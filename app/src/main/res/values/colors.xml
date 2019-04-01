@@ -82,4 +82,10 @@
     <color name="search_token_item_txt_color">#666666</color>
     <color name="test_net_background_color">#4B4A66</color>
     <color name="popup_background_color">#56526D</color>
+
+    <color name="gray_bg_color">#CCCCCC</color>
+
+    <color name="gray_line">#F2F2F2</color>
+    <color name="tv_black">#FF101010</color>
+
 </resources>

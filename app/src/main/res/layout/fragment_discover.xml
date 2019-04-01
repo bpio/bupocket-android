@@ -1,44 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:fitsSystemWindows="true">
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/app_bg_color_gray_4"
+        android:orientation="vertical"
         android:paddingLeft="12.5dp"
         android:paddingRight="12.5dp">
 
         <TextView
-            android:fitsSystemWindows="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/tabbar_discover_txt"
-            android:textSize="21sp"
-            android:layout_marginTop="10dp"
-            android:layout_gravity="center"/>
-
-        <LinearLayout
-            android:layout_marginTop="11.5dp"
             android:layout_width="match_parent"
-            android:layout_height="187.5dp"
-            android:background="@drawable/shape_corner"
-            android:orientation="vertical">
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:fitsSystemWindows="true"
+            android:gravity="center"
+            android:text="@string/tabbar_discover_txt"
+            android:textSize="18sp" />
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@mipmap/ic_discover_bg"
-                tools:ignore="ContentDescription" />
-        </LinearLayout>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vpDisBanner"
+            android:layout_width="match_parent"
+            android:layout_height="144dp" />
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="187.5dp"-->
+        <!--android:layout_marginTop="11.5dp"-->
+        <!--android:background="@drawable/shape_corner"-->
+        <!--android:orientation="vertical"-->
+        <!--android:visibility="gone">-->
+
+        <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@mipmap/ic_discover_bg"-->
+        <!--tools:ignore="ContentDescription" />-->
+        <!--</LinearLayout>-->
 
         <RelativeLayout
             android:id="@+id/cardPackageRl"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/shape_corner">
 
@@ -54,13 +63,11 @@
                 android:background="@mipmap/icon_discover_cards" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/tvDisStyle"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="47dp"
                 android:layout_marginLeft="47dp"
-                android:text="@string/card_package_txt"
-                android:textSize="15sp" />
+                android:text="@string/card_package_txt" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -74,16 +81,16 @@
         </RelativeLayout>
 
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/shape_corner"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/nodePlanRl"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="60dp">
 
                 <ImageView
                     android:id="@+id/nodePlanIcon"
@@ -116,11 +123,17 @@
                     android:background="@mipmap/icon_right_arrow" />
             </RelativeLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="40dp"
+                android:background="@color/gray_line" />
+
 
             <RelativeLayout
                 android:id="@+id/nodeBuildRl"
                 android:layout_width="match_parent"
-                android:layout_height="50dp">
+                android:layout_height="60dp">
 
                 <ImageView
                     android:id="@+id/nodeBuildIcon"
@@ -159,7 +172,7 @@
         <RelativeLayout
             android:id="@+id/informationRl"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/shape_corner">
 
@@ -197,7 +210,7 @@
         <RelativeLayout
             android:id="@+id/xiaobuYoupinRl"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_marginTop="10dp"
             android:background="@drawable/shape_corner">
 

@@ -211,4 +211,14 @@
         <item name="colorAccent">@color/app_color_main</item>
     </style>
 
+    <style name="tvDisStyle">
+
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/tv_black</item>
+        <item name="android:textSize">15sp</item>
+
+
+    </style>
+
 </resources>
