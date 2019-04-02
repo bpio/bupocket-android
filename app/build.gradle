@@ -96,4 +96,7 @@ dependencies {
     configurations{
         all*.exclude group:'com.google.zxing'
     }
+
+
+    implementation 'com.orhanobut:logger:1.15'
 }

@@ -40,7 +40,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
     ViewPager vpDisBanner;
     private ArrayList<ImageView> banListData;
     private DisBannerAdapter disBannerAdapter;
-    private long PAGER_TIME = 2 * 1000;
+    private long PAGER_TIME = 3 * 1000;
     private boolean isStop;
     private boolean isDownStop;
 
