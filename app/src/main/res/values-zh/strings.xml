@@ -399,4 +399,9 @@
     <string name="address_already_exist_message_txt">该联系人已存在</string>
     <string name="capture_activity_cancel">关闭</string>
     <string name="capture_activity_photo_album">相册</string>
+
+
+
+    <string name="common_node">共识节点</string>
+    <string name="ecological_node">生态节点</string>
 </resources>

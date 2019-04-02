@@ -443,4 +443,8 @@
     <string name="confirm_login_txt">确认登录</string>
 
 
+    <string name="common_node">共识节点</string>
+    <string name="ecological_node">生态节点</string>
+
+
 </resources>

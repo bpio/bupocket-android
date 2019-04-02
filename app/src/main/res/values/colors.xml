@@ -88,4 +88,6 @@
     <color name="gray_line">#F2F2F2</color>
     <color name="tv_black">#FF101010</color>
 
+    <color name="tv_node">#FF0BB9A9</color>
+
 </resources>

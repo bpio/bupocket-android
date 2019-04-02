@@ -33,6 +33,8 @@ public class Constants {
     public static final String QR_LOGIN_PREFIX = "bumo://login/";
     public static final String QR_NODE_PLAN_PREFIX = "bumo://dpos/";
 
+    public static final String  ADDRESS="address";
+
     public static enum MainNetConfig {
         WEB_SERVER_DOMAIN("https://api-bp.bumo.io/"),
         BUMO_NODE_URL("http://wallet-node.bumo.io"),

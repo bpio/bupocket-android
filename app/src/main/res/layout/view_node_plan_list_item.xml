@@ -1,40 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="82.5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="82.5dp">
 
     <RelativeLayout
         android:id="@+id/nodeIconRl"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="12.5dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12.5dp"
+        android:layout_marginTop="15dp">
 
         <ImageView
-            android:layout_centerInParent="true"
             android:id="@+id/nodeIconBgIv"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@mipmap/icon_token_bg_list"/>
+            android:layout_centerInParent="true"
+            android:background="@mipmap/icon_token_bg_list" />
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-            android:layout_centerInParent="true"
             android:id="@+id/nodeIconIv"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_centerInParent="true"
             app:qmui_border_width="0dp"
-            app:qmui_is_circle="true"/>
+            app:qmui_is_circle="true" />
 
     </RelativeLayout>
 
     <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="22dp"
-        android:layout_toRightOf="@+id/nodeIconRl"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_toRightOf="@+id/nodeIconRl">
 
         <TextView
             android:id="@+id/nodeNameTv"
@@ -45,51 +45,53 @@
 
         <TextView
             android:id="@+id/nodeTypeTv"
-            android:layout_toRightOf="@+id/nodeNameTv"
             android:layout_width="55dp"
             android:layout_height="16dp"
-            android:layout_marginLeft="7.5dp"
-            tools:text="共识节点"
-            android:textSize="11sp"
-            android:gravity="center"
             android:layout_centerVertical="true"
-            android:background="@drawable/shape_corner_bg_gray"/>
+            android:layout_marginLeft="7.5dp"
+            android:layout_toRightOf="@+id/nodeNameTv"
+            android:background="@drawable/shape_corner_bg_gray"
+            android:gravity="center"
+            android:textSize="11sp"
+            android:textColor="@color/tv_node"
+            tools:text="共识节点" />
 
         <ImageView
             android:id="@+id/moreBtnIv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:paddingRight="10dp"
             android:layout_centerVertical="true"
-            android:src="@mipmap/icon_item_more"/>
+            android:paddingRight="10dp"
+            android:src="@mipmap/icon_item_more" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_toRightOf="@+id/nodeIconRl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="51.5dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_toRightOf="@+id/nodeIconRl">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/number_have_votes"
                 android:textColor="@color/multiline_edit_hint_color"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
             <TextView
-                android:layout_marginLeft="6dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:layout_marginLeft="6dp"
                 android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="14sp"
                 tools:text="7833993" />
         </LinearLayout>
 
@@ -98,44 +100,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/number_have_votes"
                 android:textColor="@color/multiline_edit_hint_color"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/haveVotesNumTv"
-                android:layout_marginLeft="6dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:layout_marginLeft="6dp"
                 android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="14sp"
                 tools:text="7833993" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/myVotesNumLl"
-            android:layout_toRightOf="@+id/haveVotesNumLl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="59.5dp"
+            android:layout_toRightOf="@+id/haveVotesNumLl"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/my_votes_number"
                 android:textColor="@color/multiline_edit_hint_color"
-                android:textSize="12sp"/>
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/myVotesNumTv"
-                android:layout_marginLeft="6dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:layout_marginLeft="6dp"
                 android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="14sp"
                 tools:text="8938" />
         </LinearLayout>
     </RelativeLayout>

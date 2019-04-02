@@ -77,11 +77,13 @@
         </RelativeLayout>
 
         <ListView
+            android:id="@+id/lvPlan"
             android:layout_marginTop="13.5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
         </ListView>
+
     </LinearLayout>
 
     <com.qmuiteam.qmui.widget.QMUITopBarLayout

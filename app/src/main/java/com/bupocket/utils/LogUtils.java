@@ -49,7 +49,7 @@ public class LogUtils {
     /**
      * 日志输出时的TAG
      */
-    private static final String mTag = "mmmm";
+    private static final String mTag = "mmmmbumo";
 
     /* 是否允许输出log LEVEL_NONE时候不输出日志 */
     private static int mDebuggable = LEVEL_ERROR;

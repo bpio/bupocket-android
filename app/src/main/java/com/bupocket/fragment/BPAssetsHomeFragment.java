@@ -659,7 +659,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                     Call<ApiResult> call;
                     Map<String, Object> paramsMap = new HashMap<>();
                     paramsMap.put("qrcodeSessionId",qrCodeSessionID);
-                    paramsMap.put("txHash",txHash);
+                    paramsMap.put("hash",txHash);
                     paramsMap.put("initiatorAddress",currentWalletAddress);
                     call = nodePlanService.confirmTransaction(paramsMap);
                     call.enqueue(new Callback<ApiResult>() {

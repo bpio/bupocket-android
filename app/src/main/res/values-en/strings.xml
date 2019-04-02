@@ -399,4 +399,9 @@
     <string name="address_already_exist_message_txt">The contact is already existed</string>
     <string name="capture_activity_cancel">close</string>
     <string name="capture_activity_photo_album">Album</string>
+
+
+    <string name="common_node">common node</string>
+    <string name="ecological_node">ecological node</string>
+
 </resources>
