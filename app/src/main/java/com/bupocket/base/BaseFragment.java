@@ -5,6 +5,8 @@ import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 
 public abstract class BaseFragment extends QMUIFragment {
     public BaseFragment() {
+
+
     }
 
     @Override

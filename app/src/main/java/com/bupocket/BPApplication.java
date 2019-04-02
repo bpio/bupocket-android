@@ -61,7 +61,7 @@ public class BPApplication extends Application {
         SocketUtil.getInstance().SetNull4SocketUtil();
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(context,"buPocket");
         int netTypeCode = sharedPreferencesHelper.getInt("bumoNode",Constants.DEFAULT_BUMO_NODE);
-        Boolean isMainNetConfig = true;
+        Boolean isMainNetConfig = false;
         if(BumoNodeEnum.TEST.getCode() == netTypeCode){
             isMainNetConfig = false;
         }else if(BumoNodeEnum.TEST.getName().equals(netType)){

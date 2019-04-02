@@ -7,11 +7,16 @@
     android:background="@color/app_bg_color_gray">
 
     <LinearLayout
-        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
         android:background="@color/app_bg_color_gray"
         android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/lvVoteRecord"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></ListView>
 
     </LinearLayout>
 

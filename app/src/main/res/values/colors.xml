@@ -90,4 +90,9 @@
 
     <color name="tv_node">#FF0BB9A9</color>
 
+    <color name="gray_tv_plan_more">#FF424141</color>
+
+    <color name="gray_pop_line">#666281</color>
+
+
 </resources>

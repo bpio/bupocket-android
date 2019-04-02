@@ -408,7 +408,7 @@
     <string name="node_associated_with_me_txt">和我相关的节点</string>
     <string name="search_txt">搜索</string>
     <string name="number_have_votes">得票数</string>
-    <string name="my_votes_number">我的得票数</string>
+    <string name="my_votes_number">我的投票数</string>
     <string name="confirm_transfer_title_txt">确认交易</string>
     <string name="vote_record_txt">投票记录</string>
     <string name="vote_txt">投</string>
@@ -445,6 +445,9 @@
 
     <string name="common_node">共识节点</string>
     <string name="ecological_node">生态节点</string>
+
+    <string name="cancel_vote">撤销投票</string>
+    <string name="voting_record">投票记录</string>
 
 
 </resources>

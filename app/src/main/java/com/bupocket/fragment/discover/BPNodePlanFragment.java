@@ -2,9 +2,13 @@ package com.bupocket.fragment.discover;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.bupocket.R;
+import com.bupocket.adaptor.MoreBtnAdapter;
 import com.bupocket.adaptor.SuperNodeAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
@@ -16,6 +20,7 @@ import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -31,6 +36,12 @@ public class BPNodePlanFragment extends BaseFragment {
     QMUITopBarLayout mTopBar;
     @BindView(R.id.lvPlan)
     ListView lvPlan;
+    @BindView(R.id.myNodeCB)
+    CheckBox myNodeCB;
+    @BindView(R.id.myNodeTv)
+    TextView myNodeTv;
+
+
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String currentIdentityWalletAddress;
     private SuperNodeAdapter superNodeAdapter;
@@ -46,6 +57,16 @@ public class BPNodePlanFragment extends BaseFragment {
     private void init() {
         initUI();
         initData();
+        initListener();
+    }
+
+    private void initListener() {
+        myNodeCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+            }
+        });
     }
 
     private void initData() {
@@ -56,7 +77,7 @@ public class BPNodePlanFragment extends BaseFragment {
     private void getAllNode() {
 
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
+        currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
         LogUtils.e(currentIdentityWalletAddress);
         HashMap<String, Object> listReq = new HashMap<>();
 
@@ -64,7 +85,7 @@ public class BPNodePlanFragment extends BaseFragment {
 //         "identityType": "1",
 //          "nodeName": "华润",
 //          "capitalAddress": "{capitalAddress}"
-        listReq.put(Constants.ADDRESS,currentIdentityWalletAddress);
+        listReq.put(Constants.ADDRESS, currentIdentityWalletAddress);
 //        listReq.put("identityType","");
 //        listReq.put("nodeName","");
 //        listReq.put("capitalAddress","");
@@ -72,23 +93,22 @@ public class BPNodePlanFragment extends BaseFragment {
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
 
         Call<ApiResult<SuperNodeDto>> superNodeList = nodePlanService.getSuperNodeList(listReq);
-        superNodeList.enqueue(new retrofit2.Callback<ApiResult<SuperNodeDto>>() {
+        superNodeList.enqueue(new Callback<ApiResult<SuperNodeDto>>() {
 
             @Override
             public void onResponse(Call<ApiResult<SuperNodeDto>> call, Response<ApiResult<SuperNodeDto>> response) {
                 ApiResult<SuperNodeDto> body = response.body();
-                LogUtils.e("请求成功"+body.getData());
+                LogUtils.e("请求成功" + body.getData());
 
                 superNodeAdapter.setNewData(body.getData().getNodeList());
                 superNodeAdapter.notifyDataSetChanged();
-
 
 
             }
 
             @Override
             public void onFailure(Call<ApiResult<SuperNodeDto>> call, Throwable t) {
-                LogUtils.e("请求失败"+t.getMessage());
+                LogUtils.e("请求失败" + t.getMessage());
 
             }
         });
@@ -104,6 +124,8 @@ public class BPNodePlanFragment extends BaseFragment {
     private void initListView() {
         superNodeAdapter = new SuperNodeAdapter(this.getContext());
         lvPlan.setAdapter(superNodeAdapter);
+
+
     }
 
     private void initTopBar() {
@@ -121,4 +143,5 @@ public class BPNodePlanFragment extends BaseFragment {
             }
         });
     }
+
 }

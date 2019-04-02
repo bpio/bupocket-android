@@ -3,6 +3,7 @@ package com.bupocket.http.api;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetQRContentDto;
 import com.bupocket.http.api.dto.resp.SuperNodeDto;
+import com.bupocket.model.MyVoteRecordModel;
 
 import java.util.Map;
 
@@ -23,4 +24,7 @@ public interface NodePlanService {
 
     @POST("nodeServer/node/v1/list/app")
     Call<ApiResult<SuperNodeDto>> getSuperNodeList(@Body Map<String,Object> map);
+
+    @POST("nodeServer/node/v1/vote/list")
+    Call<ApiResult<MyVoteRecordModel>> getMyVoteList(@Body Map<String,Object> map);
 }
