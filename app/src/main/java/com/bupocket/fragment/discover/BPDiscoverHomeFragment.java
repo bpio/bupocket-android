@@ -85,7 +85,13 @@ public class BPDiscoverHomeFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        isDownStop=false;
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        isDownStop=true;
     }
 
     private void autoPlayView() {
