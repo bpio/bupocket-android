@@ -778,4 +778,17 @@ public class CommonUtil {
         return false;
     }
 
+
+    private static String getAccountBPData(Context context, boolean isWhetherIdentityWallet, String currentWalletAddress){
+
+        SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(context, "buPocket");
+        String accountBPData = null;
+        if(isWhetherIdentityWallet) {
+            accountBPData = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
+        }else {
+            accountBPData = sharedPreferencesHelper.getSharedPreference(currentWalletAddress+ "-BPdata", "").toString();
+        }
+        return accountBPData;
+    }
+
 }

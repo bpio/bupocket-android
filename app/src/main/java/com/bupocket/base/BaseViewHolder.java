@@ -11,8 +11,6 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bupocket.utils.ImageUtils;
-
 
 
 /**
@@ -124,7 +122,7 @@ public class BaseViewHolder {
     @NonNull
     public BaseViewHolder setImageUrl(int viewId, String url) {
         ImageView imageView = getView(viewId);
-        ImageUtils.showImage(imageView, url);
+//        ImageUtils.showImage(imageView, url);
         return this;
     }
 
