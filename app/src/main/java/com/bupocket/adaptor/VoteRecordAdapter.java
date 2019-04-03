@@ -26,6 +26,9 @@ public class VoteRecordAdapter extends AbsViewHolderAdapter<MyVoteInfoModel> {
     protected void convert(BaseViewHolder holder, MyVoteInfoModel itemData) {
         TextView recordType = (TextView) holder.getView(R.id.recordTypeTv);
 
+        if (itemData==null) {
+            return;
+        }
 //        1 投票 2 撤票
         switch (itemData.getType()) {
             case "1":
