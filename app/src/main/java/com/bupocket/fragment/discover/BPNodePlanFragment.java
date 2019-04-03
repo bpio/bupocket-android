@@ -14,28 +14,34 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.adaptor.SuperNodeAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.SuperNodeDto;
 import com.bupocket.model.SuperNodeModel;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.bumo.model.response.TransactionBuildBlobResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -58,7 +64,8 @@ public class BPNodePlanFragment extends BaseFragment {
 
 
     private SharedPreferencesHelper sharedPreferencesHelper;
-    private String currentIdentityWalletAddress;
+    private String currentWalletAddress;
+    private Boolean whetherIdentityWallet = false;
     private SuperNodeAdapter superNodeAdapter;
 
 
@@ -155,15 +162,19 @@ public class BPNodePlanFragment extends BaseFragment {
     private void getAllNode() {
 
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
-        LogUtils.e(currentIdentityWalletAddress);
+        currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
+        if(CommonUtil.isNull(currentWalletAddress) || currentWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString())){
+            currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
+            whetherIdentityWallet = true;
+        }
+        LogUtils.e(currentWalletAddress);
         HashMap<String, Object> listReq = new HashMap<>();
 
 //        "address": "buafafsaffasfsafsfafds",
 //         "identityType": "1",
 //          "nodeName": "华润",
 //          "capitalAddress": "{capitalAddress}"
-        listReq.put(Constants.ADDRESS, currentIdentityWalletAddress);
+        listReq.put(Constants.ADDRESS, currentWalletAddress);
 //        listReq.put("identityType","");
 //        listReq.put("nodeName","");
 //        listReq.put("capitalAddress","");
@@ -205,7 +216,7 @@ public class BPNodePlanFragment extends BaseFragment {
             if (superNodeModel != null) {
                 String myVoteCount = superNodeModel.getMyVoteCount();
                 if ((TextUtils.isEmpty(myVoteCount) && (Integer.parseInt(myVoteCount)) > 0)
-                        || currentIdentityWalletAddress.equals(superNodeModel.getNodeCapitalAddress())) {
+                        || currentWalletAddress.equals(superNodeModel.getNodeCapitalAddress())) {
                     superNodeModels.add(superNodeModel);
                 }
             }
@@ -240,5 +251,46 @@ public class BPNodePlanFragment extends BaseFragment {
                 startFragment(new BPVoteRecordFragment());
             }
         });
+    }
+
+    public void confirmUnVote(SuperNodeModel nodeInfo){
+        final String nodeAddress = nodeInfo.getNodeCapitalAddress();
+        final String role = nodeInfo.getIdentityType();
+        final String nodeId = nodeInfo.getNodeId();
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try{
+                    final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().unVoteBuildBlob(currentWalletAddress,role,nodeAddress,String.valueOf(Constants.MIN_FEE));
+                    String txHash = buildBlobResponse.getResult().getHash();
+                    NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
+                    Call<ApiResult> call;
+                    Map<String, Object> paramsMap = new HashMap<>();
+                    paramsMap.put("hash",txHash);
+                    paramsMap.put("nodeId",nodeId);
+                    paramsMap.put("initiatorAddress",currentWalletAddress);
+                    call = nodePlanService.revokeVote(paramsMap);
+                    call.enqueue(new Callback<ApiResult>() {
+                        @Override
+                        public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
+                            ApiResult respDto = response.body();
+                            if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
+//                                submitTransaction(buildBlobResponse);
+                            }else {
+                                Toast.makeText(getContext(),respDto.getErrCode(),Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiResult> call, Throwable t) {
+                            Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }catch (Exception e){
+                    Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).start();
     }
 }

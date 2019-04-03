@@ -659,7 +659,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
                 try {
                     final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input, currentWalletAddress, String.valueOf(Constants.MIN_FEE));
                     String txHash = buildBlobResponse.getResult().getHash();
-                    System.out.print(txHash);
                     NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
                     Call<ApiResult> call;
                     Map<String, Object> paramsMap = new HashMap<>();
@@ -684,7 +683,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         }
                     });
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
                 }
             }
         }).start();
@@ -749,7 +748,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         } catch (Exception e) {
                             e.printStackTrace();
                             Looper.prepare();
-                            Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
                             txSendingTipDialog.dismiss();
                             Looper.loop();
                         }finally {
