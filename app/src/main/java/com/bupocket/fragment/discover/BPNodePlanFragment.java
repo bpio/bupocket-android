@@ -1,11 +1,17 @@
 package com.bupocket.fragment.discover;
 
 import android.support.annotation.NonNull;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.text.method.KeyListener;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,12 +30,17 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class BPNodePlanFragment extends BaseFragment {
 
@@ -42,6 +53,8 @@ public class BPNodePlanFragment extends BaseFragment {
     CheckBox myNodeCB;
     @BindView(R.id.myNodeTv)
     TextView myNodeTv;
+    @BindView(R.id.etNodeSearch)
+    EditText etNodeSearch;
 
 
     private SharedPreferencesHelper sharedPreferencesHelper;
@@ -73,13 +86,65 @@ public class BPNodePlanFragment extends BaseFragment {
 
                 if (isChecked) {
                     superNodeAdapter.setNewData(myVoteInfolist);
-                }else {
+                } else {
                     superNodeAdapter.setNewData(nodeList);
                 }
 
                 superNodeAdapter.notifyDataSetChanged();
             }
         });
+
+        etNodeSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                searchNode( s.toString());
+            }
+        });
+
+        etNodeSearch.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    InputMethodManager manager = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
+                    //先隐藏键盘
+                    if (manager.isActive()) {
+                        manager.hideSoftInputFromWindow(etNodeSearch.getApplicationWindowToken(), 0);
+                    }
+
+                }
+                //记得返回false
+                return false;
+            }
+        });
+    }
+
+    private ArrayList<SuperNodeModel> searchNode(String s) {
+
+        ArrayList<SuperNodeModel> superNodeModels = new ArrayList<>();
+
+        Pattern pattern = Pattern.compile(s);
+        for (int i = 0; i < nodeList.size(); i++) {
+            Matcher matcher = pattern.matcher(nodeList.get(i).getNodeName());
+            if (matcher.find()) {
+                superNodeModels.add(nodeList.get(i));
+            }
+        }
+        if (superNodeModels.size()>0) {
+            superNodeAdapter.setNewData(superNodeModels);
+            superNodeAdapter.notifyDataSetChanged();
+        }
+
+        return superNodeModels;
     }
 
     private void initData() {
@@ -113,7 +178,7 @@ public class BPNodePlanFragment extends BaseFragment {
                 ApiResult<SuperNodeDto> body = response.body();
                 LogUtils.e("请求成功" + body.getData());
                 nodeList = body.getData().getNodeList();
-                if (nodeList !=null) {
+                if (nodeList != null) {
                     superNodeAdapter.setNewData(nodeList);
                     superNodeAdapter.notifyDataSetChanged();
                     myVoteInfolist = myVoteInfoList(nodeList);
@@ -139,8 +204,8 @@ public class BPNodePlanFragment extends BaseFragment {
             SuperNodeModel superNodeModel = nodeList.get(i);
             if (superNodeModel != null) {
                 String myVoteCount = superNodeModel.getMyVoteCount();
-                if ( (TextUtils.isEmpty(myVoteCount) &&(Integer.parseInt(myVoteCount)) > 0)
-                        ||currentIdentityWalletAddress.equals(superNodeModel.getNodeCapitalAddress())) {
+                if ((TextUtils.isEmpty(myVoteCount) && (Integer.parseInt(myVoteCount)) > 0)
+                        || currentIdentityWalletAddress.equals(superNodeModel.getNodeCapitalAddress())) {
                     superNodeModels.add(superNodeModel);
                 }
             }
@@ -176,5 +241,6 @@ public class BPNodePlanFragment extends BaseFragment {
             }
         });
     }
+
 
 }
