@@ -2,7 +2,9 @@ package com.bupocket.fragment.discover;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.bupocket.R;
 import com.bupocket.adaptor.VoteRecordAdapter;
@@ -33,6 +35,8 @@ public class BPVoteRecordFragment extends BaseFragment {
     ListView lvVoteRecord;
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
+    @BindView(R.id.addressRecordEmptyLL)
+    LinearLayout addressRecordEmptyLL;
 
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String currentIdentityWalletAddress;
@@ -71,6 +75,14 @@ public class BPVoteRecordFragment extends BaseFragment {
             public void onResponse(Call<ApiResult<MyVoteRecordModel>> call, Response<ApiResult<MyVoteRecordModel>> response) {
                 ApiResult<MyVoteRecordModel> body = response.body();
                 LogUtils.e("请求成功" + body.getData());
+                if (body == null | body.getData() == null |
+                        body.getData().getList() == null | body.getData().getList().size() == 0) {
+                    addressRecordEmptyLL.setVisibility(View.VISIBLE);
+                }
+
+
+//                voteRecordAdapter.setNewData(myVoteRecordModels);
+//                voteRecordAdapter.notifyDataSetChanged();
 
 
             }
@@ -88,11 +100,11 @@ public class BPVoteRecordFragment extends BaseFragment {
     private void initUI() {
         initTopBar();
         voteRecordAdapter = new VoteRecordAdapter(getContext());
-        ArrayList<MyVoteInfoModel> myVoteRecordModels = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            myVoteRecordModels.add(new MyVoteInfoModel());
-        }
-        voteRecordAdapter.setNewData(myVoteRecordModels);
+//        ArrayList<MyVoteInfoModel> myVoteRecordModels = new ArrayList<>();
+//        for (int i = 0; i < 3; i++) {
+//            myVoteRecordModels.add(new MyVoteInfoModel());
+//        }
+//        voteRecordAdapter.setNewData(myVoteRecordModels);
         lvVoteRecord.setAdapter(voteRecordAdapter);
 
     }
@@ -105,7 +117,9 @@ public class BPVoteRecordFragment extends BaseFragment {
                 popBackStack();
             }
         });
-        mTopBar.setTitle(getResources().getString(R.string.vote_record_txt));
+        TextView title = mTopBar.setTitle(getResources().getString(R.string.vote_record_txt));
+
+
     }
 
 

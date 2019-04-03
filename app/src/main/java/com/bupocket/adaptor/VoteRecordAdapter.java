@@ -3,6 +3,7 @@ package com.bupocket.adaptor;
 import android.content.Context;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.bupocket.R;
@@ -29,17 +30,21 @@ public class VoteRecordAdapter extends AbsViewHolderAdapter<MyVoteInfoModel> {
         if (itemData==null) {
             return;
         }
-//        1 投票 2 撤票
-        switch (itemData.getType()) {
-            case "1":
-                recordType.setText("投");
-                recordType.setBackgroundResource(R.drawable.shape_corner_green);
-                break;
-            case "2":
-                recordType.setText("撤");
-                recordType.setBackgroundResource(R.drawable.shape_corner_red);
-                break;
+
+
+        if (!TextUtils.isEmpty(itemData.getType())) {
+            switch (itemData.getType()) {
+                case "1":
+                    recordType.setText("投");
+                    recordType.setBackgroundResource(R.drawable.shape_corner_green);
+                    break;
+                case "2":
+                    recordType.setText("撤");
+                    recordType.setBackgroundResource(R.drawable.shape_corner_red);
+                    break;
+            }
         }
+
 
 
         holder.setText(R.id.voterName, itemData.getNodeName());

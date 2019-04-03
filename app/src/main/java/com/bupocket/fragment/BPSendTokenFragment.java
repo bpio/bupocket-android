@@ -674,7 +674,7 @@ public class BPSendTokenFragment extends BaseFragment {
 
                         @Override
                         public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
-                            Toast.makeText(getActivity(), R.string.tx_timeout_err, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(BPSendTokenFragment.this.getContext(), R.string.tx_timeout_err, Toast.LENGTH_SHORT).show();
                         }
                     });
                     break;

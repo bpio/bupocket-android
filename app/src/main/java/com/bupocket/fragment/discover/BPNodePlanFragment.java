@@ -158,8 +158,12 @@ public class BPNodePlanFragment extends BaseFragment {
 
     private ArrayList<SuperNodeModel> searchNode(String s) {
 
-        ArrayList<SuperNodeModel> superNodeModels = new ArrayList<>();
 
+
+        ArrayList<SuperNodeModel> superNodeModels = new ArrayList<>();
+        if (nodeList==null) {
+            return superNodeModels;
+        }
         Pattern pattern = Pattern.compile(s);
         for (int i = 0; i < nodeList.size(); i++) {
             Matcher matcher = pattern.matcher(nodeList.get(i).getNodeName());
@@ -214,6 +218,9 @@ public class BPNodePlanFragment extends BaseFragment {
                     superNodeAdapter.setNewData(nodeList);
                     superNodeAdapter.notifyDataSetChanged();
                     myVoteInfolist = myVoteInfoList(nodeList);
+                }else{
+
+
                 }
 
 
