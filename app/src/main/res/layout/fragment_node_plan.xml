@@ -20,9 +20,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13.5dp"
-            android:paddingLeft="10.5dp"
-            android:paddingRight="10.5dp">
+            android:layout_marginTop="14dp"
+            android:paddingLeft="13dp"
+            android:paddingRight="13dp">
 
             <CheckBox
                 android:id="@+id/myNodeCB"
@@ -84,9 +84,14 @@
 
         <ListView
             android:id="@+id/lvPlan"
+            android:layout_marginLeft="13dp"
+            android:layout_marginRight="13dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="13.5dp">
+            android:divider="@color/token_list_view_background_color"
+            android:dividerHeight="10dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginBottom="10dp">
 
         </ListView>
 

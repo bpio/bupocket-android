@@ -13,6 +13,7 @@ import com.bupocket.R;
 import com.bupocket.base.AbsBaseAdapter;
 import com.bupocket.base.AbsViewHolderAdapter;
 import com.bupocket.base.BaseViewHolder;
+import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
@@ -40,7 +41,7 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
             moreBtnAdapter = new MoreBtnAdapter(context);
             ArrayList<String> newData = new ArrayList<>();
             newData.add(context.getResources().getString(R.string.cancel_vote));
-            newData.add(context.getResources().getString(R.string.voting_record));
+            newData.add(context.getResources().getString(R.string.vote_record));
             moreBtnAdapter.setNewData(newData);
         }
 
@@ -59,20 +60,25 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         }
         holder.setText(R.id.nodeNameTv, itemData.getNodeName());
         String identityType = itemData.getIdentityType();
-        //节点身份（1 共识节点 ，2 生态节点）
-        switch (identityType) {
-            case "1":
-                holder.setText(R.id.nodeTypeTv, context.getResources().getString(R.string.common_node));
-                break;
-            case "2":
-                holder.setText(R.id.nodeTypeTv, context.getResources().getString(R.string.ecological_node));
-                break;
+
+        if(SuperNodeTypeEnum.VALIDATOR.getCode().equals(identityType)){
+            holder.setText(R.id.nodeTypeTv, context.getResources().getString(R.string.common_node));
+        }else if(SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(identityType)){
+            holder.setText(R.id.nodeTypeTv, context.getResources().getString(R.string.ecological_node));
         }
 
         holder.setText(R.id.haveVotesNumTv, itemData.getNodeVote());
         holder.setText(R.id.myVotesNumTv, itemData.getMyVoteCount());
 
-        final View moreBtn = holder.getView(R.id.moreBtnIv);
+        final View shareBtn = holder.getView(R.id.shareBtn);
+        shareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        /*final View moreBtn = holder.getView(R.id.moreBtnIv);
         moreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -87,7 +93,7 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
 
 
             }
-        });
+        });*/
 
 
 //        holder.setText(R.id.nodeIconBgIv,itemData.getNodeName());
@@ -95,7 +101,7 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
 
     }
 
-    private void initPop() {
+    /*private void initPop() {
         if (morePop != null) {
             return;
         }
@@ -103,7 +109,7 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         morePop.create(QMUIDisplayHelper.dp2px(context, 150), QMUIDisplayHelper.dp2px(context, 400), new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//          Toast.makeText(getActivity(), "Item " + (i + 1), Toast.LENGTH_SHORT).show();
+          Toast.makeText(getActivity(), "Item " + (i + 1), Toast.LENGTH_SHORT).show();
                 LogUtils.e("位置：" + i);
                 morePop.dismiss();
             }
@@ -111,10 +117,10 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         morePop.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-//                        mActionButton2.setText(getContext().getResources().getString(R.string.popup_list_action_button_text_show));
+                        mActionButton2.setText(getContext().getResources().getString(R.string.popup_list_action_button_text_show));
             }
         });
         morePop.setAnimStyle(QMUIPopup.ANIM_GROW_FROM_CENTER);
         morePop.setPreferredDirection(QMUIPopup.DIRECTION_BOTTOM);
-    }
+    }*/
 }
