@@ -63,10 +63,10 @@ public class BPNodePlanFragment extends BaseFragment {
     private void init() {
         initUI();
         initData();
-        initListener();
+        setListener();
     }
 
-    private void initListener() {
+    private void setListener() {
         myNodeCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -176,5 +176,4 @@ public class BPNodePlanFragment extends BaseFragment {
             }
         });
     }
-
 }
