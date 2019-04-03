@@ -78,6 +78,14 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
             }
         });
 
+        final View revokeVoteBtn = holder.getView(R.id.revokeVoteBtn);
+        revokeVoteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         /*final View moreBtn = holder.getView(R.id.moreBtnIv);
         moreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
