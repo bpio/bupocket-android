@@ -1,5 +1,7 @@
 package com.bupocket.fragment.discover;
 
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CheckBox;
@@ -8,7 +10,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bupocket.R;
-import com.bupocket.adaptor.MoreBtnAdapter;
 import com.bupocket.adaptor.SuperNodeAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
@@ -16,6 +17,7 @@ import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.SuperNodeDto;
+import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -46,6 +48,10 @@ public class BPNodePlanFragment extends BaseFragment {
     private String currentIdentityWalletAddress;
     private SuperNodeAdapter superNodeAdapter;
 
+
+    private ArrayList<SuperNodeModel> myVoteInfolist;
+    private ArrayList<SuperNodeModel> nodeList;
+
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_node_plan, null);
@@ -65,6 +71,13 @@ public class BPNodePlanFragment extends BaseFragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+                if (isChecked) {
+                    superNodeAdapter.setNewData(myVoteInfolist);
+                }else {
+                    superNodeAdapter.setNewData(nodeList);
+                }
+
+                superNodeAdapter.notifyDataSetChanged();
             }
         });
     }
@@ -99,9 +112,12 @@ public class BPNodePlanFragment extends BaseFragment {
             public void onResponse(Call<ApiResult<SuperNodeDto>> call, Response<ApiResult<SuperNodeDto>> response) {
                 ApiResult<SuperNodeDto> body = response.body();
                 LogUtils.e("请求成功" + body.getData());
-
-                superNodeAdapter.setNewData(body.getData().getNodeList());
-                superNodeAdapter.notifyDataSetChanged();
+                nodeList = body.getData().getNodeList();
+                if (nodeList !=null) {
+                    superNodeAdapter.setNewData(nodeList);
+                    superNodeAdapter.notifyDataSetChanged();
+                    myVoteInfolist = myVoteInfoList(nodeList);
+                }
 
 
             }
@@ -114,6 +130,23 @@ public class BPNodePlanFragment extends BaseFragment {
         });
 
 
+    }
+
+    private ArrayList<SuperNodeModel> myVoteInfoList(@NonNull ArrayList<SuperNodeModel> nodeList) {
+
+        ArrayList<SuperNodeModel> superNodeModels = new ArrayList<>();
+        for (int i = 0; i < nodeList.size(); i++) {
+            SuperNodeModel superNodeModel = nodeList.get(i);
+            if (superNodeModel != null) {
+                String myVoteCount = superNodeModel.getMyVoteCount();
+                if ( (TextUtils.isEmpty(myVoteCount) &&(Integer.parseInt(myVoteCount)) > 0)
+                        ||currentIdentityWalletAddress.equals(superNodeModel.getNodeCapitalAddress())) {
+                    superNodeModels.add(superNodeModel);
+                }
+            }
+        }
+
+        return superNodeModels;
     }
 
     private void initUI() {

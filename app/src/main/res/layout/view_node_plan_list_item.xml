@@ -53,7 +53,7 @@
             android:background="@drawable/shape_corner_bg_gray"
             android:gravity="center"
             android:textSize="11sp"
-            android:textColor="@color/tv_node"
+            android:textColor="@color/multiline_edit_hint_color"
             tools:text="共识节点" />
 
         <ImageView
