@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.method.KeyListener;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -50,7 +50,6 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -79,6 +78,8 @@ public class BPNodePlanFragment extends BaseFragment {
     TextView myNodeTv;
     @BindView(R.id.etNodeSearch)
     EditText etNodeSearch;
+    @BindView(R.id.addressRecordEmptyLL)
+    LinearLayout addressRecordEmptyLL;
 
     private String txHash;
     private QMUITipDialog txSendingTipDialog;
@@ -113,8 +114,11 @@ public class BPNodePlanFragment extends BaseFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked) {
+
+                    setEmpty(myVoteInfolist.size()==0);
                     superNodeAdapter.setNewData(myVoteInfolist);
                 } else {
+                    setEmpty(nodeList.size()==0);
                     superNodeAdapter.setNewData(nodeList);
                 }
 
@@ -156,12 +160,19 @@ public class BPNodePlanFragment extends BaseFragment {
         });
     }
 
+    private void setEmpty(boolean isVisible) {
+        if (isVisible) {
+            addressRecordEmptyLL.setVisibility(View.VISIBLE);
+        }else{
+            addressRecordEmptyLL.setVisibility(View.GONE);
+        }
+    }
+
     private ArrayList<SuperNodeModel> searchNode(String s) {
 
 
-
         ArrayList<SuperNodeModel> superNodeModels = new ArrayList<>();
-        if (nodeList==null) {
+        if (nodeList == null) {
             return superNodeModels;
         }
         Pattern pattern = Pattern.compile(s);
@@ -187,9 +198,9 @@ public class BPNodePlanFragment extends BaseFragment {
     private void getAllNode() {
 
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
-        if(CommonUtil.isNull(currentWalletAddress) || currentWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString())){
-            currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
+        currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress", "").toString();
+        if (CommonUtil.isNull(currentWalletAddress) || currentWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString())) {
+            currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
             whetherIdentityWallet = true;
         }
         LogUtils.e(currentWalletAddress);
@@ -218,11 +229,8 @@ public class BPNodePlanFragment extends BaseFragment {
                     superNodeAdapter.setNewData(nodeList);
                     superNodeAdapter.notifyDataSetChanged();
                     myVoteInfolist = myVoteInfoList(nodeList);
-                }else{
-
-
+                    setEmpty(nodeList.size()==0);
                 }
-
 
             }
 

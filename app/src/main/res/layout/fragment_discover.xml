@@ -21,14 +21,15 @@
             android:fitsSystemWindows="true"
             android:gravity="center"
             android:text="@string/tabbar_discover_txt"
-            android:textSize="18sp" />
+            android:textColor="@color/send_confirm_title_color"
+            android:textSize="21sp" />
 
 
         <android.support.v4.view.ViewPager
-            android:layout_marginTop="10dp"
             android:id="@+id/vpDisBanner"
             android:layout_width="match_parent"
-            android:layout_height="144dp" />
+            android:layout_height="144dp"
+            android:layout_marginTop="10dp" />
 
         <!--<LinearLayout-->
         <!--android:layout_width="match_parent"-->
@@ -47,10 +48,7 @@
 
         <RelativeLayout
             android:id="@+id/cardPackageRl"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/shape_corner">
+            style="@style/dis_item_style">
 
             <ImageView
                 android:id="@+id/cardPackageIcon"
@@ -83,15 +81,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/shape_corner"
+            android:layout_height="100dp"
+            style="@style/dis_item_style"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:id="@+id/nodePlanRl"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="50dp">
 
                 <ImageView
                     android:id="@+id/nodePlanIcon"
@@ -127,14 +124,15 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
                 android:background="@color/gray_line" />
 
 
             <RelativeLayout
                 android:id="@+id/nodeBuildRl"
                 android:layout_width="match_parent"
-                android:layout_height="60dp">
+                android:layout_height="50dp">
 
                 <ImageView
                     android:id="@+id/nodeBuildIcon"
@@ -172,10 +170,8 @@
 
         <RelativeLayout
             android:id="@+id/informationRl"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/shape_corner">
+            style="@style/dis_item_style"
+            >
 
             <ImageView
                 android:id="@+id/informationIcon"
@@ -210,10 +206,7 @@
 
         <RelativeLayout
             android:id="@+id/xiaobuYoupinRl"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/shape_corner">
+            style="@style/dis_item_style">
 
             <ImageView
                 android:id="@+id/xiaobuYoupinIcon"

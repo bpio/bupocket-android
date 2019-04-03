@@ -221,4 +221,12 @@
 
     </style>
 
+    <style name="dis_item_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@drawable/shape_corner</item>
+        <item name="android:layout_marginTop">10dp</item>
+
+    </style>
+
 </resources>

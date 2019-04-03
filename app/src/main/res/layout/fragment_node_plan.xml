@@ -71,14 +71,16 @@
                     android:layout_marginLeft="5dp"
                     android:background="@null"
                     android:hint="@string/search_txt"
-                    android:singleLine="true"
                     android:imeOptions="actionSearch"
+                    android:singleLine="true"
                     android:textColor="@color/multiline_edit_hint_color"
                     android:textSize="11sp" />
 
             </LinearLayout>
 
         </RelativeLayout>
+
+        <include layout="@layout/empty_record" />
 
         <ListView
             android:id="@+id/lvPlan"
