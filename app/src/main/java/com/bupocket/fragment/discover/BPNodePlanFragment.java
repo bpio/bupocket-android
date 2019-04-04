@@ -196,6 +196,13 @@ public class BPNodePlanFragment extends BaseFragment {
     }
 
     private void getAllNode() {
+        if (myVoteInfolist==null) {
+            myVoteInfolist=new ArrayList<>();
+        }
+
+        if (nodeList==null) {
+            nodeList=new ArrayList<>();
+        }
 
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress", "").toString();

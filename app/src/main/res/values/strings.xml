@@ -4,220 +4,220 @@
     <string name="tabbar_discover_txt">发现</string>
     <string name="tabbar_profile_txt">我的</string>
 
-    <string name="fragment_title_tx_detail_txt" >交易详情</string>
-    <string name="create_wallet_info_txt_1" >请仔细抄写下方助记词，并存放在安全的地方</string>
+    <string name="fragment_title_tx_detail_txt">交易详情</string>
+    <string name="create_wallet_info_txt_1">请仔细抄写下方助记词，并存放在安全的地方</string>
     <string name="create_wallet_txt">创建钱包</string>
 
     <string name="function_opening">功能即将开放</string>
     <string name="tabbr_wallet_txt">钱包</string>
     <string name="wallet_create_txt">创建数字身份</string>
-    <string name="wallet_create_create_btn_txt" >立即创建</string>
-    <string name="wallet_create_recover_btn_txt" >恢复身份</string>
-    <string name="hint_wallet_create_form_input_identity_name" >请创建身份名</string>
-    <string name="hint_wallet_create_form_input_password" >请设置密码</string>
-    <string name="hint_wallet_create_form_input_rePassword" >请再次确认密码</string>
+    <string name="wallet_create_create_btn_txt">立即创建</string>
+    <string name="wallet_create_recover_btn_txt">恢复身份</string>
+    <string name="hint_wallet_create_form_input_identity_name">请创建身份名</string>
+    <string name="hint_wallet_create_form_input_password">请设置密码</string>
+    <string name="hint_wallet_create_form_input_rePassword">请再次确认密码</string>
 
-    <string name="wallet_create_form_input_identity_name_empty" >请输入身份名</string>
-    <string name="wallet_create_form_input_password_empty" >请输入密码</string>
-    <string name="wallet_create_form_input_rePassword_empty" >请再次确认密码</string>
-    <string name="wallet_create_form_error1" >密码与确认密码不一致</string>
-    <string name="wallet_create_form_error2" >6~30个字符，建议混合大小写字母加数字</string>
-    <string name="wallet_create_form_error4" >身份名只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
+    <string name="wallet_create_form_input_identity_name_empty">请输入身份名</string>
+    <string name="wallet_create_form_input_password_empty">请输入密码</string>
+    <string name="wallet_create_form_input_rePassword_empty">请再次确认密码</string>
+    <string name="wallet_create_form_error1">密码与确认密码不一致</string>
+    <string name="wallet_create_form_error2">6~30个字符，建议混合大小写字母加数字</string>
+    <string name="wallet_create_form_error4">身份名只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
 
-    <string name="wallet_create_creating_txt" >创建中</string>
-    <string name="wallet_create_created_txt" >创建成功</string>
-    <string name="wallet_create_ok_btn" >确认</string>
+    <string name="wallet_create_creating_txt">创建中</string>
+    <string name="wallet_create_created_txt">创建成功</string>
+    <string name="wallet_create_ok_btn">确认</string>
 
-    <string name="hint_wallet_create_form_create_btn_txt" >创建</string>
-    <string name="otc_top_bar_buy_txt" >购买</string>
-    <string name="otc_top_bar_sell_txt" >出售</string>
-    <string name="view_title_backup_wallet" >备份钱包</string>
-    <string name="view_title_create_wallet_identity" >创建身份</string>
-    <string name="create_wallet_prompt_dialog_title" >温馨提示</string>
-    <string name="create_wallet_prompt_txt1" >密码用于加密保护私钥，以及转账、调用合约等，所以强度非常重要。
+    <string name="hint_wallet_create_form_create_btn_txt">创建</string>
+    <string name="otc_top_bar_buy_txt">购买</string>
+    <string name="otc_top_bar_sell_txt">出售</string>
+    <string name="view_title_backup_wallet">备份钱包</string>
+    <string name="view_title_create_wallet_identity">创建身份</string>
+    <string name="create_wallet_prompt_dialog_title">温馨提示</string>
+    <string name="create_wallet_prompt_txt1">密码用于加密保护私钥，以及转账、调用合约等，所以强度非常重要。
         小布口袋不存储密码，也无法帮您找回，请务必牢记。</string>
-    <string name="create_wallet_prompt_txt2" >6~30个字符，建议混合大小写字母加数字</string>
-    <string name="backup_wallet_txt1" >没有妥善备份就无法保障资产安全，删除程序或钱包后，你需要备份文件来恢复钱包</string>
-    <string name="backup_wallet_txt2" >请确保在四周无人，没有摄像头的安全环境下备份</string>
-    <string name="backup_wallet_btn_txt" >备份助记词</string>
-    <string name="view_title_backup_mneonic_code" >备份助记词</string>
+    <string name="create_wallet_prompt_txt2">6~30个字符，建议混合大小写字母加数字</string>
+    <string name="backup_wallet_txt1">没有妥善备份就无法保障资产安全，删除程序或钱包后，你需要备份文件来恢复钱包</string>
+    <string name="backup_wallet_txt2">请确保在四周无人，没有摄像头的安全环境下备份</string>
+    <string name="backup_wallet_btn_txt">备份助记词</string>
+    <string name="view_title_backup_mneonic_code">备份助记词</string>
     <string name="skip_backup_mneonic_btn_code">跳过</string>
     <string name="no_backup_mneonic_btn_code">暂不备份</string>
-    <string name="backup_mneonic_code_txt1" >请勿截图</string>
-    <string name="backup_mneonic_code_txt2" >泄露助记词将导致资产丢失，请抄写下助记词并存放在安全的地方</string>
-    <string name="backup_mneonic_code_txt3" >请按顺序记录每个词，并妥善保管</string>
-    <string name="backup_mneonic_code_btn_txt" >我已抄好</string>
-    <string name="view_title_confirm_mneonic_code" >确认助记词</string>
-    <string name="confirm_mneonic_code_txt" >请按顺序点击助记词，以确认您正确备份</string>
-    <string name="confirm_mneonic_code_btn_txt" >完成</string>
-    <string name="wallet_password_confirm_title" >密码确认</string>
-    <string name="wallet_password_confirm_txt1" >请填写身份密码以确认备份</string>
-    <string name="hint_wallet_password_confirm_txt1" >6~30个字符，建议混合大小写字母加数字</string>
-    <string name="hint_wallet_password_confirm_submit_btn" >确认</string>
-    <string name="wallet_send_txt" >转账</string>
-    <string name="wallet_scan_txt" >扫一扫</string>
-    <string name="wallet_scan_notice" >将二维码放入框中，即可自动扫描</string>
-    <string name="wallet_scan_cancel" >取消扫描</string>
+    <string name="backup_mneonic_code_txt1">请勿截图</string>
+    <string name="backup_mneonic_code_txt2">泄露助记词将导致资产丢失，请抄写下助记词并存放在安全的地方</string>
+    <string name="backup_mneonic_code_txt3">请按顺序记录每个词，并妥善保管</string>
+    <string name="backup_mneonic_code_btn_txt">我已抄好</string>
+    <string name="view_title_confirm_mneonic_code">确认助记词</string>
+    <string name="confirm_mneonic_code_txt">请按顺序点击助记词，以确认您正确备份</string>
+    <string name="confirm_mneonic_code_btn_txt">完成</string>
+    <string name="wallet_password_confirm_title">密码确认</string>
+    <string name="wallet_password_confirm_txt1">请填写身份密码以确认备份</string>
+    <string name="hint_wallet_password_confirm_txt1">6~30个字符，建议混合大小写字母加数字</string>
+    <string name="hint_wallet_password_confirm_submit_btn">确认</string>
+    <string name="wallet_send_txt">转账</string>
+    <string name="wallet_scan_txt">扫一扫</string>
+    <string name="wallet_scan_notice">将二维码放入框中，即可自动扫描</string>
+    <string name="wallet_scan_cancel">取消扫描</string>
     <string name="recently_tx_txt">最近交易记录</string>
     <string name="no_recently_tx_record">暂无交易记录</string>
-    <string name="tx_status_success_txt" >成功</string>
-    <string name="tx_status_fail_txt" >失败</string>
-    <string name="tx_status_success_txt1" >转账成功</string>
-    <string name="tx_status_fail_txt1" >转账失败</string>
-    <string name="tx_timeout_txt1" >请求超时</string>
+    <string name="tx_status_success_txt">成功</string>
+    <string name="tx_status_fail_txt">失败</string>
+    <string name="tx_status_success_txt1">转账成功</string>
+    <string name="tx_status_fail_txt1">转账失败</string>
+    <string name="tx_timeout_txt1">请求超时</string>
 
-    <string name="password_comfirm_dialog_title" >密码确认</string>
-    <string name="password_comfirm_dialog_sub_txt" >请填写钱包密码以确认转出</string>
-    <string name="password_comfirm_dialog_to_backup" >请填写身份密码以确认备份</string>
+    <string name="password_comfirm_dialog_title">密码确认</string>
+    <string name="password_comfirm_dialog_sub_txt">请填写钱包密码以确认转出</string>
+    <string name="password_comfirm_dialog_to_backup">请填写身份密码以确认备份</string>
     <!-- 恢复身份 -->
-    <string name="recover_wallet_title" >恢复身份</string>
-    <string name="recover_edit_mneonic_code_hint" >输入助记词，用空格分割</string>
-    <string name="recover_mneonic_input_error" >助记词输入有误，请重新输入</string>
-    <string name="recover_edit_new_wallet_name_hint" >请输入新身份名</string>
-    <string name="recover_input_wallet_name_error" >只允许输入字母、汉字、数字、下划线。长度为20个字符</string>
-    <string name="recover_set_pwd_hint" >请设置密码</string>
-    <string name="recover_set_pwd_error" >6~30个字符，建议混合大小写字母加数字</string>
-    <string name="recover_confirm_pwd_hint" >请确认密码</string>
-    <string name="recover_confirm_pwd_error" >密码与确认密码不一致</string>
-    <string name="recover_wallet_next_btn" >恢复</string>
-    <string name="recover_wallet_reloading" >恢复中</string>
-    <string name="recover_wallet_error_tip" >助记词输入有误，请重新输入</string>
+    <string name="recover_wallet_title">恢复身份</string>
+    <string name="recover_edit_mneonic_code_hint">输入助记词，用空格分割</string>
+    <string name="recover_mneonic_input_error">助记词输入有误，请重新输入</string>
+    <string name="recover_edit_new_wallet_name_hint">请输入新身份名</string>
+    <string name="recover_input_wallet_name_error">只允许输入字母、汉字、数字、下划线。长度为20个字符</string>
+    <string name="recover_set_pwd_hint">请设置密码</string>
+    <string name="recover_set_pwd_error">6~30个字符，建议混合大小写字母加数字</string>
+    <string name="recover_confirm_pwd_hint">请确认密码</string>
+    <string name="recover_confirm_pwd_error">密码与确认密码不一致</string>
+    <string name="recover_wallet_next_btn">恢复</string>
+    <string name="recover_wallet_reloading">恢复中</string>
+    <string name="recover_wallet_error_tip">助记词输入有误，请重新输入</string>
 
-    <string name="view_title_wallet_sendBU" >转账</string>
-    <string name="send_address_title" >对方账户（BU地址）</string>
-    <string name="send_note_title" >备注</string>
-    <string name="send_fee_title" >最多支付交易费用（BU）</string>
-    <string name="send_input_receiver_address_hint" >请输入接收方地址</string>
-    <string name="no_backup_tips_btn" >请备份</string>
+    <string name="view_title_wallet_sendBU">转账</string>
+    <string name="send_address_title">对方账户（BU地址）</string>
+    <string name="send_note_title">备注</string>
+    <string name="send_fee_title">最多支付交易费用（BU）</string>
+    <string name="send_input_receiver_address_hint">请输入接收方地址</string>
+    <string name="no_backup_tips_btn">请备份</string>
 
-    <string name="send_amount_title" >转账数量</string>
-    <string name="send_hint_txt1" >请输入转账数量</string>
-    <string name="send_hint_txt2" >备注限20字符内</string>
-    <string name="send_hint_txt3" >请输交易费用</string>
-    <string name="send_status_success_txt" >转账成功</string>
-    <string name="send_status_target_addr" >对方账户</string>
-    <string name="send_status_amount" >转出数量</string>
-    <string name="send_tx_handleing_txt" >处理中...</string>
-    <string name="send_tx_bu_not_enough" >BU余额不足</string>
+    <string name="send_amount_title">转账数量</string>
+    <string name="send_hint_txt1">请输入转账数量</string>
+    <string name="send_hint_txt2">备注限20字符内</string>
+    <string name="send_hint_txt3">请输交易费用</string>
+    <string name="send_status_success_txt">转账成功</string>
+    <string name="send_status_target_addr">对方账户</string>
+    <string name="send_status_amount">转出数量</string>
+    <string name="send_tx_handleing_txt">处理中...</string>
+    <string name="send_tx_bu_not_enough">BU余额不足</string>
     <string name="send_tx_fee_not_enough">交易费用不足</string>
-    <string name="send_status_fee" >预估最多支付费用</string>
-    <string name="tx_timeout_err" >交易超时</string>
-    <string name="send_status_note" >备注</string>
-    <string name="send_status_time" >转账时间</string>
-    <string name="send_available_balance_txt" >可用余额</string>
-    <string name="send_form_next_btn_txt" >下一步</string>
-    <string name="tx_dettail_from_acc_addr_label" >发送方地址</string>
-    <string name="tx_dettail_to_acc_addr_label" >接收方地址</string>
-    <string name="tx_detail_fee_label" >交易费</string>
-    <string name="tx_detail_send_date_label" >发送时间</string>
-    <string name="tx_detail_note_label" >备注</string>
+    <string name="send_status_fee">预估最多支付费用</string>
+    <string name="tx_timeout_err">交易超时</string>
+    <string name="send_status_note">备注</string>
+    <string name="send_status_time">转账时间</string>
+    <string name="send_available_balance_txt">可用余额</string>
+    <string name="send_form_next_btn_txt">下一步</string>
+    <string name="tx_dettail_from_acc_addr_label">发送方地址</string>
+    <string name="tx_dettail_to_acc_addr_label">接收方地址</string>
+    <string name="tx_detail_fee_label">交易费</string>
+    <string name="tx_detail_send_date_label">发送时间</string>
+    <string name="tx_detail_note_label">备注</string>
 
     <!-- 异常 -->
-    <string name="create_wallet_fail" >创建失败</string>
-    <string name="checking_password_error" >密码错误</string>
-    <string name="geting_account_bu_balance" >获取中</string>
-    <string name="check_mneonic_code_err1" >助记词顺序有误，请您核对后更正</string>
-    <string name="next_key_down_err" >再按一次退出程序</string>
+    <string name="create_wallet_fail">创建失败</string>
+    <string name="checking_password_error">密码错误</string>
+    <string name="geting_account_bu_balance">获取中</string>
+    <string name="check_mneonic_code_err1">助记词顺序有误，请您核对后更正</string>
+    <string name="next_key_down_err">再按一次退出程序</string>
     <!-- 二维码页面 -->
-    <string name="qr_pocket_address_title" >钱包地址</string>
-    <string name="qr_cancel_btn_des" >取消</string>
-    <string name="qr_copy_btn_text" >复制钱包地址</string>
-    <string name="qr_pic_name_text" >钱包地址二维码</string>
-    <string name="qr_copy_success_message" >已复制到剪切板</string>
+    <string name="qr_pocket_address_title">钱包地址</string>
+    <string name="qr_cancel_btn_des">取消</string>
+    <string name="qr_copy_btn_text">复制钱包地址</string>
+    <string name="qr_pic_name_text">钱包地址二维码</string>
+    <string name="qr_copy_success_message">已复制到剪切板</string>
     <!-- 我的 -->
-    <string name="change_the_password_txt" >修改身份密码</string>
-    <string name="help_txt" >帮助与反馈</string>
-    <string name="version_txt" >版本号</string>
-    <string name="language_txt" >多语言</string>
-    <string name="pocket_version" >V2.0.1</string>
+    <string name="change_the_password_txt">修改身份密码</string>
+    <string name="help_txt">帮助与反馈</string>
+    <string name="version_txt">版本号</string>
+    <string name="language_txt">多语言</string>
+    <string name="pocket_version">V2.0.1</string>
     <!-- 确认转账 -->
-    <string name="send_confirm_title" >确认转账</string>
-    <string name="send_confirm_txt" >请确认转账信息是否有误</string>
-    <string name="send_confirm_target_address_txt" >对方账户</string>
-    <string name="send_confirm_amount_txt" >转出数量</string>
-    <string name="send_confirm_estimate_txt" >预估最多支付费用</string>
-    <string name="send_confirm_remark_txt" >备注</string>
-    <string name="send_confirm_submit_btn_txt" >提交</string>
+    <string name="send_confirm_title">确认转账</string>
+    <string name="send_confirm_txt">请确认转账信息是否有误</string>
+    <string name="send_confirm_target_address_txt">对方账户</string>
+    <string name="send_confirm_amount_txt">转出数量</string>
+    <string name="send_confirm_estimate_txt">预估最多支付费用</string>
+    <string name="send_confirm_remark_txt">备注</string>
+    <string name="send_confirm_submit_btn_txt">提交</string>
     <!-- 使用条款 -->
-    <string name="use_terms_title" >使用条款</string>
-    <string name="use_terms_checkbox_agree" >我已阅读并同意以上条款内容</string>
-    <string name="use_terms_next_btn" >继续</string>
+    <string name="use_terms_title">使用条款</string>
+    <string name="use_terms_checkbox_agree">我已阅读并同意以上条款内容</string>
+    <string name="use_terms_next_btn">继续</string>
 
 
-    <string name="emptyView_mode_desc_fail_title" >加载失败</string>
-    <string name="emptyView_mode_desc_fail_desc" >请检测网络是否能正常连接</string>
-    <string name="emptyView_mode_desc_retry" >点击重试</string>
-    <string name="emptyView_mode_desc_no_data" >暂无数据</string>
-    <string name="invalid_address" >BU 地址不正确，请重新输入</string>
-    <string name="send_err1" >不能给自己转账</string>
-    <string name="invalid_amount" >无效的转账数量</string>
-    <string name="amount_too_small" >转账数量单笔不可少于</string>
-    <string name="amount_too_big" >转账数量单笔不可超过 1,000,000</string>
-    <string name="invalid_tx_fee" >最多支付交易费用格式有误，请重新输入</string>
+    <string name="emptyView_mode_desc_fail_title">加载失败</string>
+    <string name="emptyView_mode_desc_fail_desc">请检测网络是否能正常连接</string>
+    <string name="emptyView_mode_desc_retry">点击重试</string>
+    <string name="emptyView_mode_desc_no_data">暂无数据</string>
+    <string name="invalid_address">BU 地址不正确，请重新输入</string>
+    <string name="send_err1">不能给自己转账</string>
+    <string name="invalid_amount">无效的转账数量</string>
+    <string name="amount_too_small">转账数量单笔不可少于</string>
+    <string name="amount_too_big">转账数量单笔不可超过 1,000,000</string>
+    <string name="invalid_tx_fee">最多支付交易费用格式有误，请重新输入</string>
     <string name="tx_fee_too_big">最多支付交易费用不可超过10 BU</string>
-    <string name="balance_not_enough" >可用余额不足</string>
-    <string name="send_token_note_too_long" >备注信息不能超过20个字</string>
-    <string name="send_loading" >处理中...</string>
-    <string name="splash_txt0" >BU Pocket</string>
-    <string name="splash_txt1" >泛在价值流通区块链网络</string>
+    <string name="balance_not_enough">可用余额不足</string>
+    <string name="send_token_note_too_long">备注信息不能超过20个字</string>
+    <string name="send_loading">处理中...</string>
+    <string name="splash_txt0">BU Pocket</string>
+    <string name="splash_txt1">泛在价值流通区块链网络</string>
 
-    <string name="change_pwd_old_pwd" >旧密码</string>
-    <string name="change_pwd_new_pwd" >新密码</string>
-    <string name="change_pwd_new_pwd_confirm" >确认密码</string>
-    <string name="change_pwd_old_pwd_hint" >请输入旧密码</string>
-    <string name="change_pwd_new_pwd_hint" >请输入新密码</string>
-    <string name="change_pwd_new_pwd_confirm_hint" >请确认新密码</string>
+    <string name="change_pwd_old_pwd">旧密码</string>
+    <string name="change_pwd_new_pwd">新密码</string>
+    <string name="change_pwd_new_pwd_confirm">确认密码</string>
+    <string name="change_pwd_old_pwd_hint">请输入旧密码</string>
+    <string name="change_pwd_new_pwd_hint">请输入新密码</string>
+    <string name="change_pwd_new_pwd_confirm_hint">请确认新密码</string>
 
-    <string name="change_pwd_err1" >请输入旧密码</string>
-    <string name="change_pwd_err2" >请输入新密码</string>
-    <string name="change_pwd_err3" >请确认新密码</string>
-    <string name="change_pwd_err4" >请输入旧密码</string>
-    <string name="change_pwd_err5" >请输入旧密码</string>
-    <string name="change_pwd_form_error1" >密码和确认密码输入不一致，请重新输入</string>
-    <string name="change_pwd_form_error2" >6~30个字符，建议混合大小写字母加数字</string>
-    <string name="change_pwd_form_error3" >6~30个字符，建议混合大小写字母加数字</string>
-    <string name="change_pwd_form_error4" >身份名格式不对</string>
-    <string name="change_pwd_form_error5" >6~30个字符，建议混合大小写字母加数字</string>
-    <string name="change_pwd_form_error6" >旧密码错误</string>
-    <string name="change_pwd_changing_txt" >密码修改中...</string>
-    <string name="change_pwd_change_success_txt" >密码修改成功</string>
+    <string name="change_pwd_err1">请输入旧密码</string>
+    <string name="change_pwd_err2">请输入新密码</string>
+    <string name="change_pwd_err3">请确认新密码</string>
+    <string name="change_pwd_err4">请输入旧密码</string>
+    <string name="change_pwd_err5">请输入旧密码</string>
+    <string name="change_pwd_form_error1">密码和确认密码输入不一致，请重新输入</string>
+    <string name="change_pwd_form_error2">6~30个字符，建议混合大小写字母加数字</string>
+    <string name="change_pwd_form_error3">6~30个字符，建议混合大小写字母加数字</string>
+    <string name="change_pwd_form_error4">身份名格式不对</string>
+    <string name="change_pwd_form_error5">6~30个字符，建议混合大小写字母加数字</string>
+    <string name="change_pwd_form_error6">旧密码错误</string>
+    <string name="change_pwd_changing_txt">密码修改中...</string>
+    <string name="change_pwd_change_success_txt">密码修改成功</string>
 
 
-    <string name="help_title_txt" >您遇到的问题或建议</string>
-    <string name="contact_title_txt" >您的联系方式</string>
-    <string name="help_hint" >请输入您遇到的问题或建议</string>
-    <string name="contact_hint" >请输入您的联系方式</string>
-    <string name="submit_feedback_btn_txt" >提交</string>
+    <string name="help_title_txt">您遇到的问题或建议</string>
+    <string name="contact_title_txt">您的联系方式</string>
+    <string name="help_hint">请输入您遇到的问题或建议</string>
+    <string name="contact_hint">请输入您的联系方式</string>
+    <string name="submit_feedback_btn_txt">提交</string>
 
     <string name="user_info_title">我的身份</string>
     <string name="user_info_wallet_name">身份名</string>
     <string name="user_info_wallet_id">身份 ID</string>
     <string name="user_info_backup_current_wallet">备份身份</string>
     <string name="user_info_logout">退出当前身份</string>
-    <string name="user_info_logout_loading" >退出中</string>
-    <string name="user_info_backup_loading" >加载中</string>
+    <string name="user_info_logout_loading">退出中</string>
+    <string name="user_info_backup_loading">加载中</string>
     <string name="user_info_logout_notice">即将移除身份，请确保身份已备份</string>
-    <string name="user_info_logout_warning" >警告：若未妥善备份，退出后将无法找回身份，请慎重处理该操作</string>
+    <string name="user_info_logout_warning">警告：若未妥善备份，退出后将无法找回身份，请慎重处理该操作</string>
 
     <string name="common_dialog_cancel">取消</string>
     <string name="common_dialog_confirm">确认</string>
-    <string name="common_dialog_input_pwd" >请输入密码</string>
+    <string name="common_dialog_input_pwd">请输入密码</string>
 
-    <string name="help_feedback_submit_success_msg" >提交成功</string>
-    <string name="help_feedback_submit_failed_msg" >提交失败</string>
-    <string name="content_empty_msg" >请输入您的问题或反馈</string>
-    <string name="content_too_long_msg" >问题或建议内容过长，不能超过100个字</string>
-    <string name="contact_empty_msg" >请输入您的联系方式</string>
-    <string name="contact_too_long_msg" >联系方式内容过长，不能超过20个字</string>
+    <string name="help_feedback_submit_success_msg">提交成功</string>
+    <string name="help_feedback_submit_failed_msg">提交失败</string>
+    <string name="content_empty_msg">请输入您的问题或反馈</string>
+    <string name="content_too_long_msg">问题或建议内容过长，不能超过100个字</string>
+    <string name="contact_empty_msg">请输入您的联系方式</string>
+    <string name="contact_too_long_msg">联系方式内容过长，不能超过20个字</string>
 
-    <string name="language_cn" >简体中文</string>
-    <string name="language_en" >English</string>
+    <string name="language_cn">简体中文</string>
+    <string name="language_en">English</string>
     <string name="set_success">设置成功</string>
-    <string name="handling" >处理中...</string>
-    <string name="i_knew_btn_txt" >我知道了</string>
-    <string name="network_error_msg" >您的网络好像不太给力，请稍后再试</string>
-    <string name="capture_activity_label" >自定义扫描界面</string>
-    <string name="capture_activity_title" >扫一扫</string>
+    <string name="handling">处理中...</string>
+    <string name="i_knew_btn_txt">我知道了</string>
+    <string name="network_error_msg">您的网络好像不太给力，请稍后再试</string>
+    <string name="capture_activity_label">自定义扫描界面</string>
+    <string name="capture_activity_title">扫一扫</string>
     <string name="capture_activity_cancel">关闭</string>
     <string name="capture_activity_photo_album">相册</string>
     <string name="time_day_ago">天前</string>
@@ -226,7 +226,7 @@
     <string name="time_just_now">刚刚</string>
 
 
-    <string formatted="false" name="srl_component_falsify">%s 虚假区域\n代表运行时拖动的高度【%.1fdp】 \n而不会显示任何东西</string>
+    <string name="srl_component_falsify" formatted="false">%s 虚假区域\n代表运行时拖动的高度【%.1fdp】 \n而不会显示任何东西</string>
     <string name="srl_content_empty">SmartRefreshLayout中没有找到内容视图。您是否忘记在xml布局文件中添加？</string>
     <string name="srl_footer_failed">加载失败</string>
     <string name="srl_footer_finish">加载完成</string>
@@ -399,7 +399,7 @@
     <string name="delete_address_failure_message_txt">删除失败，请稍后重试</string>
     <string name="delete_address_success_message_txt">删除成功</string>
     <string name="address_already_exist_message_txt">该联系人已存在</string>
-    
+
     <string name="card_package_txt">卡包</string>
     <string name="node_plan_txt">节点计划</string>
     <string name="build_node_txt">节点共建</string>
@@ -409,9 +409,6 @@
     <string name="search_txt">搜索</string>
     <string name="number_have_votes">得票数</string>
     <string name="my_votes_number">我的投票数</string>
-    <string name="invite_vote_txt">邀请投票</string>
-    <string name="cancel_vote">撤销投票</string>
-    <string name="vote_record">投票记录</string>
     <string name="confirm_transfer_title_txt">确认交易</string>
     <string name="vote_record_txt">投票记录</string>
     <string name="vote_txt">投</string>
@@ -448,6 +445,14 @@
 
     <string name="common_node">共识节点</string>
     <string name="ecological_node">生态节点</string>
+
+    <string name="cancel_vote">撤销投票</string>
+    <string name="vote_record">投票记录</string>
+
+    <string name="invite_vote_txt">邀请投票</string>
+
+    <string name="building_information_details">共建信息详情</string>
+
 
 
 </resources>
