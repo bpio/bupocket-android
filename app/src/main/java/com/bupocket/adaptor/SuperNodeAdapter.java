@@ -131,4 +131,7 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         morePop.setAnimStyle(QMUIPopup.ANIM_GROW_FROM_CENTER);
         morePop.setPreferredDirection(QMUIPopup.DIRECTION_BOTTOM);
     }*/
+
+
+
 }

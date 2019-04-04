@@ -4,15 +4,13 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
         android:background="@color/app_btn_color_white"
         android:paddingLeft="13sp"
-        android:paddingRight="10dp"
-        android:paddingBottom="15dp">
-
+        >
         <TextView
             android:id="@+id/tvBuildName"
             android:layout_width="wrap_content"
@@ -32,11 +30,18 @@
             android:textColor="@color/app_btn_color_white"
             android:textSize="14sp" />
 
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_btn_color_white"
+        android:paddingLeft="13sp"
+        android:paddingRight="10dp"
+        android:paddingBottom="15dp">
         <TextView
             android:id="@+id/tvPurchaseAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvBuildName"
             android:layout_marginTop="12dp"
             android:text="10000"
             android:textColor="@color/app_color_green"
@@ -58,12 +63,12 @@
 
 
         <ProgressBar
-            android:id="@+id/pbBuild"
+            android:id="@+id/pbBuildProgress"
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="3dp"
             android:layout_below="@+id/tvOriginPurchaseAmountHint"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="16dp"
             android:max="100"
             android:progress="60"
             android:progressDrawable="@drawable/progress_horizontal_green" />
@@ -71,7 +76,7 @@
             android:id="@+id/tvRemainNum"
             style="@style/tv_node_build_gray_style"
             android:layout_below="@+id/tvOriginPurchaseAmountHint"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="27dp"
             android:text="剩余37份" />
 
 
@@ -102,7 +107,6 @@
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvBuildName"
             android:layout_alignParentRight="true"
             android:layout_marginTop="12dp">
 
@@ -136,7 +140,7 @@
                 style="@style/tv_node_build_gray_style"
                 android:layout_below="@+id/tvOriginPurchaseAmount"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="18dp"
+                android:layout_marginTop="27dp"
                 android:text="560支持" />
 
 
@@ -188,6 +192,7 @@
         android:textColor="@color/app_txt_color_gray"
         android:layout_marginLeft="13dp"
         android:layout_marginTop="15dp"
-        android:text="@string/build_rist_info_record" />
+        android:layout_marginBottom="12dp"
+        android:text="@string/build_support_record" />
 
 </LinearLayout>

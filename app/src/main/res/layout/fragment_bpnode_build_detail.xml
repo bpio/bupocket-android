@@ -22,18 +22,15 @@
         android:id="@+id/lvBuildDetail"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="12dp"
-        android:layout_weight="1"
-        android:layout_marginTop="10dp"
-        android:dividerHeight="10dp"
-        ></ListView>
+        android:divider="@null"
+        android:layout_weight="1"></ListView>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="13dp"
-        android:layout_marginTop="15dp"
         android:layout_marginRight="13dp"
+        android:layout_marginBottom="19dp"
         android:orientation="horizontal">
 
         <Button
@@ -42,8 +39,10 @@
             android:layout_height="45dp"
             android:layout_alignParentLeft="true"
             android:layout_weight="1"
-            android:background="@drawable/shape_corner_red"
-            android:text="@string/build_exit" />
+            android:background="@drawable/shape_corner_red2"
+            android:text="@string/build_exit"
+            android:textColor="@color/app_color_white"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/btnBuildSupport"
@@ -54,7 +53,9 @@
             android:layout_marginLeft="10dp"
             android:layout_weight="2"
             android:background="@drawable/shape_corner_green"
-            android:text="@string/build_support" />
+            android:text="@string/build_support"
+            android:textColor="@color/app_color_white"
+            android:textSize="18sp" />
 
     </LinearLayout>
 
