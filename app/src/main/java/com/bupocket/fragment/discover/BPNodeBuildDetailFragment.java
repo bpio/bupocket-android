@@ -2,11 +2,16 @@ package com.bupocket.fragment.discover;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bupocket.R;
+import com.bupocket.adaptor.NodeBuildDetailAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.model.NodeBuildDetailModel;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -16,7 +21,10 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
+    @BindView(R.id.lvBuildDetail)
+    ListView lvBuildDetail;
     private Unbinder bind;
+    private NodeBuildDetailAdapter nodeBuildDetailAdapter;
 
 
     @Override
@@ -29,6 +37,25 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
     private void init() {
         initTopBar();
+        initData();
+    }
+
+    private void initData() {
+
+        if (nodeBuildDetailAdapter==null) {
+            nodeBuildDetailAdapter = new NodeBuildDetailAdapter(getContext());
+        }
+        ArrayList<NodeBuildDetailModel> newData = new ArrayList<>();
+
+        for (int i = 0; i < 10; i++) {
+            newData.add(new NodeBuildDetailModel());
+        }
+        nodeBuildDetailAdapter.setNewData(newData);
+        lvBuildDetail.setAdapter(nodeBuildDetailAdapter);
+
+        View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.node_build_header,null);
+        lvBuildDetail.addHeaderView(headerView);
+
     }
 
 
@@ -45,10 +72,5 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        bind.unbind();
-    }
 
 }
