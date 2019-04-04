@@ -2,6 +2,7 @@ package com.bupocket.fragment.discover;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
@@ -11,8 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-
-public class BPNodeBuildFragment extends BaseFragment {
+public class BPNodeBuildDetailFragment extends BaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
@@ -21,7 +21,7 @@ public class BPNodeBuildFragment extends BaseFragment {
 
     @Override
     protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_bpnode_build, null);
+        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_bpnode_build_detail, null);
         bind = ButterKnife.bind(this, root);
         init();
         return root;
@@ -40,7 +40,7 @@ public class BPNodeBuildFragment extends BaseFragment {
                 popBackStack();
             }
         });
-//        TextView title = mTopBar.setTitle(getResources().getString(R.string.building_information_details));
+        TextView title = mTopBar.setTitle(getResources().getString(R.string.building_information_details));
 
 
     }
@@ -50,4 +50,5 @@ public class BPNodeBuildFragment extends BaseFragment {
         super.onDestroyView();
         bind.unbind();
     }
+
 }

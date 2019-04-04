@@ -11,29 +11,26 @@
         android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/qmui_topbar_height"
+        app:qmui_config_color_gray_1="#333333"
         app:qmui_topbar_bg_color="@color/app_color_white"
         app:qmui_topbar_need_separator="false"
-        app:qmui_config_color_gray_1="#333333"
-        app:qmui_topbar_title_text_size="21sp"
-        app:qmui_topbar_title_color="@color/app_color_black" />
+        app:qmui_topbar_title_color="@color/app_color_black"
+        app:qmui_topbar_title_text_size="21sp" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
+
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:background="@color/app_bg_color_gray"
-        android:orientation="vertical">
+        android:text="@string/build_node_txt"
+        android:theme="@style/BPViewTitle" />
 
-        <ListView
-            android:id="@+id/lvVoteRecord"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"></ListView>
-
-    </LinearLayout>
 
     <include
-        android:visibility="gone"
-        layout="@layout/empty_record" />
+        layout="@layout/node_build_item"/>
+    <ListView
+        android:id="@+id/lvNodeBuild"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 
 

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="13dp"
+    android:layout_marginRight="13dp"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/edit_border_bg_white"
+    android:paddingLeft="13sp"
+    android:paddingRight="10dp"
+    android:paddingBottom="15dp">
+
+    <TextView
+        android:id="@+id/tvBuildName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="百信共建小分队"
+        android:textColor="@color/app_color_black"
+        android:textSize="15sp" />
+
+
+    <TextView
+        android:id="@+id/tvBuildNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvBuildName"
+        android:layout_marginTop="8dp"
+        android:text="10,000 BU/份"
+        android:textColor="@color/app_color_green"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tvBuildAmountHint"
+        style="@style/tv_node_build_gray_style"
+        android:layout_below="@+id/tvBuildNum"
+        android:layout_marginTop="2.5dp"
+        android:text="@string/build_purchase_amount_hint" />
+
+
+    <ProgressBar
+        android:id="@+id/pbBuild"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:layout_below="@+id/tvBuildAmountHint"
+        android:layout_marginTop="18dp"
+        android:max="100"
+        android:progress="60"
+        android:progressDrawable="@drawable/progress_horizontal_green" />
+
+    <TextView
+        android:id="@+id/tvRemainNumHint"
+        style="@style/tv_node_build_gray_style"
+        android:layout_below="@+id/pbBuild"
+        android:layout_marginTop="15dp"
+        android:text="@string/build_target_num" />
+
+    <TextView
+        android:id="@+id/tvRemainNum"
+        style="@style/tv_node_build_gray_style"
+        android:layout_below="@+id/pbBuild"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="15dp"
+        android:layout_toRightOf="@+id/tvRemainNumHint"
+        android:text="5,000,000 BU"
+        android:textColor="@color/app_txt_color_black" />
+
+    <TextView
+        android:id="@+id/tvRemainCopyHint"
+        style="@style/tv_node_build_gray_style"
+        android:layout_below="@+id/pbBuild"
+        android:layout_marginTop="15dp"
+        android:layout_toLeftOf="@+id/tvRemainCopy"
+        android:text="@string/build_remain_copy" />
+
+    <TextView
+        android:id="@+id/tvRemainCopy"
+        style="@style/tv_node_build_gray_style"
+        android:layout_below="@+id/pbBuild"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="7dp"
+        android:layout_marginTop="15dp"
+        android:text="30份"
+        android:textColor="@color/app_txt_color_black" />
+
+
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="66dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="12dp"
+        android:background="@color/app_txt_color_red"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:drawableRight="@mipmap/icon_help_tips"
+            android:drawablePadding="3.5dp"
+            android:text="@string/reward_sharing_ratio"
+            android:textColor="@color/app_color_white"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tvBuildProgressRatio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="8dp"
+            android:text="100%"
+            android:textColor="@color/app_color_white"
+            android:textSize="21sp" />
+
+
+    </LinearLayout>
+
+</RelativeLayout>
