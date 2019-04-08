@@ -147,6 +147,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         });
 
 
+
         supportDialog.show();
 
     }

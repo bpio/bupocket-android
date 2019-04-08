@@ -18,7 +18,7 @@
             android:layout_height="36dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:background="@mipmap/icon_collection" />
+            android:background="@mipmap/icon_support_head_record" />
 
         <TextView
             android:id="@+id/tvBuildDetailAddress"

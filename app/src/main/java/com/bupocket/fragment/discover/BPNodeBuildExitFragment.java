@@ -61,5 +61,6 @@ public class BPNodeBuildExitFragment extends QMUIFragment {
     @OnClick(R.id.btnBuildExit)
     public void onViewClicked() {
 
+        getBaseFragmentActivity().popBackStack(BPNodeBuildFragment.class);
     }
 }

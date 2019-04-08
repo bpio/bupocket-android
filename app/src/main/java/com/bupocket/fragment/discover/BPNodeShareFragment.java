@@ -132,7 +132,9 @@ public class BPNodeShareFragment extends BaseFragment {
         mShareImageRl = LayoutInflater.from(getActivity()).inflate(R.layout.view_share_image, null);
         TextView mNodeNameTv = mShareImageRl.findViewById(R.id.nodeNameTv);
         mNodeNameTv.setText(nodeName);
-        final Bitmap createFromViewBitmap = QMUIDrawableHelper.createBitmapFromView(mShareImageRl);
+        Bitmap createFromViewBitmap = getViewBitmap(mShareImageRl);
+//        final Bitmap createFromViewBitmap = QMUIDrawableHelper.createBitmapFromView(mShareImageRl,1);
+
 
         String fileName = "TEMP_" + System.currentTimeMillis() + ".jpg";
         File PHOTO_DIR = new File(getContext().getCacheDir()+"/image");
@@ -184,6 +186,7 @@ public class BPNodeShareFragment extends BaseFragment {
         qmuiBottomSheet.findViewById(R.id.shareToWeixinBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 new Share2.Builder(getActivity())
                         .setContentType(ShareContentType.IMAGE)
                         .setShareFileUri(sharePhotoUri)
@@ -209,4 +212,24 @@ public class BPNodeShareFragment extends BaseFragment {
         });
         mTopBar.setTitle(getResources().getString(R.string.invite_share_txt));
     }
+
+
+    private Bitmap getViewBitmap(View addViewContent) {
+
+        addViewContent.setDrawingCacheEnabled(true);
+
+        addViewContent.measure(
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
+                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
+        addViewContent.layout(0, 0,
+                addViewContent.getMeasuredWidth(),
+                addViewContent.getMeasuredHeight());
+
+        addViewContent.buildDrawingCache();
+        Bitmap cacheBitmap = addViewContent.getDrawingCache();
+        Bitmap bitmap = Bitmap.createBitmap(cacheBitmap);
+
+        return bitmap;
+    }
+
 }

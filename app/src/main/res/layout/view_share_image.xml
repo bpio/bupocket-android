@@ -5,8 +5,7 @@
     android:id="@+id/shareImageRl"
     android:layout_width="240dp"
     android:layout_height="342dp"
-    android:background="@mipmap/ic_share_bg"
-    android:orientation="vertical">
+    android:background="@mipmap/ic_share_bg">
 
     <RelativeLayout
         android:id="@+id/nodeIconRl"
