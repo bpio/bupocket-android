@@ -92,12 +92,6 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
 
 
 
-    @Override
-    public long getItemId(int position) {
-        LogUtils.e("getItemId当前位置："+position);
-        return super.getItemId(position);
-    }
-
     public interface OnItemBtnListener {
         void onClick(int position,int btn);
     }
