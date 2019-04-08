@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_color_white"
+    android:paddingLeft="20dp"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="@color/app_txt_color_gray_2"
+            android:text="@string/build_detail_support"
+            />
+
+        <ImageView
+            android:id="@+id/ivDialogCancle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/icon_cancel"
+            android:padding="5dp"
+            android:layout_marginRight="15dp"
+            />
+
+    </LinearLayout>
+
+    <View
+        android:background="@color/app_txt_color_gray_3"
+        android:layout_width="match_parent"
+        android:layout_marginRight="20dp"
+        android:layout_height="0.5dp"/>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/send_confirm_gray_color"
+            android:text="@string/build_purchase_amount_hint"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BU/份"
+            android:padding="5dp"
+            android:textColor="@color/search_token_asset_code_txt_color"
+            android:layout_marginRight="15dp"
+            />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/send_confirm_gray_color"
+            android:text="@string/build_support_amount_hint"
+            />
+
+
+        <TextView
+            android:id="@+id/tvDialogSub"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:text="—"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/app_color_white"
+            android:background="@drawable/selector_support_green"
+            />
+
+        <TextView
+            android:id="@+id/tvDialogNum"
+            android:layout_width="38dp"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:textColor="@color/search_token_asset_code_txt_color"
+
+
+            />
+        <TextView
+            android:id="@+id/tvDialogAdd"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:text="+"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/app_color_white"
+            android:background="@drawable/selector_support_green"
+            android:layout_marginRight="15dp"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:gravity="center_vertical"
+        >
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="14sp"
+        android:gravity="center_vertical"
+        android:textColor="@color/send_confirm_gray_color"
+        android:text="共计："
+        />
+
+        <TextView
+            android:id="@+id/tvDialogAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textSize="18sp"
+            android:gravity="center_vertical"
+            android:textColor="@color/app_txt_color_red_2"
+            android:text="0"
+            />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:textSize="12sp"
+            android:paddingTop="5dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/app_txt_color_red_2"
+            android:text="BU"
+            />
+
+        <TextView
+            android:id="@+id/btnDialogSupport"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:text="确认支持"
+            android:gravity="center"
+            android:background="@color/app_color_green"
+            android:padding="5dp"
+            android:textColor="@color/app_color_white"
+            />
+
+    </LinearLayout>
+
+</LinearLayout>

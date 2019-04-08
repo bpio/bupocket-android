@@ -163,6 +163,8 @@ public class BPNodePlanFragment extends BaseFragment {
         superNodeAdapter.setOnItemBtnListener(new SuperNodeAdapter.OnItemBtnListener() {
             @Override
             public void onClick(int position, int btn) {
+
+                LogUtils.e("position="+position+"\n"+btn);
                 switch (btn) {
                     case R.id.revokeVoteBtn:
                         showRevokeVoteDialog(nodeList.get(position));
@@ -175,6 +177,8 @@ public class BPNodePlanFragment extends BaseFragment {
                 }
             }
         });
+
+//        lvPlan.setOnItemClickListener();
     }
 
     private void showRevokeVoteDialog(SuperNodeModel itemInfo) {
