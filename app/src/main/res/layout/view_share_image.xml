@@ -42,32 +42,31 @@
         android:layout_marginTop="10dp"
         tools:text="启赋超级节点"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="67dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
+
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="240dp"
+            android:layout_height="67dp"
+            android:layout_alignParentBottom="true"
             android:orientation="horizontal">
             <LinearLayout
                 android:gravity="center_horizontal"
                 android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <TextView
                     android:layout_marginTop="13dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:gravity="center"
                     android:text="@string/invite_vote_image_txt"
                     android:textColor="@color/app_txt_color_white"/>
 
                 <TextView
                     android:layout_marginTop="6dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
                     android:layout_height="wrap_content"
                     android:text="@string/long_press_qr_txt"
                     android:textColor="@color/app_txt_color_gray_7"/>
@@ -75,18 +74,13 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_weight="1"
-                android:layout_width="0dp"
-                android:gravity="center"
-                android:layout_height="match_parent">
+
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_gravity="center_vertical"
                     android:background="@drawable/shape_corner" />
-
-            </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
 </RelativeLayout>
