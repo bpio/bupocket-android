@@ -171,10 +171,15 @@ public class BPNodePlanFragment extends BaseFragment {
                         break;
                     case R.id.shareBtn:
                         SuperNodeModel itemInfo = nodeList.get(position);
-                        Bundle argz = new Bundle();
-                        argz.putString("nodeId",itemInfo.getNodeId());
-                        argz.putString("nodeName",itemInfo.getNodeName());
-                        argz.putString("nodeType",itemInfo.getIdentityType());
+                        Bundle args = new Bundle();
+                        args.putString("nodeId",itemInfo.getNodeId());
+                        args.putString("nodeName",itemInfo.getNodeName());
+                        args.putString("nodeType",itemInfo.getIdentityType());
+                        args.putString("haveVoteNum",itemInfo.getNodeVote());
+                        args.putString("nodeLogo",itemInfo.getNodeLogo());
+                        BPNodeShareFragment bpNodeShareFragment = new BPNodeShareFragment();
+                        bpNodeShareFragment.setArguments(args);
+                        startFragment(bpNodeShareFragment);
                         break;
                     case R.id.voteRecordBtn:
                         break;

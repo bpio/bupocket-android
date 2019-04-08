@@ -44,7 +44,7 @@
 
             <RelativeLayout
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="16dp"
                 android:layout_toRightOf="@+id/nodeIconRl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
