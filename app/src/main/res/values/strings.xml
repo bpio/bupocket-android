@@ -480,5 +480,14 @@
     <string name="build_target_num">目标数量</string>
     <string name="reward_sharing_ratio">奖励分享比例</string>
 
+    <string name="build_exit_support_amount">支持总金额(BU)</string>
+
+
+    <string name="build_exit_hint">温馨提示：\n\n
+        1. 退出共建计划操作会一次将您冻结在合约账户下的支持金额全部提取到您的原钱包账户\n\n
+        2. 退出的金额将延迟到账，请在BU交易记录查收</string>
+
+    <string name="build_exit_title">退出节点共建计划</string>
+
 
 </resources>

@@ -2,6 +2,7 @@ package com.bupocket.fragment.discover;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 public class BPNodeBuildDetailFragment extends BaseFragment {
@@ -23,6 +25,10 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     QMUITopBar mTopBar;
     @BindView(R.id.lvBuildDetail)
     ListView lvBuildDetail;
+    @BindView(R.id.btnBuildExit)
+    Button btnBuildExit;
+    @BindView(R.id.btnBuildSupport)
+    Button btnBuildSupport;
     private Unbinder bind;
     private NodeBuildDetailAdapter nodeBuildDetailAdapter;
 
@@ -42,7 +48,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
     private void initData() {
 
-        if (nodeBuildDetailAdapter==null) {
+        if (nodeBuildDetailAdapter == null) {
             nodeBuildDetailAdapter = new NodeBuildDetailAdapter(getContext());
         }
         ArrayList<NodeBuildDetailModel> newData = new ArrayList<>();
@@ -53,7 +59,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         nodeBuildDetailAdapter.setNewData(newData);
         lvBuildDetail.setAdapter(nodeBuildDetailAdapter);
 
-        View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.node_build_header,null);
+        View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.node_build_header, null);
         lvBuildDetail.addHeaderView(headerView);
 
     }
@@ -73,4 +79,17 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     }
 
 
+
+    @OnClick({R.id.btnBuildExit, R.id.btnBuildSupport})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btnBuildExit:
+                startFragment(new  BPNodeBuildExitFragment());
+                break;
+            case R.id.btnBuildSupport:
+
+
+                break;
+        }
+    }
 }
