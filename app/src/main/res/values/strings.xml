@@ -454,7 +454,7 @@
     <string name="share_txt">分享</string>
     <string name="node_introduce_txt">节点介绍</string>
 
-    <string name="common_node">共识节点</string>
+    <string name="common_node">记账节点</string>
     <string name="ecological_node">生态节点</string>
 
     <string name="cancel_vote">撤销投票</string>

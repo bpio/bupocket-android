@@ -17,7 +17,7 @@ public class BPNodeShareFragment extends BaseFragment {
 
     @Override
     protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_node_plan, null);
+        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_node_share, null);
         ButterKnife.bind(this, root);
         init();
         return root;

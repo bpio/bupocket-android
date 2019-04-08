@@ -170,7 +170,11 @@ public class BPNodePlanFragment extends BaseFragment {
                         showRevokeVoteDialog(nodeList.get(position));
                         break;
                     case R.id.shareBtn:
-
+                        SuperNodeModel itemInfo = nodeList.get(position);
+                        Bundle argz = new Bundle();
+                        argz.putString("nodeId",itemInfo.getNodeId());
+                        argz.putString("nodeName",itemInfo.getNodeName());
+                        argz.putString("nodeType",itemInfo.getIdentityType());
                         break;
                     case R.id.voteRecordBtn:
                         break;
