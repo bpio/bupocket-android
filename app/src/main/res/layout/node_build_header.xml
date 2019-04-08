@@ -9,8 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/app_btn_color_white"
-        android:paddingLeft="13sp"
-        >
+        android:paddingLeft="13sp">
+
         <TextView
             android:id="@+id/tvBuildName"
             android:layout_width="wrap_content"
@@ -20,17 +20,19 @@
             android:textSize="18sp" />
 
         <TextView
+            android:id="@+id/tvNodeBuilding"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginTop="2dp"
-            android:background="@mipmap/node_building"
+            android:background="@drawable/selector_node_build"
             android:gravity="center"
             android:text="@string/build_runing"
             android:textColor="@color/app_btn_color_white"
             android:textSize="14sp" />
 
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,6 +40,7 @@
         android:paddingLeft="13sp"
         android:paddingRight="10dp"
         android:paddingBottom="15dp">
+
         <TextView
             android:id="@+id/tvPurchaseAmount"
             android:layout_width="wrap_content"
@@ -72,6 +75,7 @@
             android:max="100"
             android:progress="60"
             android:progressDrawable="@drawable/progress_horizontal_green" />
+
         <TextView
             android:id="@+id/tvRemainNum"
             style="@style/tv_node_build_gray_style"
@@ -83,10 +87,9 @@
         <View
             android:layout_width="wrap_content"
             android:layout_height="1dp"
-            android:layout_marginTop="15dp"
             android:layout_below="@+id/tvRemainNum"
-            android:background="@color/app_txt_color_gray_3"
-            />
+            android:layout_marginTop="15dp"
+            android:background="@color/app_txt_color_gray_3" />
 
 
         <TextView
@@ -170,9 +173,9 @@
         android:layout_width="match_parent"
         android:layout_marginLeft="13dp"
         android:layout_marginTop="15dp"
-        android:textSize="13sp"
+        android:text="@string/build_rist_info_record"
         android:textColor="@color/app_txt_color_gray"
-        android:text="@string/build_rist_info_record" />
+        android:textSize="13sp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -180,19 +183,18 @@
         android:layout_margin="13dp"
         android:background="@drawable/edit_border_bg_white"
         android:padding="13dp"
-        android:textSize="13sp"
         android:text="@string/build_risk_info"
         android:textColor="@color/app_txt_color_gray_2"
-        />
+        android:textSize="13sp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="13sp"
-        android:textColor="@color/app_txt_color_gray"
         android:layout_marginLeft="13dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="12dp"
-        android:text="@string/build_support_record" />
+        android:text="@string/build_support_record"
+        android:textColor="@color/app_txt_color_gray"
+        android:textSize="13sp" />
 
 </LinearLayout>

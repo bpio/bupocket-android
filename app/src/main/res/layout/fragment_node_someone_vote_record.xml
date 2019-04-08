@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_bg_color_gray">
+    android:background="@color/app_bg_color_gray"
+    android:orientation="vertical">
+
+    <com.qmuiteam.qmui.widget.QMUITopBar
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/qmui_topbar_height"
+        app:qmui_topbar_bg_color="@color/app_color_white"
+        app:qmui_topbar_need_separator="false"
+        app:qmui_config_color_gray_1="#333333"
+        app:qmui_topbar_title_text_size="21sp"
+        app:qmui_topbar_title_color="@color/app_color_black" />
+
+    <include
+        layout="@layout/empty_record"
+        android:visibility="gone" />
 
     <LinearLayout
-        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/app_bg_color_gray"
@@ -20,34 +34,34 @@
 
             <RelativeLayout
                 android:id="@+id/nodeIconRl"
-                android:layout_marginTop="15dp"
-                android:layout_marginLeft="12.5dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12.5dp"
+                android:layout_marginTop="15dp">
 
                 <ImageView
-                    android:layout_centerInParent="true"
                     android:id="@+id/nodeIconBgIv"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@mipmap/icon_token_bg_list"/>
+                    android:layout_centerInParent="true"
+                    android:background="@mipmap/icon_token_bg_list" />
 
                 <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                    android:layout_centerInParent="true"
                     android:id="@+id/nodeIconIv"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_centerInParent="true"
                     app:qmui_border_width="0dp"
-                    app:qmui_is_circle="true"/>
+                    app:qmui_is_circle="true" />
 
             </RelativeLayout>
 
             <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="22dp"
-                android:layout_toRightOf="@+id/nodeIconRl"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_toRightOf="@+id/nodeIconRl">
 
                 <TextView
                     android:id="@+id/nodeNameTv"
@@ -58,67 +72,69 @@
 
                 <TextView
                     android:id="@+id/nodeTypeTv"
-                    android:layout_toRightOf="@+id/nodeNameTv"
                     android:layout_width="55dp"
                     android:layout_height="16dp"
-                    android:layout_marginLeft="7.5dp"
-                    tools:text="共识节点"
-                    android:textSize="11sp"
-                    android:gravity="center"
                     android:layout_centerVertical="true"
-                    android:background="@drawable/shape_corner_bg_gray"/>
+                    android:layout_marginLeft="7.5dp"
+                    android:layout_toRightOf="@+id/nodeNameTv"
+                    android:background="@drawable/shape_corner_bg_gray"
+                    android:gravity="center"
+                    android:textSize="11sp"
+                    tools:text="共识节点" />
             </RelativeLayout>
 
             <RelativeLayout
-                android:layout_toRightOf="@+id/nodeIconRl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="51.5dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_toRightOf="@+id/nodeIconRl">
 
                 <LinearLayout
                     android:id="@+id/haveVotesNumLl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/number_have_votes"
                         android:textColor="@color/multiline_edit_hint_color"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/haveVotesNumTv"
-                        android:layout_marginLeft="6dp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="6dp"
                         android:textColor="@color/app_txt_color_gray_2"
+                        android:textSize="14sp"
                         tools:text="7833993" />
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/myVotesNumLl"
-                    android:layout_toRightOf="@+id/haveVotesNumLl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="59.5dp"
+                    android:layout_toRightOf="@+id/haveVotesNumLl"
                     android:orientation="horizontal">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/my_votes_number"
                         android:textColor="@color/multiline_edit_hint_color"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
 
                     <TextView
                         android:id="@+id/myVotesNumTv"
-                        android:layout_marginLeft="6dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:layout_marginLeft="6dp"
                         android:textColor="@color/app_txt_color_gray_2"
+                        android:textSize="14sp"
                         tools:text="8938" />
                 </LinearLayout>
             </RelativeLayout>
@@ -128,25 +144,30 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="14dp"
-            android:layout_marginRight="14dp"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="14dp"
                 android:text="@string/vote_record_txt"
-                android:textSize="13sp"
-                android:textColor="@color/app_txt_color_gray"/>
+                android:textColor="@color/app_txt_color_gray"
+                android:textSize="13sp" />
+
+            <ListView
+                android:id="@+id/lvSomeRecord"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                >
+
+
+            </ListView>
+
         </LinearLayout>
     </LinearLayout>
 
-    <com.qmuiteam.qmui.widget.QMUITopBar
-        android:id="@+id/topbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/qmui_topbar_height"
-        app:qmui_topbar_bg_color="@color/app_color_white"
-        app:qmui_topbar_need_separator="false"
-        app:qmui_topbar_title_color="@color/app_color_black" />
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

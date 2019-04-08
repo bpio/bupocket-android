@@ -474,6 +474,7 @@
     <string name="build_support_record">支持记录</string>
     <string name="build_rist_info_record">风险说明</string>
     <string name="build_runing">进行中</string>
+    <string name="build_finish">已完成</string>
     <string name="build_purchase_amount">起购金额（BU/份）</string>
     <string name="build_purchase_amount_hint">起购金额</string>
     <string name="build_support_amount_hint">支持份数</string>
