@@ -448,7 +448,7 @@
     <string name="copy_commond_txt">复制小布口令</string>
     <string name="invite_vote_image_txt">快来小布口袋帮忙投票</string>
     <string name="long_press_qr_txt">（长按识别二维码）</string>
-
+    <string name="ticket_txt">票</string>
 
     <string name="common_node">共识节点</string>
     <string name="ecological_node">生态节点</string>

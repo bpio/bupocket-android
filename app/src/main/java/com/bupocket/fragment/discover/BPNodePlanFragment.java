@@ -168,7 +168,7 @@ public class BPNodePlanFragment extends BaseFragment {
                         showRevokeVoteDialog(nodeList.get(position));
                         break;
                     case R.id.shareBtn:
-                        showShareDialog();
+
                         break;
                     case R.id.voteRecordBtn:
                         break;
@@ -294,10 +294,6 @@ public class BPNodePlanFragment extends BaseFragment {
                 }
             }
         }).start();
-    }
-
-    private void showShareDialog() {
-
     }
 
     private void setEmpty(boolean isVisible) {
