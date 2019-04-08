@@ -179,14 +179,20 @@ public class BPNodeShareFragment extends BaseFragment {
         qmuiBottomSheet.findViewById(R.id.shareToQQBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                new Share2.Builder(getActivity())
+                        .setContentType(ShareContentType.IMAGE)
+                        .setShareFileUri(sharePhotoUri)
+//                                .setShareToComponent("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI")
+                        .setShareToComponent("com.tencent.mobileqq","com.tencent.mobileqq.activity.JumpActivity")
+                        .setTitle("Share Image")
+                        .build()
+                        .shareBySystem();
             }
         });
 
         qmuiBottomSheet.findViewById(R.id.shareToWeixinBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 new Share2.Builder(getActivity())
                         .setContentType(ShareContentType.IMAGE)
                         .setShareFileUri(sharePhotoUri)
