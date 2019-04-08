@@ -14,12 +14,11 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,7 +67,7 @@ import retrofit2.Response;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
 
-public class BPNodePlanFragment extends BaseFragment {
+public class BPSomeOneNodePlanFragment extends BaseFragment {
 
 
     @BindView(R.id.topbar)
