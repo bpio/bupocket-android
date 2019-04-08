@@ -14,6 +14,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -205,6 +206,13 @@ public class BPNodePlanFragment extends BaseFragment {
     }
 
     private void getAllNode() {
+        if (myVoteInfolist==null) {
+            myVoteInfolist=new ArrayList<>();
+        }
+
+        if (nodeList==null) {
+            nodeList=new ArrayList<>();
+        }
 
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress", "").toString();
@@ -278,7 +286,12 @@ public class BPNodePlanFragment extends BaseFragment {
     private void initListView() {
         superNodeAdapter = new SuperNodeAdapter(this.getContext());
         lvPlan.setAdapter(superNodeAdapter);
-
+//        lvPlan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//            }
+//        });
 
     }
 

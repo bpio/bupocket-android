@@ -23,6 +23,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
+import butterknife.Unbinder;
 
 public class BPDiscoverHomeFragment extends BaseFragment {
     @BindView(R.id.cardPackageRl)
@@ -43,12 +45,13 @@ public class BPDiscoverHomeFragment extends BaseFragment {
     private long PAGER_TIME = 3 * 1000;
     private boolean isStop;
     private boolean isDownStop;
+    private Unbinder bind;
 
 
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_discover, null);
-        ButterKnife.bind(this, root);
+        bind = ButterKnife.bind(this, root);
         init();
         return root;
     }
@@ -85,13 +88,13 @@ public class BPDiscoverHomeFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        isDownStop=false;
+        isDownStop = false;
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        isDownStop=true;
+        isDownStop = true;
     }
 
     private void autoPlayView() {
@@ -106,7 +109,9 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                vpDisBanner.setCurrentItem(vpDisBanner.getCurrentItem() + 1);
+                                if (vpDisBanner!=null) {
+                                    vpDisBanner.setCurrentItem(vpDisBanner.getCurrentItem() + 1);
+                                }
                             }
                         });
                         SystemClock.sleep(PAGER_TIME);
@@ -125,6 +130,13 @@ public class BPDiscoverHomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 startFragment(new BPNodePlanFragment());
+            }
+        });
+
+        mNodeBuildRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new BPNodeBuildFragment());
             }
         });
 
@@ -151,6 +163,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
             }
         });
     }
+
 
     private class PageImageOnClick implements View.OnClickListener {
         @Override
@@ -187,7 +200,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                 case MotionEvent.ACTION_UP:
                     isDownStop = false;
                     if (System.currentTimeMillis() - downTime < 500) {
-                        Toast.makeText(getContext(), "图片"+v.getId()+"被点击", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "图片" + v.getId() + "被点击", Toast.LENGTH_SHORT).show();
                     }
 
                     break;
