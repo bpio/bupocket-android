@@ -16,9 +16,11 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fitsSystemWindows="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
             android:gravity="center"
             android:text="@string/tabbar_discover_txt"
             android:textColor="@color/send_confirm_title_color"
