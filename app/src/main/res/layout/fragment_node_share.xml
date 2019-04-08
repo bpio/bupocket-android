@@ -55,6 +55,7 @@
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="15sp"
+                    android:layout_centerVertical="true"
                     tools:text="股神699" />
 
                 <TextView
@@ -68,6 +69,31 @@
                     android:gravity="center"
                     android:layout_centerVertical="true"
                     android:background="@drawable/shape_corner_bg_gray"/>
+
+                <LinearLayout
+                    android:id="@+id/shareBtn"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/icon_share_btn_bg"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_marginLeft="8dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@mipmap/icon_share_white"/>
+
+                    <TextView
+                        android:layout_marginLeft="4dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/share_txt"
+                        android:textSize="14sp"
+                        android:textColor="@color/app_color_white"/>
+
+                </LinearLayout>
             </RelativeLayout>
 
             <RelativeLayout
@@ -81,22 +107,23 @@
                     android:id="@+id/haveVotesNumLl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
                     android:orientation="horizontal">
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/number_have_votes"
-                        android:textColor="@color/multiline_edit_hint_color"
-                        android:textSize="12sp"/>
-
-                    <TextView
                         android:id="@+id/haveVotesNumTv"
-                        android:layout_marginLeft="6dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="14sp"
                         android:textColor="@color/app_txt_color_gray_2"
                         tools:text="7833993" />
+
+                    <TextView
+                        android:layout_marginLeft="6dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/ticket_txt"
+                        android:textColor="@color/multiline_edit_hint_color"
+                        android:textSize="12sp"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -105,22 +132,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="59.5dp"
+                    android:layout_centerVertical="true"
                     android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/my_votes_number"
-                        android:textColor="@color/multiline_edit_hint_color"
-                        android:textSize="12sp"/>
 
                     <TextView
-                        android:id="@+id/myVotesNumTv"
-                        android:layout_marginLeft="6dp"
+                        android:id="@+id/supportPeopleTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
-                        android:textColor="@color/app_txt_color_gray_2"
-                        tools:text="8938" />
+                        tools:text="@string/support_people_num_txt"
+                        android:textColor="@color/multiline_edit_hint_color"
+                        android:textSize="12sp"/>
                 </LinearLayout>
             </RelativeLayout>
 
@@ -131,14 +152,27 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="14dp"
             android:layout_marginRight="14dp"
-            android:layout_marginTop="15dp">
+            android:layout_marginTop="15dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/vote_record_txt"
+                android:text="@string/node_introduce_txt"
                 android:textSize="13sp"
                 android:textColor="@color/app_txt_color_gray"/>
+
+            <TextView
+                android:layout_marginTop="12dp"
+                android:background="@drawable/shape_corner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:paddingLeft="13dp"
+                android:paddingRight="13dp"
+                android:lineSpacingMultiplier="1.5"
+                tools:text="Houbi Token是火币全球站独立发行的一种平台币，具有多种使用场景，价值支撑。使用HT购买VIP，立即获得交易手续费折扣。每个季度火币全球站以固定比例在流通市场回购，回购的HT全部计提火币投资者保护基金认证商家保证金。使用HT支付保证金，成为法币交易认证商家获得专属认证标识、优质前排展位、一对一客户服务。火币积分专享活动，持有HT不定期赠送上线火币平台的新币。与热门币种交易，支持HT对USDT、HT对BTCHT对ETH的交易。参与火币业务，持有HT用户的建议对火币上币有重大影响只针对评级达到火币全球专业站上线要求的项目。"/>
         </LinearLayout>
     </LinearLayout>
 
