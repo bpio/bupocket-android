@@ -36,6 +36,7 @@
     <color name="app_txt_color_blue">#0598e2</color>
     <color name="app_txt_color_white">#BABCC9</color>
     <color name="app_color_green">#02CA71</color>
+    <color name="app_color_green_normal">#25C57E</color>
 
     <color name="app_color_blue_2">#31BDF3</color>
     <color name="app_color_blue_2_disabled">#7F31BDF3</color>

@@ -476,6 +476,7 @@
     <string name="build_runing">进行中</string>
     <string name="build_purchase_amount">起购金额（BU/份）</string>
     <string name="build_purchase_amount_hint">起购金额</string>
+    <string name="build_support_amount_hint">支持份数</string>
     <string name="build_origin_purchase_amount">发起人支持总额(BU)</string>
     <string name="build_target_amount">目标总额（BU)</string>
     <string name="build_support_amount">已支持总额（BU)</string>
@@ -492,6 +493,10 @@
         2. 退出的金额将延迟到账，请在BU交易记录查收</string>
 
     <string name="build_exit_title">退出节点共建计划</string>
+
+
+    <string name="build_detail_support">支持项目</string>
+    <string name="build_dialog_error">最少起购为1份</string>
 
 
 </resources>

@@ -4,12 +4,15 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 
 import com.bupocket.R;
 import com.bupocket.base.AbsViewHolderAdapter;
+import com.bupocket.base.BaseRecyclerAdapter;
 import com.bupocket.base.BaseViewHolder;
 import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.model.SuperNodeModel;
+import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.widget.popup.QMUIListPopup;
 
 import java.util.ArrayList;
@@ -44,7 +47,7 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
     }
 
     @Override
-    protected void convert(BaseViewHolder holder, SuperNodeModel itemData) {
+    protected void convert(final BaseViewHolder holder, SuperNodeModel itemData) {
 
         if (itemData == null) {
             return;
@@ -65,7 +68,8 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemBtnListener.onClick(position,shareBtn.getId());
+
+                onItemBtnListener.onClick(holder.getPosition(),shareBtn.getId());
             }
         });
 
@@ -73,7 +77,7 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         revokeVoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemBtnListener.onClick(position,revokeVoteBtn.getId());
+                onItemBtnListener.onClick(holder.getPosition(),revokeVoteBtn.getId());
             }
         });
 
@@ -81,15 +85,17 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         voteRecordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemBtnListener.onClick(position,R.id.voteRecordBtn);
+                onItemBtnListener.onClick(holder.getPosition(),R.id.voteRecordBtn);
             }
         });
     }
 
+
+
     @Override
-    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
-        this.position = position;
-        return super.getView(position, convertView, parent);
+    public long getItemId(int position) {
+        LogUtils.e("getItemId当前位置："+position);
+        return super.getItemId(position);
     }
 
     public interface OnItemBtnListener {
@@ -100,4 +106,7 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
     public void setOnItemBtnListener(OnItemBtnListener onItemBtnListener) {
         this.onItemBtnListener = onItemBtnListener;
     }
+
+
+
 }
