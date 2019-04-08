@@ -444,6 +444,11 @@
     <string name="scan_qr_login_management_system_note_txt">即将登录节点计划运营管理系统，请确认是本人操作。</string>
     <string name="address_be_made_public_note_txt">您的账户地址将被公开</string>
     <string name="confirm_login_txt">确认登录</string>
+    <string name="weixin_txt">微信</string>
+    <string name="qq_txt">QQ</string>
+    <string name="copy_commond_txt">复制小布口令</string>
+    <string name="invite_vote_image_txt">快来小布口袋帮忙投票</string>
+    <string name="long_press_qr_txt">（长按识别二维码）</string>
 
 
     <string name="common_node">共识节点</string>

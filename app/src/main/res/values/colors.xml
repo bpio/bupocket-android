@@ -25,6 +25,7 @@
     <color name="app_txt_color_gray_4">#bababa</color>
     <color name="app_txt_color_gray_5">#888888</color>
     <color name="app_txt_color_gray_6">#BBBBBB</color>
+    <color name="app_txt_color_gray_7">#737791</color>
     <color name="app_txt_color_red">#FF7272</color>
     <color name="app_txt_color_red_2">#ff0000</color>
     <color name="app_txt_color_red_3">#e23b1b</color>
@@ -32,6 +33,7 @@
     <color name="app_txt_color_black">#2A2A2A</color>
     <color name="app_txt_color_black_2">#151515</color>
     <color name="app_txt_color_blue">#0598e2</color>
+    <color name="app_txt_color_white">#BABCC9</color>
     <color name="app_color_green">#02CA71</color>
 
     <color name="app_color_blue_2">#31BDF3</color>

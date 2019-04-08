@@ -158,6 +158,15 @@ public class BPNodePlanFragment extends BaseFragment {
                 return false;
             }
         });
+
+        superNodeAdapter.setOnRevokeVoteBtnListener(new SuperNodeAdapter.OnRevokeVoteBtnListener() {
+            @Override
+            public void onClick(int position, int btn) {
+                switch (btn) {
+
+                }
+            }
+        });
     }
 
     private void setEmpty(boolean isVisible) {

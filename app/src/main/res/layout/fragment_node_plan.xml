@@ -91,7 +91,9 @@
             android:divider="@color/token_list_view_background_color"
             android:dividerHeight="10dp"
             android:layout_marginTop="14dp"
-            android:layout_marginBottom="10dp">
+            android:layout_marginBottom="10dp"
+            android:fadeScrollbars="false"
+            android:scrollbars="none">
 
         </ListView>
 

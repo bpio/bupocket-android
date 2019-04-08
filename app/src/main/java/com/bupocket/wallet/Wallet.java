@@ -695,7 +695,7 @@ public class Wallet {
         return transactionBuildBlobResponse;
     }
 
-    public String submitTransaction(String password, String bPData, String sourceAddress, TransactionBuildBlobResponse transactionBuildBlobResponse) throws Exception{
+    public String submitTransaction(String password, String bPData, String sourceAddress, TransactionBuildBlobResponse transactionBuildBlobResponse) throws Exception {
         String transactionBlob = transactionBuildBlobResponse.getResult().getTransactionBlob();
         String senderPrivateKey = getPKBYAccountPassword(password, bPData, sourceAddress);
 
@@ -717,9 +717,9 @@ public class Wallet {
             txHash = transactionSubmitResponse.getResult().getHash();
             System.out.println("Success，hash=" + transactionSubmitResponse.getResult().getHash());
         } else {
-            if(BUChainExceptionEnum.ERRCODE_FEE_NOT_ENOUGH.getCode().equals(transactionSubmitResponse.getErrorCode())){
+            if (BUChainExceptionEnum.ERRCODE_FEE_NOT_ENOUGH.getCode().equals(transactionSubmitResponse.getErrorCode())) {
                 throw new WalletException(ExceptionEnum.FEE_NOT_ENOUGH);
-            }else if(BUChainExceptionEnum.ERRCODE_ACCOUNT_LOW_RESERVE.getCode().equals(transactionSubmitResponse.getErrorCode())){
+            } else if (BUChainExceptionEnum.ERRCODE_ACCOUNT_LOW_RESERVE.getCode().equals(transactionSubmitResponse.getErrorCode())) {
                 throw new WalletException(ExceptionEnum.BU_NOT_ENOUGH);
             }
             System.out.println("Failure，hash=" + transactionSubmitResponse.getResult().getHash() + "");
