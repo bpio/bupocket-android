@@ -303,7 +303,13 @@ public class BPNodePlanFragment extends BaseFragment {
                         }
                     });
                 } catch (Exception e) {
-                    Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
                 }
             }
         }).start();
