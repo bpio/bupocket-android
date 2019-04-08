@@ -14,7 +14,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -171,9 +170,10 @@ public class BPNodePlanFragment extends BaseFragment {
                         break;
                     case R.id.shareBtn:
 
-//                        startFragment();
+
                         break;
                     case R.id.voteRecordBtn:
+                        startFragment(new BPSomeOneVoteRecordFragment());
                         break;
                 }
             }

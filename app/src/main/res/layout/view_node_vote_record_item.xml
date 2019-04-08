@@ -1,114 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="95dp"
+    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/shape_corner"
     android:orientation="vertical">
 
+
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="14dp"
-        android:layout_marginLeft="15dp">
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/shape_corner"
+        android:orientation="vertical"
+        >
 
-        <TextView
-            android:id="@+id/recordTypeTv"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
-            android:text="@string/vote_txt"
-            android:textColor="@color/app_color_white"
-            android:textSize="13sp"
-            android:gravity="center"
-            android:background="@drawable/shape_corner_green"/>
-
-        <TextView
-            android:id="@+id/voterName"
-            android:layout_marginLeft="10dp"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="15sp"
-            android:textColor="@color/app_color_black"
-            android:textStyle="bold"
-            tools:text="迷失的小鹿" />
+            android:layout_marginTop="14dp"
+            android:layout_marginLeft="15dp">
 
-        <TextView
-            android:id="@+id/nodeTypeTv"
-            android:layout_toRightOf="@+id/nodeNameTv"
-            android:layout_width="55dp"
-            android:layout_height="16dp"
-            android:layout_marginLeft="7.5dp"
-            tools:text="共识节点"
-            android:textSize="11sp"
-            android:gravity="center"
-            android:layout_centerVertical="true"
-            android:background="@drawable/shape_corner_bg_gray"/>
+            <TextView
+                android:id="@+id/recordTypeTv"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:text="@string/vote_txt"
+                android:textColor="@color/app_color_white"
+                android:textSize="13sp"
+                android:gravity="center"
+                android:background="@drawable/shape_corner_green"/>
+
+            <TextView
+                android:id="@+id/voterName"
+                android:layout_marginLeft="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textColor="@color/app_color_black"
+                android:textStyle="bold"
+                tools:text="迷失的小鹿" />
+
+            <TextView
+                android:id="@+id/nodeTypeTv"
+                android:layout_toRightOf="@+id/nodeNameTv"
+                android:layout_width="55dp"
+                android:layout_height="16dp"
+                android:layout_marginLeft="7.5dp"
+                tools:text="共识节点"
+                android:textSize="11sp"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:background="@drawable/shape_corner_bg_gray"/>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/amountLl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/amount_txt"
+                    android:textColor="@color/app_txt_color_gray"/>
+
+                <TextView
+                    android:id="@+id/amountTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="900"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/statusLl"
+                android:layout_toRightOf="@+id/amountLl"
+                android:layout_marginLeft="64.5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/status_txt"
+                    android:textColor="@color/app_txt_color_gray"/>
+
+                <TextView
+                    android:id="@+id/statusTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/app_color_green"
+                    tools:text="成功"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:gravity="right"
+                android:id="@+id/timeLl"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/time_txt"
+                    android:textColor="@color/app_txt_color_gray"/>
+
+                <TextView
+                    android:id="@+id/timeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="14:10:55 03/11/2019 "/>
+            </LinearLayout>
+        </RelativeLayout>
+
+
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/amountLl"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/amount_txt"
-                android:textColor="@color/app_txt_color_gray"/>
 
-            <TextView
-                android:id="@+id/amountTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="900"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/statusLl"
-            android:layout_toRightOf="@+id/amountLl"
-            android:layout_marginLeft="64.5dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/status_txt"
-                android:textColor="@color/app_txt_color_gray"/>
-
-            <TextView
-                android:id="@+id/statusTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/app_color_green"
-                tools:text="成功"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:gravity="right"
-            android:id="@+id/timeLl"
-            android:layout_alignParentRight="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/time_txt"
-                android:textColor="@color/app_txt_color_gray"/>
-
-            <TextView
-                android:id="@+id/timeTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="14:10:55 03/11/2019 "/>
-        </LinearLayout>
-    </RelativeLayout>
 </LinearLayout>
