@@ -3,6 +3,7 @@ package com.bupocket.fragment.discover;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,6 +14,8 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.model.NodeBuildDetailModel;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -31,8 +34,13 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     Button btnBuildExit;
     @BindView(R.id.btnBuildSupport)
     Button btnBuildSupport;
+    @BindView(R.id.llBtnBuild)
+    LinearLayout llBtnBuild;
+
+
     private Unbinder bind;
     private NodeBuildDetailAdapter nodeBuildDetailAdapter;
+    private TextView tvNodeBuilding;
 
 
     @Override
@@ -62,6 +70,9 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         lvBuildDetail.setAdapter(nodeBuildDetailAdapter);
 
         View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.node_build_header, null);
+
+
+        tvNodeBuilding = ((TextView) headerView.findViewById(R.id.tvNodeBuilding));
         lvBuildDetail.addHeaderView(headerView);
 
     }
@@ -108,7 +119,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         supportDialog.findViewById(R.id.tvDialogAdd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                num.setText(Integer.parseInt(num.getText().toString())+1);
+                num.setText((Integer.parseInt(num.getText().toString())+1)+"");
             }
         });
         
@@ -118,10 +129,20 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
                 int num1 = Integer.parseInt(num.getText().toString());
                 if (num1==1) {
-                    Toast.makeText(mContext, R.string.error_already_import_meaaage_txt, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.build_dialog_error, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                num.setText(num1 -1);
+                int numSub = num1 - 1;
+                num.setText(numSub+"");
+            }
+        });
+        supportDialog.findViewById(R.id.tvDialogSupport).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                supportDialog.cancel();
+                tvNodeBuilding.setSelected(true);
+                tvNodeBuilding.setText(R.string.build_finish);
+                llBtnBuild.setVisibility(View.GONE);
             }
         });
 
