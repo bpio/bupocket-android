@@ -65,7 +65,7 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         shareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                onItemBtnListener.onClick(position,shareBtn.getId());
             }
         });
 
@@ -73,10 +73,17 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         revokeVoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onRevokeVoteBtnListener.onClick(position,revokeVoteBtn.getId());
+                onItemBtnListener.onClick(position,revokeVoteBtn.getId());
             }
         });
 
+        final View voteRecordBtn = holder.getView(R.id.voteRecordBtn);
+        voteRecordBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onItemBtnListener.onClick(position,R.id.voteRecordBtn);
+            }
+        });
     }
 
     @Override
@@ -85,12 +92,12 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         return super.getView(position, convertView, parent);
     }
 
-    public interface OnRevokeVoteBtnListener {
+    public interface OnItemBtnListener {
         void onClick(int position,int btn);
     }
-    private OnRevokeVoteBtnListener onRevokeVoteBtnListener;
+    private OnItemBtnListener onItemBtnListener;
 
-    public void setOnRevokeVoteBtnListener(OnRevokeVoteBtnListener onRevokeVoteBtnListener) {
-        this.onRevokeVoteBtnListener = onRevokeVoteBtnListener;
+    public void setOnItemBtnListener(OnItemBtnListener onItemBtnListener) {
+        this.onItemBtnListener = onItemBtnListener;
     }
 }

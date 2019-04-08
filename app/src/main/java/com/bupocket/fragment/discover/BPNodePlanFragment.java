@@ -24,6 +24,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.adaptor.SuperNodeAdapter;
 import com.bupocket.base.BaseFragment;
@@ -45,6 +46,7 @@ import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -149,25 +151,153 @@ public class BPNodePlanFragment extends BaseFragment {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                     InputMethodManager manager = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
-                    //先隐藏键盘
                     if (manager.isActive()) {
                         manager.hideSoftInputFromWindow(etNodeSearch.getApplicationWindowToken(), 0);
                     }
 
                 }
-                //记得返回false
                 return false;
             }
         });
 
-        superNodeAdapter.setOnRevokeVoteBtnListener(new SuperNodeAdapter.OnRevokeVoteBtnListener() {
+        superNodeAdapter.setOnItemBtnListener(new SuperNodeAdapter.OnItemBtnListener() {
             @Override
             public void onClick(int position, int btn) {
                 switch (btn) {
-
+                    case R.id.revokeVoteBtn:
+                        showRevokeVoteDialog(nodeList.get(position));
+                        break;
+                    case R.id.shareBtn:
+                        showShareDialog();
+                        break;
+                    case R.id.voteRecordBtn:
+                        break;
                 }
             }
         });
+    }
+
+    private void showRevokeVoteDialog(SuperNodeModel itemInfo) {
+        @SuppressLint("StringFormatMatches")
+        String role = itemInfo.getIdentityType();
+        String nodeAddress = itemInfo.getNodeCapitalAddress();
+        final String nodeId = itemInfo.getNodeId();
+
+        String destAddress = String.format(getString(R.string.revoke_vote_dest_address_txt),Constants.CONTRACT_ADDRESS);
+        String transactionDetail = String.format(getString(R.string.revoke_vote_tx_details_txt),itemInfo.getNodeName(),nodeAddress);
+        String transactionAmount = "0";
+
+        final JSONObject input = new JSONObject();
+        input.put("method","unVote");
+        JSONObject params = new JSONObject();
+        params.put("role",role);
+        params.put("address",nodeAddress);
+        input.put("params", params);
+
+        String transactionParams = input.toJSONString();
+
+        final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
+        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm,null));
+        LinearLayout mTransactionAmountLl = qmuiBottomSheet.findViewById(R.id.transactionAmountLl);
+        mTransactionAmountLl.setVisibility(View.GONE);
+        TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
+        mTransactionDetailTv.setText(transactionDetail);
+        TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
+        mDestAddressTv.setText(destAddress);
+        TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
+        mTxFeeTv.setText(String.valueOf(Constants.MIN_FEE));
+
+        qmuiBottomSheet.findViewById(R.id.detailBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.GONE);
+                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.VISIBLE);
+            }
+        });
+
+        // confirm details page
+        TextView mSourceAddressTv = qmuiBottomSheet.findViewById(R.id.sourceAddressTv);
+        mSourceAddressTv.setText(currentWalletAddress);
+        TextView mDetailsDestAddressTv = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTv);
+        mDetailsDestAddressTv.setText(destAddress);
+        TextView mDetailsAmountTv = qmuiBottomSheet.findViewById(R.id.detailsAmountTv);
+        mDetailsAmountTv.setText(CommonUtil.addSuffix(transactionAmount,"BU"));
+        TextView mDetailsTxFeeTv = qmuiBottomSheet.findViewById(R.id.detailsTxFeeTv);
+        mDetailsTxFeeTv.setText(String.valueOf(Constants.MIN_FEE));
+        TextView mTransactionParamsTv = qmuiBottomSheet.findViewById(R.id.transactionParamsTv);
+        mTransactionParamsTv.setText(transactionParams);
+
+        // title view listener
+        qmuiBottomSheet.findViewById(R.id.goBackBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.VISIBLE);
+                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.GONE);
+            }
+        });
+        qmuiBottomSheet.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiBottomSheet.dismiss();
+            }
+        });
+        qmuiBottomSheet.findViewById(R.id.detailsCancelBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiBottomSheet.dismiss();
+            }
+        });
+        qmuiBottomSheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiBottomSheet.dismiss();
+                confirmUnVote(input,nodeId);
+            }
+        });
+        qmuiBottomSheet.show();
+
+    }
+
+    private void confirmUnVote(final JSONObject input, final String nodeId) {
+        final String amount = "0";
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount,input.toJSONString(),currentWalletAddress,String.valueOf(Constants.MIN_FEE));
+                    String txHash = buildBlobResponse.getResult().getHash();
+                    NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
+                    Call<ApiResult> call;
+                    Map<String, Object> paramsMap = new HashMap<>();
+                    paramsMap.put("hash",txHash);
+                    paramsMap.put("nodeId",nodeId);
+                    paramsMap.put("initiatorAddress",currentWalletAddress);
+                    call = nodePlanService.revokeVote(paramsMap);
+                    call.enqueue(new Callback<ApiResult>() {
+                        @Override
+                        public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
+                            ApiResult respDto = response.body();
+                            if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
+                                submitTransaction(buildBlobResponse);
+                            }else {
+                                Toast.makeText(getContext(),respDto.getMsg(),Toast.LENGTH_SHORT).show();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiResult> call, Throwable t) {
+                            Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (Exception e) {
+                    Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).start();
+    }
+
+    private void showShareDialog() {
+
     }
 
     private void setEmpty(boolean isVisible) {
@@ -309,47 +439,6 @@ public class BPNodePlanFragment extends BaseFragment {
                 startFragment(new BPVoteRecordFragment());
             }
         });
-    }
-
-    public void confirmUnVote(SuperNodeModel nodeInfo){
-        final String nodeAddress = nodeInfo.getNodeCapitalAddress();
-        final String role = nodeInfo.getIdentityType();
-        final String nodeId = nodeInfo.getNodeId();
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try{
-                    final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().unVoteBuildBlob(currentWalletAddress,role,nodeAddress,String.valueOf(Constants.MIN_FEE));
-                    String txHash = buildBlobResponse.getResult().getHash();
-                    NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
-                    Call<ApiResult> call;
-                    Map<String, Object> paramsMap = new HashMap<>();
-                    paramsMap.put("hash",txHash);
-                    paramsMap.put("nodeId",nodeId);
-                    paramsMap.put("initiatorAddress",currentWalletAddress);
-                    call = nodePlanService.revokeVote(paramsMap);
-                    call.enqueue(new Callback<ApiResult>() {
-                        @Override
-                        public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
-                            ApiResult respDto = response.body();
-                            if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
-                                submitTransaction(buildBlobResponse);
-                            }else {
-                                Toast.makeText(getContext(),respDto.getErrCode(),Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ApiResult> call, Throwable t) {
-                            Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }catch (Exception e){
-                    Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
-                }
-            }
-        }).start();
     }
 
     private void submitTransaction(final TransactionBuildBlobResponse buildBlobResponse) {

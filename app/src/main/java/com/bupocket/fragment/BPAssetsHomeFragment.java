@@ -673,7 +673,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                             if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                                 submitTransaction(buildBlobResponse);
                             }else {
-                                Toast.makeText(getContext(),respDto.getErrCode(),Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(),respDto.getMsg(),Toast.LENGTH_SHORT).show();
                             }
                         }
 
