@@ -586,6 +586,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         String transactionDetail = contentDto.getQrRemark();
         String transactionParams = contentDto.getScript();
         String transactionType = contentDto.getType();
+        String accountTag = contentDto.getAccountTag();
         if(ScanTransactionTypeEnum.NODE_VOTE.getCode().equals(transactionType)){
             scanTxFee = Constants.NODE_VOTE_FEE;
         }else if(ScanTransactionTypeEnum.NODE_AUDIT.getCode().equals(transactionType)){
@@ -607,7 +608,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
         mTransactionDetailTv.setText(transactionDetail);
         TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
-        mDestAddressTv.setText(destAddress);
+        mDestAddressTv.setText(destAddress.concat(accountTag));
         TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
         mTxFeeTv.setText(String.valueOf(scanTxFee));
 

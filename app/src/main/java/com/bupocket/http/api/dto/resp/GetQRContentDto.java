@@ -16,6 +16,7 @@ public class GetQRContentDto {
     private String type;
     private String qrcodeSessionId;
     private String destAddress;
+    private String accountTag;
     private String amount;
     private String script;
     private String qrRemark;
@@ -71,5 +72,13 @@ public class GetQRContentDto {
 
     public void setQrRemark(String qrRemark) {
         this.qrRemark = qrRemark;
+    }
+
+    public String getAccountTag() {
+        return accountTag;
+    }
+
+    public void setAccountTag(String accountTag) {
+        this.accountTag = accountTag;
     }
 }
