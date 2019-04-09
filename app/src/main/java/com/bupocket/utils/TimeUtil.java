@@ -58,4 +58,8 @@ public class TimeUtil {
         return sdf.format(new Date(Long.valueOf(seconds+"000")));
     }
 
+    public static long getCurrentTimeMillis(){
+        return System.currentTimeMillis();
+    }
+
 }
