@@ -4,6 +4,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetQRContentDto;
 import com.bupocket.http.api.dto.resp.SuperNodeDto;
 import com.bupocket.model.MyVoteRecordModel;
+import com.bupocket.model.TransConfirmModel;
 
 import java.util.Map;
 
@@ -15,7 +16,7 @@ public interface NodePlanService {
     @POST("nodeServer/qr/v1/content")
     Call<ApiResult<GetQRContentDto>> getQRContent(@Body Map<String,Object> map);
     @POST("nodeServer/tx/v1/confirm")
-    Call<ApiResult> confirmTransaction(@Body Map<String,Object> map);
+    Call<ApiResult<TransConfirmModel>> confirmTransaction(@Body Map<String,Object> map);
     @POST("nodeServer/node/v1/vote/revoke/user")
     Call<ApiResult> revokeVote(@Body Map<String,Object> map);
     @POST("nodeServer/node/v1/get/reward/user")

@@ -35,6 +35,7 @@ import com.bupocket.enums.ScanTransactionTypeEnum;
 import com.bupocket.enums.TokenActionTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.fragment.components.AssetsListView;
+import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.NodePlanManagementSystemService;
 import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
@@ -45,10 +46,13 @@ import com.bupocket.http.api.dto.resp.GetQRContentDto;
 import com.bupocket.http.api.dto.resp.GetTokensRespDto;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.http.api.dto.resp.UserScanQrLoginDto;
+import com.bupocket.model.TransConfirmModel;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.TimeUtil;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -76,6 +80,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import static com.bupocket.utils.TimeUtil.getCurrentTimeMillis;
 
 public class BPAssetsHomeFragment extends BaseFragment {
 
@@ -134,6 +140,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
     private TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean;
 
     private Double scanTxFee;
+    private String expiryTime;
 
     @Override
     protected View onCreateView() {
@@ -671,17 +678,19 @@ public class BPAssetsHomeFragment extends BaseFragment {
                     final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input, currentWalletAddress, String.valueOf(scanTxFee));
                     String txHash = buildBlobResponse.getResult().getHash();
                     NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
-                    Call<ApiResult> call;
+                    Call<ApiResult<TransConfirmModel>> call;
                     Map<String, Object> paramsMap = new HashMap<>();
                     paramsMap.put("qrcodeSessionId",qrCodeSessionID);
                     paramsMap.put("hash",txHash);
                     paramsMap.put("initiatorAddress",currentWalletAddress);
                     call = nodePlanService.confirmTransaction(paramsMap);
-                    call.enqueue(new Callback<ApiResult>() {
+                    call.enqueue(new Callback<ApiResult<TransConfirmModel>>() {
                         @Override
-                        public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
-                            ApiResult respDto = response.body();
+                        public void onResponse(Call<ApiResult<TransConfirmModel>> call, Response<ApiResult<TransConfirmModel>> response) {
+                            ApiResult<TransConfirmModel> respDto = response.body();
                             if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
+                                expiryTime = respDto.getData().getExpiryTime();
+                                LogUtils.e("超时时间"+expiryTime);
                                 submitTransaction(buildBlobResponse);
                             }else {
                                 Toast.makeText(getContext(),respDto.getMsg(),Toast.LENGTH_SHORT).show();
@@ -689,7 +698,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         }
 
                         @Override
-                        public void onFailure(Call<ApiResult> call, Throwable t) {
+                        public void onFailure(Call<ApiResult<TransConfirmModel>> call, Throwable t) {
                             Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -720,6 +729,13 @@ public class BPAssetsHomeFragment extends BaseFragment {
         mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (getCurrentTimeMillis()>=Long.parseLong(expiryTime)) {
+                    Toast.makeText(mContext, R.string.transaction_timeout, Toast.LENGTH_SHORT).show();
+                    qmuiDialog.dismiss();
+                    startFragment(new HomeFragment());
+                    return;
+                }
+
                 txSendingTipDialog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                         .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
