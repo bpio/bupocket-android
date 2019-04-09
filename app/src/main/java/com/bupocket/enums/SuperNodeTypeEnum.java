@@ -1,8 +1,8 @@
 package com.bupocket.enums;
 
 public enum SuperNodeTypeEnum {
-    VALIDATOR("1","记账节点"),
-    ECOLOGICAL("2","生态节点"),
+    VALIDATOR("1","validator"),
+    ECOLOGICAL("2","kol"),
     ;
 
     private String code;

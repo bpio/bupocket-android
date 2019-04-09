@@ -29,6 +29,7 @@ import com.bupocket.adaptor.SuperNodeAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.ExceptionEnum;
+import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.fragment.BPSendStatusFragment;
 import com.bupocket.fragment.BPTxRequestTimeoutFragment;
@@ -192,7 +193,13 @@ public class BPNodePlanFragment extends BaseFragment {
 
     private void showRevokeVoteDialog(SuperNodeModel itemInfo) {
         @SuppressLint("StringFormatMatches")
-        String role = itemInfo.getIdentityType();
+        String nodeType = itemInfo.getIdentityType();
+        String role = null;
+        if(SuperNodeTypeEnum.VALIDATOR.getCode().equals(nodeType)){
+            role = SuperNodeTypeEnum.VALIDATOR.getName();
+        }else if(SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(nodeType)){
+            role = SuperNodeTypeEnum.ECOLOGICAL.getName();
+        }
         String nodeAddress = itemInfo.getNodeCapitalAddress();
         final String nodeId = itemInfo.getNodeId();
 
