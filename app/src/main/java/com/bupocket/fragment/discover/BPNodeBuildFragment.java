@@ -1,5 +1,6 @@
 package com.bupocket.fragment.discover;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,6 +28,7 @@ public class BPNodeBuildFragment extends BaseFragment {
     private Unbinder bind;
     private NodeBuildAdapter nodeBuildAdapter;
     private ArrayList<NodeBuildModel> newData;
+    public static String  NODE_INFO = "nodeInfo";
 
 
     @Override
@@ -47,7 +49,16 @@ public class BPNodeBuildFragment extends BaseFragment {
         lvNodeBuild.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                startFragment(new BPNodeBuildDetailFragment());
+
+                BPNodeBuildDetailFragment fragment = new BPNodeBuildDetailFragment();
+                Bundle args = new Bundle();
+                if (newData!=null) {
+                    NodeBuildModel nodebuildmodel = newData.get(position);
+                    nodebuildmodel.setName("小明"+position);
+                    args.putSerializable(NODE_INFO, nodebuildmodel);
+                }
+                fragment.setArguments(args);
+                startFragment(fragment);
             }
         });
     }

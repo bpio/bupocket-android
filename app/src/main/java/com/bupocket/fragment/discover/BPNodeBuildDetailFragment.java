@@ -6,16 +6,15 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeBuildDetailAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.model.NodeBuildDetailModel;
+import com.bupocket.model.NodeBuildModel;
+import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -41,6 +40,11 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private Unbinder bind;
     private NodeBuildDetailAdapter nodeBuildDetailAdapter;
     private TextView tvNodeBuilding;
+    private View addBtn;
+    private View subBtn;
+    private TextView tvDialogAmount;
+    private TextView tvDialogOneNum;
+    private TextView numSupport;
 
 
     @Override
@@ -57,6 +61,9 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     }
 
     private void initData() {
+
+        NodeBuildModel nodeBuildModel = (NodeBuildModel)getArguments().getSerializable(BPNodeBuildFragment.NODE_INFO);
+        LogUtils.e("信息："+nodeBuildModel.getName());
 
         if (nodeBuildDetailAdapter == null) {
             nodeBuildDetailAdapter = new NodeBuildDetailAdapter(getContext());
@@ -108,32 +115,35 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private void ShowSupport() {
         final QMUIBottomSheet supportDialog = new QMUIBottomSheet(getContext());
         supportDialog.setContentView(supportDialog.getLayoutInflater().inflate(R.layout.dialog_node_detail_support,null));
+        addBtn = supportDialog.findViewById(R.id.tvDialogAdd);
+        subBtn = supportDialog.findViewById(R.id.tvDialogSub);
+        tvDialogAmount =  supportDialog.findViewById(R.id.tvDialogAmount);
+        tvDialogOneNum =  supportDialog.findViewById(R.id.tvDialogOneNum);
         supportDialog.findViewById(R.id.ivDialogCancle).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 supportDialog.cancel();
             }
         });
-        final TextView num = (TextView) supportDialog.findViewById(R.id.tvDialogNum);
-        num.setText(""+1);
-        supportDialog.findViewById(R.id.tvDialogAdd).setOnClickListener(new View.OnClickListener() {
+        numSupport = supportDialog.findViewById(R.id.tvDialogNum);
+        numSupport.setText(""+1);
+//        tvDialogAmount.setText();//初始化数据
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                num.setText((Integer.parseInt(num.getText().toString())+1)+"");
+                int addNum = Integer.parseInt(numSupport.getText().toString()) + 1;
+                setNumStatus(addNum);
             }
         });
-        
-        supportDialog.findViewById(R.id.tvDialogSub).setOnClickListener(new View.OnClickListener() {
+        addBtn.setSelected(true);
+
+
+        subBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                int num1 = Integer.parseInt(num.getText().toString());
-                if (num1==1) {
-                    Toast.makeText(getContext(), R.string.build_dialog_error, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                int numSub = num1 - 1;
-                num.setText(numSub+"");
+                int numSub = Integer.parseInt(numSupport.getText().toString()) - 1;
+                setNumStatus(numSub);
             }
         });
         supportDialog.findViewById(R.id.tvDialogSupport).setOnClickListener(new View.OnClickListener() {
@@ -150,5 +160,31 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
         supportDialog.show();
 
+    }
+
+    private void setNumStatus(int num) {
+
+        if (num<1||num>10){
+            return;
+        }
+
+         if (num==1) {
+            subBtn.setSelected(false);
+        } else if (num==10){
+            addBtn.setSelected(false);
+        }else{
+            if (!subBtn.isSelected()) {
+                subBtn.setSelected(true);
+            }
+            if (!addBtn.isSelected()) {
+                addBtn.setSelected(true);
+            }
+
+        }
+
+
+        numSupport.setText(num +"");
+        int amount = num * Integer.parseInt(tvDialogOneNum.getText().toString());
+        tvDialogAmount.setText(amount +"");
     }
 }

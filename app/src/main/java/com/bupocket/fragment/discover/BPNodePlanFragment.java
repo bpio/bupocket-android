@@ -175,11 +175,7 @@ public class BPNodePlanFragment extends BaseFragment {
                     case R.id.shareBtn:
                         SuperNodeModel itemInfo = nodeList.get(position);
                         Bundle args = new Bundle();
-                        args.putString("nodeId",itemInfo.getNodeId());
-                        args.putString("nodeName",itemInfo.getNodeName());
-                        args.putString("nodeType",itemInfo.getIdentityType());
-                        args.putString("haveVoteNum",itemInfo.getNodeVote());
-                        args.putString("nodeLogo",itemInfo.getNodeLogo());
+                        args.putParcelable("itemInfo",itemInfo);
                         BPNodeShareFragment bpNodeShareFragment = new BPNodeShareFragment();
                         bpNodeShareFragment.setArguments(args);
                         startFragment(bpNodeShareFragment);
@@ -307,7 +303,13 @@ public class BPNodePlanFragment extends BaseFragment {
                         }
                     });
                 } catch (Exception e) {
-                    Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
                 }
             }
         }).start();
