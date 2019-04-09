@@ -33,6 +33,7 @@ import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.fragment.BPSendStatusFragment;
 import com.bupocket.fragment.BPTxRequestTimeoutFragment;
+import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
@@ -48,6 +49,7 @@ import com.bupocket.wallet.exception.WalletException;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -172,7 +174,14 @@ public class BPNodePlanFragment extends BaseFragment {
                 switch (btn) {
                     case R.id.revokeVoteBtn:
                         if("0".equals(superNodeModel.getMyVoteCount())){
-                            Toast.makeText(getContext(),getString(R.string.revoke_no_vote_error_message_txt),Toast.LENGTH_SHORT).show();
+                            new QMUIDialog.MessageDialogBuilder(getActivity())
+                                    .setMessage(R.string.revoke_no_vote_error_message_txt)
+                                    .addAction(getString(R.string.i_knew_btn_txt), new QMUIDialogAction.ActionListener() {
+                                @Override
+                                public void onClick(QMUIDialog dialog, int index) {
+                                    dialog.dismiss();
+                                }
+                            }).setCanceledOnTouchOutside(false).create().show();
                         }else{
                             showRevokeVoteDialog(superNodeModel);
                         }

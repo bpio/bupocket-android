@@ -17,15 +17,15 @@
         <ImageView
             android:layout_centerInParent="true"
             android:id="@+id/nodeIconBgIv"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:background="@mipmap/icon_token_bg_list"/>
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:layout_centerInParent="true"
             android:id="@+id/nodeIconIv"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
             app:qmui_border_width="0dp"
             app:qmui_is_circle="true"/>
 

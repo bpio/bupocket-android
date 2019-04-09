@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,7 +24,9 @@ import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.model.SuperNodeModel;
+import com.bupocket.utils.CommonUtil;
 import com.qmuiteam.qmui.util.QMUIDrawableHelper;
+import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
@@ -48,9 +51,12 @@ public class BPNodeShareFragment extends BaseFragment {
     TextView mHaveVotesNumTv;
     @BindView(R.id.shareBtn)
     LinearLayout mShareBtn;
-
-
-
+    @BindView(R.id.supportPeopleTv)
+    TextView mSupportPeopleTv;
+    @BindView(R.id.nodeIntroduceTv)
+    TextView mNodeIntroduceTv;
+    @BindView(R.id.nodeIconIv)
+    QMUIRadiusImageView mNodeIconIv;
 
     private View mShareImageRl;
     private Uri sharePhotoUri = null;
@@ -113,6 +119,14 @@ public class BPNodeShareFragment extends BaseFragment {
         } else if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(itemInfo.getIdentityType())) {
             mNodeTypeTv.setText(getContext().getResources().getString(R.string.ecological_node));
         }
+        mHaveVotesNumTv.setText(itemInfo.getNodeVote());
+        mSupportPeopleTv.setText(String.format(getString(R.string.support_people_num_txt),itemInfo.getSupport()));
+        mNodeIntroduceTv.setText(itemInfo.getIntroduce());
+        String nodeLogo = itemInfo.getNodeLogo();
+        if (!TextUtils.isEmpty(nodeLogo)) {
+            mNodeIconIv.setImageBitmap(CommonUtil.base64ToBitmap(nodeLogo));
+            mNodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
+        }
     }
 
     private void setListener() {
@@ -130,6 +144,12 @@ public class BPNodeShareFragment extends BaseFragment {
         mShareImageRl = LayoutInflater.from(getActivity()).inflate(R.layout.view_share_image, null);
         TextView mNodeNameTv = mShareImageRl.findViewById(R.id.nodeNameTv);
         mNodeNameTv.setText(itemInfo.getNodeName());
+        QMUIRadiusImageView nodeIconIv = mShareImageRl.findViewById(R.id.nodeIconIv);
+        String nodeLogo = itemInfo.getNodeLogo();
+        if (!TextUtils.isEmpty(nodeLogo)) {
+            nodeIconIv.setImageBitmap(CommonUtil.base64ToBitmap(nodeLogo));
+            nodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
+        }
         Bitmap createFromViewBitmap = getViewBitmap(mShareImageRl);
 //        final Bitmap createFromViewBitmap = QMUIDrawableHelper.createBitmapFromView(mShareImageRl,1);
 

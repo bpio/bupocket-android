@@ -163,6 +163,7 @@
                 android:textColor="@color/app_txt_color_gray"/>
 
             <TextView
+                android:id="@+id/nodeIntroduceTv"
                 android:layout_marginTop="12dp"
                 android:background="@drawable/shape_corner"
                 android:layout_width="match_parent"

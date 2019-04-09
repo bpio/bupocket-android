@@ -13,6 +13,8 @@ public class SuperNodeModel implements Parcelable {
     private String identityStatus;
     private String nodeVote;
     private String myVoteCount;
+    private String introduce;
+    private String support;
 
     protected SuperNodeModel(Parcel in) {
         nodeId = in.readString();
@@ -23,6 +25,8 @@ public class SuperNodeModel implements Parcelable {
         identityStatus = in.readString();
         nodeVote = in.readString();
         myVoteCount = in.readString();
+        introduce = in.readString();
+        support = in.readString();
     }
 
     public static final Creator<SuperNodeModel> CREATOR = new Creator<SuperNodeModel>() {
@@ -101,6 +105,22 @@ public class SuperNodeModel implements Parcelable {
         return myVoteCount;
     }
 
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public String getSupport() {
+        return support;
+    }
+
+    public void setSupport(String support) {
+        this.support = support;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -116,5 +136,7 @@ public class SuperNodeModel implements Parcelable {
         dest.writeString(identityStatus);
         dest.writeString(nodeVote);
         dest.writeString(myVoteCount);
+        dest.writeString(introduce);
+        dest.writeString(support);
     }
 }
