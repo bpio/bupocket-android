@@ -167,26 +167,31 @@ public class BPNodePlanFragment extends BaseFragment {
         superNodeAdapter.setOnItemBtnListener(new SuperNodeAdapter.OnItemBtnListener() {
             @Override
             public void onClick(int position, int btn) {
-
+                SuperNodeModel superNodeModel = nodeList.get(position);
                 LogUtils.e("position="+position+"\n"+btn);
                 switch (btn) {
                     case R.id.revokeVoteBtn:
-                        if("0".equals(nodeList.get(position).getMyVoteCount())){
+                        if("0".equals(superNodeModel.getMyVoteCount())){
                             Toast.makeText(getContext(),getString(R.string.revoke_no_vote_error_message_txt),Toast.LENGTH_SHORT).show();
                         }else{
-                            showRevokeVoteDialog(nodeList.get(position));
+                            showRevokeVoteDialog(superNodeModel);
                         }
                         break;
                     case R.id.shareBtn:
-                        SuperNodeModel itemInfo = nodeList.get(position);
+
                         Bundle args = new Bundle();
-                        args.putParcelable("itemInfo",itemInfo);
+                        args.putParcelable("itemInfo",superNodeModel);
                         BPNodeShareFragment bpNodeShareFragment = new BPNodeShareFragment();
                         bpNodeShareFragment.setArguments(args);
                         startFragment(bpNodeShareFragment);
                         break;
                     case R.id.voteRecordBtn:
-                        startFragment(new BPSomeOneVoteRecordFragment());
+                        BPSomeOneVoteRecordFragment fragment = new BPSomeOneVoteRecordFragment();
+                        Bundle args1 = new Bundle();
+                        args1.putParcelable("itemNodeInfo",superNodeModel);
+                        fragment.setArguments(args1);
+
+                        startFragment(fragment);
                         break;
                 }
             }
