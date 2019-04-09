@@ -694,6 +694,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                 LogUtils.e("超时时间"+expiryTime);
                                 submitTransaction(buildBlobResponse);
                             }else {
+                                LogUtils.e("超时时间"+respDto.getMsg()+"\t"+respDto.getErrCode());
                                 Toast.makeText(getContext(),respDto.getMsg(),Toast.LENGTH_SHORT).show();
                             }
                         }

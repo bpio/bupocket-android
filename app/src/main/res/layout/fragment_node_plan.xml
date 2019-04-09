@@ -19,17 +19,20 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
             android:paddingLeft="13dp"
             android:paddingRight="13dp">
 
             <CheckBox
                 android:id="@+id/myNodeCB"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="13dp"
+                android:layout_height="13dp"
+                android:layout_marginRight="6dp"
+                android:button="@null"
                 android:layout_centerVertical="true"
-                android:theme="@style/checkboxTheme" />
+                android:background="@drawable/selector_my_node"
+                />
 
             <TextView
                 android:id="@+id/myNodeTv"
@@ -80,7 +83,9 @@
 
         </RelativeLayout>
 
-        <include layout="@layout/empty_record" />
+        <include
+            android:visibility="gone"
+            layout="@layout/empty_record" />
 
         <ListView
             android:id="@+id/lvPlan"
@@ -90,7 +95,6 @@
             android:layout_height="match_parent"
             android:divider="@color/token_list_view_background_color"
             android:dividerHeight="10dp"
-            android:layout_marginTop="14dp"
             android:layout_marginBottom="10dp"
             android:fadeScrollbars="false"
             android:scrollbars="none">

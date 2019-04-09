@@ -250,4 +250,12 @@
         <item name="android:textColor">@color/app_color_black</item>
     </style>
 
+
+    <style name="divide_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:layout_marginLeft">13sp</item>
+        <item name="android:layout_marginRight">13sp</item>
+        <item name="android:background">@color/app_txt_color_gray_3</item>
+    </style>
 </resources>
