@@ -401,7 +401,7 @@
     <string name="address_already_exist_message_txt">该联系人已存在</string>
 
     <string name="card_package_txt">卡包</string>
-    <string name="node_plan_txt">节点计划</string>
+    <string name="run_for_node_txt">节点竞选</string>
     <string name="build_node_txt">节点共建</string>
     <string name="information_txt">资讯</string>
     <string name="xiaobu_youpin_txt">小布有品</string>
@@ -418,6 +418,7 @@
     <string name="time_txt">时间</string>
     <string name="withdraw_txt">撤销</string>
     <string name="voted_txt">投票</string>
+    <string name="revoke_no_vote_error_message_txt">还未向该节点投票，无法撤票</string>
     <string name="revoke_vote_tx_details_txt">撤销向%1$s(%2$s)的投票</string>
     <string name="revoke_vote_dest_address_txt">%1$s(节点计划合约账户)</string>
     <string name="withdraw_vote_confirm_txt">确认撤票</string>

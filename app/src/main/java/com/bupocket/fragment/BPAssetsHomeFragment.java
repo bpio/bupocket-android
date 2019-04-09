@@ -31,6 +31,7 @@ import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.CurrencyTypeEnum;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.MnemonicWordBackupStateEnum;
+import com.bupocket.enums.ScanTransactionTypeEnum;
 import com.bupocket.enums.TokenActionTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.fragment.components.AssetsListView;
@@ -131,6 +132,8 @@ public class BPAssetsHomeFragment extends BaseFragment {
     private Boolean whetherIdentityWallet = false;
     private QMUITipDialog txSendingTipDialog;
     private TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean;
+
+    private Double scanTxFee;
 
     @Override
     protected View onCreateView() {
@@ -479,7 +482,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                     Call<ApiResult<UserScanQrLoginDto>> call;
                     Map<String, Object> paramsMap = new HashMap<>();
                     paramsMap.put("uuid",uuid);
-                    paramsMap.put("address",currentIdentityWalletAddress);
+                    paramsMap.put("address",currentWalletAddress);
                     call = nodePlanManagementSystemService.userScanQrLogin(paramsMap);
                     call.enqueue(new Callback<ApiResult<UserScanQrLoginDto>>() {
                         @Override
@@ -494,7 +497,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                     Bundle argz = new Bundle();
                                     argz.putString("appId",appId);
                                     argz.putString("uuid",uuid);
-                                    argz.putString("address",currentIdentityWalletAddress);
+                                    argz.putString("address",currentWalletAddress);
                                     argz.putString("appName",appName);
                                     argz.putString("appPic",appPic);
                                     BPNodePlanManagementSystemLoginFragment bpNodePlanManagementSystemLoginFragment = new BPNodePlanManagementSystemLoginFragment();
@@ -575,6 +578,14 @@ public class BPAssetsHomeFragment extends BaseFragment {
         String transactionAmount = contentDto.getAmount();
         String transactionDetail = contentDto.getQrRemark();
         String transactionParams = contentDto.getScript();
+        String transactionType = contentDto.getType();
+        if(ScanTransactionTypeEnum.NODE_VOTE.getCode().equals(transactionType)){
+            scanTxFee = Constants.NODE_VOTE_FEE;
+        }else if(ScanTransactionTypeEnum.NODE_AUDIT.getCode().equals(transactionType)){
+            scanTxFee = Constants.NODE_AUDIT_FEE;
+        }else {
+            scanTxFee = Constants.MIN_FEE;
+        }
 
         // confirm page
         final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
@@ -591,7 +602,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
         mDestAddressTv.setText(destAddress);
         TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
-        mTxFeeTv.setText(String.valueOf(Constants.MIN_FEE));
+        mTxFeeTv.setText(String.valueOf(scanTxFee));
 
         qmuiBottomSheet.findViewById(R.id.detailBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -609,7 +620,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         TextView mDetailsAmountTv = qmuiBottomSheet.findViewById(R.id.detailsAmountTv);
         mDetailsAmountTv.setText(CommonUtil.addSuffix(transactionAmount,"BU"));
         TextView mDetailsTxFeeTv = qmuiBottomSheet.findViewById(R.id.detailsTxFeeTv);
-        mDetailsTxFeeTv.setText(String.valueOf(Constants.MIN_FEE));
+        mDetailsTxFeeTv.setText(String.valueOf(scanTxFee));
         TextView mTransactionParamsTv = qmuiBottomSheet.findViewById(R.id.transactionParamsTv);
         mTransactionParamsTv.setText(transactionParams);
 
@@ -657,7 +668,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
             @Override
             public void run() {
                 try {
-                    final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input, currentWalletAddress, String.valueOf(Constants.MIN_FEE));
+                    final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input, currentWalletAddress, String.valueOf(scanTxFee));
                     String txHash = buildBlobResponse.getResult().getHash();
                     NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
                     Call<ApiResult> call;

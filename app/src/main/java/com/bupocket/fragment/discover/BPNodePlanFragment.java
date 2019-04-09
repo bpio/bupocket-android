@@ -166,7 +166,11 @@ public class BPNodePlanFragment extends BaseFragment {
                 LogUtils.e("position="+position+"\n"+btn);
                 switch (btn) {
                     case R.id.revokeVoteBtn:
-                        showRevokeVoteDialog(nodeList.get(position));
+                        if("0".equals(nodeList.get(position).getMyVoteCount())){
+                            Toast.makeText(getContext(),getString(R.string.revoke_no_vote_error_message_txt),Toast.LENGTH_SHORT).show();
+                        }else{
+                            showRevokeVoteDialog(nodeList.get(position));
+                        }
                         break;
                     case R.id.shareBtn:
                         SuperNodeModel itemInfo = nodeList.get(position);
@@ -218,7 +222,7 @@ public class BPNodePlanFragment extends BaseFragment {
         TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
         mDestAddressTv.setText(destAddress);
         TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
-        mTxFeeTv.setText(String.valueOf(Constants.MIN_FEE));
+        mTxFeeTv.setText(String.valueOf(Constants.NODE_REVOKE_FEE));
 
         qmuiBottomSheet.findViewById(R.id.detailBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -236,7 +240,7 @@ public class BPNodePlanFragment extends BaseFragment {
         TextView mDetailsAmountTv = qmuiBottomSheet.findViewById(R.id.detailsAmountTv);
         mDetailsAmountTv.setText(CommonUtil.addSuffix(transactionAmount,"BU"));
         TextView mDetailsTxFeeTv = qmuiBottomSheet.findViewById(R.id.detailsTxFeeTv);
-        mDetailsTxFeeTv.setText(String.valueOf(Constants.MIN_FEE));
+        mDetailsTxFeeTv.setText(String.valueOf(Constants.NODE_REVOKE_FEE));
         TextView mTransactionParamsTv = qmuiBottomSheet.findViewById(R.id.transactionParamsTv);
         mTransactionParamsTv.setText(transactionParams);
 
@@ -277,7 +281,7 @@ public class BPNodePlanFragment extends BaseFragment {
             @Override
             public void run() {
                 try {
-                    final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount,input.toJSONString(),currentWalletAddress,String.valueOf(Constants.MIN_FEE));
+                    final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount,input.toJSONString(),currentWalletAddress,String.valueOf(Constants.NODE_REVOKE_FEE));
                     String txHash = buildBlobResponse.getResult().getHash();
                     NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
                     Call<ApiResult> call;

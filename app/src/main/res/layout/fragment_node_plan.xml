@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/node_plan_txt"
+            android:text="@string/run_for_node_txt"
             android:theme="@style/BPViewTitle" />
 
         <RelativeLayout
