@@ -197,7 +197,7 @@ public class BPNodePlanFragment extends BaseFragment {
         final String nodeId = itemInfo.getNodeId();
 
         String destAddress = String.format(getString(R.string.revoke_vote_dest_address_txt),Constants.CONTRACT_ADDRESS);
-        String transactionDetail = String.format(getString(R.string.revoke_vote_tx_details_txt),itemInfo.getNodeName(),nodeAddress);
+        String transactionDetail = String.format(getString(R.string.revoke_vote_tx_details_txt),itemInfo.getNodeName());
         String transactionAmount = "0";
 
         final JSONObject input = new JSONObject();
@@ -368,14 +368,7 @@ public class BPNodePlanFragment extends BaseFragment {
         LogUtils.e(currentWalletAddress);
         HashMap<String, Object> listReq = new HashMap<>();
 
-//        "address": "buafafsaffasfsafsfafds",
-//         "identityType": "1",
-//          "nodeName": "华润",
-//          "capitalAddress": "{capitalAddress}"
         listReq.put(Constants.ADDRESS, currentWalletAddress);
-//        listReq.put("identityType","");
-//        listReq.put("nodeName","");
-//        listReq.put("capitalAddress","");
 
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
 

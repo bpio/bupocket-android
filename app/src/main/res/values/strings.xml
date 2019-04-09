@@ -419,7 +419,7 @@
     <string name="withdraw_txt">撤销</string>
     <string name="voted_txt">投票</string>
     <string name="revoke_no_vote_error_message_txt">还未向该节点投票，无法撤票</string>
-    <string name="revoke_vote_tx_details_txt">撤销向%1$s(%2$s)的投票</string>
+    <string name="revoke_vote_tx_details_txt">撤销向\"%1$s\"的投票</string>
     <string name="revoke_vote_dest_address_txt">%1$s(节点计划合约账户)</string>
     <string name="withdraw_vote_confirm_txt">确认撤票</string>
     <string name="withdraw_vote_amount_edittext_hint">最多可撤销%1$s投票数量</string>
