@@ -1,6 +1,9 @@
 package com.bupocket.model;
 
-public class SuperNodeModel {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class SuperNodeModel implements Parcelable {
 
     private String nodeId;
     private String nodeName;
@@ -10,6 +13,29 @@ public class SuperNodeModel {
     private String identityStatus;
     private String nodeVote;
     private String myVoteCount;
+
+    protected SuperNodeModel(Parcel in) {
+        nodeId = in.readString();
+        nodeName = in.readString();
+        nodeLogo = in.readString();
+        nodeCapitalAddress = in.readString();
+        identityType = in.readString();
+        identityStatus = in.readString();
+        nodeVote = in.readString();
+        myVoteCount = in.readString();
+    }
+
+    public static final Creator<SuperNodeModel> CREATOR = new Creator<SuperNodeModel>() {
+        @Override
+        public SuperNodeModel createFromParcel(Parcel in) {
+            return new SuperNodeModel(in);
+        }
+
+        @Override
+        public SuperNodeModel[] newArray(int size) {
+            return new SuperNodeModel[size];
+        }
+    };
 
     public void setNodeId(String nodeId) {
         this.nodeId = nodeId;
@@ -73,5 +99,22 @@ public class SuperNodeModel {
 
     public String getMyVoteCount() {
         return myVoteCount;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(nodeId);
+        dest.writeString(nodeName);
+        dest.writeString(nodeLogo);
+        dest.writeString(nodeCapitalAddress);
+        dest.writeString(identityType);
+        dest.writeString(identityStatus);
+        dest.writeString(nodeVote);
+        dest.writeString(myVoteCount);
     }
 }

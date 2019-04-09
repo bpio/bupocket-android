@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.SuperNodeTypeEnum;
+import com.bupocket.model.SuperNodeModel;
 import com.qmuiteam.qmui.util.QMUIDrawableHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -48,15 +49,14 @@ public class BPNodeShareFragment extends BaseFragment {
     @BindView(R.id.shareBtn)
     LinearLayout mShareBtn;
 
-    private String nodeName;
-    private String nodeType;
-    private String haveVoteNum;
-    private String nodeId;
+
+
 
     private View mShareImageRl;
     private Uri sharePhotoUri = null;
 
     private static final int REQUEST_WRITE_STORAGE_PERMISSION = 121;
+    private SuperNodeModel itemInfo;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,11 +95,9 @@ public class BPNodeShareFragment extends BaseFragment {
     }
 
     private void initData() {
-        Bundle bundle = getArguments();
-        nodeId = bundle.getString("nodeId");
-        nodeName = bundle.getString("nodeName");
-        nodeType = bundle.getString("nodeType");
-        haveVoteNum = bundle.getString("haveVoteNum");
+        itemInfo = getArguments().getParcelable("itemInfo");
+
+
     }
 
     private void initUI() {
@@ -108,11 +106,11 @@ public class BPNodeShareFragment extends BaseFragment {
     }
 
     private void initNodeInfoUI() {
-        mNodeNameTv.setText(nodeName);
+        mNodeNameTv.setText(itemInfo.getNodeName());
         // set node type
-        if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(nodeType)) {
+        if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(itemInfo.getIdentityType())) {
             mNodeTypeTv.setText(getContext().getResources().getString(R.string.common_node));
-        } else if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(nodeType)) {
+        } else if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(itemInfo.getIdentityType())) {
             mNodeTypeTv.setText(getContext().getResources().getString(R.string.ecological_node));
         }
     }
@@ -131,7 +129,7 @@ public class BPNodeShareFragment extends BaseFragment {
 
         mShareImageRl = LayoutInflater.from(getActivity()).inflate(R.layout.view_share_image, null);
         TextView mNodeNameTv = mShareImageRl.findViewById(R.id.nodeNameTv);
-        mNodeNameTv.setText(nodeName);
+        mNodeNameTv.setText(itemInfo.getNodeName());
         Bitmap createFromViewBitmap = getViewBitmap(mShareImageRl);
 //        final Bitmap createFromViewBitmap = QMUIDrawableHelper.createBitmapFromView(mShareImageRl,1);
 

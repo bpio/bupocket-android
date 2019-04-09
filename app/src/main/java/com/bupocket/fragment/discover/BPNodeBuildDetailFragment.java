@@ -11,6 +11,8 @@ import com.bupocket.R;
 import com.bupocket.adaptor.NodeBuildDetailAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.model.NodeBuildDetailModel;
+import com.bupocket.model.NodeBuildModel;
+import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 
@@ -59,6 +61,9 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     }
 
     private void initData() {
+
+        NodeBuildModel nodeBuildModel = (NodeBuildModel)getArguments().getSerializable(BPNodeBuildFragment.NODE_INFO);
+        LogUtils.e("信息："+nodeBuildModel.getName());
 
         if (nodeBuildDetailAdapter == null) {
             nodeBuildDetailAdapter = new NodeBuildDetailAdapter(getContext());
