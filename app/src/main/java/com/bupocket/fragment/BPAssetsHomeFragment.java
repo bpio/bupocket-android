@@ -847,7 +847,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                 argz.putString("sendTime",txDetailRespBoBean.getApplyTimeDate());
                                 BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
                                 bpSendStatusFragment.setArguments(argz);
-                                startFragmentAndDestroyCurrent(bpSendStatusFragment);
+                                startFragment(bpSendStatusFragment);
                             }
                         }
 

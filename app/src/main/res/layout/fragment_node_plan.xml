@@ -87,19 +87,30 @@
             android:visibility="gone"
             layout="@layout/empty_record" />
 
-        <ListView
-            android:id="@+id/lvPlan"
-            android:layout_marginLeft="13dp"
-            android:layout_marginRight="13dp"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:divider="@color/token_list_view_background_color"
-            android:dividerHeight="10dp"
-            android:layout_marginBottom="10dp"
-            android:fadeScrollbars="false"
-            android:scrollbars="none">
+            app:srlEnableScrollContentWhenLoaded="true"
+            app:srlEnableFooterFollowWhenLoadFinished="true">
+
+            <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <ListView
+                android:id="@+id/lvPlan"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="13dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@color/token_list_view_background_color"
+                android:dividerHeight="10dp"
+                android:layout_marginBottom="10dp"
+                android:fadeScrollbars="false"
+                android:scrollbars="none">
 
         </ListView>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     </LinearLayout>
 

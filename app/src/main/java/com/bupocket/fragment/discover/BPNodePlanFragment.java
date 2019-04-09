@@ -50,6 +50,8 @@ import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -83,6 +85,8 @@ public class BPNodePlanFragment extends BaseFragment {
     EditText etNodeSearch;
     @BindView(R.id.addressRecordEmptyLL)
     LinearLayout addressRecordEmptyLL;
+    @BindView(R.id.refreshLayout)
+    RefreshLayout refreshLayout;
 
     private String txHash;
     private QMUITipDialog txSendingTipDialog;
@@ -188,7 +192,20 @@ public class BPNodePlanFragment extends BaseFragment {
             }
         });
 
-//        lvPlan.setOnItemClickListener();
+        refreshLayout.setEnableLoadMore(false);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                refreshData();
+                refreshLayout.finishRefresh();
+                refreshLayout.setNoMoreData(false);
+            }
+        });
+
+    }
+
+    private void refreshData() {
+        initData();
     }
 
     private void showRevokeVoteDialog(SuperNodeModel itemInfo) {
@@ -585,7 +602,7 @@ public class BPNodePlanFragment extends BaseFragment {
                                 argz.putString("sendTime",txDetailRespBoBean.getApplyTimeDate());
                                 BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
                                 bpSendStatusFragment.setArguments(argz);
-                                startFragmentAndDestroyCurrent(bpSendStatusFragment);
+                                startFragment(bpSendStatusFragment);
                             }
                         }
 
