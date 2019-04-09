@@ -47,11 +47,11 @@ public class VoteRecordAdapter extends AbsViewHolderAdapter<MyVoteInfoModel> {
             if (type.equals(VoteNodeEnum.VOTE.getCode())) {
                 recordType.setText(VoteNodeEnum.VOTE.getName1());
                 recordType.setBackgroundResource(VoteNodeEnum.VOTE.getDrawableRes());
-                holder.setText(R.id.voterName,VoteNodeEnum.VOTE.getName2());
+//                holder.setText(R.id.voterName,VoteNodeEnum.VOTE.getName2());
             }else if (type.equals(VoteNodeEnum.CANCLE.getCode())){
                 recordType.setText(VoteNodeEnum.CANCLE.getName1());
                 recordType.setBackgroundResource(VoteNodeEnum.CANCLE.getDrawableRes());
-                holder.setText(R.id.voterName,VoteNodeEnum.CANCLE.getName2());
+//                holder.setText(R.id.voterName,VoteNodeEnum.CANCLE.getName2());
 
             }
         }
@@ -60,6 +60,7 @@ public class VoteRecordAdapter extends AbsViewHolderAdapter<MyVoteInfoModel> {
         if (adapterType==SOME_RECORD) {
 
             holder.getView(R.id.nodeTypeTv).setVisibility(View.INVISIBLE);
+            holder.getView(R.id.voterName).setVisibility(View.INVISIBLE);
         }else{
             holder.setText(R.id.voterName, itemData.getNodeName());
 
