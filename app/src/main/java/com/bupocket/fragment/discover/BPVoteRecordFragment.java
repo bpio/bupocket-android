@@ -15,6 +15,7 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.MyVoteInfoModel;
 import com.bupocket.model.MyVoteRecordModel;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -39,8 +40,8 @@ public class BPVoteRecordFragment extends BaseFragment {
     LinearLayout addressRecordEmptyLL;
 
     private SharedPreferencesHelper sharedPreferencesHelper;
-    private String currentIdentityWalletAddress;
     private VoteRecordAdapter voteRecordAdapter;
+    private String currentWalletAddress;
 
     @Override
     protected View onCreateView() {
@@ -58,12 +59,16 @@ public class BPVoteRecordFragment extends BaseFragment {
     private void initData() {
 
 
+
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
+        currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
+        if(CommonUtil.isNull(currentWalletAddress) || currentWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString())) {
+            currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
+        }
 
         HashMap<String, Object> listReq = new HashMap<>();
 
-        listReq.put(Constants.ADDRESS, currentIdentityWalletAddress);
+        listReq.put(Constants.ADDRESS, currentWalletAddress);
 //        listReq.put("nodeId","");
 
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
@@ -77,12 +82,12 @@ public class BPVoteRecordFragment extends BaseFragment {
                 LogUtils.e("请求成功" + body.getData());
                 if (body == null | body.getData() == null |
                         body.getData().getList() == null | body.getData().getList().size() == 0) {
-//                    addressRecordEmptyLL.setVisibility(View.VISIBLE);
+                    addressRecordEmptyLL.setVisibility(View.VISIBLE);
                 }
 
 
-//                voteRecordAdapter.setNewData(myVoteRecordModels);
-//                voteRecordAdapter.notifyDataSetChanged();
+                voteRecordAdapter.setNewData(body.getData().getList());
+                voteRecordAdapter.notifyDataSetChanged();
 
 
             }
@@ -100,11 +105,11 @@ public class BPVoteRecordFragment extends BaseFragment {
     private void initUI() {
         initTopBar();
         voteRecordAdapter = new VoteRecordAdapter(getContext());
-        ArrayList<MyVoteInfoModel> myVoteRecordModels = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            myVoteRecordModels.add(new MyVoteInfoModel());
-        }
-        voteRecordAdapter.setNewData(myVoteRecordModels);
+//        ArrayList<MyVoteInfoModel> myVoteRecordModels = new ArrayList<>();
+//        for (int i = 0; i < 3; i++) {
+//            myVoteRecordModels.add(new MyVoteInfoModel());
+//        }
+//        voteRecordAdapter.setNewData(myVoteRecordModels);
         lvVoteRecord.setAdapter(voteRecordAdapter);
 
     }

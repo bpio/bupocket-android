@@ -5,6 +5,7 @@ public class MyVoteInfoModel {
 
     private String type;
     private String nodeName;
+    private String identityType;
     private String amount;
     private String status;
     private String date;
@@ -47,5 +48,13 @@ public class MyVoteInfoModel {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getIdentityType() {
+        return identityType;
+    }
+
+    public void setIdentityType(String identityType) {
+        this.identityType = identityType;
     }
 }

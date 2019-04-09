@@ -1,5 +1,6 @@
 package com.bupocket.fragment.discover;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,12 +13,15 @@ import com.bupocket.R;
 import com.bupocket.adaptor.VoteRecordAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.MyVoteInfoModel;
 import com.bupocket.model.MyVoteRecordModel;
 import com.bupocket.model.NodeInfoModel;
+import com.bupocket.model.SuperNodeModel;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
@@ -79,14 +83,22 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
 
     private void initData() {
 
+        final SuperNodeModel itemNodeInfo = getArguments().getParcelable("itemNodeInfo");
+
 
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
+        currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
+        if(CommonUtil.isNull(currentIdentityWalletAddress) || currentIdentityWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString())) {
+            currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
+        }
+
+//        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+//        currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
 
         HashMap<String, Object> listReq = new HashMap<>();
 
         listReq.put(Constants.ADDRESS, currentIdentityWalletAddress);
-//        listReq.put("nodeId","");
+        listReq.put(Constants.NODE_ID,itemNodeInfo.getNodeId());
 
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
 
@@ -96,23 +108,35 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ApiResult<MyVoteRecordModel>> call, Response<ApiResult<MyVoteRecordModel>> response) {
                 ApiResult<MyVoteRecordModel> body = response.body();
-                LogUtils.e("请求成功" + body.getData());
                 if (body == null | body.getData() == null |
                         body.getData().getList() == null | body.getData().getList().size() == 0) {
-//                    addressRecordEmptyLL.setVisibility(View.VISIBLE);
+                    addressRecordEmptyLL.setVisibility(View.VISIBLE);
                 }
 
                 MyVoteRecordModel data = body.getData();
                 NodeInfoModel nodeInfo = data.getNodeInfo();
 
-//                nodeIconIv.setBackground(nodeInfo.getLogo());
                 nodeNameTv.setText(nodeInfo.getNodeName());
                 nodeTypeTv.setText(nodeInfo.getIdentityType());
                 haveVotesNumTv.setText(nodeInfo.getVoteCount());
                 myVotesNumTv.setText(nodeInfo.getMyVoteCount());
 
-//                voteRecordAdapter.setNewData(data.getList());
-//                voteRecordAdapter.notifyDataSetChanged();
+                voteRecordAdapter.setNewData(data.getList());
+                voteRecordAdapter.notifyDataSetChanged();
+
+                String identityType = itemNodeInfo.getIdentityType();
+                if (!TextUtils.isEmpty(identityType)) {
+                    if (identityType.equals(SuperNodeTypeEnum.VALIDATOR.getCode())) {
+                        nodeTypeTv.setText(getContext().getResources().getString(R.string.common_node));
+                    }else if (identityType.equals(SuperNodeTypeEnum.ECOLOGICAL.getCode())){
+                        nodeTypeTv.setText(getContext().getResources().getString(R.string.ecological_node));
+                    }
+                }
+                String nodeLogo = itemNodeInfo.getNodeLogo();
+                if (!TextUtils.isEmpty(nodeLogo)) {
+                    nodeIconIv.setImageBitmap(CommonUtil.base64ToBitmap(nodeLogo));
+                    nodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
+                }
 
 
             }
@@ -130,6 +154,7 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
     private void initUI() {
         initTopBar();
         voteRecordAdapter = new VoteRecordAdapter(getContext());
+        voteRecordAdapter.setAdapterType(VoteRecordAdapter.SOME_RECORD);
         ArrayList<MyVoteInfoModel> myVoteRecordModels = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             myVoteRecordModels.add(new MyVoteInfoModel());
