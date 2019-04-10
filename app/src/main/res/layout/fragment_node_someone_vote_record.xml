@@ -82,62 +82,109 @@
                     tools:text="" />
             </RelativeLayout>
 
-            <RelativeLayout
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_marginLeft="23dp"
                 android:layout_marginTop="51.5dp"
-                android:layout_toRightOf="@+id/nodeIconRl">
+                android:layout_toRightOf="@+id/nodeIconRl"
+                android:orientation="horizontal"
+                >
 
-                <LinearLayout
-                    android:id="@+id/haveVotesNumLl"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:text="@string/number_have_votes"
+                    android:textColor="@color/multiline_edit_hint_color"
+                    android:textSize="12sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/number_have_votes"
-                        android:textColor="@color/multiline_edit_hint_color"
-                        android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/haveVotesNumTv"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="6dp"
+                    android:textColor="@color/app_txt_color_gray_2"
+                    android:textSize="14sp"
+                    tools:text="" />
 
-                    <TextView
-                        android:id="@+id/haveVotesNumTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="6dp"
-                        android:textColor="@color/app_txt_color_gray_2"
-                        android:textSize="14sp"
-                        tools:text="" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/myVotesNumLl"
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="40dp"
-                    android:layout_toRightOf="@+id/haveVotesNumLl"
-                    android:orientation="horizontal">
+                    android:text="@string/my_votes_number"
+                    android:textColor="@color/multiline_edit_hint_color"
+                    android:textSize="12sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/my_votes_number"
-                        android:textColor="@color/multiline_edit_hint_color"
-                        android:textSize="12sp" />
+                <TextView
+                    android:id="@+id/myVotesNumTv"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dp"
+                    android:lines="1"
+                    android:textColor="@color/app_txt_color_gray_2"
+                    android:textSize="14sp"
+                    tools:text="" />
 
-                    <TextView
-                        android:id="@+id/myVotesNumTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
-                        android:lines="1"
-                        android:textColor="@color/app_txt_color_gray_2"
-                        android:textSize="14sp"
-                        tools:text="" />
-                </LinearLayout>
-            </RelativeLayout>
+            </LinearLayout>
+
+            <!--<RelativeLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_marginTop="51.5dp"-->
+                <!--android:layout_toRightOf="@+id/nodeIconRl">-->
+
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/haveVotesNumLl"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="@string/number_have_votes"-->
+                        <!--android:textColor="@color/multiline_edit_hint_color"-->
+                        <!--android:textSize="12sp" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/haveVotesNumTv"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_marginLeft="6dp"-->
+                        <!--android:textColor="@color/app_txt_color_gray_2"-->
+                        <!--android:textSize="14sp"-->
+                        <!--tools:text="" />-->
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:id="@+id/myVotesNumLl"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginLeft="40dp"-->
+                    <!--android:layout_toRightOf="@+id/haveVotesNumLl"-->
+                    <!--android:orientation="horizontal">-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="@string/my_votes_number"-->
+                        <!--android:textColor="@color/multiline_edit_hint_color"-->
+                        <!--android:textSize="12sp" />-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/myVotesNumTv"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="6dp"-->
+                        <!--android:lines="1"-->
+                        <!--android:textColor="@color/app_txt_color_gray_2"-->
+                        <!--android:textSize="14sp"-->
+                        <!--tools:text="" />-->
+                <!--</LinearLayout>-->
+            <!--</RelativeLayout>-->
 
         </RelativeLayout>
 
