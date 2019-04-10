@@ -40,7 +40,7 @@
                 android:textSize="15sp"
                 android:textColor="@color/app_color_black"
                 android:textStyle="bold"
-                tools:text="迷失的小鹿" />
+                tools:text="" />
 
             <TextView
                 android:id="@+id/nodeTypeTv"
@@ -48,7 +48,8 @@
                 android:layout_width="55dp"
                 android:layout_height="16dp"
                 android:layout_marginLeft="7.5dp"
-                tools:text="共识节点"
+                tools:text=""
+                android:textColor="@color/multiline_edit_hint_color"
                 android:textSize="11sp"
                 android:gravity="center"
                 android:layout_centerVertical="true"
@@ -78,7 +79,7 @@
                     android:id="@+id/amountTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="900"/>
+                    tools:text=""/>
             </LinearLayout>
 
             <LinearLayout
@@ -99,7 +100,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/app_color_green"
-                    tools:text="成功"/>
+                    tools:text=""/>
             </LinearLayout>
 
             <LinearLayout
@@ -119,7 +120,7 @@
                     android:id="@+id/timeTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="14:10:55 03/11/2019 "/>
+                    tools:text=" "/>
             </LinearLayout>
         </RelativeLayout>
 

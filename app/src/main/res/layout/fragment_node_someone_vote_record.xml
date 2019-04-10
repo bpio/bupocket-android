@@ -68,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    tools:text="股神699" />
+                    tools:text="" />
 
                 <TextView
                     android:id="@+id/nodeTypeTv"
@@ -80,7 +80,8 @@
                     android:background="@drawable/shape_corner_bg_gray"
                     android:gravity="center"
                     android:textSize="11sp"
-                    tools:text="共识节点" />
+                    android:textColor="@color/multiline_edit_hint_color"
+                    tools:text="" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -110,7 +111,7 @@
                         android:layout_marginLeft="6dp"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="14sp"
-                        tools:text="7833993" />
+                        tools:text="" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -136,7 +137,7 @@
                         android:lines="1"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="14sp"
-                        tools:text="8938" />
+                        tools:text="" />
                 </LinearLayout>
             </RelativeLayout>
 
