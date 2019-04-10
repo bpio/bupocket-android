@@ -603,7 +603,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         if("0".equals(transactionAmount)){
             mTransactionAmountLl.setVisibility(View.GONE);
         }else {
-            mTransactionAmountTv.setText(transactionAmount);
+            mTransactionAmountTv.setText(CommonUtil.thousandSeparator(transactionAmount));
         }
         TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
         mTransactionDetailTv.setText(transactionDetail);
@@ -626,7 +626,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         TextView mDetailsDestAddressTv = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTv);
         mDetailsDestAddressTv.setText(destAddress);
         TextView mDetailsAmountTv = qmuiBottomSheet.findViewById(R.id.detailsAmountTv);
-        mDetailsAmountTv.setText(CommonUtil.addSuffix(transactionAmount,"BU"));
+        mDetailsAmountTv.setText(CommonUtil.addSuffix(CommonUtil.thousandSeparator(transactionAmount),"BU"));
         TextView mDetailsTxFeeTv = qmuiBottomSheet.findViewById(R.id.detailsTxFeeTv);
         mDetailsTxFeeTv.setText(String.valueOf(scanTxFee));
         TextView mTransactionParamsTv = qmuiBottomSheet.findViewById(R.id.transactionParamsTv);

@@ -726,6 +726,11 @@ public class CommonUtil {
         return Pattern.matches(base64Pattern, str);
     }
 
+    /**
+     * 数字添加千分符
+     * @param str
+     * @return
+     */
     public static String thousandSeparator(String str) {
         DecimalFormat df = new DecimalFormat("###,###.########");
         return df.format(new BigDecimal(str));

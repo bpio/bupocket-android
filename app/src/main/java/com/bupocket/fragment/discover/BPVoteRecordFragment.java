@@ -91,7 +91,6 @@ public class BPVoteRecordFragment extends BaseFragment {
         HashMap<String, Object> listReq = new HashMap<>();
 
         listReq.put(Constants.ADDRESS, currentWalletAddress);
-//        listReq.put("nodeId","");
 
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
 
@@ -145,8 +144,6 @@ public class BPVoteRecordFragment extends BaseFragment {
             }
         });
         TextView title = mTopBar.setTitle(getResources().getString(R.string.vote_record_txt));
-
-
     }
 
 }
