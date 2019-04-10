@@ -11,11 +11,11 @@
         android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/qmui_topbar_height"
+        app:qmui_config_color_gray_1="#333333"
         app:qmui_topbar_bg_color="@color/app_color_white"
         app:qmui_topbar_need_separator="false"
-        app:qmui_config_color_gray_1="#333333"
-        app:qmui_topbar_title_text_size="21sp"
-        app:qmui_topbar_title_color="@color/app_color_black" />
+        app:qmui_topbar_title_color="@color/app_color_black"
+        app:qmui_topbar_title_text_size="21sp" />
 
     <include
         layout="@layout/view_empty_record"
@@ -79,8 +79,8 @@
                     android:layout_toRightOf="@+id/nodeNameTv"
                     android:background="@drawable/shape_corner_bg_gray"
                     android:gravity="center"
-                    android:textSize="11sp"
                     android:textColor="@color/multiline_edit_hint_color"
+                    android:textSize="11sp"
                     tools:text="" />
             </RelativeLayout>
 
@@ -152,24 +152,31 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"
                 android:layout_marginLeft="14dp"
+                android:layout_marginBottom="12dp"
                 android:text="@string/vote_record_txt"
                 android:textColor="@color/app_txt_color_gray"
                 android:textSize="13sp" />
 
-            <ListView
-                android:id="@+id/lvSomeRecord"
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/refreshLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:divider="@null"
-                >
+                android:layout_height="match_parent"
+                app:srlEnableFooterFollowWhenLoadFinished="true"
+                app:srlEnableScrollContentWhenLoaded="true">
 
+                <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-            </ListView>
+                <ListView
+                    android:id="@+id/lvSomeRecord"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@null"
+                    android:scrollbars="none" />
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
         </LinearLayout>
     </LinearLayout>
-
-
 </LinearLayout>
