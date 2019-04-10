@@ -60,12 +60,8 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
     TextView nodeTypeTv;
     @BindView(R.id.haveVotesNumTv)
     TextView haveVotesNumTv;
-    @BindView(R.id.haveVotesNumLl)
-    LinearLayout haveVotesNumLl;
     @BindView(R.id.myVotesNumTv)
     TextView myVotesNumTv;
-    @BindView(R.id.myVotesNumLl)
-    LinearLayout myVotesNumLl;
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
 
@@ -151,11 +147,6 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
                 }
 
                 MyVoteRecordModel data = body.getData();
-                NodeInfoModel nodeInfo = data.getNodeInfo();
-
-
-
-
                 voteRecordAdapter.setNewData(data.getList());
                 voteRecordAdapter.notifyDataSetChanged();
 
