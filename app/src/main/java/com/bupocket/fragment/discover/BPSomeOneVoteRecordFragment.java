@@ -107,7 +107,26 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
 
     private void initData() {
 
-        final SuperNodeModel itemNodeInfo = getArguments().getParcelable("itemNodeInfo");
+         SuperNodeModel itemNodeInfo = getArguments().getParcelable("itemNodeInfo");
+
+        nodeNameTv.setText(itemNodeInfo.getNodeName());
+        haveVotesNumTv.setText(itemNodeInfo.getNodeVote());
+        myVotesNumTv.setText(itemNodeInfo.getMyVoteCount());
+
+        String identityType = itemNodeInfo.getIdentityType();
+        if (!TextUtils.isEmpty(identityType)) {
+            if (identityType.equals(SuperNodeTypeEnum.VALIDATOR.getCode())) {
+                nodeTypeTv.setText(getContext().getResources().getString(R.string.common_node));
+            }else if (identityType.equals(SuperNodeTypeEnum.ECOLOGICAL.getCode())){
+                nodeTypeTv.setText(getContext().getResources().getString(R.string.ecological_node));
+            }
+        }
+        String nodeLogo = itemNodeInfo.getNodeLogo();
+        if (!TextUtils.isEmpty(nodeLogo)) {
+            nodeIconIv.setImageBitmap(CommonUtil.base64ToBitmap(nodeLogo));
+            nodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
+        }
+
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
         if(CommonUtil.isNull(currentIdentityWalletAddress) || currentIdentityWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString())) {
@@ -134,27 +153,12 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
                 MyVoteRecordModel data = body.getData();
                 NodeInfoModel nodeInfo = data.getNodeInfo();
 
-                nodeNameTv.setText(nodeInfo.getNodeName());
-                nodeTypeTv.setText(nodeInfo.getIdentityType());
-                haveVotesNumTv.setText(nodeInfo.getVoteCount());
-                myVotesNumTv.setText(nodeInfo.getMyVoteCount());
+
+
 
                 voteRecordAdapter.setNewData(data.getList());
                 voteRecordAdapter.notifyDataSetChanged();
 
-                String identityType = itemNodeInfo.getIdentityType();
-                if (!TextUtils.isEmpty(identityType)) {
-                    if (identityType.equals(SuperNodeTypeEnum.VALIDATOR.getCode())) {
-                        nodeTypeTv.setText(getContext().getResources().getString(R.string.common_node));
-                    }else if (identityType.equals(SuperNodeTypeEnum.ECOLOGICAL.getCode())){
-                        nodeTypeTv.setText(getContext().getResources().getString(R.string.ecological_node));
-                    }
-                }
-                String nodeLogo = itemNodeInfo.getNodeLogo();
-                if (!TextUtils.isEmpty(nodeLogo)) {
-                    nodeIconIv.setImageBitmap(CommonUtil.base64ToBitmap(nodeLogo));
-                    nodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
-                }
 
 
             }
