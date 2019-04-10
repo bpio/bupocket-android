@@ -11,7 +11,10 @@ import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.bupocket.R;
 import com.bupocket.enums.CurrencyTypeEnum;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -794,6 +797,20 @@ public class CommonUtil {
             accountBPData = sharedPreferencesHelper.getSharedPreference(currentWalletAddress+ "-BPdata", "").toString();
         }
         return accountBPData;
+    }
+
+    public static void showMessageDialog(Context mContext, String notice) {
+        int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
+        new QMUIDialog.MessageDialogBuilder(mContext)
+                .setMessage(notice)
+                .addAction(R.string.i_knew_btn_txt, new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                    }
+                })
+                .create(mCurrentDialogStyle).show();
+
     }
 
 }

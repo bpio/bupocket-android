@@ -174,14 +174,7 @@ public class BPNodePlanFragment extends BaseFragment {
                 switch (btn) {
                     case R.id.revokeVoteBtn:
                         if("0".equals(superNodeModel.getMyVoteCount())){
-                            new QMUIDialog.MessageDialogBuilder(getActivity())
-                                    .setMessage(R.string.revoke_no_vote_error_message_txt)
-                                    .addAction(getString(R.string.i_knew_btn_txt), new QMUIDialogAction.ActionListener() {
-                                @Override
-                                public void onClick(QMUIDialog dialog, int index) {
-                                    dialog.dismiss();
-                                }
-                            }).setCanceledOnTouchOutside(false).create().show();
+                            CommonUtil.showMessageDialog(getContext(),getString(R.string.revoke_no_vote_error_message_txt));
                         }else{
                             showRevokeVoteDialog(superNodeModel);
                         }
@@ -331,7 +324,8 @@ public class BPNodePlanFragment extends BaseFragment {
                             if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                                 submitTransaction(buildBlobResponse);
                             }else {
-                                Toast.makeText(getContext(),respDto.getMsg(),Toast.LENGTH_SHORT).show();
+                                CommonUtil.showMessageDialog(getContext(),respDto.getMsg());
+//                                Toast.makeText(getContext(),respDto.getMsg(),Toast.LENGTH_SHORT).show();
                             }
                         }
 
