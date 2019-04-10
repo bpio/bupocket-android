@@ -86,6 +86,8 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
     QMUIEmptyView mEmptyView;
     @BindView(R.id.assetCodeTv)
     TextView mAssetCodeTv;
+    @BindView(R.id.txSignatureTitleTv)
+    TextView mTxSignatureTitleTv;
 
     @BindView(R.id.txDetailLl)
     LinearLayout mTxDetailLl;
@@ -184,21 +186,27 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     mTxDetailTxInfoNonceTv.setText(txInfoRespBoBean.getNonce() + "");
 
                     String signatureStr = txInfoRespBoBean.getSignatureStr();
-                    JSONArray signatureArr = JSON.parseArray(signatureStr);
-                    JSONObject signatureObj = null;
-                    List<TxDetailSignatureAdapter.Signature> signatures = new ArrayList<>();
-                    TxDetailSignatureAdapter.Signature signature = null;
-                    for (int i = 0; i < signatureArr.size(); i++) {
-                        signatureObj = JSON.parseObject(signatureArr.getString(i));
-                        signature = new TxDetailSignatureAdapter.Signature();
-                        signature.setPublicKey(signatureObj.getString("publicKey"));
-                        signature.setSignData(signatureObj.getString("signData"));
-                        signatures.add(signature);
+                    if(signatureStr != null){
+                        JSONArray signatureArr = JSON.parseArray(signatureStr);
+                        JSONObject signatureObj = null;
+                        List<TxDetailSignatureAdapter.Signature> signatures = new ArrayList<>();
+                        TxDetailSignatureAdapter.Signature signature = null;
+                        for (int i = 0; i < signatureArr.size(); i++) {
+                            signatureObj = JSON.parseObject(signatureArr.getString(i));
+                            signature = new TxDetailSignatureAdapter.Signature();
+                            signature.setPublicKey(signatureObj.getString("publicKey"));
+                            signature.setSignData(signatureObj.getString("signData"));
+                            signatures.add(signature);
+                        }
+
+                        if(isAdded()){
+                            loads(signatures);
+                        }
+                    }else {
+                        mTxSignatureTitleTv.setVisibility(View.GONE);
+                        txDetailSignatureListLl.setVisibility(View.GONE);
                     }
 
-                    if(isAdded()){
-                        loads(signatures);
-                    }
 //                    txDetailSignatureAdapter = new TxDetailSignatureAdapter(signatures, getContext());
 //                    mTxDetailSignatureItemLv.setAdapter(txDetailSignatureAdapter);
 //                    setListViewHeightBasedOnChildren(mTxDetailSignatureItemLv);
