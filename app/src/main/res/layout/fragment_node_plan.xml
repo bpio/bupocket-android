@@ -87,7 +87,7 @@
 
         <include
             android:visibility="gone"
-            layout="@layout/empty_record" />
+            layout="@layout/view_empty_record" />
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/refreshLayout"

@@ -45,7 +45,7 @@
 
     <include
         android:visibility="gone"
-        layout="@layout/empty_record" />
+        layout="@layout/view_empty_record" />
 
 
 

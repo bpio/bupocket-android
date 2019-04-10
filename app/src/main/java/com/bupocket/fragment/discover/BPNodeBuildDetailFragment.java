@@ -114,7 +114,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
     private void ShowSupport() {
         final QMUIBottomSheet supportDialog = new QMUIBottomSheet(getContext());
-        supportDialog.setContentView(supportDialog.getLayoutInflater().inflate(R.layout.dialog_node_detail_support,null));
+        supportDialog.setContentView(supportDialog.getLayoutInflater().inflate(R.layout.view_dialog_node_detail_support,null));
         addBtn = supportDialog.findViewById(R.id.tvDialogAdd);
         subBtn = supportDialog.findViewById(R.id.tvDialogSub);
         tvDialogAmount =  supportDialog.findViewById(R.id.tvDialogAmount);
