@@ -32,7 +32,7 @@
                 android:button="@null"
                 android:cropToPadding="true"
                 android:paddingRight="6dp"
-                android:paddingLeft="13dp"
+                android:paddingLeft="15dp"
                 android:drawableLeft="@drawable/selector_my_node"
                 />
 
