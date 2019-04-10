@@ -2,6 +2,9 @@ package com.bupocket.fragment.discover;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -11,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,6 +34,9 @@ import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -64,7 +71,7 @@ public class BPNodeShareFragment extends BaseFragment {
     private static final int REQUEST_WRITE_STORAGE_PERMISSION = 121;
     private SuperNodeModel itemInfo;
 
-    @Override
+/*    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
@@ -84,7 +91,7 @@ public class BPNodeShareFragment extends BaseFragment {
                 Toast.makeText(getContext(), getString(R.string.write_external_storage_no_permissions_txt), Toast.LENGTH_SHORT).show();
             }
         }
-    }
+    }*/
 
     @Override
     protected View onCreateView() {
@@ -219,6 +226,40 @@ public class BPNodeShareFragment extends BaseFragment {
                         .setTitle("Share Image")
                         .build()
                         .shareBySystem();
+            }
+        });
+        qmuiBottomSheet.findViewById(R.id.copyCommandBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiBottomSheet.dismiss();
+                final QMUIDialog xiaobuCommandDialog = new QMUIDialog(getContext());
+                xiaobuCommandDialog.setCanceledOnTouchOutside(true);
+                xiaobuCommandDialog.setContentView(R.layout.view_share_xiaobu_command);
+                final TextView mXiaobuCommandContentTv = xiaobuCommandDialog.findViewById(R.id.xiaobuCommandContentTv);
+                mXiaobuCommandContentTv.setText(Html.fromHtml(String.format(getString(R.string.xiaobu_command_content_txt),itemInfo.getNodeName(),"https://bumo.io/technology")));
+
+                QMUIRoundButton copyCommandBtn = xiaobuCommandDialog.findViewById(R.id.copyCommandBtn);
+                copyCommandBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        String xiaobuCommandStr = mXiaobuCommandContentTv.getText().toString();
+                        ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                        ClipData mClipData = ClipData.newPlainText("Label", xiaobuCommandStr);
+                        cm.setPrimaryClip(mClipData);
+                        final QMUITipDialog copySuccessDiglog = new QMUITipDialog.Builder(getContext())
+                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
+                                .setTipWord(getString(R.string.qr_copy_success_message))
+                                .create();
+                        copySuccessDiglog.show();
+                        getView().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                copySuccessDiglog.dismiss();
+                            }
+                        }, 1500);
+                    }
+                });
+                xiaobuCommandDialog.show();
             }
         });
         qmuiBottomSheet.show();

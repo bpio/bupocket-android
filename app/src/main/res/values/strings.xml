@@ -454,6 +454,9 @@
     <string name="support_people_num_txt">%1$s人支持</string>
     <string name="share_txt">分享</string>
     <string name="node_introduce_txt">节点介绍</string>
+    <string name="xiaobu_command_title_txt">小布口令已生成</string>
+    <string name="xiaobu_command_content_txt">#&lt;font color=\'#02CA71\'>小布口令&lt;/font>#我为BUMO超级节点计划参与方&lt;font color=\'#151515\'>%1$s&lt;/font>打call，打开链接进行为他投票&lt;font color=\'#02CA71\'>%2$s&lt;/font></string>
+    <string name="copy_command_txt">复制口令</string>
 
     <string name="common_node">记账节点</string>
     <string name="ecological_node">生态节点</string>
