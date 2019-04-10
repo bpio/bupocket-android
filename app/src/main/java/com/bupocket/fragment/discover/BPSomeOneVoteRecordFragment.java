@@ -1,5 +1,6 @@
 package com.bupocket.fragment.discover;
 
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,6 +27,8 @@ import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -63,6 +66,8 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
     TextView myVotesNumTv;
     @BindView(R.id.myVotesNumLl)
     LinearLayout myVotesNumLl;
+    @BindView(R.id.refreshLayout)
+    RefreshLayout refreshLayout;
 
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String currentIdentityWalletAddress;
@@ -79,24 +84,37 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
     private void init() {
         initUI();
         initData();
+        setListener();
     }
+
+    private void setListener() {
+        refreshLayout.setEnableLoadMore(false);
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                refreshData();
+                refreshLayout.finishRefresh();
+                refreshLayout.setNoMoreData(false);
+            }
+        });
+
+    }
+
+    private void refreshData() {
+        initData();
+    }
+
 
     private void initData() {
 
         final SuperNodeModel itemNodeInfo = getArguments().getParcelable("itemNodeInfo");
-
-
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
         if(CommonUtil.isNull(currentIdentityWalletAddress) || currentIdentityWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString())) {
             currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
         }
 
-//        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-//        currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
-
         HashMap<String, Object> listReq = new HashMap<>();
-
         listReq.put(Constants.ADDRESS, currentIdentityWalletAddress);
         listReq.put(Constants.NODE_ID,itemNodeInfo.getNodeId());
 
