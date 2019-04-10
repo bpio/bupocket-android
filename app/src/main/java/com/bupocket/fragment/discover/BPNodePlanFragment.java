@@ -219,7 +219,7 @@ public class BPNodePlanFragment extends BaseFragment {
     }
 
     private void refreshData() {
-        initData();
+        getAllNode();
     }
 
     private void showRevokeVoteDialog(SuperNodeModel itemInfo) {
@@ -384,18 +384,11 @@ public class BPNodePlanFragment extends BaseFragment {
     }
 
     private void initData() {
-
-        getAllNode();
+        refreshLayout.autoRefresh();
     }
 
-    private void getAllNode() {
-        if (myVoteInfolist==null) {
-            myVoteInfolist=new ArrayList<>();
-        }
 
-        if (nodeList==null) {
-            nodeList=new ArrayList<>();
-        }
+    private void getAllNode() {
 
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress", "").toString();
@@ -416,20 +409,23 @@ public class BPNodePlanFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ApiResult<SuperNodeDto>> call, Response<ApiResult<SuperNodeDto>> response) {
                 ApiResult<SuperNodeDto> body = response.body();
-                LogUtils.e("请求成功" + body.getData());
+                if (body==null) {
+                    return;
+                }
                 nodeList = body.getData().getNodeList();
                 if (nodeList != null) {
+                    setEmpty(nodeList.size()==0);
                     superNodeAdapter.setNewData(nodeList);
                     superNodeAdapter.notifyDataSetChanged();
                     myVoteInfolist = myVoteInfoList(nodeList);
-                    setEmpty(nodeList.size()==0);
+
                 }
 
             }
 
             @Override
             public void onFailure(Call<ApiResult<SuperNodeDto>> call, Throwable t) {
-                LogUtils.e("请求失败" + t.getMessage());
+//                LogUtils.e("请求失败" + t.getMessage());
 
             }
         });
@@ -462,12 +458,14 @@ public class BPNodePlanFragment extends BaseFragment {
     private void initListView() {
         superNodeAdapter = new SuperNodeAdapter(this.getContext());
         lvPlan.setAdapter(superNodeAdapter);
-//        lvPlan.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//            }
-//        });
+
+        if (myVoteInfolist==null) {
+            myVoteInfolist=new ArrayList<>();
+        }
+
+        if (nodeList==null) {
+            nodeList=new ArrayList<>();
+        }
 
     }
 
