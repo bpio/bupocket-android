@@ -8,16 +8,20 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bupocket.R;
 import com.bupocket.base.AbsViewHolderAdapter;
 import com.bupocket.base.BaseRecyclerAdapter;
 import com.bupocket.base.BaseViewHolder;
+import com.bupocket.common.Constants;
 import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.ImageUtil;
 import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.widget.popup.QMUIListPopup;
+import com.squareup.picasso.Picasso;
 import com.zhy.http.okhttp.utils.ImageUtils;
 
 import org.bouncycastle.util.encoders.UrlBase64Encoder;
@@ -85,12 +89,11 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         ImageView nodeIconIv = holder.getView(R.id.nodeIconIv);
 
         String nodeLogo = itemData.getNodeLogo();
-        if (!TextUtils.isEmpty(nodeLogo.toString().trim())) {
-            nodeIconIv.setImageBitmap(CommonUtil.base64ToBitmap(nodeLogo));
-            nodeIconIv.setBackgroundColor(context.getResources().getColor(R.color.app_color_white));
-        }
 
-
+        Glide.with(context)
+                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
+                .into(nodeIconIv);
+        nodeIconIv.setBackgroundColor(context.getResources().getColor(R.color.app_color_white));
 
     }
 
@@ -104,7 +107,4 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
     public void setOnItemBtnListener(OnItemBtnListener onItemBtnListener) {
         this.onItemBtnListener = onItemBtnListener;
     }
-
-
-
 }

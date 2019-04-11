@@ -7,6 +7,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,8 +25,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.Target;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.Constants;
 import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
@@ -42,6 +46,7 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,6 +77,7 @@ public class BPNodeShareFragment extends BaseFragment {
     private String shareUrl = "https://bumo.io/technology";
 
     private SuperNodeModel itemInfo;
+    private Bitmap nodeLogoBitmap = null;
 
     @Override
     protected View onCreateView() {
@@ -109,11 +115,28 @@ public class BPNodeShareFragment extends BaseFragment {
         mHaveVotesNumTv.setText(itemInfo.getNodeVote());
         mSupportPeopleTv.setText(String.format(getString(R.string.support_people_num_txt),itemInfo.getSupport()));
         mNodeIntroduceTv.setText(itemInfo.getIntroduce());
-        String nodeLogo = itemInfo.getNodeLogo();
-        if (!TextUtils.isEmpty(nodeLogo)) {
-            mNodeIconIv.setImageBitmap(CommonUtil.base64ToBitmap(nodeLogo));
-            mNodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
-        }
+        final String nodeLogo = itemInfo.getNodeLogo();
+        Glide.with(getContext())
+                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
+                .into(mNodeIconIv);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    nodeLogoBitmap = Glide.with(getContext())
+                            .asBitmap()
+                            .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
+                            .centerCrop()
+                            .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
+                            .get();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+        mNodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
     }
 
     private void setListener() {
@@ -132,14 +155,15 @@ public class BPNodeShareFragment extends BaseFragment {
         TextView mNodeNameTv = mShareImageRl.findViewById(R.id.nodeNameTv);
         mNodeNameTv.setText(itemInfo.getNodeName());
         QMUIRadiusImageView nodeIconIv = mShareImageRl.findViewById(R.id.nodeIconIv);
+        nodeIconIv.setImageBitmap(nodeLogoBitmap);
         ImageView mQrIv = mShareImageRl.findViewById(R.id.qrIv);
         Bitmap QRBitmap = QRCodeUtil.createQRCodeBitmap(shareUrl,356,356);
         mQrIv.setImageBitmap(QRBitmap);
-        String nodeLogo = itemInfo.getNodeLogo();
-        if (!TextUtils.isEmpty(nodeLogo)) {
-            nodeIconIv.setImageBitmap(CommonUtil.base64ToBitmap(nodeLogo));
-            nodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
-        }
+//        String nodeLogo = itemInfo.getNodeLogo();
+//        Glide.with(getContext())
+//                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
+//                .into(nodeIconIv);
+
         Bitmap createFromViewBitmap = getViewBitmap(mShareImageRl);
 //        final Bitmap createFromViewBitmap = QMUIDrawableHelper.createBitmapFromView(mShareImageRl,1);
 

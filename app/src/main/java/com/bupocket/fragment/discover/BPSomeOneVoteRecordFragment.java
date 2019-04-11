@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.adaptor.VoteRecordAdapter;
 import com.bupocket.base.BaseFragment;
@@ -127,10 +128,10 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
             }
         }
         String nodeLogo = itemNodeInfo.getNodeLogo();
-        if (!TextUtils.isEmpty(nodeLogo)) {
-            nodeIconIv.setImageBitmap(CommonUtil.base64ToBitmap(nodeLogo));
-            nodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
-        }
+        Glide.with(getContext())
+                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
+                .into(nodeIconIv);
+        nodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
 
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress", "").toString();

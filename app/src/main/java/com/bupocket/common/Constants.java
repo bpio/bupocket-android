@@ -35,6 +35,7 @@ public class Constants {
 
     public static final String QR_LOGIN_PREFIX = "bumo://login/";
     public static final String QR_NODE_PLAN_PREFIX = "bumo://dpos/";
+    public static final String NODE_PLAN_IMAGE_URL_PREFIX = "http://192.168.6.97:5648/img-dpos/";
 
     public static final String  ADDRESS="address";
     public static final String  NODE_ID="nodeId";
