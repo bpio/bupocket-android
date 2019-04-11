@@ -38,7 +38,7 @@
         android:textColor="@color/app_color_black"
         android:textSize="18sp"
         android:textStyle="bold"
-        tools:text="9223372036854775807" />
+        />
 
     <TextView
         android:id="@+id/assetAmountTv"
@@ -48,7 +48,7 @@
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:textColor="@color/send_confirm_gray_color"
-        tools:text="9223372036854775807" />
+       />
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -204,7 +204,7 @@
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:hint="@string/send_hint_txt1"
-                            android:inputType=""
+                            android:inputType="number"
                             android:textColor="@color/app_color_black"
                             android:textSize="14sp" />
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
 
@@ -13,120 +13,122 @@
         android:layout_marginRight="13dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/shape_corner"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:layout_marginLeft="15dp">
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="14dp">
 
             <TextView
                 android:id="@+id/recordTypeTv"
                 android:layout_width="18dp"
                 android:layout_height="18dp"
+                android:background="@drawable/shape_corner_green"
+                android:gravity="center"
                 android:text="@string/vote_txt"
                 android:textColor="@color/app_color_white"
-                android:textSize="13sp"
-                android:gravity="center"
-                android:background="@drawable/shape_corner_green"/>
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/voterName"
-                android:layout_marginLeft="10dp"
+                style="@style/tv_node_plan_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:layout_marginLeft="10dp"
                 android:textColor="@color/app_color_black"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 tools:text="" />
 
             <TextView
                 android:id="@+id/nodeTypeTv"
-                android:layout_toRightOf="@+id/nodeNameTv"
                 android:layout_width="55dp"
                 android:layout_height="16dp"
+                android:layout_centerVertical="true"
                 android:layout_marginLeft="7.5dp"
-                tools:text=""
+                android:layout_toRightOf="@+id/nodeNameTv"
+                android:background="@drawable/shape_corner_bg_gray"
+                android:gravity="center"
                 android:textColor="@color/multiline_edit_hint_color"
                 android:textSize="11sp"
-                android:gravity="center"
-                android:layout_centerVertical="true"
-                android:background="@drawable/shape_corner_bg_gray"/>
+                tools:text="" />
         </LinearLayout>
 
         <RelativeLayout
-            android:layout_marginTop="15dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp">
 
             <LinearLayout
                 android:id="@+id/amountLl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/amount_txt"
-                    android:textColor="@color/app_txt_color_gray"/>
+                    android:textColor="@color/app_txt_color_gray" />
 
                 <TextView
                     android:id="@+id/amountTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text=""/>
+                    tools:text="" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/statusLl"
-                android:layout_toRightOf="@+id/amountLl"
-                android:layout_marginLeft="64.5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="64.5dp"
+                android:layout_toRightOf="@+id/amountLl"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/status_txt"
-                    android:textColor="@color/app_txt_color_gray"/>
+                    android:textColor="@color/app_txt_color_gray" />
 
                 <TextView
                     android:id="@+id/statusTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/app_color_green"
-                    tools:text=""/>
+                    tools:text="" />
             </LinearLayout>
 
             <LinearLayout
-                android:gravity="right"
                 android:id="@+id/timeLl"
-                android:layout_alignParentRight="true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:gravity="right"
                 android:orientation="vertical">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/time_txt"
-                    android:textColor="@color/app_txt_color_gray"/>
+                    android:textColor="@color/app_txt_color_gray" />
 
                 <TextView
                     android:id="@+id/timeTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text=" "/>
+                    tools:text=" " />
             </LinearLayout>
         </RelativeLayout>
 
 
     </LinearLayout>
-
 
 
 </LinearLayout>

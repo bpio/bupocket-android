@@ -1,6 +1,7 @@
 package com.bupocket.fragment;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.*;
@@ -10,6 +11,7 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -454,7 +456,14 @@ public class BPSendTokenFragment extends BaseFragment {
                         final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
                         qmuiDialog.setCanceledOnTouchOutside(false);
                         qmuiDialog.setContentView(R.layout.view_password_comfirm);
+                        final EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
                         qmuiDialog.show();
+                        mPasswordConfirmEt.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                showSoftInputFromWindow(mPasswordConfirmEt);
+                            }
+                        },10);
 
                         QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
 
@@ -471,7 +480,7 @@ public class BPSendTokenFragment extends BaseFragment {
 
                             @Override
                             public void onClick(View v) {
-                                EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
+
                                 final String password = mPasswordConfirmEt.getText().toString().trim();
                                 txSendingTipDialog = new QMUITipDialog.Builder(getContext())
                                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
@@ -693,4 +702,17 @@ public class BPSendTokenFragment extends BaseFragment {
             }
         }
     };
+
+
+
+    public void showSoftInputFromWindow(EditText editText){
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        editText.findFocus();
+        InputMethodManager inputManager =
+                (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.showSoftInput(editText,  InputMethodManager.SHOW_FORCED);
+    }
+
 }
