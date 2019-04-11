@@ -507,4 +507,5 @@
 
 
     <string name="transaction_timeout">请求已超时，请重新操作。</string>
+    <string name="reload_txt">重新加载</string>
 </resources>
