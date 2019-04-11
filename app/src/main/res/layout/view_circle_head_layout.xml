@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/llHeadLayout"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@mipmap/icon_token_bg_list"
     android:gravity="center"
     android:orientation="vertical"
@@ -11,11 +11,10 @@
 
 
     <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-        android:id="@+id/ivRadiusHead"
+        android:id="@+id/assetIconIv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/app_color_white"
         app:qmui_border_width="0dp"
         app:qmui_is_circle="true" />
 
