@@ -7,6 +7,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -46,11 +47,13 @@ import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
+import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -71,6 +74,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.content.Context.INPUT_METHOD_SERVICE;
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class BPNodePlanFragment extends BaseFragment {
 
@@ -87,6 +91,8 @@ public class BPNodePlanFragment extends BaseFragment {
     EditText etNodeSearch;
     @BindView(R.id.addressRecordEmptyLL)
     LinearLayout addressRecordEmptyLL;
+    @BindView(R.id.myNodeTipsIv)
+    ImageView mMyNodeTipsIv;
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
 
@@ -99,6 +105,7 @@ public class BPNodePlanFragment extends BaseFragment {
     private Boolean whetherIdentityWallet = false;
     private SuperNodeAdapter superNodeAdapter;
 
+    private QMUIPopup myNodeExplainPopup;
 
     private ArrayList<SuperNodeModel> myVoteInfolist;
     private ArrayList<SuperNodeModel> nodeList;
@@ -209,6 +216,35 @@ public class BPNodePlanFragment extends BaseFragment {
             }
         });
 
+        mMyNodeTipsIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initPopup();
+                myNodeExplainPopup.setAnimStyle(QMUIPopup.ANIM_GROW_FROM_CENTER);
+                myNodeExplainPopup.setPreferredDirection(QMUIPopup.DIRECTION_BOTTOM);
+                myNodeExplainPopup.show(v);
+                ImageView arrowUp = myNodeExplainPopup.getDecorView().findViewById(R.id.arrow_up);
+                arrowUp.setImageDrawable(getResources().getDrawable(R.mipmap.triangle));
+            }
+        });
+    }
+
+    private void initPopup() {
+        if (myNodeExplainPopup == null) {
+            myNodeExplainPopup = new QMUIPopup(getContext(), QMUIPopup.DIRECTION_NONE);
+            TextView textView = new TextView(getContext());
+            textView.setLayoutParams(myNodeExplainPopup.generateLayoutParam(
+                    QMUIDisplayHelper.dp2px(getContext(), 280),
+                    WRAP_CONTENT
+            ));
+            textView.setLineSpacing(QMUIDisplayHelper.dp2px(getContext(), 4), 1.0f);
+            int padding = QMUIDisplayHelper.dp2px(getContext(), 10);
+            textView.setPadding(padding, padding, padding, padding);
+            textView.setText(getString(R.string.node_associated_with_me_help_txt));
+            textView.setTextColor(ContextCompat.getColor(getContext(), R.color.app_color_white));
+            textView.setBackgroundColor(getResources().getColor(R.color.popup_background_color));
+            myNodeExplainPopup.setContentView(textView);
+        }
     }
 
     private void refreshData() {

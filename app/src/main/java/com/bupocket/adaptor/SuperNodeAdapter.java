@@ -28,24 +28,10 @@ import java.util.ArrayList;
 public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
 
     QMUIListPopup morePop;
-    MoreBtnAdapter moreBtnAdapter;
     private int position;
 
     public SuperNodeAdapter(@NonNull Context context) {
         super(context);
-
-        initData();
-    }
-
-    private void initData() {
-        if (moreBtnAdapter == null) {
-            moreBtnAdapter = new MoreBtnAdapter(context);
-            ArrayList<String> newData = new ArrayList<>();
-            newData.add(context.getResources().getString(R.string.cancel_vote));
-            newData.add(context.getResources().getString(R.string.vote_record));
-            moreBtnAdapter.setNewData(newData);
-        }
-
     }
 
     @Override

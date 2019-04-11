@@ -406,6 +406,7 @@
     <string name="information_txt">资讯</string>
     <string name="xiaobu_youpin_txt">小布有品</string>
     <string name="node_associated_with_me_txt">和我相关的节点</string>
+    <string name="node_associated_with_me_help_txt">勾选后过滤出和我相关的节点信息，如我的投过票的节点和我是节点发起人（节点资金地址是本钱包地址）的节点</string>
     <string name="search_txt">搜索</string>
     <string name="number_have_votes">得票数</string>
     <string name="my_votes_number">我的投票数</string>
