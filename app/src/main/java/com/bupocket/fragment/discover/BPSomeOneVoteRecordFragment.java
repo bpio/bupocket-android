@@ -18,19 +18,17 @@ import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
-import com.bupocket.model.MyVoteInfoModel;
 import com.bupocket.model.MyVoteRecordModel;
-import com.bupocket.model.NodeInfoModel;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -46,7 +44,7 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
     QMUITopBar mTopBar;
     @BindView(R.id.addressRecordEmptyLL)
     LinearLayout addressRecordEmptyLL;
-    @BindView(R.id.lvSomeRecord)
+    @BindView(R.id.lvRefresh)
     ListView lvVoteRecord;
     @BindView(R.id.nodeIconBgIv)
     ImageView nodeIconBgIv;
@@ -64,6 +62,10 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
     TextView myVotesNumTv;
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
+    @BindView(R.id.copyCommandBtn)
+    QMUIRoundButton copyCommandBtn;
+    @BindView(R.id.llLoadFailed)
+    LinearLayout llLoadFailed;
 
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String currentIdentityWalletAddress;
@@ -94,6 +96,13 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
             }
         });
 
+        copyCommandBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initData();
+            }
+        });
+
     }
 
     private void refreshData() {
@@ -103,7 +112,7 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
 
     private void initData() {
 
-         SuperNodeModel itemNodeInfo = getArguments().getParcelable("itemNodeInfo");
+        SuperNodeModel itemNodeInfo = getArguments().getParcelable("itemNodeInfo");
 
         nodeNameTv.setText(itemNodeInfo.getNodeName());
         haveVotesNumTv.setText(itemNodeInfo.getNodeVote());
@@ -113,7 +122,7 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
         if (!TextUtils.isEmpty(identityType)) {
             if (identityType.equals(SuperNodeTypeEnum.VALIDATOR.getCode())) {
                 nodeTypeTv.setText(getContext().getResources().getString(R.string.common_node));
-            }else if (identityType.equals(SuperNodeTypeEnum.ECOLOGICAL.getCode())){
+            } else if (identityType.equals(SuperNodeTypeEnum.ECOLOGICAL.getCode())) {
                 nodeTypeTv.setText(getContext().getResources().getString(R.string.ecological_node));
             }
         }
@@ -124,14 +133,14 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
         }
 
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
-        if(CommonUtil.isNull(currentIdentityWalletAddress) || currentIdentityWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString())) {
+        currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress", "").toString();
+        if (CommonUtil.isNull(currentIdentityWalletAddress) || currentIdentityWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString())) {
             currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
         }
 
         HashMap<String, Object> listReq = new HashMap<>();
         listReq.put(Constants.ADDRESS, currentIdentityWalletAddress);
-        listReq.put(Constants.NODE_ID,itemNodeInfo.getNodeId());
+        listReq.put(Constants.NODE_ID, itemNodeInfo.getNodeId());
 
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
 
@@ -141,6 +150,8 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ApiResult<MyVoteRecordModel>> call, Response<ApiResult<MyVoteRecordModel>> response) {
                 ApiResult<MyVoteRecordModel> body = response.body();
+                llLoadFailed.setVisibility(View.GONE);
+
                 if (body == null | body.getData() == null |
                         body.getData().getList() == null | body.getData().getList().size() == 0) {
                     addressRecordEmptyLL.setVisibility(View.VISIBLE);
@@ -151,12 +162,12 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
                 voteRecordAdapter.notifyDataSetChanged();
 
 
-
             }
 
             @Override
             public void onFailure(Call<ApiResult<MyVoteRecordModel>> call, Throwable t) {
-                LogUtils.e("请求失败" + t.getMessage());
+
+                llLoadFailed.setVisibility(View.VISIBLE);
 
             }
         });
@@ -168,11 +179,6 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
         initTopBar();
         voteRecordAdapter = new VoteRecordAdapter(getContext());
         voteRecordAdapter.setAdapterType(VoteRecordAdapter.SOME_RECORD);
-        ArrayList<MyVoteInfoModel> myVoteRecordModels = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            myVoteRecordModels.add(new MyVoteInfoModel());
-        }
-        voteRecordAdapter.setNewData(myVoteRecordModels);
         lvVoteRecord.setAdapter(voteRecordAdapter);
 
     }
@@ -187,6 +193,7 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
         });
         mTopBar.setTitle(getResources().getString(R.string.vote_record_txt));
     }
+
 
 
 }

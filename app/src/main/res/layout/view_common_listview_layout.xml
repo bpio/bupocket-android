@@ -21,16 +21,15 @@
             android:visibility="gone" />
 
         <ListView
-            android:id="@+id/myTokenTxLv"
+            android:id="@+id/lvRefresh"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:divider="@null"
             android:fadeScrollbars="false"
             android:scrollbars="none" />
 
 
         <include
-            android:id="@+id/recentlyTxRecordEmptyLL"
             layout="@layout/view_empty_record"
             android:visibility="gone" />
 

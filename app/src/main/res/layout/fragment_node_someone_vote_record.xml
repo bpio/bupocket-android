@@ -205,28 +205,7 @@
 
 
             <include
-                layout="@layout/view_empty_record"
-                android:visibility="gone" />
-
-            <com.scwang.smartrefresh.layout.SmartRefreshLayout
-                android:id="@+id/refreshLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srlEnableFooterFollowWhenLoadFinished="true"
-                app:srlEnableScrollContentWhenLoaded="true">
-
-                <com.scwang.smartrefresh.layout.header.ClassicsHeader
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-
-                <ListView
-                    android:id="@+id/lvSomeRecord"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@null"
-                    android:scrollbars="none" />
-            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-
+                layout="@layout/view_common_listview_layout"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
