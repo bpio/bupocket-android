@@ -113,9 +113,6 @@
             android:visibility="gone"
             layout="@layout/view_load_failed"/>
 
-        <!--<include-->
-            <!--layout="@layout/view_empty_record"/>-->
-        <!---->
         <com.qmuiteam.qmui.widget.QMUIEmptyView
             android:id="@+id/emptyView"
             android:layout_width="match_parent"
@@ -153,28 +150,6 @@
                         android:visibility="gone"
                         layout="@layout/view_empty_record"/>
 
-                    <!--<LinearLayout-->
-                        <!--android:id="@+id/recentlyTxRecordEmptyLL"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:background="@color/app_bg_color_gray"-->
-                        <!--android:gravity="center"-->
-                        <!--android:orientation="vertical"-->
-                        <!--android:visibility="gone">-->
-
-                        <!--<ImageView-->
-                            <!--android:layout_width="wrap_content"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:layout_marginBottom="20dp"-->
-                            <!--android:src="@mipmap/icon_no_recently_record"></ImageView>-->
-
-                        <!--<TextView-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="wrap_content"-->
-                            <!--android:text="@string/no_recently_tx_record"-->
-                            <!--android:textAlignment="center"></TextView>-->
-
-                    <!--</LinearLayout>-->
                 </LinearLayout>
 
                 <com.scwang.smartrefresh.layout.footer.ClassicsFooter

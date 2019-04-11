@@ -3,6 +3,7 @@ package com.bupocket.fragment.discover;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -42,6 +43,10 @@ public class BPVoteRecordFragment extends BaseFragment {
     LinearLayout addressRecordEmptyLL;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.llLoadFailed)
+    LinearLayout llLoadFailed;
+    @BindView(R.id.copyCommandBtn)
+    Button copyCommandBtn;
 
 
     private SharedPreferencesHelper sharedPreferencesHelper;
@@ -73,6 +78,13 @@ public class BPVoteRecordFragment extends BaseFragment {
             }
         });
 
+        copyCommandBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initData();
+            }
+        });
+
     }
 
     private void refreshData() {
@@ -100,13 +112,10 @@ public class BPVoteRecordFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ApiResult<MyVoteRecordModel>> call, Response<ApiResult<MyVoteRecordModel>> response) {
                 ApiResult<MyVoteRecordModel> body = response.body();
-                LogUtils.e("请求成功" + body.getData());
-                if (body == null | body.getData() == null |
-                        body.getData().getList() == null | body.getData().getList().size() == 0) {
+                llLoadFailed.setVisibility(View.GONE);
+                if (body == null | body.getData() == null | body.getData().getList() == null | body.getData().getList().size() == 0) {
                     addressRecordEmptyLL.setVisibility(View.VISIBLE);
                 }
-
-
                 voteRecordAdapter.setNewData(body.getData().getList());
                 voteRecordAdapter.notifyDataSetChanged();
 
@@ -115,7 +124,8 @@ public class BPVoteRecordFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<MyVoteRecordModel>> call, Throwable t) {
-                LogUtils.e("请求失败" + t.getMessage());
+
+                llLoadFailed.setVisibility(View.VISIBLE);
 
             }
         });
