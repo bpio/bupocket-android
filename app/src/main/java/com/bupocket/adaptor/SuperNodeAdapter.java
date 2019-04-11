@@ -85,7 +85,7 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         ImageView nodeIconIv = holder.getView(R.id.nodeIconIv);
 
         String nodeLogo = itemData.getNodeLogo();
-        if (!TextUtils.isEmpty(nodeLogo)) {
+        if (!TextUtils.isEmpty(nodeLogo.toString().trim())) {
             nodeIconIv.setImageBitmap(CommonUtil.base64ToBitmap(nodeLogo));
             nodeIconIv.setBackgroundColor(context.getResources().getColor(R.color.app_color_white));
         }
