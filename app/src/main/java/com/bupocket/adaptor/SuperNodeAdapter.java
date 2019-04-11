@@ -45,7 +45,7 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         if (itemData == null) {
             return;
         }
-        holder.setText(R.id.nodeNameTv, itemData.getNodeName()+"某某某欧某");
+        holder.setText(R.id.nodeNameTv, itemData.getNodeName());
         String identityType = itemData.getIdentityType();
 
         if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(identityType)) {
