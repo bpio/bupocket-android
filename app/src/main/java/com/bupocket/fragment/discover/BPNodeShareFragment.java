@@ -29,6 +29,7 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.QRCodeUtil;
 import com.qmuiteam.qmui.util.QMUIDrawableHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -68,30 +69,9 @@ public class BPNodeShareFragment extends BaseFragment {
     private View mShareImageRl;
     private Uri sharePhotoUri = null;
 
-    private static final int REQUEST_WRITE_STORAGE_PERMISSION = 121;
+    private String shareUrl = "https://bumo.io/technology";
+
     private SuperNodeModel itemInfo;
-
-/*    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_WRITE_STORAGE_PERMISSION);
-            } else {
-                Toast.makeText(getContext(), getString(R.string.write_external_storage_no_permissions_txt), Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_WRITE_STORAGE_PERMISSION) {
-            if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                Toast.makeText(getContext(), getString(R.string.write_external_storage_no_permissions_txt), Toast.LENGTH_SHORT).show();
-            }
-        }
-    }*/
 
     @Override
     protected View onCreateView() {
@@ -152,6 +132,9 @@ public class BPNodeShareFragment extends BaseFragment {
         TextView mNodeNameTv = mShareImageRl.findViewById(R.id.nodeNameTv);
         mNodeNameTv.setText(itemInfo.getNodeName());
         QMUIRadiusImageView nodeIconIv = mShareImageRl.findViewById(R.id.nodeIconIv);
+        ImageView mQrIv = mShareImageRl.findViewById(R.id.qrIv);
+        Bitmap QRBitmap = QRCodeUtil.createQRCodeBitmap(shareUrl,356,356);
+        mQrIv.setImageBitmap(QRBitmap);
         String nodeLogo = itemInfo.getNodeLogo();
         if (!TextUtils.isEmpty(nodeLogo)) {
             nodeIconIv.setImageBitmap(CommonUtil.base64ToBitmap(nodeLogo));
@@ -236,7 +219,7 @@ public class BPNodeShareFragment extends BaseFragment {
                 xiaobuCommandDialog.setCanceledOnTouchOutside(true);
                 xiaobuCommandDialog.setContentView(R.layout.view_share_xiaobu_command);
                 final TextView mXiaobuCommandContentTv = xiaobuCommandDialog.findViewById(R.id.xiaobuCommandContentTv);
-                mXiaobuCommandContentTv.setText(Html.fromHtml(String.format(getString(R.string.xiaobu_command_content_txt),itemInfo.getNodeName(),"https://bumo.io/technology")));
+                mXiaobuCommandContentTv.setText(Html.fromHtml(String.format(getString(R.string.xiaobu_command_content_txt),itemInfo.getNodeName(),shareUrl)));
 
                 QMUIRoundButton copyCommandBtn = xiaobuCommandDialog.findViewById(R.id.copyCommandBtn);
                 copyCommandBtn.setOnClickListener(new View.OnClickListener() {
