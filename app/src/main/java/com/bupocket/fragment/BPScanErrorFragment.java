@@ -25,6 +25,7 @@ public class BPScanErrorFragment extends BaseFragment {
     TextView mErrorMessageTv;
 
     private String errorCode;
+    private String errorMessage;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_scan_error, null);
@@ -43,12 +44,14 @@ public class BPScanErrorFragment extends BaseFragment {
         Bundle bundle = getArguments();
         if(null != bundle){
             errorCode = bundle.getString("errorCode");
+            errorMessage = bundle.getString("errorMessage");
         }
     }
 
     private void initUI() {
         if(!ExceptionEnum.SUCCESS.equals(errorCode)){
-            mErrorTypeTv.setText(getResources().getString(R.string.request_expired_txt));
+//            mErrorTypeTv.setText(getResources().getString(R.string.request_expired_txt));
+            mErrorTypeTv.setText(errorMessage);
             mErrorMessageTv.setText(getResources().getString(R.string.refresh_qr_tips_txt));
         }
     }

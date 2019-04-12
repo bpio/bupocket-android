@@ -2,6 +2,7 @@ package com.bupocket.enums;
 
 public enum ScanTransactionTypeEnum {
     NODE_VOTE("3","用户投票"),
+    APPLY_CO_BUILD("4","共建自购"),
     NODE_AUDIT("8","委员会审核"),
     ;
 

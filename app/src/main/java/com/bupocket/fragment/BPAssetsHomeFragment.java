@@ -533,6 +533,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                     Call<ApiResult<GetQRContentDto>> call;
                     Map<String, Object> paramsMap = new HashMap<>();
                     paramsMap.put("qrcodeSessionId",qrCodeSessionId);
+                    paramsMap.put("initiatorAddress",currentWalletAddress);
                     call = nodePlanService.getQRContent(paramsMap);
                     call.enqueue(new Callback<ApiResult<GetQRContentDto>>() {
                         @Override
@@ -544,6 +545,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                 }else {
                                     Bundle argz = new Bundle();
                                     argz.putString("errorCode",respDto.getErrCode());
+                                    argz.putString("errorMessage",respDto.getMsg());
                                     BPScanErrorFragment bpScanErrorFragment = new BPScanErrorFragment();
                                     bpScanErrorFragment.setArguments(argz);
                                     startFragment(bpScanErrorFragment);
@@ -589,9 +591,11 @@ public class BPAssetsHomeFragment extends BaseFragment {
         String accountTag = contentDto.getAccountTag();
         if(ScanTransactionTypeEnum.NODE_VOTE.getCode().equals(transactionType)){
             scanTxFee = Constants.NODE_VOTE_FEE;
-        }else if(ScanTransactionTypeEnum.NODE_AUDIT.getCode().equals(transactionType)){
+        } else if(ScanTransactionTypeEnum.NODE_AUDIT.getCode().equals(transactionType)){
             scanTxFee = Constants.NODE_AUDIT_FEE;
-        }else {
+        } else if(ScanTransactionTypeEnum.APPLY_CO_BUILD.getCode().equals(transactionType)){
+            scanTxFee = Constants.NODE_CO_BUILD_FEE;
+        } else {
             scanTxFee = Constants.MIN_FEE;
         }
 
@@ -664,9 +668,10 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
     private void confirmTransaction(GetQRContentDto contentDto) {
         final String qrCodeSessionID = contentDto.getQrcodeSessionId();
-        final String input = contentDto.getScript();
+        final String script = contentDto.getScript();
         final String amount = contentDto.getAmount();
         final String contractAddress = contentDto.getDestAddress();
+        final String transactionType = contentDto.getType();
 
         if(Double.valueOf(tokenBalance) < Double.valueOf(amount)){
             Toast.makeText(getContext(),getString(R.string.send_tx_bu_not_enough),Toast.LENGTH_SHORT).show();
@@ -677,7 +682,14 @@ public class BPAssetsHomeFragment extends BaseFragment {
             @Override
             public void run() {
                 try {
-                    final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input, currentWalletAddress, String.valueOf(scanTxFee), contractAddress);
+                    final TransactionBuildBlobResponse buildBlobResponse;
+                    if(ScanTransactionTypeEnum.APPLY_CO_BUILD.getCode().equals(transactionType)) {
+                        // handle script
+                        buildBlobResponse = Wallet.getInstance().buildBlob(amount, script, currentWalletAddress, String.valueOf(scanTxFee), contractAddress);
+//                        buildBlobResponse = Wallet.getInstance().applyCoBuildBlob(currentWalletAddress, amount, );
+                    }else {
+                        buildBlobResponse = Wallet.getInstance().buildBlob(amount, script, currentWalletAddress, String.valueOf(scanTxFee), contractAddress);
+                    }
                     String txHash = buildBlobResponse.getResult().getHash();
                     NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
                     Call<ApiResult<TransConfirmModel>> call;

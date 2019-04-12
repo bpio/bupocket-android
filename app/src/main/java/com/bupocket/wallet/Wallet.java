@@ -695,6 +695,34 @@ public class Wallet {
         return transactionBuildBlobResponse;
     }
 
+    public TransactionBuildBlobResponse applyCoBuildBlob(String sourceAddress, String amount, String initInput, String payload, String fee) throws Exception {
+        Long initBalance = ToBaseUnit.BU2MO(amount);
+        // The fixed write 1000L ，the unit is MO
+        Long gasPrice = 1000L;
+        // Set up the maximum cost 10.01BU
+        Long feeLimit = 1015076000L;//ToBaseUnit.BU2MO("10.01");
+        // Transaction initiation account's Nonce + 1
+        Long nonce = getAccountNonce(sourceAddress) + 1;
+
+        // 2. Build activateAccount operation
+        ContractCreateOperation operation = new ContractCreateOperation();
+        operation.setSourceAddress(sourceAddress);
+        operation.setInitBalance(initBalance);
+        operation.setPayload(payload);
+        operation.setInitInput(initInput);
+
+        TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
+        transactionBuildBlobRequest.setSourceAddress(sourceAddress);
+        transactionBuildBlobRequest.setNonce(nonce);
+        transactionBuildBlobRequest.setFeeLimit(feeLimit);
+        transactionBuildBlobRequest.setGasPrice(gasPrice);
+        transactionBuildBlobRequest.addOperation(operation);
+
+        TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
+        return transactionBuildBlobResponse;
+    }
+
+
     public String submitTransaction(String password, String bPData, String sourceAddress, TransactionBuildBlobResponse transactionBuildBlobResponse) throws Exception {
         String transactionBlob = transactionBuildBlobResponse.getResult().getTransactionBlob();
         String senderPrivateKey = getPKBYAccountPassword(password, bPData, sourceAddress);
