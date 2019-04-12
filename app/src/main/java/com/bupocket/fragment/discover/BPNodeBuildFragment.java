@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.bupocket.R;
@@ -11,6 +12,7 @@ import com.bupocket.adaptor.NodeBuildAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.model.NodeBuildModel;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.ArrayList;
 
@@ -23,12 +25,20 @@ public class BPNodeBuildFragment extends BaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
-    @BindView(R.id.lvNodeBuild)
+    @BindView(R.id.lvRefresh)
     ListView lvNodeBuild;
+    @BindView(R.id.copyCommandBtn)
+    QMUIRoundButton copyCommandBtn;
+    @BindView(R.id.llLoadFailed)
+    LinearLayout llLoadFailed;
+    @BindView(R.id.addressRecordEmptyLL)
+    LinearLayout addressRecordEmptyLL;
+
+
     private Unbinder bind;
     private NodeBuildAdapter nodeBuildAdapter;
     private ArrayList<NodeBuildModel> newData;
-    public static String  NODE_INFO = "nodeInfo";
+    public static String NODE_INFO = "nodeInfo";
 
 
     @Override
@@ -52,13 +62,19 @@ public class BPNodeBuildFragment extends BaseFragment {
 
                 BPNodeBuildDetailFragment fragment = new BPNodeBuildDetailFragment();
                 Bundle args = new Bundle();
-                if (newData!=null) {
+                if (newData != null) {
                     NodeBuildModel nodebuildmodel = newData.get(position);
-                    nodebuildmodel.setName("小明"+position);
+                    nodebuildmodel.setName("小明" + position);
                     args.putSerializable(NODE_INFO, nodebuildmodel);
                 }
                 fragment.setArguments(args);
                 startFragment(fragment);
+            }
+        });
+        copyCommandBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                initData();
             }
         });
     }
@@ -68,7 +84,7 @@ public class BPNodeBuildFragment extends BaseFragment {
             nodeBuildAdapter = new NodeBuildAdapter(getContext());
         }
 
-        if (newData==null) {
+        if (newData == null) {
             newData = new ArrayList<>();
         }
 
@@ -77,6 +93,14 @@ public class BPNodeBuildFragment extends BaseFragment {
         }
         nodeBuildAdapter.setNewData(newData);
         lvNodeBuild.setAdapter(nodeBuildAdapter);
+
+        getBuildData();
+
+    }
+
+    private void getBuildData() {
+
+
     }
 
 
@@ -92,5 +116,4 @@ public class BPNodeBuildFragment extends BaseFragment {
 
 
     }
-
 }
