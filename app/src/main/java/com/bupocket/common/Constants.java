@@ -6,6 +6,10 @@ public class Constants {
     public static String BUMO_NODE_URL = MainNetConfig.BUMO_NODE_URL.getValue();
     public static String PUSH_MESSAGE_SOCKET_URL = MainNetConfig.PUSH_MESSAGE_SOCKET_URL.getValue();
 
+    public static  String IMAGE_PATH="img-dpos/";
+    public static  String NODE_PLAN_IMAGE_URL_PREFIX = MainNetConfig.WEB_SERVER_DOMAIN.getValue()+IMAGE_PATH;
+
+
     public static final Integer SEND_TOKEN_NOTE_MAX_LENGTH = 20;
     public static final Integer HELP_FEEDBACK_CONTENT_LENGTH = 100;
     public static final Integer HELP_FEEDBACK_CONTACT_LENGTH = 20;
@@ -35,7 +39,7 @@ public class Constants {
 
     public static final String QR_LOGIN_PREFIX = "bumo://login/";
     public static final String QR_NODE_PLAN_PREFIX = "bumo://dpos/";
-    public static final String NODE_PLAN_IMAGE_URL_PREFIX = "http://192.168.6.97:5648/img-dpos/";
+
 
     public static final String  ADDRESS="address";
     public static final String  NODE_ID="nodeId";
