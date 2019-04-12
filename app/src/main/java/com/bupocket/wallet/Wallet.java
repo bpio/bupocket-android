@@ -625,7 +625,7 @@ public class Wallet {
     /**
      * withdraw the vote
      */
-    public TransactionBuildBlobResponse unVoteBuildBlob(String fromAccAddr, String role, String address, String fee) throws Exception{
+    public TransactionBuildBlobResponse unVoteBuildBlob(String fromAccAddr, String role, String address, String fee, String contractAddress) throws Exception{
         Long nonce = getAccountNonce(fromAccAddr) + 1;
         Long gasPrice = 1000L;
         Long feeLimit = ToBaseUnit.BU2MO(fee);
@@ -639,7 +639,7 @@ public class Wallet {
         params.put("address",address);
         input.put("params", params);
 
-        return buildBlob(buAmount,input,fromAccAddr,nonce,feeLimit,gasPrice);
+        return buildBlob(buAmount,input,fromAccAddr,nonce,feeLimit,gasPrice,contractAddress);
     }
 
     /**
@@ -653,10 +653,10 @@ public class Wallet {
      * @return
      */
 
-    private TransactionBuildBlobResponse buildBlob(Long buAmount, JSONObject input, String fromAccAddr, Long nonce, Long feeLimit, Long gasPrice) {
+    private TransactionBuildBlobResponse buildBlob(Long buAmount, JSONObject input, String fromAccAddr, Long nonce, Long feeLimit, Long gasPrice, String contractAddress) {
         // build contractInvokeByBUOperation
         ContractInvokeByBUOperation contractInvokeByBUOperation = new ContractInvokeByBUOperation();
-        contractInvokeByBUOperation.setContractAddress(Constants.CONTRACT_ADDRESS);
+        contractInvokeByBUOperation.setContractAddress(contractAddress);
         contractInvokeByBUOperation.setBuAmount(buAmount);
         contractInvokeByBUOperation.setInput(input.toJSONString());
 
@@ -672,14 +672,14 @@ public class Wallet {
         return transactionBuildBlobResponse;
     }
 
-    public TransactionBuildBlobResponse buildBlob(String amount, String input, String sourceAddress, String fee) throws Exception{
+    public TransactionBuildBlobResponse buildBlob(String amount, String input, String sourceAddress, String fee, String contractAddress) throws Exception{
         Long nonce = getAccountNonce(sourceAddress) + 1;
         Long gasPrice = 1000L;
         Long feeLimit = ToBaseUnit.BU2MO(fee);
         Long buAmount = ToBaseUnit.BU2MO(amount);
 
         ContractInvokeByBUOperation contractInvokeByBUOperation = new ContractInvokeByBUOperation();
-        contractInvokeByBUOperation.setContractAddress(Constants.CONTRACT_ADDRESS);
+        contractInvokeByBUOperation.setContractAddress(contractAddress);
         contractInvokeByBUOperation.setBuAmount(buAmount);
         contractInvokeByBUOperation.setInput(input);
 

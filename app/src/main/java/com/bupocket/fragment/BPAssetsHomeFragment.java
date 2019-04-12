@@ -666,6 +666,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         final String qrCodeSessionID = contentDto.getQrcodeSessionId();
         final String input = contentDto.getScript();
         final String amount = contentDto.getAmount();
+        final String contractAddress = contentDto.getDestAddress();
 
         if(Double.valueOf(tokenBalance) < Double.valueOf(amount)){
             Toast.makeText(getContext(),getString(R.string.send_tx_bu_not_enough),Toast.LENGTH_SHORT).show();
@@ -676,7 +677,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
             @Override
             public void run() {
                 try {
-                    final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input, currentWalletAddress, String.valueOf(scanTxFee));
+                    final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input, currentWalletAddress, String.valueOf(scanTxFee), contractAddress);
                     String txHash = buildBlobResponse.getResult().getHash();
                     NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
                     Call<ApiResult<TransConfirmModel>> call;
