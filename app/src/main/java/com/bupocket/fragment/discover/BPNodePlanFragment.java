@@ -101,14 +101,9 @@ public class BPNodePlanFragment extends BaseFragment {
     private String txHash;
     private QMUITipDialog txSendingTipDialog;
     private TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean;
-
-    private SharedPreferencesHelper sharedPreferencesHelper;
     private String currentWalletAddress;
-    private Boolean whetherIdentityWallet = false;
     private SuperNodeAdapter superNodeAdapter;
-
     private QMUIPopup myNodeExplainPopup;
-
     private ArrayList<SuperNodeModel> myVoteInfolist;
     private ArrayList<SuperNodeModel> nodeList;
 
@@ -578,7 +573,7 @@ public class BPNodePlanFragment extends BaseFragment {
                 new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        String accountBPData = getAccountBPData();
+                        String accountBPData = getBPAccountData();
                         EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
                         final String password = mPasswordConfirmEt.getText().toString().trim();
                         try {
@@ -614,15 +609,6 @@ public class BPNodePlanFragment extends BaseFragment {
         });
     }
 
-    private String getAccountBPData() {
-        String accountBPData = null;
-        if (whetherIdentityWallet) {
-            accountBPData = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
-        } else {
-            accountBPData = sharedPreferencesHelper.getSharedPreference(currentWalletAddress + "-BPdata", "").toString();
-        }
-        return accountBPData;
-    }
 
     private int timerTimes = 0;
     private final Timer timer = new Timer();
