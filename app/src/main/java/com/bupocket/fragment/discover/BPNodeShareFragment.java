@@ -156,6 +156,7 @@ public class BPNodeShareFragment extends BaseFragment {
         mNodeNameTv.setText(itemInfo.getNodeName());
         QMUIRadiusImageView nodeIconIv = mShareImageRl.findViewById(R.id.nodeIconIv);
         nodeIconIv.setImageBitmap(nodeLogoBitmap);
+        nodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
         ImageView mQrIv = mShareImageRl.findViewById(R.id.qrIv);
         Bitmap QRBitmap = QRCodeUtil.createQRCodeBitmap(shareUrl,356,356);
         mQrIv.setImageBitmap(QRBitmap);
