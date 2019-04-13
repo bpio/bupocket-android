@@ -21,6 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+
 import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.adaptor.TokensAdapter;
@@ -55,6 +56,8 @@ import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TimeUtil;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -685,8 +688,16 @@ public class BPAssetsHomeFragment extends BaseFragment {
                     final TransactionBuildBlobResponse buildBlobResponse;
                     if(ScanTransactionTypeEnum.APPLY_CO_BUILD.getCode().equals(transactionType)) {
                         // handle script
-                        buildBlobResponse = Wallet.getInstance().buildBlob(amount, script, currentWalletAddress, String.valueOf(scanTxFee), contractAddress);
-//                        buildBlobResponse = Wallet.getInstance().applyCoBuildBlob(currentWalletAddress, amount, );
+
+
+                        org.json.JSONObject jsonObj = new org.json.JSONObject(script);
+                        org.json.JSONObject input = jsonObj.getJSONObject("input");
+                        String payload = jsonObj.getString("payload");
+//                        ScriptModel scriptModel = new Gson().fromJson(script, ScriptModel.class);
+
+
+//                        buildBlobResponse = Wallet.getInstance().buildBlob(amount, script, currentWalletAddress, String.valueOf(scanTxFee), contractAddress);
+                        buildBlobResponse = Wallet.getInstance().applyCoBuildBlob(currentWalletAddress, amount,input.toString(),payload,Constants.NODE_CO_BUILD_FEE );
                     }else {
                         buildBlobResponse = Wallet.getInstance().buildBlob(amount, script, currentWalletAddress, String.valueOf(scanTxFee), contractAddress);
                     }

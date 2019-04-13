@@ -44,7 +44,7 @@ public class LogUtils {
     /**
      * 日志输出级别E
      */
-    private static final int LEVEL_ERROR = 5;
+    public static final int LEVEL_ERROR = 5;
 
     /**
      * 日志输出时的TAG
@@ -52,7 +52,7 @@ public class LogUtils {
     private static final String mTag = "mmmmbumo";
 
     /* 是否允许输出log LEVEL_NONE时候不输出日志 */
-    private static int mDebuggable = LEVEL_ERROR;
+    public static int mDebuggable = LEVEL_NONE;
 
     /**
      * 用于记时的变量

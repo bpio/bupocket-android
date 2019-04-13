@@ -11,6 +11,7 @@ import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LocaleUtil;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.SocketUtil;
 import com.bupocket.wallet.Wallet;
@@ -73,12 +74,13 @@ public class BPApplication extends Application {
             Constants.PUSH_MESSAGE_SOCKET_URL = Constants.MainNetConfig.PUSH_MESSAGE_SOCKET_URL.getValue();
             Constants.WEB_SERVER_DOMAIN = Constants.MainNetConfig.WEB_SERVER_DOMAIN.getValue();
             Constants.NODE_PLAN_IMAGE_URL_PREFIX = Constants.MainNetConfig.WEB_SERVER_DOMAIN.getValue()+Constants.IMAGE_PATH;
-
         }else {
             Constants.BUMO_NODE_URL = Constants.TestNetConfig.BUMO_NODE_URL.getValue();
             Constants.PUSH_MESSAGE_SOCKET_URL = Constants.TestNetConfig.PUSH_MESSAGE_SOCKET_URL.getValue();
             Constants.WEB_SERVER_DOMAIN = Constants.TestNetConfig.WEB_SERVER_DOMAIN.getValue();
             Constants.NODE_PLAN_IMAGE_URL_PREFIX = Constants.TestNetConfig.WEB_SERVER_DOMAIN.getValue()+Constants.IMAGE_PATH;
+
+            LogUtils.mDebuggable=LogUtils.LEVEL_ERROR;
         }
     }
 }

@@ -695,12 +695,12 @@ public class Wallet {
         return transactionBuildBlobResponse;
     }
 
-    public TransactionBuildBlobResponse applyCoBuildBlob(String sourceAddress, String amount, String initInput, String payload, String fee) throws Exception {
+    public TransactionBuildBlobResponse applyCoBuildBlob(String sourceAddress, String amount, String initInput, String payload, double fee) throws Exception {
         Long initBalance = ToBaseUnit.BU2MO(amount);
         // The fixed write 1000L ，the unit is MO
         Long gasPrice = 1000L;
         // Set up the maximum cost 10.01BU
-        Long feeLimit = 1015076000L;//ToBaseUnit.BU2MO("10.01");
+        Long feeLimit = ToBaseUnit.BU2MO(fee+"");//ToBaseUnit.BU2MO("10.01");
         // Transaction initiation account's Nonce + 1
         Long nonce = getAccountNonce(sourceAddress) + 1;
 
