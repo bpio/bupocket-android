@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="85dp">
+    android:layout_height="85dp"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <RelativeLayout
@@ -13,7 +14,7 @@
         android:background="@drawable/edit_border_bg_white">
 
         <ImageView
-            android:id="@+id/ivBuildDetailHead"
+            android:id="@+id/ivBuildSupportHead"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_centerVertical="true"
@@ -26,32 +27,32 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_toRightOf="@+id/ivBuildDetailHead"
-            android:text="sdajflaadf"
+            android:layout_toRightOf="@+id/ivBuildSupportHead"
+            tools:text="sdajflaadf"
             android:textColor="@color/app_txt_color_gray_2"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/tvBuildDetailTime"
+            android:id="@+id/tvBuildSupportDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvBuildDetailAddress"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_toRightOf="@+id/ivBuildDetailHead"
-            android:text="2019-04-01 11:50:04"
+            android:layout_toRightOf="@+id/ivBuildSupportHead"
+            tools:text="2019-04-01 11:50:04"
             android:textColor="@color/send_confirm_gray_color"
             android:textSize="12sp" />
 
         <TextView
-            android:id="@+id/tvBuildDetailNum"
+            android:id="@+id/tvBuildSupportAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginTop="5dp"
             android:layout_marginRight="5dp"
-            android:text="10000BU"
+            tools:text="10000BU"
             android:textColor="@color/send_confirm_title_color"
             android:textSize="16sp" />
 

@@ -1,6 +1,7 @@
 package com.bupocket.wallet;
 
 import android.content.Context;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.common.Constants;
@@ -9,6 +10,7 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DecimalCalculate;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.wallet.enums.BUChainExceptionEnum;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
@@ -16,6 +18,7 @@ import com.bupocket.wallet.model.WalletBPData;
 import com.bupocket.wallet.utils.KeyStore;
 import com.bupocket.wallet.utils.keystore.BaseKeyStoreEntity;
 import com.bupocket.wallet.utils.keystore.KeyStoreEntity;
+
 import io.bumo.SDK;
 import io.bumo.common.ToBaseUnit;
 import io.bumo.encryption.crypto.mnemonic.Mnemonic;
@@ -25,7 +28,9 @@ import io.bumo.model.request.*;
 import io.bumo.model.request.operation.*;
 import io.bumo.model.response.*;
 import io.bumo.model.response.result.TransactionBuildBlobResult;
+
 import org.bitcoinj.crypto.MnemonicCode;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,7 +46,7 @@ public class Wallet {
     private static SDK sdk = null;
     private static Wallet wallet;
 
-    private Wallet(){
+    private Wallet() {
         init();
     }
 
@@ -49,25 +54,27 @@ public class Wallet {
         sdk = SDK.getInstance(Constants.BUMO_NODE_URL);
     }
 
-    public synchronized static Wallet getInstance(){
-        if(wallet == null){
+    public synchronized static Wallet getInstance() {
+        if (wallet == null) {
             wallet = new Wallet();
         }
         return wallet;
     }
 
-    public void setNull4Wallet() {wallet = null;}
+    public void setNull4Wallet() {
+        wallet = null;
+    }
 
-    private WalletBPData create(String password, String sKey,Context context) throws WalletException {
+    private WalletBPData create(String password, String sKey, Context context) throws WalletException {
         try {
             WalletBPData walletBPData;
             List<String> mnemonicCodes;
-            BaseKeyStoreEntity baseKeyStoreEntity =  KeyStore.encryptMsg(password, sKey, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 1);
+            BaseKeyStoreEntity baseKeyStoreEntity = KeyStore.encryptMsg(password, sKey, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 1);
             List<String> hdPaths = new ArrayList<>();
             hdPaths.add("M/44H/526H/0H/0/0");
             hdPaths.add("M/44H/526H/1H/0/0");
             mnemonicCodes = new MnemonicCode().toMnemonic(HexFormat.hexStringToBytes(sKey));
-            List<String> privateKeys = Mnemonic.generatePrivateKeys(mnemonicCodes,hdPaths);
+            List<String> privateKeys = Mnemonic.generatePrivateKeys(mnemonicCodes, hdPaths);
 
 
             walletBPData = new WalletBPData();
@@ -76,7 +83,7 @@ public class Wallet {
 
             KeyStoreEntity keyStoreEntity = null;
             WalletBPData.AccountsBean accountsBean;
-            for (String pk:privateKeys) {
+            for (String pk : privateKeys) {
                 keyStoreEntity = KeyStore.generateKeyStore(password, pk, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 1);
                 accountsBean = new WalletBPData.AccountsBean();
                 accountsBean.setAddress(new PrivateKey(pk).getEncAddress());
@@ -92,7 +99,7 @@ public class Wallet {
 
             String walletAccountSignData = signData(privateKeys.get(1), walletAccountBean.getAddress());
 
-            deviceBind(walletAccountBean.getAddress(),identityAccountBean.getAddress(),walletAccountPk,walletAccountSignData,context);
+            deviceBind(walletAccountBean.getAddress(), identityAccountBean.getAddress(), walletAccountPk, walletAccountSignData, context);
 
             return walletBPData;
 
@@ -101,43 +108,44 @@ public class Wallet {
             throw new WalletException(ExceptionEnum.SYS_ERR.getCode(), ExceptionEnum.SYS_ERR.getMessage());
         }
     }
+
     public WalletBPData create(String password, Context context) throws WalletException {
         byte[] aesIv = new byte[16];
         SecureRandom randomIv = new SecureRandom();
         randomIv.nextBytes(aesIv);
         String skey = HexFormat.byteToHex(aesIv);
-        return create(password, skey,context);
+        return create(password, skey, context);
     }
 
-    public WalletBPData updateAccountPassword(String oblPwd,String newPwd, String ciphertextSkeyData, Context context) throws WalletException {
+    public WalletBPData updateAccountPassword(String oblPwd, String newPwd, String ciphertextSkeyData, Context context) throws WalletException {
         try {
             // 校验密码是否匹配
-            String sKey =  HexFormat.byteToHex(getSkey(oblPwd,ciphertextSkeyData));
-            return create(newPwd,sKey,context);
-        }catch (Exception e){
+            String sKey = HexFormat.byteToHex(getSkey(oblPwd, ciphertextSkeyData));
+            return create(newPwd, sKey, context);
+        } catch (Exception e) {
             e.printStackTrace();
-            throw new WalletException(ExceptionEnum.SYS_ERR.getCode(),ExceptionEnum.SYS_ERR.getMessage());
+            throw new WalletException(ExceptionEnum.SYS_ERR.getCode(), ExceptionEnum.SYS_ERR.getMessage());
         }
     }
 
 
-    public WalletBPData importMnemonicCode(List<String> mnemonicCodes,String password, Context context) throws Exception {
+    public WalletBPData importMnemonicCode(List<String> mnemonicCodes, String password, Context context) throws Exception {
         byte[] sKeyByte = new MnemonicCode().toEntropy(mnemonicCodes);
         String sKey = HexFormat.byteToHex(sKeyByte);
-        return create(password, sKey,context);
+        return create(password, sKey, context);
     }
 
-    public void checkPwd(String password,String ciphertextSkeyData) throws Exception {
+    public void checkPwd(String password, String ciphertextSkeyData) throws Exception {
         getSkey(password, ciphertextSkeyData);
     }
 
     public byte[] getSkey(String password, String ciphertextSkeyData) throws Exception {
         BaseKeyStoreEntity baseKeyStoreEntity = JSON.parseObject(ciphertextSkeyData, BaseKeyStoreEntity.class);
-        String skeyHex = KeyStore.decodeMsg(password,baseKeyStoreEntity);
+        String skeyHex = KeyStore.decodeMsg(password, baseKeyStoreEntity);
         return HexFormat.hexToByte(skeyHex);
     }
 
-    public String getAccountBUBalance(String accountAddress){
+    public String getAccountBUBalance(String accountAddress) {
         System.out.print(Constants.BUMO_NODE_URL);
         AccountGetBalanceRequest request = new AccountGetBalanceRequest();
         request.setAddress(accountAddress);
@@ -150,7 +158,7 @@ public class Wallet {
         return null;
     }
 
-    public Boolean checkAccAddress(String address){
+    public Boolean checkAccAddress(String address) {
         Boolean flag = false;
         AccountCheckValidRequest accountCheckValidRequest = new AccountCheckValidRequest();
         accountCheckValidRequest.setAddress(address);
@@ -164,7 +172,7 @@ public class Wallet {
     }
 
 
-    public String sendBu(String password,String bPData, String fromAccAddr,String toAccAddr,String amount, String note, String fee) throws Exception {
+    public String sendBu(String password, String bPData, String fromAccAddr, String toAccAddr, String amount, String note, String fee) throws Exception {
         String hash = null;
         try {
             String senderPrivateKey = getPKBYAccountPassword(password, bPData, fromAccAddr);
@@ -181,15 +189,16 @@ public class Wallet {
             String transMetadata = note;
 
             Long nonce = getAccountNonce(fromAccAddr) + 1;
-            hash = sendBu(senderPrivateKey, destAddress, sendAmount, nonce, gasPrice, feeLimit,transMetadata);
-        }catch (WalletException e){
-            throw new WalletException(e.getErrCode(),e.getErrMsg());
-        }catch (Exception e){
+            hash = sendBu(senderPrivateKey, destAddress, sendAmount, nonce, gasPrice, feeLimit, transMetadata);
+        } catch (WalletException e) {
+            throw new WalletException(e.getErrCode(), e.getErrMsg());
+        } catch (Exception e) {
             throw new Exception(e);
         }
         return hash;
     }
-    private String sendBu(String senderPrivateKey, String destAddress, Long amount, Long senderNonce, Long gasPrice, Long feeLimit,String transMetadata) throws Exception {
+
+    private String sendBu(String senderPrivateKey, String destAddress, Long amount, Long senderNonce, Long gasPrice, Long feeLimit, String transMetadata) throws Exception {
 
         String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
         BUSendOperation buSendOperation = new BUSendOperation();
@@ -228,9 +237,9 @@ public class Wallet {
         if (0 == transactionSubmitResponse.getErrorCode()) {
             System.out.println("Success，hash=" + transactionSubmitResponse.getResult().getHash());
         } else {
-            if(BUChainExceptionEnum.ERRCODE_FEE_NOT_ENOUGH.getCode().equals(transactionSubmitResponse.getErrorCode())){
+            if (BUChainExceptionEnum.ERRCODE_FEE_NOT_ENOUGH.getCode().equals(transactionSubmitResponse.getErrorCode())) {
                 throw new WalletException(ExceptionEnum.FEE_NOT_ENOUGH);
-            }else if(BUChainExceptionEnum.ERRCODE_ACCOUNT_LOW_RESERVE.getCode().equals(transactionSubmitResponse.getErrorCode())){
+            } else if (BUChainExceptionEnum.ERRCODE_ACCOUNT_LOW_RESERVE.getCode().equals(transactionSubmitResponse.getErrorCode())) {
                 throw new WalletException(ExceptionEnum.BU_NOT_ENOUGH);
             }
             System.out.println("Failure，hash=" + transactionSubmitResponse.getResult().getHash() + "");
@@ -240,14 +249,14 @@ public class Wallet {
     }
 
 
-    public String sendToken(String password,String bPData, String fromAccAddr,String toAccAddr,String tokenCode,String tokenIssuer,String sendTokenAamount,String tokenDecimals, String note, String fee) throws Exception {
+    public String sendToken(String password, String bPData, String fromAccAddr, String toAccAddr, String tokenCode, String tokenIssuer, String sendTokenAamount, String tokenDecimals, String note, String fee) throws Exception {
         String hash = null;
         try {
             String senderPrivateKey = getPKBYAccountPassword(password, bPData, fromAccAddr);
-            hash = sendToken(senderPrivateKey,tokenIssuer,toAccAddr,tokenCode,sendTokenAamount,tokenDecimals,note,fee);
-        }catch (WalletException e){
-            throw new WalletException(e.getErrCode(),e.getErrMsg());
-        }catch (Exception e){
+            hash = sendToken(senderPrivateKey, tokenIssuer, toAccAddr, tokenCode, sendTokenAamount, tokenDecimals, note, fee);
+        } catch (WalletException e) {
+            throw new WalletException(e.getErrCode(), e.getErrMsg());
+        } catch (Exception e) {
             throw new Exception(e);
         }
         return hash;
@@ -273,7 +282,7 @@ public class Wallet {
     }
 
 
-    private String sendToken(String senderPrivateKey, String issuerAddress,String destAddress ,String code ,String amount,String decimals, String note,String fee) throws Exception {
+    private String sendToken(String senderPrivateKey, String issuerAddress, String destAddress, String code, String amount, String decimals, String note, String fee) throws Exception {
         // The operation notes
         String metadata = note;
         // The fixed write 1000L, the unit is MO
@@ -296,13 +305,13 @@ public class Wallet {
 
         // Check whether the destination account is activated
         if (!checkAccountActivated(destAddress)) {
-            if(Double.parseDouble(fee) - Constants.ACTIVE_AMOUNT_FEE <= 0){
+            if (Double.parseDouble(fee) - Constants.ACTIVE_AMOUNT_FEE <= 0) {
                 throw new WalletException(ExceptionEnum.FEE_NOT_ENOUGH);
             }
             AccountActivateOperation accountActivateOperation = new AccountActivateOperation();
             accountActivateOperation.setSourceAddress(senderAddresss);
             accountActivateOperation.setDestAddress(destAddress);
-            accountActivateOperation.setInitBalance(ToBaseUnit.BU2MO(Constants.ACTIVE_AMOUNT_FEE+""));
+            accountActivateOperation.setInitBalance(ToBaseUnit.BU2MO(Constants.ACTIVE_AMOUNT_FEE + ""));
             accountActivateOperation.setMetadata("activate account");
             operations.add(accountActivateOperation);
             fee = DecimalCalculate.sub(Double.parseDouble(fee), Constants.ACTIVE_AMOUNT_FEE) + "";
@@ -331,7 +340,7 @@ public class Wallet {
     }
 
 
-    private Long handleSendTokenAmount(String srcAmount, String decimals){
+    private Long handleSendTokenAmount(String srcAmount, String decimals) {
         return Long.parseLong(new BigDecimal(srcAmount).multiply(new BigDecimal(Math.pow(10, Integer.parseInt(decimals)))).setScale(0).toPlainString());
     }
 
@@ -381,9 +390,9 @@ public class Wallet {
         if (0 == transactionSubmitResponse.getErrorCode()) {
             Hash = transactionSubmitResponse.getResult().getHash();
         } else {
-            if(BUChainExceptionEnum.ERRCODE_FEE_NOT_ENOUGH.getCode().equals(transactionSubmitResponse.getErrorCode())){
+            if (BUChainExceptionEnum.ERRCODE_FEE_NOT_ENOUGH.getCode().equals(transactionSubmitResponse.getErrorCode())) {
                 throw new WalletException(ExceptionEnum.FEE_NOT_ENOUGH);
-            }else if(BUChainExceptionEnum.ERRCODE_ACCOUNT_LOW_RESERVE.getCode().equals(transactionSubmitResponse.getErrorCode())){
+            } else if (BUChainExceptionEnum.ERRCODE_ACCOUNT_LOW_RESERVE.getCode().equals(transactionSubmitResponse.getErrorCode())) {
                 throw new WalletException(ExceptionEnum.BU_NOT_ENOUGH);
             }
             System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
@@ -411,31 +420,32 @@ public class Wallet {
         String address = PrivateKey.getEncAddress(publicKey);
         return address;
     }
-    private Long getAccountNonce(String accountAddress) throws WalletException{
+
+    private Long getAccountNonce(String accountAddress) throws WalletException {
         AccountGetNonceRequest request = new AccountGetNonceRequest();
         request.setAddress(accountAddress);
 
         AccountGetNonceResponse response = sdk.getAccountService().getNonce(request);
         if (0 == response.getErrorCode()) {
             return response.getResult().getNonce();
-        }else if(11007 == response.getErrorCode()){
+        } else if (11007 == response.getErrorCode()) {
             throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
         }
         return null;
     }
 
-    private void deviceBind(final String walletAddress, final String identityAddress, final String publicKey, final String signData, final Context context){
+    private void deviceBind(final String walletAddress, final String identityAddress, final String publicKey, final String signData, final Context context) {
         new Thread(new Runnable() {
             @Override
             public void run() {
 
                 AccountService accountService = RetrofitFactory.getInstance().getRetrofit().create(AccountService.class);
                 Map<String, Object> parmasMap = new HashMap<>();
-                parmasMap.put("walletAddress",walletAddress);
+                parmasMap.put("walletAddress", walletAddress);
                 parmasMap.put("identityAddress", identityAddress);
                 parmasMap.put("deviceId", CommonUtil.getUniqueId(context));
-                parmasMap.put("publicKey",publicKey);
-                parmasMap.put("signData",signData);
+                parmasMap.put("publicKey", publicKey);
+                parmasMap.put("signData", signData);
 
                 Call<ApiResult> call = accountService.deviceBind(parmasMap);
                 call.enqueue(new Callback<ApiResult>() {
@@ -454,16 +464,16 @@ public class Wallet {
     }
 
 
-    private String getPk(String sk){
+    private String getPk(String sk) {
         return PrivateKey.getEncPublicKey(sk);
     }
 
 
-    private String signData(String sk,String message){
+    private String signData(String sk, String message) {
         return HexFormat.byteToHex(PrivateKey.sign(message.getBytes(), sk));
     }
 
-    private Long handleTokenAmount(String srcAmount, String decimals){
+    private Long handleTokenAmount(String srcAmount, String decimals) {
         return Long.parseLong(new BigDecimal(srcAmount).multiply(new BigDecimal(Math.pow(10, Double.parseDouble(decimals)))).setScale(0).toPlainString());
     }
 
@@ -472,9 +482,10 @@ public class Wallet {
      */
     public String issueAtp10Token(String password, String bPData, String fromAccAddr, String code, String decimals, String issueAmount, String fee) throws Exception {
         // The account private key to issue atp1.0 token
-        String issuerPrivateKey = getPKBYAccountPassword(password,bPData,fromAccAddr);
+        String issuerPrivateKey = getPKBYAccountPassword(password, bPData, fromAccAddr);
         // The token now supply number
-        Long nowSupply = handleTokenAmount(issueAmount,decimals);;
+        Long nowSupply = handleTokenAmount(issueAmount, decimals);
+        ;
         // The operation note
         String operationMetadata = "";
         // The transaction note
@@ -509,15 +520,15 @@ public class Wallet {
     }
 
 
-    public String registerATP10Token(String password, String bPData, String fromAccAddr, String name, String code, String decimals, String description, String fee, String tokenAmount) throws Exception{
+    public String registerATP10Token(String password, String bPData, String fromAccAddr, String name, String code, String decimals, String description, String fee, String tokenAmount) throws Exception {
         // The account private key to issue atp1.0 token
-        String issuerPrivateKey = getPKBYAccountPassword(password,bPData,fromAccAddr);
+        String issuerPrivateKey = getPKBYAccountPassword(password, bPData, fromAccAddr);
         // The apt token version
         String version = "1.0";
         // The apt token icon
         String icon = "";
         // The token total supply number
-        Long totalSupply = handleTokenAmount(tokenAmount,decimals);
+        Long totalSupply = handleTokenAmount(tokenAmount, decimals);
         // The operation note
         String operationMetadata = "";
         // The transaction note
@@ -550,7 +561,7 @@ public class Wallet {
         List<BaseOperation> operations = new ArrayList<>();
         operations.add(accountSetMetadataOperation);
 
-        String txHash = submitTransaction(issuerPrivateKey,fromAccAddr,operations,nonce,gasPrice,feeLimit,transMetadata);
+        String txHash = submitTransaction(issuerPrivateKey, fromAccAddr, operations, nonce, gasPrice, feeLimit, transMetadata);
         return txHash;
     }
 
@@ -574,7 +585,7 @@ public class Wallet {
         return keystore;
     }
 
-    public String exportPrivateKey(String password, String accountBPData, String walletPublicAddress) throws Exception{
+    public String exportPrivateKey(String password, String accountBPData, String walletPublicAddress) throws Exception {
         String senderPrivateKey = null;
         List<WalletBPData.AccountsBean> accountsBeans = JSON.parseArray(accountBPData, WalletBPData.AccountsBean.class);
 
@@ -594,7 +605,7 @@ public class Wallet {
 
     public WalletBPData importKeystore(String password, String keystore) throws Exception {
         String privateKey = KeyStore.decipherKeyStore(password, JSON.parseObject(keystore, KeyStoreEntity.class));
-        if(!privateKey.startsWith("priv")){
+        if (!privateKey.startsWith("priv")) {
             throw new Exception();
         }
         String address = new PrivateKey(privateKey).getEncAddress();
@@ -625,7 +636,7 @@ public class Wallet {
     /**
      * withdraw the vote
      */
-    public TransactionBuildBlobResponse unVoteBuildBlob(String fromAccAddr, String role, String address, String fee, String contractAddress) throws Exception{
+    public TransactionBuildBlobResponse unVoteBuildBlob(String fromAccAddr, String role, String address, String fee, String contractAddress) throws Exception {
         Long nonce = getAccountNonce(fromAccAddr) + 1;
         Long gasPrice = 1000L;
         Long feeLimit = ToBaseUnit.BU2MO(fee);
@@ -633,17 +644,18 @@ public class Wallet {
 
         // init input
         JSONObject input = new JSONObject();
-        input.put("method","unVote");
+        input.put("method", "unVote");
         JSONObject params = new JSONObject();
-        params.put("role",role);
-        params.put("address",address);
+        params.put("role", role);
+        params.put("address", address);
         input.put("params", params);
 
-        return buildBlob(buAmount,input,fromAccAddr,nonce,feeLimit,gasPrice,contractAddress);
+        return buildBlob(buAmount, input, fromAccAddr, nonce, feeLimit, gasPrice, contractAddress);
     }
 
     /**
      * build blob
+     *
      * @param buAmount
      * @param input
      * @param fromAccAddr
@@ -672,7 +684,7 @@ public class Wallet {
         return transactionBuildBlobResponse;
     }
 
-    public TransactionBuildBlobResponse buildBlob(String amount, String input, String sourceAddress, String fee, String contractAddress) throws Exception{
+    public TransactionBuildBlobResponse buildBlob(String amount, String input, String sourceAddress, String fee, String contractAddress) throws Exception {
         Long nonce = getAccountNonce(sourceAddress) + 1;
         Long gasPrice = 1000L;
         Long feeLimit = ToBaseUnit.BU2MO(fee);
@@ -700,7 +712,7 @@ public class Wallet {
         // The fixed write 1000L ，the unit is MO
         Long gasPrice = 1000L;
         // Set up the maximum cost 10.01BU
-        Long feeLimit = ToBaseUnit.BU2MO(fee+"");//ToBaseUnit.BU2MO("10.01");
+        Long feeLimit = ToBaseUnit.BU2MO(fee + "");//ToBaseUnit.BU2MO("10.01");
         // Transaction initiation account's Nonce + 1
         Long nonce = getAccountNonce(sourceAddress) + 1;
 
@@ -750,6 +762,8 @@ public class Wallet {
             } else if (BUChainExceptionEnum.ERRCODE_ACCOUNT_LOW_RESERVE.getCode().equals(transactionSubmitResponse.getErrorCode())) {
                 throw new WalletException(ExceptionEnum.BU_NOT_ENOUGH);
             }
+
+//          errorCode  152
             System.out.println("Failure，hash=" + transactionSubmitResponse.getResult().getHash() + "");
             System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
         }

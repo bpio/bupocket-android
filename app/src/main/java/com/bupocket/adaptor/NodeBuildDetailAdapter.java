@@ -2,13 +2,17 @@ package com.bupocket.adaptor;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.view.View;
+import android.widget.ImageView;
 
 import com.bupocket.R;
 import com.bupocket.base.AbsViewHolderAdapter;
 import com.bupocket.base.BaseViewHolder;
 import com.bupocket.model.NodeBuildDetailModel;
+import com.bupocket.model.NodeBuildSupportModel;
+import com.bupocket.utils.AddressUtil;
 
-public class NodeBuildDetailAdapter extends AbsViewHolderAdapter<NodeBuildDetailModel> {
+public class NodeBuildDetailAdapter extends AbsViewHolderAdapter<NodeBuildSupportModel> {
 
 
     public NodeBuildDetailAdapter(@NonNull Context context) {
@@ -21,7 +25,12 @@ public class NodeBuildDetailAdapter extends AbsViewHolderAdapter<NodeBuildDetail
     }
 
     @Override
-    protected void convert(BaseViewHolder holder, NodeBuildDetailModel itemData) {
+    protected void convert(BaseViewHolder holder, NodeBuildSupportModel itemData) {
+
+        ImageView ivHead = holder.getView(R.id.ivBuildSupportHead);
+        holder.setText(R.id.tvBuildSupportAmount,itemData.getAmount());
+        holder.setText(R.id.tvBuildSupportDate,itemData.getCreateTime());
+        holder.setText(R.id.tvBuildDetailAddress, AddressUtil.anonymous(itemData.getInitiatorAddress()));
 
     }
 }

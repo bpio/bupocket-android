@@ -695,8 +695,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         String payload = jsonObj.getString("payload");
 //                        ScriptModel scriptModel = new Gson().fromJson(script, ScriptModel.class);
 
-
-//                        buildBlobResponse = Wallet.getInstance().buildBlob(amount, script, currentWalletAddress, String.valueOf(scanTxFee), contractAddress);
                         buildBlobResponse = Wallet.getInstance().applyCoBuildBlob(currentWalletAddress, amount,input.toString(),payload,Constants.NODE_CO_BUILD_FEE );
                     }else {
                         buildBlobResponse = Wallet.getInstance().buildBlob(amount, script, currentWalletAddress, String.valueOf(scanTxFee), contractAddress);
@@ -726,7 +724,13 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
                         @Override
                         public void onFailure(Call<ApiResult<TransConfirmModel>> call, Throwable t) {
-                            Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
                         }
                     });
                 } catch (Exception e) {
