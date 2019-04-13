@@ -509,4 +509,15 @@
 
     <string name="transaction_timeout">请求已超时，请重新操作。</string>
     <string name="reload_txt">重新加载</string>
+
+
+    <string name="transaction_success_title">交易成功</string>
+    <string name="transaction_success_title_info">链上交易已成功</string>
+    <string name="transaction_process_title">业务数据处理中</string>
+    <string name="transaction_process_title_info">业务数据根据链上交易元数据进行分析处理，预计</string>
+    <string name="transaction_refresh_title">数据已刷新</string>
+    <string name="transaction_success_hint">
+        温馨提示：\n\n
+        节点的投票、撤票等操作链上交易成功后，相关数据的统计有延迟，预计30秒内完成，此为正常现象。</string>
+
 </resources>

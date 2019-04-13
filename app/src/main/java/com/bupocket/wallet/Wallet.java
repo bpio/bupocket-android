@@ -764,6 +764,7 @@ public class Wallet {
             }
 
 //          errorCode  152
+            LogUtils.e("Failure，hash=" + transactionSubmitResponse.getResult().getHash() + "");
             System.out.println("Failure，hash=" + transactionSubmitResponse.getResult().getHash() + "");
             System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
         }
