@@ -21,114 +21,116 @@
             android:visibility="visible">
 
             <RelativeLayout
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
                 <TextView
                     android:id="@+id/dialogTitleTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:text="@string/confirm_transfer_title_txt"
                     android:textColor="@color/app_txt_color_gray_2"
-                    android:text="@string/confirm_transfer_title_txt"/>
+                    android:textSize="16sp" />
 
                 <ImageView
                     android:id="@+id/cancelBtn"
-                    android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_cancel"/>
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/icon_cancel" />
             </RelativeLayout>
 
             <View
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@drawable/bg_solid_line"/>
+                android:layout_marginTop="15dp"
+                android:background="@drawable/bg_solid_line" />
+
 
             <LinearLayout
                 android:id="@+id/transactionAmountLl"
-                android:visibility="visible"
-                android:layout_marginTop="14dp"
-                android:layout_gravity="center"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="14dp"
+                android:visibility="visible">
 
                 <TextView
                     android:id="@+id/transactionAmountTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="32sp"
                     android:textColor="@color/app_color_black"
+                    android:textSize="32sp"
                     tools:text="6894" />
 
                 <TextView
-                    android:layout_marginLeft="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
+                    android:layout_marginLeft="10dp"
+                    android:text="BU"
                     android:textColor="@color/app_txt_color_black_2"
-                    android:text="BU" />
+                    android:textSize="16sp" />
             </LinearLayout>
 
             <TextView
-                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/fragment_title_tx_detail_txt"
                 android:textColor="@color/app_txt_color_gray"
-                android:textSize="13sp"
-                android:text="@string/fragment_title_tx_detail_txt"/>
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/transactionDetailTv"
-                android:layout_marginTop="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:textSize="14sp"
-                tools:text="向谷神668(buQk4h9Ygc5QSyDWCxgps6ZH)投票(buQk4h9Ygc5QSyDWCxgps6ZH)投票6894票"/>
+                tools:text="向谷神668(buQk4h9Ygc5QSyDWCxgps6ZH)投票(buQk4h9Ygc5QSyDWCxgps6ZH)投票6894票" />
 
             <TextView
-                android:layout_marginTop="14.5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="14.5dp"
+                android:text="@string/opposite_account_txt"
                 android:textColor="@color/app_txt_color_gray"
-                android:textSize="13sp"
-                android:text="@string/opposite_account_txt"/>
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/destAddressTv"
-                android:layout_marginTop="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:textSize="14sp"
-                tools:text="bujslk3i3kkdkladkl8dfkdfk3kl3kl3ldsjf"/>
+                tools:text="bujslk3i3kkdkladkl8dfkdfk3kl3kl3ldsjf" />
 
             <TextView
-                android:layout_marginTop="14.5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="14.5dp"
+                android:text="@string/send_fee_title"
                 android:textColor="@color/app_txt_color_gray"
-                android:textSize="13sp"
-                android:text="@string/send_fee_title"/>
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/txFeeTv"
-                android:layout_marginTop="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
                 android:textSize="14sp"
-                tools:text="0.001675"/>
+                tools:text="0.001675" />
 
             <TextView
                 android:id="@+id/detailBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                android:textColor="@color/app_color_main"
                 android:layout_gravity="end"
-                android:layout_marginRight="5dp"
                 android:layout_marginTop="15dp"
-                android:text="@string/details_txt"/>
+                android:layout_marginRight="5dp"
+                android:text="@string/details_txt"
+                android:textColor="@color/app_color_main"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -138,141 +140,162 @@
             android:layout_height="460dp"
             android:layout_marginLeft="18dp"
             android:layout_marginRight="18dp"
+            android:layout_above="@+id/v_gray_line"
             android:orientation="vertical"
             android:visibility="gone">
 
             <RelativeLayout
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="15dp">
+
                 <ImageView
                     android:id="@+id/goBackBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_tobar_left_arrow"/>
+                    android:src="@mipmap/icon_tobar_left_arrow" />
 
                 <ImageView
                     android:id="@+id/detailsCancelBtn"
-                    android:layout_alignParentRight="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_cancel"/>
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/icon_cancel" />
             </RelativeLayout>
 
             <View
-                android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:background="@drawable/bg_solid_line"/>
+                android:layout_marginTop="15dp"
+                android:background="@drawable/bg_solid_line" />
 
-            <TextView
-                android:layout_marginTop="14.5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="13sp"
-                android:text="@string/transaction_originator_txt"/>
 
-            <TextView
-                android:id="@+id/sourceAddressTv"
-                android:layout_marginTop="4dp"
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
-                tools:text="向谷神668(buQk4h9Ygc5QSyDWCxgps6ZH)投票(buQk4h9Ygc5QSyDWCxgps6ZH)投票6894票"/>
+                >
 
-            <TextView
-                android:layout_marginTop="14.5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="13sp"
-                android:text="@string/opposite_account_txt"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/detailsDestAddressTv"
-                android:layout_marginTop="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                tools:text="bujslk3i3kkdkladkl8dfkdfk3kl3kl3ldsjf"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14.5dp"
+                        android:text="@string/transaction_originator_txt"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="13sp" />
 
-            <TextView
-                android:layout_marginTop="14.5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="13sp"
-                android:text="@string/amount_txt"/>
+                    <TextView
+                        android:id="@+id/sourceAddressTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textSize="14sp"
+                        tools:text="向谷神668(buQk4h9Ygc5QSyDWCxgps6ZH)投票(buQk4h9Ygc5QSyDWCxgps6ZH)投票6894票" />
 
-            <TextView
-                android:id="@+id/detailsAmountTv"
-                android:layout_marginTop="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                tools:text="0 BU"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14.5dp"
+                        android:text="@string/opposite_account_txt"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="13sp" />
 
-            <TextView
-                android:layout_marginTop="14.5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="13sp"
-                android:text="@string/transaction_costs_txt"/>
+                    <TextView
+                        android:id="@+id/detailsDestAddressTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textSize="14sp"
+                        tools:text="bujslk3i3kkdkladkl8dfkdfk3kl3kl3ldsjf" />
 
-            <TextView
-                android:id="@+id/detailsTxFeeTv"
-                android:layout_marginTop="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                tools:text="0.001675"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14.5dp"
+                        android:text="@string/amount_txt"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="13sp" />
 
-            <TextView
-                android:layout_marginTop="14.5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="13sp"
-                android:text="@string/parameter_txt"/>
+                    <TextView
+                        android:id="@+id/detailsAmountTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textSize="14sp"
+                        tools:text="0 BU" />
 
-            <TextView
-                android:id="@+id/transactionParamsTv"
-                android:layout_marginTop="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="14sp"
-                tools:text="0.001675"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14.5dp"
+                        android:text="@string/transaction_costs_txt"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/detailsTxFeeTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textSize="14sp"
+                        tools:text="0.001675" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14.5dp"
+                        android:text="@string/parameter_txt"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/transactionParamsTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textSize="14sp"
+                        tools:text="0.001675" />
+
+                </LinearLayout>
+
+
+            </ScrollView>
+
 
         </LinearLayout>
 
         <View
-            android:layout_alignTop="@+id/sendConfirmBtnRl"
-            android:layout_marginBottom="15dp"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp"
+            android:id="@+id/v_gray_line"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:background="@drawable/bg_solid_line"/>
+            android:layout_alignTop="@+id/sendConfirmBtnRl"
+            android:layout_marginLeft="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/bg_solid_line" />
 
         <RelativeLayout
             android:id="@+id/sendConfirmBtnRl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:paddingBottom="25dp"
             android:paddingLeft="18dp"
-            android:paddingRight="18dp">
+            android:paddingRight="18dp"
+            android:paddingBottom="25dp">
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                 android:id="@+id/sendConfirmBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="19.5dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="10dp"
-                android:layout_marginTop="19.5dp"
                 android:text="@string/common_dialog_confirm"
                 android:textColor="@color/qmui_config_color_white"
                 app:qmui_backgroundColor="@color/app_color_main"

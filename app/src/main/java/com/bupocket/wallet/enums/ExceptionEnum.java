@@ -9,6 +9,7 @@ public enum ExceptionEnum {
     BU_NOT_ENOUGH("10003","bu not enough"),
     IMPORT_KEYSTORE_VERSION_ERROR("20001","the keyStore version was wrong"),
     IMPORT_KEYSTORE_ADDRESS_ERROR("20002","the address in the keyStore was wrong, please check"),
+    SUBMIT_TRANSACTION_ERROR("152","submit transaction error  not  hash"),
     ;
 
     private final String code;

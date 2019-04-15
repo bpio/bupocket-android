@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/app_color_white"
     android:orientation="vertical">
 
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
@@ -15,6 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -25,8 +27,8 @@
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
                 android:background="@mipmap/icon_send_success" />
 
             <View
@@ -56,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="13dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="5dp"
             android:orientation="vertical">
 
             <TextView
@@ -99,7 +101,7 @@
         android:background="@color/app_bg_color_gray_3"
         android:text="@string/transaction_success_hint" />
 
-    <ImageView
+    <com.qmuiteam.qmui.widget.QMUIRadiusImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -107,6 +109,7 @@
         android:layout_marginRight="13dp"
         android:layout_marginTop="20dp"
         android:background="@mipmap/ic_me_header_bg"
+
         />
 
 
