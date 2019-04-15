@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -676,7 +677,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         final String contractAddress = contentDto.getDestAddress();
         final String transactionType = contentDto.getType();
 
-        if(Double.valueOf(tokenBalance) < Double.valueOf(amount)){
+        if(TextUtils.isEmpty(tokenBalance)||(Double.valueOf(tokenBalance) < Double.valueOf(amount))){
             Toast.makeText(getContext(),getString(R.string.send_tx_bu_not_enough),Toast.LENGTH_SHORT).show();
             return;
         }
@@ -691,9 +692,8 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
 
                         org.json.JSONObject jsonObj = new org.json.JSONObject(script);
-                        org.json.JSONObject input = jsonObj.getJSONObject("input");
+                        String input = jsonObj.getString("input");
                         String payload = jsonObj.getString("payload");
-//                        ScriptModel scriptModel = new Gson().fromJson(script, ScriptModel.class);
 
                         buildBlobResponse = Wallet.getInstance().applyCoBuildBlob(currentWalletAddress, amount,input.toString(),payload,Constants.NODE_CO_BUILD_FEE );
                     }else {
@@ -901,4 +901,11 @@ public class BPAssetsHomeFragment extends BaseFragment {
             }
         }
     };
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogUtils.e("address:\t"+getWalletAddress());
+    }
 }

@@ -9,9 +9,11 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeBuildDetailAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.Constants;
 import com.bupocket.enums.CoBuildDetailStatusEnum;
 import com.bupocket.http.api.NodeBuildService;
 import com.bupocket.http.api.RetrofitFactory;
@@ -19,9 +21,13 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.NodeBuildDetailModel;
 import com.bupocket.model.NodeBuildSupportModel;
 import com.bupocket.utils.LogUtils;
+import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +36,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.bumo.model.response.TransactionBuildBlobResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -66,6 +73,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private TextView tvBuildDetailSupportNum;
     private TextView tvBuildDetailSupportAmount;
     private NodeBuildDetailModel data;
+    private String nodeId;
 
     @Override
     protected View onCreateView() {
@@ -112,7 +120,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
     private void getBuildData() {
 
-        String nodeId = getArguments().getString("nodeId", "");
+        nodeId = getArguments().getString("nodeId", "");
         if (TextUtils.isEmpty(nodeId)) {
             return;
         }
@@ -197,7 +205,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 startFragment(new BPNodeBuildExitFragment());
                 break;
             case R.id.btnBuildSupport:
-                if (data!=null) {
+                if (data != null) {
                     ShowSupport();
                 }
 
@@ -213,6 +221,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         tvDialogAmount = supportDialog.findViewById(R.id.tvDialogAmount);
         tvDialogOneNum = supportDialog.findViewById(R.id.tvDialogOneNum);
         tvDialogOneNum.setText(data.getAmount());
+        tvDialogOneNum.setText("1000");
         supportDialog.findViewById(R.id.ivDialogCancle).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -244,12 +253,54 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             public void onClick(View v) {
                 supportDialog.cancel();
 
-                llBtnBuild.setVisibility(View.GONE);
+                confirmSupport();
+
+
+
             }
         });
 
 
         supportDialog.show();
+
+    }
+
+    private void confirmSupport() {
+        String amount = tvTotalAmount.getText().toString();
+        String num = numSupport.getText().toString();
+        JSONObject params = new JSONObject();
+        params.put("shares", num);
+        JSONObject input = new JSONObject();
+        input.put("method", "subscribe");
+        input.put("params",params.toJSONString() );
+        try {
+            final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, input.toJSONString(), getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_FEE), nodeId);
+            String hash = transBlob.getResult().getHash();
+            LogUtils.e(hash);
+            ShowPWDialog(new PasswordListener() {
+                @Override
+                public void Confirm(@NotNull String password) {
+                    QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                            .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                            .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
+                            .create();
+                    txSendingTipDialog.show();
+
+                    String txHash = submitTransaction(password, transBlob);
+                    if (TextUtils.isEmpty(txHash)) {
+
+                        return;
+                    }
+
+                }
+            });
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
 
     }
 
