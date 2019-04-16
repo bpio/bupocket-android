@@ -6,7 +6,14 @@
     android:layout_height="match_parent"
     android:background="@color/qmui_config_color_white">
 
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true" />
     <LinearLayout
+        android:id="@+id/llStatusFailed"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/qmui_topbar_height"
@@ -216,9 +223,11 @@
     </LinearLayout>
 
 
-    <com.qmuiteam.qmui.widget.QMUITopBarLayout
-        android:id="@+id/topbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true" />
+
+    <include
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        layout="@layout/fragment_transaction_success"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
+
 </android.support.design.widget.CoordinatorLayout>

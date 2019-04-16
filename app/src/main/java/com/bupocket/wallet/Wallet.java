@@ -172,6 +172,32 @@ public class Wallet {
     }
 
 
+    public String sendBuNoNonce(String password, String bPData, String fromAccAddr, String toAccAddr, String amount, String note, String fee, long nonce) throws Exception {
+        String hash = null;
+        try {
+            String senderPrivateKey = getPKBYAccountPassword(password, bPData, fromAccAddr);
+            // Init variable
+            // The account address to receive bu
+            String destAddress = toAccAddr;
+            // The amount to be sent
+            Long sendAmount = ToBaseUnit.BU2MO(amount);
+            // The fixed write 1000L, the unit is MO
+            Long gasPrice = 1000L;
+            // Set up the maximum cost 0.01BU
+            Long feeLimit = ToBaseUnit.BU2MO(fee);
+            // Transaction initiation account's nonce + 1
+            String transMetadata = note;
+
+//            Long nonce = getAccountNonce(fromAccAddr) + 1;
+            hash = sendBu(senderPrivateKey, destAddress, sendAmount, nonce, gasPrice, feeLimit, transMetadata);
+        } catch (WalletException e) {
+            throw new WalletException(e.getErrCode(), e.getErrMsg());
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+        return hash;
+    }
+
     public String sendBu(String password, String bPData, String fromAccAddr, String toAccAddr, String amount, String note, String fee) throws Exception {
         String hash = null;
         try {
@@ -249,11 +275,76 @@ public class Wallet {
     }
 
 
+    public String sendTokenNoNonce(String password, String bPData, String fromAccAddr, String toAccAddr, String tokenCode, String tokenIssuer, String amount, String decimals, String note, String fee, long nonce) throws Exception {
+        String hash = null;
+        try {
+            String senderPrivateKey = getPKBYAccountPassword(password, bPData, fromAccAddr);
+            String metadata = note;
+            // The fixed write 1000L, the unit is MO
+            Long gasPrice = 1000L;
+
+
+            // handle send token amount
+
+            Long sendTokenAmount = handleSendTokenAmount(amount, decimals);
+
+            // Transaction initiation account's Nonce + 1
+//            String senderAddress = getAddressByPrivateKey(senderPrivateKey);
+//            Long nonce = getAccountNonce(senderAddress) + 1;
+
+
+            List<BaseOperation> operations = new ArrayList<>();
+
+
+            String senderAddresss = getAddressByPrivateKey(senderPrivateKey);
+
+            // Check whether the destination account is activated
+            if (!checkAccountActivated(toAccAddr)) {
+                if (Double.parseDouble(fee) - Constants.ACTIVE_AMOUNT_FEE <= 0) {
+                    throw new WalletException(ExceptionEnum.FEE_NOT_ENOUGH);
+                }
+                AccountActivateOperation accountActivateOperation = new AccountActivateOperation();
+                accountActivateOperation.setSourceAddress(senderAddresss);
+                accountActivateOperation.setDestAddress(toAccAddr);
+                accountActivateOperation.setInitBalance(ToBaseUnit.BU2MO(Constants.ACTIVE_AMOUNT_FEE + ""));
+                accountActivateOperation.setMetadata("activate account");
+                operations.add(accountActivateOperation);
+                fee = DecimalCalculate.sub(Double.parseDouble(fee), Constants.ACTIVE_AMOUNT_FEE) + "";
+            }
+
+            // Set up the maximum cost 0.01BU
+            Long feeLimit = ToBaseUnit.BU2MO(fee);
+
+            // Build asset operation
+            AssetSendOperation assetSendOperation = new AssetSendOperation();
+            assetSendOperation.setSourceAddress(senderAddresss);
+            assetSendOperation.setDestAddress(toAccAddr);
+            assetSendOperation.setCode(tokenCode);
+            assetSendOperation.setAmount(sendTokenAmount);
+            assetSendOperation.setIssuer(tokenIssuer);
+            assetSendOperation.setMetadata(metadata);
+
+            operations.add(assetSendOperation);
+
+//        BaseOperation[] operations = {operation};
+            // Record txhash for subsequent confirmation of the real result of the transaction.
+            // After recommending five blocks, call again through txhash `Get the transaction information
+            // from the transaction Hash'(see example: getTxByHash ()) to confirm the final result of the transaction
+            hash = submitTransaction(senderPrivateKey, senderAddresss, operations, nonce, gasPrice, feeLimit, note);
+        } catch (WalletException e) {
+            throw new WalletException(e.getErrCode(), e.getErrMsg());
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+        return hash;
+    }
+
     public String sendToken(String password, String bPData, String fromAccAddr, String toAccAddr, String tokenCode, String tokenIssuer, String sendTokenAamount, String tokenDecimals, String note, String fee) throws Exception {
         String hash = null;
         try {
             String senderPrivateKey = getPKBYAccountPassword(password, bPData, fromAccAddr);
             hash = sendToken(senderPrivateKey, tokenIssuer, toAccAddr, tokenCode, sendTokenAamount, tokenDecimals, note, fee);
+
         } catch (WalletException e) {
             throw new WalletException(e.getErrCode(), e.getErrMsg());
         } catch (Exception e) {
@@ -421,7 +512,7 @@ public class Wallet {
         return address;
     }
 
-    private Long getAccountNonce(String accountAddress) throws WalletException {
+    public Long getAccountNonce(String accountAddress) throws WalletException {
         AccountGetNonceRequest request = new AccountGetNonceRequest();
         request.setAddress(accountAddress);
 
@@ -430,7 +521,7 @@ public class Wallet {
             return response.getResult().getNonce();
         } else if (11007 == response.getErrorCode()) {
             throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
-        }else if (20000==response.getErrorCode()){
+        } else if (20000 == response.getErrorCode()) {
             throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
         }
         return null;
@@ -764,12 +855,12 @@ public class Wallet {
                 throw new WalletException(ExceptionEnum.FEE_NOT_ENOUGH);
             } else if (BUChainExceptionEnum.ERRCODE_ACCOUNT_LOW_RESERVE.getCode().equals(transactionSubmitResponse.getErrorCode())) {
                 throw new WalletException(ExceptionEnum.BU_NOT_ENOUGH);
-            }else if (BUChainExceptionEnum.ERRCODE_OTHER.getCode().equals(transactionSubmitResponse.getErrorCode())){
+            } else if (BUChainExceptionEnum.ERRCODE_OTHER.getCode().equals(transactionSubmitResponse.getErrorCode())) {
                 throw new WalletException(ExceptionEnum.SUBMIT_TRANSACTION_ERROR);
             }
 
 //          errorCode  152
-            LogUtils.e("\nFailure，code="+transactionSubmitResponse.getErrorCode() +"\n，hash=" + transactionSubmitResponse.getResult().getHash() + "");
+            LogUtils.e("\nFailure，code=" + transactionSubmitResponse.getErrorCode() + "\n，hash=" + transactionSubmitResponse.getResult().getHash() + "");
             System.out.println("Failure，hash=" + transactionSubmitResponse.getResult().getHash() + "");
             System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
         }

@@ -2,20 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/llTransactionSuccess"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/app_color_white"
     android:orientation="vertical">
-
-    <com.qmuiteam.qmui.widget.QMUITopBarLayout
-        android:id="@+id/topbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="40dp"
         android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
@@ -58,7 +53,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="13dp"
-            android:layout_marginTop="5dp"
             android:orientation="vertical">
 
             <TextView
@@ -72,7 +66,7 @@
 
             <TextView
                 style="@style/tv_com_gray66_style"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/transaction_process_title" />/>
 
             <TextView
@@ -102,12 +96,13 @@
         android:text="@string/transaction_success_hint" />
 
     <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginLeft="13dp"
         android:layout_marginRight="13dp"
         android:layout_marginTop="20dp"
+        app:qmui_corner_radius="5dp"
         android:background="@mipmap/ic_me_header_bg"
 
         />

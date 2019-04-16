@@ -419,7 +419,7 @@
     <string name="time_txt">时间</string>
     <string name="withdraw_txt">撤销</string>
     <string name="voted_txt">投票</string>
-    <string name="revoke_no_vote_error_message_txt">还未向该节点投票，无法撤票</string>
+    <string name="revoke_no_vote_error_message_txt">暂无可撤销的票数</string>
     <string name="revoke_vote_tx_details_txt">撤销向\"%1$s\"的投票</string>
     <string name="revoke_vote_dest_address_txt">%1$s(节点计划合约账户)</string>
     <string name="withdraw_vote_confirm_txt">确认撤票</string>
@@ -514,7 +514,8 @@
     <string name="transaction_success_title">交易成功</string>
     <string name="transaction_success_title_info">链上交易已成功</string>
     <string name="transaction_process_title">业务数据处理中</string>
-    <string name="transaction_process_title_info">业务数据根据链上交易元数据进行分析处理，预计</string>
+    <string name="transaction_process_title_info">业务数据根据链上交易元数据进行分析处理，预计
+20秒内处理完成</string>
     <string name="transaction_refresh_title">数据已刷新</string>
     <string name="transaction_success_hint">
         温馨提示：\n\n

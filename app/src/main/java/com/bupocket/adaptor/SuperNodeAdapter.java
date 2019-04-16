@@ -95,6 +95,8 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
                 .into(nodeIconIv);
         nodeIconIv.setBackgroundColor(context.getResources().getColor(R.color.app_color_white));
 
+
+        LogUtils.e(""+itemData.getNodeId());
     }
 
 

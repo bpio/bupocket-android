@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -44,6 +45,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -76,6 +78,8 @@ public class BPSendTokenFragment extends BaseFragment {
     @BindView(R.id.sendTokenAmountLable)
     TextView mSendTokenAmountLable;
 
+    public final static String SEND_TOKEN_STATUS = "sendTokenStatus";
+    ;
     private static final int CHOOSE_ADDRESS_CODE = 1;
 
     private String hash;
@@ -90,6 +94,8 @@ public class BPSendTokenFragment extends BaseFragment {
     protected SharedPreferencesHelper sharedPreferencesHelper;
 
     private TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean;
+    private long nonce;
+
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_send, null);
@@ -106,13 +112,13 @@ public class BPSendTokenFragment extends BaseFragment {
             public void onClick(View v) {
                 Bundle argz = new Bundle();
                 argz.putString("flag", AddressClickEventEnum.CHOOSE.getCode());
-                argz.putString("tokenType",tokenType);
-                argz.putString("tokenCode",tokenCode);
-                argz.putString("tokenDecimals",tokenDecimals);
-                argz.putString("tokenIssuer",tokenIssuer);
+                argz.putString("tokenType", tokenType);
+                argz.putString("tokenCode", tokenCode);
+                argz.putString("tokenDecimals", tokenDecimals);
+                argz.putString("tokenIssuer", tokenIssuer);
                 BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
                 bpAddressBookFragment.setArguments(argz);
-                startFragmentForResult(bpAddressBookFragment,CHOOSE_ADDRESS_CODE);
+                startFragmentForResult(bpAddressBookFragment, CHOOSE_ADDRESS_CODE);
             }
         });
         buildWatcher();
@@ -140,10 +146,10 @@ public class BPSendTokenFragment extends BaseFragment {
                 boolean signAccountAddress = destAccountAddressEt.getText().toString().trim().length() > 0;
                 boolean signAmount = sendAmountET.getText().toString().trim().length() > 0;
                 boolean signTxFee = sendFormTxFeeEt.getText().toString().trim().length() > 0;
-                if(signAccountAddress && signAmount && signTxFee){
+                if (signAccountAddress && signAmount && signTxFee) {
                     mConfirmSendBtn.setEnabled(true);
                     mConfirmSendBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
-                }else {
+                } else {
                     mConfirmSendBtn.setEnabled(false);
                     mConfirmSendBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
                 }
@@ -168,9 +174,8 @@ public class BPSendTokenFragment extends BaseFragment {
             @Override
             public void afterTextChanged(final Editable s) {
 
-                if(!TokenTypeEnum.BU.getCode().equals(tokenType)){
-                    @SuppressLint("HandlerLeak")
-                    final Handler handler = new Handler(){
+                if (!TokenTypeEnum.BU.getCode().equals(tokenType)) {
+                    @SuppressLint("HandlerLeak") final Handler handler = new Handler() {
                         @Override
                         public void handleMessage(Message msg) {
                             super.handleMessage(msg);
@@ -183,18 +188,18 @@ public class BPSendTokenFragment extends BaseFragment {
                         @Override
                         public void run() {
                             String fee;
-                            if(Wallet.getInstance().checkAccAddress(s.toString())){
-                                if(!Wallet.getInstance().checkAccountActivated(s.toString())){
+                            if (Wallet.getInstance().checkAccAddress(s.toString())) {
+                                if (!Wallet.getInstance().checkAccountActivated(s.toString())) {
                                     fee = Constants.ACCOUNT_NOT_ACTIVATED_SEND_FEE;
-                                }else{
+                                } else {
                                     fee = Constants.ACCOUNT_ACTIVATED_SEND_FEE;
                                 }
-                            }else {
+                            } else {
                                 fee = Constants.ACCOUNT_ACTIVATED_SEND_FEE;
                             }
                             Message message = new Message();
                             Bundle data = new Bundle();
-                            data.putString("fee",fee);
+                            data.putString("fee", fee);
                             message.setData(data);
                             handler.sendMessage(message);
                         }
@@ -207,11 +212,11 @@ public class BPSendTokenFragment extends BaseFragment {
         destAccountAddressEt.addTextChangedListener(addressEtWatcher);
     }
 
-    private void initData(){
+    private void initData() {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
-        if(CommonUtil.isNull(currentWalletAddress) || sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString().equals(currentWalletAddress)){
-            currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
+        currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress", "").toString();
+        if (CommonUtil.isNull(currentWalletAddress) || sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString().equals(currentWalletAddress)) {
+            currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
             whetherIdentityWallet = true;
         }
 
@@ -221,10 +226,11 @@ public class BPSendTokenFragment extends BaseFragment {
         tokenDecimals = getArguments().getString("tokenDecimals");
         String tokenBalance = getArguments().getString("tokenBalance");
         mTokenCodeTv.setText(tokenCode);
-        mSendTokenAmountLable.setText(getResources().getText(R.string.send_amount_title) + "（"+tokenCode+"）");
+        mSendTokenAmountLable.setText(getResources().getText(R.string.send_amount_title) + "（" + tokenCode + "）");
         getAccountAvailableTokenBalance(tokenType, tokenBalance);
 
     }
+
     private void initTopBar() {
         mTopBar.setBackgroundDividerEnabled(false);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
@@ -233,7 +239,7 @@ public class BPSendTokenFragment extends BaseFragment {
                 popBackStack();
             }
         });
-        mTopBar.addRightImageButton(R.mipmap.icon_scan_green_little,R.id.walletScanBtn).setOnClickListener(new View.OnClickListener() {
+        mTopBar.addRightImageButton(R.mipmap.icon_scan_green_little, R.id.walletScanBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startScan();
@@ -241,44 +247,45 @@ public class BPSendTokenFragment extends BaseFragment {
         });
     }
 
-    private void getAccountAvailableTokenBalance(String tokenType,String tokenBalance){
+    private void getAccountAvailableTokenBalance(String tokenType, String tokenBalance) {
 
-        if(TokenTypeEnum.BU.getCode().equals(tokenType)){
-            if(tokenBalance == null || Double.parseDouble(tokenBalance) < 0 || Double.parseDouble(tokenBalance) == 0){
+        if (TokenTypeEnum.BU.getCode().equals(tokenType)) {
+            if (tokenBalance == null || Double.parseDouble(tokenBalance) < 0 || Double.parseDouble(tokenBalance) == 0) {
                 availableTokenBalance = "0";
             } else {
-                Double doubleAvailableTokenBalance = DecimalCalculate.sub(Double.parseDouble(tokenBalance),com.bupocket.common.Constants.RESERVE_AMOUNT);
-                if(doubleAvailableTokenBalance < 0){
+                Double doubleAvailableTokenBalance = DecimalCalculate.sub(Double.parseDouble(tokenBalance), com.bupocket.common.Constants.RESERVE_AMOUNT);
+                if (doubleAvailableTokenBalance < 0) {
                     availableTokenBalance = "0";
-                }else {
-                    availableTokenBalance = CommonUtil.rvZeroAndDot(new BigDecimal(DecimalCalculate.sub(Double.parseDouble(tokenBalance),com.bupocket.common.Constants.RESERVE_AMOUNT)).setScale(Integer.valueOf(tokenDecimals),BigDecimal.ROUND_HALF_UP).toPlainString());
+                } else {
+                    availableTokenBalance = CommonUtil.rvZeroAndDot(new BigDecimal(DecimalCalculate.sub(Double.parseDouble(tokenBalance), com.bupocket.common.Constants.RESERVE_AMOUNT)).setScale(Integer.valueOf(tokenDecimals), BigDecimal.ROUND_HALF_UP).toPlainString());
                 }
 //                availableTokenBalance = CommonUtil.rvZeroAndDot(new BigDecimal(AmountUtil.availableSubtractionFee(tokenBalance,com.bupocket.common.Constants.RESERVE_AMOUNT)).setScale(Integer.valueOf(tokenDecimals),BigDecimal.ROUND_HALF_UP).toPlainString());
             }
-        }else{
+        } else {
             availableTokenBalance = tokenBalance;
         }
         mAccountAvailableBalanceTv.setText(availableTokenBalance);
     }
-    private String getAccountBPData(){
+
+    private String getAccountBPData() {
 //        String data = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
 //        return data;
 
         String accountBPData = null;
-        if(whetherIdentityWallet) {
+        if (whetherIdentityWallet) {
             accountBPData = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
-        }else {
-            accountBPData = sharedPreferencesHelper.getSharedPreference(currentWalletAddress+ "-BPdata", "").toString();
+        } else {
+            accountBPData = sharedPreferencesHelper.getSharedPreference(currentWalletAddress + "-BPdata", "").toString();
         }
         return accountBPData;
     }
 
 
-    private String getDestAccAddr(){
+    private String getDestAccAddr() {
         return destAccountAddressEt.getText().toString().trim();
     }
 
-    private void confirmSendInfo(){
+    private void confirmSendInfo() {
 
         mConfirmSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -287,7 +294,7 @@ public class BPSendTokenFragment extends BaseFragment {
 
                 String address = destAccountAddressEt.getText().toString().trim();
                 Boolean flag = Wallet.getInstance().checkAccAddress(address);
-                if(!flag || CommonUtil.isNull(address)){
+                if (!flag || CommonUtil.isNull(address)) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.invalid_address))
                             .create();
@@ -302,7 +309,7 @@ public class BPSendTokenFragment extends BaseFragment {
                     return;
                 }
 
-                if(address.equals(currentWalletAddress)){
+                if (address.equals(currentWalletAddress)) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.send_err1))
                             .create();
@@ -317,10 +324,9 @@ public class BPSendTokenFragment extends BaseFragment {
                 }
 
 
-
                 String sendAmountInput = sendAmountET.getText().toString().trim();
                 final String sendAmount = CommonUtil.rvZeroAndDot(sendAmountET.getText().toString().trim());
-                if(!CommonUtil.isBU(sendAmountInput) || CommonUtil.isNull(sendAmountInput) || CommonUtil.checkSendAmountDecimals(sendAmountInput,tokenDecimals)){
+                if (!CommonUtil.isBU(sendAmountInput) || CommonUtil.isNull(sendAmountInput) || CommonUtil.checkSendAmountDecimals(sendAmountInput, tokenDecimals)) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.invalid_amount))
                             .create();
@@ -335,7 +341,7 @@ public class BPSendTokenFragment extends BaseFragment {
                 }
                 if (Double.parseDouble(sendAmountInput) < com.bupocket.common.Constants.MIN_SEND_AMOUNT) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
-                            .setTipWord(CommonUtil.addSuffix(CommonUtil.addSuffix(getResources().getString(R.string.amount_too_small),CommonUtil.calculateMinSendAmount(tokenDecimals)),tokenCode))
+                            .setTipWord(CommonUtil.addSuffix(CommonUtil.addSuffix(getResources().getString(R.string.amount_too_small), CommonUtil.calculateMinSendAmount(tokenDecimals)), tokenCode))
                             .create();
                     tipDialog.show();
                     sendAmountET.postDelayed(new Runnable() {
@@ -349,7 +355,7 @@ public class BPSendTokenFragment extends BaseFragment {
 
                 if ((TokenTypeEnum.BU.getCode().equals(tokenType)) && (Double.parseDouble(sendAmountInput) > com.bupocket.common.Constants.MAX_SEND_AMOUNT)) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
-                            .setTipWord(CommonUtil.addSuffix(getResources().getString(R.string.amount_too_big),tokenCode))
+                            .setTipWord(CommonUtil.addSuffix(getResources().getString(R.string.amount_too_big), tokenCode))
                             .create();
                     tipDialog.show();
                     sendAmountET.postDelayed(new Runnable() {
@@ -363,7 +369,7 @@ public class BPSendTokenFragment extends BaseFragment {
 
                 final String note = sendFormNoteEt.getText().toString();
 
-                if(!CommonUtil.isNull(note) && note.length() > com.bupocket.common.Constants.SEND_TOKEN_NOTE_MAX_LENGTH){
+                if (!CommonUtil.isNull(note) && note.length() > com.bupocket.common.Constants.SEND_TOKEN_NOTE_MAX_LENGTH) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.send_token_note_too_long))
                             .create();
@@ -379,7 +385,7 @@ public class BPSendTokenFragment extends BaseFragment {
 
                 final String txFee = CommonUtil.rvZeroAndDot(sendFormTxFeeEt.getText().toString());
 
-                if(!CommonUtil.isBU(txFee) || CommonUtil.isNull(txFee) || CommonUtil.checkSendAmountDecimals(txFee, Constants.BU_DECIMAL.toString())){
+                if (!CommonUtil.isBU(txFee) || CommonUtil.isNull(txFee) || CommonUtil.checkSendAmountDecimals(txFee, Constants.BU_DECIMAL.toString())) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.invalid_tx_fee))
                             .create();
@@ -392,7 +398,7 @@ public class BPSendTokenFragment extends BaseFragment {
                     }, 1500);
                     return;
                 }
-                if(Double.parseDouble(txFee) > Constants.MAX_FEE){
+                if (Double.parseDouble(txFee) > Constants.MAX_FEE) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.tx_fee_too_big))
                             .create();
@@ -406,7 +412,7 @@ public class BPSendTokenFragment extends BaseFragment {
                     return;
                 }
 
-                if(Double.parseDouble(mAccountAvailableBalanceTv.getText().toString()) < Double.parseDouble(sendAmountInput)){
+                if (Double.parseDouble(mAccountAvailableBalanceTv.getText().toString()) < Double.parseDouble(sendAmountInput)) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.balance_not_enough))
                             .create();
@@ -419,9 +425,6 @@ public class BPSendTokenFragment extends BaseFragment {
                     }, 1500);
                     return;
                 }
-
-
-
 
 
                 final QMUIBottomSheet sheet = new QMUIBottomSheet(getContext());
@@ -439,7 +442,7 @@ public class BPSendTokenFragment extends BaseFragment {
 
                 TextView remarkTxt = sheet.findViewById(R.id.sendRemark);
                 remarkTxt.setText(note);
-                
+
                 sheet.findViewById(R.id.sendConfirmCloseBtn).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -448,11 +451,23 @@ public class BPSendTokenFragment extends BaseFragment {
                 });
 
                 sheet.show();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            nonce = Wallet.getInstance().getAccountNonce(getWalletAddress()) + 1;
+                        } catch (WalletException e) {
+                            e.printStackTrace();
+                        }
 
+                    }
+                }).start();
                 sheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         sheet.dismiss();
+
+                        final long finalNonce = nonce;
                         final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
                         qmuiDialog.setCanceledOnTouchOutside(false);
                         qmuiDialog.setContentView(R.layout.view_password_comfirm);
@@ -463,7 +478,7 @@ public class BPSendTokenFragment extends BaseFragment {
                             public void run() {
                                 showSoftInputFromWindow(mPasswordConfirmEt);
                             }
-                        },10);
+                        }, 10);
 
                         QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
 
@@ -475,6 +490,7 @@ public class BPSendTokenFragment extends BaseFragment {
                                 qmuiDialog.dismiss();
                             }
                         });
+
 
                         mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -491,7 +507,7 @@ public class BPSendTokenFragment extends BaseFragment {
                                     @Override
                                     public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
 
-                                        if(event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+                                        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
                                             return true;
                                         }
                                         return false;
@@ -507,21 +523,26 @@ public class BPSendTokenFragment extends BaseFragment {
                                         String destAddess = getDestAccAddr();
                                         try {
 
-                                            if(TokenTypeEnum.BU.getCode().equals(tokenType)){
-                                                hash = Wallet.getInstance().sendBu(password,accountBPData, currentWalletAddress, destAddess, sendAmount, note,txFee);
-                                            }else if(TokenTypeEnum.ATP10.getCode().equals(tokenType)){
-                                                hash = Wallet.getInstance().sendToken(password,accountBPData,currentWalletAddress,destAddess,tokenCode,tokenIssuer, sendAmount,tokenDecimals,note, txFee);
+//                                            if(TokenTypeEnum.BU.getCode().equals(tokenType)){
+//                                                hash = Wallet.getInstance().sendBu(password,accountBPData, currentWalletAddress, destAddess, sendAmount, note,txFee);
+//                                            }else if(TokenTypeEnum.ATP10.getCode().equals(tokenType)){
+//                                                hash = Wallet.getInstance().sendToken(password,accountBPData,currentWalletAddress,destAddess,tokenCode,tokenIssuer, sendAmount,tokenDecimals,note, txFee);
+//                                            }
+                                            if (TokenTypeEnum.BU.getCode().equals(tokenType)) {
+                                                hash = Wallet.getInstance().sendBuNoNonce(password, accountBPData, currentWalletAddress, destAddess, sendAmount, note, txFee, nonce);
+                                            } else if (TokenTypeEnum.ATP10.getCode().equals(tokenType)) {
+                                                hash = Wallet.getInstance().sendTokenNoNonce(password, accountBPData, currentWalletAddress, destAddess, tokenCode, tokenIssuer, sendAmount, tokenDecimals, note, txFee, nonce);
                                             }
 
 
-                                        }catch (WalletException e){
+                                        } catch (WalletException e) {
                                             e.printStackTrace();
                                             Looper.prepare();
-                                            if(ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())){
+                                            if (ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
                                                 Toast.makeText(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT).show();
-                                            }else if(ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())){
+                                            } else if (ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
                                                 Toast.makeText(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT).show();
-                                            }else {
+                                            } else {
                                                 Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
                                             }
                                             txSendingTipDialog.dismiss();
@@ -532,7 +553,7 @@ public class BPSendTokenFragment extends BaseFragment {
                                             Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
                                             txSendingTipDialog.dismiss();
                                             Looper.loop();
-                                        }finally {
+                                        } finally {
                                             timer.schedule(timerTask,
                                                     1 * 1000,//延迟1秒执行
                                                     1000);
@@ -550,15 +571,14 @@ public class BPSendTokenFragment extends BaseFragment {
         });
     }
 
-    private void setDestAddress(){
+    private void setDestAddress() {
         Bundle bundle = getArguments();
-        if(bundle != null){
+        if (bundle != null) {
             final String destAddress = getArguments().getString("destAddress");
             destAccountAddressEt.setText(destAddress);
 
-            if(!TokenTypeEnum.BU.getCode().equals(tokenType)){
-                @SuppressLint("HandlerLeak")
-                final Handler handler = new Handler(){
+            if (!TokenTypeEnum.BU.getCode().equals(tokenType)) {
+                @SuppressLint("HandlerLeak") final Handler handler = new Handler() {
                     @Override
                     public void handleMessage(Message msg) {
                         super.handleMessage(msg);
@@ -571,18 +591,18 @@ public class BPSendTokenFragment extends BaseFragment {
                     @Override
                     public void run() {
                         String fee;
-                        if(Wallet.getInstance().checkAccAddress(destAddress)){
-                            if(!Wallet.getInstance().checkAccountActivated(destAddress)){
+                        if (Wallet.getInstance().checkAccAddress(destAddress)) {
+                            if (!Wallet.getInstance().checkAccountActivated(destAddress)) {
                                 fee = Constants.ACCOUNT_NOT_ACTIVATED_SEND_FEE;
-                            }else{
+                            } else {
                                 fee = Constants.ACCOUNT_ACTIVATED_SEND_FEE;
                             }
-                        }else {
+                        } else {
                             fee = Constants.ACCOUNT_ACTIVATED_SEND_FEE;
                         }
                         Message message = new Message();
                         Bundle data = new Bundle();
-                        data.putString("fee",fee);
+                        data.putString("fee", fee);
                         message.setData(data);
                         handler.sendMessage(message);
                     }
@@ -593,7 +613,7 @@ public class BPSendTokenFragment extends BaseFragment {
         }
     }
 
-    private void startScan(){
+    private void startScan() {
         IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(this);
         intentIntegrator.setBeepEnabled(true);
         intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
@@ -623,7 +643,7 @@ public class BPSendTokenFragment extends BaseFragment {
         switch (requestCode) {
             case CHOOSE_ADDRESS_CODE: {
                 if (resultCode == RESULT_OK) {
-                    if(null != data){
+                    if (null != data) {
                         String destAddress = data.getStringExtra("destAddress");
                         destAccountAddressEt.setText(destAddress);
                     }
@@ -635,13 +655,14 @@ public class BPSendTokenFragment extends BaseFragment {
 
     private int timerTimes = 0;
     private final Timer timer = new Timer();
+
     @SuppressLint("HandlerLeak")
     private Handler mHanlder = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    if(timerTimes > Constants.TX_REQUEST_TIMEOUT_TIMES){
+                    if (timerTimes > Constants.TX_REQUEST_TIMEOUT_TIMES) {
                         timerTask.cancel();
                         txSendingTipDialog.dismiss();
                         startFragmentAndDestroyCurrent(new BPTxRequestTimeoutFragment());
@@ -651,16 +672,16 @@ public class BPSendTokenFragment extends BaseFragment {
                     System.out.println("timerTimes:" + timerTimes);
                     TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
                     Map<String, Object> paramsMap = new HashMap<>();
-                    paramsMap.put("hash",hash);
+                    paramsMap.put("hash", hash);
                     Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetailByHash(paramsMap);
-                    call.enqueue(new retrofit2.Callback<ApiResult<TxDetailRespDto>>(){
+                    call.enqueue(new retrofit2.Callback<ApiResult<TxDetailRespDto>>() {
 
                         @Override
                         public void onResponse(Call<ApiResult<TxDetailRespDto>> call, Response<ApiResult<TxDetailRespDto>> response) {
                             ApiResult<TxDetailRespDto> resp = response.body();
-                            if(!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())){
+                            if (!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())) {
                                 return;
-                            }else{
+                            } else {
                                 txDeatilRespBoBean = resp.getData().getTxDeatilRespBo();
                                 timerTask.cancel();
                                 txSendingTipDialog.dismiss();
@@ -668,13 +689,15 @@ public class BPSendTokenFragment extends BaseFragment {
                                     Toast.makeText(getActivity(), R.string.balance_not_enough, Toast.LENGTH_SHORT).show();
                                 }
                                 Bundle argz = new Bundle();
-                                argz.putString("destAccAddr",txDeatilRespBoBean.getDestAddress());
-                                argz.putString("sendAmount",txDeatilRespBoBean.getAmount());
-                                argz.putString("txFee",txDeatilRespBoBean.getFee());
-                                argz.putString("tokenCode",tokenCode);
-                                argz.putString("note",txDeatilRespBoBean.getOriginalMetadata());
-                                argz.putString("state",txDeatilRespBoBean.getStatus().toString());
-                                argz.putString("sendTime",txDeatilRespBoBean.getApplyTimeDate());
+                                argz.putString("destAccAddr", txDeatilRespBoBean.getDestAddress());
+                                argz.putString("sendAmount", txDeatilRespBoBean.getAmount());
+                                argz.putString("txFee", txDeatilRespBoBean.getFee());
+                                argz.putString("tokenCode", tokenCode);
+                                argz.putString("note", txDeatilRespBoBean.getOriginalMetadata());
+                                argz.putString("state", txDeatilRespBoBean.getStatus().toString());
+                                argz.putString("sendTime", txDeatilRespBoBean.getApplyTimeDate());
+
+                                argz.putString("sendTokenStatusKey", SEND_TOKEN_STATUS);
                                 BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
                                 bpSendStatusFragment.setArguments(argz);
                                 startFragmentAndDestroyCurrent(bpSendStatusFragment);
@@ -697,22 +720,21 @@ public class BPSendTokenFragment extends BaseFragment {
     private TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
-            if(hash != null && !hash.equals("")){
+            if (hash != null && !hash.equals("")) {
                 mHanlder.sendEmptyMessage(1);
             }
         }
     };
 
 
-
-    public void showSoftInputFromWindow(EditText editText){
+    public void showSoftInputFromWindow(EditText editText) {
         editText.setFocusable(true);
         editText.setFocusableInTouchMode(true);
         editText.requestFocus();
         editText.findFocus();
         InputMethodManager inputManager =
                 (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.showSoftInput(editText,  InputMethodManager.SHOW_FORCED);
+        inputManager.showSoftInput(editText, InputMethodManager.SHOW_FORCED);
     }
 
 }
