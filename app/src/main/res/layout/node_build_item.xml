@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="百信共建小分队"
+            tools:text="百信共建小分队"
             android:textColor="@color/app_color_black"
             android:textSize="15sp" />
 
@@ -36,7 +37,7 @@
                 android:id="@+id/tvBuildNum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="10,000"
+                tools:text="10,000"
                 android:textColor="@color/app_color_green"
                 android:textSize="18sp" />
 
@@ -66,8 +67,8 @@
             android:layout_height="3dp"
             android:layout_below="@+id/tvBuildAmountHint"
             android:layout_marginTop="18dp"
-            android:max="100"
-            android:progress="60"
+            tools:max="100"
+            tools:progress="60"
             android:progressDrawable="@drawable/progress_horizontal_green" />
 
         <TextView
@@ -84,7 +85,7 @@
             android:layout_marginLeft="2dp"
             android:layout_marginTop="15dp"
             android:layout_toRightOf="@+id/tvRemainNumHint"
-            android:text="5,000,000 BU"
+            tools:text="5,000,000 BU"
             android:textColor="@color/app_txt_color_black" />
 
         <TextView
@@ -102,7 +103,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginLeft="7dp"
             android:layout_marginTop="15dp"
-            android:text="30份"
+            tools:text="30份"
             android:textColor="@color/app_txt_color_black" />
 
 
@@ -131,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="3dp"
-                android:text="100%"
+                tools:text="100%"
                 android:textColor="@color/app_color_white"
                 android:textSize="21sp" />
 

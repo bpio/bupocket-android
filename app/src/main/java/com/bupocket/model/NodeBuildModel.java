@@ -9,7 +9,7 @@ public class NodeBuildModel implements Serializable {
 
     private String nodeId;
     private String title;
-    private String amount;
+    private String perAmount;
     private String deposit;
     private int copies;
     private int leftCopies;
@@ -32,12 +32,12 @@ public class NodeBuildModel implements Serializable {
         this.title = title;
     }
 
-    public String getAmount() {
-        return amount;
+    public String getPerAmount() {
+        return perAmount;
     }
 
-    public void setAmount(String amount) {
-        this.amount = amount;
+    public void setPerAmount(String perAmount) {
+        this.perAmount = perAmount;
     }
 
     public String getDeposit() {

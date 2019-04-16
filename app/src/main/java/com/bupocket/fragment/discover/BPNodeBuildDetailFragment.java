@@ -63,8 +63,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private TextView tvStutas;
     private View addBtn;
     private View subBtn;
+    private TextView tvDialogTotalAmount;
     private TextView tvDialogAmount;
-    private TextView tvDialogOneNum;
     private TextView numSupport;
     private TextView tvName;
     private TextView tvBuildDetailAmount;
@@ -169,14 +169,13 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     }
 
                     ArrayList<NodeBuildSupportModel> nodelist = body.getData().getSupportList();
-                    if (nodelist==null||nodelist.size()==0) {
+                    if (nodelist == null || nodelist.size() == 0) {
                         lvBuildDetail.addHeaderView(emptyLayout);
-                    }else{
+                    } else {
                         lvBuildDetail.removeHeaderView(emptyLayout);
                         nodeBuildDetailAdapter.setNewData(nodelist);
                         nodeBuildDetailAdapter.notifyDataSetChanged();
                     }
-
 
 
                 }
@@ -230,9 +229,9 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         supportDialog.setContentView(supportDialog.getLayoutInflater().inflate(R.layout.view_dialog_node_detail_support, null));
         addBtn = supportDialog.findViewById(R.id.tvDialogAdd);
         subBtn = supportDialog.findViewById(R.id.tvDialogSub);
+        tvDialogTotalAmount = supportDialog.findViewById(R.id.tvDialogTotalAmount);
         tvDialogAmount = supportDialog.findViewById(R.id.tvDialogAmount);
-        tvDialogOneNum = supportDialog.findViewById(R.id.tvDialogOneNum);
-        tvDialogOneNum.setText(data.getPerAmount());
+
         supportDialog.findViewById(R.id.ivDialogCancle).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -240,7 +239,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             }
         });
         numSupport = supportDialog.findViewById(R.id.tvDialogNum);
-        numSupport.setText("" + 1);
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -259,6 +257,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 setNumStatus(numSub);
             }
         });
+
+        //confirm
         supportDialog.findViewById(R.id.tvDialogSupport).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -270,46 +270,63 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             }
         });
 
+        //init
+        tvDialogAmount.setText(data.getPerAmount());
+        numSupport.setText("" + 1);
+        tvDialogTotalAmount.setText(data.getPerAmount());
 
         supportDialog.show();
 
     }
 
     private void confirmSupport() {
-        String amount = tvTotalAmount.getText().toString();
+        final String amount = tvDialogTotalAmount.getText().toString();
         String num = numSupport.getText().toString();
         JSONObject params = new JSONObject();
         params.put("shares", num);
-        JSONObject input = new JSONObject();
+         JSONObject input = new JSONObject();
         input.put("method", "subscribe");
         input.put("params", params.toJSONString());
-        try {
-            final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, input.toJSONString(), getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_FEE), nodeId);
-            String hash = transBlob.getResult().getHash();
-            LogUtils.e(hash);
-            ShowPWDialog(new PasswordListener() {
-                @Override
-                public void Confirm(@NotNull String password) {
-                    QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
-                            .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                            .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
-                            .create();
-                    txSendingTipDialog.show();
+        JSONObject inputJson = new JSONObject();
+        inputJson.put("input",input.toJSONString());
+        final JSONObject input1 = inputJson.getJSONObject("input");
 
-                    String txHash = submitTransaction(password, transBlob);
-                    if (TextUtils.isEmpty(txHash)) {
+        final String inputStr="{\"method\":\"subscribe\",\"params\":"+ params.toJSONString() +" }";
 
-                        return;
-                    }
 
-                    ByHashQueryResult(txHash);
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount,inputStr, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_FEE), nodeId);
+                    String hash = transBlob.getResult().getHash();
+                    LogUtils.e(hash);
+                    ShowPWDialog(new PasswordListener() {
+                        @Override
+                        public void Confirm(@NotNull String password) {
+                            QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                                    .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
+                                    .create();
+                            txSendingTipDialog.show();
 
+                            String txHash = submitTransaction(password, transBlob);
+                            if (TextUtils.isEmpty(txHash)) {
+
+                                return;
+                            }
+
+                            ByHashQueryResult(txHash);
+
+                        }
+                    });
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            });
+            }
+        }).start();
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
 
     }
@@ -336,8 +353,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
 
         numSupport.setText(num + "");
-        int amount = num * Integer.parseInt(tvDialogOneNum.getText().toString());
-        tvDialogAmount.setText(amount + "");
+        int amount = num * Integer.parseInt(tvDialogAmount.getText().toString());
+        tvDialogTotalAmount.setText(amount + "");
     }
 
 }

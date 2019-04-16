@@ -430,6 +430,8 @@ public class Wallet {
             return response.getResult().getNonce();
         } else if (11007 == response.getErrorCode()) {
             throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
+        }else if (20000==response.getErrorCode()){
+            throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
         }
         return null;
     }

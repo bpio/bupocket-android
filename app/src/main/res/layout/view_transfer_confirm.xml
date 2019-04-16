@@ -259,6 +259,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:textSize="14sp"
+                        android:paddingBottom="20dp"
                         tools:text="0.001675" />
 
                 </LinearLayout>
