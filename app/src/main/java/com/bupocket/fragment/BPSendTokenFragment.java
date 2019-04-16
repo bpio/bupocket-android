@@ -727,14 +727,5 @@ public class BPSendTokenFragment extends BaseFragment {
     };
 
 
-    public void showSoftInputFromWindow(EditText editText) {
-        editText.setFocusable(true);
-        editText.setFocusableInTouchMode(true);
-        editText.requestFocus();
-        editText.findFocus();
-        InputMethodManager inputManager =
-                (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.showSoftInput(editText, InputMethodManager.SHOW_FORCED);
-    }
 
 }

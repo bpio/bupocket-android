@@ -2,6 +2,7 @@ package com.bupocket.enums;
 
 public enum ExceptionEnum {
     SUCCESS("0","success"),
+    VOTE_CLOSE("1029","vote close"),
     ADDRESS_ALREADY_EXISTED("100055","the contact is already existed")
     ;
     private final String code;

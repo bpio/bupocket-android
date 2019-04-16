@@ -72,12 +72,12 @@ public class CommonUtil {
         return x + 100000;
     }
 
-    public static boolean isBU(String str){
+    public static boolean isBU(String str) {
         Pattern pattern = Pattern.compile("^(([0-9]+\\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\\.[0-9]+)|([0-9]*[1-9][0-9]*))$");
-        Matcher match= pattern.matcher(str);
-        if(match.matches()==false) {
+        Matcher match = pattern.matcher(str);
+        if (match.matches() == false) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
@@ -262,9 +262,6 @@ public class CommonUtil {
         String uuid = UUID.randomUUID().toString().trim().replaceAll("-", "");
         return uuid.toUpperCase();
     }
-
-
-
 
 
     /**
@@ -502,7 +499,6 @@ public class CommonUtil {
     }
 
 
-
     /**
      * 验证是否为日期
      *
@@ -583,7 +579,6 @@ public class CommonUtil {
     }
 
 
-
     /**
      * 生成随机密码
      *
@@ -622,6 +617,7 @@ public class CommonUtil {
         }
         return code;
     }
+
     public static String packageName(Context context) {
         PackageManager manager = context.getPackageManager();
         String name = null;
@@ -639,14 +635,14 @@ public class CommonUtil {
         return str == null || str.length() == 0;
     }
 
-    public static boolean isNull(String str){
-        if(isEmpty(str) || str == ""){
+    public static boolean isNull(String str) {
+        if (isEmpty(str) || str == "") {
             return true;
         }
         return false;
     }
 
-    public static String getUniqueId(Context context){
+    public static String getUniqueId(Context context) {
         String androidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         String id = androidID + Build.SERIAL;
         try {
@@ -674,7 +670,7 @@ public class CommonUtil {
         return sb.toString();
     }
 
-    public static Bitmap base64ToBitmap(String base64Data) throws IllegalArgumentException{
+    public static Bitmap base64ToBitmap(String base64Data) throws IllegalArgumentException {
         base64Data = base64Data.split(",")[1];
         byte[] bytes = Base64.decode(base64Data, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -687,35 +683,35 @@ public class CommonUtil {
     /*
      * add asset suffix
      */
-    public static String addSuffix(String originalStr,String suffix){
+    public static String addSuffix(String originalStr, String suffix) {
         return originalStr + " " + suffix;
     }
 
     /*
      *check number format
      */
-    public static Boolean checkSendAmountDecimals(String srcAmount, String decimals){
-        BigDecimal value = BigDecimal.valueOf(DecimalCalculate.mul(Double.parseDouble(srcAmount),Math.pow(10, Double.parseDouble(decimals))));
+    public static Boolean checkSendAmountDecimals(String srcAmount, String decimals) {
+        BigDecimal value = BigDecimal.valueOf(DecimalCalculate.mul(Double.parseDouble(srcAmount), Math.pow(10, Double.parseDouble(decimals))));
 //        System.out.println(value.toPlainString());
 //        System.out.println(value.remainder(BigDecimal.ONE));
-        if(value.remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0){
+        if (value.remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0) {
             return false;
-        }else {
+        } else {
             return true;
         }
     }
 
-    public static String calculateMinSendAmount(String decimalsStr){
+    public static String calculateMinSendAmount(String decimalsStr) {
         BigDecimal one = new BigDecimal(1);
         BigDecimal ten = new BigDecimal(10);
         return one.divide(ten.pow(Integer.valueOf(decimalsStr))).toPlainString();
     }
 
-    public static String rvZeroAndDot(String s){
+    public static String rvZeroAndDot(String s) {
         if (s.isEmpty()) {
             return null;
         }
-        if(s.indexOf(".") > 0){
+        if (s.indexOf(".") > 0) {
             //去掉多余的0
             s = s.replaceAll("0+?$", "");
             //如最后一位是.则去掉
@@ -731,6 +727,7 @@ public class CommonUtil {
 
     /**
      * 数字添加千分符
+     *
      * @param str
      * @return
      */
@@ -739,18 +736,18 @@ public class CommonUtil {
         return df.format(new BigDecimal(str));
     }
 
-    public static Boolean checkAmount(String issueAmount,String decimals){
-        try{
+    public static Boolean checkAmount(String issueAmount, String decimals) {
+        try {
             Long.parseLong(new BigDecimal(issueAmount).multiply(new BigDecimal(Math.pow(10, Double.parseDouble(decimals)))).setScale(0).toPlainString());
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return false;
         }
         return true;
     }
 
-    public static String addCurrencySymbol(String assetAmount,String currencyType){
-        for(CurrencyTypeEnum currencyTypeEnum : CurrencyTypeEnum.values()){
-            if(currencyTypeEnum.getName().equals(currencyType)){
+    public static String addCurrencySymbol(String assetAmount, String currencyType) {
+        for (CurrencyTypeEnum currencyTypeEnum : CurrencyTypeEnum.values()) {
+            if (currencyTypeEnum.getName().equals(currencyType)) {
                 return "≈" + currencyTypeEnum.getSymbol() + " " + assetAmount;
             }
         }
@@ -787,14 +784,14 @@ public class CommonUtil {
     }
 
 
-    private static String getAccountBPData(Context context, boolean isWhetherIdentityWallet, String currentWalletAddress){
+    private static String getAccountBPData(Context context, boolean isWhetherIdentityWallet, String currentWalletAddress) {
 
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(context, "buPocket");
         String accountBPData = null;
-        if(isWhetherIdentityWallet) {
+        if (isWhetherIdentityWallet) {
             accountBPData = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
-        }else {
-            accountBPData = sharedPreferencesHelper.getSharedPreference(currentWalletAddress+ "-BPdata", "").toString();
+        } else {
+            accountBPData = sharedPreferencesHelper.getSharedPreference(currentWalletAddress + "-BPdata", "").toString();
         }
         return accountBPData;
     }
@@ -812,5 +809,10 @@ public class CommonUtil {
                 .create(mCurrentDialogStyle).show();
 
     }
+
+    public static void showMessageDialog(Context mContext, int notice) {
+        showMessageDialog(mContext, mContext.getResources().getString(notice));
+    }
+
 
 }

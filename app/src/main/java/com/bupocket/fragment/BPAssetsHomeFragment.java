@@ -54,12 +54,9 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
-import com.bupocket.utils.TimeUtil;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -547,7 +544,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
                             if(null != respDto){
                                 if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                                     showTransactionConfirmView(respDto.getData());
-                                }else {
+                                }else if (ExceptionEnum.VOTE_CLOSE.getCode().equals(respDto.getErrCode())){
+                                    CommonUtil.showMessageDialog(getContext(),R.string.vote_close);
+                                } else {
                                     Bundle argz = new Bundle();
                                     argz.putString("errorCode",respDto.getErrCode());
                                     argz.putString("errorMessage",respDto.getMsg());

@@ -12,6 +12,7 @@ import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,7 +55,7 @@ public abstract class BaseFragment extends QMUIFragment {
     private final static String BP_FILE_NAME = "buPocket";
     public SharedPreferencesHelper spHelper;
     public Context mContext;
-
+    private QMUITipDialog txSendingTipDialog;
 
 
     @Override
@@ -125,7 +126,7 @@ public abstract class BaseFragment extends QMUIFragment {
         QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
 
         ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
-        final TextView tvPw = qmuiDialog.findViewById(R.id.passwordConfirmEt);
+        final EditText tvPw = qmuiDialog.findViewById(R.id.passwordConfirmEt);
 
         mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,12 +135,19 @@ public abstract class BaseFragment extends QMUIFragment {
             }
         });
 
+        tvPw.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                showSoftInputFromWindow(tvPw);
+            }
+        }, 10);
+
         mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 qmuiDialog.dismiss();
 
-                QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                txSendingTipDialog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                         .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
                         .create();
@@ -147,7 +155,8 @@ public abstract class BaseFragment extends QMUIFragment {
 
                 String txHash = submitTransaction(tvPw.getText().toString(), transBlob);
                 if (TextUtils.isEmpty(txHash)) {
-
+                    txSendingTipDialog.dismiss();
+                    ToastUtil.showToast(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT);
                     return;
                 }
 
@@ -166,7 +175,7 @@ public abstract class BaseFragment extends QMUIFragment {
     }
 
 
-    public String submitTransaction(final String password, final TransactionBuildBlobResponse buildBlobResponse) {
+    private String submitTransaction(final String password, final TransactionBuildBlobResponse buildBlobResponse) {
 
         String hash = "";
         try {
@@ -174,20 +183,16 @@ public abstract class BaseFragment extends QMUIFragment {
 
         } catch (WalletException e) {
             e.printStackTrace();
-            Looper.prepare();
             if (com.bupocket.wallet.enums.ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
-                Toast.makeText(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT).show();
+                ToastUtil.showToast(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT);
             } else if (com.bupocket.wallet.enums.ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
-                Toast.makeText(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT).show();
+                ToastUtil.showToast(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT);
             } else {
-                Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
+                ToastUtil.showToast(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT);
             }
-            Looper.loop();
         } catch (Exception e) {
             e.printStackTrace();
-            Looper.prepare();
-            Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
-            Looper.loop();
+            ToastUtil.showToast(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT);
         } finally {
 
         }
@@ -206,6 +211,9 @@ public abstract class BaseFragment extends QMUIFragment {
                 case 1:
                     if (timerTimes > Constants.TX_REQUEST_TIMEOUT_TIMES) {
                         timerTask.cancel();
+                        if (txSendingTipDialog!=null) {
+                            txSendingTipDialog.dismiss();
+                        }
                         startFragmentAndDestroyCurrent(new BPTxRequestTimeoutFragment());
                         return;
                     }
@@ -226,6 +234,9 @@ public abstract class BaseFragment extends QMUIFragment {
                             } else {
                                 TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
                                 timerTask.cancel();
+                                if (txSendingTipDialog!=null) {
+                                    txSendingTipDialog.dismiss();
+                                }
                                 if (com.bupocket.wallet.enums.ExceptionEnum.BU_NOT_ENOUGH_FOR_PAYMENT.getCode().equals(txDetailRespBoBean.getErrorCode())) {
                                     Toast.makeText(getActivity(), R.string.balance_not_enough, Toast.LENGTH_SHORT).show();
                                 }
@@ -246,7 +257,9 @@ public abstract class BaseFragment extends QMUIFragment {
                         @Override
                         public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
                            ToastUtil.showToast(getActivity(), R.string.tx_timeout_err, Toast.LENGTH_SHORT);
-
+                            if (txSendingTipDialog!=null) {
+                                txSendingTipDialog.dismiss();
+                            }
                         }
                     });
                     break;
@@ -271,5 +284,17 @@ public abstract class BaseFragment extends QMUIFragment {
                 1 * 1000,//延迟1秒执行
                 1000);
     }
+
+
+    public void showSoftInputFromWindow(EditText editText) {
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        editText.findFocus();
+        InputMethodManager inputManager =
+                (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.showSoftInput(editText, InputMethodManager.SHOW_FORCED);
+    }
+
 
 }

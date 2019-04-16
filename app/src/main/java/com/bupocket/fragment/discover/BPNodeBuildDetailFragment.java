@@ -157,12 +157,17 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     if (CoBuildDetailStatusEnum.CO_BUILD_RUNING.getCode().equals(data.getStatus())) {
                         tvStutas.setSelected(false);
                         tvStutas.setText(CoBuildDetailStatusEnum.CO_BUILD_RUNING.getMsg());
-                    } else if (CoBuildDetailStatusEnum.CO_BUILD_SUCCESS.getCode().equals(data.getStatus())) {
-                        tvStutas.setSelected(true);
-                        tvStutas.setText(CoBuildDetailStatusEnum.CO_BUILD_SUCCESS.getMsg());
-                    } else if (CoBuildDetailStatusEnum.CO_BUILD_EXIT.getCode().equals(data.getStatus())) {
-                        tvStutas.setSelected(true);
-                        tvStutas.setText(CoBuildDetailStatusEnum.CO_BUILD_EXIT.getMsg());
+                    } else{
+                        if (CoBuildDetailStatusEnum.CO_BUILD_SUCCESS.getCode().equals(data.getStatus())) {
+                            tvStutas.setSelected(true);
+                            tvStutas.setText(CoBuildDetailStatusEnum.CO_BUILD_SUCCESS.getMsg());
+                        } else if (CoBuildDetailStatusEnum.CO_BUILD_EXIT.getCode().equals(data.getStatus())) {
+                            tvStutas.setSelected(true);
+                            tvStutas.setText(CoBuildDetailStatusEnum.CO_BUILD_EXIT.getMsg());
+                        }
+
+                        llBtnBuild.setVisibility(View.GONE);
+
                     }
 
                     ArrayList<NodeBuildSupportModel> nodelist = body.getData().getSupportList();
