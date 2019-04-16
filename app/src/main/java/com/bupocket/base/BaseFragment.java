@@ -29,6 +29,7 @@ import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.qmuiteam.qmui.arch.QMUIFragment;
@@ -114,7 +115,8 @@ public abstract class BaseFragment extends QMUIFragment {
     }
 
 
-    protected void ShowPWDialog(final PasswordListener passwordListener) {
+
+    protected void submitTransactionBase(final TransactionBuildBlobResponse transBlob) {
         final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
         qmuiDialog.setCanceledOnTouchOutside(false);
         qmuiDialog.setContentView(R.layout.view_password_comfirm);
@@ -136,10 +138,26 @@ public abstract class BaseFragment extends QMUIFragment {
             @Override
             public void onClick(View v) {
                 qmuiDialog.dismiss();
-                passwordListener.Confirm(tvPw.getText().toString());
+
+                QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                        .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
+                        .create();
+                txSendingTipDialog.show();
+
+                String txHash = submitTransaction(tvPw.getText().toString(), transBlob);
+                if (TextUtils.isEmpty(txHash)) {
+
+                    return;
+                }
+
+                ByHashQueryResult(txHash);
+
             }
         });
     }
+
+
 
 
     public interface PasswordListener {
@@ -227,7 +245,8 @@ public abstract class BaseFragment extends QMUIFragment {
 
                         @Override
                         public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
-                            Toast.makeText(getActivity(), R.string.tx_timeout_err, Toast.LENGTH_SHORT).show();
+                           ToastUtil.showToast(getActivity(), R.string.tx_timeout_err, Toast.LENGTH_SHORT);
+
                         }
                     });
                     break;

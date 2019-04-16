@@ -18,6 +18,16 @@ public class NodeBuildDetailModel {
     private String supportPerson;
     private String initiatorAmount;
     private String supportAmount;
+    private String contractAddress;
+
+    public String getContractAddress() {
+        return contractAddress;
+    }
+
+    public void setContractAddress(String contractAddress) {
+        this.contractAddress = contractAddress;
+    }
+
     private ArrayList<NodeBuildSupportModel> supportList;
 
     public String getSupportCopies() {

@@ -25,10 +25,7 @@ import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
-import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -213,7 +210,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnBuildExit:
-                startFragment(new BPNodeBuildExitFragment());
+                showExit();
                 break;
             case R.id.btnBuildSupport:
                 if (data != null) {
@@ -222,6 +219,58 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
                 break;
         }
+    }
+
+    private void showExit() {
+
+        final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
+        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
+        TextView mTransactionAmountTv = qmuiBottomSheet.findViewById(R.id.transactionAmountTv);
+        mTransactionAmountTv.setText("0");
+        TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
+        mTransactionDetailTv.setText("退出\""+data.getTitle()+"\"项目");
+        TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
+        mDestAddressTv.setText(data.getContractAddress());
+        TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
+        mTxFeeTv.setText(String.valueOf(Constants.NODE_REVOKE_FEE));
+
+        qmuiBottomSheet.findViewById(R.id.detailBtn).setVisibility(View.GONE);
+        qmuiBottomSheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                confirmExit();
+            }
+        });
+        qmuiBottomSheet.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiBottomSheet.dismiss();
+            }
+        });
+        qmuiBottomSheet.show();
+    }
+
+    private void confirmExit() {
+        final String amount="0";
+        final String inputStr="{\"method\":\"revoke\"}";
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount,inputStr, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_FEE), data.getContractAddress());
+                    String hash = transBlob.getResult().getHash();
+                    LogUtils.e(hash);
+
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
     }
 
     private void ShowSupport() {
@@ -264,7 +313,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             public void onClick(View v) {
                 supportDialog.cancel();
 
-                confirmSupport();
+                confirmSheet();
 
 
             }
@@ -279,6 +328,36 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
     }
 
+    private void confirmSheet() {
+        final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
+        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
+        TextView mTransactionAmountTv = qmuiBottomSheet.findViewById(R.id.transactionAmountTv);
+        mTransactionAmountTv.setText(tvDialogTotalAmount.getText());
+        TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
+        mTransactionDetailTv.setText("支持\""+data.getTitle()+"\"项目");
+        TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
+        mDestAddressTv.setText(data.getContractAddress());
+        TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
+        mTxFeeTv.setText(String.valueOf(Constants.NODE_REVOKE_FEE));
+
+        qmuiBottomSheet.findViewById(R.id.detailBtn).setVisibility(View.GONE);
+        qmuiBottomSheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                confirmSupport();
+            }
+        });
+        qmuiBottomSheet.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiBottomSheet.dismiss();
+            }
+        });
+        qmuiBottomSheet.show();
+
+    }
+
     private void confirmSupport() {
         final String amount = tvDialogTotalAmount.getText().toString();
         String num = numSupport.getText().toString();
@@ -287,39 +366,20 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
          JSONObject input = new JSONObject();
         input.put("method", "subscribe");
         input.put("params", params.toJSONString());
-        JSONObject inputJson = new JSONObject();
-        inputJson.put("input",input.toJSONString());
-        final JSONObject input1 = inputJson.getJSONObject("input");
 
         final String inputStr="{\"method\":\"subscribe\",\"params\":"+ params.toJSONString() +" }";
+//        final String inputStr="{\"method\":\"subscribe\",\"params\":{\"shares\":1}";
 
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount,inputStr, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_FEE), nodeId);
+
+                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount,inputStr, getWalletAddress(), String.valueOf(Constants.NODE_MIN_FEE), data.getContractAddress());
                     String hash = transBlob.getResult().getHash();
                     LogUtils.e(hash);
-                    ShowPWDialog(new PasswordListener() {
-                        @Override
-                        public void Confirm(@NotNull String password) {
-                            QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
-                                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                                    .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
-                                    .create();
-                            txSendingTipDialog.show();
-
-                            String txHash = submitTransaction(password, transBlob);
-                            if (TextUtils.isEmpty(txHash)) {
-
-                                return;
-                            }
-
-                            ByHashQueryResult(txHash);
-
-                        }
-                    });
+                    submitTransactionBase(transBlob);
 
                 } catch (Exception e) {
                     e.printStackTrace();

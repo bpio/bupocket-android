@@ -55,6 +55,7 @@ import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TimeUtil;
+import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.google.gson.Gson;
@@ -797,18 +798,18 @@ public class BPAssetsHomeFragment extends BaseFragment {
                             e.printStackTrace();
                             Looper.prepare();
                             if(com.bupocket.wallet.enums.ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())){
-                                Toast.makeText(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT).show();
+                                ToastUtil.showToast(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT);
                             }else if(com.bupocket.wallet.enums.ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())){
-                                Toast.makeText(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT).show();
+                                ToastUtil.showToast(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT);
                             }else {
-                                Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
+                                ToastUtil.showToast(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT);
                             }
                             txSendingTipDialog.dismiss();
                             Looper.loop();
                         } catch (Exception e) {
                             e.printStackTrace();
                             Looper.prepare();
-                            Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
+                            ToastUtil.showToast(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT);
                             txSendingTipDialog.dismiss();
                             Looper.loop();
                         }finally {
@@ -909,5 +910,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
     public void onResume() {
         super.onResume();
         LogUtils.e("address:\t"+getWalletAddress());
+
     }
 }
