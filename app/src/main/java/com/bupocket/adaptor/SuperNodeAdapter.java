@@ -52,12 +52,23 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         holder.setText(R.id.nodeNameTv, itemData.getNodeName());
         String identityType = itemData.getIdentityType();
 
+        String nodeLogo = itemData.getNodeLogo();
+
+        ImageView nodeIconIv = holder.getView(R.id.nodeIconIv);
+
+
         if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(identityType)) {
             holder.setText(R.id.nodeTypeTv, context.getResources().getString(R.string.common_node));
+            Glide.with(context)
+                    .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
+                    .into(nodeIconIv);
         } else if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(identityType)) {
             holder.setText(R.id.nodeTypeTv, context.getResources().getString(R.string.ecological_node));
+            Glide.with(context)
+                    .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(itemData.getApplyAvatar()))
+                    .into(nodeIconIv);
         }
-
+        nodeIconIv.setBackgroundColor(context.getResources().getColor(R.color.app_color_white));
         holder.setText(R.id.haveVotesNumTv, itemData.getNodeVote());
         holder.setText(R.id.myVotesNumTv, itemData.getMyVoteCount());
 
@@ -86,14 +97,6 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
             }
         });
 
-        ImageView nodeIconIv = holder.getView(R.id.nodeIconIv);
-
-        String nodeLogo = itemData.getNodeLogo();
-
-        Glide.with(context)
-                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
-                .into(nodeIconIv);
-        nodeIconIv.setBackgroundColor(context.getResources().getColor(R.color.app_color_white));
 
 
         LogUtils.e(""+itemData.getNodeId());

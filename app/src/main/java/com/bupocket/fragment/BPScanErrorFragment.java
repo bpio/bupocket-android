@@ -45,6 +45,9 @@ public class BPScanErrorFragment extends BaseFragment {
         if(null != bundle){
             errorCode = bundle.getString("errorCode");
             errorMessage = bundle.getString("errorMessage");
+            if (errorCode.equals(ExceptionEnum.NODE_TIMEOUT.getCode())) {
+                errorMessage=mContext.getResources().getString(R.string.request_timeout);
+            }
         }
     }
 

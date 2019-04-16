@@ -489,7 +489,7 @@ public class BPNodePlanFragment extends BaseFragment {
             SuperNodeModel superNodeModel = nodeList.get(i);
             if (superNodeModel != null) {
                 String myVoteCount = superNodeModel.getMyVoteCount();
-                if ((TextUtils.isEmpty(myVoteCount) && (Integer.parseInt(myVoteCount)) > 0)
+                if ((!TextUtils.isEmpty(myVoteCount) && (Integer.parseInt(myVoteCount)) > 0)
                         || currentWalletAddress.equals(superNodeModel.getNodeCapitalAddress())) {
                     superNodeModels.add(superNodeModel);
                 }

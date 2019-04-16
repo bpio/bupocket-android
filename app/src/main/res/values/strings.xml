@@ -523,5 +523,6 @@
 
 
     <string name="vote_close">投票通道还未开启，请在开启后进行投票</string>
+    <string name="request_timeout">请求已超时</string>
 
 </resources>
