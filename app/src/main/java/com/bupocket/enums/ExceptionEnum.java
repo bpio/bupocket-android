@@ -1,20 +1,23 @@
 package com.bupocket.enums;
 
+import com.bupocket.R;
+
 public enum ExceptionEnum {
-    SUCCESS("0","success"),
-    VOTE_CLOSE("1029","vote close"),
-    NODE_TIMEOUT("1006","请求已超时"),
-    EEEOR_1003("1003","该待绑定的物理地址已被占用，请更换后再申请"),
-    ERROR_1009("1009"," 该钱包账户已申请过，请更换后再进行申请"),
-    ERROR_1011( "1011","对应的提示「检测到有尚未提交的操作，请稍后再重试"),
-    ADDRESS_ALREADY_EXISTED("100055","the contact is already existed")
-    ;
+    SUCCESS("0","success", R.string.req_success),
+    ERROR_VOTE_CLOSE("1029","vote close",R.string.error_vote_close),
+    ERROR_TIMEOUT("1006","request timeout",R.string.error_timeout),
+    ERROR_1003("1003","test",R.string.error_1003),
+    ERROR_1009("1009","",R.string.error_1009),
+    ERROR_1011( "1011","",R.string.error_1011),
+    ERROR_ADDRESS_ALREADY_EXISTED("100055","",R.string.error_100055);
     private final String code;
     private final String message;
+    private final int msg;
 
-    private ExceptionEnum(String code, String message) {
+    ExceptionEnum(String code, String message,int msg) {
         this.code = code;
         this.message = message;
+        this.msg=msg;
     }
 
     public String getCode() {
@@ -23,4 +26,19 @@ public enum ExceptionEnum {
     public String getMessage() {
         return message;
     }
+
+    public int getMsg() {
+        return msg;
+    }
+
+    //
+    public static ExceptionEnum getByValue(String value) {
+        for (ExceptionEnum code : values()) {
+            if (value.equals(code.getCode())) {
+                return code;
+            }
+        }
+        return null;
+    }
+
 }

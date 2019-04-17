@@ -1,7 +1,6 @@
 package com.bupocket.fragment;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -139,7 +138,7 @@ public class BPAddressAddFragment extends BaseFragment {
                     if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                         Toast.makeText(getContext(),getString(R.string.save_address_success_message_txt),Toast.LENGTH_SHORT).show();
                         popBackStack();
-                    }else if(ExceptionEnum.ADDRESS_ALREADY_EXISTED.getCode().equals(respDto.getErrCode())){
+                    }else if(ExceptionEnum.ERROR_ADDRESS_ALREADY_EXISTED.getCode().equals(respDto.getErrCode())){
                         Toast.makeText(getContext(),getString(R.string.address_already_exist_message_txt),Toast.LENGTH_SHORT).show();
                     }
                     else {

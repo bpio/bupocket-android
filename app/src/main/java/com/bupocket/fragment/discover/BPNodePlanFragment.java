@@ -472,8 +472,6 @@ public class BPNodePlanFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<SuperNodeDto>> call, Throwable t) {
-//                LogUtils.e("请求失败" + t.getMessage());
-
                 llLoadFailed.setVisibility(View.VISIBLE);
 
             }

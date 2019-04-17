@@ -32,7 +32,7 @@ import java.util.ArrayList;
 public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
 
     QMUIListPopup morePop;
-    private int position;
+
 
     public SuperNodeAdapter(@NonNull Context context) {
         super(context);
@@ -97,7 +97,7 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
 
 
 
-        LogUtils.e(""+itemData.getNodeId());
+        LogUtils.e("node address"+itemData.getNodeId());
     }
 
 

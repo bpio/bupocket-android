@@ -13,6 +13,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.bupocket.R;
 import com.bupocket.enums.CurrencyTypeEnum;
+import com.bupocket.enums.ExceptionEnum;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
@@ -814,5 +815,18 @@ public class CommonUtil {
         showMessageDialog(mContext, mContext.getResources().getString(notice));
     }
 
+    /**
+     * get  error massage
+     * @param mContext
+     * @param code error code
+     * @return  error massage
+     */
+    public static String byCodeToMsg(Context mContext,String code){
+        ExceptionEnum byValue = ExceptionEnum.getByValue(code);
+        if (byValue==null) {
+            return "";
+        }
+        return mContext.getResources().getString(byValue.getMsg());
+    }
 
 }

@@ -522,7 +522,14 @@
         节点的投票、撤票等操作链上交易成功后，相关数据的统计有延迟，预计30秒内完成，此为正常现象。</string>
 
 
-    <string name="vote_close">投票通道还未开启，请在开启后进行投票</string>
-    <string name="request_timeout">请求已超时</string>
+
+    <string name="req_success">成功</string>
+    <string name="error_vote_close">投票通道还未开启，请在开启后进行投票</string>
+    <string name="error_timeout">请求已超时</string>
+    <string name="error_1003">该待绑定的物理地址已被占用，请更换后再申请</string>
+    <string name="error_1009">该钱包账户已申请过，请更换后再进行申请</string>
+    <string name="error_1011">检测到有尚未提交的操作，请稍后再重试</string>
+    <string name="error_100055">the contact is already existed</string>
+
 
 </resources>
