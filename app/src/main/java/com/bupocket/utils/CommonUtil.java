@@ -811,6 +811,32 @@ public class CommonUtil {
 
     }
 
+    /**
+     *
+     * @param mContext
+     * @param notice  error massage
+     * @param code error code
+     */
+    public static void showMessageDialog(Context mContext, String notice,String code) {
+        String errMsg = byCodeToMsg(mContext, code);
+        if (!errMsg.isEmpty()) {
+            notice=errMsg;
+        }
+
+        int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
+        new QMUIDialog.MessageDialogBuilder(mContext)
+                .setMessage(notice)
+                .addAction(R.string.i_knew_btn_txt, new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                    }
+                })
+                .create(mCurrentDialogStyle).show();
+
+    }
+
+
     public static void showMessageDialog(Context mContext, int notice) {
         showMessageDialog(mContext, mContext.getResources().getString(notice));
     }

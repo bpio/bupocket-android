@@ -1,5 +1,6 @@
 package com.bupocket.http.api;
 
+import com.bupocket.utils.LogUtils;
 import com.orhanobut.logger.Logger;
 import com.squareup.okhttp.internal.http.HttpEngine;
 
@@ -42,8 +43,9 @@ public class LoggingInterceptor implements Interceptor {
             body = buffer.readString(charset);
         }
 
-        Logger.e("发送请求\nmethod：%s\nurl：%s\nheaders: %sbody：%s",
+        LogUtils.e("发送请求\nmethod：%s\nurl：%s\nheaders: %sbody：%s",
                 request.method(), request.url(), request.headers(), body);
+
 
         long startNs = System.nanoTime();
         Response response = chain.proceed(request);
@@ -70,7 +72,7 @@ public class LoggingInterceptor implements Interceptor {
             rBody = buffer.clone().readString(charset);
 //        }
 
-        Logger.e("收到响应 %s%s %ss\n请求url：%s\n请求body：%s\n响应body：%s",
+        LogUtils.e("收到响应 %s%s %ss\n请求url：%s\n请求body：%s\n响应body：%s",
                 response.code(), response.message(), tookMs, response.request().url(), body, rBody);
 
         return response;

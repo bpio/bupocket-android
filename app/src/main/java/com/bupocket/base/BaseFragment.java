@@ -2,20 +2,16 @@ package com.bupocket.base;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bupocket.R;
@@ -27,8 +23,6 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
-import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
@@ -38,8 +32,6 @@ import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
-
-import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -153,26 +145,26 @@ public abstract class BaseFragment extends QMUIFragment {
                         .create();
                 txSendingTipDialog.show();
 
-                String txHash = submitTransaction(tvPw.getText().toString(), transBlob);
-                if (TextUtils.isEmpty(txHash)) {
-                    txSendingTipDialog.dismiss();
-                    ToastUtil.showToast(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT);
-                    return;
-                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                         txHash = submitTransaction(tvPw.getText().toString(), transBlob);
+                        if (TextUtils.isEmpty(txHash)) {
+                            txSendingTipDialog.dismiss();
+                            ToastUtil.showToast(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT);
+                            return;
+                        }
 
-                ByHashQueryResult(txHash);
+                        ByHashQueryResult(txHash);
+
+                    }
+                }).start();
 
             }
         });
     }
 
 
-
-
-    public interface PasswordListener {
-
-        void Confirm(@NotNull String password);
-    }
 
 
     private String submitTransaction(final String password, final TransactionBuildBlobResponse buildBlobResponse) {
@@ -204,7 +196,7 @@ public abstract class BaseFragment extends QMUIFragment {
     private int timerTimes = 0;
     private final Timer timer = new Timer();
     @SuppressLint("HandlerLeak")
-    private Handler mHanlder = new Handler() {
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -273,7 +265,7 @@ public abstract class BaseFragment extends QMUIFragment {
     private TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
-            mHanlder.sendEmptyMessage(1);
+            mHandler.sendEmptyMessage(1);
         }
     };
 

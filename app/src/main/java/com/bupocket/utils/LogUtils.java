@@ -1,5 +1,6 @@
 package com.bupocket.utils;
 
+import android.graphics.MaskFilter;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
@@ -126,6 +127,13 @@ public class LogUtils {
         if (mDebuggable >= LEVEL_ERROR) {
             //            Log.e(mTag, msg + "");
             Logger.t(mTag).e(msg + "");
+        }
+    }
+
+    public static void e(String message, Object... args) {
+        if (mDebuggable >= LEVEL_ERROR) {
+            //            Log.e(mTag, msg + "");
+            Logger.t(mTag).e(message,args);
         }
     }
 

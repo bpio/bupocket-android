@@ -97,7 +97,7 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
 
 
 
-        LogUtils.e("node address"+itemData.getNodeId());
+        LogUtils.e("node address:\t"+itemData.getNodeId());
     }
 
 

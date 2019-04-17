@@ -13,7 +13,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
@@ -37,14 +36,11 @@ import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.MnemonicWordBackupStateEnum;
 import com.bupocket.enums.ScanTransactionTypeEnum;
 import com.bupocket.enums.TokenActionTypeEnum;
-import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.fragment.components.AssetsListView;
-import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.NodePlanManagementSystemService;
 import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TokenService;
-import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetQRContentDto;
 import com.bupocket.http.api.dto.resp.GetTokensRespDto;
@@ -56,15 +52,12 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
-import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
-import com.bupocket.wallet.exception.WalletException;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.header.MaterialHeader;
@@ -82,10 +75,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import static com.bupocket.utils.TimeUtil.getCurrentTimeMillis;
 
 public class BPAssetsHomeFragment extends BaseFragment {
 
@@ -727,11 +716,10 @@ public class BPAssetsHomeFragment extends BaseFragment {
                             if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
                                 expiryTime = respDto.getData().getExpiryTime();
                                 LogUtils.e("超时时间" + expiryTime);
-                                submitTransaction(buildBlobResponse);
+                                submitTransactionBase(buildBlobResponse);
                             } else {
                                 LogUtils.e("超时时间" + respDto.getMsg() + "\t" + respDto.getErrCode());
-                                CommonUtil.showMessageDialog(getContext(), respDto.getMsg());
-//                                Toast.makeText(getContext(),respDto.getMsg(),Toast.LENGTH_SHORT).show();
+                                CommonUtil.showMessageDialog(getContext(), respDto.getMsg(),respDto.getErrCode());
                             }
                         }
 
@@ -753,167 +741,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         }).start();
     }
 
-    private void submitTransaction(final TransactionBuildBlobResponse buildBlobResponse) {
-        final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
-        qmuiDialog.setCanceledOnTouchOutside(false);
-        qmuiDialog.setContentView(R.layout.view_password_comfirm);
-        qmuiDialog.show();
 
-        QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
-
-        ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
-
-        mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiDialog.dismiss();
-            }
-        });
-
-        mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (getCurrentTimeMillis() >= Long.parseLong(expiryTime)) {
-                    Toast.makeText(mContext, R.string.transaction_timeout, Toast.LENGTH_SHORT).show();
-                    qmuiDialog.dismiss();
-                    startFragment(new HomeFragment());
-                    return;
-                }
-
-                txSendingTipDialog = new QMUITipDialog.Builder(getContext())
-                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                        .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
-                        .create();
-                txSendingTipDialog.show();
-                txSendingTipDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-                    @Override
-                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-
-                        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-                            return true;
-                        }
-                        return false;
-                    }
-                });
-
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String accountBPData = getAccountBPData();
-                        EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
-                        final String password = mPasswordConfirmEt.getText().toString().trim();
-                        try {
-                            txHash = Wallet.getInstance().submitTransaction(password, accountBPData, currentWalletAddress, buildBlobResponse);
-                        } catch (WalletException e) {
-                            e.printStackTrace();
-                            Looper.prepare();
-                            if (com.bupocket.wallet.enums.ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
-                                ToastUtil.showToast(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT);
-                            } else if (com.bupocket.wallet.enums.ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
-                                ToastUtil.showToast(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT);
-                            } else {
-                                ToastUtil.showToast(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT);
-                            }
-                            txSendingTipDialog.dismiss();
-                            Looper.loop();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Looper.prepare();
-                            ToastUtil.showToast(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT);
-                            txSendingTipDialog.dismiss();
-                            Looper.loop();
-                        } finally {
-                            timer.schedule(timerTask,
-                                    1 * 1000,//延迟1秒执行
-                                    1000);
-                        }
-                    }
-                }).start();
-                qmuiDialog.dismiss();
-
-            }
-        });
-    }
-
-    private String getAccountBPData() {
-        String accountBPData = null;
-        if (whetherIdentityWallet) {
-            accountBPData = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
-        } else {
-            accountBPData = sharedPreferencesHelper.getSharedPreference(currentWalletAddress + "-BPdata", "").toString();
-        }
-        return accountBPData;
-    }
-
-    private int timerTimes = 0;
-    private final Timer timer = new Timer();
-    @SuppressLint("HandlerLeak")
-    private Handler mHanlder = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 1:
-                    if (timerTimes > Constants.TX_REQUEST_TIMEOUT_TIMES) {
-                        timerTask.cancel();
-                        txSendingTipDialog.dismiss();
-                        startFragmentAndDestroyCurrent(new BPTxRequestTimeoutFragment());
-                        return;
-                    }
-                    timerTimes++;
-                    System.out.println("timerTimes:" + timerTimes);
-                    TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
-                    Map<String, Object> paramsMap = new HashMap<>();
-                    paramsMap.put("hash", txHash);
-                    Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetailByHash(paramsMap);
-                    call.enqueue(new retrofit2.Callback<ApiResult<TxDetailRespDto>>() {
-
-                        @Override
-                        public void onResponse(Call<ApiResult<TxDetailRespDto>> call, Response<ApiResult<TxDetailRespDto>> response) {
-                            ApiResult<TxDetailRespDto> resp = response.body();
-                            if (!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())) {
-                                return;
-                            } else {
-                                txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
-                                timerTask.cancel();
-                                txSendingTipDialog.dismiss();
-                                if (com.bupocket.wallet.enums.ExceptionEnum.BU_NOT_ENOUGH_FOR_PAYMENT.getCode().equals(txDetailRespBoBean.getErrorCode())) {
-                                    Toast.makeText(getActivity(), R.string.balance_not_enough, Toast.LENGTH_SHORT).show();
-                                }
-                                Bundle argz = new Bundle();
-                                argz.putString("destAccAddr", txDetailRespBoBean.getDestAddress());
-                                argz.putString("sendAmount", txDetailRespBoBean.getAmount());
-                                argz.putString("txFee", txDetailRespBoBean.getFee());
-                                argz.putString("tokenCode", "BU");
-                                argz.putString("note", txDetailRespBoBean.getOriginalMetadata());
-                                argz.putString("state", txDetailRespBoBean.getStatus().toString());
-                                argz.putString("sendTime", txDetailRespBoBean.getApplyTimeDate());
-                                BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
-                                bpSendStatusFragment.setArguments(argz);
-                                startFragment(bpSendStatusFragment);
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
-                            Toast.makeText(getActivity(), R.string.tx_timeout_err, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    break;
-                default:
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
-
-    private TimerTask timerTask = new TimerTask() {
-        @Override
-        public void run() {
-            if (txHash != null && !txHash.equals("")) {
-                mHanlder.sendEmptyMessage(1);
-            }
-        }
-    };
 
 
     @Override

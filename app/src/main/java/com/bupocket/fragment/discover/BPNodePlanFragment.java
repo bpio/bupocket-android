@@ -362,10 +362,17 @@ public class BPNodePlanFragment extends BaseFragment {
                         public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
                             ApiResult respDto = response.body();
                             if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
-                                submitTransaction(buildBlobResponse);
+//                                submitTransaction(buildBlobResponse);
+
+                                submitTransactionBase(buildBlobResponse);
                             } else {
+                                String msg = CommonUtil.byCodeToMsg(mContext, respDto.getErrCode());
+                                if (!msg.isEmpty()) {
+                                    CommonUtil.showMessageDialog(getContext(), msg);
+                                    return;
+                                }
                                 CommonUtil.showMessageDialog(getContext(), respDto.getMsg());
-//                                Toast.makeText(getContext(),respDto.getMsg(),Toast.LENGTH_SHORT).show();
+
                             }
                         }
 
@@ -402,11 +409,18 @@ public class BPNodePlanFragment extends BaseFragment {
         if (nodeList == null) {
             return superNodeModels;
         }
+
+        ArrayList<SuperNodeModel> sourceData = new ArrayList<>();
+        if (myNodeCB.isChecked()) {
+            sourceData.addAll(myVoteInfolist);
+        }else{
+            sourceData.addAll(nodeList);
+        }
         Pattern pattern = Pattern.compile(s);
-        for (int i = 0; i < nodeList.size(); i++) {
-            Matcher matcher = pattern.matcher(nodeList.get(i).getNodeName());
+        for (int i = 0; i < sourceData.size(); i++) {
+            Matcher matcher = pattern.matcher(sourceData.get(i).getNodeName());
             if (matcher.find()) {
-                superNodeModels.add(nodeList.get(i));
+                superNodeModels.add(sourceData.get(i));
             }
         }
         if (superNodeModels.size() > 0) {
@@ -419,6 +433,14 @@ public class BPNodePlanFragment extends BaseFragment {
 
     private void initData() {
 //        refreshLayout.autoRefresh();
+
+        if (myVoteInfolist==null) {
+            myVoteInfolist=new ArrayList<>();
+        }
+        if (nodeList==null) {
+            nodeList=new ArrayList<>();
+        }
+
         currentWalletAddress = getWalletAddress();
         lvPlan.postDelayed(new Runnable() {
             @Override
@@ -426,13 +448,6 @@ public class BPNodePlanFragment extends BaseFragment {
                 getAllNode();
             }
         }, 200);
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-
     }
 
     private void getAllNode() {
@@ -462,9 +477,14 @@ public class BPNodePlanFragment extends BaseFragment {
                 nodeList = body.getData().getNodeList();
                 if (nodeList != null) {
                     setEmpty(nodeList.size() == 0);
-                    superNodeAdapter.setNewData(nodeList);
-                    superNodeAdapter.notifyDataSetChanged();
                     myVoteInfolist = myVoteInfoList(nodeList);
+                    if (myNodeCB.isChecked()) {
+                        superNodeAdapter.setNewData(myVoteInfolist);
+                    }else{
+                        superNodeAdapter.setNewData(nodeList);
+                    }
+                    superNodeAdapter.notifyDataSetChanged();
+
 
                 }
 
@@ -505,15 +525,6 @@ public class BPNodePlanFragment extends BaseFragment {
     private void initListView() {
         superNodeAdapter = new SuperNodeAdapter(this.getContext());
         lvPlan.setAdapter(superNodeAdapter);
-
-        if (myVoteInfolist == null) {
-            myVoteInfolist = new ArrayList<>();
-        }
-
-        if (nodeList == null) {
-            nodeList = new ArrayList<>();
-        }
-
     }
 
     private void initTopBar() {
@@ -531,151 +542,5 @@ public class BPNodePlanFragment extends BaseFragment {
             }
         });
     }
-
-    private void submitTransaction(final TransactionBuildBlobResponse buildBlobResponse) {
-        final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
-        qmuiDialog.setCanceledOnTouchOutside(false);
-        qmuiDialog.setContentView(R.layout.view_password_comfirm);
-        qmuiDialog.show();
-
-        QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
-
-        ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
-
-        mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiDialog.dismiss();
-            }
-        });
-
-        mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                txSendingTipDialog = new QMUITipDialog.Builder(getContext())
-                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                        .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
-                        .create();
-                txSendingTipDialog.show();
-                txSendingTipDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-                    @Override
-                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-
-                        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-                            return true;
-                        }
-                        return false;
-                    }
-                });
-
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String accountBPData = getBPAccountData();
-                        EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
-                        final String password = mPasswordConfirmEt.getText().toString().trim();
-                        try {
-                            txHash = Wallet.getInstance().submitTransaction(password, accountBPData, currentWalletAddress, buildBlobResponse);
-                        } catch (WalletException e) {
-                            e.printStackTrace();
-                            Looper.prepare();
-                            if (com.bupocket.wallet.enums.ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
-                                Toast.makeText(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT).show();
-                            } else if (com.bupocket.wallet.enums.ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
-                                Toast.makeText(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
-                            }
-                            txSendingTipDialog.dismiss();
-                            Looper.loop();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Looper.prepare();
-                            Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
-                            txSendingTipDialog.dismiss();
-                            Looper.loop();
-                        } finally {
-                            timer.schedule(timerTask,
-                                    1 * 1000,//延迟1秒执行
-                                    1000);
-                        }
-                    }
-                }).start();
-                qmuiDialog.dismiss();
-
-            }
-        });
-    }
-
-
-    private int timerTimes = 0;
-    private final Timer timer = new Timer();
-    @SuppressLint("HandlerLeak")
-    private Handler mHanlder = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 1:
-                    if (timerTimes > Constants.TX_REQUEST_TIMEOUT_TIMES) {
-                        timerTask.cancel();
-                        txSendingTipDialog.dismiss();
-                        startFragmentAndDestroyCurrent(new BPTxRequestTimeoutFragment());
-                        return;
-                    }
-                    timerTimes++;
-                    System.out.println("timerTimes:" + timerTimes);
-                    TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
-                    Map<String, Object> paramsMap = new HashMap<>();
-                    paramsMap.put("hash", txHash);
-                    Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetailByHash(paramsMap);
-                    call.enqueue(new retrofit2.Callback<ApiResult<TxDetailRespDto>>() {
-
-                        @Override
-                        public void onResponse(Call<ApiResult<TxDetailRespDto>> call, Response<ApiResult<TxDetailRespDto>> response) {
-                            ApiResult<TxDetailRespDto> resp = response.body();
-                            if (!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())) {
-                                return;
-                            } else {
-                                txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
-                                timerTask.cancel();
-                                txSendingTipDialog.dismiss();
-                                if (com.bupocket.wallet.enums.ExceptionEnum.BU_NOT_ENOUGH_FOR_PAYMENT.getCode().equals(txDetailRespBoBean.getErrorCode())) {
-                                    Toast.makeText(getActivity(), R.string.balance_not_enough, Toast.LENGTH_SHORT).show();
-                                }
-                                Bundle argz = new Bundle();
-                                argz.putString("destAccAddr", txDetailRespBoBean.getDestAddress());
-                                argz.putString("sendAmount", txDetailRespBoBean.getAmount());
-                                argz.putString("txFee", txDetailRespBoBean.getFee());
-                                argz.putString("tokenCode", "BU");
-                                argz.putString("note", txDetailRespBoBean.getOriginalMetadata());
-                                argz.putString("state", txDetailRespBoBean.getStatus().toString());
-                                argz.putString("sendTime", txDetailRespBoBean.getApplyTimeDate());
-                                BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
-                                bpSendStatusFragment.setArguments(argz);
-                                startFragment(bpSendStatusFragment);
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
-                            Toast.makeText(getActivity(), R.string.tx_timeout_err, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    break;
-                default:
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
-
-    private TimerTask timerTask = new TimerTask() {
-        @Override
-        public void run() {
-            if (txHash != null && !txHash.equals("")) {
-                mHanlder.sendEmptyMessage(1);
-            }
-        }
-    };
 
 }
