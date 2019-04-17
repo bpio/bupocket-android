@@ -114,7 +114,7 @@ public class BPNodeShareFragment extends BaseFragment {
         }
         mHaveVotesNumTv.setText(itemInfo.getNodeVote());
         mSupportPeopleTv.setText(String.format(getString(R.string.support_people_num_txt),itemInfo.getSupport()));
-        mNodeIntroduceTv.setText(itemInfo.getIntroduce());
+        mNodeIntroduceTv.setText(Html.fromHtml(itemInfo.getIntroduce()));
         final String nodeLogo = itemInfo.getNodeLogo();
         Glide.with(getContext())
                 .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))

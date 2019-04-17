@@ -100,6 +100,7 @@ public class BPNodeBuildFragment extends BaseFragment {
                 refreshLayout.setNoMoreData(false);
             }
         });
+        refreshLayout.setEnableLoadMore(false);
     }
 
     private void initData() {
@@ -127,7 +128,8 @@ public class BPNodeBuildFragment extends BaseFragment {
             public void onResponse(Call<ApiResult<CoBuildListModel>> call, Response<ApiResult<CoBuildListModel>> response) {
                 ApiResult<CoBuildListModel> body = response.body();
                 llLoadFailed.setVisibility(View.GONE);
-                if (body != null && ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
+                if ( ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())
+                        &&body.getData()!=null &&body.getData().getNodeList()!=null&&body.getData().getNodeList().size()>0) {
                     nodeList = body.getData().getNodeList();
                     if (nodeList != null) {
                         nodeBuildAdapter.setNewData(nodeList);
