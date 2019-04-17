@@ -15,16 +15,9 @@ public class SuperNodeModel implements Parcelable {
     private String myVoteCount;
     private String introduce;
     private String support;
-    private String applyAvatar;
 
 
-    public String getApplyAvatar() {
-        return applyAvatar;
-    }
 
-    public void setApplyAvatar(String applyAvatar) {
-        this.applyAvatar = applyAvatar;
-    }
 
     public static Creator<SuperNodeModel> getCREATOR() {
         return CREATOR;

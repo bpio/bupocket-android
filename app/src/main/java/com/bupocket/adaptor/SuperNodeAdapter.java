@@ -59,15 +59,13 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
 
         if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(identityType)) {
             holder.setText(R.id.nodeTypeTv, context.getResources().getString(R.string.common_node));
-            Glide.with(context)
-                    .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
-                    .into(nodeIconIv);
         } else if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(identityType)) {
             holder.setText(R.id.nodeTypeTv, context.getResources().getString(R.string.ecological_node));
-            Glide.with(context)
-                    .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(itemData.getApplyAvatar()))
-                    .into(nodeIconIv);
         }
+
+        Glide.with(context)
+                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
+                .into(nodeIconIv);
         nodeIconIv.setBackgroundColor(context.getResources().getColor(R.color.app_color_white));
         holder.setText(R.id.haveVotesNumTv, itemData.getNodeVote());
         holder.setText(R.id.myVotesNumTv, itemData.getMyVoteCount());
