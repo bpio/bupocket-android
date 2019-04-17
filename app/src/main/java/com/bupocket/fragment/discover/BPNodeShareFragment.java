@@ -19,6 +19,7 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -30,10 +31,16 @@ import com.bumptech.glide.request.target.Target;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.SuperNodeTypeEnum;
+import com.bupocket.http.api.NodePlanService;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.model.ShareUrlModel;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.QRCodeUtil;
+import com.bupocket.utils.ToastUtil;
 import com.qmuiteam.qmui.util.QMUIDrawableHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -46,12 +53,17 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import gdut.bsx.share2.Share2;
 import gdut.bsx.share2.ShareContentType;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BPNodeShareFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -66,17 +78,20 @@ public class BPNodeShareFragment extends BaseFragment {
     LinearLayout mShareBtn;
     @BindView(R.id.supportPeopleTv)
     TextView mSupportPeopleTv;
-    @BindView(R.id.nodeIntroduceTv)
-    TextView mNodeIntroduceTv;
     @BindView(R.id.nodeIconIv)
     QMUIRadiusImageView mNodeIconIv;
-
+    @BindView(R.id.wbShare)
+    WebView webView;
     private View mShareImageRl;
     private Uri sharePhotoUri = null;
 
     private String shareUrl = "https://bumo.io/technology";
 
+    private static final String VALIDATE_PATH = "dpos/detail/validate/";
+    private static final String KOL_PATH = "dpos/detail/kol/";
+
     private SuperNodeModel itemInfo;
+    private SuperNodeModel itemData;
     private Bitmap nodeLogoBitmap = null;
 
     @Override
@@ -88,19 +103,75 @@ public class BPNodeShareFragment extends BaseFragment {
     }
 
     private void init() {
-        initData();
         initUI();
+        initData();
         setListener();
     }
 
     private void initData() {
-        itemInfo = getArguments().getParcelable("itemInfo");
+        itemData = getArguments().getParcelable("itemInfo");
+        getShareData();
+        getUrlData();
+    }
+
+    private void getShareData() {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("nodeId", itemData.getNodeId());
+        map.put("address", getWalletAddress());
+        NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
+
+        nodePlanService.getShareData(map).enqueue(new Callback<ApiResult<SuperNodeModel>>() {
+            @Override
+            public void onResponse(Call<ApiResult<SuperNodeModel>> call, Response<ApiResult<SuperNodeModel>> response) {
+                ApiResult<SuperNodeModel> body = response.body();
+                if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
+                    itemInfo = body.getData();
+                    initNodeInfoUI();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<SuperNodeModel>> call, Throwable t) {
+                ToastUtil.showToast(getActivity(), t.getMessage().toString(), Toast.LENGTH_SHORT);
+            }
+        });
+
+
+    }
+
+    private void getUrlData() {
+        String path = null;
+        if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(itemData.getIdentityType())) {
+            path = VALIDATE_PATH + itemData.getNodeId();
+        } else if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(itemData.getIdentityType())) {
+            path = KOL_PATH + itemData.getNodeId();
+        }
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("type", "1");
+        map.put("path", path);
+        NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
+
+        nodePlanService.getShareUrl(map).enqueue(new Callback<ApiResult<ShareUrlModel>>() {
+            @Override
+            public void onResponse(Call<ApiResult<ShareUrlModel>> call, Response<ApiResult<ShareUrlModel>> response) {
+                ApiResult<ShareUrlModel> body = response.body();
+                if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
+                    ShareUrlModel shareUrlModel = body.getData();
+                    shareUrl = shareUrlModel.getShortlink();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<ShareUrlModel>> call, Throwable t) {
+                ToastUtil.showToast(getActivity(), t.getMessage().toString(), Toast.LENGTH_SHORT);
+            }
+        });
 
 
     }
 
     private void initUI() {
-        initNodeInfoUI();
         initTopBar();
     }
 
@@ -109,12 +180,15 @@ public class BPNodeShareFragment extends BaseFragment {
         // set node type
         if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(itemInfo.getIdentityType())) {
             mNodeTypeTv.setText(getContext().getResources().getString(R.string.common_node));
+
         } else if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(itemInfo.getIdentityType())) {
             mNodeTypeTv.setText(getContext().getResources().getString(R.string.ecological_node));
         }
         mHaveVotesNumTv.setText(itemInfo.getNodeVote());
-        mSupportPeopleTv.setText(String.format(getString(R.string.support_people_num_txt),itemInfo.getSupport()));
-        mNodeIntroduceTv.setText(Html.fromHtml(itemInfo.getIntroduce()));
+        mSupportPeopleTv.setText(String.format(getString(R.string.support_people_num_txt), itemInfo.getSupport()));
+        String source = itemInfo.getIntroduce().trim().toString();
+        webView.loadDataWithBaseURL(null, source, "text/html", "utf-8", null);
+
         final String nodeLogo = itemInfo.getNodeLogo();
         Glide.with(getContext())
                 .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
@@ -158,7 +232,7 @@ public class BPNodeShareFragment extends BaseFragment {
         nodeIconIv.setImageBitmap(nodeLogoBitmap);
         nodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
         ImageView mQrIv = mShareImageRl.findViewById(R.id.qrIv);
-        Bitmap QRBitmap = QRCodeUtil.createQRCodeBitmap(shareUrl,356,356);
+        Bitmap QRBitmap = QRCodeUtil.createQRCodeBitmap(shareUrl, 356, 356);
         mQrIv.setImageBitmap(QRBitmap);
 //        String nodeLogo = itemInfo.getNodeLogo();
 //        Glide.with(getContext())
@@ -170,22 +244,22 @@ public class BPNodeShareFragment extends BaseFragment {
 
 
         String fileName = "TEMP_" + System.currentTimeMillis() + ".jpg";
-        File PHOTO_DIR = new File(getContext().getCacheDir()+"/image");
+        File PHOTO_DIR = new File(getContext().getCacheDir() + "/image");
         File shareFile = new File(PHOTO_DIR, fileName);
 
-        if(shareFile.exists()){
+        if (shareFile.exists()) {
             boolean delete = shareFile.delete();
         }
-        if(!shareFile.getParentFile().exists()) {
+        if (!shareFile.getParentFile().exists()) {
             shareFile.getParentFile().mkdirs();
         }
-        try{
+        try {
             boolean newFile = shareFile.createNewFile();
             FileOutputStream fos = new FileOutputStream(shareFile);
-            createFromViewBitmap.compress(Bitmap.CompressFormat.JPEG,100,fos);
+            createFromViewBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
             fos.flush();
             fos.close();
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -196,7 +270,7 @@ public class BPNodeShareFragment extends BaseFragment {
         }
 
         final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
-        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_node_share,null));
+        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_node_share, null));
 
         ImageView mShareImageIv = qmuiBottomSheet.findViewById(R.id.shareImageIv);
         mShareImageIv.setImageBitmap(createFromViewBitmap);
@@ -216,7 +290,7 @@ public class BPNodeShareFragment extends BaseFragment {
                         .setContentType(ShareContentType.IMAGE)
                         .setShareFileUri(sharePhotoUri)
 //                                .setShareToComponent("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI")
-                        .setShareToComponent("com.tencent.mobileqq","com.tencent.mobileqq.activity.JumpActivity")
+                        .setShareToComponent("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity")
                         .setTitle("Share Image")
                         .build()
                         .shareBySystem();
@@ -230,7 +304,7 @@ public class BPNodeShareFragment extends BaseFragment {
                         .setContentType(ShareContentType.IMAGE)
                         .setShareFileUri(sharePhotoUri)
 //                                .setShareToComponent("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI")
-                        .setShareToComponent("com.tencent.mm","com.tencent.mm.ui.tools.ShareImgUI")
+                        .setShareToComponent("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI")
                         .setTitle("Share Image")
                         .build()
                         .shareBySystem();
@@ -244,7 +318,7 @@ public class BPNodeShareFragment extends BaseFragment {
                 xiaobuCommandDialog.setCanceledOnTouchOutside(true);
                 xiaobuCommandDialog.setContentView(R.layout.view_share_xiaobu_command);
                 final TextView mXiaobuCommandContentTv = xiaobuCommandDialog.findViewById(R.id.xiaobuCommandContentTv);
-                mXiaobuCommandContentTv.setText(Html.fromHtml(String.format(getString(R.string.xiaobu_command_content_txt),itemInfo.getNodeName(),shareUrl)));
+                mXiaobuCommandContentTv.setText(Html.fromHtml(String.format(getString(R.string.xiaobu_command_content_txt), itemInfo.getNodeName(), shareUrl)));
 
                 QMUIRoundButton copyCommandBtn = xiaobuCommandDialog.findViewById(R.id.copyCommandBtn);
                 copyCommandBtn.setOnClickListener(new View.OnClickListener() {

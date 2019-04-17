@@ -1,9 +1,13 @@
 package com.bupocket.http.api;
 
+import android.os.SharedMemory;
+
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetQRContentDto;
 import com.bupocket.http.api.dto.resp.SuperNodeDto;
 import com.bupocket.model.MyVoteRecordModel;
+import com.bupocket.model.ShareUrlModel;
+import com.bupocket.model.SuperNodeModel;
 import com.bupocket.model.TransConfirmModel;
 
 import java.util.Map;
@@ -28,4 +32,12 @@ public interface NodePlanService {
 
     @POST("nodeServer/node/v1/vote/list")
     Call<ApiResult<MyVoteRecordModel>> getMyVoteList(@Body Map<String,Object> map);
+
+
+    @POST("nodeServer/shortlink")
+    Call<ApiResult<ShareUrlModel>> getShareUrl(@Body Map<String,Object> map);
+
+    @POST("nodeServer/node/v1/detail")
+    Call<ApiResult<SuperNodeModel>> getShareData(@Body Map<String,Object> map);
+
 }
