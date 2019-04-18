@@ -111,59 +111,69 @@ public abstract class BaseFragment extends QMUIFragment {
 
 
     protected void submitTransactionBase(final TransactionBuildBlobResponse transBlob) {
-        final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
-        qmuiDialog.setCanceledOnTouchOutside(false);
-        qmuiDialog.setContentView(R.layout.view_password_comfirm);
-        qmuiDialog.show();
 
-        QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
-
-        ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
-        final EditText tvPw = qmuiDialog.findViewById(R.id.passwordConfirmEt);
-
-        mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiDialog.dismiss();
-            }
-        });
-
-        tvPw.postDelayed(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                showSoftInputFromWindow(tvPw);
-            }
-        }, 10);
+                final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
+                qmuiDialog.setCanceledOnTouchOutside(false);
+                qmuiDialog.setContentView(R.layout.view_password_comfirm);
 
-        mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiDialog.dismiss();
+                qmuiDialog.show();
+                LogUtils.e("Thread==="+Thread.currentThread().getName());
 
-                txSendingTipDialog = new QMUITipDialog.Builder(getContext())
-                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                        .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
-                        .create();
-                txSendingTipDialog.show();
+                QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
 
-                new Thread(new Runnable() {
+                ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
+                final EditText tvPw = qmuiDialog.findViewById(R.id.passwordConfirmEt);
+
+                mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        qmuiDialog.dismiss();
+                    }
+                });
+
+                tvPw.postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                         txHash = submitTransaction(tvPw.getText().toString(), transBlob);
-                        if (TextUtils.isEmpty(txHash)) {
-                            txSendingTipDialog.dismiss();
-                            ToastUtil.showToast(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT);
-                            return;
-                        }
+                        showSoftInputFromWindow(tvPw);
+                    }
+                }, 10);
 
-                        LogUtils.e("submit hash="+txHash);
-                        ByHashQueryResult(txHash);
+                mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        qmuiDialog.dismiss();
+
+                        txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                                .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
+                                .create();
+                        txSendingTipDialog.show();
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                txHash = submitTransaction(tvPw.getText().toString(), transBlob);
+                                if (TextUtils.isEmpty(txHash)) {
+                                    txSendingTipDialog.dismiss();
+                                    ToastUtil.showToast(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT);
+                                    return;
+                                }
+
+                                LogUtils.e("submit hash="+txHash);
+                                ByHashQueryResult(txHash);
+
+                            }
+                        }).start();
 
                     }
-                }).start();
+                });
 
             }
         });
+
     }
 
 

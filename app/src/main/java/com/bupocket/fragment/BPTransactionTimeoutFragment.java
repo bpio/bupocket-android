@@ -47,7 +47,7 @@ public class BPTransactionTimeoutFragment extends BaseFragment {
     private void init() {
 
         txHash = getArguments().getString("txHash", "");
-        tvTimeoutHash.setText(AddressUtil.anonymous(txHash));
+        tvTimeoutHash.setText(AddressUtil.anonymous(txHash,8));
         tvTransactionInfo.setText(Html.fromHtml(getString(R.string.transaction_timeout_info)));
         initTopBar();
     }

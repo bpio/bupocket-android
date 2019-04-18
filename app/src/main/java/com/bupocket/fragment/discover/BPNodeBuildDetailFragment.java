@@ -19,17 +19,22 @@ import com.bupocket.adaptor.NodeBuildDetailAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.CoBuildDetailStatusEnum;
+import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.NodeBuildService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.NodeBuildDetailModel;
 import com.bupocket.model.NodeBuildSupportModel;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
@@ -170,10 +175,14 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                             tvStutas.setSelected(true);
                             tvStutas.setText(CoBuildDetailStatusEnum.CO_BUILD_EXIT.getMsg());
                         }
-
-                        llBtnBuild.setVisibility(View.GONE);
-
                     }
+
+                    if (getWalletAddress().equals(detailModel.getOriginatorAddress())) {
+                        llBtnBuild.setVisibility(View.GONE);
+                    }else{
+                        llBtnBuild.setVisibility(View.VISIBLE);
+                    }
+
 
                     ArrayList<NodeBuildSupportModel> nodelist = body.getData().getSupportList();
                     if (nodelist == null || nodelist.size() == 0) {
@@ -183,6 +192,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                         nodeBuildDetailAdapter.setNewData(nodelist);
                         nodeBuildDetailAdapter.notifyDataSetChanged();
                     }
+
 
 
                 }
@@ -388,7 +398,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         qmuiBottomSheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                qmuiBottomSheet.dismiss();
                 confirmSupport();
             }
         });
@@ -403,6 +413,13 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     }
 
     private void confirmSupport() {
+        final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord(getResources().getString(R.string.send_tx_verify))
+                .create();
+        txSendingTipDialog.show();
+
+
         final String amount = tvDialogTotalAmount.getText().toString();
         String num = numSupport.getText().toString();
         JSONObject params = new JSONObject();
@@ -411,10 +428,10 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         input.put("method", "subscribe");
         input.put("params", params.toJSONString());
 
-//        final String inputStr="{\"method\":\"subscribe\",\"params\":"+ params.toJSONString() +" }";
-        final String inputStr="{\"method\":\"subscribe\",\"params\":{\"shares\":1}";
+        final String inputStr="{\"method\":\"subscribe\",\"params\":"+ params.toJSONString() +" }";
+//        final String inputStr="{\"method\":\"subscribe\",\"params\":{\"shares\":1}";
         final String contractAddress = detailModel.getContractAddress();
-        contractAddress.replace("\r\n","");
+//        contractAddress.replace("\r\n","");
 
         new Thread(new Runnable() {
             @Override
@@ -422,8 +439,20 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 try {
 
                     final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount,inputStr, getWalletAddress(), String.valueOf(Constants.NODE_MIN_FEE), contractAddress);
+                    txSendingTipDialog.dismiss();
                     String hash = transBlob.getResult().getHash();
-                    LogUtils.e(hash);
+                    if (TextUtils.isEmpty(hash)) {
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                CommonUtil.showMessageDialog(mContext,transBlob.getErrorDesc());
+                            }
+                        });
+
+                        return;
+                    }
                     submitTransactionBase(transBlob);
 
                 } catch (Exception e) {

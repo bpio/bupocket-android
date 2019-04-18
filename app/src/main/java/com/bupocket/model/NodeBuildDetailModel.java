@@ -19,6 +19,15 @@ public class NodeBuildDetailModel {
     private String initiatorAmount;
     private String supportAmount;
     private String contractAddress;
+    private String originatorAddress;
+
+    public String getOriginatorAddress() {
+        return originatorAddress;
+    }
+
+    public void setOriginatorAddress(String originatorAddress) {
+        this.originatorAddress = originatorAddress;
+    }
 
     public String getContractAddress() {
         return contractAddress;
