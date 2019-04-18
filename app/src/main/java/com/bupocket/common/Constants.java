@@ -45,8 +45,7 @@ public class Constants {
     public static final String QR_NODE_PLAN_PREFIX = "bumo://dpos/";
 
 
-    public static final String  ADDRESS="address";
-    public static final String  NODE_ID="nodeId";
+
 
     public static enum MainNetConfig {
         WEB_SERVER_DOMAIN("https://api-bp.bumo.io/"),
@@ -76,4 +75,11 @@ public class Constants {
             return value;
         }
     }
+
+
+
+    public static final String  ADDRESS="address";
+    public static final String  NODE_ID="nodeId";
+    public static final String  TYPE="type";
+    public static final String  PATH="path";
 }

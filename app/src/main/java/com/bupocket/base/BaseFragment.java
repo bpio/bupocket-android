@@ -23,6 +23,7 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
@@ -155,6 +156,7 @@ public abstract class BaseFragment extends QMUIFragment {
                             return;
                         }
 
+                        LogUtils.e("submit hash="+txHash);
                         ByHashQueryResult(txHash);
 
                     }
@@ -215,7 +217,6 @@ public abstract class BaseFragment extends QMUIFragment {
                     Map<String, Object> paramsMap = new HashMap<>();
                     paramsMap.put("hash", txHash);
                     Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetailByHash(paramsMap);
-                    txHash="";
                     call.enqueue(new retrofit2.Callback<ApiResult<TxDetailRespDto>>() {
 
                         @Override

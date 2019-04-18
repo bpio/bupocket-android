@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/app_color_white"
     android:paddingLeft="20dp"
     android:orientation="vertical">
@@ -106,13 +107,18 @@
             android:background="@drawable/selector_support_green_sub"
             />
 
-        <TextView
+        <EditText
             android:id="@+id/tvDialogNum"
-            android:layout_width="38dp"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:text="1"
+            tools:text="1"
             android:gravity="center"
             android:padding="5dp"
+            android:singleLine="true"
+            android:numeric="integer"
+            android:inputType="number"
+            android:background="@null"
+            android:textSize="16sp"
             android:textColor="@color/search_token_asset_code_txt_color"
 
 

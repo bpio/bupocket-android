@@ -1,13 +1,17 @@
 package com.bupocket.fragment.discover;
 
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
@@ -21,6 +25,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.NodeBuildDetailModel;
 import com.bupocket.model.NodeBuildSupportModel;
 import com.bupocket.utils.LogUtils;
+import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -62,7 +67,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private View subBtn;
     private TextView tvDialogTotalAmount;
     private TextView tvDialogAmount;
-    private TextView numSupport;
+    private EditText numSupport;
     private TextView tvName;
     private TextView tvBuildDetailAmount;
     private TextView tvTotalAmount;
@@ -72,7 +77,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private TextView tvBuildDetailOriginAmount;
     private TextView tvBuildDetailSupportNum;
     private TextView tvBuildDetailSupportAmount;
-    private NodeBuildDetailModel data;
+    private NodeBuildDetailModel detailModel;
     private String nodeId;
     private View emptyLayout;
 
@@ -139,29 +144,29 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
                 if (body != null && ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
 
-                    data = body.getData();
-                    if (data == null) {
+                    detailModel = body.getData();
+                    if (detailModel == null) {
                         return;
                     }
-                    tvName.setText(data.getTitle());
-                    tvBuildDetailAmount.setText(data.getPerAmount());
-                    tvTotalAmount.setText(data.getTotalAmount());
-                    pbDetail.setMax(data.getCopies());
-                    pbDetail.setProgress(data.getCopies() - data.getLeftCopies());
-                    tvBuildDetailLeftCopies.setText("剩余" + data.getLeftCopies() + "份");
-                    tvBuildDetailSharingRatio.setText(data.getRewardRate() + "%");
-                    tvBuildDetailOriginAmount.setText(data.getInitiatorAmount());
-                    tvBuildDetailSupportNum.setText(data.getSupportPerson() + "人支持");
-                    tvBuildDetailSupportAmount.setText(data.getSupportAmount());
+                    tvName.setText(detailModel.getTitle());
+                    tvBuildDetailAmount.setText(detailModel.getPerAmount());
+                    tvTotalAmount.setText(detailModel.getTotalAmount());
+                    pbDetail.setMax(detailModel.getCopies());
+                    pbDetail.setProgress(detailModel.getCopies() - detailModel.getLeftCopies());
+                    tvBuildDetailLeftCopies.setText("剩余" + detailModel.getLeftCopies() + "份");
+                    tvBuildDetailSharingRatio.setText(detailModel.getRewardRate() + "%");
+                    tvBuildDetailOriginAmount.setText(detailModel.getInitiatorAmount());
+                    tvBuildDetailSupportNum.setText(detailModel.getSupportPerson() + "人支持");
+                    tvBuildDetailSupportAmount.setText(detailModel.getSupportAmount());
 
-                    if (CoBuildDetailStatusEnum.CO_BUILD_RUNING.getCode().equals(data.getStatus())) {
+                    if (CoBuildDetailStatusEnum.CO_BUILD_RUNING.getCode().equals(detailModel.getStatus())) {
                         tvStutas.setSelected(false);
                         tvStutas.setText(CoBuildDetailStatusEnum.CO_BUILD_RUNING.getMsg());
                     } else{
-                        if (CoBuildDetailStatusEnum.CO_BUILD_SUCCESS.getCode().equals(data.getStatus())) {
+                        if (CoBuildDetailStatusEnum.CO_BUILD_SUCCESS.getCode().equals(detailModel.getStatus())) {
                             tvStutas.setSelected(true);
                             tvStutas.setText(CoBuildDetailStatusEnum.CO_BUILD_SUCCESS.getMsg());
-                        } else if (CoBuildDetailStatusEnum.CO_BUILD_EXIT.getCode().equals(data.getStatus())) {
+                        } else if (CoBuildDetailStatusEnum.CO_BUILD_EXIT.getCode().equals(detailModel.getStatus())) {
                             tvStutas.setSelected(true);
                             tvStutas.setText(CoBuildDetailStatusEnum.CO_BUILD_EXIT.getMsg());
                         }
@@ -218,7 +223,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 showExit();
                 break;
             case R.id.btnBuildSupport:
-                if (data != null) {
+                if (detailModel != null) {
                     ShowSupport();
                 }
 
@@ -233,9 +238,9 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         TextView mTransactionAmountTv = qmuiBottomSheet.findViewById(R.id.transactionAmountTv);
         mTransactionAmountTv.setText("0");
         TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
-        mTransactionDetailTv.setText("退出\""+data.getTitle()+"\"项目");
+        mTransactionDetailTv.setText("退出\""+ detailModel.getTitle()+"\"项目");
         TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
-        mDestAddressTv.setText(data.getContractAddress());
+        mDestAddressTv.setText(detailModel.getContractAddress());
         TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
         mTxFeeTv.setText(String.valueOf(Constants.NODE_REVOKE_FEE));
 
@@ -265,7 +270,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             @Override
             public void run() {
                 try {
-                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount,inputStr, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_FEE), data.getContractAddress());
+                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount,inputStr, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_FEE), detailModel.getContractAddress());
                     String hash = transBlob.getResult().getHash();
                     LogUtils.e(hash);
 
@@ -297,7 +302,14 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int addNum = Integer.parseInt(numSupport.getText().toString()) + 1;
+                String addStr = numSupport.getText().toString();
+                int addNum = 0;
+                if (TextUtils.isEmpty(addStr)) {
+                    addNum+=1;
+                }else{
+                    addNum = Integer.parseInt(addStr) + 1;
+                }
+
                 setNumStatus(addNum);
             }
         });
@@ -307,8 +319,29 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         subBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int numSub = Integer.parseInt(numSupport.getText().toString()) - 1;
+                String subStr = numSupport.getText().toString();
+                if (TextUtils.isEmpty(subStr)) {
+                    return;
+                }
+                int numSub = Integer.parseInt(subStr) - 1;
                 setNumStatus(numSub);
+            }
+        });
+
+        numSupport.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 
@@ -325,9 +358,9 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         });
 
         //init
-        tvDialogAmount.setText(data.getPerAmount());
-        numSupport.setText("" + 1);
-        tvDialogTotalAmount.setText(data.getPerAmount());
+        tvDialogAmount.setText(detailModel.getPerAmount());
+        numSupport.setText("1");
+        tvDialogTotalAmount.setText(detailModel.getPerAmount());
 
         supportDialog.show();
 
@@ -339,9 +372,14 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         TextView mTransactionAmountTv = qmuiBottomSheet.findViewById(R.id.transactionAmountTv);
         mTransactionAmountTv.setText(tvDialogTotalAmount.getText());
         TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
-        mTransactionDetailTv.setText("支持\""+data.getTitle()+"\"项目");
+        mTransactionDetailTv.setText("支持\""+ detailModel.getTitle()+"\"项目");
         TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
-        mDestAddressTv.setText(data.getContractAddress());
+
+        if (TextUtils.isEmpty(detailModel.getContractAddress())) {
+            ToastUtil.showToast(getActivity(),R.string.contract_address_empty, Toast.LENGTH_SHORT);
+            return;
+        }
+        mDestAddressTv.setText(detailModel.getContractAddress());
         TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
         mTxFeeTv.setText(String.valueOf(Constants.NODE_REVOKE_FEE));
 
@@ -381,7 +419,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             public void run() {
                 try {
 
-                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount,inputStr, getWalletAddress(), String.valueOf(Constants.NODE_MIN_FEE), data.getContractAddress());
+                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount,inputStr, getWalletAddress(), String.valueOf(Constants.NODE_MIN_FEE), detailModel.getContractAddress());
                     String hash = transBlob.getResult().getHash();
                     LogUtils.e(hash);
                     submitTransactionBase(transBlob);
@@ -398,13 +436,15 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
     private void setNumStatus(int num) {
 
-        if (num < 1 || num > 10) {
+        int leftCopies = detailModel.getLeftCopies();
+
+        if (num < 1 || num > leftCopies) {
             return;
         }
 
         if (num == 1) {
             subBtn.setSelected(false);
-        } else if (num == 10) {
+        } else if (num == leftCopies) {
             addBtn.setSelected(false);
         } else {
             if (!subBtn.isSelected()) {

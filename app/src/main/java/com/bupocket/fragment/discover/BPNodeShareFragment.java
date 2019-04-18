@@ -148,8 +148,8 @@ public class BPNodeShareFragment extends BaseFragment {
         }
 
         HashMap<String, Object> map = new HashMap<>();
-        map.put("type", "1");
-        map.put("path", path);
+        map.put(Constants.TYPE, "1");
+        map.put(Constants.PATH, path);
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
 
         nodePlanService.getShareUrl(map).enqueue(new Callback<ApiResult<ShareUrlModel>>() {

@@ -532,4 +532,7 @@
     <string name="error_100055">the contact is already existed</string>
 
 
+    <string name="contract_address_empty">账户地址为空</string>
+
+
 </resources>
