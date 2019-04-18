@@ -530,9 +530,16 @@
     <string name="error_1009">该钱包账户已申请过，请更换后再进行申请</string>
     <string name="error_1011">检测到有尚未提交的操作，请稍后再重试</string>
     <string name="error_100055">the contact is already existed</string>
+    <string name="error_build_success_01">抱歉，该共建项目已被认购完</string>
+    <string name="error_build_success_02">抱歉，该共建项目已完成，目前您不能退出</string>
 
 
     <string name="contract_address_empty">账户地址为空</string>
+
+    <string name="send_tx_verify">数据验证中</string>
+    <string name="share_close">分享暂时未开启</string>
+
+    <string name="hint_title_info">提示信息</string>
 
 
 </resources>

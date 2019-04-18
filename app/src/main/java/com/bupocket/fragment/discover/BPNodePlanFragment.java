@@ -44,6 +44,7 @@ import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
@@ -343,6 +344,13 @@ public class BPNodePlanFragment extends BaseFragment {
     }
 
     private void confirmUnVote(final JSONObject input, final String nodeId) {
+        final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord(getResources().getString(R.string.send_tx_verify))
+                .create();
+        txSendingTipDialog.show();
+
+
         final String amount = "0";
         new Thread(new Runnable() {
             @Override
@@ -360,10 +368,10 @@ public class BPNodePlanFragment extends BaseFragment {
                     call.enqueue(new Callback<ApiResult>() {
                         @Override
                         public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
+
+                            txSendingTipDialog.dismiss();
                             ApiResult respDto = response.body();
                             if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
-//                                submitTransaction(buildBlobResponse);
-
                                 submitTransactionBase(buildBlobResponse);
                             } else {
                                 String msg = CommonUtil.byCodeToMsg(mContext, respDto.getErrCode());
@@ -379,16 +387,13 @@ public class BPNodePlanFragment extends BaseFragment {
                         @Override
                         public void onFailure(Call<ApiResult> call, Throwable t) {
                             Toast.makeText(getContext(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
+                            txSendingTipDialog.dismiss();
                         }
                     });
                 } catch (Exception e) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
-                        }
-                    });
 
+                    ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
+                    txSendingTipDialog.dismiss();
                 }
             }
         }).start();
@@ -413,7 +418,7 @@ public class BPNodePlanFragment extends BaseFragment {
         ArrayList<SuperNodeModel> sourceData = new ArrayList<>();
         if (myNodeCB.isChecked()) {
             sourceData.addAll(myVoteInfolist);
-        }else{
+        } else {
             sourceData.addAll(nodeList);
         }
         Pattern pattern = Pattern.compile(s);
@@ -434,11 +439,11 @@ public class BPNodePlanFragment extends BaseFragment {
     private void initData() {
 //        refreshLayout.autoRefresh();
 
-        if (myVoteInfolist==null) {
-            myVoteInfolist=new ArrayList<>();
+        if (myVoteInfolist == null) {
+            myVoteInfolist = new ArrayList<>();
         }
-        if (nodeList==null) {
-            nodeList=new ArrayList<>();
+        if (nodeList == null) {
+            nodeList = new ArrayList<>();
         }
 
         currentWalletAddress = getWalletAddress();
@@ -462,7 +467,7 @@ public class BPNodePlanFragment extends BaseFragment {
         Call<ApiResult<SuperNodeDto>> superNodeList = null;
 
         if (superNodeList == null) {
-            NodePlanService nodePlanService  = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
+            NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
             superNodeList = nodePlanService.getSuperNodeList(listReq);
         }
         superNodeList.enqueue(new Callback<ApiResult<SuperNodeDto>>() {
@@ -480,7 +485,7 @@ public class BPNodePlanFragment extends BaseFragment {
                     myVoteInfolist = myVoteInfoList(nodeList);
                     if (myNodeCB.isChecked()) {
                         superNodeAdapter.setNewData(myVoteInfolist);
-                    }else{
+                    } else {
                         superNodeAdapter.setNewData(nodeList);
                     }
                     superNodeAdapter.notifyDataSetChanged();

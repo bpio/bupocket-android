@@ -217,7 +217,13 @@ public class BPNodeShareFragment extends BaseFragment {
         mShareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showShareDialog();
+
+                if (true){
+                    CommonUtil.showMessageDialog(getContext(), R.string.share_close);
+                }else{
+                    showShareDialog();
+                }
+
             }
         });
     }

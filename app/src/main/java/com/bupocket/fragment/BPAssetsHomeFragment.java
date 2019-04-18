@@ -129,7 +129,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
     private String txHash;
     private Boolean whetherIdentityWallet = false;
-    private QMUITipDialog txSendingTipDialog;
+
     private TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean;
 
     private Double scanTxFee;
@@ -671,6 +671,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
     }
 
     private void confirmTransaction(GetQRContentDto contentDto) {
+
+
+
         final String qrCodeSessionID = contentDto.getQrcodeSessionId();
         final String script = contentDto.getScript();
         final String amount = contentDto.getAmount();
@@ -681,7 +684,11 @@ public class BPAssetsHomeFragment extends BaseFragment {
             Toast.makeText(getContext(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT).show();
             return;
         }
-
+        final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord(getResources().getString(R.string.send_tx_verify))
+                .create();
+        txSendingTipDialog.show();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -689,7 +696,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
                     final TransactionBuildBlobResponse buildBlobResponse;
                     if (ScanTransactionTypeEnum.APPLY_CO_BUILD.getCode().equals(transactionType)) {
                         // handle script
-
 
                         org.json.JSONObject jsonObj = new org.json.JSONObject(script);
                         String input = jsonObj.getString("input");
@@ -712,6 +718,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                     call.enqueue(new Callback<ApiResult<TransConfirmModel>>() {
                         @Override
                         public void onResponse(Call<ApiResult<TransConfirmModel>> call, Response<ApiResult<TransConfirmModel>> response) {
+                            txSendingTipDialog.dismiss();
                             ApiResult<TransConfirmModel> respDto = response.body();
                             if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
                                 expiryTime = respDto.getData().getExpiryTime();
@@ -719,7 +726,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                 submitTransactionBase(buildBlobResponse);
                             } else {
                                 LogUtils.e("超时时间" + respDto.getMsg() + "\t" + respDto.getErrCode());
-                                CommonUtil.showMessageDialog(getContext(), respDto.getMsg(),respDto.getErrCode());
+                                CommonUtil.showMessageDialog(getContext(), respDto.getMsg(), respDto.getErrCode());
                             }
                         }
 
@@ -732,6 +739,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                 }
                             });
 
+                            txSendingTipDialog.dismiss();
                         }
                     });
                 } catch (Exception e) {
@@ -740,8 +748,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
             }
         }).start();
     }
-
-
 
 
     @Override

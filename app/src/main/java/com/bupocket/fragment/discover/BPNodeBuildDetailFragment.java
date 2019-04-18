@@ -273,7 +273,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount,inputStr, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_FEE), detailModel.getContractAddress());
                     String hash = transBlob.getResult().getHash();
                     LogUtils.e(hash);
-
+                    submitTransactionBase(transBlob);
 
                 } catch (Exception e) {
                     e.printStackTrace();
