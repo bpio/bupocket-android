@@ -62,4 +62,17 @@ public class TimeUtil {
         return System.currentTimeMillis();
     }
 
+
+    /**
+     *
+     * @param inputTime
+     * @return true inputTime
+     */
+    public static boolean judgeTime(long inputTime){
+        if (inputTime<getCurrentTimeMillis()){
+            return true;
+        }
+        return false;
+    }
+
 }

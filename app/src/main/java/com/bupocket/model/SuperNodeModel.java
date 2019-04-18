@@ -15,9 +15,15 @@ public class SuperNodeModel implements Parcelable {
     private String myVoteCount;
     private String introduce;
     private String support;
+    private String shareStartTime;
 
+    public String getShareStartTime() {
+        return shareStartTime;
+    }
 
-
+    public void setShareStartTime(String shareStartTime) {
+        this.shareStartTime = shareStartTime;
+    }
 
     public static Creator<SuperNodeModel> getCREATOR() {
         return CREATOR;

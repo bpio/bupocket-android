@@ -40,6 +40,7 @@ import com.bupocket.model.ShareUrlModel;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.QRCodeUtil;
+import com.bupocket.utils.TimeUtil;
 import com.bupocket.utils.ToastUtil;
 import com.qmuiteam.qmui.util.QMUIDrawableHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
@@ -218,7 +219,8 @@ public class BPNodeShareFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-                if (true){
+                String shareStartTime = itemInfo.getShareStartTime();
+                if (TimeUtil.judgeTime(Long.parseLong(shareStartTime))){
                     CommonUtil.showMessageDialog(getContext(), R.string.share_close);
                 }else{
                     showShareDialog();

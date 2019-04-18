@@ -537,9 +537,13 @@
     <string name="contract_address_empty">账户地址为空</string>
 
     <string name="send_tx_verify">数据验证中</string>
-    <string name="share_close">分享暂时未开启</string>
+    <string name="share_close">投票通道还未开启，请在开启后进行分享</string>
 
     <string name="hint_title_info">提示信息</string>
+    <string name="transaction_timeout_title">交易状态</string>
+    <string name="transaction_timeout_hint">交易广播成功</string>
+    <string name="transaction_timeout_info">交易广播成功，交易最终状态请复制交易摘要到&lt;font color=\'#02CA71\'>http://explorer.bumo.io&lt;/font>查询</string>
+    <string name="transaction_info">交易摘要</string>
 
 
 </resources>

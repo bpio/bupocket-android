@@ -795,8 +795,9 @@ public class Wallet {
         transactionBuildBlobRequest.setGasPrice(gasPrice);
         transactionBuildBlobRequest.addOperation(contractInvokeByBUOperation);
 
-        String transactionBlob = null;
         TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
+        LogUtils.e("transactionBuildBlobResponse:"+transactionBuildBlobResponse.getErrorCode()+"" +
+                "t"+transactionBuildBlobResponse.getErrorDesc());
         return transactionBuildBlobResponse;
     }
 
@@ -824,6 +825,8 @@ public class Wallet {
         transactionBuildBlobRequest.addOperation(operation);
 
         TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
+      LogUtils.e("transactionBuildBlobResponse:"+transactionBuildBlobResponse.getErrorCode()+"" +
+              "t"+transactionBuildBlobResponse.getErrorDesc());
         return transactionBuildBlobResponse;
     }
 

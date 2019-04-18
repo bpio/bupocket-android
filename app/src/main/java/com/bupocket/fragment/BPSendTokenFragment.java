@@ -665,7 +665,12 @@ public class BPSendTokenFragment extends BaseFragment {
                     if (timerTimes > Constants.TX_REQUEST_TIMEOUT_TIMES) {
                         timerTask.cancel();
                         txSendingTipDialog.dismiss();
-                        startFragmentAndDestroyCurrent(new BPTxRequestTimeoutFragment());
+
+                        BPTransactionTimeoutFragment fragment = new BPTransactionTimeoutFragment();
+                        Bundle args = new Bundle();
+                        args.putString("txHash",hash);
+                        fragment.setArguments(args);
+                        startFragment(fragment);
                         return;
                     }
                     timerTimes++;

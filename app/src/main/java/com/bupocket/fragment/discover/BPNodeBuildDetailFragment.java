@@ -271,6 +271,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             public void run() {
                 try {
                     final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount,inputStr, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_FEE), detailModel.getContractAddress());
+
                     String hash = transBlob.getResult().getHash();
                     LogUtils.e(hash);
                     submitTransactionBase(transBlob);
@@ -410,16 +411,17 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         input.put("method", "subscribe");
         input.put("params", params.toJSONString());
 
-        final String inputStr="{\"method\":\"subscribe\",\"params\":"+ params.toJSONString() +" }";
-//        final String inputStr="{\"method\":\"subscribe\",\"params\":{\"shares\":1}";
-
+//        final String inputStr="{\"method\":\"subscribe\",\"params\":"+ params.toJSONString() +" }";
+        final String inputStr="{\"method\":\"subscribe\",\"params\":{\"shares\":1}";
+        final String contractAddress = detailModel.getContractAddress();
+        contractAddress.replace("\r\n","");
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
 
-                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount,inputStr, getWalletAddress(), String.valueOf(Constants.NODE_MIN_FEE), detailModel.getContractAddress());
+                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount,inputStr, getWalletAddress(), String.valueOf(Constants.NODE_MIN_FEE), contractAddress);
                     String hash = transBlob.getResult().getHash();
                     LogUtils.e(hash);
                     submitTransactionBase(transBlob);
@@ -458,6 +460,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
 
         numSupport.setText(num + "");
+
+//        setTotalAmount();
         int amount = num * Integer.parseInt(tvDialogAmount.getText().toString());
         tvDialogTotalAmount.setText(amount + "");
     }

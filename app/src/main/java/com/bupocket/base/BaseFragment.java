@@ -18,7 +18,7 @@ import com.bupocket.R;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.fragment.BPSendStatusFragment;
-import com.bupocket.fragment.BPTxRequestTimeoutFragment;
+import com.bupocket.fragment.BPTransactionTimeoutFragment;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
@@ -193,7 +193,7 @@ public abstract class BaseFragment extends QMUIFragment {
 
         return hash;
     }
-
+    private TimerTask timerTask=null;
     private String txHash;
     private int timerTimes = 0;
     private final Timer timer = new Timer();
@@ -208,7 +208,11 @@ public abstract class BaseFragment extends QMUIFragment {
                         if (txSendingTipDialog!=null) {
                             txSendingTipDialog.dismiss();
                         }
-                        startFragmentAndDestroyCurrent(new BPTxRequestTimeoutFragment());
+                        BPTransactionTimeoutFragment fragment = new BPTransactionTimeoutFragment();
+                        Bundle args = new Bundle();
+                        args.putString("txHash",txHash);
+                        fragment.setArguments(args);
+                        startFragment(fragment);
                         return;
                     }
                     timerTimes++;
@@ -263,16 +267,21 @@ public abstract class BaseFragment extends QMUIFragment {
         }
     };
 
-    private TimerTask timerTask = new TimerTask() {
-        @Override
-        public void run() {
-            mHandler.sendEmptyMessage(1);
-        }
-    };
+
 
 
     public void ByHashQueryResult(@NonNull String hash){
         txHash=hash;
+        if (timerTask!=null) {
+            timerTask.cancel();
+        }
+
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.sendEmptyMessage(1);
+            }
+        };
         timer.schedule(timerTask,
                 1 * 1000,//延迟1秒执行
                 1000);
