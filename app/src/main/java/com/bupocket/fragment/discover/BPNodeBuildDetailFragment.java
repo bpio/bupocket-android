@@ -167,7 +167,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     if (CoBuildDetailStatusEnum.CO_BUILD_RUNING.getCode().equals(detailModel.getStatus())) {
                         tvStutas.setSelected(false);
                         tvStutas.setText(CoBuildDetailStatusEnum.CO_BUILD_RUNING.getMsg());
-                    } else{
+                    } else {
                         if (CoBuildDetailStatusEnum.CO_BUILD_SUCCESS.getCode().equals(detailModel.getStatus())) {
                             tvStutas.setSelected(true);
                             tvStutas.setText(CoBuildDetailStatusEnum.CO_BUILD_SUCCESS.getMsg());
@@ -179,7 +179,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
                     if (getWalletAddress().equals(detailModel.getOriginatorAddress())) {
                         llBtnBuild.setVisibility(View.GONE);
-                    }else{
+                    } else {
                         llBtnBuild.setVisibility(View.VISIBLE);
                     }
 
@@ -192,7 +192,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                         nodeBuildDetailAdapter.setNewData(nodelist);
                         nodeBuildDetailAdapter.notifyDataSetChanged();
                     }
-
 
 
                 }
@@ -248,7 +247,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         TextView mTransactionAmountTv = qmuiBottomSheet.findViewById(R.id.transactionAmountTv);
         mTransactionAmountTv.setText("0");
         TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
-        mTransactionDetailTv.setText("退出\""+ detailModel.getTitle()+"\"项目");
+        mTransactionDetailTv.setText("退出\"" + detailModel.getTitle() + "\"项目");
         TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
         mDestAddressTv.setText(detailModel.getContractAddress());
         TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
@@ -272,15 +271,15 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     }
 
     private void confirmExit() {
-        final String amount="0";
-        final String inputStr="{\"method\":\"revoke\"}";
+        final String amount = "0";
+        final String inputStr = "{\"method\":\"revoke\"}";
 
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount,inputStr, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_FEE), detailModel.getContractAddress());
+                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, inputStr, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_FEE), detailModel.getContractAddress());
 
                     String hash = transBlob.getResult().getHash();
                     LogUtils.e(hash);
@@ -316,8 +315,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 String addStr = numSupport.getText().toString();
                 int addNum = 0;
                 if (TextUtils.isEmpty(addStr)) {
-                    addNum+=1;
-                }else{
+                    addNum += 1;
+                } else {
                     addNum = Integer.parseInt(addStr) + 1;
                 }
 
@@ -383,11 +382,11 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         TextView mTransactionAmountTv = qmuiBottomSheet.findViewById(R.id.transactionAmountTv);
         mTransactionAmountTv.setText(tvDialogTotalAmount.getText());
         TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
-        mTransactionDetailTv.setText("支持\""+ detailModel.getTitle()+"\"项目");
+        mTransactionDetailTv.setText("支持\"" + detailModel.getTitle() + "\"项目");
         TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
 
         if (TextUtils.isEmpty(detailModel.getContractAddress())) {
-            ToastUtil.showToast(getActivity(),R.string.contract_address_empty, Toast.LENGTH_SHORT);
+            ToastUtil.showToast(getActivity(), R.string.contract_address_empty, Toast.LENGTH_SHORT);
             return;
         }
         mDestAddressTv.setText(detailModel.getContractAddress());
@@ -421,14 +420,14 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
 
         final String amount = tvDialogTotalAmount.getText().toString();
-        String num = numSupport.getText().toString();
+        final String num = numSupport.getText().toString();
         JSONObject params = new JSONObject();
         params.put("shares", num);
-         JSONObject input = new JSONObject();
+        JSONObject input = new JSONObject();
         input.put("method", "subscribe");
         input.put("params", params.toJSONString());
 
-        final String inputStr="{\"method\":\"subscribe\",\"params\":"+ params.toJSONString() +" }";
+        final String inputStr = "{\"method\":\"subscribe\",\"params\":" + params.toJSONString() + " }";
 //        final String inputStr="{\"method\":\"subscribe\",\"params\":{\"shares\":1}";
         final String contractAddress = detailModel.getContractAddress();
 //        contractAddress.replace("\r\n","");
@@ -438,8 +437,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             public void run() {
                 try {
 
-                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount,inputStr, getWalletAddress(), String.valueOf(Constants.NODE_MIN_FEE), contractAddress);
-                    txSendingTipDialog.dismiss();
+                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, inputStr, getWalletAddress(), String.valueOf(Constants.NODE_MIN_FEE), contractAddress);
+
                     String hash = transBlob.getResult().getHash();
                     if (TextUtils.isEmpty(hash)) {
 
@@ -447,20 +446,43 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                             @Override
                             public void run() {
 
-                                CommonUtil.showMessageDialog(mContext,transBlob.getErrorDesc());
+                                CommonUtil.showMessageDialog(mContext, transBlob.getErrorDesc());
                             }
                         });
-
+                        txSendingTipDialog.dismiss();
                         return;
                     }
-                    submitTransactionBase(transBlob);
+
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put("nodeId", detailModel.getNodeId());
+                    map.put("hash", hash);
+                    map.put("copies", num + "");
+                    map.put("initiatorAddress",getWalletAddress());
+                    NodeBuildService nodeBuildService = RetrofitFactory.getInstance().getRetrofit().create(NodeBuildService.class);
+                    nodeBuildService.verifySupport(map).enqueue(new Callback<ApiResult>() {
+                        @Override
+                        public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
+                            ApiResult body = response.body();
+                            txSendingTipDialog.dismiss();
+                            if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
+                                submitTransactionBase(transBlob);
+                            }else{
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiResult> call, Throwable t) {
+                            txSendingTipDialog.dismiss();
+                        }
+                    });
+
 
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }).start();
-
 
 
     }

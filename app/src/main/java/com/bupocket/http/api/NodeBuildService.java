@@ -26,4 +26,10 @@ public interface NodeBuildService {
     @POST("nodeServer/qr/v1/cobuild/list")
     Call<ApiResult<NodeBuildModel>> getNodeBuildExit(@Body Map<String,Object> map);
 
+    @POST("nodeServer/node/v1/cooperate/support")
+    Call<ApiResult> verifySupport(@Body Map<String,Object> map);
+
+    @POST("nodeServer/node/v1/cooperate/exit")
+    Call<ApiResult> verifyExit(@Body Map<String,Object> map);
+
 }
