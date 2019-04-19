@@ -11,7 +11,7 @@ public class NodeBuildModel implements Serializable {
     private String title;
     private String perAmount;
     private String deposit;
-    private int copies;
+    private int totalCopies;
     private int leftCopies;
     private String rewardRate;
     private String totalAmount;
@@ -48,12 +48,12 @@ public class NodeBuildModel implements Serializable {
         this.deposit = deposit;
     }
 
-    public int getCopies() {
-        return copies;
+    public int getTotalCopies() {
+        return totalCopies;
     }
 
-    public void setCopies(int copies) {
-        this.copies = copies;
+    public void setTotalCopies(int totalCopies) {
+        this.totalCopies = totalCopies;
     }
 
     public int getLeftCopies() {

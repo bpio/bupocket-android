@@ -28,7 +28,7 @@ public class NodeBuildDetailAdapter extends AbsViewHolderAdapter<NodeBuildSuppor
     protected void convert(BaseViewHolder holder, NodeBuildSupportModel itemData) {
 
         ImageView ivHead = holder.getView(R.id.ivBuildSupportHead);
-        holder.setText(R.id.tvBuildSupportAmount,itemData.getAmount());
+        holder.setText(R.id.tvBuildSupportAmount,itemData.getAmount()+"BU");
         holder.setText(R.id.tvBuildSupportDate,itemData.getCreateTime());
         holder.setText(R.id.tvBuildDetailAddress, AddressUtil.anonymous(itemData.getInitiatorAddress()));
 
