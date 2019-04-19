@@ -93,7 +93,7 @@ public class BPSendStatusFragment extends BaseFragment {
             txStatusIconDrawable = ContextCompat.getDrawable(getContext(), R.mipmap.icon_send_fail);
             txStatusStr = getResources().getString(R.string.tx_status_fail_txt2);
             mSendTokenStatusIcon.setImageDrawable(txStatusIconDrawable);
-            mSendTokenStatusTv.setText(txStatusStr+"\n错误码"+txStatus);
+            mSendTokenStatusTv.setText(txStatusStr + txStatus);
 
         }
 
