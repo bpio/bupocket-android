@@ -91,12 +91,13 @@ public class BPSendStatusFragment extends BaseFragment {
         } else {
             llStatusFailed.setVisibility(View.VISIBLE);
             txStatusIconDrawable = ContextCompat.getDrawable(getContext(), R.mipmap.icon_send_fail);
-            txStatusStr = getResources().getString(R.string.tx_status_fail_txt1);
+            txStatusStr = getResources().getString(R.string.tx_status_fail_txt2);
             mSendTokenStatusIcon.setImageDrawable(txStatusIconDrawable);
-            mSendTokenStatusTv.setText(txStatusStr);
-        }
-        targetAddrTv.setText(destAccAddr);
+            mSendTokenStatusTv.setText(txStatusStr+"\n错误码"+txStatus);
 
+        }
+
+        targetAddrTv.setText(destAccAddr);
         sendAmountTv.setText(sendAmount);
         sendFeeTv.setText(txFee);
         sendNoteTv.setText(note);

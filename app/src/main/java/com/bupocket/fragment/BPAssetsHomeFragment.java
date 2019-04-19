@@ -458,26 +458,27 @@ public class BPAssetsHomeFragment extends BaseFragment {
                     String jsonStr = null;
                     try {
                         jsonStr = new String(Base64.decode(resultContent.getBytes("UTF-8"), Base64.DEFAULT));
+                        Object object = JSON.parseObject(jsonStr);
+                        String action = ((JSONObject) object).getString("action");
+                        String uuID = ((JSONObject) object).getString("uuID");
+                        String tokenData = ((JSONObject) object).getString("data");
+                        Bundle argz = new Bundle();
+                        argz.putString("uuID", uuID);
+                        argz.putString("tokenData", tokenData);
+                        argz.putString("buBalance", tokenBalance);
+                        if (action.equals(TokenActionTypeEnum.ISSUE.getCode())) {
+                            BPIssueTokenFragment bpIssueTokenFragment = new BPIssueTokenFragment();
+                            bpIssueTokenFragment.setArguments(argz);
+                            startFragment(bpIssueTokenFragment);
+                        } else if (action.equals(TokenActionTypeEnum.REGISTER.getCode())) {
+                            BPRegisterTokenFragment bpRegisterTokenFragment = new BPRegisterTokenFragment();
+                            bpRegisterTokenFragment.setArguments(argz);
+                            startFragment(bpRegisterTokenFragment);
+                        }
                     } catch (UnsupportedEncodingException e) {
                         e.printStackTrace();
                     }
-                    Object object = JSON.parseObject(jsonStr);
-                    String action = ((JSONObject) object).getString("action");
-                    String uuID = ((JSONObject) object).getString("uuID");
-                    String tokenData = ((JSONObject) object).getString("data");
-                    Bundle argz = new Bundle();
-                    argz.putString("uuID", uuID);
-                    argz.putString("tokenData", tokenData);
-                    argz.putString("buBalance", tokenBalance);
-                    if (action.equals(TokenActionTypeEnum.ISSUE.getCode())) {
-                        BPIssueTokenFragment bpIssueTokenFragment = new BPIssueTokenFragment();
-                        bpIssueTokenFragment.setArguments(argz);
-                        startFragment(bpIssueTokenFragment);
-                    } else if (action.equals(TokenActionTypeEnum.REGISTER.getCode())) {
-                        BPRegisterTokenFragment bpRegisterTokenFragment = new BPRegisterTokenFragment();
-                        bpRegisterTokenFragment.setArguments(argz);
-                        startFragment(bpRegisterTokenFragment);
-                    }
+
                 } else if (resultContent.startsWith(Constants.QR_LOGIN_PREFIX)) {
                     final String uuid = resultContent.replace(Constants.QR_LOGIN_PREFIX, "");
                     NodePlanManagementSystemService nodePlanManagementSystemService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanManagementSystemService.class);

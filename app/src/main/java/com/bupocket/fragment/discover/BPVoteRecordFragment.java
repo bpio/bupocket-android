@@ -12,6 +12,7 @@ import com.bupocket.R;
 import com.bupocket.adaptor.VoteRecordAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
@@ -19,6 +20,7 @@ import com.bupocket.model.MyVoteRecordModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ToastUtil;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -113,11 +115,15 @@ public class BPVoteRecordFragment extends BaseFragment {
             public void onResponse(Call<ApiResult<MyVoteRecordModel>> call, Response<ApiResult<MyVoteRecordModel>> response) {
                 ApiResult<MyVoteRecordModel> body = response.body();
                 llLoadFailed.setVisibility(View.GONE);
-                if (body == null | body.getData() == null | body.getData().getList() == null | body.getData().getList().size() == 0) {
+                if (body==null) {
+                    return;
+                }
+                if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())&& body.getData() == null && body.getData().getList() == null ) {
+                    voteRecordAdapter.setNewData(body.getData().getList());
+                    voteRecordAdapter.notifyDataSetChanged();
+                }else{
                     addressRecordEmptyLL.setVisibility(View.VISIBLE);
                 }
-                voteRecordAdapter.setNewData(body.getData().getList());
-                voteRecordAdapter.notifyDataSetChanged();
 
 
             }

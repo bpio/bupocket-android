@@ -22,8 +22,7 @@ public class Constants {
     public static final Double NODE_REVOKE_FEE = 0.15;
     public static final Double NODE_CO_BUILD_FEE = 10.30;
     public static final Double NODE_MIN_FEE = 0.15;
-//    public static final Double CO_BUILD_FEE = 0.01;
-    public static final Double CO_BUILD_FEE = 0.1;
+    public static final Double CO_BUILD_FEE = 0.01;
 
     public static final double MIN_SEND_AMOUNT = 0.00000001;
     public static final double MAX_SEND_AMOUNT = 100000000;
@@ -35,7 +34,7 @@ public class Constants {
     public static final Integer APP_TYPE_CODE = 1;
     public static final Integer BU_DECIMAL = 8;
 
-    public static final Integer TX_REQUEST_TIMEOUT_TIMES = 20;
+    public static final Integer TX_REQUEST_TIMEOUT_TIMES = 30;
 
     public static final int REQUEST_READ_STORAGE_PERMISSION = 100;
     public static final int REQUEST_IMAGE = 300;

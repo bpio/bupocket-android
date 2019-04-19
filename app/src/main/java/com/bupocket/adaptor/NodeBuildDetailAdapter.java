@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.bupocket.R;
 import com.bupocket.base.AbsViewHolderAdapter;
 import com.bupocket.base.BaseViewHolder;
+import com.bupocket.enums.BuildTypeEnum;
 import com.bupocket.model.NodeBuildDetailModel;
 import com.bupocket.model.NodeBuildSupportModel;
 import com.bupocket.utils.AddressUtil;
@@ -31,6 +32,15 @@ public class NodeBuildDetailAdapter extends AbsViewHolderAdapter<NodeBuildSuppor
         holder.setText(R.id.tvBuildSupportAmount,itemData.getAmount()+"BU");
         holder.setText(R.id.tvBuildSupportDate,itemData.getCreateTime());
         holder.setText(R.id.tvBuildDetailAddress, AddressUtil.anonymous(itemData.getInitiatorAddress()));
+
+
+        if (BuildTypeEnum.SUPPORT.getCode().equals(itemData.getType())) {
+            holder.setText(R.id.tvBuildType,context.getString(BuildTypeEnum.SUPPORT.getMsgRes()));
+        }else if (BuildTypeEnum.EXIT.getCode().equals(itemData.getType())){
+            holder.setText(R.id.tvBuildType,context.getString(BuildTypeEnum.EXIT.getMsgRes()));
+        }
+
+
 
     }
 }

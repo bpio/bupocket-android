@@ -255,7 +255,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         TextView mTransactionAmountTv = qmuiBottomSheet.findViewById(R.id.transactionAmountTv);
         mTransactionAmountTv.setText("0");
         TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
-        mTransactionDetailTv.setText("退出\"" + detailModel.getTitle() + "\"项目");
+        mTransactionDetailTv.setText(String.format(getString(R.string.build_exit_confirm_title), detailModel.getTitle()));
         TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
         mDestAddressTv.setText(detailModel.getContractAddress());
         TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
@@ -438,7 +438,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         TextView mTransactionAmountTv = qmuiBottomSheet.findViewById(R.id.transactionAmountTv);
         mTransactionAmountTv.setText(tvDialogTotalAmount.getText());
         TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
-        mTransactionDetailTv.setText("支持\"" + detailModel.getTitle() + "\"项目");
+        mTransactionDetailTv.setText(String.format(getString(R.string.build_support_confirm_title), detailModel.getTitle()));
         TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
 
         if (TextUtils.isEmpty(detailModel.getContractAddress())) {

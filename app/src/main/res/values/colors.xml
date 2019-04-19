@@ -98,6 +98,7 @@
     <color name="gray_tv_plan_more">#FF424141</color>
 
     <color name="gray_pop_line">#666281</color>
+    <color name="build_exit_color">#A1A7C7</color>
 
 
 </resources>

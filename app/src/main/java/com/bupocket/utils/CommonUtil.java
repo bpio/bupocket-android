@@ -824,16 +824,7 @@ public class CommonUtil {
             notice=errMsg;
         }
 
-        int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
-        new QMUIDialog.MessageDialogBuilder(mContext)
-                .setMessage(notice)
-                .addAction(R.string.i_knew_btn_txt, new QMUIDialogAction.ActionListener() {
-                    @Override
-                    public void onClick(QMUIDialog dialog, int index) {
-                        dialog.dismiss();
-                    }
-                })
-                .create(mCurrentDialogStyle).show();
+      showMessageDialog(mContext,notice);
 
     }
 

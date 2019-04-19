@@ -46,6 +46,20 @@
             android:textSize="12sp" />
 
         <TextView
+            android:id="@+id/tvBuildType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvBuildDetailAddress"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            tools:text="支持"
+            android:textColor="@color/send_confirm_info_color"
+            android:textSize="15sp" />
+
+        <TextView
             android:id="@+id/tvBuildSupportAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -51,7 +51,7 @@
             android:layout_height="45dp"
             android:layout_alignParentLeft="true"
             android:layout_weight="1"
-            android:background="@drawable/shape_corner_red2"
+            android:background="@drawable/shape_corner_build_exit"
             android:text="@string/build_exit"
             android:textColor="@color/app_color_white"
             android:textSize="18sp" />

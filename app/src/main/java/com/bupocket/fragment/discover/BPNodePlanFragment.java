@@ -32,7 +32,6 @@ import com.bupocket.common.Constants;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
-import com.bupocket.fragment.BPSendStatusFragment;
 import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
