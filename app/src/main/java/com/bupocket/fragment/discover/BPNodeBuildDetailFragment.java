@@ -315,7 +315,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     map.put("hash", hash);
                     map.put("initiatorAddress", getWalletAddress());
                     NodeBuildService nodeBuildService = RetrofitFactory.getInstance().getRetrofit().create(NodeBuildService.class);
-                    nodeBuildService.verifySupport(map).enqueue(new Callback<ApiResult>() {
+                    nodeBuildService.verifyExit(map).enqueue(new Callback<ApiResult>() {
                         @Override
                         public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
                             ApiResult body = response.body();
