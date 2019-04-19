@@ -29,7 +29,7 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
-import com.bupocket.wallet.enums.ExceptionEnum;
+import com.bupocket.enums.ExceptionEnum;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
@@ -257,7 +257,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         qmuiBottomSheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                qmuiBottomSheet.dismiss();
                 confirmExit();
             }
         });
@@ -271,6 +271,12 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     }
 
     private void confirmExit() {
+
+        final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord(getResources().getString(R.string.send_tx_verify))
+                .create();
+        txSendingTipDialog.show();
         final String amount = "0";
         final String inputStr = "{\"method\":\"revoke\"}";
 
@@ -283,10 +289,49 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
                     String hash = transBlob.getResult().getHash();
                     LogUtils.e(hash);
-                    submitTransactionBase(transBlob);
+
+                    if (TextUtils.isEmpty(hash)) {
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                CommonUtil.showMessageDialog(mContext, transBlob.getErrorDesc());
+                            }
+                        });
+                        txSendingTipDialog.dismiss();
+                        return;
+                    }
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put("nodeId", detailModel.getNodeId());
+                    map.put("hash", hash);
+                    map.put("initiatorAddress",getWalletAddress());
+                    NodeBuildService nodeBuildService = RetrofitFactory.getInstance().getRetrofit().create(NodeBuildService.class);
+                    nodeBuildService.verifySupport(map).enqueue(new Callback<ApiResult>() {
+                        @Override
+                        public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
+                            ApiResult body = response.body();
+                            txSendingTipDialog.dismiss();
+
+                            if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
+                                submitTransactionBase(transBlob);
+                            }else{
+                                CommonUtil.showMessageDialog(mContext,body.getMsg(),body.getErrCode());
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiResult> call, Throwable t) {
+                            txSendingTipDialog.dismiss();
+                        }
+                    });
+
+//                    submitTransactionBase(transBlob);
 
                 } catch (Exception e) {
                     e.printStackTrace();
+                    txSendingTipDialog.dismiss();
                 }
             }
         }).start();
@@ -445,7 +490,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-
                                 CommonUtil.showMessageDialog(mContext, transBlob.getErrorDesc());
                             }
                         });
@@ -467,7 +511,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                             if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
                                 submitTransactionBase(transBlob);
                             }else{
-
+                                CommonUtil.showMessageDialog(mContext,body.getMsg(),body.getErrCode());
                             }
                         }
 
@@ -480,6 +524,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
                 } catch (Exception e) {
                     e.printStackTrace();
+                    txSendingTipDialog.dismiss();
                 }
             }
         }).start();
