@@ -117,6 +117,7 @@
             android:singleLine="true"
             android:numeric="integer"
             android:inputType="number"
+            android:maxLength="9"
             android:background="@null"
             android:textSize="16sp"
             android:textColor="@color/search_token_asset_code_txt_color"

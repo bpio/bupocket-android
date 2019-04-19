@@ -545,6 +545,7 @@
     <string name="transaction_timeout_info">交易广播成功，交易最终状态请复制交易摘要到&lt;font color=\'#02CA71\'>http://explorer.bumo.io&lt;/font>查询</string>
     <string name="transaction_info">交易摘要</string>
     <string name="error_build_1028">copies is not available</string>
+    <string name="error_build_exit">抱歉，该共建项目已被认购完</string>
 
 
 </resources>

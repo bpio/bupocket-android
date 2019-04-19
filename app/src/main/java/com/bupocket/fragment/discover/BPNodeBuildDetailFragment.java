@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeBuildDetailAdapter;
@@ -23,6 +24,7 @@ import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.NodeBuildService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.http.api.dto.resp.GetTokensRespDto;
 import com.bupocket.model.NodeBuildDetailModel;
 import com.bupocket.model.NodeBuildSupportModel;
 import com.bupocket.utils.CommonUtil;
@@ -85,6 +87,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private NodeBuildDetailModel detailModel;
     private String nodeId;
     private View emptyLayout;
+    private GetTokensRespDto.TokenListBean tokenListBean;
 
     @Override
     protected View onCreateView() {
@@ -100,7 +103,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     }
 
     private void initData() {
-
+        GetTokensRespDto tokensCache = JSON.parseObject(spHelper.getSharedPreference(getWalletAddress() + "tokensInfoCache", "").toString(), GetTokensRespDto.class);
+        tokenListBean = tokensCache.getTokenList().get(0);
         if (nodeBuildDetailAdapter == null) {
             nodeBuildDetailAdapter = new NodeBuildDetailAdapter(getContext());
         }
@@ -233,6 +237,10 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 break;
             case R.id.btnBuildSupport:
                 if (detailModel != null) {
+                    if (detailModel.getLeftCopies() == 0) {
+                        CommonUtil.showMessageDialog(mContext, R.string.error_build_exit);
+                        return;
+                    }
                     ShowSupport();
                 }
 
@@ -305,7 +313,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     HashMap<String, Object> map = new HashMap<>();
                     map.put("nodeId", detailModel.getNodeId());
                     map.put("hash", hash);
-                    map.put("initiatorAddress",getWalletAddress());
+                    map.put("initiatorAddress", getWalletAddress());
                     NodeBuildService nodeBuildService = RetrofitFactory.getInstance().getRetrofit().create(NodeBuildService.class);
                     nodeBuildService.verifySupport(map).enqueue(new Callback<ApiResult>() {
                         @Override
@@ -315,8 +323,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
                             if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
                                 submitTransactionBase(transBlob);
-                            }else{
-                                CommonUtil.showMessageDialog(mContext,body.getMsg(),body.getErrCode());
+                            } else {
+                                CommonUtil.showMessageDialog(mContext, body.getMsg(), body.getErrCode());
 
                             }
                         }
@@ -365,7 +373,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     addNum = Integer.parseInt(addStr) + 1;
                 }
 
-                setNumStatus(addNum);
+                setBtnStatus(addNum);
             }
         });
         addBtn.setSelected(true);
@@ -379,7 +387,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     return;
                 }
                 int numSub = Integer.parseInt(subStr) - 1;
-                setNumStatus(numSub);
+                setBtnStatus(numSub);
             }
         });
 
@@ -396,7 +404,10 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-
+                String supportAmount = s.toString();
+                if (!TextUtils.isEmpty(supportAmount)) {
+                    setNumStatus(Integer.parseInt(supportAmount));
+                }
             }
         });
 
@@ -501,7 +512,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     map.put("nodeId", detailModel.getNodeId());
                     map.put("hash", hash);
                     map.put("copies", num + "");
-                    map.put("initiatorAddress",getWalletAddress());
+                    map.put("initiatorAddress", getWalletAddress());
                     NodeBuildService nodeBuildService = RetrofitFactory.getInstance().getRetrofit().create(NodeBuildService.class);
                     nodeBuildService.verifySupport(map).enqueue(new Callback<ApiResult>() {
                         @Override
@@ -510,8 +521,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                             txSendingTipDialog.dismiss();
                             if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
                                 submitTransactionBase(transBlob);
-                            }else{
-                                CommonUtil.showMessageDialog(mContext,body.getMsg(),body.getErrCode());
+                            } else {
+                                CommonUtil.showMessageDialog(mContext, body.getMsg(), body.getErrCode());
                             }
                         }
 
@@ -532,18 +543,34 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
     }
 
-    private void setNumStatus(int num) {
+    private void setBtnStatus(int num) {
+        setNumStatus(num);
+        numSupport.setText(num + "");
+
+    }
+
+    private int setNumStatus(int num) {
 
         int leftCopies = detailModel.getLeftCopies();
+        double myAmount = Double.parseDouble(tokenListBean.getAmount());
+        int perAmount = Integer.parseInt(tvDialogAmount.getText().toString());
+        int myLeftCopies = (int) (myAmount / perAmount);
 
-        if (num < 1 || num > leftCopies) {
-            return;
+        if (myLeftCopies < leftCopies) {
+            leftCopies = myLeftCopies;
         }
-
-        if (num == 1) {
+        if (num < 1) {
+            subBtn.setSelected(false);
+            num = 1;
+            numSupport.setText(num + "");
+        } else if (num == 1) {
             subBtn.setSelected(false);
         } else if (num == leftCopies) {
             addBtn.setSelected(false);
+        } else if (num > leftCopies) {
+            addBtn.setSelected(false);
+            num = leftCopies;
+            numSupport.setText(num + "");
         } else {
             if (!subBtn.isSelected()) {
                 subBtn.setSelected(true);
@@ -555,11 +582,22 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         }
 
 
-        numSupport.setText(num + "");
+//        if (num < 1 || num > leftCopies) {
+//            numSupport.setText(num + "");
+//        }
 
-//        setTotalAmount();
-        int amount = num * Integer.parseInt(tvDialogAmount.getText().toString());
-        tvDialogTotalAmount.setText(amount + "");
+//        if (num < 1 || num > leftCopies) {
+//            return false;
+//        }
+
+
+//        numSupport.setText(num + "");
+
+
+        int tvAmount = num * perAmount;
+        tvDialogTotalAmount.setText(tvAmount + "");
+
+        return num;
     }
 
 }
