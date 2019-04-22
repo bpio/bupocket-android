@@ -9,9 +9,17 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.enums.ExceptionEnum;
+import com.bupocket.http.api.AdvertisingService;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.model.AdModel;
+import com.bupocket.model.AdvertisingModel;
 import com.bupocket.utils.AddressUtil;
+import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
@@ -19,6 +27,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BPTransactionTimeoutFragment extends BaseFragment {
 
@@ -32,6 +43,8 @@ public class BPTransactionTimeoutFragment extends BaseFragment {
     TextView tvTimeoutHash;
     @BindView(R.id.tvTransactionInfo)
     TextView tvTransactionInfo;
+    @BindView(R.id.ivTimeout)
+    ImageView ivTimeout;
 
 
     private String txHash;
@@ -41,13 +54,19 @@ public class BPTransactionTimeoutFragment extends BaseFragment {
         View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_transaction_timeout, null);
         unbinder = ButterKnife.bind(this, view);
         init();
+
+        initData();
         return view;
+    }
+
+    private void initData() {
+        getAdInfo();
     }
 
     private void init() {
 
         txHash = getArguments().getString("txHash", "");
-        tvTimeoutHash.setText(AddressUtil.anonymous(txHash,8));
+        tvTimeoutHash.setText(AddressUtil.anonymous(txHash, 8));
         tvTransactionInfo.setText(Html.fromHtml(getString(R.string.transaction_timeout_info)));
         initTopBar();
     }
@@ -82,6 +101,40 @@ public class BPTransactionTimeoutFragment extends BaseFragment {
                 copySuccessDiglog.dismiss();
             }
         }, 1000);
+    }
+
+
+    private void getAdInfo() {
+
+        AdvertisingService adService = RetrofitFactory.getInstance().getRetrofit().create(AdvertisingService.class);
+        adService.getAdInfo().enqueue(new Callback<ApiResult<AdvertisingModel>>() {
+            @Override
+            public void onResponse(Call<ApiResult<AdvertisingModel>> call, Response<ApiResult<AdvertisingModel>> response) {
+                ApiResult<AdvertisingModel> body = response.body();
+                if (body == null) {
+                    return;
+                }
+                if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
+                    AdModel ad = body.getData().getAd();
+
+                    if (ad == null) {
+                        return;
+                    }
+
+                    Glide.with(mContext)
+                            .load(ad.getImageUrl())
+                            .into(ivTimeout);
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<AdvertisingModel>> call, Throwable t) {
+
+                LogUtils.e("" + t.getMessage());
+            }
+        });
     }
 
 }

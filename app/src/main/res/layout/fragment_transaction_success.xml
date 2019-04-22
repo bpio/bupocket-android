@@ -96,6 +96,7 @@
         android:text="@string/transaction_success_hint" />
 
     <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+        android:id="@+id/ivTransSuccess"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal"

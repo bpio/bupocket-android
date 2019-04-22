@@ -5,19 +5,33 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.fragment.home.HomeFragment;
+import com.bupocket.http.api.AdvertisingService;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.model.AdModel;
+import com.bupocket.model.AdvertisingModel;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.TimeUtil;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BPSendStatusFragment extends BaseFragment {
 
@@ -50,6 +64,9 @@ public class BPSendStatusFragment extends BaseFragment {
 
     @BindView(R.id.llStatusFailed)
     LinearLayout llStatusFailed;
+
+    @BindView(R.id.ivTransSuccess)
+    ImageView ivTransSuccess;
 
 
     protected View onCreateView() {
@@ -103,6 +120,42 @@ public class BPSendStatusFragment extends BaseFragment {
         sendNoteTv.setText(note);
         mSendTimeTv.setText(TimeUtil.timeStamp2Date(sendTime.substring(0, 10), "yyyy.MM.dd HH:mm:ss"));
 
+
+
+        getAdInfo();
+    }
+
+    private void getAdInfo() {
+
+        AdvertisingService adService = RetrofitFactory.getInstance().getRetrofit().create(AdvertisingService.class);
+        adService.getAdInfo().enqueue(new Callback<ApiResult<AdvertisingModel>>() {
+            @Override
+            public void onResponse(Call<ApiResult<AdvertisingModel>> call, Response<ApiResult<AdvertisingModel>> response) {
+                ApiResult<AdvertisingModel> body = response.body();
+                if (body==null) {
+                    return;
+                }
+                if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
+                    AdModel ad = body.getData().getAd();
+
+                    if (ad==null) {
+                        return;
+                    }
+
+                    Glide.with(mContext)
+                            .load(ad.getImageUrl())
+                            .into(ivTransSuccess);
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<AdvertisingModel>> call, Throwable t) {
+
+                LogUtils.e(""+t.getMessage());
+            }
+        });
     }
 
     private void initTopBar() {
