@@ -108,7 +108,7 @@ public class BPSendStatusFragment extends BaseFragment {
         } else {
             llStatusFailed.setVisibility(View.VISIBLE);
             txStatusIconDrawable = ContextCompat.getDrawable(getContext(), R.mipmap.icon_send_fail);
-            txStatusStr = getResources().getString(R.string.tx_status_fail_txt2);
+            txStatusStr = getResources().getString(R.string.tx_status_fail_txt3)+"\n"+getResources().getString(R.string.tx_status_fail_txt2);;
             mSendTokenStatusIcon.setImageDrawable(txStatusIconDrawable);
             mSendTokenStatusTv.setText(txStatusStr + txStatus);
 

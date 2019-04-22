@@ -64,7 +64,8 @@
     <string name="tx_status_fail_txt">失败</string>
     <string name="tx_status_success_txt1">转账成功</string>
     <string name="tx_status_fail_txt1">转账失败</string>
-    <string name="tx_status_fail_txt2">合约调用失败&#010;错误码:</string>
+    <string name="tx_status_fail_txt2">&#010;错误码:</string>
+    <string name="tx_status_fail_txt3">合约调用失败</string>
     <string name="tx_timeout_txt1">请求超时</string>
 
     <string name="password_comfirm_dialog_title">密码确认</string>
@@ -535,6 +536,12 @@
     <string name="error_100055">the contact is already existed</string>
     <string name="error_build_success_01">抱歉，该共建项目已被认购完</string>
     <string name="error_build_success_02">抱歉，该共建项目已完成，目前您不能退出</string>
+    <string name="error_1031">当前项目已获得目标共建总金额，  您可选择其他项目进行支持</string>
+    <string name="error_1032">剩余份数不足，建议您调整支持份数</string>
+    <string name="error_1033">您还未支持过此项目，暂不能撤回</string>
+    <string name="error_1034">节点共建项目已完成，暂不支持退出</string>
+    <string name="error_1035">钱包地址与共建节点发起者地址不一致</string>
+
 
 
     <string name="contract_address_empty">账户地址为空</string>
@@ -556,6 +563,7 @@
     <string name="build_left_copies">剩余&lt;font color=\'#151515\'> %1$s &lt;/font>份</string>
     <string name="build_support_copies">已获得&lt;font color=\'#333333\'> %1$s &lt;/font>份</string>
     <string name="build_bu">BU</string>
+
 
 
 </resources>
