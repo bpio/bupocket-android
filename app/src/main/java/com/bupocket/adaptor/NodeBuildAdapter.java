@@ -2,6 +2,8 @@ package com.bupocket.adaptor;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -37,14 +39,17 @@ public class NodeBuildAdapter extends AbsViewHolderAdapter<NodeBuildModel> {
 
         ProgressBar pbBuild = holder.getView(R.id.pbBuild);
         pbBuild.setMax(itemData.getTotalCopies());
-        pbBuild.setProgress(itemData.getTotalCopies()-itemData.getLeftCopies());
+        int supportCopies = itemData.getTotalCopies() - itemData.getLeftCopies();
+        pbBuild.setProgress(supportCopies);
         String amount = itemData.getPerAmount();
         if (!TextUtils.isEmpty(amount)) {
             holder.setText(R.id.tvBuildNum,amount+" BU/份");
         }
 
-        holder.setText(R.id.tvRemainNum,itemData.getTotalAmount()+"BU");
-        holder.setText(R.id.tvRemainCopy,itemData.getLeftCopies()+"");
+        TextView tvRemainNum = holder.getView(R.id.tvRemainNum);
+        TextView tvRemainCopy  = holder.getView(R.id.tvRemainCopy);
+        tvRemainNum.setText(Html.fromHtml(String.format(context.getString(R.string.build_support_copies), supportCopies + "")));
+        tvRemainCopy.setText(Html.fromHtml(String.format(context.getString(R.string.build_left_copies),itemData.getLeftCopies()+"")));
 
 
 

@@ -75,8 +75,7 @@
             android:id="@+id/tvRemainNumHint"
             style="@style/tv_node_build_gray_style"
             android:layout_below="@+id/pbBuild"
-            android:layout_marginTop="15dp"
-            android:text="@string/build_target_num" />
+            android:layout_marginTop="15dp" />
 
         <TextView
             android:id="@+id/tvRemainNum"
@@ -85,16 +84,14 @@
             android:layout_marginLeft="2dp"
             android:layout_marginTop="15dp"
             android:layout_toRightOf="@+id/tvRemainNumHint"
-            tools:text="5,000,000 BU"
-            android:textColor="@color/app_txt_color_black" />
+            tools:text="5,000,000 BU" />
 
         <TextView
             android:id="@+id/tvRemainCopyHint"
             style="@style/tv_node_build_gray_style"
             android:layout_below="@+id/pbBuild"
             android:layout_marginTop="15dp"
-            android:layout_toLeftOf="@+id/tvRemainCopy"
-            android:text="@string/build_remain_copy" />
+            android:layout_toLeftOf="@+id/tvRemainCopy" />
 
         <TextView
             android:id="@+id/tvRemainCopy"
@@ -103,8 +100,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginLeft="7dp"
             android:layout_marginTop="15dp"
-            tools:text="30份"
-            android:textColor="@color/app_txt_color_black" />
+            tools:text="30份" />
 
 
         <LinearLayout

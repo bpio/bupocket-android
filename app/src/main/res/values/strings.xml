@@ -473,9 +473,11 @@
 
     <string name="build_exit">撤回支持</string>
     <string name="build_support">我要支持</string>
-    <string name="build_risk_info">1、节点共建不是商品交易。支持者根据自己的判断选择、支持众筹项目，与发起人共同实现梦想并获得发起人承诺的回报，众筹存在一定风险。
-\n\n2、众筹平台只提供平台网络空间、技术服务和支持等中介服务。作为中间平台，并不是发起人或支持者中的任何一方，众筹仅存在于发起人和支持者之间，使用平台产生的法律后果由发起人与支持者自行承担。
-\n\n3、如果发生发起人无法发放回报、延迟发放回报、不提供回报后续服务等情形，您需要直接和发起人协商解决，平台对此不承担任何责任。</string>
+    <string name="build_risk_info">
+           1. 节点共建不是商品交易。支持者根据节点共建发起者的奖励分享比例等其他因素，自主选择支持何种共建项目并获得相应的回报奖励；
+    \n\n2. BUMO只提供网络空间、技术服务等中间服务，与项目发起者和支持者无任何利益关联。节点共建项目仅存在于发起者和支持者之间，若因节点共建产生的任何法律纠纷将由项目发起者和支持者自行承担，平台对此不承担任何责任；
+    \n\n3. 节点共建项目未完成前，节点共建支持者可手动撤回全部支持金额；若项目发起者在项目未完成前主动退出，节点共建支持者也可手动撤回全部支持金额。
+    </string>
 
     <string name="build_support_record">节点共建记录</string>
     <string name="build_rist_info_record">风险说明</string>
@@ -484,9 +486,9 @@
     <string name="build_purchase_amount">起购金额（BU/份）</string>
     <string name="build_purchase_amount_hint">起购金额</string>
     <string name="build_support_amount_hint">支持份数</string>
-    <string name="build_origin_purchase_amount">发起人支持总额(BU)</string>
-    <string name="build_target_amount">目标总额（BU)</string>
-    <string name="build_support_amount">已支持总额（BU)</string>
+    <string name="build_origin_purchase_amount">保证金</string>
+    <string name="build_target_amount">目标共建总额</string>
+    <string name="build_support_amount">已获得支持总额</string>
     <string name="build_sharing_ratio">奖励分享比例</string>
     <string name="build_remain_copy">剩余份数</string>
     <string name="build_target_num">目标数量</string>
@@ -548,9 +550,12 @@
     <string name="error_build_1028">copies is not available</string>
     <string name="error_build_exit">抱歉，该共建项目已被认购完</string>
     <string name="build_exit_confirm_title">退出{&quot;%1$s &quot;}项目</string>
-    <string name="build_support_confirm_title">支持{ &quot;"%1$s &quot;}项目</string>
+    <string name="build_support_confirm_title">支持{ &quot;%1$s &quot;}项目</string>
     <string name="build_type_support">支持</string>
     <string name="build_type_exit">撤销</string>
+    <string name="build_left_copies">剩余&lt;font color=\'#151515\'> %1$s &lt;/font>份</string>
+    <string name="build_support_copies">已获得&lt;font color=\'#333333\'> %1$s &lt;/font>份</string>
+    <string name="build_bu">BU</string>
 
 
 </resources>

@@ -58,12 +58,6 @@
             android:layout_marginTop="3dp"
             android:text="@string/build_purchase_amount" />
 
-        <TextView
-            android:id="@+id/tvOriginPurchaseAmountHint"
-            style="@style/tv_node_build_black_style"
-            android:layout_below="@+id/tvPurchaseAmountHint"
-            android:layout_marginTop="18dp"
-            android:text="@string/build_origin_purchase_amount" />
 
 
         <ProgressBar
@@ -71,7 +65,7 @@
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="3dp"
-            android:layout_below="@+id/tvOriginPurchaseAmountHint"
+            android:layout_below="@+id/tvPurchaseAmountHint"
             android:layout_marginTop="16dp"
             tools:max="100"
             tools:progress="60"
@@ -80,7 +74,7 @@
         <TextView
             android:id="@+id/tvBuildDetailLeftCopies"
             style="@style/tv_node_build_gray_style"
-            android:layout_below="@+id/tvOriginPurchaseAmountHint"
+            android:layout_below="@+id/tvPurchaseAmountHint"
             android:layout_marginTop="27dp"
             tools:text="剩余37份" />
 
@@ -106,6 +100,13 @@
             android:layout_below="@+id/tvTargetAmountHint"
             android:layout_marginTop="15dp"
             android:text="@string/build_support_amount" />
+        <TextView
+            android:id="@+id/tvOriginPurchaseAmountHint"
+            style="@style/tv_node_build_black_style"
+            android:layout_below="@+id/tvSupportAmountHint"
+            android:layout_marginTop="18dp"
+            android:text="@string/build_origin_purchase_amount" />
+
 
 
         <RelativeLayout
@@ -131,18 +132,12 @@
                 android:layout_marginTop="3dp"
                 android:text="@string/build_sharing_ratio" />
 
-            <TextView
-                android:id="@+id/tvBuildDetailOriginAmount"
-                style="@style/tv_node_build_black_style2"
-                android:layout_below="@+id/tvSharingRatioHint"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="18dp"
-                tools:text="2000" />
+
 
             <TextView
                 android:id="@+id/tvBuildDetailSupportNum"
                 style="@style/tv_node_build_gray_style"
-                android:layout_below="@+id/tvBuildDetailOriginAmount"
+                android:layout_below="@+id/tvSharingRatioHint"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="27dp"
                 tools:text="560支持" />
@@ -163,6 +158,14 @@
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="15dp"
                 android:text="5000" />
+
+            <TextView
+                android:id="@+id/tvBuildDetailOriginAmount"
+                style="@style/tv_node_build_black_style2"
+                android:layout_below="@+id/tvBuildDetailSupportAmount"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="18dp"
+                tools:text="2000" />
 
         </RelativeLayout>
 

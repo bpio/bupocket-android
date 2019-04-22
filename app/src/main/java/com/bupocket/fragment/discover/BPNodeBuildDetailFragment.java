@@ -1,6 +1,7 @@
 package com.bupocket.fragment.discover;
 
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -159,14 +160,19 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     }
                     tvName.setText(detailModel.getTitle());
                     tvBuildDetailAmount.setText(detailModel.getPerAmount());
-                    tvTotalAmount.setText(detailModel.getTotalAmount());
+
                     pbDetail.setMax(detailModel.getTotalCopies());
-                    pbDetail.setProgress(detailModel.getTotalCopies() - detailModel.getLeftCopies());
-                    tvBuildDetailLeftCopies.setText("剩余" + detailModel.getLeftCopies() + "份");
+                    int supportCopies = detailModel.getTotalCopies() - detailModel.getLeftCopies();
+                    pbDetail.setProgress(supportCopies);
+
                     tvBuildDetailSharingRatio.setText(detailModel.getRewardRate() + "%");
-                    tvBuildDetailOriginAmount.setText(detailModel.getInitiatorAmount());
-                    tvBuildDetailSupportNum.setText(detailModel.getSupportPerson() + "人支持");
-                    tvBuildDetailSupportAmount.setText(detailModel.getSupportAmount());
+
+                    tvTotalAmount.setText(detailModel.getTotalAmount()+getString(R.string.build_bu));
+                    tvBuildDetailOriginAmount.setText(detailModel.getInitiatorAmount()+getString(R.string.build_bu));
+                    tvBuildDetailSupportAmount.setText(detailModel.getSupportAmount()+getString(R.string.build_bu));
+                    tvBuildDetailLeftCopies.setText(Html.fromHtml(String.format(getString(R.string.build_support_copies),supportCopies+"")));
+                    tvBuildDetailSupportNum.setText(Html.fromHtml(String.format(getString(R.string.build_left_copies),detailModel.getLeftCopies()+"")));
+
 
                     if (CoBuildDetailStatusEnum.CO_BUILD_RUNING.getCode().equals(detailModel.getStatus())) {
                         tvStutas.setSelected(false);

@@ -1,15 +1,12 @@
 package com.bupocket.fragment;
 
-import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -541,7 +538,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                         showTransactionConfirmView(respDto.getData());
                                         break;
                                     case ERROR_VOTE_CLOSE:
-                                    case ERROR_1003:
+                                    case ERROR_NODE_1003:
                                     case ERROR_ADDRESS_ALREADY_EXISTED:
                                         CommonUtil.showMessageDialog(getContext(), CommonUtil.byCodeToMsg(mContext, respDto.getErrCode()));
                                         break;
