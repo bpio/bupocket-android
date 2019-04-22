@@ -34,6 +34,7 @@ import com.bupocket.enums.MnemonicWordBackupStateEnum;
 import com.bupocket.enums.ScanTransactionTypeEnum;
 import com.bupocket.enums.TokenActionTypeEnum;
 import com.bupocket.fragment.components.AssetsListView;
+import com.bupocket.http.api.NodeBuildService;
 import com.bupocket.http.api.NodePlanManagementSystemService;
 import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
@@ -50,6 +51,7 @@ import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
+import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -668,7 +670,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         qmuiBottomSheet.show();
     }
 
-    private void confirmTransaction(GetQRContentDto contentDto) {
+    private void confirmTransaction(final GetQRContentDto contentDto) {
 
 
 
@@ -687,10 +689,76 @@ public class BPAssetsHomeFragment extends BaseFragment {
                 .setTipWord(getResources().getString(R.string.send_tx_verify))
                 .create();
         txSendingTipDialog.show();
+
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
+
+
+                    if (ScanTransactionTypeEnum.CO_BUILD_SUPPORT.getCode().equals(transactionType)){
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+//                                   String script1="{\"method\":\"subscribe\",\"params\":{\"shares\":\"1\"} }";
+                                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, script, getWalletAddress(), String.valueOf(Constants.NODE_MIN_FEE), contractAddress);
+
+                                    String hash = transBlob.getResult().getHash();
+                                    if (TextUtils.isEmpty(hash)) {
+
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                CommonUtil.showMessageDialog(mContext, transBlob.getErrorDesc());
+                                            }
+                                        });
+                                        txSendingTipDialog.dismiss();
+                                        return;
+                                    }
+
+                                    org.json.JSONObject obj = new org.json.JSONObject(script);
+                                    org.json.JSONObject params = obj.getJSONObject("params");
+                                    String copies = params.getString("shares");
+
+                                    HashMap<String, Object> map = new HashMap<>();
+                                    map.put("nodeId", contentDto.getNodeId());
+                                    map.put("hash", hash);
+                                    map.put("copies", copies);
+                                    map.put("initiatorAddress", getWalletAddress());
+                                    NodeBuildService nodeBuildService = RetrofitFactory.getInstance().getRetrofit().create(NodeBuildService.class);
+                                    nodeBuildService.verifySupport(map).enqueue(new Callback<ApiResult>() {
+                                        @Override
+                                        public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
+                                            ApiResult body = response.body();
+                                            txSendingTipDialog.dismiss();
+                                            if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
+                                                submitTransactionBase(transBlob);
+                                            } else {
+                                                CommonUtil.showMessageDialog(mContext, body.getMsg(), body.getErrCode());
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<ApiResult> call, Throwable t) {
+                                            txSendingTipDialog.dismiss();
+                                        }
+                                    });
+
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    txSendingTipDialog.dismiss();
+                                }
+                            }
+                        }).start();
+
+
+                        return;
+                    }
+
+
                     final TransactionBuildBlobResponse buildBlobResponse;
                     if (ScanTransactionTypeEnum.APPLY_CO_BUILD.getCode().equals(transactionType)) {
                         // handle script

@@ -42,6 +42,7 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.IllegalFormatCodePointException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -174,6 +175,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     tvBuildDetailSupportNum.setText(Html.fromHtml(String.format(getString(R.string.build_left_copies),detailModel.getLeftCopies()+"")));
 
 
+
                     if (CoBuildDetailStatusEnum.CO_BUILD_RUNING.getCode().equals(detailModel.getStatus())) {
                         tvStutas.setSelected(false);
                         tvStutas.setText(CoBuildDetailStatusEnum.CO_BUILD_RUNING.getMsg());
@@ -187,11 +189,18 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                         }
                     }
 
-                    if (getWalletAddress().equals(detailModel.getOriginatorAddress())) {
-                        llBtnBuild.setVisibility(View.GONE);
-                    } else {
+                    if (CoBuildDetailStatusEnum.CO_BUILD_CALL_BACK.getCode().equals(detailModel.getStatus())){
                         llBtnBuild.setVisibility(View.VISIBLE);
+                        btnBuildSupport.setVisibility(View.GONE);
+                    }else{
+                        if (getWalletAddress().equals(detailModel.getOriginatorAddress())) {
+                            llBtnBuild.setVisibility(View.GONE);
+                        } else {
+                            llBtnBuild.setVisibility(View.VISIBLE);
+                        }
                     }
+
+
 
 
                     ArrayList<NodeBuildSupportModel> nodelist = body.getData().getSupportList();

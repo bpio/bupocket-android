@@ -14,6 +14,10 @@ import com.bupocket.R;
 import com.bupocket.activity.BumoNewsActivity;
 import com.bupocket.adaptor.DisBannerAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.http.api.DiscoverService;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.model.SlideModel;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -25,6 +29,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BPDiscoverHomeFragment extends BaseFragment {
     @BindView(R.id.cardPackageRl)
@@ -40,7 +47,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
     @BindView(R.id.vpDisBanner)
     ViewPager vpDisBanner;
-    private ArrayList<ImageView> banListData;
+    private ArrayList<SlideModel.ImageInfo> banListData;
     private DisBannerAdapter disBannerAdapter;
     private long PAGER_TIME = 3 * 1000;
     private boolean isStop;
@@ -70,18 +77,33 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
     private void initData() {
         banListData = new ArrayList<>();
-        ImageView iv;
-        for (int i = 0; i < 4; i++) {
-            iv = new ImageView(getContext());
-            iv.setBackgroundResource(R.mipmap.upgrade_dialog_bg);
-            iv.setId(i);
-//            iv.setOnClickListener(new PageImageOnClick());
-            iv.setOnTouchListener(new PageImageOnTouch());
-            banListData.add(iv);
-        }
-
         disBannerAdapter = new DisBannerAdapter(banListData, vpDisBanner);
         vpDisBanner.setAdapter(disBannerAdapter);
+
+        DiscoverService discoverService = RetrofitFactory.getInstance().getRetrofit().create(DiscoverService.class);
+        discoverService.slideShow().enqueue(new Callback<ApiResult<SlideModel>>() {
+            @Override
+            public void onResponse(Call<ApiResult<SlideModel>> call, Response<ApiResult<SlideModel>> response) {
+                ApiResult<SlideModel> body = response.body();
+                if (body==null) {
+                    return;
+                }
+
+                SlideModel imageList = body.getData();
+                if (imageList!=null) {
+                    disBannerAdapter.setData(imageList.getSlideshow());
+                    disBannerAdapter.notifyDataSetChanged();
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<SlideModel>> call, Throwable t) {
+
+            }
+        });
+
 
     }
 

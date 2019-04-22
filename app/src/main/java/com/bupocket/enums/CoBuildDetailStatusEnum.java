@@ -5,7 +5,8 @@ public enum CoBuildDetailStatusEnum {
     CO_BUILD_INIT("1", "初始化"),
     CO_BUILD_RUNING("2","进行中"),
     CO_BUILD_SUCCESS("3","已完成"),
-    CO_BUILD_EXIT("4","已退出");
+    CO_BUILD_EXIT("4","已退出"),
+    CO_BUILD_CALL_BACK("43","赎回全部金额");
 
 
     private String code;

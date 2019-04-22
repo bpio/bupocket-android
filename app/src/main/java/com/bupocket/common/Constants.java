@@ -41,8 +41,11 @@ public class Constants {
 
     public static final String CONTRACT_ADDRESS = "buQqzdS9YSnokDjvzg4YaNatcFQfkgXqk6ss";
 
-    public static final String QR_LOGIN_PREFIX = "bumo://login/";
-    public static final String QR_NODE_PLAN_PREFIX = "bumo://dpos/";
+    public static final String QR_LOGIN_PREFIX = "http://qr.bumocdn.com/xDnAs_login/";
+    public static final String QR_NODE_PLAN_PREFIX = "http://qr.bumocdn.com/xDnAs_dpos/";
+
+
+
 
 
 

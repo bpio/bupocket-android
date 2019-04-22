@@ -20,6 +20,15 @@ public class GetQRContentDto {
     private String amount;
     private String script;
     private String qrRemark;
+    private String nodeId;
+
+    public String getNodeId() {
+        return nodeId;
+    }
+
+    public void setNodeId(String nodeId) {
+        this.nodeId = nodeId;
+    }
 
     public static GetQRContentDto objectFromData(String str) {
 
