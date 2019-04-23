@@ -193,6 +193,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     isExit = CoBuildDetailStatusEnum.CO_BUILD_CALL_BACK.getCode().equals(detailModel.getStatus());
                     if (isExit){
                         llBtnBuild.setVisibility(View.VISIBLE);
+                        btnBuildExit.setText(getString(R.string.build_exit_all));
                         btnBuildSupport.setVisibility(View.GONE);
                     }else{
                         if (getWalletAddress().equals(detailModel.getOriginatorAddress())) {
@@ -527,9 +528,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         input.put("params", params.toJSONString());
 
         final String inputStr = "{\"method\":\"subscribe\",\"params\":" + params.toJSONString() + " }";
-//        final String inputStr="{\"method\":\"subscribe\",\"params\":{\"shares\":1}";
         final String contractAddress = detailModel.getContractAddress();
-//        contractAddress.replace("\r\n","");
 
         new Thread(new Runnable() {
             @Override

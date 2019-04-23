@@ -540,6 +540,6 @@
     <string name="confirm_build_exit">确认撤回全部支持金额么？</string>
 
     <string name="bu_share">BU/份</string>
-
+    <string name="build_exit_all">我要赎回全部支持金额</string>
 
 </resources>
