@@ -489,6 +489,8 @@ public class BPNodePlanFragment extends BaseFragment {
                     superNodeAdapter.notifyDataSetChanged();
 
 
+                }else{
+                    setEmpty(true);
                 }
 
             }
@@ -523,6 +525,7 @@ public class BPNodePlanFragment extends BaseFragment {
     private void initUI() {
         initTopBar();
         initListView();
+        setEmpty(true);
     }
 
     private void initListView() {

@@ -30,8 +30,9 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/vpDisBanner"
             android:layout_width="match_parent"
-            android:layout_height="144dp"
+            android:layout_height="190dp"
             android:layout_marginTop="10dp"
+            android:background="@mipmap/ic_banner_empty"
             />
 
         <!--<LinearLayout-->
