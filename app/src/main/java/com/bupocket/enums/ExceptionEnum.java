@@ -10,6 +10,7 @@ public enum ExceptionEnum {
     ERROR_NODE_1003("1003","test",R.string.error_1003),
     ERROR_NODE_1009("1009","",R.string.error_1009),
     ERROR_TRANSACTION_OTHER_1011( "1011","",R.string.error_1011),
+    ERROR_ADDRESS_ALREADY_EXISTED("100055","",R.string.error_100055),
 
     ERROR_BUILD_1028("1028","copies is not available",R.string.error_build_1028),
     ERROR_BUILD_1031("1031","",R.string.error_1031),

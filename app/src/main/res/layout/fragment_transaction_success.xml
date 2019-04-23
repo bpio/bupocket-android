@@ -98,13 +98,11 @@
     <com.qmuiteam.qmui.widget.QMUIRadiusImageView
         android:id="@+id/ivTransSuccess"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="13dp"
-        android:layout_marginRight="13dp"
         android:layout_marginTop="20dp"
         app:qmui_corner_radius="5dp"
-        android:background="@mipmap/ic_me_header_bg"
+        android:background="@mipmap/ic_ad_empty"
 
         />
 
