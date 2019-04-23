@@ -426,7 +426,7 @@
 
     <string name="vote_txt">Vote</string>
     <string name="withdraw_vote_txt">Cancel</string>
-    <string name="amount_txt">Number</string>
+    <string name="amount_txt">Number(BU)</string>
     <string name="status_txt">Status</string>
     <string name="time_txt">Time</string>
 
@@ -526,4 +526,9 @@
     <string name="reward_sharing_ratio">Award ratio</string>
 
     <string name="build_exit_all">Withdraw All</string>
+
+
+    <string name="transaction_costs_txt">Transaction fees(BU)</string>
+    <string name="transaction_originator_txt">Initiator</string>
+    <string name="opposite_account_txt">The receiving account</string>
 </resources>

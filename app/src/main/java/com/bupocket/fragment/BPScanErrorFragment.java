@@ -53,7 +53,6 @@ public class BPScanErrorFragment extends BaseFragment {
 
     private void initUI() {
         if(!ExceptionEnum.SUCCESS.equals(errorCode)){
-//            mErrorTypeTv.setText(getResources().getString(R.string.request_expired_txt));
             mErrorTypeTv.setText(errorMessage);
             mErrorMessageTv.setText(getResources().getString(R.string.refresh_qr_tips_txt));
         }

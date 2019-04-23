@@ -126,7 +126,7 @@ public class BPIssueTokenStatusFragment extends BaseFragment {
             }
             String txHash = bundle.getString("txHash");
             String txFee = bundle.getString("txFee");
-            mTxFeeTv.setText(CommonUtil.addSuffix(txFee,"BU"));
+            mTxFeeTv.setText(txFee);
             mTxHashTv.setText(txHash);
             mIssueAddressTv.setText(issueAddress);
             issueData.setFee(txFee);
@@ -156,7 +156,7 @@ public class BPIssueTokenStatusFragment extends BaseFragment {
             String txHash = bundle.getString("txHash");
             String txFee = bundle.getString("txFee");
             String errorMsg = bundle.getString("errorMsg");
-            mTxFeeTv.setText(CommonUtil.addSuffix(txFee,"BU"));
+            mTxFeeTv.setText(txFee);
             mTxHashTv.setText(txHash);
             mIssueAddressTv.setText(issueAddress);
             issueData.setFee(txFee);

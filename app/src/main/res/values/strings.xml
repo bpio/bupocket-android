@@ -88,7 +88,7 @@
     <string name="view_title_wallet_sendBU">转账</string>
     <string name="send_address_title">对方账户（BU地址）</string>
     <string name="send_note_title">备注</string>
-    <string name="send_fee_title">最多支付交易费用（BU）</string>
+    <string name="send_fee_title">最多支付交易费用(BU)</string>
     <string name="send_input_receiver_address_hint">请输入接收方地址</string>
     <string name="no_backup_tips_btn">请备份</string>
 
@@ -416,7 +416,7 @@
     <string name="vote_record_txt">投票记录</string>
     <string name="vote_txt">投</string>
     <string name="withdraw_vote_txt">撤</string>
-    <string name="amount_txt">数量</string>
+    <string name="amount_txt">数量(BU)</string>
     <string name="status_txt">状态</string>
     <string name="time_txt">时间</string>
     <string name="revoke_no_vote_error_message_txt">暂无可撤销的票数</string>
@@ -426,9 +426,8 @@
     <string name="opposite_account_txt">对方账户</string>
     <string name="details_txt">详情</string>
     <string name="transaction_originator_txt">发起方</string>
-    <string name="transaction_costs_txt">交易费用</string>
+    <string name="transaction_costs_txt">交易费用(BU)</string>
     <string name="parameter_txt">参数</string>
-    <string name="request_expired_txt">请求已过期</string>
     <string name="refresh_qr_tips_txt">请刷新二维码，再进行扫码</string>
 
     <string name="scan_qr_login_management_system_not_bound_txt">该钱包账户未在该平台绑定</string>
@@ -515,7 +514,7 @@
     <string name="error_1033">您还未支持过此项目，暂不能撤回</string>
     <string name="error_1034">节点共建项目已完成，暂不支持退出</string>
     <string name="error_1035">钱包地址与共建节点发起者地址不一致</string>
-    <string name="error_1036">cobuild originator address support deny</string>
+    <string name="error_1036">节点共建项目发起者不能参与支持</string>
 
     <string name="contract_address_empty">账户地址为空</string>
 
