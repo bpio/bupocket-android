@@ -807,7 +807,6 @@ public class CommonUtil {
                         dialog.dismiss();
                     }
                 })
-                .setTitle(R.string.hint_title_info)
                 .create(mCurrentDialogStyle).show();
 
     }

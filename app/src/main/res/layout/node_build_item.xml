@@ -45,7 +45,8 @@
 
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=" BU/份"
+                android:text="@string/bu_share"
+                android:layout_marginLeft="3dp"
                 android:textColor="@color/app_color_green"
                 android:textSize="12sp" />
 

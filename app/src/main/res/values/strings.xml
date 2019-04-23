@@ -419,20 +419,10 @@
     <string name="amount_txt">数量</string>
     <string name="status_txt">状态</string>
     <string name="time_txt">时间</string>
-    <string name="withdraw_txt">撤销</string>
-    <string name="voted_txt">投票</string>
     <string name="revoke_no_vote_error_message_txt">暂无可撤销的票数</string>
     <string name="revoke_vote_tx_details_txt">撤销向\"%1$s\"的投票</string>
     <string name="revoke_vote_dest_address_txt">%1$s(节点计划合约账户)</string>
-    <string name="withdraw_vote_confirm_txt">确认撤票</string>
-    <string name="withdraw_vote_amount_edittext_hint">最多可撤销%1$s投票数量</string>
-    <string name="total_txt">全部</string>
-    <string name="more_txt">更多</string>
-    <string name="pack_up_txt">收起</string>
     <string name="withdraw_vote_fee_txt">本次最多支付交易费用约%1$sBU</string>
-    <string name="withdraw_vote_refund_note_txt">撤票成功后，将冻结的BU退回至原钱包</string>
-    <string name="contract_address_txt">合约方</string>
-    <string name="contract_code_txt">合约代码</string>
     <string name="opposite_account_txt">对方账户</string>
     <string name="details_txt">详情</string>
     <string name="transaction_originator_txt">发起方</string>
@@ -484,31 +474,17 @@
     <string name="build_rist_info_record">风险说明</string>
     <string name="build_runing">进行中</string>
     <string name="build_finish">已完成</string>
-    <string name="build_purchase_amount">起购金额（BU/份）</string>
+    <string name="build_purchase_amount">起购金额</string>
     <string name="build_purchase_amount_hint">起购金额</string>
     <string name="build_support_amount_hint">支持份数</string>
     <string name="build_origin_purchase_amount">保证金</string>
     <string name="build_target_amount">目标共建总额</string>
     <string name="build_support_amount">已获得支持总额</string>
     <string name="build_sharing_ratio">奖励分享比例</string>
-    <string name="build_remain_copy">剩余份数</string>
     <string name="build_target_num">目标数量</string>
     <string name="reward_sharing_ratio">奖励分享比例</string>
 
-    <string name="build_exit_support_amount">支持总金额(BU)</string>
-
-
-    <string name="build_exit_hint">温馨提示：\n\n
-        1. 退出共建计划操作会一次将您冻结在合约账户下的支持金额全部提取到您的原钱包账户\n\n
-        2. 退出的金额将延迟到账，请在BU交易记录查收</string>
-
-    <string name="build_exit_title">退出节点共建计划</string>
-
-
     <string name="build_detail_support">支持项目</string>
-    <string name="build_dialog_error">最少起购为1份</string>
-
-    <string name="write_external_storage_no_permissions_txt">缺少文件读写权限，可能会造成无法分享文件</string>
 
 
     <string name="transaction_timeout">请求已超时，请重新操作。</string>
@@ -526,8 +502,6 @@
         节点的投票、撤票等操作链上交易成功后，相关数据的统计有延迟，预计30秒内完成，此为正常现象。</string>
 
 
-
-    <string name="req_success">成功</string>
     <string name="error_vote_close">投票通道还未开启，请在开启后进行投票</string>
     <string name="error_timeout">请求已超时</string>
     <string name="error_1003">该待绑定的物理地址已被占用，请更换后再申请</string>
@@ -541,30 +515,31 @@
     <string name="error_1033">您还未支持过此项目，暂不能撤回</string>
     <string name="error_1034">节点共建项目已完成，暂不支持退出</string>
     <string name="error_1035">钱包地址与共建节点发起者地址不一致</string>
-
-
+    <string name="error_1036">cobuild originator address support deny</string>
 
     <string name="contract_address_empty">账户地址为空</string>
 
     <string name="send_tx_verify">数据验证中</string>
     <string name="share_close">投票通道还未开启，请在开启后进行分享</string>
 
-    <string name="hint_title_info">提示信息</string>
     <string name="transaction_timeout_title">交易状态</string>
     <string name="transaction_timeout_hint">交易广播成功</string>
     <string name="transaction_timeout_info">交易广播成功，交易最终状态请复制交易摘要到&lt;font color=\'#02CA71\'>http://explorer.bumo.io&lt;/font>查询</string>
     <string name="transaction_info">交易摘要</string>
+
     <string name="error_build_1028">copies is not available</string>
     <string name="error_build_exit">抱歉，该共建项目已被认购完</string>
-    <string name="build_exit_confirm_title">退出{&quot;%1$s &quot;}项目</string>
+    <string name="build_exit_confirm_title">撤回支持{&quot;%1$s &quot;}</string>
     <string name="build_support_confirm_title">支持{ &quot;%1$s &quot;}项目</string>
     <string name="build_type_support">支持</string>
     <string name="build_type_exit">撤销</string>
     <string name="build_left_copies">剩余&lt;font color=\'#151515\'> %1$s &lt;/font>份</string>
-    <string name="build_support_copies">已获得&lt;font color=\'#333333\'> %1$s &lt;/font>份</string>
+    <string name="build_support_copies">已获得支持&lt;font color=\'#333333\'> %1$s &lt;/font>份</string>
     <string name="build_bu">BU</string>
 
     <string name="confirm_build_exit">确认撤回全部支持金额么？</string>
+
+    <string name="bu_share">BU/份</string>
 
 
 </resources>

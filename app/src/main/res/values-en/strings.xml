@@ -401,4 +401,127 @@
     <string name="capture_activity_photo_album">Album</string>
 
 
+
+
+    <string name="card_package_txt">Cards</string>
+    <string name="run_for_node_txt">Node Campaign</string>
+    <string name="build_node_txt">Node co-funding</string>
+    <string name="information_txt">Information</string>
+    <string name="xiaobu_youpin_txt">BU Pocket Goods</string>
+
+
+
+    <string name="number_have_votes">Votes received</string>
+    <string name="my_votes_number">My votes</string>
+    <string name="common_node">Consensus node</string>
+    <string name="ecological_node">Ecological node</string>
+    <string name="node_associated_with_me_txt">Nodes related to me</string>
+    <string name="node_associated_with_me_help_txt"> Filter the nodes that are related to me, such as the node I voted for or the campaign node itself </string>
+    <string name="search_txt">Search </string>
+    <string name="cancel_vote">Cancel votes</string>
+    <string name="vote_record">Record of the voting</string>
+    <string name="invite_vote_txt">Invite to vote</string>
+    <string name="revoke_no_vote_error_message_txt">No revocable votes</string>
+
+
+    <string name="vote_txt">Vote</string>
+    <string name="withdraw_vote_txt">Cancel</string>
+    <string name="amount_txt">Number</string>
+    <string name="status_txt">Status</string>
+    <string name="time_txt">Time</string>
+
+    <string name="share_txt">Share</string>
+    <string name="ticket_txt">Votes</string>
+    <string name="support_people_num_txt">%1$sSponsors</string>
+    <string name="node_introduce_txt">Introduction to node</string>
+
+
+
+    <string name="invite_vote_image_txt">Welcome to vote in BU Pocket</string>
+    <string name="long_press_qr_txt">（Press and hold to identify the QR code）</string>
+    <string name="weixin_txt">WeChat</string>
+    <string name="qq_txt">QQ</string>
+    <string name="copy_commond_txt">Copy the BU link</string>
+    <string name="xiaobu_command_title_txt">The BU link is generated</string>
+    <string name="copy_command_txt">Copy the link</string>
+
+    <string name="xiaobu_command_content_txt">#&lt;font color=\'#02CA71\'>BU Link&lt;/font>#I participate to the BUMO Super Node Campaign&lt;font color=\'#151515\'>%1$s&lt;/font>Click the link to vote for him&lt;font color=\'#02CA71\'>%2$s&lt;/font></string>
+
+
+
+
+    <string name="build_purchase_amount">Entry of purchase</string>
+    <string name="build_purchase_amount_hint">Entry of purchase</string>
+
+    <string name="build_sharing_ratio">Award sharing ratio</string>
+    <string name="build_target_num">Target number</string>
+    <string name="build_target_amount">Target amount</string>
+    <string name="build_support_amount">BUs received</string>
+    <string name="build_left_copies">Remaining&lt;font color=\'#151515\'> %1$s &lt;/font>Share</string>
+
+    <string name="building_information_details">Details of co-funding</string>
+    <string name="build_runing">Processing</string>
+    <string name="build_finish">Completed</string>
+    <string name="build_origin_purchase_amount">Deposit</string>
+    <string name="build_rist_info_record">Risk Statement</string>
+    <string name="build_support_record">Record of node co-funding</string>
+
+    <string name="build_exit">Withdraw</string>
+    <string name="build_support">I want to sponsor</string>
+    <string name="build_type_support">Sponsor</string>
+    <string name="build_type_exit">Withdraw</string>
+
+    <string name="build_risk_info">
+         1. Node co-funding is not a commodity transaction. The sponsors can choose which project to support according to the rules such as award sharing ratio by the initiator and then receive awards; \n\n2. BUMO only provides cyberspace and technical services and is in no interest connection with the initiators and sponsors, so BUMO will take no responsibility if any legal dispute arising from the node co-funding project, and the initiators and sponsors will take all related responsibilities. \n\n3. Before the node co-funding project is completed, the sponsors can manually withdraw all BUs; if the project initiator terminates the project before the project is completed, the sponsors can also manually withdraw the BUs sponsored.     </string>
+
+
+
+    <string name="build_detail_support">Projects to sponsor</string>
+    <string name="build_support_amount_hint">Shares to sponsor</string>
+
+
+
+    <string name="transaction_timeout">The request has timed out; please do it again</string>
+    <string name="transaction_success_title">Transaction success</string>
+    <string name="transaction_success_title_info">The transaction on the chain is successful</string>
+    <string name="transaction_process_title">Processing business data</string>
+    <string name="transaction_process_title_info"> Business data is analyzed and processed according to the transaction metadata of the chain, and the processing is expected to be completed within 20 seconds</string>
+    <string name="transaction_refresh_title">Data is refreshed</string>
+    <string name="transaction_success_hint">
+        Tips:\n\n
+         after transactions such as voting to \n node or withdrawing votes from \n node are successful on the chain, the statistics of related data are delayed, and it is expected to be completed within 30 seconds.</string>
+
+
+    <string name="build_exit_confirm_title">Withdraw sponsor{&quot;%1$s &quot;}</string>
+
+    <string name="error_1003">The physical address to be bound is already occupied. Please apply after replacing it</string>
+    <string name="error_1009">The wallet account has been applied for, please apply after replacing it</string>
+    <string name="error_1011">An uncommitted operation is detected; please try again later</string>
+    <string name="error_100055">the contact is already existed</string>
+
+    <string name="error_1031">The current project has obtained enough BUs, and you can choose other projects to sponsor</string>
+    <string name="error_1032">The remaining number is insufficient. It is recommended that you adjust the number to sponsor.</string>
+    <string name="error_1033"> You have not sponsored this project so you cannot withdraw from it</string>
+    <string name="error_1034">The node co-funding project is finished, and you cannot withdraw from it</string>
+
+
+
+    <string name="error_vote_close">The voting channel is not yet open. Please vote after opening the channel</string>
+    <string name="share_close">The voting channel is not yet open. Please share after opening the channel </string>
+
+
+    <string name="confirm_build_exit">Are you sure to withdraw the amount voted?</string>
+    <string name="build_support_confirm_title">Sponsor { &quot;%1$s &quot;}project</string>
+    <string name="build_support_copies">BUs received&lt;font color=\'#333333\'> %1$s &lt;/font>Share</string>
+
+    <string name="vote_record_txt">Record of the voting</string>
+    <string name="bu_share">BU/share</string>
+
+    <string name="transaction_timeout_title">Transaction status</string>
+    <string name="transaction_timeout_hint">Transaction is broadcast successfully</string>
+    <string name="transaction_timeout_info">Transaction is broadcast successfully; please copy the transaction summary to&lt;font color=\'#02CA71\'>http://explorer.bumo.io&lt;/font> to query the final transaction status ;</string>
+    <string name="build_bu">BU</string>
+    <string name="send_tx_verify">Checking data</string>
+    <string name="transaction_info">Transaction summary</string>
+    <string name="reward_sharing_ratio">Award sharing ratio</string>
 </resources>

@@ -42,14 +42,29 @@
         android:paddingRight="10dp"
         android:paddingBottom="15dp">
 
+
+
         <TextView
             android:id="@+id/tvBuildDetailAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
+            android:layout_alignParentTop="true"
             tools:text="10000"
             android:textColor="@color/app_color_green"
             android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvBuildBu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_alignParentTop="true"
+            android:text="@string/bu_share"
+            android:layout_marginLeft="4dp"
+            android:layout_toRightOf="@id/tvBuildDetailAmount"
+            android:textColor="@color/app_color_green"
+            android:textSize="13sp" />
 
         <TextView
             android:id="@+id/tvPurchaseAmountHint"

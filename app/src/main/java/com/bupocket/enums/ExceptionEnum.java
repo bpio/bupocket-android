@@ -3,7 +3,7 @@ package com.bupocket.enums;
 import com.bupocket.R;
 
 public enum ExceptionEnum {
-    SUCCESS("0","success", R.string.req_success),
+    SUCCESS("0","success", R.string.tx_status_success_txt),
 
     ERROR_VOTE_CLOSE("1029","vote close",R.string.error_vote_close),
     ERROR_TIMEOUT("1006","the qr code does not exist or has expired",R.string.error_timeout),
@@ -17,7 +17,8 @@ public enum ExceptionEnum {
     ERROR_BUILD_1032("1032","",R.string.error_1032),
     ERROR_BUILD_1033("1033","",R.string.error_1033),
     ERROR_BUILD_1034("1034","",R.string.error_1034),
-    ERROR_BUILD_1035("1035","",R.string.error_1035)
+    ERROR_BUILD_1035("1035","",R.string.error_1035),
+    ERROR_BUILD_1036("1036","",R.string.error_1036)
     ;
     private final String code;
     private final String message;

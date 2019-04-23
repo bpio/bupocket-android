@@ -535,13 +535,23 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         public void onResponse(Call<ApiResult<GetQRContentDto>> call, Response<ApiResult<GetQRContentDto>> response) {
                             ApiResult<GetQRContentDto> respDto = response.body();
                             if (null != respDto) {
-                                switch (ExceptionEnum.getByValue(respDto.getErrCode())) {
+                                ExceptionEnum byValue = ExceptionEnum.getByValue(respDto.getErrCode());
+                                if (byValue==null) {
+                                    Bundle argz = new Bundle();
+                                    argz.putString("errorCode", respDto.getErrCode());
+                                    argz.putString("errorMessage", respDto.getMsg());
+                                    BPScanErrorFragment bpScanErrorFragment = new BPScanErrorFragment();
+                                    bpScanErrorFragment.setArguments(argz);
+                                    startFragment(bpScanErrorFragment);
+                                }
+                                switch (byValue) {
                                     case SUCCESS:
                                         showTransactionConfirmView(respDto.getData());
                                         break;
                                     case ERROR_VOTE_CLOSE:
                                     case ERROR_NODE_1003:
                                     case ERROR_ADDRESS_ALREADY_EXISTED:
+                                    case ERROR_BUILD_1036:
                                         CommonUtil.showMessageDialog(getContext(), CommonUtil.byCodeToMsg(mContext, respDto.getErrCode()));
                                         break;
                                     default:
