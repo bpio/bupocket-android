@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llTransactionSuccess"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/llTransactionSuccess"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/app_color_white"
     android:orientation="vertical">
 
@@ -91,20 +91,28 @@
         android:layout_marginLeft="13dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="13dp"
-        android:padding="15dp"
         android:background="@color/app_bg_color_gray_3"
+        android:padding="15dp"
         android:text="@string/transaction_success_hint" />
 
-    <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-        android:id="@+id/ivTransSuccess"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"
-        app:qmui_corner_radius="5dp"
-        android:background="@mipmap/ic_ad_empty"
 
-        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
+        android:background="#F8F8F8"
+        android:orientation="vertical">
+
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            android:id="@+id/ivTransSuccess"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="@mipmap/ic_ad_empty"
+            app:qmui_border_width="0dp" />
+
+    </LinearLayout>
 
 
 </LinearLayout>
