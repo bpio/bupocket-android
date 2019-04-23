@@ -90,6 +90,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private String nodeId;
     private View emptyLayout;
     private GetTokensRespDto.TokenListBean tokenListBean;
+    private boolean isExit;
 
     @Override
     protected View onCreateView() {
@@ -189,7 +190,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                         }
                     }
 
-                    if (CoBuildDetailStatusEnum.CO_BUILD_CALL_BACK.getCode().equals(detailModel.getStatus())){
+                    isExit = CoBuildDetailStatusEnum.CO_BUILD_CALL_BACK.getCode().equals(detailModel.getStatus());
+                    if (isExit){
                         llBtnBuild.setVisibility(View.VISIBLE);
                         btnBuildSupport.setVisibility(View.GONE);
                     }else{
@@ -281,7 +283,14 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 qmuiBottomSheet.dismiss();
-                confirmExit();
+
+                if (isExit) {
+                    confirmExit();
+                }else{
+                    showMessagePositiveDialog();
+                }
+
+
             }
         });
         qmuiBottomSheet.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
@@ -291,6 +300,25 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             }
         });
         qmuiBottomSheet.show();
+    }
+
+    private void showMessagePositiveDialog() {
+        new QMUIDialog.MessageDialogBuilder(getActivity())
+                .setMessage(R.string.confirm_build_exit)
+                .addAction(R.string.common_dialog_cancel, new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                    }
+                })
+                .addAction(R.string.common_dialog_confirm, new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                        confirmExit();
+                    }
+                })
+                .create(com.qmuiteam.qmui.R.style.QMUI_Dialog).show();
     }
 
     private void confirmExit() {

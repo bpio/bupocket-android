@@ -697,66 +697,66 @@ public class BPAssetsHomeFragment extends BaseFragment {
                 try {
 
 
-                    if (ScanTransactionTypeEnum.CO_BUILD_SUPPORT.getCode().equals(transactionType)){
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-//                                   String script1="{\"method\":\"subscribe\",\"params\":{\"shares\":\"1\"} }";
-                                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, script, getWalletAddress(), String.valueOf(Constants.NODE_MIN_FEE), contractAddress);
-
-                                    String hash = transBlob.getResult().getHash();
-                                    if (TextUtils.isEmpty(hash)) {
-
-                                        getActivity().runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                CommonUtil.showMessageDialog(mContext, transBlob.getErrorDesc());
-                                            }
-                                        });
-                                        txSendingTipDialog.dismiss();
-                                        return;
-                                    }
-
-                                    org.json.JSONObject obj = new org.json.JSONObject(script);
-                                    org.json.JSONObject params = obj.getJSONObject("params");
-                                    String copies = params.getString("shares");
-
-                                    HashMap<String, Object> map = new HashMap<>();
-                                    map.put("nodeId", contentDto.getNodeId());
-                                    map.put("hash", hash);
-                                    map.put("copies", copies);
-                                    map.put("initiatorAddress", getWalletAddress());
-                                    NodeBuildService nodeBuildService = RetrofitFactory.getInstance().getRetrofit().create(NodeBuildService.class);
-                                    nodeBuildService.verifySupport(map).enqueue(new Callback<ApiResult>() {
-                                        @Override
-                                        public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
-                                            ApiResult body = response.body();
-                                            txSendingTipDialog.dismiss();
-                                            if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
-                                                submitTransactionBase(transBlob);
-                                            } else {
-                                                CommonUtil.showMessageDialog(mContext, body.getMsg(), body.getErrCode());
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onFailure(Call<ApiResult> call, Throwable t) {
-                                            txSendingTipDialog.dismiss();
-                                        }
-                                    });
-
-
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    txSendingTipDialog.dismiss();
-                                }
-                            }
-                        }).start();
-
-
-                        return;
-                    }
+//                    if (ScanTransactionTypeEnum.CO_BUILD_SUPPORT.getCode().equals(transactionType)){
+//                        new Thread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                try {
+////                                   String script1="{\"method\":\"subscribe\",\"params\":{\"shares\":\"1\"} }";
+//                                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, script, getWalletAddress(), String.valueOf(Constants.NODE_MIN_FEE), contractAddress);
+//
+//                                    String hash = transBlob.getResult().getHash();
+//                                    if (TextUtils.isEmpty(hash)) {
+//
+//                                        getActivity().runOnUiThread(new Runnable() {
+//                                            @Override
+//                                            public void run() {
+//                                                CommonUtil.showMessageDialog(mContext, transBlob.getErrorDesc());
+//                                            }
+//                                        });
+//                                        txSendingTipDialog.dismiss();
+//                                        return;
+//                                    }
+//
+//                                    org.json.JSONObject obj = new org.json.JSONObject(script);
+//                                    org.json.JSONObject params = obj.getJSONObject("params");
+//                                    String copies = params.getString("shares");
+//
+//                                    HashMap<String, Object> map = new HashMap<>();
+//                                    map.put("nodeId", contentDto.getNodeId());
+//                                    map.put("hash", hash);
+//                                    map.put("copies", copies);
+//                                    map.put("initiatorAddress", getWalletAddress());
+//                                    NodeBuildService nodeBuildService = RetrofitFactory.getInstance().getRetrofit().create(NodeBuildService.class);
+//                                    nodeBuildService.verifySupport(map).enqueue(new Callback<ApiResult>() {
+//                                        @Override
+//                                        public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
+//                                            ApiResult body = response.body();
+//                                            txSendingTipDialog.dismiss();
+//                                            if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
+//                                                submitTransactionBase(transBlob);
+//                                            } else {
+//                                                CommonUtil.showMessageDialog(mContext, body.getMsg(), body.getErrCode());
+//                                            }
+//                                        }
+//
+//                                        @Override
+//                                        public void onFailure(Call<ApiResult> call, Throwable t) {
+//                                            txSendingTipDialog.dismiss();
+//                                        }
+//                                    });
+//
+//
+//                                } catch (Exception e) {
+//                                    e.printStackTrace();
+//                                    txSendingTipDialog.dismiss();
+//                                }
+//                            }
+//                        }).start();
+//
+//
+//                        return;
+//                    }
 
 
                     final TransactionBuildBlobResponse buildBlobResponse;

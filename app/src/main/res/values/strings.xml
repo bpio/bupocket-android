@@ -564,6 +564,7 @@
     <string name="build_support_copies">已获得&lt;font color=\'#333333\'> %1$s &lt;/font>份</string>
     <string name="build_bu">BU</string>
 
+    <string name="confirm_build_exit">确认撤回全部支持金额么？</string>
 
 
 </resources>
