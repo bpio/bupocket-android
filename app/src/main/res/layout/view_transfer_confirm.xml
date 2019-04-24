@@ -91,6 +91,7 @@
                 tools:text="向谷神668(buQk4h9Ygc5QSyDWCxgps6ZH)投票(buQk4h9Ygc5QSyDWCxgps6ZH)投票6894票" />
 
             <TextView
+                android:id="@+id/destAddressTvHint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14.5dp"
@@ -215,6 +216,7 @@
                         tools:text="向谷神668(buQk4h9Ygc5QSyDWCxgps6ZH)投票(buQk4h9Ygc5QSyDWCxgps6ZH)投票6894票" />
 
                     <TextView
+                        android:id="@+id/detailsDestAddressTvHint"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14.5dp"

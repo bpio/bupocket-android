@@ -93,6 +93,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
     final String inputExit = "{\"method\":\"revoke\"}";
     private String inputSupport;
+    private View ivSheetHint;
 
     @Override
     protected View onCreateView() {
@@ -134,6 +135,13 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         tvBuildDetailSupportAmount = ((TextView) headerView.findViewById(R.id.tvBuildDetailSupportAmount));
         tvTotalAmount = ((TextView) headerView.findViewById(R.id.tvDetailTotalAmount));
         tvTotalAmount = ((TextView) headerView.findViewById(R.id.tvDetailTotalAmount));
+        ivSheetHint = headerView.findViewById(R.id.ivSheetHint);
+        ivSheetHint.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         emptyLayout = LayoutInflater.from(getContext()).inflate(R.layout.view_empty_record, null);
         getBuildData();

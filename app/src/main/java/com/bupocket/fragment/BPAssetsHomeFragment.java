@@ -50,6 +50,7 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
 import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -474,8 +475,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
                             bpRegisterTokenFragment.setArguments(argz);
                             startFragment(bpRegisterTokenFragment);
                         }
-                    } catch (UnsupportedEncodingException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
+                        ToastUtil.showToast(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT);
                     }
 
                 } else if (resultContent.startsWith(Constants.QR_LOGIN_PREFIX)) {
@@ -536,7 +538,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                             ApiResult<GetQRContentDto> respDto = response.body();
                             if (null != respDto) {
                                 ExceptionEnum byValue = ExceptionEnum.getByValue(respDto.getErrCode());
-                                if (byValue==null) {
+                                if (byValue == null) {
                                     Bundle argz = new Bundle();
                                     argz.putString("errorCode", respDto.getErrCode());
                                     argz.putString("errorMessage", respDto.getMsg());
@@ -626,11 +628,18 @@ public class BPAssetsHomeFragment extends BaseFragment {
         TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
         mTransactionDetailTv.setText(transactionDetail);
         TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
-        mDestAddressTv.setText(destAddress.concat(accountTag));
+        TextView mDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.destAddressTvHint);
+        if (TextUtils.isEmpty(destAddress)) {
+            mDestAddressTv.setVisibility(View.GONE);
+            mDestAddressTvHint.setVisibility(View.GONE);
+        } else {
+            mDestAddressTv.setVisibility(View.VISIBLE);
+            mDestAddressTvHint.setVisibility(View.VISIBLE);
+            mDestAddressTv.setText(destAddress.concat(accountTag));
+        }
+
         TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
         mTxFeeTv.setText(String.valueOf(scanTxFee));
-
-
 
 
         qmuiBottomSheet.findViewById(R.id.detailBtn).setOnClickListener(new View.OnClickListener() {
@@ -645,7 +654,17 @@ public class BPAssetsHomeFragment extends BaseFragment {
         TextView mSourceAddressTv = qmuiBottomSheet.findViewById(R.id.sourceAddressTv);
         mSourceAddressTv.setText(currentWalletAddress);
         TextView mDetailsDestAddressTv = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTv);
-        mDetailsDestAddressTv.setText(destAddress);
+        TextView mDetailsDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTvHint);
+        if (TextUtils.isEmpty(destAddress)) {
+            mDetailsDestAddressTv.setVisibility(View.GONE);
+            mDetailsDestAddressTvHint.setVisibility(View.GONE);
+        } else {
+            mDetailsDestAddressTv.setVisibility(View.VISIBLE);
+            mDetailsDestAddressTvHint.setVisibility(View.VISIBLE);
+            mDetailsDestAddressTv.setText(destAddress);
+        }
+
+
         TextView mDetailsAmountTv = qmuiBottomSheet.findViewById(R.id.detailsAmountTv);
         mDetailsAmountTv.setText(CommonUtil.thousandSeparator(transactionAmount));
         TextView mDetailsTxFeeTv = qmuiBottomSheet.findViewById(R.id.detailsTxFeeTv);
@@ -684,7 +703,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
     }
 
     private void confirmTransaction(final GetQRContentDto contentDto) {
-
 
 
         final String qrCodeSessionID = contentDto.getQrcodeSessionId();

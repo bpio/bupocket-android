@@ -528,7 +528,7 @@
 
     <string name="transaction_timeout_title">Transaction status</string>
     <string name="transaction_timeout_hint">Transaction is broadcast successfully</string>
-    <string name="transaction_timeout_info">Transaction is broadcast successfully; please copy the transaction summary to&lt;font color=\'#02CA71\'>http://explorer.bumo.io&lt;/font> to query the final transaction status ;</string>
+    <string name="transaction_timeout_info">Transaction is broadcast successfully; please copy the transaction summary to&lt;font color=\'#02CA71\'>https://explorer.bumo.io&lt;/font> to query the final transaction status ;</string>
     <string name="build_bu">BU</string>
     <string name="send_tx_verify">Checking data</string>
     <string name="transaction_info">Transaction summary</string>

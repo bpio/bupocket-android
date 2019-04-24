@@ -96,7 +96,7 @@
 
         <View
             android:layout_width="wrap_content"
-            android:layout_height="1dp"
+            android:layout_height="0.5dp"
             android:layout_below="@+id/tvBuildDetailLeftCopies"
             android:layout_marginTop="15dp"
             android:background="@color/app_txt_color_gray_3" />
@@ -121,6 +121,18 @@
             android:layout_below="@+id/tvSupportAmountHint"
             android:layout_marginTop="18dp"
             android:text="@string/build_origin_purchase_amount" />
+
+
+        <ImageView
+            android:id="@+id/ivSheetHint"
+            android:layout_toRightOf="@+id/tvOriginPurchaseAmountHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp"
+            android:layout_alignTop="@id/tvOriginPurchaseAmountHint"
+            android:background="@mipmap/ic_sheet_hint"
+            />
 
 
 

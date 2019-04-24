@@ -263,7 +263,6 @@ public abstract class BaseFragment extends QMUIFragment {
 
                         @Override
                         public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
-                           ToastUtil.showToast(getActivity(), R.string.tx_timeout_err, Toast.LENGTH_SHORT);
                             if (txSendingTipDialog!=null) {
                                 txSendingTipDialog.dismiss();
                             }
