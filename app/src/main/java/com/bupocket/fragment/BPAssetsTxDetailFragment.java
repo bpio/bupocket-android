@@ -171,7 +171,13 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     }
                     mTxStatusIcon.setImageDrawable(txStatusIconDrawable);
                     mTxStatusTv.setText(txStatusStr);
-                    mSendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(outinType) ? "+" : "-") + txInfoRespBoBean.getAmount());
+
+                    if (txInfoRespBoBean.getAmount().equals("0")) {
+                        mSendAmountTv.setText(txInfoRespBoBean.getAmount());
+                    }else{
+                        mSendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(outinType) ? "+" : "-") + txInfoRespBoBean.getAmount());
+                    }
+
                     mTxFromAccAddrTv.setText(txDeatilRespBoBean.getSourceAddress());
                     mTxToAccAddrTv.setText(txDeatilRespBoBean.getDestAddress());
                     mTxDetailFeeTv.setText(txDeatilRespBoBean.getFee() + " BU");

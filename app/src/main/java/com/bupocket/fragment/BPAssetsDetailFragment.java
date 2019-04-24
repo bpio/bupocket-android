@@ -261,11 +261,17 @@ public class BPAssetsDetailFragment extends BaseFragment {
                 String txAccountAddress = AddressUtil.anonymous((obj.getOutinType().equals(OutinTypeEnum.OUT.getCode())) ? obj.getToAddress() : obj.getFromAddress());
                 String amountStr = null;
                 String txStartStr = null;
-                if (obj.getOutinType().equals(OutinTypeEnum.OUT.getCode())) {
-                    amountStr = "-" + obj.getAmount();
-                } else {
-                    amountStr = "+" + obj.getAmount();
+                if (obj.getAmount().equals("0")) {
+                    amountStr=obj.getAmount();
+                }else{
+                    if (obj.getOutinType().equals(OutinTypeEnum.OUT.getCode())) {
+                        amountStr = "-" + obj.getAmount();
+                    } else {
+                        amountStr = "+" + obj.getAmount();
+                    }
                 }
+
+
 
                 if (TxStatusEnum.SUCCESS.getCode().equals(obj.getTxStatus())) {
                     txStartStr = TxStatusEnum.SUCCESS.getName();

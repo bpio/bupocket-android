@@ -501,7 +501,7 @@
 20秒内处理完成</string>
     <string name="transaction_refresh_title">数据已刷新</string>
     <string name="transaction_success_hint">
-        温馨提示：\n\n
+        温馨提示：\n
         节点的投票、撤票等操作链上交易成功后，相关数据的统计有延迟，预计30秒内完成，此为正常现象。</string>
 
 
