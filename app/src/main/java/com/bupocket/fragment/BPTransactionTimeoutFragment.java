@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.enums.AdvertisingEnum;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.AdvertisingService;
 import com.bupocket.http.api.RetrofitFactory;
@@ -19,9 +20,13 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.AdModel;
 import com.bupocket.model.AdvertisingModel;
 import com.bupocket.utils.AddressUtil;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +35,9 @@ import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.bupocket.common.Constants.WeChat_APPID;
+import static com.bupocket.common.Constants.XB_YOUPING_USERNAME;
 
 public class BPTransactionTimeoutFragment extends BaseFragment {
 
@@ -48,15 +56,30 @@ public class BPTransactionTimeoutFragment extends BaseFragment {
 
 
     private String txHash;
+    private AdModel ad;
 
     @Override
     protected View onCreateView() {
         View view = LayoutInflater.from(mContext).inflate(R.layout.fragment_transaction_timeout, null);
         unbinder = ButterKnife.bind(this, view);
         init();
-
         initData();
+        initListener();
         return view;
+    }
+
+    private void initListener() {
+        ivTimeout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ad!=null) {
+                    if (AdvertisingEnum.APP.getCode().equals(ad.getType())) {
+                        CommonUtil.goWeChat(getContext(),WeChat_APPID,XB_YOUPING_USERNAME);
+                    }
+                }
+
+            }
+        });
     }
 
     private void initData() {
@@ -115,7 +138,7 @@ public class BPTransactionTimeoutFragment extends BaseFragment {
                     return;
                 }
                 if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
-                    AdModel ad = body.getData().getAd();
+                    ad = body.getData().getAd();
 
                     if (ad == null) {
                         return;

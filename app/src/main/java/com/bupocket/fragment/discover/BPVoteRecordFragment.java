@@ -118,7 +118,9 @@ public class BPVoteRecordFragment extends BaseFragment {
                 if (body==null) {
                     return;
                 }
-                if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())&& body.getData() == null && body.getData().getList() == null ) {
+                if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())
+                        && body.getData() != null
+                        && body.getData().getList() != null ) {
                     voteRecordAdapter.setNewData(body.getData().getList());
                     voteRecordAdapter.notifyDataSetChanged();
                 }else{

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.enums.AdvertisingEnum;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.fragment.home.HomeFragment;
@@ -20,6 +21,7 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.AdModel;
 import com.bupocket.model.AdvertisingModel;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.TimeUtil;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
@@ -32,6 +34,9 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.bupocket.common.Constants.WeChat_APPID;
+import static com.bupocket.common.Constants.XB_YOUPING_USERNAME;
 
 public class BPSendStatusFragment extends BaseFragment {
 
@@ -67,6 +72,7 @@ public class BPSendStatusFragment extends BaseFragment {
 
     @BindView(R.id.ivTransSuccess)
     ImageView ivTransSuccess;
+    private AdModel ad;
 
 
     protected View onCreateView() {
@@ -74,7 +80,21 @@ public class BPSendStatusFragment extends BaseFragment {
         ButterKnife.bind(this, root);
         initTopBar();
         initData();
+        initListener();
         return root;
+    }
+
+    private void initListener() {
+        ivTransSuccess.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ad!=null) {
+                    if (AdvertisingEnum.APP.getCode().equals(ad.getType())) {
+                        CommonUtil.goWeChat(getContext(),WeChat_APPID,XB_YOUPING_USERNAME);
+                    }
+                }
+            }
+        });
     }
 
 
@@ -105,10 +125,16 @@ public class BPSendStatusFragment extends BaseFragment {
                 mSendTokenStatusTv.setText(txStatusStr);
             }
 
-        } else {
+        } else if (txStatus.equals(ExceptionEnum.ERROR_151.getCode())){
             llStatusFailed.setVisibility(View.VISIBLE);
             txStatusIconDrawable = ContextCompat.getDrawable(getContext(), R.mipmap.icon_send_fail);
-            txStatusStr = getResources().getString(R.string.tx_status_fail_txt3)+"\n"+getResources().getString(R.string.tx_status_fail_txt2);;
+            txStatusStr = getResources().getString(R.string.tx_status_fail_txt3);
+            mSendTokenStatusIcon.setImageDrawable(txStatusIconDrawable);
+            mSendTokenStatusTv.setText(txStatusStr + txStatus);
+        }else{
+            llStatusFailed.setVisibility(View.VISIBLE);
+            txStatusIconDrawable = ContextCompat.getDrawable(getContext(), R.mipmap.icon_send_fail);
+            txStatusStr = getResources().getString(R.string.tx_status_fail_txt);
             mSendTokenStatusIcon.setImageDrawable(txStatusIconDrawable);
             mSendTokenStatusTv.setText(txStatusStr + txStatus);
 
@@ -136,9 +162,9 @@ public class BPSendStatusFragment extends BaseFragment {
                     return;
                 }
                 if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
-                    AdModel ad = body.getData().getAd();
+                    ad = body.getData().getAd();
 
-                    if (ad==null) {
+                    if (ad ==null) {
                         return;
                     }
 

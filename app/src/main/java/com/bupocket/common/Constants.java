@@ -45,7 +45,8 @@ public class Constants {
     public static final String QR_NODE_PLAN_PREFIX = "http://qr.bumocdn.com/xDnAs_dpos/";
 
 
-
+    public static final String WeChat_APPID = "wxaecf7ac4085fd34a";
+    public static final String XB_YOUPING_USERNAME = "gh_463781563a74";
 
 
 

@@ -17,6 +17,9 @@ import com.bupocket.enums.CurrencyTypeEnum;
 import com.bupocket.enums.ExceptionEnum;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -35,6 +38,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.bupocket.common.Constants.WeChat_APPID;
+import static com.bupocket.common.Constants.XB_YOUPING_USERNAME;
 
 /**
  * 通用工具类.
@@ -850,7 +856,7 @@ public class CommonUtil {
 
     /**
      *
-     * @param info
+     * @param
      * @return true==single
      */
     public static boolean isSingle(int num) {
@@ -868,6 +874,16 @@ public class CommonUtil {
             return "0";
         }
         return format;
+    }
+
+    public static void goWeChat(Context context,String appid,String username){
+
+        IWXAPI api = WXAPIFactory.createWXAPI(context, WeChat_APPID);
+        WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
+        req.userName = XB_YOUPING_USERNAME;
+        req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
+        api.sendReq(req);
+
     }
 
 }

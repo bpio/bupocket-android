@@ -31,10 +31,12 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static com.bupocket.common.Constants.WeChat_APPID;
+import static com.bupocket.common.Constants.XB_YOUPING_USERNAME;
+
 public class BPDiscoverHomeFragment extends BaseFragment {
 
-    private static final String WeChat_APPID = "wxaecf7ac4085fd34a";
-    private static final String XB_YOUPING_USERNAME = "gh_463781563a74";
+
 
     @BindView(R.id.cardPackageRl)
     RelativeLayout mCardPackageRl;
