@@ -516,7 +516,7 @@
     <string name="error_1032">剩余份数不足，建议您调整支持份数</string>
     <string name="error_1033">您还未支持过此项目，暂不能撤回</string>
     <string name="error_1034">节点共建项目已完成，暂不支持退出</string>
-    <string name="error_1035">钱包地址与共建节点发起者地址不一致</string>
+    <string name="error_1035">不是该共建节点发起者，无法发起该操作</string>
     <string name="error_1036">节点共建项目发起者不能参与支持</string>
 
 

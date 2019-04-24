@@ -34,7 +34,6 @@ import com.bupocket.enums.MnemonicWordBackupStateEnum;
 import com.bupocket.enums.ScanTransactionTypeEnum;
 import com.bupocket.enums.TokenActionTypeEnum;
 import com.bupocket.fragment.components.AssetsListView;
-import com.bupocket.http.api.NodeBuildService;
 import com.bupocket.http.api.NodePlanManagementSystemService;
 import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
@@ -52,7 +51,6 @@ import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
-import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -70,7 +68,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -611,7 +608,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
             scanTxFee = Constants.NODE_AUDIT_FEE;
         } else if (ScanTransactionTypeEnum.APPLY_CO_BUILD.getCode().equals(transactionType)) {
             scanTxFee = Constants.NODE_CO_BUILD_FEE;
-        } else {
+        } else if (ScanTransactionTypeEnum.CO_BUILD_SUPPORT.getCode().equals(transactionType)){
+            scanTxFee=Constants.NODE_CO_BUILD_MIN_FEE;
+        }else{
             scanTxFee = Constants.MIN_FEE;
         }
 
@@ -734,7 +733,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         org.json.JSONObject jsonObj = new org.json.JSONObject(script);
                         String input = jsonObj.getString("input");
                         String payload = jsonObj.getString("payload");
-                        buildBlobResponse = Wallet.getInstance().applyCoBuildBlob(currentWalletAddress, String.valueOf(Double.parseDouble(amount) + Constants.CO_BUILD_FEE), input.toString(), payload, Constants.NODE_CO_BUILD_FEE);
+                        buildBlobResponse = Wallet.getInstance().applyCoBuildBlob(currentWalletAddress, String.valueOf(Double.parseDouble(amount) + Constants.NODE_CO_BUILD_MIN_FEE), input.toString(), payload, Constants.NODE_CO_BUILD_FEE);
                     } else {
                         buildBlobResponse = Wallet.getInstance().buildBlob(amount, script, currentWalletAddress, String.valueOf(scanTxFee), contractAddress);
                     }
