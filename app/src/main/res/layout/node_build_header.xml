@@ -135,6 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 tools:text="86%"
+                android:visibility="invisible"
                 android:textColor="@color/app_txt_color_red_5"
                 android:textSize="18sp" />
 
@@ -144,6 +145,7 @@
                 android:layout_below="@+id/tvBuildDetailSharingRatio"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="3dp"
+                android:visibility="invisible"
                 android:text="@string/build_sharing_ratio" />
 
 
