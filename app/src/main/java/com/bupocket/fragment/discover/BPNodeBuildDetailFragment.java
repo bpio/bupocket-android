@@ -172,8 +172,26 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     tvTotalAmount.setText(detailModel.getTotalAmount()+getString(R.string.build_bu));
                     tvBuildDetailOriginAmount.setText(detailModel.getInitiatorAmount()+getString(R.string.build_bu));
                     tvBuildDetailSupportAmount.setText(detailModel.getSupportAmount()+getString(R.string.build_bu));
-                    tvBuildDetailLeftCopies.setText(Html.fromHtml(String.format(getString(R.string.build_support_copies),supportCopies+"")));
-                    tvBuildDetailSupportNum.setText(Html.fromHtml(String.format(getString(R.string.build_left_copies),detailModel.getLeftCopies()+"")));
+
+
+                    int build_support_copies;
+                    int build_left_copies;
+                    if (CommonUtil.isSingle(supportCopies)) {
+                        build_support_copies = R.string.build_support_copies;
+                    } else {
+                        build_support_copies = R.string.build_support_copies_s;
+
+                    }
+                    if (CommonUtil.isSingle(detailModel.getLeftCopies())) {
+                        build_left_copies = R.string.build_left_copies;
+                    } else {
+                        build_left_copies = R.string.build_left_copies_s;
+                    }
+
+
+                    tvBuildDetailLeftCopies.setText(Html.fromHtml(String.format(getString(build_support_copies),supportCopies+"")));
+
+                    tvBuildDetailSupportNum.setText(Html.fromHtml(String.format(getString(build_left_copies),detailModel.getLeftCopies()+"")));
 
 
 

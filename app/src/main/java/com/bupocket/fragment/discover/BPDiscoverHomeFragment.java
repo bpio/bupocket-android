@@ -6,7 +6,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -27,13 +26,16 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BPDiscoverHomeFragment extends BaseFragment {
+
+    private static final String WeChat_APPID = "wxaecf7ac4085fd34a";
+    private static final String XB_YOUPING_USERNAME = "gh_463781563a74";
+
     @BindView(R.id.cardPackageRl)
     RelativeLayout mCardPackageRl;
     @BindView(R.id.nodePlanRl)
@@ -85,12 +87,12 @@ public class BPDiscoverHomeFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ApiResult<SlideModel>> call, Response<ApiResult<SlideModel>> response) {
                 ApiResult<SlideModel> body = response.body();
-                if (body==null) {
+                if (body == null) {
                     return;
                 }
 
                 SlideModel imageList = body.getData();
-                if (imageList!=null) {
+                if (imageList != null) {
                     disBannerAdapter.setData(imageList.getSlideshow());
                     disBannerAdapter.notifyDataSetChanged();
                 }
@@ -131,7 +133,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                if (vpDisBanner!=null) {
+                                if (vpDisBanner != null) {
                                     vpDisBanner.setCurrentItem(vpDisBanner.getCurrentItem() + 1);
                                 }
                             }
@@ -176,10 +178,10 @@ public class BPDiscoverHomeFragment extends BaseFragment {
         mXiaobuYoupinRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String appId = "wxaecf7ac4085fd34a";
-                IWXAPI api = WXAPIFactory.createWXAPI(getContext(), appId);
+
+                IWXAPI api = WXAPIFactory.createWXAPI(getContext(), WeChat_APPID);
                 WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
-                req.userName = "gh_463781563a74";
+                req.userName = XB_YOUPING_USERNAME;
                 req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
                 api.sendReq(req);
             }

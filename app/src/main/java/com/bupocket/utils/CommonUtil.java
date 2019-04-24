@@ -812,18 +812,17 @@ public class CommonUtil {
     }
 
     /**
-     *
      * @param mContext
-     * @param notice  error massage
-     * @param code error code
+     * @param notice   error massage
+     * @param code     error code
      */
-    public static void showMessageDialog(Context mContext, String notice,String code) {
+    public static void showMessageDialog(Context mContext, String notice, String code) {
         String errMsg = byCodeToMsg(mContext, code);
         if (!errMsg.isEmpty()) {
-            notice=errMsg;
+            notice = errMsg;
         }
 
-      showMessageDialog(mContext,notice);
+        showMessageDialog(mContext, notice);
 
     }
 
@@ -834,16 +833,30 @@ public class CommonUtil {
 
     /**
      * get  error massage
+     *
      * @param mContext
-     * @param code error code
-     * @return  error massage
+     * @param code     error code
+     * @return error massage
      */
-    public static String byCodeToMsg(Context mContext,String code){
+    public static String byCodeToMsg(Context mContext, String code) {
         ExceptionEnum byValue = ExceptionEnum.getByValue(code);
-        if (byValue==null) {
+        if (byValue == null) {
             return "";
         }
         return mContext.getResources().getString(byValue.getMsg());
+    }
+
+
+    /**
+     *
+     * @param info
+     * @return true==single
+     */
+    public static boolean isSingle(int num) {
+        if (num == 0 || num == 1) {
+            return true;
+        }
+        return false;
     }
 
 }

@@ -88,7 +88,7 @@
     <string name="view_title_wallet_sendBU">转账</string>
     <string name="send_address_title">对方账户（BU地址）</string>
     <string name="send_note_title">备注</string>
-    <string name="send_fee_title">最多支付交易费用（BU）</string>
+    <string name="send_fee_title">最多支付交易费用(BU)</string>
     <string name="send_input_receiver_address_hint">请输入接收方地址</string>
     <string name="no_backup_tips_btn">请备份</string>
 
@@ -413,6 +413,7 @@
     <string name="number_have_votes">得票数</string>
     <string name="my_votes_number">我的投票数</string>
     <string name="confirm_transfer_title_txt">确认交易</string>
+
     <string name="vote_record_txt">投票记录</string>
     <string name="vote_txt">投</string>
     <string name="withdraw_vote_txt">撤</string>
@@ -442,6 +443,7 @@
     <string name="invite_vote_image_txt">快来小布口袋帮忙投票</string>
     <string name="long_press_qr_txt">（长按识别二维码）</string>
     <string name="invite_share_txt">邀请投票</string>
+
     <string name="ticket_txt">票</string>
     <string name="support_people_num_txt">%1$s人支持</string>
     <string name="share_txt">分享</string>
@@ -516,6 +518,7 @@
     <string name="error_1035">钱包地址与共建节点发起者地址不一致</string>
     <string name="error_1036">节点共建项目发起者不能参与支持</string>
 
+
     <string name="contract_address_empty">账户地址为空</string>
 
     <string name="send_tx_verify">数据验证中</string>
@@ -534,6 +537,9 @@
     <string name="build_type_exit">撤销</string>
     <string name="build_left_copies">剩余&lt;font color=\'#151515\'> %1$s &lt;/font>份</string>
     <string name="build_support_copies">已获得支持&lt;font color=\'#333333\'> %1$s &lt;/font>份</string>
+    <string name="build_left_copies_s">剩余&lt;font color=\'#151515\'> %1$s &lt;/font>份</string>
+    <string name="build_support_copies_s">已获得支持&lt;font color=\'#333333\'> %1$s &lt;/font>份</string>
+
     <string name="build_bu">BU</string>
 
     <string name="confirm_build_exit">确认撤回全部支持金额么？</string>

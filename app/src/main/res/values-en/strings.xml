@@ -408,7 +408,7 @@
     <string name="build_node_txt">Node Co-funding</string>
     <string name="information_txt">Information</string>
     <string name="xiaobu_youpin_txt">BU Pocket Goods</string>
-
+    <string name="confirm_transfer_title_txt">Confirm transaction</string>
 
 
     <string name="number_have_votes">Votes received</string>
@@ -422,7 +422,7 @@
     <string name="vote_record">Record of Votes</string>
     <string name="invite_vote_txt">Invite to Vote</string>
     <string name="revoke_no_vote_error_message_txt">No revocable votes</string>
-
+    <string name="invite_share_txt">Invite to vote</string>
 
     <string name="vote_txt">Vote</string>
     <string name="withdraw_vote_txt">Cancel</string>
@@ -457,7 +457,12 @@
     <string name="build_target_num">Target number</string>
     <string name="build_target_amount">Target amount</string>
     <string name="build_support_amount">BUs received</string>
-    <string name="build_left_copies">Shares left&lt;font color=\'#151515\'> %1$s &lt;/font></string>
+
+    <string name="build_left_copies">Share left&lt;font color=\'#151515\'> %1$s &lt;/font></string>
+    <string name="build_support_copies">BUs received&lt;font color=\'#333333\'> %1$s &lt;/font>Share</string>
+
+    <string name="build_left_copies_s">Shares left&lt;font color=\'#151515\'> %1$s &lt;/font></string>
+    <string name="build_support_copies_s">BUs received&lt;font color=\'#333333\'> %1$s &lt;/font>Shares</string>
 
     <string name="building_information_details">Details of Co-funding</string>
     <string name="build_runing">Processing</string>
@@ -504,7 +509,7 @@
     <string name="error_1033"> You have not sponsored this project so you cannot withdraw from it</string>
     <string name="error_1034">The node Co-funding project is finished, and you cannot withdraw from it</string>
 
-
+    <string name="error_1036">The initiator of the node co-funding project cannot be a sponsor.</string>
 
     <string name="error_vote_close">The voting channel is not yet open. Please vote after opening the channel</string>
     <string name="share_close">The voting channel is not yet open. Please share after opening the channel </string>
@@ -512,7 +517,7 @@
 
     <string name="confirm_build_exit">Are you sure to withdraw the amount voted?</string>
     <string name="build_support_confirm_title">Sponsor { &quot;%1$s &quot;}project</string>
-    <string name="build_support_copies">BUs received&lt;font color=\'#333333\'> %1$s &lt;/font>Share</string>
+
 
     <string name="vote_record_txt">Record of Votes</string>
     <string name="bu_share">BU/ share</string>
