@@ -241,11 +241,13 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     }
 
                     isExit = CoBuildDetailStatusEnum.CO_BUILD_FAILURE.getCode().equals(detailModel.getStatus());
-                    if (isExit) {
+                    if (isExit&&getWalletAddress().equals(detailModel.getOriginatorAddress())) {
                         llBtnBuild.setVisibility(View.VISIBLE);
                         btnBuildExit.setText(getString(R.string.build_exit_all));
                         btnBuildSupport.setVisibility(View.GONE);
-                    } else if (CoBuildDetailStatusEnum.CO_BUILD_RUNING.getCode().equals(detailModel.getStatus())) {
+                    }
+
+                    if (CoBuildDetailStatusEnum.CO_BUILD_RUNING.getCode().equals(detailModel.getStatus())) {
                         if (getWalletAddress().equals(detailModel.getOriginatorAddress())) {
                             llBtnBuild.setVisibility(View.GONE);
                         } else {
@@ -357,7 +359,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         });
 
 
-
         qmuiBottomSheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -401,7 +402,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 .create();
         txSendingTipDialog.show();
         final String amount = "0";
-
 
 
         new Thread(new Runnable() {
