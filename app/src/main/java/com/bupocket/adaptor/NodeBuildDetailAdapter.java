@@ -12,6 +12,7 @@ import com.bupocket.enums.BuildTypeEnum;
 import com.bupocket.model.NodeBuildDetailModel;
 import com.bupocket.model.NodeBuildSupportModel;
 import com.bupocket.utils.AddressUtil;
+import com.bupocket.utils.CommonUtil;
 
 public class NodeBuildDetailAdapter extends AbsViewHolderAdapter<NodeBuildSupportModel> {
 
@@ -29,7 +30,7 @@ public class NodeBuildDetailAdapter extends AbsViewHolderAdapter<NodeBuildSuppor
     protected void convert(BaseViewHolder holder, NodeBuildSupportModel itemData) {
 
         ImageView ivHead = holder.getView(R.id.ivBuildSupportHead);
-        holder.setText(R.id.tvBuildSupportAmount,itemData.getAmount()+"BU");
+        holder.setText(R.id.tvBuildSupportAmount, CommonUtil.format(itemData.getAmount())+context.getString(R.string.build_bu));
         holder.setText(R.id.tvBuildSupportDate,itemData.getCreateTime());
         holder.setText(R.id.tvBuildDetailAddress, AddressUtil.anonymous(itemData.getInitiatorAddress()));
 
