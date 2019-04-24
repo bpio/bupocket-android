@@ -512,7 +512,7 @@
     <string name="error_1032">The remaining number is insufficient. It is recommended that you adjust the number to sponsor.</string>
     <string name="error_1033"> You have not sponsored this project so you cannot withdraw from it</string>
     <string name="error_1034">The node Co-funding project is finished, and you cannot withdraw from it</string>
-
+    <string name="error_1035">This operation can only be initiated by the initiator of the node co-funding</string>
     <string name="error_1036">The initiator of the node co-funding project cannot be a sponsor.</string>
 
     <string name="error_vote_close">The voting channel is not yet open. Please vote after opening the channel</string>
@@ -540,4 +540,6 @@
     <string name="transaction_costs_txt">Transaction fees(BU)</string>
     <string name="transaction_originator_txt">Initiator</string>
     <string name="opposite_account_txt">The receiving account</string>
+
+    <string name="build_cooperate_bond">The initiator of the node co-funding project transfers the deposit to an account as the amount to be locked in node co-funding</string>
 </resources>

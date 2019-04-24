@@ -282,8 +282,6 @@ public class BPNodePlanFragment extends BaseFragment {
 
         final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
         qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
-        LinearLayout mTransactionAmountLl = qmuiBottomSheet.findViewById(R.id.transactionAmountLl);
-        mTransactionAmountLl.setVisibility(View.GONE);
         TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
         mTransactionDetailTv.setText(transactionDetail);
         TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);

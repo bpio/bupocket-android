@@ -446,7 +446,7 @@
     <string name="invite_share_txt">邀请投票</string>
 
     <string name="ticket_txt">票</string>
-    <string name="support_people_num_txt">%1$s人支持</string>
+    <string name="support_people_num_txt">&lt;font color=\'#02CA71\'>%1$s&lt;/font>人支持</string>
     <string name="share_txt">分享</string>
     <string name="node_introduce_txt">节点介绍</string>
     <string name="xiaobu_command_title_txt">小布口令已生成</string>
@@ -517,6 +517,8 @@
     <string name="error_1033">您还未支持过此项目，暂不能撤回</string>
     <string name="error_1034">节点共建项目已完成，暂不支持退出</string>
     <string name="error_1035">不是该共建节点发起者，无法发起该操作</string>
+
+
     <string name="error_1036">节点共建项目发起者不能参与支持</string>
 
 
@@ -550,6 +552,8 @@
     <string name="building">共建中</string>
     <string name="build_success">共建成功</string>
     <string name="build_failure">共建失败</string>
+    
+    <string name="build_cooperate_bond">节点共建项目发起者转入保证金作为节点共建的锁仓金额</string>
 
 
 </resources>

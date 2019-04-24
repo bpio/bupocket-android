@@ -551,5 +551,7 @@
     <string name="build_success">共建成功</string>
     <string name="build_failure">共建失败</string>
 
+    <string name="build_cooperate_bond">节点共建项目发起者转入保证金作为节点共建的锁仓金额</string>
+
 
 </resources>

@@ -69,7 +69,7 @@ public class TimeUtil {
      * @return true inputTime
      */
     public static boolean judgeTime(long inputTime){
-        if (inputTime<getCurrentTimeMillis()){
+        if (inputTime>getCurrentTimeMillis()){
             return true;
         }
         return false;

@@ -266,12 +266,17 @@ public class BPWalletManageFragment extends BaseFragment {
                                 try {
                                     privateKeyStr = Wallet.getInstance().exportPrivateKey(password, bpData, walletAddress);
                                     exportingTipDialog.dismiss();
-                                    Bundle argz = new Bundle();
+                                    final Bundle argz = new Bundle();
                                     argz.putString("address", walletAddress);
                                     argz.putString("privateKey", privateKeyStr);
-                                    BPWalletExportPrivateFragment bpWalletExportPrivateFragment = new BPWalletExportPrivateFragment();
-                                    bpWalletExportPrivateFragment.setArguments(argz);
-                                    startFragment(bpWalletExportPrivateFragment);
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            BPWalletExportPrivateFragment bpWalletExportPrivateFragment = new BPWalletExportPrivateFragment();
+                                            bpWalletExportPrivateFragment.setArguments(argz);
+                                            startFragment(bpWalletExportPrivateFragment);
+                                        }
+                                    });
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     Looper.prepare();

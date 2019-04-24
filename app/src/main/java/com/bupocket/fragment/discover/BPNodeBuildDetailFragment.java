@@ -296,7 +296,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
         final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
         qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
-        qmuiBottomSheet.findViewById(R.id.transactionAmountLl).setVisibility(View.GONE);
         TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
         mTransactionDetailTv.setText(String.format(getString(R.string.build_exit_confirm_title), detailModel.getTitle()));
         TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
@@ -526,8 +525,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private void confirmSheet() {
         final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
         qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
-        TextView mTransactionAmountTv = qmuiBottomSheet.findViewById(R.id.transactionAmountTv);
-        mTransactionAmountTv.setText(CommonUtil.format(tvDialogTotalAmount.getText().toString()));
         TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
         mTransactionDetailTv.setText(String.format(getString(R.string.build_support_confirm_title), detailModel.getTitle()));
         TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);

@@ -617,13 +617,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         // confirm page
         final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
         qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
-        TextView mTransactionAmountTv = qmuiBottomSheet.findViewById(R.id.transactionAmountTv);
-        LinearLayout mTransactionAmountLl = qmuiBottomSheet.findViewById(R.id.transactionAmountLl);
-        if ("0".equals(transactionAmount)) {
-            mTransactionAmountLl.setVisibility(View.GONE);
-        } else {
-            mTransactionAmountTv.setText(CommonUtil.thousandSeparator(transactionAmount));
-        }
+
         TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
         mTransactionDetailTv.setText(transactionDetail);
         TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);

@@ -142,6 +142,7 @@
                         tools:text="@string/support_people_num_txt"
                         android:textColor="@color/multiline_edit_hint_color"
                         android:textSize="12sp"/>
+
                 </LinearLayout>
             </RelativeLayout>
 
