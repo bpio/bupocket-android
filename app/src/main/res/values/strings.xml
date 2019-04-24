@@ -530,9 +530,8 @@
     <string name="transaction_info">交易摘要</string>
 
     <string name="error_build_1028">copies is not available</string>
-    <string name="error_build_exit">抱歉，该共建项目已被认购完</string>
-    <string name="build_exit_confirm_title">撤回支持{&quot;%1$s &quot;}</string>
-    <string name="build_support_confirm_title">支持{ &quot;%1$s &quot;}项目</string>
+    <string name="build_exit_confirm_title">撤回支持\"%1$s &quot;\"项目</string>
+    <string name="build_support_confirm_title">支持\"&quot;%1$s &quot;\"项目</string>
     <string name="build_type_support">支持</string>
     <string name="build_type_exit">撤销</string>
     <string name="build_left_copies">剩余&lt;font color=\'#151515\'> %1$s &lt;/font>份</string>
@@ -546,6 +545,11 @@
 
     <string name="bu_share">BU/份</string>
     <string name="build_exit_all">我要赎回全部支持金额</string>
+
+
+    <string name="building">共建中</string>
+    <string name="build_success">共建成功</string>
+    <string name="build_failure">共建失败</string>
 
 
 </resources>

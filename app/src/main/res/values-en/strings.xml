@@ -493,11 +493,12 @@
     <string name="transaction_process_title_info"> Business data is analyzed and processed according to the transaction metadata of the chain, and the processing is expected to be completed within 20 seconds</string>
     <string name="transaction_refresh_title">Data is refreshed</string>
     <string name="transaction_success_hint">
-        Tips:\n\n
-         after transactions such as voting to \n node or withdrawing votes from \n node are successful on the chain, the statistics of related data are delayed, and it is expected to be completed within 30 seconds.</string>
+        Tips:\n
+         after transactions such as voting to  node or withdrawing votes from  node are successful on the chain, the statistics of related data are delayed, and it is expected to be completed within 30 seconds.</string>
 
 
-    <string name="build_exit_confirm_title">Withdraw sponsor{&quot;%1$s &quot;}</string>
+    <string name="build_exit_confirm_title">Withdraw sponsor \"%1$s\" project</string>
+    <string name="build_support_confirm_title">Sponsor \"%1$s\" project</string>
 
     <string name="error_1003">The physical address to be bound is already occupied. Please apply after replacing it</string>
     <string name="error_1009">The wallet account has been applied for, please apply after replacing it</string>
@@ -516,7 +517,7 @@
 
 
     <string name="confirm_build_exit">Are you sure to withdraw the amount voted?</string>
-    <string name="build_support_confirm_title">Sponsor { &quot;%1$s &quot;}project</string>
+
 
 
     <string name="vote_record_txt">Record of Votes</string>

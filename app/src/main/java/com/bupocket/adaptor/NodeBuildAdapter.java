@@ -44,7 +44,7 @@ public class NodeBuildAdapter extends AbsViewHolderAdapter<NodeBuildModel> {
         pbBuild.setProgress(supportCopies);
         String amount = itemData.getPerAmount();
         if (!TextUtils.isEmpty(amount)) {
-            holder.setText(R.id.tvBuildNum, amount);
+            holder.setText(R.id.tvBuildNum, CommonUtil.format(amount));
         }
 
         TextView tvRemainNum = holder.getView(R.id.tvRemainNum);

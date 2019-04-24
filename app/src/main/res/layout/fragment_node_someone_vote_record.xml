@@ -70,8 +70,12 @@
 
                 <TextView
                     android:id="@+id/nodeTypeTv"
-                    android:layout_width="55dp"
-                    android:layout_height="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="7.5dp"
                     android:layout_toRightOf="@+id/nodeNameTv"
@@ -79,8 +83,7 @@
                     android:gravity="center"
                     android:textColor="@color/multiline_edit_hint_color"
                     android:textSize="11sp"
-
-                    tools:text="" />
+                    tools:text="@string/common_node" />
             </RelativeLayout>
 
 

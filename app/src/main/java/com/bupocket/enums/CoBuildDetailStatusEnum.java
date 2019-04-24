@@ -1,18 +1,18 @@
 package com.bupocket.enums;
 
+import com.bupocket.R;
+
 public enum CoBuildDetailStatusEnum {
     //    1 初始化 ，2 资料已录入(共建中) ，3 共建成功(带发起人确认)，4 共建退出
-    CO_BUILD_INIT("1", "初始化"),
-    CO_BUILD_RUNING("2","进行中"),
-    CO_BUILD_SUCCESS("3","已完成"),
-    CO_BUILD_EXIT("4","已退出"),
-    CO_BUILD_CALL_BACK("43","赎回全部金额");
+    CO_BUILD_RUNING("1", R.string.building),
+    CO_BUILD_SUCCESS("2",R.string.build_success),
+    CO_BUILD_FAILURE("3",R.string.build_failure),;
 
 
     private String code;
-    private String msg;
+    private int msg;
 
-    CoBuildDetailStatusEnum(String code, String msg) {
+    CoBuildDetailStatusEnum(String code, int msg) {
         this.code = code;
         this.msg = msg;
     }
@@ -21,7 +21,7 @@ public enum CoBuildDetailStatusEnum {
         return code;
     }
 
-    public String getMsg() {
+    public int getMsg() {
         return msg;
     }
 }

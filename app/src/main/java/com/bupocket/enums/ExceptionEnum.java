@@ -5,6 +5,7 @@ import com.bupocket.R;
 public enum ExceptionEnum {
     SUCCESS("0","success", R.string.tx_status_success_txt),
 
+    ERROR_151("151","vote close",R.string.tx_status_fail_txt3),
     ERROR_VOTE_CLOSE("1029","vote close",R.string.error_vote_close),
     ERROR_TIMEOUT("1006","the qr code does not exist or has expired",R.string.error_timeout),
     ERROR_NODE_1003("1003","test",R.string.error_1003),

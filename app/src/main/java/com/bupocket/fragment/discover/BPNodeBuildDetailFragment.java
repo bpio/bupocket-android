@@ -21,7 +21,6 @@ import com.bupocket.adaptor.NodeBuildDetailAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.CoBuildDetailStatusEnum;
-import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.NodeBuildService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
@@ -161,7 +160,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                         return;
                     }
                     tvName.setText(detailModel.getTitle());
-                    tvBuildDetailAmount.setText(detailModel.getPerAmount());
+                    tvBuildDetailAmount.setText(CommonUtil.format(detailModel.getPerAmount()));
 
                     pbDetail.setMax(detailModel.getTotalCopies());
                     int supportCopies = detailModel.getTotalCopies() - detailModel.getLeftCopies();
@@ -169,9 +168,9 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
                     tvBuildDetailSharingRatio.setText(detailModel.getRewardRate() + "%");
 
-                    tvTotalAmount.setText(detailModel.getTotalAmount()+getString(R.string.build_bu));
-                    tvBuildDetailOriginAmount.setText(detailModel.getInitiatorAmount()+getString(R.string.build_bu));
-                    tvBuildDetailSupportAmount.setText(detailModel.getSupportAmount()+getString(R.string.build_bu));
+                    tvTotalAmount.setText(CommonUtil.format(detailModel.getTotalAmount()) + getString(R.string.build_bu));
+                    tvBuildDetailOriginAmount.setText(CommonUtil.format(detailModel.getInitiatorAmount()) + getString(R.string.build_bu));
+                    tvBuildDetailSupportAmount.setText(CommonUtil.format(detailModel.getSupportAmount()) + getString(R.string.build_bu));
 
 
                     int build_support_copies;
@@ -189,10 +188,9 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     }
 
 
-                    tvBuildDetailLeftCopies.setText(Html.fromHtml(String.format(getString(build_support_copies),supportCopies+"")));
+                    tvBuildDetailLeftCopies.setText(Html.fromHtml(String.format(getString(build_support_copies), supportCopies + "")));
 
-                    tvBuildDetailSupportNum.setText(Html.fromHtml(String.format(getString(build_left_copies),detailModel.getLeftCopies()+"")));
-
+                    tvBuildDetailSupportNum.setText(Html.fromHtml(String.format(getString(build_left_copies), detailModel.getLeftCopies() + "")));
 
 
                     if (CoBuildDetailStatusEnum.CO_BUILD_RUNING.getCode().equals(detailModel.getStatus())) {
@@ -202,26 +200,26 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                         if (CoBuildDetailStatusEnum.CO_BUILD_SUCCESS.getCode().equals(detailModel.getStatus())) {
                             tvStutas.setSelected(true);
                             tvStutas.setText(CoBuildDetailStatusEnum.CO_BUILD_SUCCESS.getMsg());
-                        } else if (CoBuildDetailStatusEnum.CO_BUILD_EXIT.getCode().equals(detailModel.getStatus())) {
+                        } else if (CoBuildDetailStatusEnum.CO_BUILD_FAILURE.getCode().equals(detailModel.getStatus())) {
                             tvStutas.setSelected(true);
-                            tvStutas.setText(CoBuildDetailStatusEnum.CO_BUILD_EXIT.getMsg());
+                            tvStutas.setText(CoBuildDetailStatusEnum.CO_BUILD_FAILURE.getMsg());
                         }
                     }
 
-                    isExit = CoBuildDetailStatusEnum.CO_BUILD_CALL_BACK.getCode().equals(detailModel.getStatus());
-                    if (isExit){
+                    isExit = CoBuildDetailStatusEnum.CO_BUILD_FAILURE.getCode().equals(detailModel.getStatus());
+                    if (isExit) {
                         llBtnBuild.setVisibility(View.VISIBLE);
                         btnBuildExit.setText(getString(R.string.build_exit_all));
                         btnBuildSupport.setVisibility(View.GONE);
-                    }else{
+                    } else if (CoBuildDetailStatusEnum.CO_BUILD_RUNING.getCode().equals(detailModel.getStatus())) {
                         if (getWalletAddress().equals(detailModel.getOriginatorAddress())) {
                             llBtnBuild.setVisibility(View.GONE);
                         } else {
                             llBtnBuild.setVisibility(View.VISIBLE);
                         }
+                    } else if (CoBuildDetailStatusEnum.CO_BUILD_SUCCESS.getCode().equals(detailModel.getStatus())) {
+                        llBtnBuild.setVisibility(View.GONE);
                     }
-
-
 
 
                     ArrayList<NodeBuildSupportModel> nodelist = body.getData().getSupportList();
@@ -269,14 +267,16 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnBuildExit:
-                showExit();
+
+                if (isExit) {
+                    showExit();
+                } else {
+                    showMessagePositiveDialog();
+                }
+
                 break;
             case R.id.btnBuildSupport:
                 if (detailModel != null) {
-                    if (detailModel.getLeftCopies() == 0) {
-                        CommonUtil.showMessageDialog(mContext, R.string.error_build_exit);
-                        return;
-                    }
                     ShowSupport();
                 }
 
@@ -302,14 +302,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 qmuiBottomSheet.dismiss();
-
-                if (isExit) {
-                    confirmExit();
-                }else{
-                    showMessagePositiveDialog();
-                }
-
-
+                confirmExit();
             }
         });
         qmuiBottomSheet.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
@@ -334,7 +327,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {
                         dialog.dismiss();
-                        confirmExit();
+                        showExit();
                     }
                 })
                 .create(com.qmuiteam.qmui.R.style.QMUI_Dialog).show();
@@ -640,18 +633,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             }
 
         }
-
-
-//        if (num < 1 || num > leftCopies) {
-//            numSupport.setText(num + "");
-//        }
-
-//        if (num < 1 || num > leftCopies) {
-//            return false;
-//        }
-
-
-//        numSupport.setText(num + "");
 
 
         int tvAmount = num * perAmount;

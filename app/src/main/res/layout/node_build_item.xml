@@ -109,6 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginRight="12dp"
+            android:visibility="gone"
             android:background="@mipmap/icon_build_retio"
             android:orientation="vertical">
 

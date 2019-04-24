@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -857,6 +858,16 @@ public class CommonUtil {
             return true;
         }
         return false;
+    }
+
+
+    public static String format(String num) {
+        int num1 = Integer.parseInt(num);
+        String format = DecimalFormat.getNumberInstance().format(num1);
+        if (TextUtils.isEmpty(format)) {
+            return "0";
+        }
+        return format;
     }
 
 }
