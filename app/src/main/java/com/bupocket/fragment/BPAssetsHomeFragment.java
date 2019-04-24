@@ -630,6 +630,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
         TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
         mTxFeeTv.setText(String.valueOf(scanTxFee));
 
+
+
+
         qmuiBottomSheet.findViewById(R.id.detailBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

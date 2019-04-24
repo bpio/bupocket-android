@@ -424,11 +424,14 @@
     <string name="revoke_no_vote_error_message_txt">No revocable votes</string>
     <string name="invite_share_txt">Invite to vote</string>
 
+    <string name="details_txt">Details>></string>
+    <string name="details">Details</string>
     <string name="vote_txt">Vote</string>
     <string name="withdraw_vote_txt">Cancel</string>
     <string name="amount_txt">Number(BU)</string>
     <string name="status_txt">Status</string>
     <string name="time_txt">Time</string>
+
 
     <string name="share_txt">Share</string>
     <string name="ticket_txt">Votes</string>
