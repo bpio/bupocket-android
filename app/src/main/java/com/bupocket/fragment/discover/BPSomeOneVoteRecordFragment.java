@@ -67,6 +67,8 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
     QMUIRoundButton copyCommandBtn;
     @BindView(R.id.llLoadFailed)
     LinearLayout llLoadFailed;
+    @BindView(R.id.haveVotesNumTvHint)
+    TextView haveVotesNumTvHint;
 
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String currentIdentityWalletAddress;
@@ -116,6 +118,11 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
         SuperNodeModel itemNodeInfo = getArguments().getParcelable("itemNodeInfo");
 
         nodeNameTv.setText(itemNodeInfo.getNodeName());
+        if (CommonUtil.isSingle(itemNodeInfo.getNodeVote())) {
+            haveVotesNumTvHint.setText(getString(R.string.number_have_votes));
+        }else{
+            haveVotesNumTvHint.setText(getString(R.string.number_have_votes_s));
+        }
         haveVotesNumTv.setText(itemNodeInfo.getNodeVote());
         myVotesNumTv.setText(itemNodeInfo.getMyVoteCount());
 

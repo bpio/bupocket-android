@@ -866,6 +866,10 @@ public class CommonUtil {
         return false;
     }
 
+    public static boolean isSingle(String  num) {
+        return isSingle(Integer.parseInt(num));
+    }
+
 
     public static String format(String num) {
         int num1 = Integer.parseInt(num);

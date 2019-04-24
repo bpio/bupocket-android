@@ -1,5 +1,6 @@
 package com.bupocket.fragment.discover;
 
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -30,11 +32,13 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.enums.ExceptionEnum;
+import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
@@ -48,6 +52,8 @@ import io.bumo.model.response.TransactionBuildBlobResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class BPNodeBuildDetailFragment extends BaseFragment {
 
@@ -91,6 +97,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     final String inputExit = "{\"method\":\"revoke\"}";
     private String inputSupport;
     private View ivSheetHint;
+    private QMUIPopup myNodeExplainPopup;
 
     @Override
     protected View onCreateView() {
@@ -136,7 +143,26 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         ivSheetHint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                if (myNodeExplainPopup == null) {
+                    myNodeExplainPopup = new QMUIPopup(getContext(), QMUIPopup.DIRECTION_NONE);
+                    TextView textView = new TextView(getContext());
+                    textView.setLayoutParams(myNodeExplainPopup.generateLayoutParam(
+                            QMUIDisplayHelper.dp2px(getContext(), 280),
+                            WRAP_CONTENT
+                    ));
+                    textView.setLineSpacing(QMUIDisplayHelper.dp2px(getContext(), 4), 1.0f);
+                    int padding = QMUIDisplayHelper.dp2px(getContext(), 10);
+                    textView.setPadding(padding, padding, padding, padding);
+                    textView.setText(getString(R.string.build_cooperate_bond));
+                    textView.setTextColor(ContextCompat.getColor(getContext(), R.color.app_color_white));
+                    textView.setBackgroundColor(getResources().getColor(R.color.popup_background_color));
+                    myNodeExplainPopup.setContentView(textView);
+                }
+                myNodeExplainPopup.setAnimStyle(QMUIPopup.ANIM_GROW_FROM_CENTER);
+                myNodeExplainPopup.setPreferredDirection(QMUIPopup.DIRECTION_BOTTOM);
+                myNodeExplainPopup.show(v);
+                ImageView arrowUp = myNodeExplainPopup.getDecorView().findViewById(R.id.arrow_up);
+                arrowUp.setImageDrawable(getResources().getDrawable(R.mipmap.triangle));
             }
         });
 

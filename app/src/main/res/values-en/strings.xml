@@ -411,7 +411,8 @@
     <string name="confirm_transfer_title_txt">Confirm transaction</string>
 
 
-    <string name="number_have_votes">Votes received</string>
+    <string name="number_have_votes">Vote</string>
+    <string name="number_have_votes_s">Votes</string>
     <string name="my_votes_number">My votes</string>
     <string name="common_node">Consensus node</string>
     <string name="ecological_node">Ecological node</string>
@@ -529,7 +530,7 @@
     <string name="transaction_timeout_title">Transaction status</string>
     <string name="transaction_timeout_hint">Transaction is broadcast successfully</string>
     <string name="transaction_timeout_info">Transaction is broadcast successfully; please copy the transaction summary to&lt;font color=\'#02CA71\'>https://explorer.bumo.io&lt;/font> to query the final transaction status ;</string>
-    <string name="build_bu">BU</string>
+    <string name="build_bu">&#160;BU</string>
     <string name="send_tx_verify">Checking data</string>
     <string name="transaction_info">Transaction summary</string>
     <string name="reward_sharing_ratio">Award ratio</string>

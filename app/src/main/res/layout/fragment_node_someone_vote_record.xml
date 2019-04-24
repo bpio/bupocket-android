@@ -96,6 +96,7 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/haveVotesNumTvHint"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/number_have_votes"

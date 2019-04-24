@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -67,6 +68,14 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
                 .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
                 .into(nodeIconIv);
         nodeIconIv.setBackgroundColor(context.getResources().getColor(R.color.app_color_white));
+
+        TextView haveVotesNumTvHint = holder.getView(R.id.haveVotesNumTvHint);
+        if (CommonUtil.isSingle(itemData.getNodeVote())) {
+            haveVotesNumTvHint.setText(context.getString(R.string.number_have_votes));
+        }else{
+            haveVotesNumTvHint.setText(context.getString(R.string.number_have_votes_s));
+        }
+
         holder.setText(R.id.haveVotesNumTv, itemData.getNodeVote());
         holder.setText(R.id.myVotesNumTv, itemData.getMyVoteCount());
 

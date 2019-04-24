@@ -411,6 +411,7 @@
     <string name="node_associated_with_me_help_txt">勾选后过滤出和我相关的节点信息，如我的投过票的节点和我是节点发起人（节点资金地址是本钱包地址）的节点</string>
     <string name="search_txt">搜索</string>
     <string name="number_have_votes">得票数</string>
+    <string name="number_have_votes_s">得票数</string>
     <string name="my_votes_number">我的投票数</string>
     <string name="confirm_transfer_title_txt">确认交易</string>
 
@@ -446,7 +447,7 @@
     <string name="invite_share_txt">邀请投票</string>
 
     <string name="ticket_txt">票</string>
-    <string name="support_people_num_txt">&lt;font color=\'#02CA71\'>%1$s&lt;/font>人支持</string>
+    <string name="support_people_num_txt">%1$s人支持</string>
     <string name="share_txt">分享</string>
     <string name="node_introduce_txt">节点介绍</string>
     <string name="xiaobu_command_title_txt">小布口令已生成</string>
@@ -541,7 +542,7 @@
     <string name="build_left_copies_s">剩余&lt;font color=\'#151515\'> %1$s &lt;/font>份</string>
     <string name="build_support_copies_s">已获得支持&lt;font color=\'#333333\'> %1$s &lt;/font>份</string>
 
-    <string name="build_bu">BU</string>
+    <string name="build_bu">&#160;BU</string>
 
     <string name="confirm_build_exit">确认撤回全部支持金额么？</string>
 
