@@ -96,6 +96,7 @@
                 android:id="@+id/tvProgress"
                 android:layout_width="50dp"
                 android:gravity="center"
+                android:layout_marginLeft="3dp"
                 android:layout_height="wrap_content"
                 android:text="66.66%" />
 
