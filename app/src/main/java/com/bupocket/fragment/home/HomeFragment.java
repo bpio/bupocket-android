@@ -16,6 +16,7 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.BPAssetsHomeFragment;
 import com.bupocket.fragment.BPProfileFragment;
 import com.bupocket.fragment.discover.BPDiscoverHomeFragment;
+import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.widget.QMUIPagerAdapter;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 
@@ -24,6 +25,9 @@ import butterknife.ButterKnife;
 
 
 public class HomeFragment extends BaseFragment {
+
+
+    public static boolean isDisFragment;
 
     @BindView(R.id.pager)
     ViewPager mViewPager;
@@ -59,6 +63,31 @@ public class HomeFragment extends BaseFragment {
         mTabSegment.addTab(profile);
         mTabSegment.setDefaultSelectedColor(getContext().getResources().getColor(R.color.app_color_green));
 
+        mTabSegment.addOnTabSelectedListener(new QMUITabSegment.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(int index) {
+                if (index==1){
+                    isDisFragment=true;
+                }else{
+                    isDisFragment=false;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(int index) {
+
+            }
+
+            @Override
+            public void onTabReselected(int index) {
+
+            }
+
+            @Override
+            public void onDoubleTap(int index) {
+
+            }
+        });
     }
 
     private void initPagers() {

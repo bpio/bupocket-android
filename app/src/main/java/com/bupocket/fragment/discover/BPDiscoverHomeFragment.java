@@ -13,10 +13,12 @@ import com.bupocket.R;
 import com.bupocket.activity.BumoNewsActivity;
 import com.bupocket.adaptor.DisBannerAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.DiscoverService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.SlideModel;
+import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -129,9 +131,8 @@ public class BPDiscoverHomeFragment extends BaseFragment {
             @Override
             public void run() {
                 while (!isStop) {
-
+                    isDownStop=! HomeFragment.isDisFragment;
                     if (!isDownStop) {
-
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -139,9 +140,11 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                                     vpDisBanner.setCurrentItem(vpDisBanner.getCurrentItem() + 1);
                                 }
                             }
+
                         });
-                        SystemClock.sleep(PAGER_TIME);
                     }
+                    SystemClock.sleep(PAGER_TIME);
+
                 }
             }
         }).start();
