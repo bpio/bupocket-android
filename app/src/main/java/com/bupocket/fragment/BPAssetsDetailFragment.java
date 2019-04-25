@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TimeUtil;
+import com.bupocket.utils.ToastUtil;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -44,6 +46,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.bumo.encryption.key.PublicKey;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -389,7 +392,10 @@ public class BPAssetsDetailFragment extends BaseFragment {
         if (result != null) {
             if (result.getContents() == null) {
                 Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
-            } else {
+            } else if(!PublicKey.isAddressValid(result.getContents())){
+                ToastUtil.showToast((Activity) mContext, R.string.error_qr_message_txt, Toast.LENGTH_LONG);
+
+            }else {
                 Bundle argz = new Bundle();
                 argz.putString("destAddress", result.getContents());
                 argz.putString("tokenCode", assetCode);

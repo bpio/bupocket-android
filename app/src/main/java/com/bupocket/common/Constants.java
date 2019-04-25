@@ -66,10 +66,11 @@ public class Constants {
 
     public static enum TestNetConfig {
 
-//        WEB_SERVER_DOMAIN("http://test-bupocket-api.bumocdn.com/"),
-//        BUMO_NODE_URL("http://192.168.3.64:36002"),
-        WEB_SERVER_DOMAIN("http://192.168.6.97:5648/"),
-        BUMO_NODE_URL("http://192.168.21.35:36002"),
+        WEB_SERVER_DOMAIN("http://test-bupocket-api.bumocdn.com/"),
+//        WEB_SERVER_DOMAIN("http://192.168.3.53:8180/"),
+        BUMO_NODE_URL("http://192.168.3.64:36002"),
+//        WEB_SERVER_DOMAIN("http://192.168.6.97:5648/"),
+//        BUMO_NODE_URL("http://192.168.21.35:36002"),
         PUSH_MESSAGE_SOCKET_URL("https://ws-tools.bumotest.io");
         private String value;
         TestNetConfig(String value){
