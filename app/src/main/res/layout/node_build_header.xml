@@ -73,24 +73,43 @@
             android:layout_marginTop="3dp"
             android:text="@string/build_purchase_amount" />
 
-
-
-        <ProgressBar
-            android:id="@+id/pbBuildDetailProgress"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        <LinearLayout
+            android:id="@+id/llProgress"
             android:layout_width="match_parent"
-            android:layout_height="3dp"
+            android:layout_height="wrap_content"
             android:layout_below="@+id/tvPurchaseAmountHint"
-            android:layout_marginTop="16dp"
-            tools:max="100"
-            tools:progress="60"
-            android:progressDrawable="@drawable/progress_horizontal_green" />
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ProgressBar
+                android:id="@+id/pbBuild"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="5dp"
+                android:layout_weight="1"
+                android:progressDrawable="@drawable/progress_horizontal_green"
+                tools:max="100"
+                tools:progress="60" />
+
+            <TextView
+                android:id="@+id/tvProgress"
+                android:layout_width="50dp"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:text="66.66%" />
+
+
+        </LinearLayout>
+
+
+
 
         <TextView
             android:id="@+id/tvBuildDetailLeftCopies"
             style="@style/tv_node_build_gray_style"
             android:layout_below="@+id/tvPurchaseAmountHint"
-            android:layout_marginTop="27dp"
+            android:layout_marginTop="32dp"
             tools:text="剩余37份" />
 
 
@@ -168,7 +187,7 @@
                 style="@style/tv_node_build_gray_style"
                 android:layout_below="@+id/tvSharingRatioHint"
                 android:layout_alignParentRight="true"
-                android:layout_marginTop="27dp"
+                android:layout_marginTop="32dp"
                 tools:text="560支持" />
 
 

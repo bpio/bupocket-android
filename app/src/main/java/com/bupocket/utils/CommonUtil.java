@@ -855,7 +855,6 @@ public class CommonUtil {
 
 
     /**
-     *
      * @param
      * @return true==single
      */
@@ -866,26 +865,26 @@ public class CommonUtil {
         return false;
     }
 
-    public static boolean isSingle(String  num) {
+    public static boolean isSingle(String num) {
         return isSingle(Integer.parseInt(num));
     }
 
 
     public static String format(String num) {
-        String format="";
-        try{
+        String format = "";
+        try {
             int num1 = Integer.parseInt(num);
             format = DecimalFormat.getNumberInstance().format(num1);
             if (TextUtils.isEmpty(format)) {
                 return "0";
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return "0";
         }
         return format;
     }
 
-    public static void goWeChat(Context context,String appid,String username){
+    public static void goWeChat(Context context, String appid, String username) {
 
         IWXAPI api = WXAPIFactory.createWXAPI(context, WeChat_APPID);
         WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
@@ -893,6 +892,21 @@ public class CommonUtil {
         req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
         api.sendReq(req);
 
+    }
+
+
+    public static String setRatio(int support, int total) {
+        String strRatio = "0";
+        double ratio = ((double) support / total) * 100;
+        if (support == 0) {
+            strRatio = "0";
+        } else if (support==total) {
+            strRatio = "100";
+        } else {
+            DecimalFormat df = new DecimalFormat("#.00");
+            strRatio = df.format(ratio);
+        }
+        return strRatio + "%";
     }
 
 }

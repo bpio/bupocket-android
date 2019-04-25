@@ -98,6 +98,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private String inputSupport;
     private View ivSheetHint;
     private QMUIPopup myNodeExplainPopup;
+    private TextView tvProgress;
 
     @Override
     protected View onCreateView() {
@@ -130,7 +131,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         tvName = headerView.findViewById(R.id.tvBuildDetailName);
         tvBuildDetailAmount = headerView.findViewById(R.id.tvBuildDetailAmount);
         tvTotalAmount = ((TextView) headerView.findViewById(R.id.tvDetailTotalAmount));
-        pbDetail = ((ProgressBar) headerView.findViewById(R.id.pbBuildDetailProgress));
+        pbDetail = ((ProgressBar) headerView.findViewById(R.id.pbBuild));
+        tvProgress = ((TextView) headerView.findViewById(R.id.tvProgress));
 
         tvBuildDetailLeftCopies = ((TextView) headerView.findViewById(R.id.tvBuildDetailLeftCopies));
         tvBuildDetailSharingRatio = ((TextView) headerView.findViewById(R.id.tvBuildDetailSharingRatio));
@@ -199,6 +201,9 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     pbDetail.setMax(detailModel.getTotalCopies());
                     int supportCopies = detailModel.getTotalCopies() - detailModel.getLeftCopies();
                     pbDetail.setProgress(supportCopies);
+
+                    tvProgress.setText(CommonUtil.setRatio(supportCopies,detailModel.getTotalCopies()));
+
 
                     tvBuildDetailSharingRatio.setText(detailModel.getRewardRate() + "%");
 

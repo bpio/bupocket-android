@@ -3,9 +3,7 @@ package com.bupocket.adaptor;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.Html;
-import android.text.Spanned;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -14,6 +12,8 @@ import com.bupocket.base.AbsViewHolderAdapter;
 import com.bupocket.base.BaseViewHolder;
 import com.bupocket.model.NodeBuildModel;
 import com.bupocket.utils.CommonUtil;
+
+import java.text.DecimalFormat;
 
 public class NodeBuildAdapter extends AbsViewHolderAdapter<NodeBuildModel> {
 
@@ -42,6 +42,10 @@ public class NodeBuildAdapter extends AbsViewHolderAdapter<NodeBuildModel> {
         pbBuild.setMax(itemData.getTotalCopies());
         int supportCopies = itemData.getTotalCopies() - itemData.getLeftCopies();
         pbBuild.setProgress(supportCopies);
+
+
+        holder.setText(R.id.tvProgress, CommonUtil.setRatio(supportCopies, itemData.getTotalCopies()));
+
         String amount = itemData.getPerAmount();
         if (!TextUtils.isEmpty(amount)) {
             holder.setText(R.id.tvBuildNum, CommonUtil.format(amount));
@@ -69,4 +73,6 @@ public class NodeBuildAdapter extends AbsViewHolderAdapter<NodeBuildModel> {
 
 
     }
+
+
 }
