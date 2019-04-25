@@ -872,9 +872,14 @@ public class CommonUtil {
 
 
     public static String format(String num) {
-        int num1 = Integer.parseInt(num);
-        String format = DecimalFormat.getNumberInstance().format(num1);
-        if (TextUtils.isEmpty(format)) {
+        String format="";
+        try{
+            int num1 = Integer.parseInt(num);
+            format = DecimalFormat.getNumberInstance().format(num1);
+            if (TextUtils.isEmpty(format)) {
+                return "0";
+            }
+        }catch (Exception e){
             return "0";
         }
         return format;
