@@ -241,22 +241,19 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     }
 
                     isExit = CoBuildDetailStatusEnum.CO_BUILD_FAILURE.getCode().equals(detailModel.getStatus());
-                    if (isExit&&getWalletAddress().equals(detailModel.getOriginatorAddress())) {
-                        llBtnBuild.setVisibility(View.VISIBLE);
-                        btnBuildExit.setText(getString(R.string.build_exit_all));
-                        btnBuildSupport.setVisibility(View.GONE);
-                    }
 
-                    if (CoBuildDetailStatusEnum.CO_BUILD_RUNING.getCode().equals(detailModel.getStatus())) {
-                        if (getWalletAddress().equals(detailModel.getOriginatorAddress())) {
-                            llBtnBuild.setVisibility(View.GONE);
-                        } else {
-                            llBtnBuild.setVisibility(View.VISIBLE);
-                        }
-                    } else if (CoBuildDetailStatusEnum.CO_BUILD_SUCCESS.getCode().equals(detailModel.getStatus())) {
+                    //origin
+                    if (getWalletAddress().equals(detailModel.getOriginatorAddress())) {
                         llBtnBuild.setVisibility(View.GONE);
+                    }else{
+                        if (CoBuildDetailStatusEnum.CO_BUILD_RUNING.getCode().equals(detailModel.getStatus())) {
+                            llBtnBuild.setVisibility(View.VISIBLE);
+                        }else if (CoBuildDetailStatusEnum.CO_BUILD_FAILURE.getCode().equals(detailModel.getStatus())){
+                            llBtnBuild.setVisibility(View.VISIBLE);
+                            btnBuildSupport.setVisibility(View.GONE);
+                            btnBuildExit.setText(getString(R.string.build_exit_all));
+                        }
                     }
-
 
                     ArrayList<NodeBuildSupportModel> nodelist = body.getData().getSupportList();
                     if (nodelist == null || nodelist.size() == 0) {
@@ -293,7 +290,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 popBackStack();
             }
         });
-        TextView title = mTopBar.setTitle(getResources().getString(R.string.building_information_details));
+        mTopBar.setTitle(getResources().getString(R.string.building_information_details));
 
 
     }

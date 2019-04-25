@@ -129,7 +129,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="2dp"
+            android:layout_marginTop="2.5dp"
             android:layout_alignTop="@id/tvOriginPurchaseAmountHint"
             android:background="@mipmap/ic_sheet_hint"
             />
