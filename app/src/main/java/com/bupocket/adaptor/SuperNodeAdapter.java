@@ -2,32 +2,20 @@ package com.bupocket.adaptor;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bupocket.R;
 import com.bupocket.base.AbsViewHolderAdapter;
-import com.bupocket.base.BaseRecyclerAdapter;
 import com.bupocket.base.BaseViewHolder;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.ImageUtil;
 import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.widget.popup.QMUIListPopup;
-import com.squareup.picasso.Picasso;
-import com.zhy.http.okhttp.utils.ImageUtils;
-
-import org.bouncycastle.util.encoders.UrlBase64Encoder;
-
-import java.util.ArrayList;
 
 
 public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
@@ -41,7 +29,7 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.view_node_plan_list_item;
+        return R.layout.view_super_node_item;
     }
 
     @Override
@@ -75,8 +63,16 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         }else{
             haveVotesNumTvHint.setText(context.getString(R.string.number_have_votes_s));
         }
-
         holder.setText(R.id.haveVotesNumTv, itemData.getNodeVote());
+
+
+        TextView myVotesNumTvHint = holder.getView(R.id.myVotesNumTvHint);
+        if (CommonUtil.isSingle( itemData.getMyVoteCount())){
+            myVotesNumTvHint.setText(context.getString(R.string.my_votes_number));
+        }else {
+            myVotesNumTvHint.setText(context.getString(R.string.my_votes_number_s));
+        }
+
         holder.setText(R.id.myVotesNumTv, itemData.getMyVoteCount());
 
         final View shareBtn = holder.getView(R.id.shareBtn);

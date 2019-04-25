@@ -414,6 +414,7 @@
     <string name="number_have_votes">Vote</string>
     <string name="number_have_votes_s">Votes</string>
     <string name="my_votes_number">My votes</string>
+    <string name="my_votes_number_s">My votes</string>
     <string name="common_node">Consensus node</string>
     <string name="ecological_node">Ecological node</string>
     <string name="node_associated_with_me_txt">Nodes related to me</string>

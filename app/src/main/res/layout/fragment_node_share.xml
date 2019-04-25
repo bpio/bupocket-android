@@ -121,6 +121,7 @@
                         tools:text="7833993" />
 
                     <TextView
+                        android:id="@+id/haveVotesNumTvHint"
                         android:layout_marginLeft="6dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

@@ -83,6 +83,9 @@ public class BPNodeShareFragment extends BaseFragment {
     QMUIRadiusImageView mNodeIconIv;
     @BindView(R.id.wbShare)
     WebView webView;
+    @BindView(R.id.haveVotesNumTvHint)
+    TextView haveVotesNumTvHint;
+
     private View mShareImageRl;
     private Uri sharePhotoUri = null;
 
@@ -185,6 +188,15 @@ public class BPNodeShareFragment extends BaseFragment {
         } else if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(itemInfo.getIdentityType())) {
             mNodeTypeTv.setText(getContext().getResources().getString(R.string.ecological_node));
         }
+
+
+
+        if (CommonUtil.isSingle(itemInfo.getNodeVote())) {
+            haveVotesNumTvHint.setText(getString(R.string.number_have_votes));
+        }else{
+            haveVotesNumTvHint.setText(getString(R.string.number_have_votes_s));
+        }
+
         mHaveVotesNumTv.setText(itemInfo.getNodeVote());
         mSupportPeopleTv.setText(String.format(getString(R.string.support_people_num_txt), itemInfo.getSupport()));
         String source = itemInfo.getIntroduce().trim().toString();
