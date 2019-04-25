@@ -41,8 +41,8 @@ public class Constants {
 
     public static final String CONTRACT_ADDRESS = "buQqzdS9YSnokDjvzg4YaNatcFQfkgXqk6ss";
 
-    public static final String QR_LOGIN_PREFIX = "http://qr.bumocdn.com/xDnAs_login/";
-    public static final String QR_NODE_PLAN_PREFIX = "http://qr.bumocdn.com/xDnAs_dpos/";
+    public static final String QR_LOGIN_PREFIX = "/xDnAs_login/";
+    public static final String QR_NODE_PLAN_PREFIX = "/xDnAs_dpos/";
 
 
     public static final String WeChat_APPID = "wxaecf7ac4085fd34a";
@@ -66,9 +66,9 @@ public class Constants {
 
     public static enum TestNetConfig {
 
-        WEB_SERVER_DOMAIN("http://test-bupocket-api.bumocdn.com/"),
-//        WEB_SERVER_DOMAIN("http://192.168.3.53:8180/"),
-        BUMO_NODE_URL("http://192.168.3.64:36002"),
+//        WEB_SERVER_DOMAIN("http://test-bupocket-api.bumocdn.com/"),
+        WEB_SERVER_DOMAIN("http://192.168.3.53:8180/"),
+        BUMO_NODE_URL("http://192.168.3.65:36002"),
 //        WEB_SERVER_DOMAIN("http://192.168.6.97:5648/"),
 //        BUMO_NODE_URL("http://192.168.21.35:36002"),
         PUSH_MESSAGE_SOCKET_URL("https://ws-tools.bumotest.io");

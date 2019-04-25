@@ -67,7 +67,9 @@ import io.bumo.model.response.TransactionBuildBlobResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Url;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -477,108 +479,119 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         ToastUtil.showToast(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT);
                     }
 
-                } else if (resultContent.startsWith(Constants.QR_LOGIN_PREFIX)) {
-                    final String uuid = resultContent.replace(Constants.QR_LOGIN_PREFIX, "");
-                    NodePlanManagementSystemService nodePlanManagementSystemService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanManagementSystemService.class);
-                    Call<ApiResult<UserScanQrLoginDto>> call;
-                    Map<String, Object> paramsMap = new HashMap<>();
-                    paramsMap.put("uuid", uuid);
-                    paramsMap.put("address", currentWalletAddress);
-                    call = nodePlanManagementSystemService.userScanQrLogin(paramsMap);
-                    call.enqueue(new Callback<ApiResult<UserScanQrLoginDto>>() {
-                        @Override
-                        public void onResponse(Call<ApiResult<UserScanQrLoginDto>> call, Response<ApiResult<UserScanQrLoginDto>> response) {
-                            ApiResult<UserScanQrLoginDto> respDto = response.body();
-                            if (null != respDto) {
-                                if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
-                                    UserScanQrLoginDto userScanQrLoginDto = respDto.getData();
-                                    String appId = userScanQrLoginDto.getAppId();
-                                    String appName = userScanQrLoginDto.getAppName();
-                                    String appPic = userScanQrLoginDto.getAppPic();
-                                    Bundle argz = new Bundle();
-                                    argz.putString("appId", appId);
-                                    argz.putString("uuid", uuid);
-                                    argz.putString("address", currentWalletAddress);
-                                    argz.putString("appName", appName);
-                                    argz.putString("appPic", appPic);
-                                    BPNodePlanManagementSystemLoginFragment bpNodePlanManagementSystemLoginFragment = new BPNodePlanManagementSystemLoginFragment();
-                                    bpNodePlanManagementSystemLoginFragment.setArguments(argz);
-                                    startFragment(bpNodePlanManagementSystemLoginFragment);
+                } else  {
+
+                    try {
+                        java.net.URL  url = new  java.net.URL(resultContent);
+                        String path = url.getPath();
+                        resultContent=path;
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (resultContent.startsWith(Constants.QR_LOGIN_PREFIX)) {
+                        final String uuid = resultContent.replace(Constants.QR_LOGIN_PREFIX, "");
+                        NodePlanManagementSystemService nodePlanManagementSystemService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanManagementSystemService.class);
+                        Call<ApiResult<UserScanQrLoginDto>> call;
+                        Map<String, Object> paramsMap = new HashMap<>();
+                        paramsMap.put("uuid", uuid);
+                        paramsMap.put("address", currentWalletAddress);
+                        call = nodePlanManagementSystemService.userScanQrLogin(paramsMap);
+                        call.enqueue(new Callback<ApiResult<UserScanQrLoginDto>>() {
+                            @Override
+                            public void onResponse(Call<ApiResult<UserScanQrLoginDto>> call, Response<ApiResult<UserScanQrLoginDto>> response) {
+                                ApiResult<UserScanQrLoginDto> respDto = response.body();
+                                if (null != respDto) {
+                                    if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
+                                        UserScanQrLoginDto userScanQrLoginDto = respDto.getData();
+                                        String appId = userScanQrLoginDto.getAppId();
+                                        String appName = userScanQrLoginDto.getAppName();
+                                        String appPic = userScanQrLoginDto.getAppPic();
+                                        Bundle argz = new Bundle();
+                                        argz.putString("appId", appId);
+                                        argz.putString("uuid", uuid);
+                                        argz.putString("address", currentWalletAddress);
+                                        argz.putString("appName", appName);
+                                        argz.putString("appPic", appPic);
+                                        BPNodePlanManagementSystemLoginFragment bpNodePlanManagementSystemLoginFragment = new BPNodePlanManagementSystemLoginFragment();
+                                        bpNodePlanManagementSystemLoginFragment.setArguments(argz);
+                                        startFragment(bpNodePlanManagementSystemLoginFragment);
+                                    } else {
+                                        Bundle argz = new Bundle();
+                                        argz.putString("errorCode", respDto.getErrCode());
+                                        BPScanErrorFragment bpScanErrorFragment = new BPScanErrorFragment();
+                                        bpScanErrorFragment.setArguments(argz);
+                                        startFragment(bpScanErrorFragment);
+                                    }
                                 } else {
-                                    Bundle argz = new Bundle();
-                                    argz.putString("errorCode", respDto.getErrCode());
-                                    BPScanErrorFragment bpScanErrorFragment = new BPScanErrorFragment();
-                                    bpScanErrorFragment.setArguments(argz);
-                                    startFragment(bpScanErrorFragment);
+                                    Toast.makeText(getContext(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
                                 }
-                            } else {
+                            }
+
+                            @Override
+                            public void onFailure(Call<ApiResult<UserScanQrLoginDto>> call, Throwable t) {
                                 Toast.makeText(getContext(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
                             }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ApiResult<UserScanQrLoginDto>> call, Throwable t) {
-                            Toast.makeText(getContext(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else if (resultContent.startsWith(Constants.QR_NODE_PLAN_PREFIX)) {
-                    String qrCodeSessionId = resultContent.replace(Constants.QR_NODE_PLAN_PREFIX, "");
-                    NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
-                    Call<ApiResult<GetQRContentDto>> call;
-                    Map<String, Object> paramsMap = new HashMap<>();
-                    paramsMap.put("qrcodeSessionId", qrCodeSessionId);
-                    paramsMap.put("initiatorAddress", currentWalletAddress);
-                    call = nodePlanService.getQRContent(paramsMap);
-                    call.enqueue(new Callback<ApiResult<GetQRContentDto>>() {
-                        @Override
-                        public void onResponse(Call<ApiResult<GetQRContentDto>> call, Response<ApiResult<GetQRContentDto>> response) {
-                            ApiResult<GetQRContentDto> respDto = response.body();
-                            if (null != respDto) {
-                                ExceptionEnum byValue = ExceptionEnum.getByValue(respDto.getErrCode());
-                                if (byValue == null) {
-                                    Bundle argz = new Bundle();
-                                    argz.putString("errorCode", respDto.getErrCode());
-                                    argz.putString("errorMessage", respDto.getMsg());
-                                    BPScanErrorFragment bpScanErrorFragment = new BPScanErrorFragment();
-                                    bpScanErrorFragment.setArguments(argz);
-                                    startFragment(bpScanErrorFragment);
-                                }
-                                switch (byValue) {
-                                    case SUCCESS:
-                                        showTransactionConfirmView(respDto.getData());
-                                        break;
-                                    case ERROR_VOTE_CLOSE:
-                                    case ERROR_NODE_1003:
-                                    case ERROR_ADDRESS_ALREADY_EXISTED:
-                                    case ERROR_BUILD_1036:
-                                        CommonUtil.showMessageDialog(getContext(), CommonUtil.byCodeToMsg(mContext, respDto.getErrCode()));
-                                        break;
-                                    default:
+                        });
+                    } else if (resultContent.startsWith(Constants.QR_NODE_PLAN_PREFIX)) {
+                        String qrCodeSessionId = resultContent.replace(Constants.QR_NODE_PLAN_PREFIX, "");
+                        NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
+                        Call<ApiResult<GetQRContentDto>> call;
+                        Map<String, Object> paramsMap = new HashMap<>();
+                        paramsMap.put("qrcodeSessionId", qrCodeSessionId);
+                        paramsMap.put("initiatorAddress", currentWalletAddress);
+                        call = nodePlanService.getQRContent(paramsMap);
+                        call.enqueue(new Callback<ApiResult<GetQRContentDto>>() {
+                            @Override
+                            public void onResponse(Call<ApiResult<GetQRContentDto>> call, Response<ApiResult<GetQRContentDto>> response) {
+                                ApiResult<GetQRContentDto> respDto = response.body();
+                                if (null != respDto) {
+                                    ExceptionEnum byValue = ExceptionEnum.getByValue(respDto.getErrCode());
+                                    if (byValue == null) {
                                         Bundle argz = new Bundle();
                                         argz.putString("errorCode", respDto.getErrCode());
                                         argz.putString("errorMessage", respDto.getMsg());
                                         BPScanErrorFragment bpScanErrorFragment = new BPScanErrorFragment();
                                         bpScanErrorFragment.setArguments(argz);
                                         startFragment(bpScanErrorFragment);
-                                        break;
+                                    }
+                                    switch (byValue) {
+                                        case SUCCESS:
+                                            showTransactionConfirmView(respDto.getData());
+                                            break;
+                                        case ERROR_VOTE_CLOSE:
+                                        case ERROR_NODE_1003:
+                                        case ERROR_ADDRESS_ALREADY_EXISTED:
+                                        case ERROR_BUILD_1036:
+                                            CommonUtil.showMessageDialog(getContext(), CommonUtil.byCodeToMsg(mContext, respDto.getErrCode()));
+                                            break;
+                                        default:
+                                            Bundle argz = new Bundle();
+                                            argz.putString("errorCode", respDto.getErrCode());
+                                            argz.putString("errorMessage", respDto.getMsg());
+                                            BPScanErrorFragment bpScanErrorFragment = new BPScanErrorFragment();
+                                            bpScanErrorFragment.setArguments(argz);
+                                            startFragment(bpScanErrorFragment);
+                                            break;
+                                    }
+
+
+                                } else {
+                                    Toast.makeText(getContext(), "response is null", Toast.LENGTH_SHORT).show();
                                 }
-
-
-                            } else {
-                                Toast.makeText(getContext(), "response is null", Toast.LENGTH_SHORT).show();
                             }
-                        }
 
-                        @Override
-                        public void onFailure(Call<ApiResult<GetQRContentDto>> call, Throwable t) {
-                            System.out.print(t.getMessage());
-                            t.printStackTrace();
-                            Toast.makeText(getContext(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                            @Override
+                            public void onFailure(Call<ApiResult<GetQRContentDto>> call, Throwable t) {
+                                System.out.print(t.getMessage());
+                                t.printStackTrace();
+                                Toast.makeText(getContext(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
+                            }
+                        });
 
-                } else {
-                    Toast.makeText(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT).show();
+                    }else {
+                        Toast.makeText(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT).show();
+                    }
                 }
             } else {
                 Bundle argz = new Bundle();
@@ -608,9 +621,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
             scanTxFee = Constants.NODE_AUDIT_FEE;
         } else if (ScanTransactionTypeEnum.APPLY_CO_BUILD.getCode().equals(transactionType)) {
             scanTxFee = Constants.NODE_CO_BUILD_FEE;
-        } else if (ScanTransactionTypeEnum.CO_BUILD_SUPPORT.getCode().equals(transactionType)){
-            scanTxFee=Constants.NODE_CO_BUILD_MIN_FEE;
-        }else{
+        } else if (ScanTransactionTypeEnum.CO_BUILD_SUPPORT.getCode().equals(transactionType)) {
+            scanTxFee = Constants.NODE_CO_BUILD_MIN_FEE;
+        } else {
             scanTxFee = Constants.MIN_FEE;
         }
 
