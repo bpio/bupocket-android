@@ -21,7 +21,9 @@ public class Constants {
     public static final Double NODE_VOTE_FEE = 0.15;
     public static final Double NODE_REVOKE_FEE = 0.15;
     public static final Double NODE_CO_BUILD_FEE = 10.30;
-    public static final Double NODE_CO_BUILD_MIN_FEE = 0.15;
+    public static final Double NODE_CO_BUILD_MIN_FEE = 0.01;
+    public static final Double NODE_CO_BUILD_SUPPORT = 0.15;
+    public static final Double NODE_CO_BUILD_AMOUNT_FEE = 0.01;
 
 
     public static final double MIN_SEND_AMOUNT = 0.00000001;

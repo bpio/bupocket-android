@@ -21,6 +21,7 @@ import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
 import com.bupocket.wallet.exception.WalletException;
@@ -186,17 +187,23 @@ public class BPCreateWalletFormFragment extends BaseFragment {
 
                             sharedPreferencesHelper.put("currentWalletAddress",walletBPData.getAccounts().get(1).getAddress());
 
-                            BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();
-                            Bundle argz = new Bundle();
-                            argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) walletBPData.getMnemonicCodes());
-                            backupWalletFragment.setArguments(argz);
-                            startFragment(backupWalletFragment);
+                            final WalletBPData finalWalletBPData = walletBPData;
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
 
+                                    BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();
+                                    Bundle argz = new Bundle();
+                                    argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) finalWalletBPData.getMnemonicCodes());
+                                    backupWalletFragment.setArguments(argz);
+                                    startFragment(backupWalletFragment);
+                                }
+                            });
 
                             tipDialog.dismiss();
                         } catch (WalletException e) {
                             e.printStackTrace();
-                            Toast.makeText(getActivity(), R.string.create_wallet_fail,Toast.LENGTH_SHORT).show();
+                            ToastUtil.showToast(getActivity(), R.string.create_wallet_fail,Toast.LENGTH_SHORT);
                             return;
                         }
                     }
