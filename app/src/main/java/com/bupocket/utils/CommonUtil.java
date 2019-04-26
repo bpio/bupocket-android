@@ -11,10 +11,12 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import com.bupocket.R;
 import com.bupocket.enums.CurrencyTypeEnum;
 import com.bupocket.enums.ExceptionEnum;
+import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
@@ -900,13 +902,100 @@ public class CommonUtil {
         double ratio = ((double) support / total) * 100;
         if (support == 0) {
             strRatio = "0";
-        } else if (support==total) {
+        } else if (support == total) {
             strRatio = "100";
         } else {
             DecimalFormat df = new DecimalFormat("#.00");
             strRatio = df.format(ratio);
         }
         return strRatio + "%";
+    }
+
+
+    public static void TransactionConfirmSheet(Context context,String transactionDetail,String sourceAddress,String destAddress,String amount,String fee) {
+//        final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(context);
+//        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
+//
+//        TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
+//        mTransactionDetailTv.setText(transactionDetail);
+//        TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
+//        TextView mDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.destAddressTvHint);
+//        if (TextUtils.isEmpty(destAddress)) {
+//            mDestAddressTv.setVisibility(View.GONE);
+//            mDestAddressTvHint.setVisibility(View.GONE);
+//        } else {
+//            mDestAddressTv.setVisibility(View.VISIBLE);
+//            mDestAddressTvHint.setVisibility(View.VISIBLE);
+//            if (TextUtils.isEmpty(accountTag)) {
+//                mDestAddressTv.setText(destAddress);
+//            } else {
+//                mDestAddressTv.setText(destAddress.concat(accountTag));
+//            }
+//
+//        }
+//
+//        TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
+//        mTxFeeTv.setText(String.valueOf(scanTxFee));
+//
+//
+//        qmuiBottomSheet.findViewById(R.id.detailBtn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.GONE);
+//                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.VISIBLE);
+//            }
+//        });
+//
+//
+//        TextView mSourceAddressTv = qmuiBottomSheet.findViewById(R.id.sourceAddressTv);
+//        mSourceAddressTv.setText(sourceAddress);
+//        TextView mDetailsDestAddressTv = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTv);
+//        TextView mDetailsDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTvHint);
+//        if (TextUtils.isEmpty(destAddress)) {
+//            mDetailsDestAddressTv.setVisibility(View.GONE);
+//            mDetailsDestAddressTvHint.setVisibility(View.GONE);
+//        } else {
+//            mDetailsDestAddressTv.setVisibility(View.VISIBLE);
+//            mDetailsDestAddressTvHint.setVisibility(View.VISIBLE);
+//            mDetailsDestAddressTv.setText(destAddress);
+//        }
+//
+//
+//        TextView mDetailsAmountTv = qmuiBottomSheet.findViewById(R.id.detailsAmountTv);
+//        mDetailsAmountTv.setText(CommonUtil.thousandSeparator(transactionAmount));
+//        TextView mDetailsTxFeeTv = qmuiBottomSheet.findViewById(R.id.detailsTxFeeTv);
+//        mDetailsTxFeeTv.setText(String.valueOf(scanTxFee));
+//        TextView mTransactionParamsTv = qmuiBottomSheet.findViewById(R.id.transactionParamsTv);
+//        mTransactionParamsTv.setText(transactionParams);
+//
+//        // title view listener
+//        qmuiBottomSheet.findViewById(R.id.goBackBtn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.VISIBLE);
+//                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.GONE);
+//            }
+//        });
+//        qmuiBottomSheet.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                qmuiBottomSheet.dismiss();
+//            }
+//        });
+//        qmuiBottomSheet.findViewById(R.id.detailsCancelBtn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                qmuiBottomSheet.dismiss();
+//            }
+//        });
+//        qmuiBottomSheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                qmuiBottomSheet.dismiss();
+//                confirmTransaction(contentDto);
+//            }
+//        });
+//        qmuiBottomSheet.show();
     }
 
 }

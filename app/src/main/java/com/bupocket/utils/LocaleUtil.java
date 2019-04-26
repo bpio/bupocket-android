@@ -67,6 +67,21 @@ public class LocaleUtil {
         resources.updateConfiguration(configuration, dm);
     }
 
+
+    public static int getLanguageStatus() {
+        int currentLanguage = (int) SharedPreferencesHelper.getInstance().getInt("currentLanguage", 0);
+
+        switch (currentLanguage) {
+            case 0:// Locale.SIMPLIFIED_CHINESE;
+                return 0;
+            case 1://Locale.ENGLISH;
+                return 1;
+        }
+
+        return 0;
+    }
+
+
     /**
      * 保存设置的语言
      *

@@ -47,6 +47,7 @@ import com.bupocket.http.api.dto.resp.UserScanQrLoginDto;
 import com.bupocket.model.TransConfirmModel;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.LocaleUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
@@ -619,6 +620,15 @@ public class BPAssetsHomeFragment extends BaseFragment {
         String transactionParams = contentDto.getScript();
         String transactionType = contentDto.getType();
         String accountTag = contentDto.getAccountTag();
+
+
+        switch (LocaleUtil.getLanguageStatus()) {
+            case 1:
+                accountTag = contentDto.getAccountTagEn();
+                transactionDetail = contentDto.getQrRemarkEn();
+                break;
+        }
+
         if (ScanTransactionTypeEnum.NODE_VOTE.getCode().equals(transactionType)) {
             scanTxFee = Constants.NODE_VOTE_FEE;
         } else if (ScanTransactionTypeEnum.CO_BUILD_APPLY.getCode().equals(transactionType)) {
@@ -628,7 +638,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         } else if (ScanTransactionTypeEnum.CO_BUILD_SUPPORT.getCode().equals(transactionType)) {
             scanTxFee = Constants.NODE_CO_BUILD_SUPPORT;
         } else if (ScanTransactionTypeEnum.CO_BUILD_APPLY.getCode().equals(transactionType)
-        ||ScanTransactionTypeEnum.CO_BUILD_CANCLE.getCode().equals(transactionType)
+                || ScanTransactionTypeEnum.CO_BUILD_CANCLE.getCode().equals(transactionType)
         ) {
             scanTxFee = Constants.NODE_CO_BUILD_SUPPORT;
         } else {

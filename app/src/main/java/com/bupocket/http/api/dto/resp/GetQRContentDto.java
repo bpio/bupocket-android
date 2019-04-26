@@ -21,6 +21,24 @@ public class GetQRContentDto {
     private String script;
     private String qrRemark;
     private String nodeId;
+    private String accountTagEn;
+    private String qrRemarkEn;
+
+    public String getAccountTagEn() {
+        return accountTagEn;
+    }
+
+    public void setAccountTagEn(String accountTagEn) {
+        this.accountTagEn = accountTagEn;
+    }
+
+    public String getQrRemarkEn() {
+        return qrRemarkEn;
+    }
+
+    public void setQrRemarkEn(String qrRemarkEn) {
+        this.qrRemarkEn = qrRemarkEn;
+    }
 
     public String getNodeId() {
         return nodeId;
