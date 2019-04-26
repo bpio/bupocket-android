@@ -507,7 +507,7 @@
 
 
     <string name="error_vote_close">投票通道还未开启，请在开启后进行投票</string>
-    <string name="error_timeout">请求已超时</string>
+    <string name="error_timeout">请求已过期</string>
     <string name="error_1003">该待绑定的物理地址已被占用，请更换后再申请</string>
     <string name="error_1009">该钱包账户已申请过，请更换后再进行申请</string>
     <string name="error_1011">检测到有尚未提交的操作，请稍后再重试</string>

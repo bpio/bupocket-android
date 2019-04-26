@@ -546,35 +546,30 @@ public class BPAssetsHomeFragment extends BaseFragment {
                             public void onResponse(Call<ApiResult<GetQRContentDto>> call, Response<ApiResult<GetQRContentDto>> response) {
                                 ApiResult<GetQRContentDto> respDto = response.body();
                                 if (null != respDto) {
-                                    ExceptionEnum byValue = ExceptionEnum.getByValue(respDto.getErrCode());
-                                    if (byValue == null) {
+
+                                    if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
+                                        showTransactionConfirmView(respDto.getData());
+                                    }else if (ExceptionEnum.ERROR_TIMEOUT.getCode().equals(respDto.getErrCode())){
                                         Bundle argz = new Bundle();
                                         argz.putString("errorCode", respDto.getErrCode());
                                         argz.putString("errorMessage", respDto.getMsg());
                                         BPScanErrorFragment bpScanErrorFragment = new BPScanErrorFragment();
                                         bpScanErrorFragment.setArguments(argz);
                                         startFragment(bpScanErrorFragment);
-                                    }
-                                    switch (byValue) {
-                                        case SUCCESS:
-                                            showTransactionConfirmView(respDto.getData());
-                                            break;
-                                        case ERROR_VOTE_CLOSE:
-                                        case ERROR_NODE_1003:
-                                        case ERROR_ADDRESS_ALREADY_EXISTED:
-                                        case ERROR_BUILD_1036:
-                                            CommonUtil.showMessageDialog(getContext(), CommonUtil.byCodeToMsg(mContext, respDto.getErrCode()));
-                                            break;
-                                        default:
+                                    } else {
+                                        String msg = CommonUtil.byCodeToMsg(mContext, respDto.getErrCode());
+                                        if (!msg.isEmpty()) {
+                                            CommonUtil.showMessageDialog(getContext(), msg);
+                                        }else{
                                             Bundle argz = new Bundle();
                                             argz.putString("errorCode", respDto.getErrCode());
                                             argz.putString("errorMessage", respDto.getMsg());
                                             BPScanErrorFragment bpScanErrorFragment = new BPScanErrorFragment();
                                             bpScanErrorFragment.setArguments(argz);
                                             startFragment(bpScanErrorFragment);
-                                            break;
-                                    }
+                                        }
 
+                                    }
 
                                 } else {
                                     Toast.makeText(getContext(), "response is null", Toast.LENGTH_SHORT).show();

@@ -539,6 +539,8 @@
     <string name="build_exit_all">Withdraw All</string>
 
 
+
+    <string name="error_timeout">The request is expired</string>
     <string name="transaction_costs_txt">Transaction fees(BU)</string>
     <string name="transaction_originator_txt">Initiator</string>
     <string name="opposite_account_txt">The receiving account</string>
