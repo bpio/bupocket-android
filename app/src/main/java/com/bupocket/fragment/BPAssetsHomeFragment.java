@@ -30,6 +30,7 @@ import com.bupocket.enums.BackupTipsStateEnum;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.CurrencyTypeEnum;
 import com.bupocket.enums.ExceptionEnum;
+import com.bupocket.enums.ExceptionLoginEnum;
 import com.bupocket.enums.MnemonicWordBackupStateEnum;
 import com.bupocket.enums.ScanTransactionTypeEnum;
 import com.bupocket.enums.TokenActionTypeEnum;
@@ -516,12 +517,22 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                         BPNodePlanManagementSystemLoginFragment bpNodePlanManagementSystemLoginFragment = new BPNodePlanManagementSystemLoginFragment();
                                         bpNodePlanManagementSystemLoginFragment.setArguments(argz);
                                         startFragment(bpNodePlanManagementSystemLoginFragment);
-                                    } else {
+                                    } else if (ExceptionLoginEnum.ERROR_TIMEOUT.getCode().equals(respDto.getErrCode())){
                                         Bundle argz = new Bundle();
                                         argz.putString("errorCode", respDto.getErrCode());
+                                        argz.putString("errorMessage",mContext.getString(ExceptionLoginEnum.ERROR_TIMEOUT.getMsg()));
                                         BPScanErrorFragment bpScanErrorFragment = new BPScanErrorFragment();
                                         bpScanErrorFragment.setArguments(argz);
                                         startFragment(bpScanErrorFragment);
+                                    } else if (ExceptionLoginEnum.ERROR_VOTE_CLOSE.getCode().equals(respDto.getErrCode())){
+                                        Bundle argz = new Bundle();
+                                        argz.putString("errorCode", respDto.getErrCode());
+                                        argz.putString("errorMessage",mContext.getString(ExceptionLoginEnum.ERROR_VOTE_CLOSE.getMsg()));
+                                        BPScanErrorFragment bpScanErrorFragment = new BPScanErrorFragment();
+                                        bpScanErrorFragment.setArguments(argz);
+                                        startFragment(bpScanErrorFragment);
+                                    }else{
+                                        ToastUtil.showToast(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT);
                                     }
                                 } else {
                                     Toast.makeText(getContext(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
@@ -568,7 +579,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                             bpScanErrorFragment.setArguments(argz);
                                             startFragment(bpScanErrorFragment);
                                         }
-
                                     }
 
                                 } else {
@@ -617,7 +627,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         } else if (ScanTransactionTypeEnum.APPLY_CO_BUILD.getCode().equals(transactionType)) {
             scanTxFee = Constants.NODE_CO_BUILD_FEE;
         } else if (ScanTransactionTypeEnum.CO_BUILD_SUPPORT.getCode().equals(transactionType)) {
-            scanTxFee = Constants.NODE_CO_BUILD_MIN_FEE;
+            scanTxFee = Constants.NODE_CO_BUILD_SUPPORT;
         } else {
             scanTxFee = Constants.MIN_FEE;
         }
@@ -735,7 +745,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         org.json.JSONObject jsonObj = new org.json.JSONObject(script);
                         String input = jsonObj.getString("input");
                         String payload = jsonObj.getString("payload");
-                        buildBlobResponse = Wallet.getInstance().applyCoBuildBlob(currentWalletAddress, String.valueOf(Double.parseDouble(amount) + Constants.NODE_CO_BUILD_MIN_FEE), input.toString(), payload, Constants.NODE_CO_BUILD_FEE);
+                        buildBlobResponse = Wallet.getInstance().applyCoBuildBlob(currentWalletAddress, String.valueOf(Double.parseDouble(amount) + Constants.NODE_CO_BUILD_AMOUNT_FEE), input.toString(), payload, Constants.NODE_CO_BUILD_FEE);
                     } else {
                         buildBlobResponse = Wallet.getInstance().buildBlob(amount, script, currentWalletAddress, String.valueOf(scanTxFee), contractAddress);
                     }

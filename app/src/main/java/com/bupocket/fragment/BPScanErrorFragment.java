@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.ExceptionEnum;
+import com.bupocket.enums.ExceptionLoginEnum;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import butterknife.BindView;
@@ -52,9 +53,13 @@ public class BPScanErrorFragment extends BaseFragment {
     }
 
     private void initUI() {
-        if(!ExceptionEnum.SUCCESS.equals(errorCode)){
+
+        if (ExceptionLoginEnum.ERROR_VOTE_CLOSE.getCode().equals(errorCode)) {
             mErrorTypeTv.setText(errorMessage);
             mErrorMessageTv.setText(getResources().getString(R.string.refresh_qr_tips_txt));
+        }else if (!ExceptionEnum.SUCCESS.equals(errorCode)){
+            mErrorTypeTv.setText(errorMessage);
+            mErrorMessageTv.setText(getResources().getString(R.string.bound_address_note_txt));
         }
     }
 

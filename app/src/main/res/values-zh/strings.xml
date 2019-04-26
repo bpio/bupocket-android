@@ -425,7 +425,6 @@
     <string name="revoke_no_vote_error_message_txt">暂无可撤销的票数</string>
     <string name="revoke_vote_tx_details_txt">撤销向\"%1$s\"的投票</string>
     <string name="revoke_vote_dest_address_txt">%1$s(节点计划合约账户)</string>
-    <string name="withdraw_vote_fee_txt">本次最多支付交易费用约%1$sBU</string>
     <string name="opposite_account_txt">对方账户</string>
     <string name="details_txt">详情>></string>
     <string name="details">详情</string>
