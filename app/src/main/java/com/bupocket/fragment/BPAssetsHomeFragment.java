@@ -68,7 +68,6 @@ import io.bumo.model.response.TransactionBuildBlobResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Url;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -480,12 +479,12 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         ToastUtil.showToast(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT);
                     }
 
-                } else  {
+                } else {
 
                     try {
-                        java.net.URL  url = new  java.net.URL(resultContent);
+                        java.net.URL url = new java.net.URL(resultContent);
                         String path = url.getPath();
-                        resultContent=path;
+                        resultContent = path;
                     } catch (MalformedURLException e) {
                         e.printStackTrace();
                     }
@@ -517,21 +516,21 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                         BPNodePlanManagementSystemLoginFragment bpNodePlanManagementSystemLoginFragment = new BPNodePlanManagementSystemLoginFragment();
                                         bpNodePlanManagementSystemLoginFragment.setArguments(argz);
                                         startFragment(bpNodePlanManagementSystemLoginFragment);
-                                    } else if (ExceptionLoginEnum.ERROR_TIMEOUT.getCode().equals(respDto.getErrCode())){
+                                    } else if (ExceptionLoginEnum.ERROR_TIMEOUT.getCode().equals(respDto.getErrCode())) {
                                         Bundle argz = new Bundle();
                                         argz.putString("errorCode", respDto.getErrCode());
-                                        argz.putString("errorMessage",mContext.getString(ExceptionLoginEnum.ERROR_TIMEOUT.getMsg()));
+                                        argz.putString("errorMessage", mContext.getString(ExceptionLoginEnum.ERROR_TIMEOUT.getMsg()));
                                         BPScanErrorFragment bpScanErrorFragment = new BPScanErrorFragment();
                                         bpScanErrorFragment.setArguments(argz);
                                         startFragment(bpScanErrorFragment);
-                                    } else if (ExceptionLoginEnum.ERROR_VOTE_CLOSE.getCode().equals(respDto.getErrCode())){
+                                    } else if (ExceptionLoginEnum.ERROR_VOTE_CLOSE.getCode().equals(respDto.getErrCode())) {
                                         Bundle argz = new Bundle();
                                         argz.putString("errorCode", respDto.getErrCode());
-                                        argz.putString("errorMessage",mContext.getString(ExceptionLoginEnum.ERROR_VOTE_CLOSE.getMsg()));
+                                        argz.putString("errorMessage", mContext.getString(ExceptionLoginEnum.ERROR_VOTE_CLOSE.getMsg()));
                                         BPScanErrorFragment bpScanErrorFragment = new BPScanErrorFragment();
                                         bpScanErrorFragment.setArguments(argz);
                                         startFragment(bpScanErrorFragment);
-                                    }else{
+                                    } else {
                                         ToastUtil.showToast(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT);
                                     }
                                 } else {
@@ -560,7 +559,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
                                     if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
                                         showTransactionConfirmView(respDto.getData());
-                                    }else if (ExceptionEnum.ERROR_TIMEOUT.getCode().equals(respDto.getErrCode())){
+                                    } else if (ExceptionEnum.ERROR_TIMEOUT.getCode().equals(respDto.getErrCode())) {
                                         Bundle argz = new Bundle();
                                         argz.putString("errorCode", respDto.getErrCode());
                                         argz.putString("errorMessage", respDto.getMsg());
@@ -571,7 +570,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                         String msg = CommonUtil.byCodeToMsg(mContext, respDto.getErrCode());
                                         if (!msg.isEmpty()) {
                                             CommonUtil.showMessageDialog(getContext(), msg);
-                                        }else{
+                                        } else {
                                             Bundle argz = new Bundle();
                                             argz.putString("errorCode", respDto.getErrCode());
                                             argz.putString("errorMessage", respDto.getMsg());
@@ -594,7 +593,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                             }
                         });
 
-                    }else {
+                    } else {
                         Toast.makeText(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -622,11 +621,15 @@ public class BPAssetsHomeFragment extends BaseFragment {
         String accountTag = contentDto.getAccountTag();
         if (ScanTransactionTypeEnum.NODE_VOTE.getCode().equals(transactionType)) {
             scanTxFee = Constants.NODE_VOTE_FEE;
-        } else if (ScanTransactionTypeEnum.NODE_AUDIT.getCode().equals(transactionType)) {
+        } else if (ScanTransactionTypeEnum.CO_BUILD_APPLY.getCode().equals(transactionType)) {
             scanTxFee = Constants.NODE_AUDIT_FEE;
         } else if (ScanTransactionTypeEnum.APPLY_CO_BUILD.getCode().equals(transactionType)) {
             scanTxFee = Constants.NODE_CO_BUILD_FEE;
         } else if (ScanTransactionTypeEnum.CO_BUILD_SUPPORT.getCode().equals(transactionType)) {
+            scanTxFee = Constants.NODE_CO_BUILD_SUPPORT;
+        } else if (ScanTransactionTypeEnum.CO_BUILD_APPLY.getCode().equals(transactionType)
+        ||ScanTransactionTypeEnum.CO_BUILD_CANCLE.getCode().equals(transactionType)
+        ) {
             scanTxFee = Constants.NODE_CO_BUILD_SUPPORT;
         } else {
             scanTxFee = Constants.MIN_FEE;
@@ -646,7 +649,12 @@ public class BPAssetsHomeFragment extends BaseFragment {
         } else {
             mDestAddressTv.setVisibility(View.VISIBLE);
             mDestAddressTvHint.setVisibility(View.VISIBLE);
-            mDestAddressTv.setText(destAddress.concat(accountTag));
+            if (TextUtils.isEmpty(accountTag)) {
+                mDestAddressTv.setText(destAddress);
+            } else {
+                mDestAddressTv.setText(destAddress.concat(accountTag));
+            }
+
         }
 
         TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);

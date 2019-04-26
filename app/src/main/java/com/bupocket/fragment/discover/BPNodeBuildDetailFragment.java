@@ -202,7 +202,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     int supportCopies = detailModel.getTotalCopies() - detailModel.getLeftCopies();
                     pbDetail.setProgress(supportCopies);
 
-                    tvProgress.setText(CommonUtil.setRatio(supportCopies,detailModel.getTotalCopies()));
+                    tvProgress.setText(CommonUtil.setRatio(supportCopies, detailModel.getTotalCopies()));
 
 
                     tvBuildDetailSharingRatio.setText(detailModel.getRewardRate() + "%");
@@ -248,18 +248,14 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     isExit = CoBuildDetailStatusEnum.CO_BUILD_FAILURE.getCode().equals(detailModel.getStatus());
 
                     //origin
-                    if (getWalletAddress().equals(detailModel.getOriginatorAddress())) {
-                        llBtnBuild.setVisibility(View.GONE);
-                    }else{
-                        if (CoBuildDetailStatusEnum.CO_BUILD_RUNING.getCode().equals(detailModel.getStatus())) {
-                            llBtnBuild.setVisibility(View.VISIBLE);
-                        }else if (CoBuildDetailStatusEnum.CO_BUILD_FAILURE.getCode().equals(detailModel.getStatus())){
-                            llBtnBuild.setVisibility(View.VISIBLE);
-                            btnBuildSupport.setVisibility(View.GONE);
-                            btnBuildExit.setText(getString(R.string.build_exit_all));
-                        }
+                    if (CoBuildDetailStatusEnum.CO_BUILD_RUNING.getCode().equals(detailModel.getStatus()) &&
+                            !getWalletAddress().equals(detailModel.getOriginatorAddress())) {
+                        llBtnBuild.setVisibility(View.VISIBLE);
+                    } else if (CoBuildDetailStatusEnum.CO_BUILD_FAILURE.getCode().equals(detailModel.getStatus())) {
+                        llBtnBuild.setVisibility(View.VISIBLE);
+                        btnBuildSupport.setVisibility(View.GONE);
+                        btnBuildExit.setText(getString(R.string.build_exit_all));
                     }
-
                     ArrayList<NodeBuildSupportModel> nodelist = body.getData().getSupportList();
                     if (nodelist == null || nodelist.size() == 0) {
                         lvBuildDetail.addHeaderView(emptyLayout);
