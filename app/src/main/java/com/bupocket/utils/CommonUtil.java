@@ -1,5 +1,6 @@
 package com.bupocket.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -996,6 +997,20 @@ public class CommonUtil {
 //            }
 //        });
 //        qmuiBottomSheet.show();
+    }
+
+
+    public static void setExpiryTime(String expiryTime,Context context){
+        if (!TextUtils.isEmpty(expiryTime)) {
+            String[] strings = TimeUtil.time_mmss(Long.parseLong(expiryTime) - System.currentTimeMillis());
+            if (strings[0].isEmpty()) {
+                @SuppressLint("StringFormatMatches") String format = String.format(context.getString(R.string.error_1011_s, strings[1] + ""));
+                CommonUtil.showMessageDialog(context, format);
+            } else {
+                @SuppressLint("StringFormatMatches") String format = String.format(context.getString(R.string.error_1011_m, strings[0] + "",strings[1] + ""));
+                CommonUtil.showMessageDialog(context, format);
+            }
+        }
     }
 
 }

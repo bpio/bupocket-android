@@ -4,6 +4,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.CoBuildListModel;
 import com.bupocket.model.NodeBuildDetailModel;
 import com.bupocket.model.NodeBuildModel;
+import com.bupocket.model.TransConfirmModel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,9 +28,9 @@ public interface NodeBuildService {
     Call<ApiResult<NodeBuildModel>> getNodeBuildExit(@Body Map<String,Object> map);
 
     @POST("nodeServer/node/v1/cooperate/support")
-    Call<ApiResult> verifySupport(@Body Map<String,Object> map);
+    Call<ApiResult<TransConfirmModel>> verifySupport(@Body Map<String,Object> map);
 
     @POST("nodeServer/node/v1/cooperate/exit")
-    Call<ApiResult> verifyExit(@Body Map<String,Object> map);
+    Call<ApiResult<TransConfirmModel>> verifyExit(@Body Map<String,Object> map);
 
 }

@@ -28,6 +28,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetTokensRespDto;
 import com.bupocket.model.NodeBuildDetailModel;
 import com.bupocket.model.NodeBuildSupportModel;
+import com.bupocket.model.TransConfirmModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.wallet.Wallet;
@@ -428,22 +429,29 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     map.put("hash", hash);
                     map.put("initiatorAddress", getWalletAddress());
                     NodeBuildService nodeBuildService = RetrofitFactory.getInstance().getRetrofit().create(NodeBuildService.class);
-                    nodeBuildService.verifyExit(map).enqueue(new Callback<ApiResult>() {
+                    nodeBuildService.verifyExit(map).enqueue(new Callback<ApiResult<TransConfirmModel>>() {
                         @Override
-                        public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
-                            ApiResult body = response.body();
+                        public void onResponse(Call<ApiResult<TransConfirmModel>> call, Response<ApiResult<TransConfirmModel>> response) {
+                            ApiResult<TransConfirmModel> body = response.body();
                             txSendingTipDialog.dismiss();
 
                             if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
                                 submitTransactionBase(transBlob);
                             } else {
-                                CommonUtil.showMessageDialog(mContext, body.getMsg(), body.getErrCode());
+
+                                if (ExceptionEnum.ERROR_TRANSACTION_OTHER_1011.getCode().equals(body.getErrCode())) {
+                                   String expiryTime = body.getData().getExpiryTime();
+                                    CommonUtil.setExpiryTime(expiryTime, mContext);
+
+                                } else {
+                                    CommonUtil.showMessageDialog(mContext, body.getMsg(), body.getErrCode());
+                                }
 
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<ApiResult> call, Throwable t) {
+                        public void onFailure(Call<ApiResult<TransConfirmModel>> call, Throwable t) {
                             txSendingTipDialog.dismiss();
                         }
                     });
@@ -646,20 +654,26 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     map.put("copies", num + "");
                     map.put("initiatorAddress", getWalletAddress());
                     NodeBuildService nodeBuildService = RetrofitFactory.getInstance().getRetrofit().create(NodeBuildService.class);
-                    nodeBuildService.verifySupport(map).enqueue(new Callback<ApiResult>() {
+                    nodeBuildService.verifySupport(map).enqueue(new Callback<ApiResult<TransConfirmModel>>() {
                         @Override
-                        public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
-                            ApiResult body = response.body();
+                        public void onResponse(Call<ApiResult<TransConfirmModel>> call, Response<ApiResult<TransConfirmModel>> response) {
+                            ApiResult<TransConfirmModel> body = response.body();
                             txSendingTipDialog.dismiss();
                             if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
                                 submitTransactionBase(transBlob);
                             } else {
-                                CommonUtil.showMessageDialog(mContext, body.getMsg(), body.getErrCode());
+                                if (ExceptionEnum.ERROR_TRANSACTION_OTHER_1011.getCode().equals(body.getErrCode())) {
+                                    String expiryTime = body.getData().getExpiryTime();
+                                    CommonUtil.setExpiryTime(expiryTime, mContext);
+
+                                } else {
+                                    CommonUtil.showMessageDialog(mContext, body.getMsg(), body.getErrCode());
+                                }
                             }
                         }
 
                         @Override
-                        public void onFailure(Call<ApiResult> call, Throwable t) {
+                        public void onFailure(Call<ApiResult<TransConfirmModel>> call, Throwable t) {
                             txSendingTipDialog.dismiss();
                         }
                     });

@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -51,6 +52,7 @@ import com.bupocket.utils.LocaleUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.TimeUtil;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -72,6 +74,7 @@ import retrofit2.Response;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -162,7 +165,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         refreshLayout.finishRefresh();
                         refreshLayout.setNoMoreData(false);
                     }
-                },400);
+                }, 400);
             }
         });
     }
@@ -808,8 +811,19 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                 expiryTime = respDto.getData().getExpiryTime();
                                 submitTransactionBase(buildBlobResponse);
                             } else {
-                                CommonUtil.showMessageDialog(getContext(), respDto.getMsg(), respDto.getErrCode());
+
+                                if (ExceptionEnum.ERROR_TRANSACTION_OTHER_1011.getCode().equals(respDto.getErrCode())) {
+                                    expiryTime = respDto.getData().getExpiryTime();
+                                    CommonUtil.setExpiryTime(expiryTime,mContext);
+
+                                } else {
+                                    CommonUtil.showMessageDialog(getContext(), respDto.getMsg(), respDto.getErrCode());
+                                }
+
+
                             }
+
+
                         }
 
                         @Override

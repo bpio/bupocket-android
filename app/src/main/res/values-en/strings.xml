@@ -498,7 +498,8 @@
     <string name="error_1009">The wallet account has been applied for, please apply after replacing it.</string>
     <string name="error_1011">An uncommitted operation is detected; please try again later.</string>
     <string name="error_100055">The contact is already existed.</string>
-
+    <string name="error_1011_s">Please complete the remaining operations. You can trade again after %1$s seconds</string>
+    <string name="error_1011_m">Please complete the remaining operations. You can trade again after %1$s sminutes/ %1$s seconds</string>
     <string name="error_1031">The current project has obtained enough BUs, and you can choose other projects to sponsor.</string>
     <string name="error_1032">The remaining number is insufficient. It is recommended that you adjust the number to sponsor.</string>
     <string name="error_1033"> You have not sponsored this project so you cannot withdraw from it.</string>

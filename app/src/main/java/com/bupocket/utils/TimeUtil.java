@@ -58,6 +58,18 @@ public class TimeUtil {
         return sdf.format(new Date(Long.valueOf(seconds+"000")));
     }
 
+    public static String[] time_mmss(long time) {
+
+        String format = "mm:ss";
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        String[] split = sdf.format(new Date(time)).toString().split(":");
+        split[0]=split[0].replace("0","");
+        split[1]= String.valueOf(Integer.parseInt(split[1]));
+        return split;
+    }
+
+
+
     public static long getCurrentTimeMillis(){
         return System.currentTimeMillis();
     }
