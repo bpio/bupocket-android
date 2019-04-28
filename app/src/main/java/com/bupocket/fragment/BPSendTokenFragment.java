@@ -701,8 +701,8 @@ public class BPSendTokenFragment extends BaseFragment {
                                 argz.putString("note", txDeatilRespBoBean.getOriginalMetadata());
                                 argz.putString("state", txDeatilRespBoBean.getStatus().toString());
                                 argz.putString("sendTime", txDeatilRespBoBean.getApplyTimeDate());
-
                                 argz.putString("sendTokenStatusKey", SEND_TOKEN_STATUS);
+                                argz.putString("txHash",hash);
                                 BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
                                 bpSendStatusFragment.setArguments(argz);
                                 startFragmentAndDestroyCurrent(bpSendStatusFragment);

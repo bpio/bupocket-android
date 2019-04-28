@@ -72,6 +72,14 @@ public class BPSendStatusFragment extends BaseFragment {
 
     @BindView(R.id.ivTransSuccess)
     ImageView ivTransSuccess;
+
+
+    @BindView(R.id.sendTransHash)
+    TextView  tvTransHash;
+
+    @BindView(R.id.tvFromAddress)
+    TextView tvFormAddress;
+
     private AdModel ad;
 
 
@@ -109,6 +117,7 @@ public class BPSendStatusFragment extends BaseFragment {
         String sendTime = getArguments().getString("sendTime");
         Integer txStatus = Integer.parseInt(getArguments().getString("state"));
         String sendTokenStatus = getArguments().getString("sendTokenStatusKey");
+        String txHash = getArguments().getString("txHash");
 
         String txStatusStr;
         llTransactionSuccess.setVisibility(View.GONE);
@@ -140,10 +149,12 @@ public class BPSendStatusFragment extends BaseFragment {
 
         }
 
+        tvFormAddress.setText(getWalletAddress());
         targetAddrTv.setText(destAccAddr);
         sendAmountTv.setText(sendAmount);
         sendFeeTv.setText(txFee);
         sendNoteTv.setText(note);
+        tvTransHash.setText(txHash);
         mSendTimeTv.setText(TimeUtil.timeStamp2Date(sendTime.substring(0, 10), "yyyy.MM.dd HH:mm:ss"));
 
 

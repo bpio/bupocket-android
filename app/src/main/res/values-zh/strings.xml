@@ -64,7 +64,6 @@
     <string name="tx_status_fail_txt">失败</string>
     <string name="tx_status_success_txt1">转账成功</string>
     <string name="tx_status_fail_txt1">转账失败</string>
-    <string name="tx_status_fail_txt2">&#010;错误码:</string>
     <string name="tx_status_fail_txt3">合约调用失败</string>
     <string name="tx_timeout_txt1">请求超时</string>
 
@@ -98,18 +97,18 @@
     <string name="send_hint_txt3">请输交易费用</string>
     <string name="send_status_success_txt">转账成功</string>
     <string name="send_status_target_addr">对方账户</string>
-    <string name="send_status_amount">转出数量</string>
+    <string name="send_status_amount">数量</string>
     <string name="send_tx_handleing_txt">处理中...</string>
     <string name="send_tx_bu_not_enough">BU余额不足</string>
     <string name="send_tx_fee_not_enough">交易费用不足</string>
     <string name="send_status_fee">预估最多支付费用</string>
     <string name="tx_timeout_err">交易超时</string>
     <string name="send_status_note">备注</string>
-    <string name="send_status_time">转账时间</string>
+    <string name="send_status_time">交易时间</string>
     <string name="send_available_balance_txt">可用余额</string>
     <string name="send_form_next_btn_txt">下一步</string>
-    <string name="tx_dettail_from_acc_addr_label">发送方地址</string>
-    <string name="tx_dettail_to_acc_addr_label">接收方地址</string>
+    <string name="tx_dettail_from_acc_addr_label">发送账户</string>
+    <string name="tx_dettail_to_acc_addr_label">接收账户</string>
     <string name="tx_detail_fee_label">交易费</string>
     <string name="tx_detail_send_date_label">发送时间</string>
     <string name="tx_detail_note_label">备注</string>
@@ -423,8 +422,10 @@
     <string name="status_txt">状态</string>
     <string name="time_txt">时间</string>
     <string name="revoke_no_vote_error_message_txt">暂无可撤销的票数</string>
-    <string name="revoke_vote_tx_details_txt">撤销向\"%1$s\"的投票</string>
-    <string name="revoke_vote_dest_address_txt">%1$s(节点计划合约账户)</string>
+    <string name="revoke_vote_tx_details_txt">撤销对\"%1$s\"的投票</string>
+
+
+
     <string name="opposite_account_txt">对方账户</string>
     <string name="details_txt">详情>></string>
     <string name="details">详情</string>
@@ -432,7 +433,6 @@
     <string name="transaction_costs_txt">交易费用(BU)</string>
     <string name="parameter_txt">参数</string>
     <string name="refresh_qr_tips_txt">请刷新二维码，再进行扫码</string>
-
     <string name="scan_qr_login_management_system_not_bound_txt">该钱包账户未在该平台绑定</string>
     <string name="bound_address_note_txt">请联系该平台管理进行绑定</string>
     <string name="node_plan_management_system_txt">节点计划运营管理系统</string>
@@ -513,15 +513,14 @@
     <string name="error_100055">the contact is already existed</string>
     <string name="error_build_success_01">抱歉，该共建项目已被认购完</string>
     <string name="error_build_success_02">抱歉，该共建项目已完成，目前您不能退出</string>
+    <string name="error_build_1028">copies is not available</string>
     <string name="error_1031">当前项目已获得目标共建总金额，  您可选择其他项目进行支持</string>
     <string name="error_1032">剩余份数不足，建议您调整支持份数</string>
     <string name="error_1033">您还未支持过此项目，暂不能撤回</string>
     <string name="error_1034">节点共建项目已完成，暂不支持退出</string>
     <string name="error_1035">不是该共建节点发起者，无法发起该操作</string>
-
-
     <string name="error_1036">节点共建项目发起者不能参与支持</string>
-
+    <string name="error_1038">您已成功撤回，不能重复操作</string>
 
 
     <string name="send_tx_verify">数据验证中</string>
@@ -532,7 +531,7 @@
     <string name="transaction_timeout_info">交易广播成功，交易最终状态请复制交易摘要到&lt;font color=\'#02CA71\'>https://explorer.bumo.io&lt;/font>查询</string>
     <string name="transaction_info">交易摘要</string>
 
-    <string name="error_build_1028">copies is not available</string>
+
     <string name="build_exit_confirm_title">撤回支持\"%1$s&quot;\"项目</string>
     <string name="build_support_confirm_title">支持\"&quot;%1$s&quot;\"项目</string>
     <string name="build_type_support">支持</string>
@@ -555,6 +554,7 @@
     <string name="build_failure">共建失败</string>
 
     <string name="build_cooperate_bond">节点共建项目发起者转入保证金作为节点共建的锁仓金额</string>
+    <string name="send_status_trans_hash">交易Hash</string>
 
 
 </resources>

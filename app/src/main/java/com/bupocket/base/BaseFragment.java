@@ -255,6 +255,7 @@ public abstract class BaseFragment extends QMUIFragment {
                                 argz.putString("note", txDetailRespBoBean.getOriginalMetadata());
                                 argz.putString("state", txDetailRespBoBean.getStatus().toString());
                                 argz.putString("sendTime", txDetailRespBoBean.getApplyTimeDate());
+                                argz.putString("txHash",txHash);
                                 BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
                                 bpSendStatusFragment.setArguments(argz);
                                 startFragment(bpSendStatusFragment);

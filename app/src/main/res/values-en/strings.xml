@@ -517,7 +517,7 @@
     <string name="error_1035">This operation can only be initiated by the initiator of the node co-funding.</string>
     <string name="error_1036">The initiator of the node co-funding project cannot be a sponsor.</string>
     <string name="error_1038">You have withdrawn successfully. Frequent operations are not allowed.</string>
-
+    <string name="tx_status_fail_txt3">The contract call failed</string>
 
     <string name="error_vote_close">The voting channel is not yet open. Please vote after opening the channel</string>
     <string name="share_close">The voting channel is not yet open. Please share after opening the channel </string>
@@ -549,4 +549,7 @@
     <string name="opposite_account_txt">The receiving account</string>
 
     <string name="build_cooperate_bond">The initiator of the node co-funding project transfers the deposit to an account as the amount to be locked in node co-funding</string>
+
+    <string name="revoke_vote_tx_details_txt">Cancel votes to\"%1$s\"</string>
+
 </resources>

@@ -267,7 +267,7 @@ public class BPNodePlanFragment extends BaseFragment {
         String nodeAddress = itemInfo.getNodeCapitalAddress();
         final String nodeId = itemInfo.getNodeId();
 
-        String destAddress = String.format(getString(R.string.revoke_vote_dest_address_txt), Constants.CONTRACT_ADDRESS);
+        String destAddress = Constants.CONTRACT_ADDRESS;
         String transactionDetail = String.format(getString(R.string.revoke_vote_tx_details_txt), itemInfo.getNodeName());
         String transactionAmount = "0";
 
@@ -353,7 +353,7 @@ public class BPNodePlanFragment extends BaseFragment {
             @Override
             public void run() {
                 try {
-                    final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input.toJSONString(), currentWalletAddress, String.valueOf(Constants.NODE_REVOKE_FEE), Constants.CONTRACT_ADDRESS);
+                    final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input.toJSONString(), currentWalletAddress, String.valueOf(0.01), Constants.CONTRACT_ADDRESS);
                     String txHash = buildBlobResponse.getResult().getHash();
                     NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
                     Call<ApiResult> call;
@@ -488,7 +488,7 @@ public class BPNodePlanFragment extends BaseFragment {
                     superNodeAdapter.notifyDataSetChanged();
 
 
-                }else{
+                } else {
                     setEmpty(true);
                 }
 
