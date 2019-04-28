@@ -16,7 +16,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="30dp"
         android:gravity="center"
         android:text="@string/network_error_msg"
         android:textColor="@color/app_txt_color_gray"
@@ -29,7 +29,6 @@
         android:layout_marginLeft="100dp"
         android:layout_marginTop="40dp"
         android:layout_marginRight="100dp"
-        android:layout_marginBottom="30dp"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"

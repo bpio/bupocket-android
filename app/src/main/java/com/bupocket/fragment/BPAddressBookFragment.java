@@ -65,6 +65,7 @@ public class BPAddressBookFragment extends BaseFragment {
     private String tokenType;
     private String currentWalletAddress;
     private List<GetAddressBookRespDto.AddressBookListBean> addressList = new ArrayList<>();
+    private View faildLayout;
 
     @Override
     protected View onCreateView() {
@@ -106,6 +107,23 @@ public class BPAddressBookFragment extends BaseFragment {
     private void initUI() {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
+
+        faildLayout = LayoutInflater.from(mContext).inflate(R.layout.view_load_failed, null);
+        faildLayout.findViewById(R.id.copyCommandBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                refreshLayout.autoRefreshAnimationOnly();
+                refreshLayout.getLayout().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshData();
+                        refreshLayout.finishRefresh();
+                        refreshLayout.setNoMoreData(false);
+                        initData();
+                    }
+                }, 500);
+            }
+        });
     }
 
     private void initListView() {
@@ -164,7 +182,7 @@ public class BPAddressBookFragment extends BaseFragment {
     }
 
     private void loadAddressList() {
-        AddressBookService addressBookService = RetrofitFactory.getInstance().getRetrofit().create(AddressBookService.class);
+        final AddressBookService addressBookService = RetrofitFactory.getInstance().getRetrofit().create(AddressBookService.class);
         Call<ApiResult<GetAddressBookRespDto>> call;
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("identityAddress",identityAddress);
@@ -186,7 +204,9 @@ public class BPAddressBookFragment extends BaseFragment {
                         mAddressRecordEmptyLL.setVisibility(View.VISIBLE);
                     }
                 }else{
-                    mAddressEv.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
+//                    mAddressEv.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
+                    mAddressEv.removeAllViews();
+                    mAddressEv.addView(faildLayout);
                 }
             }
 
@@ -194,7 +214,8 @@ public class BPAddressBookFragment extends BaseFragment {
             public void onFailure(Call<ApiResult<GetAddressBookRespDto>> call, Throwable t) {
                 t.printStackTrace();
                 if(isAdded()){
-                    mAddressEv.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
+                    mAddressEv.removeAllViews();
+                    mAddressEv.addView(faildLayout);
                 }
             }
         });
