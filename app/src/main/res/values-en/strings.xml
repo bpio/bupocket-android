@@ -84,7 +84,6 @@
     <string name="recover_wallet_error_tip">The mnemonic words entered are incorrect, please enter again</string>
 
     <string name="view_title_wallet_sendBU">transfer</string>
-    <string name="send_address_title">Recipient account (BU address)</string>
     <string name="send_note_title">Remark</string>
     <string name="send_fee_title">Maximum transaction fee (BU)</string>
     <string name="send_input_receiver_address_hint">Please enter the recipient address</string>
@@ -94,7 +93,6 @@
     <string name="send_hint_txt2">Remarks cannot exceed 20 characters</string>
     <string name="send_hint_txt3">Please enter the transaction fee</string>
     <string name="send_status_success_txt">Transferred successfully</string>
-    <string name="send_status_target_addr">Recipient account</string>
 
 
     <string name="send_tx_handleing_txt">Processing...</string>
@@ -129,10 +127,6 @@
     <!-- 确认转账 -->
     <string name="send_confirm_title">Confirm</string>
     <string name="send_confirm_txt">Please confirm whether the transfer information is correct</string>
-    <string name="send_confirm_target_address_txt">Recipient account</string>
-    <string name="send_confirm_amount_txt">Amount</string>
-    <string name="send_confirm_estimate_txt">Estimated maximum payment</string>
-    <string name="send_confirm_remark_txt">Remark</string>
     <string name="send_confirm_submit_btn_txt">Submit</string>
     <!-- 使用条款 -->
     <string name="use_terms_title">Terms of service</string>
@@ -426,7 +420,6 @@
     <string name="details">Details</string>
     <string name="vote_txt">Vote</string>
     <string name="withdraw_vote_txt">Cancel</string>
-    <string name="amount_txt">Number(BU)</string>
     <string name="status_txt">Status</string>
     <string name="time_txt">Time</string>
 
@@ -539,11 +532,7 @@
 
 
     <string name="error_timeout">The request is expired</string>
-    <string name="transaction_costs_txt">Transaction fees(BU)</string>
     <string name="parameter_txt">Parameter</string>
-    <string name="transaction_originator_txt">Initiator</string>
-    <string name="opposite_account_txt">The receiving account</string>
-
     <string name="build_cooperate_bond">The initiator of the node co-funding project transfers the deposit to an account as the amount to be locked in node co-funding</string>
 
     <string name="revoke_vote_tx_details_txt">Cancel votes to\"%1$s\"</string>
@@ -556,7 +545,9 @@
     <string name="tx_memo">Memo</string>
     <string name="tx_time">Timestamp</string>
     <string name="tx_value">Value</string>
-
+    <string name="tx_value_bu">Value(BU)</string>
+    <string name="tx_to_bu">对方账户(BU地址）</string>
+    <string name="tx_fee_bu">交易费(BU)</string>
 
     <string name="tx_from_en">From</string>
     <string name="tx_to_en">To</string>

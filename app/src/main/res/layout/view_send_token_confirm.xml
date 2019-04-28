@@ -63,7 +63,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/send_confirm_target_address_txt"
+                    android:text="@string/tx_to"
                     android:layout_marginBottom="10dp"
                     android:textColor="@color/send_confirm_gray_color"
                     android:textSize="15sp" />
@@ -86,7 +86,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/send_confirm_amount_txt"
+                    android:text="@string/tx_value"
                     android:textColor="@color/send_confirm_gray_color"
                     android:textSize="15sp" />
 
@@ -130,7 +130,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/send_confirm_remark_txt"
+                    android:text="@string/tx_memo"
                     android:textColor="@color/send_confirm_gray_color"
                     android:textSize="15sp" />
 

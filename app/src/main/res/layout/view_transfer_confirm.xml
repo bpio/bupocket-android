@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14.5dp"
-                android:text="@string/opposite_account_txt"
+                android:text="@string/tx_to"
                 android:textColor="@color/app_txt_color_gray"
                 android:textSize="13sp" />
 
@@ -178,7 +178,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14.5dp"
-                        android:text="@string/transaction_originator_txt"
+                        android:text="@string/tx_from"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="13sp" />
 
@@ -196,7 +196,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14.5dp"
-                        android:text="@string/opposite_account_txt"
+                        android:text="@string/tx_to"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="13sp" />
 
@@ -213,7 +213,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14.5dp"
-                        android:text="@string/amount_txt"
+                        android:text="@string/tx_value_bu"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="13sp" />
 
@@ -230,7 +230,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14.5dp"
-                        android:text="@string/transaction_costs_txt"
+                        android:text="@string/tx_fee_bu"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="13sp" />
 
