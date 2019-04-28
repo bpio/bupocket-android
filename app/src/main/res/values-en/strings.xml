@@ -495,7 +495,7 @@
     <string name="transaction_success_title">Transaction success</string>
     <string name="transaction_success_title_info">The transaction on the chain is successful</string>
     <string name="transaction_process_title">Processing business data</string>
-    <string name="transaction_process_title_info"> Business data is analyzed and processed according to the transaction metadata of the chain, and the processing is expected to be completed within 20 seconds</string>
+    <string name="transaction_process_title_info"> Business data is analyzed and processed according to the transaction metadata of the chain, and the processing is expected to be completed within 20 seconds.</string>
     <string name="transaction_refresh_title">Data is refreshed</string>
     <string name="transaction_success_hint">
         Tips:\n
@@ -506,16 +506,18 @@
     <string name="build_support_confirm_title">Sponsor \"%1$s\" project</string>
 
     <string name="error_1003">The physical address to be bound is already occupied. Please apply after replacing it</string>
-    <string name="error_1009">The wallet account has been applied for, please apply after replacing it</string>
-    <string name="error_1011">An uncommitted operation is detected; please try again later</string>
-    <string name="error_100055">the contact is already existed</string>
+    <string name="error_1009">The wallet account has been applied for, please apply after replacing it.</string>
+    <string name="error_1011">An uncommitted operation is detected; please try again later.</string>
+    <string name="error_100055">The contact is already existed.</string>
 
-    <string name="error_1031">The current project has obtained enough BUs, and you can choose other projects to sponsor</string>
+    <string name="error_1031">The current project has obtained enough BUs, and you can choose other projects to sponsor.</string>
     <string name="error_1032">The remaining number is insufficient. It is recommended that you adjust the number to sponsor.</string>
-    <string name="error_1033"> You have not sponsored this project so you cannot withdraw from it</string>
-    <string name="error_1034">The node Co-funding project is finished, and you cannot withdraw from it</string>
-    <string name="error_1035">This operation can only be initiated by the initiator of the node co-funding</string>
+    <string name="error_1033"> You have not sponsored this project so you cannot withdraw from it.</string>
+    <string name="error_1034">The node Co-funding project is finished, and you cannot withdraw from it.</string>
+    <string name="error_1035">This operation can only be initiated by the initiator of the node co-funding.</string>
     <string name="error_1036">The initiator of the node co-funding project cannot be a sponsor.</string>
+    <string name="error_1038">You have withdrawn successfully. Frequent operations are not allowed.</string>
+
 
     <string name="error_vote_close">The voting channel is not yet open. Please vote after opening the channel</string>
     <string name="share_close">The voting channel is not yet open. Please share after opening the channel </string>
@@ -542,6 +544,7 @@
 
     <string name="error_timeout">The request is expired</string>
     <string name="transaction_costs_txt">Transaction fees(BU)</string>
+    <string name="parameter_txt">Parameter</string>
     <string name="transaction_originator_txt">Initiator</string>
     <string name="opposite_account_txt">The receiving account</string>
 

@@ -514,15 +514,14 @@
     <string name="error_100055">the contact is already existed</string>
     <string name="error_build_success_01">抱歉，该共建项目已被认购完</string>
     <string name="error_build_success_02">抱歉，该共建项目已完成，目前您不能退出</string>
+    <string name="error_build_1028">copies is not available</string>
     <string name="error_1031">当前项目已获得目标共建总金额，  您可选择其他项目进行支持</string>
     <string name="error_1032">剩余份数不足，建议您调整支持份数</string>
     <string name="error_1033">您还未支持过此项目，暂不能撤回</string>
     <string name="error_1034">节点共建项目已完成，暂不支持退出</string>
     <string name="error_1035">不是该共建节点发起者，无法发起该操作</string>
-
-
     <string name="error_1036">节点共建项目发起者不能参与支持</string>
-
+    <string name="error_1038">您已成功撤回，不能重复操作</string>
 
 
     <string name="send_tx_verify">数据验证中</string>
@@ -533,7 +532,7 @@
     <string name="transaction_timeout_info">交易广播成功，交易最终状态请复制交易摘要到&lt;font color=\'#02CA71\'>https://explorer.bumo.io&lt;/font>查询</string>
     <string name="transaction_info">交易摘要</string>
 
-    <string name="error_build_1028">copies is not available</string>
+
     <string name="build_exit_confirm_title">撤回支持\"%1$s&quot;\"项目</string>
     <string name="build_support_confirm_title">支持\"&quot;%1$s&quot;\"项目</string>
     <string name="build_type_support">支持</string>
@@ -556,6 +555,7 @@
     <string name="build_failure">共建失败</string>
     
     <string name="build_cooperate_bond">节点共建项目发起者转入保证金作为节点共建的锁仓金额</string>
+
 
 
 </resources>

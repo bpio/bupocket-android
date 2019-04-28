@@ -134,16 +134,37 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
     private Double scanTxFee;
     private String expiryTime;
+    private View faildlayout;
+    List<GetTokensRespDto.TokenListBean> mTokenList;
 
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_assets_home, null);
         ButterKnife.bind(this, root);
+        initView();
         initData();
         initWalletInfoView();
         setListeners();
         backupState();
         return root;
+    }
+
+    private void initView() {
+        faildlayout = LayoutInflater.from(mContext).inflate(R.layout.view_load_failed, null);
+        faildlayout.findViewById(R.id.copyCommandBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshLayout.autoRefreshAnimationOnly();
+                refreshLayout.getLayout().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        refreshData();
+                        refreshLayout.finishRefresh();
+                        refreshLayout.setNoMoreData(false);
+                    }
+                },400);
+            }
+        });
     }
 
     @Override
@@ -257,6 +278,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
     private void initTokensView() {
         mMaterialHeader = (MaterialHeader) refreshLayout.getRefreshHeader();
 
+
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(final RefreshLayout refreshlayout) {
@@ -284,6 +306,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
     }
 
     private void loadAssetList() {
+
         tokenBalance = sharedPreferencesHelper.getSharedPreference(currentWalletAddress + "tokenBalance", "0").toString();
         Runnable getBalanceRunnable = new Runnable() {
             @Override
@@ -332,15 +355,15 @@ public class BPAssetsHomeFragment extends BaseFragment {
             @Override
             public void onFailure(Call<ApiResult<GetTokensRespDto>> call, Throwable t) {
                 t.printStackTrace();
-                if (isAdded()) {
-                    mAssetsHomeEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
+                if (isAdded() && mTokenList.size() == 0) {
+                    mAssetsHomeEmptyView.removeAllViews();
+                    mAssetsHomeEmptyView.addView(faildlayout);
                 }
             }
         });
     }
 
     private void handleTokens(GetTokensRespDto tokensRespDto) {
-        List<GetTokensRespDto.TokenListBean> mTokenList;
         if (tokensRespDto != null) {
             if (tokensRespDto.getTokenList() == null || tokensRespDto.getTokenList().size() == 0) {
                 mAssetsHomeEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
@@ -386,6 +409,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
     }
 
     private void initData() {
+        mTokenList = new ArrayList<>();
         QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
 //        QMUIStatusBarHelper.translucent(getActivity());
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");

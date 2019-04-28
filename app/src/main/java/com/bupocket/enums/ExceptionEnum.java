@@ -19,7 +19,8 @@ public enum ExceptionEnum {
     ERROR_BUILD_1033("1033","",R.string.error_1033),
     ERROR_BUILD_1034("1034","",R.string.error_1034),
     ERROR_BUILD_1035("1035","",R.string.error_1035),
-    ERROR_BUILD_1036("1036","",R.string.error_1036)
+    ERROR_BUILD_1036("1036","",R.string.error_1036),
+    ERROR_BUILD_1038("1038","",R.string.error_1038),
     ;
     private final String code;
     private final String message;
