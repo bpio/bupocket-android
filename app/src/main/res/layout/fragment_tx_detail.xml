@@ -113,7 +113,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="6"
-                                    android:text="@string/tx_dettail_from_acc_addr_label"
+                                    android:text="@string/tx_from"
                                     android:textColor="@color/app_txt_color_gray_5" />
 
                                 <TextView
@@ -136,7 +136,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="6"
-                                    android:text="@string/tx_dettail_to_acc_addr_label"
+                                    android:text="@string/tx_to"
                                     android:textColor="@color/app_txt_color_gray_5" />
 
                                 <TextView
@@ -159,7 +159,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="6"
-                                    android:text="@string/tx_detail_fee_label"
+                                    android:text="@string/tx_fee"
                                     android:textColor="@color/app_txt_color_gray_5" />
 
                                 <TextView
@@ -181,7 +181,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="6"
-                                    android:text="@string/tx_detail_send_date_label"
+                                    android:text="@string/tx_time"
                                     android:textColor="@color/app_txt_color_gray_5" />
 
                                 <TextView
@@ -203,7 +203,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="6"
-                                    android:text="@string/tx_detail_note_label"
+                                    android:text="@string/tx_memo"
                                     android:textColor="@color/app_txt_color_gray_5" />
 
                                 <TextView
@@ -250,7 +250,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="6"
-                                        android:text="TX Hash"
+                                        android:text="@string/tx_hash_en"
                                         android:textColor="@color/app_txt_color_gray_5" />
 
                                     <TextView
@@ -272,7 +272,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="6"
-                                        android:text="Source Address"
+                                        android:text="@string/tx_from_en"
                                         android:textColor="@color/app_txt_color_gray_5" />
 
                                     <TextView
@@ -295,7 +295,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="6"
-                                        android:text="Dest Address"
+                                        android:text="@string/tx_to_en"
                                         android:textColor="@color/app_txt_color_gray_5" />
 
                                     <TextView
@@ -318,7 +318,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="6"
-                                        android:text="Amount"
+                                        android:text="@string/tx_value_en"
                                         android:textColor="@color/app_txt_color_gray_5" />
 
                                     <TextView
@@ -340,7 +340,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="6"
-                                        android:text="TX Fee"
+                                        android:text="@string/tx_fee_en"
                                         android:textColor="@color/app_txt_color_gray_5" />
 
                                     <TextView

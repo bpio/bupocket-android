@@ -84,7 +84,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:layout_marginBottom="10dp"
-                        android:text="@string/tx_dettail_from_acc_addr_label"
+                        android:text="@string/tx_from"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="14sp" />
 
@@ -112,7 +112,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
                         android:layout_marginBottom="10dp"
-                        android:text="@string/tx_dettail_to_acc_addr_label"
+                        android:text="@string/tx_to"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="14sp" />
 
@@ -139,7 +139,7 @@
                         android:layout_width="@dimen/transaction_status_width"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:text="@string/send_status_amount"
+                        android:text="@string/tx_value"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="14sp" />
 
@@ -164,7 +164,7 @@
                         android:layout_width="@dimen/transaction_status_width"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:text="@string/tx_detail_fee_label"
+                        android:text="@string/tx_fee"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="14sp" />
 
@@ -188,7 +188,7 @@
                         android:layout_width="@dimen/transaction_status_width"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:text="@string/send_status_trans_hash"
+                        android:text="@string/tx_hash"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="14sp" />
 
@@ -216,7 +216,7 @@
                         android:layout_width="@dimen/transaction_status_width"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:text="@string/send_status_time"
+                        android:text="@string/tx_time"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="14sp" />
 
@@ -241,7 +241,7 @@
                         android:layout_width="@dimen/transaction_status_width"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:text="@string/send_status_note"
+                        android:text="@string/tx_memo"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="14sp" />
 
