@@ -460,6 +460,7 @@
 
     <string name="building_information_details">Details of Co-funding</string>
     <string name="build_runing">Processing</string>
+    <string name="tx_status_runing">Processing</string>
     <string name="build_finish">Completed</string>
     <string name="build_origin_purchase_amount">Deposit</string>
     <string name="build_rist_info_record">Risk Statement</string>

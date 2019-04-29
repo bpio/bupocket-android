@@ -173,12 +173,8 @@ public class BPNodePlanFragment extends BaseFragment {
         superNodeAdapter.setOnItemBtnListener(new SuperNodeAdapter.OnItemBtnListener() {
             @Override
             public void onClick(int position, int btn) {
-                SuperNodeModel superNodeModel;
-                if (myNodeCB.isChecked()) {
-                    superNodeModel = myVoteInfolist.get(position);
-                }else{
-                    superNodeModel = nodeList.get(position);
-                }
+
+                SuperNodeModel superNodeModel = superNodeAdapter.getItem(position);
                 LogUtils.e("position=" + position + "\n" + btn);
                 switch (btn) {
                     case R.id.revokeVoteBtn:

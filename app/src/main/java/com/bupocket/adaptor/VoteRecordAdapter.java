@@ -45,11 +45,11 @@ public class VoteRecordAdapter extends AbsViewHolderAdapter<MyVoteInfoModel> {
         String type = itemData.getType();
         if (!TextUtils.isEmpty(type)) {
             if (type.equals(VoteNodeEnum.VOTE.getCode())) {
-                recordType.setText(VoteNodeEnum.VOTE.getName1());
+                recordType.setText(context.getString(VoteNodeEnum.VOTE.getNameRes()));
                 recordType.setBackgroundResource(VoteNodeEnum.VOTE.getDrawableRes());
 //                holder.setText(R.id.voterName,VoteNodeEnum.VOTE.getName2());
             }else if (type.equals(VoteNodeEnum.CANCLE.getCode())){
-                recordType.setText(VoteNodeEnum.CANCLE.getName1());
+                recordType.setText(context.getString(VoteNodeEnum.CANCLE.getNameRes()));
                 recordType.setBackgroundResource(VoteNodeEnum.CANCLE.getDrawableRes());
 //                holder.setText(R.id.voterName,VoteNodeEnum.CANCLE.getName2());
 
@@ -83,13 +83,13 @@ public class VoteRecordAdapter extends AbsViewHolderAdapter<MyVoteInfoModel> {
         if (!TextUtils.isEmpty(status)) {
 
             if (status.equals(NodeStatusEnum.SUCCESS.getCode())) {
-                tvStatus.setText(NodeStatusEnum.SUCCESS.getName());
+                tvStatus.setText(context.getString(NodeStatusEnum.SUCCESS.getName()));
                 tvStatus.setTextColor(context.getResources().getColor(NodeStatusEnum.SUCCESS.getColor()));
             }else if (status.equals(NodeStatusEnum.FAILURE.getCode())){
-                tvStatus.setText(NodeStatusEnum.FAILURE.getName());
+                tvStatus.setText(context.getString(NodeStatusEnum.FAILURE.getName()));
                 tvStatus.setTextColor(context.getResources().getColor(NodeStatusEnum.FAILURE.getColor()));
             }else if (status.equals(NodeStatusEnum.RUNING.getCode())){
-                tvStatus.setText(NodeStatusEnum.RUNING.getName());
+                tvStatus.setText(context.getString(NodeStatusEnum.RUNING.getName()));
                 tvStatus.setTextColor(context.getResources().getColor(NodeStatusEnum.RUNING.getColor()));
             }
         }

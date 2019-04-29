@@ -39,7 +39,6 @@ import static com.bupocket.common.Constants.XB_YOUPING_USERNAME;
 public class BPDiscoverHomeFragment extends BaseFragment {
 
 
-
     @BindView(R.id.cardPackageRl)
     RelativeLayout mCardPackageRl;
     @BindView(R.id.nodePlanRl)
@@ -131,17 +130,23 @@ public class BPDiscoverHomeFragment extends BaseFragment {
             @Override
             public void run() {
                 while (!isStop) {
-                    isDownStop=! HomeFragment.isDisFragment;
+                    isDownStop = !HomeFragment.isDisFragment;
                     if (!isDownStop) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (vpDisBanner != null) {
-                                    vpDisBanner.setCurrentItem(vpDisBanner.getCurrentItem() + 1);
-                                }
-                            }
 
-                        });
+                        try {
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (vpDisBanner != null) {
+                                        vpDisBanner.setCurrentItem(vpDisBanner.getCurrentItem() + 1);
+                                    }
+                                }
+
+                            });
+                        } catch (Exception e) {
+
+                        }
+
                     }
                     SystemClock.sleep(PAGER_TIME);
 

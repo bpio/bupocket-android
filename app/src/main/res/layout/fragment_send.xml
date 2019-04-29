@@ -204,7 +204,7 @@
                             android:layout_height="wrap_content"
                             android:background="@null"
                             android:hint="@string/send_hint_txt1"
-                            android:inputType="number"
+                            android:inputType="numberDecimal"
                             android:textColor="@color/app_color_black"
                             android:textSize="14sp" />
 

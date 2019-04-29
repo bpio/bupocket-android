@@ -226,6 +226,13 @@ public class BPNodeShareFragment extends BaseFragment {
         mNodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
     }
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        webView.destroy();
+    }
+
     private void setListener() {
         mShareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
