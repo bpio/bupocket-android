@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-package="com.bupocket"
-android:versionCode="160"
-android:versionName="V1.6.0"
-android:debuggable="false"
-xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-tools:ignore="HardcodedDebugMode">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.bupocket"
+    android:debuggable="false"
+    android:versionCode="161"
+    android:versionName="V1.6.1"
+    tools:ignore="HardcodedDebugMode">
 
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
-<application
+    <application
         android:name=".BPApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -21,55 +20,54 @@ tools:ignore="HardcodedDebugMode">
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
 
-    <meta-data
+        <meta-data
             android:name="android.notch_support"
-            android:value="true"/>
+            android:value="true" />
 
-    <meta-data
+        <meta-data
             android:name="android.max_aspect"
-            android:value="2.34"/>
+            android:value="2.34" />
 
-    <meta-data
+        <meta-data
             android:name="notch.config"
-            android:value="portrait|landscape"/>
+            android:value="portrait|landscape" />
 
-    <activity
+        <activity
             android:name=".BPMainActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:screenOrientation="portrait"
             android:label="@string/app_name"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"/>
-    <activity
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+        <activity
             android:name=".activity.LauncherActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN"/>
-            <category android:name="android.intent.category.LAUNCHER"/>
-        </intent-filter>
-    </activity>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
-    <activity
-        android:name=".activity.BumoNewsActivity"
-        android:configChanges="orientation|keyboardHidden|screenSize"
-        android:label="@string/app_name"
-        android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
-    </activity>
+        <activity
+            android:name=".activity.BumoNewsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"></activity>
 
-    <activity
-        android:name="com.bupocket.activity.CaptureActivity"
-        android:label="@string/capture_activity_label"
-        android:screenOrientation="portrait"/>
+        <activity
+            android:name="com.bupocket.activity.CaptureActivity"
+            android:label="@string/capture_activity_label"
+            android:screenOrientation="portrait" />
 
-    <provider
-        android:name="android.support.v4.content.FileProvider"
-        android:authorities="com.mydomain.fileprovider"
-        android:exported="false"
-        android:grantUriPermissions="true">
-        <meta-data
-            android:name="android.support.FILE_PROVIDER_PATHS"
-            android:resource="@xml/file_provider" />
-    </provider>
-</application>
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.mydomain.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider" />
+        </provider>
+    </application>
 
 
 </manifest>

@@ -403,9 +403,9 @@
 
     <string name="number_have_votes">Vote</string>
     <string name="number_have_votes_s">Votes</string>
-    <string name="my_votes_number">My votes</string>
+    <string name="my_votes_number">My vote</string>
     <string name="my_votes_number_s">My votes</string>
-    <string name="common_node">Consensus node</string>
+    <string name="common_node">Validator Node</string>
     <string name="ecological_node">Ecological node</string>
     <string name="node_associated_with_me_txt">Nodes related to me</string>
     <string name="node_associated_with_me_help_txt"> Filter the nodes that are related to me, such as the node I voted for or the campaign node itself </string>
