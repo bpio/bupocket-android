@@ -1,6 +1,5 @@
 package com.bupocket.fragment;
 
-import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -52,7 +51,6 @@ import com.bupocket.utils.LocaleUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
-import com.bupocket.utils.TimeUtil;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -74,7 +72,6 @@ import retrofit2.Response;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -655,8 +652,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
                 transactionDetail = contentDto.getQrRemarkEn();
                 break;
         }
-
-        if (ScanTransactionTypeEnum.NODE_VOTE.getCode().equals(transactionType)) {
+        if (ScanTransactionTypeEnum.ADD_MARGIN.getCode().equals(transactionType)) {
+            scanTxFee = Constants.ADD_MARGIN;
+        } else if (ScanTransactionTypeEnum.NODE_VOTE.getCode().equals(transactionType)) {
             scanTxFee = Constants.NODE_VOTE_FEE;
         } else if (ScanTransactionTypeEnum.CO_BUILD_APPLY.getCode().equals(transactionType)) {
             scanTxFee = Constants.NODE_AUDIT_FEE;
@@ -665,9 +663,13 @@ public class BPAssetsHomeFragment extends BaseFragment {
         } else if (ScanTransactionTypeEnum.CO_BUILD_SUPPORT.getCode().equals(transactionType)) {
             scanTxFee = Constants.NODE_CO_BUILD_SUPPORT;
         } else if (ScanTransactionTypeEnum.CO_BUILD_APPLY.getCode().equals(transactionType)
-                || ScanTransactionTypeEnum.CO_BUILD_CANCLE.getCode().equals(transactionType)
-        ) {
+                || ScanTransactionTypeEnum.CO_BUILD_APPLY_KOL.getCode().equals(transactionType)
+                || ScanTransactionTypeEnum.COMMITTEE_EXIT.getCode().equals(transactionType)) {
             scanTxFee = Constants.NODE_CO_BUILD_SUPPORT;
+        } else if (ScanTransactionTypeEnum.COMMITTEE_APPLY.getCode().equals(transactionType)) {
+            scanTxFee = Constants.COMMITTEE_APPLY;
+        } else if (ScanTransactionTypeEnum.COMMITTEE_EXIT.getCode().equals(transactionType)) {
+            scanTxFee = Constants.COMMITTEE_APPLY;
         } else {
             scanTxFee = Constants.MIN_FEE;
         }
@@ -814,7 +816,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
                                 if (ExceptionEnum.ERROR_TRANSACTION_OTHER_1011.getCode().equals(respDto.getErrCode())) {
                                     expiryTime = respDto.getData().getExpiryTime();
-                                    CommonUtil.setExpiryTime(expiryTime,mContext);
+                                    CommonUtil.setExpiryTime(expiryTime, mContext);
 
                                 } else {
                                     CommonUtil.showMessageDialog(getContext(), respDto.getMsg(), respDto.getErrCode());

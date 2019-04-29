@@ -18,12 +18,15 @@ public class Constants {
     public static final double RESERVE_AMOUNT = 0.02;
     public static final Double ACTIVE_AMOUNT_FEE = 0.02;
     public static final Double NODE_AUDIT_FEE = 0.15;
+    public static final Double ADD_MARGIN = 0.15;
     public static final Double NODE_VOTE_FEE = 0.15;
     public static final Double NODE_REVOKE_FEE = 0.15;
     public static final Double NODE_CO_BUILD_FEE = 10.30;
     public static final Double NODE_CO_BUILD_MIN_FEE = 0.01;
     public static final Double NODE_CO_BUILD_SUPPORT = 0.15;
     public static final Double NODE_CO_BUILD_AMOUNT_FEE = 0.01;
+    public static final Double COMMITTEE_APPLY = 0.15;
+
 
 
     public static final double MIN_SEND_AMOUNT = 0.00000001;
@@ -68,11 +71,11 @@ public class Constants {
 
     public static enum TestNetConfig {
 
-        WEB_SERVER_DOMAIN("http://test-bupocket-api.bumocdn.com/"),
-//        WEB_SERVER_DOMAIN("http://192.168.3.53:8180/"),
-        BUMO_NODE_URL("http://192.168.3.65:36002"),
-//        WEB_SERVER_DOMAIN("http://192.168.6.97:5648/"),
-//        BUMO_NODE_URL("http://192.168.21.35:36002"),
+//        WEB_SERVER_DOMAIN("http://test-bupocket-api.bumocdn.com/"),
+////        WEB_SERVER_DOMAIN("http://192.168.3.53:8180/"),
+//        BUMO_NODE_URL("http://192.168.3.65:36002"),
+        WEB_SERVER_DOMAIN("http://192.168.6.97:5648/"),
+        BUMO_NODE_URL("http://192.168.21.35:36002"),
         PUSH_MESSAGE_SOCKET_URL("https://ws-tools.bumotest.io");
         private String value;
         TestNetConfig(String value){
