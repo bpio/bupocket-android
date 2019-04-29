@@ -27,9 +27,9 @@
                 android:background="@mipmap/icon_send_success" />
 
             <View
-                android:layout_width="1dp"
+                android:layout_width="1.5dp"
                 android:layout_height="45dp"
-                android:background="@color/app_txt_color_gray_3" />
+                android:background="@color/app_color_green_normal" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -37,8 +37,13 @@
                 android:background="@mipmap/icon_transaction_process" />
 
             <View
-                android:layout_width="1dp"
-                android:layout_height="72dp"
+                android:layout_width="1.5dp"
+                android:layout_height="50dp"
+                android:background="@color/app_color_green" />
+
+            <View
+                android:layout_width="1.5dp"
+                android:layout_height="30dp"
                 android:background="@color/app_txt_color_gray_3" />
 
             <ImageView
@@ -71,14 +76,14 @@
 
             <TextView
                 style="@style/tv_node_build_black_style"
+                android:layout_height="68dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
                 android:text="@string/transaction_process_title_info" />
-            />
+
 
             <TextView
                 style="@style/tv_com_gray66_style"
-                android:layout_marginTop="25dp"
                 android:text="@string/transaction_refresh_title" />/>
 
 
