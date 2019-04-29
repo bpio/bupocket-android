@@ -796,8 +796,8 @@ public class Wallet {
         transactionBuildBlobRequest.addOperation(contractInvokeByBUOperation);
 
         TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
-        LogUtils.e("transactionBuildBlobResponse:"+transactionBuildBlobResponse.getErrorCode()+"" +
-                "t"+transactionBuildBlobResponse.getErrorDesc());
+        LogUtils.e("transactionBuildBlobResponse:" + transactionBuildBlobResponse.getErrorCode() + "" +
+                "t" + transactionBuildBlobResponse.getErrorDesc());
         return transactionBuildBlobResponse;
     }
 
@@ -825,15 +825,21 @@ public class Wallet {
         transactionBuildBlobRequest.addOperation(operation);
 
         TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
-      LogUtils.e("transactionBuildBlobResponse:"+transactionBuildBlobResponse.getErrorCode()+"" +
-              "t"+transactionBuildBlobResponse.getErrorDesc());
+        LogUtils.e("transactionBuildBlobResponse:" + transactionBuildBlobResponse.getErrorCode() + "" +
+                "t" + transactionBuildBlobResponse.getErrorDesc());
         return transactionBuildBlobResponse;
     }
 
 
     public String submitTransaction(String password, String bPData, String sourceAddress, TransactionBuildBlobResponse transactionBuildBlobResponse) throws Exception {
         String transactionBlob = transactionBuildBlobResponse.getResult().getTransactionBlob();
-        String senderPrivateKey = getPKBYAccountPassword(password, bPData, sourceAddress);
+        String senderPrivateKey;
+        try {
+            senderPrivateKey = getPKBYAccountPassword(password, bPData, sourceAddress);
+        } catch (Exception e) {
+            throw new WalletException(ExceptionEnum.PASSWORD_ERROR.getCode(), ExceptionEnum.PASSWORD_ERROR.getMessage());
+        }
+
 
         String[] signerPrivateKeyArr = {senderPrivateKey};
         TransactionSignRequest transactionSignRequest = new TransactionSignRequest();

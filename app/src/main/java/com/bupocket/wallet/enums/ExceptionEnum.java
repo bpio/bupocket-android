@@ -10,6 +10,7 @@ public enum ExceptionEnum {
     IMPORT_KEYSTORE_VERSION_ERROR("20001","the keyStore version was wrong"),
     IMPORT_KEYSTORE_ADDRESS_ERROR("20002","the address in the keyStore was wrong, please check"),
     SUBMIT_TRANSACTION_ERROR("152","submit transaction error  not  hash"),
+    PASSWORD_ERROR("1011001","password error"),
     ;
 
     private final String code;

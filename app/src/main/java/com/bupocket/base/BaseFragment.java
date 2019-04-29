@@ -27,6 +27,7 @@ import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
+import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
 import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
@@ -158,7 +159,6 @@ public abstract class BaseFragment extends QMUIFragment {
                                 txHash = submitTransaction(tvPw.getText().toString(), transBlob);
                                 if (TextUtils.isEmpty(txHash)) {
                                     txSendingTipDialog.dismiss();
-                                    ToastUtil.showToast(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT);
                                     return;
                                 }
 
@@ -191,6 +191,8 @@ public abstract class BaseFragment extends QMUIFragment {
                 ToastUtil.showToast(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT);
             } else if (com.bupocket.wallet.enums.ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
                 ToastUtil.showToast(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT);
+            }else if (ExceptionEnum.PASSWORD_ERROR.getCode().equals(e.getErrCode())){
+                ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
             } else {
                 ToastUtil.showToast(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT);
             }
