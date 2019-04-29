@@ -53,7 +53,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@+id/myNodeTv"
-                android:src="@mipmap/icon_help_tips" />
+                android:src="@mipmap/ic_sheet_hint" />
 
             <LinearLayout
                 android:layout_width="72.5dp"
