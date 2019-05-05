@@ -22,6 +22,7 @@ import com.bupocket.adaptor.NodeBuildDetailAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.CoBuildDetailStatusEnum;
+import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.NodeBuildService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
@@ -32,7 +33,6 @@ import com.bupocket.model.TransConfirmModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.wallet.Wallet;
-import com.bupocket.enums.ExceptionEnum;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
@@ -40,7 +40,10 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
+import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -70,6 +73,12 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     LinearLayout llBtnBuild;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.llLoadFailed)
+    LinearLayout llLoadFailed;
+    @BindView(R.id.addressRecordEmptyLL)
+    LinearLayout addressRecordEmptyLL;
+    @BindView(R.id.copyCommandBtn)
+    QMUIRoundButton copyCommandBtn;
 
 
     private Unbinder bind;
@@ -100,6 +109,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private View ivSheetHint;
     private QMUIPopup myNodeExplainPopup;
     private TextView tvProgress;
+    private View headerView;
 
     @Override
     protected View onCreateView() {
@@ -112,6 +122,27 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private void init() {
         initTopBar();
         initData();
+        initListener();
+    }
+
+    private void initListener() {
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(final RefreshLayout refreshlayout) {
+
+                getBuildData();
+                refreshlayout.finishRefresh();
+                refreshLayout.setNoMoreData(false);
+            }
+        });
+        refreshLayout.setEnableLoadMore(false);
+
+        copyCommandBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshLayout.autoRefresh(200);
+            }
+        });
     }
 
     private void initData() {
@@ -123,12 +154,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         lvBuildDetail.setAdapter(nodeBuildDetailAdapter);
         refreshLayout.setEnableLoadMore(false);
 
-        View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.node_build_header, null);
-
-
+        headerView = LayoutInflater.from(getActivity()).inflate(R.layout.node_build_header, null);
         tvStutas = ((TextView) headerView.findViewById(R.id.tvNodeBuilding));
-        lvBuildDetail.addHeaderView(headerView);
-
         tvName = headerView.findViewById(R.id.tvBuildDetailName);
         tvBuildDetailAmount = headerView.findViewById(R.id.tvBuildDetailAmount);
         tvTotalAmount = ((TextView) headerView.findViewById(R.id.tvDetailTotalAmount));
@@ -169,7 +196,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             }
         });
 
-        emptyLayout = LayoutInflater.from(getContext()).inflate(R.layout.view_empty_record, null);
+
         getBuildData();
     }
 
@@ -190,6 +217,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             public void onResponse(Call<ApiResult<NodeBuildDetailModel>> call, Response<ApiResult<NodeBuildDetailModel>> response) {
                 ApiResult<NodeBuildDetailModel> body = response.body();
 
+                llLoadFailed.setVisibility(View.GONE);
                 if (body != null && ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
 
                     detailModel = body.getData();
@@ -257,11 +285,14 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                         btnBuildSupport.setVisibility(View.GONE);
                         btnBuildExit.setText(getString(R.string.build_exit_all));
                     }
+
+                    lvBuildDetail.addHeaderView(headerView);
+
                     ArrayList<NodeBuildSupportModel> nodelist = body.getData().getSupportList();
                     if (nodelist == null || nodelist.size() == 0) {
-                        lvBuildDetail.addHeaderView(emptyLayout);
+                        addressRecordEmptyLL.setVisibility(View.VISIBLE);
                     } else {
-                        lvBuildDetail.removeHeaderView(emptyLayout);
+                        addressRecordEmptyLL.setVisibility(View.GONE);
                         nodeBuildDetailAdapter.setNewData(nodelist);
                         nodeBuildDetailAdapter.notifyDataSetChanged();
                     }
@@ -274,7 +305,9 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<NodeBuildDetailModel>> call, Throwable t) {
-                LogUtils.e("" + t.toString());
+
+                llLoadFailed.setVisibility(View.VISIBLE);
+
             }
 
 
@@ -439,7 +472,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                             } else {
 
                                 if (ExceptionEnum.ERROR_TRANSACTION_OTHER_1011.getCode().equals(body.getErrCode())) {
-                                   String expiryTime = body.getData().getExpiryTime();
+                                    String expiryTime = body.getData().getExpiryTime();
                                     CommonUtil.setExpiryTime(expiryTime, mContext);
 
                                 } else {
