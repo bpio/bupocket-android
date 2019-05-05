@@ -20,6 +20,15 @@ public class NodeBuildDetailModel {
     private String supportAmount;
     private String contractAddress;
     private String originatorAddress;
+    private int cobuildCopies;
+
+    public int getCobuildCopies() {
+        return cobuildCopies;
+    }
+
+    public void setCobuildCopies(int cobuildCopies) {
+        this.cobuildCopies = cobuildCopies;
+    }
 
     public String getOriginatorAddress() {
         return originatorAddress;

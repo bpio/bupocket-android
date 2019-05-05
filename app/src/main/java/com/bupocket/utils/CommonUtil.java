@@ -906,7 +906,7 @@ public class CommonUtil {
         } else if (support == total) {
             strRatio = "100";
         } else {
-            DecimalFormat df = new DecimalFormat("#.00");
+            DecimalFormat df = new DecimalFormat("#0.00");
             strRatio = df.format(ratio);
         }
         return strRatio + "%";

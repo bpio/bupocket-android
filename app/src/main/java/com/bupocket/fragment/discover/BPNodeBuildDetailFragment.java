@@ -199,11 +199,11 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     tvName.setText(detailModel.getTitle());
                     tvBuildDetailAmount.setText(CommonUtil.format(detailModel.getPerAmount()));
 
-                    pbDetail.setMax(detailModel.getTotalCopies());
-                    int supportCopies = detailModel.getTotalCopies() - detailModel.getLeftCopies();
+                    pbDetail.setMax(detailModel.getCobuildCopies());
+                    int supportCopies = detailModel.getCobuildCopies() - detailModel.getLeftCopies();
                     pbDetail.setProgress(supportCopies);
 
-                    tvProgress.setText(CommonUtil.setRatio(supportCopies, detailModel.getTotalCopies()));
+                    tvProgress.setText(CommonUtil.setRatio(supportCopies, detailModel.getCobuildCopies()));
 
 
                     tvBuildDetailSharingRatio.setText(detailModel.getRewardRate() + "%");

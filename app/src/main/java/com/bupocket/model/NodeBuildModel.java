@@ -15,6 +15,15 @@ public class NodeBuildModel implements Serializable {
     private int leftCopies;
     private String rewardRate;
     private String totalAmount;
+    private int cobuildCopies;
+
+    public int getCobuildCopies() {
+        return cobuildCopies;
+    }
+
+    public void setCobuildCopies(int cobuildCopies) {
+        this.cobuildCopies = cobuildCopies;
+    }
 
     public String getNodeId() {
         return nodeId;
