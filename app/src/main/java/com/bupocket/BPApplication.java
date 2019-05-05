@@ -10,6 +10,7 @@ import com.bupocket.enums.BackupTipsStateEnum;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.CrashHandler;
 import com.bupocket.utils.LocaleUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
@@ -47,6 +48,8 @@ public class BPApplication extends Application {
         switchNetConfig(null);
         SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(context,"buPocket");
         sharedPreferencesHelper.put("backupTipsState",BackupTipsStateEnum.SHOW.getCode());
+
+        initCrash();
     }
 
     @Override
@@ -81,6 +84,12 @@ public class BPApplication extends Application {
             Constants.NODE_PLAN_IMAGE_URL_PREFIX = Constants.TestNetConfig.WEB_SERVER_DOMAIN.getValue()+Constants.IMAGE_PATH;
 
             LogUtils.mDebuggable=LogUtils.LEVEL_ERROR;
+            CrashHandler.isWrite=true;
         }
+    }
+
+    private void initCrash() {
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(this);
     }
 }

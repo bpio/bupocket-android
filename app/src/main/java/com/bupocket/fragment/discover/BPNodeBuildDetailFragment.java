@@ -294,7 +294,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         });
         mTopBar.setTitle(getResources().getString(R.string.building_information_details));
 
-
     }
 
 

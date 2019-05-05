@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.Manifest;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -8,6 +9,8 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -21,6 +24,7 @@ import butterknife.ButterKnife;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import com.bupocket.BPMainActivity;
 import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.adaptor.TokensAdapter;
@@ -66,6 +70,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import io.bumo.encryption.key.PublicKey;
 import io.bumo.model.response.TransactionBuildBlobResponse;
+import io.socket.client.Manager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -146,7 +151,20 @@ public class BPAssetsHomeFragment extends BaseFragment {
         initWalletInfoView();
         setListeners();
         backupState();
+        initPermission();
         return root;
+    }
+
+    private void initPermission() {
+        ArrayList<String> permissions = new ArrayList<>();
+        permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        permissions.add(Manifest.permission.READ_PHONE_STATE);
+        ArrayList<String> needRequestPermissions = ((BPMainActivity) getActivity()).getNeedRequestPermissions(permissions);
+        if (needRequestPermissions.size()>0) {
+            ActivityCompat.requestPermissions(getActivity(), needRequestPermissions.toArray(new String[permissions.size()]), BPMainActivity.BASE_REQUEST_CODE);
+
+        }
+
     }
 
     private void initView() {
