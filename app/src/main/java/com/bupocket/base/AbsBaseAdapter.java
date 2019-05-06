@@ -30,8 +30,6 @@ public abstract class AbsBaseAdapter<T> extends BaseAdapter implements BaseAdapt
     }
 
 
-
-
     //加到list后面
     void addToEnd(@Nullable List<T> datas) {
         if (datas != null && datas.size() > 0) {
@@ -65,6 +63,7 @@ public abstract class AbsBaseAdapter<T> extends BaseAdapter implements BaseAdapt
 
     }
 
+
     @Nullable
     @Override
     public T getItem(int position) {
@@ -79,7 +78,7 @@ public abstract class AbsBaseAdapter<T> extends BaseAdapter implements BaseAdapt
         return position;
     }
 
-    List<T> getData() {
+    public List<T> getData() {
         return data;
     }
 

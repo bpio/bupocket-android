@@ -116,12 +116,17 @@ public class BPNodePlanFragment extends BaseFragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
                 if (isChecked) {
-
-                    setEmpty(myVoteInfoList.size() == 0);
-                    superNodeAdapter.setNewData(myVoteInfoList);
+                    ArrayList<SuperNodeModel> superNodeModels = myVoteInfoList((ArrayList<SuperNodeModel>) superNodeAdapter.getData());
+                    setEmpty(superNodeModels.size() == 0);
+                    superNodeAdapter.setNewData(superNodeModels);
                 } else {
                     setEmpty(nodeList.size() == 0);
-                    superNodeAdapter.setNewData(nodeList);
+                    if (etNodeSearch.getText().toString().isEmpty()){
+                        superNodeAdapter.setNewData(nodeList);
+                    }else{
+                        searchNode(etNodeSearch.getText().toString());
+                    }
+
                 }
 
                 superNodeAdapter.notifyDataSetChanged();
@@ -501,6 +506,11 @@ public class BPNodePlanFragment extends BaseFragment {
 
     }
 
+    /**
+     *
+     * @param nodeList
+     * @return
+     */
     private ArrayList<SuperNodeModel> myVoteInfoList(@NonNull ArrayList<SuperNodeModel> nodeList) {
 
         ArrayList<SuperNodeModel> superNodeModels = new ArrayList<>();
