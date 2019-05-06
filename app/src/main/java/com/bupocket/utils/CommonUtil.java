@@ -895,7 +895,7 @@ public class CommonUtil {
         req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
         boolean isSend = api.sendReq(req);
         if (!isSend){
-            showMessageDialog(context,"请下载微信后使用");
+            showMessageDialog(context,R.string.wechat_down_load_info);
         }
         return isSend;
     }

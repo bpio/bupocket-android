@@ -496,6 +496,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
             Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
         } else {
             if (!PublicKey.isAddressValid(resultContent)) {
+                LogUtils.e("resultContent:\t"+resultContent);
                 if (CommonUtil.checkIsBase64(resultContent)) {
                     String jsonStr = null;
                     try {

@@ -526,6 +526,9 @@
     <string name="error_100055">the contact is already existed</string>
     <string name="error_build_success_01">抱歉，该共建项目已被认购完</string>
     <string name="error_build_success_02">抱歉，该共建项目已完成，目前您不能退出</string>
+
+
+    <string name="error_build_1024">没有权限，请使用委员会钱包进行扫码</string>
     <string name="error_build_1028">copies is not available</string>
     <string name="error_1031">当前项目已获得目标共建总金额，  您可选择其他项目进行支持</string>
     <string name="error_1032">剩余份数不足，建议您调整支持份数</string>
@@ -576,6 +579,8 @@
     <string name="super_status_success">申请成功</string>
     <string name="super_status_running">退出中</string>
     <string name="super_status_failed">已退出</string>
+    <string name="wechat_down_load_info">请下载微信后使用</string>
+
 
 
 </resources>

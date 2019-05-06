@@ -501,6 +501,8 @@
     <string name="error_100055">The contact is already existed.</string>
     <string name="error_1011_s">Please complete the remaining operations. You can trade again after %1$s seconds</string>
     <string name="error_1011_m">Please complete the remaining operations. You can trade again after %1$s sminutes/ %1$s seconds</string>
+
+    <string name="error_build_1024">No permission, please use the committee wallet to scan the code</string>
     <string name="error_1031">The current project has obtained enough BUs, and you can choose other projects to sponsor.</string>
     <string name="error_1032">The remaining number is insufficient. It is recommended that you adjust the number to sponsor.</string>
     <string name="error_1033"> You have not sponsored this project so you cannot withdraw from it.</string>
