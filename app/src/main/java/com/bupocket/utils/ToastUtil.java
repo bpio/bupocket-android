@@ -20,6 +20,10 @@ public class ToastUtil {
 
 
     public static void showToast(final Activity context, final String titles, final int duration) {
+
+        if (titles==null||titles.isEmpty()) {
+            return;
+        }
         if ("main".equals(Thread.currentThread().getName())) {
             Toast.makeText(context, titles, duration).show();
         } else {

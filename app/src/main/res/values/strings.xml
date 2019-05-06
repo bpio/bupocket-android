@@ -569,8 +569,13 @@
     <string name="build_cooperate_bond">节点共建项目发起者转入保证金作为节点共建的锁仓金额</string>
 
 
-    <string name="super_status_info">当前节点处于{退出中}状态，暂不支持邀请投票。</string>
+    <string name="super_status_info">当前节点处于%1$s&quot;状态，暂不支持邀请投票。</string>
     <string name="node_associated_with_me_help_txt2">筛选和我相关的节点，例如：我投票的节点/竞选节点自身。</string>
+
+
+    <string name="super_status_success">申请成功</string>
+    <string name="super_status_running">退出中</string>
+    <string name="super_status_failed">已退出</string>
 
 
 </resources>

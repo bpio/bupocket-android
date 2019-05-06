@@ -1,21 +1,22 @@
 package com.bupocket.enums;
 
+import com.bupocket.R;
+
 public enum SuperNodeStatusEnum {
 
-        SUCCESS("1","申请成功"),
-        RUNING("2","退出中"),
-        FAILED("3","已退出");
+        SUCCESS("1", R.string.super_status_success),
+        RUNNING("2",R.string.super_status_running),
+        FAILED("3",R.string.super_status_failed);
 
 
-
-    SuperNodeStatusEnum(String code, String name) {
+    SuperNodeStatusEnum(String code, int nameRes) {
         this.code = code;
-        this.name = name;
+        this.nameRes = nameRes;
     }
 
     private String code;
 
-    private String name;
+    private int nameRes;
 
     public String getCode() {
         return code;
@@ -25,11 +26,11 @@ public enum SuperNodeStatusEnum {
         this.code = code;
     }
 
-    public String getName() {
-        return name;
+    public int getNameRes() {
+        return nameRes;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNameRes(int nameRes) {
+        this.nameRes = nameRes;
     }
 }

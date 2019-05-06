@@ -180,10 +180,12 @@ public class BPNodePlanFragment extends BaseFragment {
                         break;
                     case R.id.shareBtn:
                         String status = superNodeModel.getStatus();
-                        if (SuperNodeStatusEnum.RUNING.getCode().equals(status)
-                                || SuperNodeStatusEnum.FAILED.getCode().equals(status)) {
+                        if (SuperNodeStatusEnum.RUNNING.getCode().equals(status)){
 
-                            CommonUtil.showMessageDialog(mContext, R.string.super_status_info);
+                            CommonUtil.showMessageDialog(mContext,String.format(getString(R.string.super_status_info),getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
+                        }else if (SuperNodeStatusEnum.FAILED.getCode().equals(status)) {
+
+                            CommonUtil.showMessageDialog(mContext,String.format(getString(R.string.super_status_info),getString(SuperNodeStatusEnum.FAILED.getNameRes())));
 
                         } else {
                             Bundle args = new Bundle();
