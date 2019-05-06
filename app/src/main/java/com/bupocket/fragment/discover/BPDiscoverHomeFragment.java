@@ -18,6 +18,7 @@ import com.bupocket.http.api.DiscoverService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.SlideModel;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
@@ -189,11 +190,8 @@ public class BPDiscoverHomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-                IWXAPI api = WXAPIFactory.createWXAPI(getContext(), WeChat_APPID);
-                WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
-                req.userName = XB_YOUPING_USERNAME;
-                req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
-                api.sendReq(req);
+                CommonUtil.goWeChat(mContext,WeChat_APPID,XB_YOUPING_USERNAME);
+
             }
         });
     }

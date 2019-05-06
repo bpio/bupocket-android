@@ -887,14 +887,17 @@ public class CommonUtil {
         return format;
     }
 
-    public static void goWeChat(Context context, String appid, String username) {
+    public static boolean goWeChat(Context context, String appid, String username) {
 
         IWXAPI api = WXAPIFactory.createWXAPI(context, WeChat_APPID);
         WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
         req.userName = XB_YOUPING_USERNAME;
         req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
-        api.sendReq(req);
-
+        boolean isSend = api.sendReq(req);
+        if (!isSend){
+            showMessageDialog(context,"请下载微信后使用");
+        }
+        return isSend;
     }
 
 
@@ -913,7 +916,7 @@ public class CommonUtil {
     }
 
 
-    public static void TransactionConfirmSheet(Context context,String transactionDetail,String sourceAddress,String destAddress,String amount,String fee) {
+    public static void TransactionConfirmSheet(Context context, String transactionDetail, String sourceAddress, String destAddress, String amount, String fee) {
 //        final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(context);
 //        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
 //
@@ -1000,14 +1003,14 @@ public class CommonUtil {
     }
 
 
-    public static void setExpiryTime(String expiryTime,Context context){
+    public static void setExpiryTime(String expiryTime, Context context) {
         if (!TextUtils.isEmpty(expiryTime)) {
             String[] strings = TimeUtil.time_mmss(Long.parseLong(expiryTime) - System.currentTimeMillis());
             if (strings[0].isEmpty()) {
                 @SuppressLint("StringFormatMatches") String format = String.format(context.getString(R.string.error_1011_s, strings[1] + ""));
                 CommonUtil.showMessageDialog(context, format);
             } else {
-                @SuppressLint("StringFormatMatches") String format = String.format(context.getString(R.string.error_1011_m, strings[0] + "",strings[1] + ""));
+                @SuppressLint("StringFormatMatches") String format = String.format(context.getString(R.string.error_1011_m, strings[0] + "", strings[1] + ""));
                 CommonUtil.showMessageDialog(context, format);
             }
         }
