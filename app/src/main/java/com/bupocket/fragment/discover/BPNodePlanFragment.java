@@ -1,11 +1,7 @@
 package com.bupocket.fragment.discover;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
@@ -30,37 +26,30 @@ import com.bupocket.adaptor.SuperNodeAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.ExceptionEnum;
+import com.bupocket.enums.SuperNodeStatusEnum;
 import com.bupocket.enums.SuperNodeTypeEnum;
-import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
-import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.SuperNodeDto;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
-import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
-import com.bupocket.wallet.exception.WalletException;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -104,7 +93,7 @@ public class BPNodePlanFragment extends BaseFragment {
     private String currentWalletAddress;
     private SuperNodeAdapter superNodeAdapter;
     private QMUIPopup myNodeExplainPopup;
-    private ArrayList<SuperNodeModel> myVoteInfolist;
+    private ArrayList<SuperNodeModel> myVoteInfoList;
     private ArrayList<SuperNodeModel> nodeList;
 
     @Override
@@ -128,8 +117,8 @@ public class BPNodePlanFragment extends BaseFragment {
 
                 if (isChecked) {
 
-                    setEmpty(myVoteInfolist.size() == 0);
-                    superNodeAdapter.setNewData(myVoteInfolist);
+                    setEmpty(myVoteInfoList.size() == 0);
+                    superNodeAdapter.setNewData(myVoteInfoList);
                 } else {
                     setEmpty(nodeList.size() == 0);
                     superNodeAdapter.setNewData(nodeList);
@@ -185,12 +174,21 @@ public class BPNodePlanFragment extends BaseFragment {
                         }
                         break;
                     case R.id.shareBtn:
+                        String status = superNodeModel.getStatus();
+                        if (SuperNodeStatusEnum.RUNING.getCode().equals(status)
+                                || SuperNodeStatusEnum.FAILED.getCode().equals(status)) {
 
-                        Bundle args = new Bundle();
-                        args.putParcelable("itemInfo", superNodeModel);
-                        BPNodeShareFragment bpNodeShareFragment = new BPNodeShareFragment();
-                        bpNodeShareFragment.setArguments(args);
-                        startFragment(bpNodeShareFragment);
+                            CommonUtil.showMessageDialog(mContext, R.string.super_status_info);
+
+                        } else {
+                            Bundle args = new Bundle();
+                            args.putParcelable("itemInfo", superNodeModel);
+                            BPNodeShareFragment bpNodeShareFragment = new BPNodeShareFragment();
+                            bpNodeShareFragment.setArguments(args);
+                            startFragment(bpNodeShareFragment);
+                        }
+
+
                         break;
                     case R.id.voteRecordBtn:
                         BPSomeOneVoteRecordFragment fragment = new BPSomeOneVoteRecordFragment();
@@ -245,7 +243,7 @@ public class BPNodePlanFragment extends BaseFragment {
             textView.setLineSpacing(QMUIDisplayHelper.dp2px(getContext(), 4), 1.0f);
             int padding = QMUIDisplayHelper.dp2px(getContext(), 10);
             textView.setPadding(padding, padding, padding, padding);
-            textView.setText(getString(R.string.node_associated_with_me_help_txt));
+            textView.setText(getString(R.string.node_associated_with_me_help_txt2));
             textView.setTextColor(ContextCompat.getColor(getContext(), R.color.app_color_white));
             textView.setBackgroundColor(getResources().getColor(R.color.popup_background_color));
             myNodeExplainPopup.setContentView(textView);
@@ -415,7 +413,7 @@ public class BPNodePlanFragment extends BaseFragment {
 
         ArrayList<SuperNodeModel> sourceData = new ArrayList<>();
         if (myNodeCB.isChecked()) {
-            sourceData.addAll(myVoteInfolist);
+            sourceData.addAll(myVoteInfoList);
         } else {
             sourceData.addAll(nodeList);
         }
@@ -426,19 +424,17 @@ public class BPNodePlanFragment extends BaseFragment {
                 superNodeModels.add(sourceData.get(i));
             }
         }
-        if (superNodeModels.size() > 0) {
-            superNodeAdapter.setNewData(superNodeModels);
-            superNodeAdapter.notifyDataSetChanged();
-        }
-
+        superNodeAdapter.setNewData(superNodeModels);
+        superNodeAdapter.notifyDataSetChanged();
+        setEmpty(superNodeModels.size() == 0);
         return superNodeModels;
     }
 
     private void initData() {
 //        refreshLayout.autoRefresh();
 
-        if (myVoteInfolist == null) {
-            myVoteInfolist = new ArrayList<>();
+        if (myVoteInfoList == null) {
+            myVoteInfoList = new ArrayList<>();
         }
         if (nodeList == null) {
             nodeList = new ArrayList<>();
@@ -480,9 +476,9 @@ public class BPNodePlanFragment extends BaseFragment {
                 nodeList = body.getData().getNodeList();
                 if (nodeList != null) {
                     setEmpty(nodeList.size() == 0);
-                    myVoteInfolist = myVoteInfoList(nodeList);
+                    myVoteInfoList = myVoteInfoList(nodeList);
                     if (myNodeCB.isChecked()) {
-                        superNodeAdapter.setNewData(myVoteInfolist);
+                        superNodeAdapter.setNewData(myVoteInfoList);
                     } else {
                         superNodeAdapter.setNewData(nodeList);
                     }

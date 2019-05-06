@@ -16,6 +16,15 @@ public class SuperNodeModel implements Parcelable {
     private String introduce;
     private String support;
     private String shareStartTime;
+    private String status;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getShareStartTime() {
         return shareStartTime;
