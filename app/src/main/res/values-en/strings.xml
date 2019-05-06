@@ -569,5 +569,10 @@
     <string name="tx_value_en">Value</string>
 
 
+    <string name="wechat_down_load_info">Please use it after downloading WeChat</string>
+    <string name="qq_down_load_info">Please use it after downloading QQ</string>
+    <string name="qq_open_error">Error! Please try again later</string>
+    <string name="qq_code_error">Please use it after upgrading to the latest version</string>
+
 
 </resources>

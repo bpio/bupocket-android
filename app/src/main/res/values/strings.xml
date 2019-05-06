@@ -586,7 +586,12 @@
     <string name="super_status_success">申请成功</string>
     <string name="super_status_running">退出中</string>
     <string name="super_status_failed">已退出</string>
+
+
     <string name="wechat_down_load_info">请下载微信后使用</string>
+    <string name="qq_down_load_info">请下载QQ后使用 </string>
+    <string name="qq_open_error">出错了，请稍后重试</string>
+    <string name="qq_code_error">当前版本太低，请更新后使用</string>
 
 
 
