@@ -206,9 +206,16 @@
     <string name="i_knew_btn_txt">Got it</string>
     <string name="network_error_msg">Your network is interrupted. Please try again later.</string>
     <string name="capture_activity_title">Scan</string>
-    <string name="time_day_ago">days ago</string>
-    <string name="time_hour_ago">hours ago</string>
-    <string name="time_minute_ago">minutes ago</string>
+    <string name="time_day_ago">day ago</string>
+    <string name="time_hour_ago">hr ago</string>
+    <string name="time_minute_ago">min ago</string>
+    <string name="time_sec_ago">secs ago</string>
+
+    <string name="time_day_ago_s">days ago</string>
+    <string name="time_hour_ago_s">hrs ago</string>
+    <string name="time_minute_ago_s">mins ago</string>
+    <string name="time_sec_ago_s">secs ago</string>
+
     <string name="time_just_now">Just now</string>
 
 

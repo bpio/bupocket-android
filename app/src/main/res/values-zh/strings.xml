@@ -237,6 +237,13 @@
     <string name="time_day_ago">天前</string>
     <string name="time_hour_ago">小时前</string>
     <string name="time_minute_ago">分钟前</string>
+    <string name="time_sec_ago">秒前</string>
+
+    <string name="time_day_ago_s">天前</string>
+    <string name="time_hour_ago_s">小时前</string>
+    <string name="time_minute_ago_s">分钟前</string>
+    <string name="time_sec_ago_s">秒前</string>
+
     <string name="time_just_now">刚刚</string>
 
 
@@ -526,6 +533,9 @@
     <string name="error_100055">the contact is already existed</string>
     <string name="error_build_success_01">抱歉，该共建项目已被认购完</string>
     <string name="error_build_success_02">抱歉，该共建项目已完成，目前您不能退出</string>
+
+
+    <string name="error_build_1024">没有权限，请使用委员会钱包进行扫码</string>
     <string name="error_build_1028">copies is not available</string>
     <string name="error_1031">当前项目已获得目标共建总金额，  您可选择其他项目进行支持</string>
     <string name="error_1032">剩余份数不足，建议您调整支持份数</string>
@@ -567,6 +577,16 @@
     <string name="build_failure">共建失败</string>
 
     <string name="build_cooperate_bond">节点共建项目发起者转入保证金作为节点共建的锁仓金额</string>
+
+
+    <string name="super_status_info">当前节点处于%1$s&quot;状态，暂不支持邀请投票。</string>
+    <string name="node_associated_with_me_help_txt2">筛选和我相关的节点，例如：我投票的节点/竞选节点自身。</string>
+
+
+    <string name="super_status_success">申请成功</string>
+    <string name="super_status_running">退出中</string>
+    <string name="super_status_failed">已退出</string>
+    <string name="wechat_down_load_info">请下载微信后使用</string>
 
 
 

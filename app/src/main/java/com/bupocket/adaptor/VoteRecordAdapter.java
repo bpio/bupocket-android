@@ -13,6 +13,9 @@ import com.bupocket.enums.NodeStatusEnum;
 import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.enums.VoteNodeEnum;
 import com.bupocket.model.MyVoteInfoModel;
+import com.bupocket.utils.TimeUtil;
+
+import java.text.ParseException;
 
 public class VoteRecordAdapter extends AbsViewHolderAdapter<MyVoteInfoModel> {
 
@@ -93,8 +96,12 @@ public class VoteRecordAdapter extends AbsViewHolderAdapter<MyVoteInfoModel> {
                 tvStatus.setTextColor(context.getResources().getColor(NodeStatusEnum.RUNING.getColor()));
             }
         }
-
-        holder.setText(R.id.timeTv, itemData.getDate());
+        String date = itemData.getDate();
+        try {
+            holder.setText(R.id.timeTv, TimeUtil.getDateDiff(TimeUtil.stringToLong(date,TimeUtil.TIME_TYPE),context));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
 
     }

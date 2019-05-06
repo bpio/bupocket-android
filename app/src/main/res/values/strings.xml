@@ -237,6 +237,13 @@
     <string name="time_day_ago">天前</string>
     <string name="time_hour_ago">小时前</string>
     <string name="time_minute_ago">分钟前</string>
+    <string name="time_sec_ago">秒前</string>
+
+    <string name="time_day_ago_s">天前</string>
+    <string name="time_hour_ago_s">小时前</string>
+    <string name="time_minute_ago_s">分钟前</string>
+    <string name="time_sec_ago_s">秒前</string>
+
     <string name="time_just_now">刚刚</string>
 
 

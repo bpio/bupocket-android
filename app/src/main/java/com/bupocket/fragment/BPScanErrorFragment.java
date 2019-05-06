@@ -56,10 +56,12 @@ public class BPScanErrorFragment extends BaseFragment {
 
         if (ExceptionLoginEnum.ERROR_VOTE_CLOSE.getCode().equals(errorCode)) {
             mErrorTypeTv.setText(errorMessage);
-            mErrorMessageTv.setText(getResources().getString(R.string.refresh_qr_tips_txt));
-        }else if (!ExceptionEnum.SUCCESS.equals(errorCode)){
-            mErrorTypeTv.setText(errorMessage);
             mErrorMessageTv.setText(getResources().getString(R.string.bound_address_note_txt));
+        }else if (!ExceptionEnum.SUCCESS.equals(errorCode)){
+
+            mErrorTypeTv.setText(errorMessage);
+            mErrorMessageTv.setText(getResources().getString(R.string.refresh_qr_tips_txt));
+
         }
     }
 
