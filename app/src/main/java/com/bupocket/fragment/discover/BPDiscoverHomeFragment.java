@@ -99,6 +99,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                 if (imageList != null) {
                     disBannerAdapter.setData(imageList.getSlideshow());
                     disBannerAdapter.notifyDataSetChanged();
+                    vpDisBanner.setCurrentItem(vpDisBanner.getCurrentItem() + 1);
                 }
 
 
@@ -140,6 +141,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                                 public void run() {
                                     if (vpDisBanner != null) {
                                         vpDisBanner.setCurrentItem(vpDisBanner.getCurrentItem() + 1);
+                                        disBannerAdapter.notifyDataSetChanged();
                                     }
                                 }
 
@@ -147,9 +149,9 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                         } catch (Exception e) {
 
                         }
-
+                        SystemClock.sleep(PAGER_TIME);
                     }
-                    SystemClock.sleep(PAGER_TIME);
+
 
                 }
             }
