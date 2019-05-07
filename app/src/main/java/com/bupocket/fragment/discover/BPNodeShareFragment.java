@@ -1,28 +1,19 @@
 package com.bupocket.fragment.discover;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.text.Html;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,10 +33,8 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.TimeUtil;
 import com.bupocket.utils.ToastUtil;
-import com.qmuiteam.qmui.util.QMUIDrawableHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
-import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
@@ -55,7 +44,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
@@ -85,6 +73,10 @@ public class BPNodeShareFragment extends BaseFragment {
     WebView webView;
     @BindView(R.id.haveVotesNumTvHint)
     TextView haveVotesNumTvHint;
+    @BindView(R.id.supportPeopleTvHint)
+    TextView supportPeopleTvHint;
+
+
 
     private View mShareImageRl;
     private Uri sharePhotoUri = null;
@@ -190,15 +182,22 @@ public class BPNodeShareFragment extends BaseFragment {
         }
 
 
-
         if (CommonUtil.isSingle(itemInfo.getNodeVote())) {
-            haveVotesNumTvHint.setText(getString(R.string.number_have_votes));
-        }else{
-            haveVotesNumTvHint.setText(getString(R.string.number_have_votes_s));
+            haveVotesNumTvHint.setText(mContext.getString(R.string.number_have_votes));
+        } else {
+            haveVotesNumTvHint.setText(mContext.getString(R.string.number_have_votes_s));
         }
-
         mHaveVotesNumTv.setText(itemInfo.getNodeVote());
-        mSupportPeopleTv.setText(String.format(getString(R.string.support_people_num_txt), itemInfo.getSupport()));
+
+
+        if (CommonUtil.isSingle(itemInfo.getMyVoteCount())) {
+            supportPeopleTvHint.setText(mContext.getString(R.string.my_votes_number));
+        } else {
+            supportPeopleTvHint.setText(mContext.getString(R.string.my_votes_number_s));
+        }
+        mSupportPeopleTv.setText(itemInfo.getMyVoteCount());
+
+
         String source = itemInfo.getIntroduce().trim().toString();
         webView.loadDataWithBaseURL(null, source, "text/html", "utf-8", null);
 
@@ -230,23 +229,23 @@ public class BPNodeShareFragment extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
-        webView.destroy();
     }
 
+
     private void setListener() {
-        mShareBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                String shareStartTime = itemInfo.getShareStartTime();
-                if (TimeUtil.judgeTime(Long.parseLong(shareStartTime))){
-                    CommonUtil.showMessageDialog(getContext(), R.string.share_close);
-                }else{
-                    showShareDialog();
-                }
-
-            }
-        });
+//        mShareBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                String shareStartTime = itemInfo.getShareStartTime();
+//                if (TimeUtil.judgeTime(Long.parseLong(shareStartTime))) {
+//                    CommonUtil.showMessageDialog(getContext(), R.string.share_close);
+//                } else {
+//                    showShareDialog();
+//                }
+//
+//            }
+//        });
     }
 
     @SuppressLint("ResourceType")
@@ -385,6 +384,17 @@ public class BPNodeShareFragment extends BaseFragment {
             }
         });
         mTopBar.setTitle(getResources().getString(R.string.invite_share_txt));
+        mTopBar.addRightImageButton(R.mipmap.icon_share_green, R.id.topbar_right_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String shareStartTime = itemInfo.getShareStartTime();
+                if (TimeUtil.judgeTime(Long.parseLong(shareStartTime))) {
+                    CommonUtil.showMessageDialog(getContext(), R.string.share_close);
+                } else {
+                    showShareDialog();
+                }
+            }
+        });
     }
 
 
@@ -406,4 +416,10 @@ public class BPNodeShareFragment extends BaseFragment {
         return bitmap;
     }
 
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        webView.destroy();
+    }
 }

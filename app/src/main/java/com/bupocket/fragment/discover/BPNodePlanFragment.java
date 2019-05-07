@@ -539,6 +539,12 @@ public class BPNodePlanFragment extends BaseFragment {
     private void initListView() {
         superNodeAdapter = new SuperNodeAdapter(this.getContext());
         lvPlan.setAdapter(superNodeAdapter);
+//        lvPlan.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+//            @Override
+//            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+//                LogUtils.e("lvPlan:\t left:"+left+"\t top" +top+"\t right" +right+"\t bottom" +top+"\t oldLeft" +oldLeft+"\t oldTop" +oldTop+"\t oldRight" +oldRight);
+//            }
+//        });
     }
 
     private void initTopBar() {
@@ -555,6 +561,7 @@ public class BPNodePlanFragment extends BaseFragment {
                 startFragment(new BPVoteRecordFragment());
             }
         });
+
     }
 
 }

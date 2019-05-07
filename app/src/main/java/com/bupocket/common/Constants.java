@@ -87,7 +87,7 @@ public class Constants {
 
         //test-main
 //        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
-//        BUMO_NODE_URL("https://wallet-node.bumotest.io"),
+//        BUMO_NODE_URL("http://wallet-node.bumotest.io"),
 
 
 

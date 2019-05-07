@@ -43,6 +43,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_node_name"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="16dp"
                 android:layout_toRightOf="@+id/nodeIconRl"
@@ -52,12 +53,12 @@
 
                 <TextView
                     android:id="@+id/nodeNameTv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
                     android:textSize="15sp"
                     android:layout_centerVertical="true"
-                    tools:text="股神699" />
+                    tools:text="股神股神 股神股神 啊股神" />
 
                 <TextView
                     android:id="@+id/nodeTypeTv"
@@ -70,7 +71,6 @@
                     android:textSize="11sp"
                     android:gravity="center"
                     android:textColor="#B2B2B2"
-                    android:layout_centerVertical="true"
                     android:background="@drawable/shape_corner_bg_gray"/>
 
                 <LinearLayout
@@ -79,6 +79,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@mipmap/icon_share_btn_bg"
+                    android:visibility="gone"
                     android:orientation="horizontal">
                     <ImageView
                         android:layout_marginLeft="8dp"
@@ -100,9 +101,10 @@
             </RelativeLayout>
 
             <RelativeLayout
+                android:layout_below="@+id/rl_node_name"
                 android:layout_toRightOf="@+id/nodeIconRl"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="51.5dp"
+                android:layout_marginTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -113,39 +115,53 @@
                     android:layout_centerVertical="true"
                     android:orientation="horizontal">
                     <TextView
+                        android:id="@+id/haveVotesNumTvHint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="@string/number_have_votes"
+                        android:textColor="@color/multiline_edit_hint_color"
+                        android:textSize="12sp"/>
+
+                    <TextView
                         android:id="@+id/haveVotesNumTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dp"
                         android:textSize="14sp"
                         android:textColor="@color/app_txt_color_gray_2"
                         tools:text="7833993" />
 
-                    <TextView
-                        android:id="@+id/haveVotesNumTvHint"
-                        android:layout_marginLeft="6dp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/ticket_txt"
-                        android:textColor="@color/multiline_edit_hint_color"
-                        android:textSize="12sp"/>
+
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/myVotesNumLl"
-                    android:layout_toRightOf="@+id/haveVotesNumLl"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:layout_marginLeft="59.5dp"
-                    android:layout_centerVertical="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_toRightOf="@+id/haveVotesNumLl"
                     android:orientation="horizontal">
+
+
+                    <TextView
+                        android:id="@+id/supportPeopleTvHint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/multiline_edit_hint_color"
+                        android:textSize="12sp"
+                        tools:text="@string/my_votes_number" />
 
                     <TextView
                         android:id="@+id/supportPeopleTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="@string/support_people_num_txt"
-                        android:textColor="@color/multiline_edit_hint_color"
-                        android:textSize="12sp"/>
+                        android:layout_marginLeft="6dp"
+                        android:textColor="@color/app_txt_color_gray_2"
+                        android:textSize="14sp"
+                        tools:text="7833993" />
+
 
                 </LinearLayout>
             </RelativeLayout>
