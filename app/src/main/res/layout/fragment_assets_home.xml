@@ -33,7 +33,7 @@
                     android:id="@+id/assetLinearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_asset_home"
+                    android:background="@mipmap/ic_asset_home_bg"
                     android:fitsSystemWindows="true"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">

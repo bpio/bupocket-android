@@ -455,7 +455,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
     private void initBackground() {
         if (SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()) {
             mCurrentTestNetTipsTv.setText(getString(R.string.current_test_message_txt));
-            mAssetLinearLayout.setBackgroundResource(R.drawable.bg_asset_home_test_net);
+            mAssetLinearLayout.setBackgroundResource(R.mipmap.ic_asset_home_bg_test_net);
         }
         mCurrentWalletNameTv.setText(currentWalletName);
     }
