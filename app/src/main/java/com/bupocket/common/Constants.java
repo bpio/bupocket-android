@@ -80,14 +80,14 @@ public class Constants {
 
 
         //development
-        WEB_SERVER_DOMAIN("http://192.168.6.97:5648/"),
-        BUMO_NODE_URL("http://192.168.21.35:36002"),
-//
+//        WEB_SERVER_DOMAIN("http://192.168.6.97:5648/"),
+//        BUMO_NODE_URL("http://192.168.21.35:36002"),
+
 
 
         //test-main
-//        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
-//        BUMO_NODE_URL("https://wallet-node.bumotest.io"),
+        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
+        BUMO_NODE_URL("https://wallet-node.bumotest.io"),
 
 
 
