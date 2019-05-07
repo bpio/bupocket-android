@@ -22,7 +22,7 @@ public class VoteRecordAdapter extends AbsViewHolderAdapter<MyVoteInfoModel> {
 
     private int adapterType;
 
-    public final static int SOME_RECORD=1;
+    public final static int SOME_RECORD = 1;
 
     public void setAdapterType(int adapterType) {
         this.adapterType = adapterType;
@@ -41,7 +41,7 @@ public class VoteRecordAdapter extends AbsViewHolderAdapter<MyVoteInfoModel> {
     protected void convert(BaseViewHolder holder, MyVoteInfoModel itemData) {
         TextView recordType = (TextView) holder.getView(R.id.recordTypeTv);
 
-        if (itemData==null) {
+        if (itemData == null) {
             return;
         }
 
@@ -51,7 +51,7 @@ public class VoteRecordAdapter extends AbsViewHolderAdapter<MyVoteInfoModel> {
                 recordType.setText(context.getString(VoteNodeEnum.VOTE.getNameRes()));
                 recordType.setBackgroundResource(VoteNodeEnum.VOTE.getDrawableRes());
 //                holder.setText(R.id.voterName,VoteNodeEnum.VOTE.getName2());
-            }else if (type.equals(VoteNodeEnum.CANCLE.getCode())){
+            } else if (type.equals(VoteNodeEnum.CANCLE.getCode())) {
                 recordType.setText(context.getString(VoteNodeEnum.CANCLE.getNameRes()));
                 recordType.setBackgroundResource(VoteNodeEnum.CANCLE.getDrawableRes());
 //                holder.setText(R.id.voterName,VoteNodeEnum.CANCLE.getName2());
@@ -60,24 +60,22 @@ public class VoteRecordAdapter extends AbsViewHolderAdapter<MyVoteInfoModel> {
         }
 
 
-        if (adapterType==SOME_RECORD) {
+        if (adapterType == SOME_RECORD) {
 
             holder.getView(R.id.nodeTypeTv).setVisibility(View.INVISIBLE);
             holder.getView(R.id.voterName).setVisibility(View.INVISIBLE);
-        }else{
+        } else {
             holder.setText(R.id.voterName, itemData.getNodeName());
 
             String identityType = itemData.getIdentityType();
             if (!TextUtils.isEmpty(identityType)) {
                 if (identityType.equals(SuperNodeTypeEnum.VALIDATOR.getCode())) {
                     holder.setText(R.id.nodeTypeTv, context.getResources().getString(R.string.common_node));
-                }else if (identityType.equals(SuperNodeTypeEnum.ECOLOGICAL.getCode())){
+                } else if (identityType.equals(SuperNodeTypeEnum.ECOLOGICAL.getCode())) {
                     holder.setText(R.id.nodeTypeTv, context.getResources().getString(R.string.ecological_node));
                 }
             }
         }
-
-
 
 
         holder.setText(R.id.amountTv, itemData.getAmount());
@@ -88,20 +86,17 @@ public class VoteRecordAdapter extends AbsViewHolderAdapter<MyVoteInfoModel> {
             if (status.equals(NodeStatusEnum.SUCCESS.getCode())) {
                 tvStatus.setText(context.getString(NodeStatusEnum.SUCCESS.getName()));
                 tvStatus.setTextColor(context.getResources().getColor(NodeStatusEnum.SUCCESS.getColor()));
-            }else if (status.equals(NodeStatusEnum.FAILURE.getCode())){
+            } else if (status.equals(NodeStatusEnum.FAILURE.getCode())) {
                 tvStatus.setText(context.getString(NodeStatusEnum.FAILURE.getName()));
                 tvStatus.setTextColor(context.getResources().getColor(NodeStatusEnum.FAILURE.getColor()));
-            }else if (status.equals(NodeStatusEnum.RUNING.getCode())){
+            } else if (status.equals(NodeStatusEnum.RUNING.getCode())) {
                 tvStatus.setText(context.getString(NodeStatusEnum.RUNING.getName()));
                 tvStatus.setTextColor(context.getResources().getColor(NodeStatusEnum.RUNING.getColor()));
             }
         }
         String date = itemData.getDate();
-        try {
-            holder.setText(R.id.timeTv, TimeUtil.getDateDiff(TimeUtil.stringToLong(date,TimeUtil.TIME_TYPE),context));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//            holder.setText(R.id.timeTv, TimeUtil.getDateDiff(TimeUtil.stringToLong(date,TimeUtil.TIME_TYPE),context));
+        holder.setText(R.id.timeTv, date);
 
 
     }

@@ -479,9 +479,9 @@
     <string name="build_type_exit">Withdraw</string>
 
     <string name="build_risk_info">
-         1. Node co-funding is not a commodity transaction. The sponsors can independently choose the relevant node co-funding projects to support. The sponsors can get reward which is based on the proportion of the sponsoring amount to the co-founding project by each sponsor.
+         1. Node co-funding is not a commodity transaction. The sponsors can independently choose the relevant node co-funding projects to support. The sponsors can get reward which is based on the proportion of the sponsoring amount to the co-founding project by each sponsor;
         \n\n
-        2. BUMO only provides intermediate services such cyberspace and technical services, and BUMO is in no interest relationship to any project initiators and sponsors. BUMO will not take any responsibilities to any legal disputes arising from the node co-funding project, and the initiators and sponsors will take all responsibilities to these legal disputes.
+        2. BUMO only provides intermediate services such cyberspace and technical services, and BUMO is in no interest relationship to any project initiators and sponsors. BUMO will not take any responsibilities to any legal disputes arising from the node co-funding project, and the initiators and sponsors will take all responsibilities to these legal disputes;
         \n\n
         3. Before the node co-funding project is completed, the node co-funding project sponsors can manually withdraw all BUs sponsored. If the project initiator cancels the project before the project is completed, the node co-funding sponsors can also manually withdraw all BUs sponsored.     </string>
 
