@@ -7,6 +7,7 @@ public enum ScanTransactionTypeEnum {
     NODE_VOTE("3","用户投票"),
     APPLY_CO_BUILD("4","共建自购"),
     CO_BUILD_SUPPORT("5","共建支持"),
+    NODE_EXIT("6","节点退出"),
     CO_BUILD_EXIT("7","共建解散"),
     CO_BUILD_APPLY_KOL("17","共建发起者申请退出kol"),
     CO_BUILD_APPLY("13","共建申请kol"),

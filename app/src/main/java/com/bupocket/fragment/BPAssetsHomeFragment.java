@@ -160,7 +160,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         permissions.add(Manifest.permission.READ_PHONE_STATE);
         ArrayList<String> needRequestPermissions = ((BPMainActivity) getActivity()).getNeedRequestPermissions(permissions);
-        if (needRequestPermissions.size()>0) {
+        if (needRequestPermissions.size() > 0) {
             ActivityCompat.requestPermissions(getActivity(), needRequestPermissions.toArray(new String[permissions.size()]), BPMainActivity.BASE_REQUEST_CODE);
 
         }
@@ -496,7 +496,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
             Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
         } else {
             if (!PublicKey.isAddressValid(resultContent)) {
-                LogUtils.e("resultContent:\t"+resultContent);
+                LogUtils.e("resultContent:\t" + resultContent);
                 if (CommonUtil.checkIsBase64(resultContent)) {
                     String jsonStr = null;
                     try {
@@ -689,6 +689,8 @@ public class BPAssetsHomeFragment extends BaseFragment {
             scanTxFee = Constants.COMMITTEE_APPLY;
         } else if (ScanTransactionTypeEnum.COMMITTEE_EXIT.getCode().equals(transactionType)) {
             scanTxFee = Constants.COMMITTEE_APPLY;
+        } else if (ScanTransactionTypeEnum.NODE_EXIT.getCode().equals(transactionType)) {
+            scanTxFee = Constants.NODE_EXIT;
         } else {
             scanTxFee = Constants.MIN_FEE;
         }

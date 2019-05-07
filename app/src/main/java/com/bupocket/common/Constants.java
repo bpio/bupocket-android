@@ -26,6 +26,7 @@ public class Constants {
     public static final Double NODE_CO_BUILD_SUPPORT = 0.15;
     public static final Double NODE_CO_BUILD_AMOUNT_FEE = 0.01;
     public static final Double COMMITTEE_APPLY = 0.15;
+    public static final Double NODE_EXIT = 0.15;
 
 
     public static final double MIN_SEND_AMOUNT = 0.00000001;
@@ -80,14 +81,14 @@ public class Constants {
 
 
         //development
-        WEB_SERVER_DOMAIN("http://192.168.6.97:5648/"),
-        BUMO_NODE_URL("http://192.168.21.35:36002"),
+//        WEB_SERVER_DOMAIN("http://192.168.6.97:5648/"),
+//        BUMO_NODE_URL("http://192.168.21.35:36002"),
 
 
 
         //test-main
-//        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
-//        BUMO_NODE_URL("http://wallet-node.bumotest.io"),
+        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
+        BUMO_NODE_URL("http://wallet-node.bumotest.io"),
 
 
 
