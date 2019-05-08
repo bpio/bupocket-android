@@ -163,11 +163,11 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
                 if (body == null | body.getData() == null |
                         body.getData().getList() == null | body.getData().getList().size() == 0) {
                     addressRecordEmptyLL.setVisibility(View.VISIBLE);
+                }else {
+                    MyVoteRecordModel data = body.getData();
+                    voteRecordAdapter.setNewData(data.getList());
+                    voteRecordAdapter.notifyDataSetChanged();
                 }
-
-                MyVoteRecordModel data = body.getData();
-                voteRecordAdapter.setNewData(data.getList());
-                voteRecordAdapter.notifyDataSetChanged();
 
 
             }
