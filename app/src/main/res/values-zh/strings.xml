@@ -592,6 +592,9 @@
     <string name="qq_down_load_info">请下载QQ后使用 </string>
     <string name="qq_open_error">出错了，请稍后重试</string>
     <string name="qq_code_error">当前版本太低，请更新后使用</string>
+    <string name="send_dailog">请使用下方扫一扫进行操作</string>
+
+    <string name="error_qr_message_txt_2">暂不支持该操作</string>
 
 
 

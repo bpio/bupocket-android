@@ -577,6 +577,6 @@
     <string name="qq_down_load_info">Please use it after downloading QQ</string>
     <string name="qq_open_error">Error! Please try again later</string>
     <string name="qq_code_error">Please use it after upgrading to the latest version</string>
-
+    <string name="error_qr_message_txt_2">This operation is not supported now.</string>
 
 </resources>
