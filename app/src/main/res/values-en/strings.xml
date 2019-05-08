@@ -518,7 +518,7 @@
     <string name="error_1032">The remaining number is insufficient. It is recommended that you adjust the number to sponsor.</string>
     <string name="error_1033"> You have not sponsored this project so you cannot withdraw from it.</string>
     <string name="error_1034">The node Co-funding project is finished, and you cannot withdraw from it.</string>
-    <string name="error_1035">This operation can only be initiated by the initiator of the node.</string>
+    <string name="error_1035">Only the initiator of this node can initiate this operation.</string>
     <string name="error_1036">The initiator of the node co-funding project cannot be a sponsor.</string>
     <string name="error_1038">You have withdrawn successfully. Frequent operations are not allowed.</string>
     <string name="tx_status_fail_txt3">The contract call failed</string>
