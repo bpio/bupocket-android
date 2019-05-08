@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.util.Log;
+
 import com.bupocket.common.Constants;
 import com.bupocket.enums.BackupTipsStateEnum;
 import com.bupocket.enums.BumoNodeEnum;
@@ -18,14 +18,7 @@ import com.bupocket.utils.SocketUtil;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager;
 import com.squareup.leakcanary.LeakCanary;
-import io.socket.client.IO;
-import io.socket.client.Socket;
-import okhttp3.OkHttpClient;
-
-import javax.net.ssl.*;
-import java.net.URISyntaxException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
+import com.umeng.commonsdk.UMConfigure;
 
 public class BPApplication extends Application {
     @SuppressLint("StaticFieldLeak")
@@ -50,6 +43,17 @@ public class BPApplication extends Application {
         sharedPreferencesHelper.put("backupTipsState",BackupTipsStateEnum.SHOW.getCode());
 
         initCrash();
+
+        initUMeng();
+    }
+
+    private void initUMeng() {
+
+//        UMConfigure.init(Context context, String appkey, String channel, int deviceType, String pushSecret);
+
+        UMConfigure.init(this, Constants.UM_APPID, "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "");
+
+
     }
 
     @Override

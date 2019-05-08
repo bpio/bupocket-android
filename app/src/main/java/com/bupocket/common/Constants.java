@@ -6,7 +6,7 @@ public class Constants {
     public static String BUMO_NODE_URL = MainNetConfig.BUMO_NODE_URL.getValue();
     public static String PUSH_MESSAGE_SOCKET_URL = MainNetConfig.PUSH_MESSAGE_SOCKET_URL.getValue();
 
-    public static String IMAGE_PATH = "img-dpos/";
+    public static String IMAGE_PATH = "img_dpos/";
     public static String NODE_PLAN_IMAGE_URL_PREFIX = MainNetConfig.WEB_SERVER_DOMAIN.getValue() + IMAGE_PATH;
 
 
@@ -55,6 +55,9 @@ public class Constants {
 
     public static final String WeChat_APPID = "wxaecf7ac4085fd34a";
     public static final String XB_YOUPING_USERNAME = "gh_545e659b7dcd";
+
+
+    public static final String UM_APPID="5cc7a5e90cafb257820006d9";
 
 
     public static enum MainNetConfig {

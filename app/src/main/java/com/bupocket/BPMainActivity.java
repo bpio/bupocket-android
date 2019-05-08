@@ -16,6 +16,8 @@ import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.commonsdk.UMConfigure;
 
 public class BPMainActivity extends BaseFragmentActivity {
     private static final String KEY_FRAGMENT = "key_fragment";
@@ -107,5 +109,4 @@ public class BPMainActivity extends BaseFragmentActivity {
             super.onBackPressed();
         }
     }
-
 }

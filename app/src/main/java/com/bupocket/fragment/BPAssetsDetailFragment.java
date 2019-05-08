@@ -15,6 +15,7 @@ import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.adaptor.MyTokenTxAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.Constants;
 import com.bupocket.enums.OutinTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
@@ -34,11 +35,13 @@ import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -217,7 +220,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
                     handleMyTxs(respDto.getData());
                     if (respDto.getData().getTxRecord().size() == 0) {
                         mRecentlyTxRecordEmptyLL.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         mRecentlyTxRecordEmptyLL.setVisibility(View.GONE);
                     }
 
@@ -265,15 +268,14 @@ public class BPAssetsDetailFragment extends BaseFragment {
                 String amountStr = null;
                 String txStartStr = null;
                 if (obj.getAmount().equals("0")) {
-                    amountStr=obj.getAmount();
-                }else{
+                    amountStr = obj.getAmount();
+                } else {
                     if (obj.getOutinType().equals(OutinTypeEnum.OUT.getCode())) {
                         amountStr = "-" + obj.getAmount();
                     } else {
                         amountStr = "+" + obj.getAmount();
                     }
                 }
-
 
 
                 if (TxStatusEnum.SUCCESS.getCode().equals(obj.getTxStatus())) {
@@ -392,10 +394,30 @@ public class BPAssetsDetailFragment extends BaseFragment {
         if (result != null) {
             if (result.getContents() == null) {
                 Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
-            } else if(!PublicKey.isAddressValid(result.getContents())){
-                ToastUtil.showToast((Activity) mContext, R.string.error_qr_message_txt, Toast.LENGTH_LONG);
+            } else if (!PublicKey.isAddressValid(result.getContents())) {
 
-            }else {
+//                String resultContent = result.getContents();
+//                if (CommonUtil.checkIsBase64(resultContent)) {
+//                    showSendDialog();
+//                } else {
+//                    try {
+//                        java.net.URL url = new java.net.URL(resultContent);
+//                        String path = url.getPath();
+//                        resultContent = path;
+//                    } catch (MalformedURLException e) {
+//                        e.printStackTrace();
+//                    }
+//                    if (resultContent.startsWith(Constants.QR_LOGIN_PREFIX)
+//                            | resultContent.startsWith(Constants.QR_NODE_PLAN_PREFIX)) {
+//                        showSendDialog();
+//                    } else {
+//                        Toast.makeText(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+
+                ToastUtil.showToast((Activity) mContext, R.string.error_qr_message_txt_2, Toast.LENGTH_LONG);
+
+            } else {
                 Bundle argz = new Bundle();
                 argz.putString("destAddress", result.getContents());
                 argz.putString("tokenCode", assetCode);
@@ -411,6 +433,38 @@ public class BPAssetsDetailFragment extends BaseFragment {
             super.onActivityResult(requestCode, resultCode, data);
 
         }
+    }
+
+    private void showSendDialog() {
+        int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
+        final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext)
+                .setLayout(R.layout.view_send_dialog)
+                .create(mCurrentDialogStyle);
+        qmuiDialog.show();
+
+        qmuiDialog.findViewById(R.id.tvSendDialogClose).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+            }
+        });
+
+        qmuiDialog.findViewById(R.id.ivSendDialogScan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startScanHome();
+            }
+        });
+    }
+
+
+    private void startScanHome() {
+        IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(this);
+        intentIntegrator.setBeepEnabled(true);
+        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
+        intentIntegrator.setPrompt(getResources().getString(R.string.wallet_scan_notice));
+        intentIntegrator.setCaptureActivity(CaptureActivity.class);
+        intentIntegrator.initiateScan();
     }
 
 }

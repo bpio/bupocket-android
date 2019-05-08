@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="200dp"
+    android:layout_gravity="center_horizontal"
+    android:background="@color/app_color_white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvSendDialogClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="5dp"
+        android:padding="5dp"
+        android:background="@mipmap/icon_cancel_big"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/send_dailog"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/app_txt_color_gray_2"
+        />
+
+    <ImageView
+        android:id="@+id/ivSendDialogScan"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@mipmap/icon_scan_green"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="@string/wallet_scan_txt"
+        android:textSize="18sp"
+        android:textColor="@color/app_txt_color_gray_2"
+        />
+
+</LinearLayout>

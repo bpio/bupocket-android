@@ -34,6 +34,7 @@ import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -69,12 +70,6 @@ public abstract class BaseFragment extends QMUIFragment {
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-
-//        BPUpgradeManager.getInstance(getContext()).runUpgradeTipTaskIfExist(getActivity());
-    }
 
 
     public String getWalletAddress() {
@@ -310,5 +305,15 @@ public abstract class BaseFragment extends QMUIFragment {
         inputManager.showSoftInput(editText, InputMethodManager.SHOW_FORCED);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        MobclickAgent.onPageStart(this.getTag().getClass().toString()); //统计页面("MainScreen"为页面名称，可自定义)
+    }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        MobclickAgent.onPageEnd(this.getTag());
+    }
 }

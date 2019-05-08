@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.bupocket.utils.LocaleUtil;
 import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.arch.QMUIFragmentActivity;
+import com.umeng.analytics.MobclickAgent;
 
 import java.util.ArrayList;
 
@@ -47,6 +48,20 @@ public abstract class BaseFragmentActivity extends QMUIFragmentActivity {
             LogUtils.e(" request permission success");
         }
 
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
     }
 
 }

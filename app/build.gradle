@@ -105,4 +105,8 @@ dependencies {
 
     implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'com.melnykov:floatingactionbutton:1.0.7'
+
+
+    implementation 'com.umeng.sdk:common:1.5.0'
+    implementation 'com.umeng.sdk:analytics:7.5.0'
 }
