@@ -82,7 +82,7 @@ dependencies {
     implementation 'com.qianwen:okhttp-utils:3.8.0'
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.squareup.okhttp3:mockwebserver:3.10.0'
-    implementation ('io.socket:socket.io-client:1.0.0') {
+    implementation('io.socket:socket.io-client:1.0.0') {
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
     }
@@ -96,11 +96,13 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.9.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.9.0'
     testImplementation 'junit:junit:4.12'
-    configurations{
-        all*.exclude group:'com.google.zxing'
+    configurations {
+        all*.exclude group: 'com.google.zxing'
     }
-
-
     implementation 'com.orhanobut:logger:1.15'
     implementation 'org.greenrobot:eventbus:3.1.1'
+    implementation 'com.github.ksoichiro:android-observablescrollview:1.6.0'
+
+    implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'com.melnykov:floatingactionbutton:1.0.7'
 }

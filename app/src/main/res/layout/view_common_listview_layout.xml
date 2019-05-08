@@ -20,10 +20,10 @@
             layout="@layout/view_load_failed"
             android:visibility="gone" />
 
-        <ListView
+        <com.github.ksoichiro.android.observablescrollview.ObservableListView
             android:id="@+id/lvRefresh"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:divider="@null"
             android:fadeScrollbars="false"
             android:scrollbars="none" />

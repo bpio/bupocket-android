@@ -4,19 +4,22 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,12 +41,19 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
+import com.github.ksoichiro.android.observablescrollview.ObservableListView;
+import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
+import com.github.ksoichiro.android.observablescrollview.ScrollState;
+import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
+import com.nineoldandroids.view.ViewHelper;
+import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
@@ -69,7 +79,7 @@ public class BPNodePlanFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
     @BindView(R.id.lvRefresh)
-    ListView lvPlan;
+    ObservableListView lvPlan;
     @BindView(R.id.myNodeCB)
     CheckBox myNodeCB;
     @BindView(R.id.myNodeTv)
@@ -81,11 +91,18 @@ public class BPNodePlanFragment extends BaseFragment {
     @BindView(R.id.myNodeTipsIv)
     ImageView mMyNodeTipsIv;
     @BindView(R.id.refreshLayout)
-    RefreshLayout refreshLayout;
+    SmartRefreshLayout refreshLayout;
     @BindView(R.id.copyCommandBtn)
     QMUIRoundButton copyCommandBtn;
     @BindView(R.id.llLoadFailed)
     LinearLayout llLoadFailed;
+    @BindView(R.id.tvTitle)
+    TextView tvTitle;
+    @BindView(R.id.llNodeSearch)
+    RelativeLayout llNodeSearch;
+    @BindView(R.id.llHeadView)
+    LinearLayout llHeadView;
+
 
     private String txHash;
     private QMUITipDialog txSendingTipDialog;
@@ -95,6 +112,8 @@ public class BPNodePlanFragment extends BaseFragment {
     private QMUIPopup myNodeExplainPopup;
     private ArrayList<SuperNodeModel> myVoteInfoList;
     private ArrayList<SuperNodeModel> nodeList;
+    private int mBaseTranslationY;
+    private TextView mTopBarTitle;
 
     @Override
     protected View onCreateView() {
@@ -121,9 +140,9 @@ public class BPNodePlanFragment extends BaseFragment {
                     superNodeAdapter.setNewData(superNodeModels);
                 } else {
                     setEmpty(nodeList.size() == 0);
-                    if (etNodeSearch.getText().toString().isEmpty()){
+                    if (etNodeSearch.getText().toString().isEmpty()) {
                         superNodeAdapter.setNewData(nodeList);
-                    }else{
+                    } else {
                         searchNode(etNodeSearch.getText().toString());
                     }
 
@@ -180,12 +199,12 @@ public class BPNodePlanFragment extends BaseFragment {
                         break;
                     case R.id.shareBtn:
                         String status = superNodeModel.getStatus();
-                        if (SuperNodeStatusEnum.RUNNING.getCode().equals(status)){
+                        if (SuperNodeStatusEnum.RUNNING.getCode().equals(status)) {
 
-                            CommonUtil.showMessageDialog(mContext,String.format(getString(R.string.super_status_info),getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
-                        }else if (SuperNodeStatusEnum.FAILED.getCode().equals(status)) {
+                            CommonUtil.showMessageDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
+                        } else if (SuperNodeStatusEnum.FAILED.getCode().equals(status)) {
 
-                            CommonUtil.showMessageDialog(mContext,String.format(getString(R.string.super_status_info),getString(SuperNodeStatusEnum.FAILED.getNameRes())));
+                            CommonUtil.showMessageDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.FAILED.getNameRes())));
 
                         } else {
                             Bundle args = new Bundle();
@@ -237,6 +256,96 @@ public class BPNodePlanFragment extends BaseFragment {
                 refreshData();
             }
         });
+
+
+        lvPlan.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
+            @Override
+            public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
+                LogUtils.e("scrollY:" + scrollY + "\tfirstScroll:" + firstScroll + "\tdragging:" + dragging);
+
+                if (dragging) {
+                    int toolbarHeight = tvTitle.getHeight();
+                    if (firstScroll) {
+                        float currentHeaderTranslationY = ViewHelper.getTranslationY(llHeadView);
+                        if (-toolbarHeight < currentHeaderTranslationY) {
+                            mBaseTranslationY = scrollY;
+                        }
+                    }
+                    float headerTranslationY = ScrollUtils.getFloat(-(scrollY - mBaseTranslationY), -toolbarHeight, 0);
+                    ViewPropertyAnimator.animate(llHeadView).cancel();
+                    ViewHelper.setTranslationY(llHeadView, headerTranslationY);
+//                    setMargin((int) (llHeadView.getHeight()-headerTranslationY));
+                }
+
+            }
+
+            @Override
+            public void onDownMotionEvent() {
+
+            }
+
+            @Override
+            public void onUpOrCancelMotionEvent(ScrollState scrollState) {
+                mBaseTranslationY = 0;
+
+                if (scrollState == ScrollState.DOWN) {
+                    showToolbar();
+                } else if (scrollState == ScrollState.UP) {
+                    int toolbarHeight = tvTitle.getHeight();
+                    int scrollY = lvPlan.getCurrentScrollY();
+                    if (toolbarHeight <= scrollY) {
+                        hideToolbar();
+                    } else {
+                        showToolbar();
+                    }
+                } else {
+                    // Even if onScrollChanged occurs without scrollY changing, toolbar should be adjusted
+                    if (!toolbarIsShown() && !toolbarIsHidden()) {
+                        // Toolbar is moving but doesn't know which to move:
+                        // you can change this to hideToolbar()
+                        showToolbar();
+                    }
+                }
+            }
+        });
+    }
+    private boolean toolbarIsShown() {
+        return ViewHelper.getTranslationY(llHeadView) == 0;
+    }
+
+    private boolean toolbarIsHidden() {
+        return ViewHelper.getTranslationY(llHeadView) == -tvTitle.getHeight();
+    }
+
+    private void showToolbar() {
+        float headerTranslationY = ViewHelper.getTranslationY(llHeadView);
+        if (headerTranslationY != 0) {
+            ViewPropertyAnimator.animate(llHeadView).cancel();
+            ViewPropertyAnimator.animate(llHeadView).translationY(0).setDuration(200).start();
+        }
+        setMargin(llHeadView.getHeight());
+//        mTopBar.setTitle("");
+        ViewPropertyAnimator.animate(mTopBarTitle).alpha(0).setDuration(200).start();
+    }
+
+    private void hideToolbar() {
+        float headerTranslationY = ViewHelper.getTranslationY(llHeadView);
+        int toolbarHeight = tvTitle.getHeight();
+        if (headerTranslationY != -toolbarHeight) {
+            ViewPropertyAnimator.animate(llHeadView).cancel();
+            ViewPropertyAnimator.animate(llHeadView).translationY(-toolbarHeight).setDuration(200).start();
+        }
+        setMargin(llHeadView.getHeight()-tvTitle.getHeight());
+//        mTopBar.setTitle(R.string.run_for_node_txt);
+
+        ViewPropertyAnimator.animate(mTopBarTitle).alpha(100).setDuration(200).start();
+    }
+
+
+    private void setMargin(int margin){
+        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) refreshLayout.getLayoutParams();
+        lp.setMargins(0, margin, 0, 0);
+        refreshLayout.getLayout().setLayoutParams(lp);
     }
 
     private void initPopup() {
@@ -496,6 +605,7 @@ public class BPNodePlanFragment extends BaseFragment {
                     setEmpty(true);
                 }
 
+
             }
 
             @Override
@@ -504,12 +614,11 @@ public class BPNodePlanFragment extends BaseFragment {
 
             }
         });
-
+        setMargin(llHeadView.getHeight());
 
     }
 
     /**
-     *
      * @param nodeList
      * @return
      */
@@ -539,6 +648,7 @@ public class BPNodePlanFragment extends BaseFragment {
     private void initListView() {
         superNodeAdapter = new SuperNodeAdapter(this.getContext());
         lvPlan.setAdapter(superNodeAdapter);
+
 //        lvPlan.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
 //            @Override
 //            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -561,7 +671,8 @@ public class BPNodePlanFragment extends BaseFragment {
                 startFragment(new BPVoteRecordFragment());
             }
         });
-
+        mTopBarTitle = mTopBar.setTitle(R.string.run_for_node_txt);
+        ViewPropertyAnimator.animate(mTopBarTitle).alpha(0).setDuration(10).start();
     }
 
 }
