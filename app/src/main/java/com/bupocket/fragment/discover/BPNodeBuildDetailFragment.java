@@ -100,7 +100,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private TextView tvBuildDetailSupportAmount;
     private NodeBuildDetailModel detailModel;
     private String nodeId;
-    private View emptyLayout;
     private GetTokensRespDto.TokenListBean tokenListBean;
     private boolean isExit;
 
@@ -196,6 +195,9 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             }
         });
 
+        lvBuildDetail.addHeaderView(headerView);
+        lvBuildDetail.setVisibility(View.GONE);
+//        addressRecordEmptyLL.setVisibility(View.VISIBLE);
 
         getBuildData();
     }
@@ -286,17 +288,18 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                         btnBuildExit.setText(getString(R.string.build_exit_all));
                     }
 
-                    lvBuildDetail.addHeaderView(headerView);
+
 
                     ArrayList<NodeBuildSupportModel> nodelist = body.getData().getSupportList();
+
                     if (nodelist == null || nodelist.size() == 0) {
                         addressRecordEmptyLL.setVisibility(View.VISIBLE);
                     } else {
                         addressRecordEmptyLL.setVisibility(View.GONE);
-                        nodeBuildDetailAdapter.setNewData(nodelist);
-                        nodeBuildDetailAdapter.notifyDataSetChanged();
                     }
-
+                    lvBuildDetail.setVisibility(View.VISIBLE);
+                    nodeBuildDetailAdapter.setNewData(nodelist);
+                    nodeBuildDetailAdapter.notifyDataSetChanged();
 
                 }
 
@@ -307,7 +310,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             public void onFailure(Call<ApiResult<NodeBuildDetailModel>> call, Throwable t) {
 
                 llLoadFailed.setVisibility(View.VISIBLE);
-
+                lvBuildDetail.setVisibility(View.GONE);
+                llBtnBuild.setVisibility(View.GONE);
             }
 
 

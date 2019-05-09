@@ -10,11 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/app_btn_color_white"
+        android:paddingTop="10dp"
         android:paddingLeft="13sp">
 
         <TextView
             android:id="@+id/tvBuildDetailName"
-            android:layout_width="wrap_content"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             tools:text="百信共建小分队"
             android:textColor="@color/app_color_black"

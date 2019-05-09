@@ -20,10 +20,6 @@
             layout="@layout/view_load_failed"
             android:visibility="gone" />
 
-        <include
-            layout="@layout/view_empty_record"
-            android:visibility="gone" />
-
 
         <com.github.ksoichiro.android.observablescrollview.ObservableListView
             android:id="@+id/lvRefresh"
@@ -33,7 +29,9 @@
             android:fadeScrollbars="false"
             android:scrollbars="none" />
 
-
+        <include
+            layout="@layout/view_empty_record"
+            android:visibility="gone" />
 
     </LinearLayout>
 

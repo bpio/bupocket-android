@@ -140,7 +140,6 @@ public class BPNodeBuildFragment extends BaseFragment {
                     addressRecordEmptyLL.setVisibility(View.VISIBLE);
                 }
 
-
             }
 
             @Override
