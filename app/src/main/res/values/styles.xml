@@ -280,4 +280,14 @@
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>
     </style>
+
+
+    <style name="qmui_com_dialog"   parent="QMUI.Dialog">
+        <item name="android:textColor">@color/app_color_green</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="qmui_dialog_positive_action_text_color">@color/app_color_green</item>
+        <item name="qmui_dialog_negative_action_text_color">@color/app_color_green</item>
+
+    </style>
 </resources>

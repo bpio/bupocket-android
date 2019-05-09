@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
@@ -17,7 +18,6 @@ import android.widget.TextView;
 import com.bupocket.R;
 import com.bupocket.enums.CurrencyTypeEnum;
 import com.bupocket.enums.ExceptionEnum;
-import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
@@ -44,6 +44,7 @@ import java.util.regex.Pattern;
 
 import static com.bupocket.common.Constants.WeChat_APPID;
 import static com.bupocket.common.Constants.XB_YOUPING_USERNAME;
+import static com.qmuiteam.qmui.widget.dialog.QMUIDialogAction.ACTION_PROP_POSITIVE;
 
 /**
  * 通用工具类.
@@ -807,17 +808,31 @@ public class CommonUtil {
         return accountBPData;
     }
 
-    public static void showMessageDialog(Context mContext, String notice) {
-        int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
-        new QMUIDialog.MessageDialogBuilder(mContext)
-                .setMessage(notice)
-                .addAction(R.string.i_knew_btn_txt, new QMUIDialogAction.ActionListener() {
-                    @Override
-                    public void onClick(QMUIDialog dialog, int index) {
-                        dialog.dismiss();
-                    }
-                })
-                .create(mCurrentDialogStyle).show();
+    public static void showMessageDialog(Context mContext, String msg) {
+//        int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
+//        int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog_Action;
+//        int mCurrentDialogStyle = R.style.qmui_com_dialog;
+//        QMUIDialog qmuiDialog = new QMUIDialog.MessageDialogBuilder(mContext)
+//                .setMessage(msg)
+//                .addAction(R.drawable.shape_corner_green,R.string.i_knew_btn_txt, new QMUIDialogAction.ActionListener() {
+//                    @Override
+//                    public void onClick(QMUIDialog dialog, int index) {
+//                        dialog.dismiss();
+//                    }
+//                })
+//                .create(mCurrentDialogStyle);
+//        qmuiDialog.show();
+
+        final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
+                setLayout(R.layout.qmui_com_dialog_green).create();
+        qmuiDialog.findViewById(R.id.tvComKnow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+            }
+        });
+        ((TextView) qmuiDialog.findViewById(R.id.tvComMassage)).setText(msg);
+        qmuiDialog.show();
 
     }
 
@@ -894,8 +909,8 @@ public class CommonUtil {
         req.userName = XB_YOUPING_USERNAME;
         req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
         boolean isSend = api.sendReq(req);
-        if (!isSend){
-            showMessageDialog(context,R.string.wechat_down_load_info);
+        if (!isSend) {
+            showMessageDialog(context, R.string.wechat_down_load_info);
         }
         return isSend;
     }
