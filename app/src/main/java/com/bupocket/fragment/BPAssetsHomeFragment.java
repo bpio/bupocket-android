@@ -49,6 +49,7 @@ import com.bupocket.http.api.dto.resp.GetTokensRespDto;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.http.api.dto.resp.UserScanQrLoginDto;
 import com.bupocket.model.TransConfirmModel;
+import com.bupocket.model.UDCBUModel;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LocaleUtil;
@@ -57,6 +58,7 @@ import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
+import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -637,6 +639,26 @@ public class BPAssetsHomeFragment extends BaseFragment {
                             }
                         });
 
+                    } else if (resultContent.contains(Constants.INFO_UDCBU)) {
+                        final String udcbuContent = resultContent.replace(Constants.INFO_UDCBU, "");
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    UDCBUModel udcbuModel = new Gson().fromJson(udcbuContent, UDCBUModel.class);
+                                    TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(udcbuModel.getAmount(), udcbuModel.getInput(), currentWalletAddress, String.valueOf(scanTxFee), udcbuModel.getDest_address(), udcbuModel.getTx_fee());
+                                    submitTransactionBase(buildBlobResponse);
+
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }).start();
+
+
                     } else {
                         Toast.makeText(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT).show();
                     }
@@ -789,7 +811,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         final String amount = contentDto.getAmount();
         final String contractAddress = contentDto.getDestAddress();
         final String transactionType = contentDto.getType();
-        final String transMetaData=contentDto.getQrRemarkEn();
+        final String transMetaData = contentDto.getQrRemarkEn();
 
         if (TextUtils.isEmpty(tokenBalance) || (Double.valueOf(tokenBalance) < Double.valueOf(amount))) {
             Toast.makeText(getContext(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT).show();
@@ -814,9 +836,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         org.json.JSONObject jsonObj = new org.json.JSONObject(script);
                         String input = jsonObj.getString("input");
                         String payload = jsonObj.getString("payload");
-                        buildBlobResponse = Wallet.getInstance().applyCoBuildBlob(currentWalletAddress, String.valueOf(Double.parseDouble(amount) + Constants.NODE_CO_BUILD_AMOUNT_FEE), input.toString(), payload, Constants.NODE_CO_BUILD_FEE,transMetaData);
+                        buildBlobResponse = Wallet.getInstance().applyCoBuildBlob(currentWalletAddress, String.valueOf(Double.parseDouble(amount) + Constants.NODE_CO_BUILD_AMOUNT_FEE), input.toString(), payload, Constants.NODE_CO_BUILD_FEE, transMetaData);
                     } else {
-                        buildBlobResponse = Wallet.getInstance().buildBlob(amount, script, currentWalletAddress, String.valueOf(scanTxFee), contractAddress,transMetaData);
+                        buildBlobResponse = Wallet.getInstance().buildBlob(amount, script, currentWalletAddress, String.valueOf(scanTxFee), contractAddress, transMetaData);
                     }
                     String txHash = buildBlobResponse.getResult().getHash();
                     NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);

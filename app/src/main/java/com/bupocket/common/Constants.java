@@ -2,6 +2,7 @@ package com.bupocket.common;
 
 public class Constants {
 
+
     public static String WEB_SERVER_DOMAIN = MainNetConfig.WEB_SERVER_DOMAIN.getValue();
     public static String BUMO_NODE_URL = MainNetConfig.BUMO_NODE_URL.getValue();
     public static String PUSH_MESSAGE_SOCKET_URL = MainNetConfig.PUSH_MESSAGE_SOCKET_URL.getValue();
@@ -48,7 +49,7 @@ public class Constants {
 
     public static final String QR_LOGIN_PREFIX = "/xDnAs_login/";
     public static final String QR_NODE_PLAN_PREFIX = "/xDnAs_dpos/";
-
+    public static final CharSequence INFO_UDCBU = "###UDCBU###";
 
 //    public static final String WeChat_APPID = "wxaecf7ac4085fd34a";
 //    public static final String XB_YOUPING_USERNAME = "gh_463781563a74";
@@ -58,6 +59,7 @@ public class Constants {
 
 
     public static final String UM_APPID="5cc7a5e90cafb257820006d9";
+
 
 
     public static enum MainNetConfig {
