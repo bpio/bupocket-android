@@ -789,6 +789,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         final String amount = contentDto.getAmount();
         final String contractAddress = contentDto.getDestAddress();
         final String transactionType = contentDto.getType();
+        final String transMetaData=contentDto.getQrRemarkEn();
 
         if (TextUtils.isEmpty(tokenBalance) || (Double.valueOf(tokenBalance) < Double.valueOf(amount))) {
             Toast.makeText(getContext(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT).show();
@@ -813,9 +814,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         org.json.JSONObject jsonObj = new org.json.JSONObject(script);
                         String input = jsonObj.getString("input");
                         String payload = jsonObj.getString("payload");
-                        buildBlobResponse = Wallet.getInstance().applyCoBuildBlob(currentWalletAddress, String.valueOf(Double.parseDouble(amount) + Constants.NODE_CO_BUILD_AMOUNT_FEE), input.toString(), payload, Constants.NODE_CO_BUILD_FEE);
+                        buildBlobResponse = Wallet.getInstance().applyCoBuildBlob(currentWalletAddress, String.valueOf(Double.parseDouble(amount) + Constants.NODE_CO_BUILD_AMOUNT_FEE), input.toString(), payload, Constants.NODE_CO_BUILD_FEE,transMetaData);
                     } else {
-                        buildBlobResponse = Wallet.getInstance().buildBlob(amount, script, currentWalletAddress, String.valueOf(scanTxFee), contractAddress);
+                        buildBlobResponse = Wallet.getInstance().buildBlob(amount, script, currentWalletAddress, String.valueOf(scanTxFee), contractAddress,transMetaData);
                     }
                     String txHash = buildBlobResponse.getResult().getHash();
                     NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);

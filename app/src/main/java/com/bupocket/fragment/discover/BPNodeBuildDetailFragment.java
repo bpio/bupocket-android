@@ -109,6 +109,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private QMUIPopup myNodeExplainPopup;
     private TextView tvProgress;
     private View headerView;
+    private String transMetaData;
+    private String supportTransMetaData;
 
     @Override
     protected View onCreateView() {
@@ -357,10 +359,12 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
     private void showExit() {
 
+
         final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
         qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
         TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
-        mTransactionDetailTv.setText(String.format(getString(R.string.build_exit_confirm_title), detailModel.getTitle()));
+        transMetaData = String.format(getString(R.string.build_exit_confirm_title), detailModel.getTitle());
+        mTransactionDetailTv.setText(transMetaData);
         TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
         mDestAddressTv.setText(detailModel.getContractAddress());
         TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
@@ -443,7 +447,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             @Override
             public void run() {
                 try {
-                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, inputExit, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_FEE), detailModel.getContractAddress());
+                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, inputExit, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_FEE), detailModel.getContractAddress(),transMetaData);
 
                     String hash = transBlob.getResult().getHash();
                     LogUtils.e(hash);
@@ -594,7 +598,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
         qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
         TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
-        mTransactionDetailTv.setText(String.format(getString(R.string.build_support_confirm_title), detailModel.getTitle()));
+        supportTransMetaData = String.format(getString(R.string.build_support_confirm_title), detailModel.getTitle());
+        mTransactionDetailTv.setText(supportTransMetaData);
         TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
 
         mDestAddressTv.setText(detailModel.getContractAddress());
@@ -669,7 +674,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             public void run() {
                 try {
 
-                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, inputSupport, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_MIN_FEE), contractAddress);
+                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, inputSupport, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_MIN_FEE), contractAddress,supportTransMetaData);
 
                     String hash = transBlob.getResult().getHash();
                     if (TextUtils.isEmpty(hash)) {

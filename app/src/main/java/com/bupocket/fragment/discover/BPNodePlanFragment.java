@@ -114,6 +114,7 @@ public class BPNodePlanFragment extends BaseFragment {
     private ArrayList<SuperNodeModel> nodeList;
     private int mBaseTranslationY;
     private TextView mTopBarTitle;
+    private String metaData;
 
     @Override
     protected View onCreateView() {
@@ -384,6 +385,7 @@ public class BPNodePlanFragment extends BaseFragment {
 
         String destAddress = Constants.CONTRACT_ADDRESS;
         String transactionDetail = String.format(getString(R.string.revoke_vote_tx_details_txt), itemInfo.getNodeName());
+        metaData = String.format(getString(R.string.revoke_vote_tx_details_txt), itemInfo.getNodeName());
         String transactionAmount = "0";
 
         final JSONObject input = new JSONObject();
@@ -468,7 +470,7 @@ public class BPNodePlanFragment extends BaseFragment {
             @Override
             public void run() {
                 try {
-                    final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input.toJSONString(), currentWalletAddress, String.valueOf(Constants.NODE_REVOKE_FEE), Constants.CONTRACT_ADDRESS);
+                    final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input.toJSONString(), currentWalletAddress, String.valueOf(Constants.NODE_REVOKE_FEE), Constants.CONTRACT_ADDRESS,metaData);
                     String txHash = buildBlobResponse.getResult().getHash();
                     NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
                     Call<ApiResult> call;

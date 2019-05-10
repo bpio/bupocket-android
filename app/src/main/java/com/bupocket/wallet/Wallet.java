@@ -31,6 +31,7 @@ import io.bumo.model.response.result.TransactionBuildBlobResult;
 
 import org.bitcoinj.crypto.MnemonicCode;
 
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -727,25 +728,25 @@ public class Wallet {
         return walletBPData;
     }
 
-    /**
-     * withdraw the vote
-     */
-    public TransactionBuildBlobResponse unVoteBuildBlob(String fromAccAddr, String role, String address, String fee, String contractAddress) throws Exception {
-        Long nonce = getAccountNonce(fromAccAddr) + 1;
-        Long gasPrice = 1000L;
-        Long feeLimit = ToBaseUnit.BU2MO(fee);
-        Long buAmount = 0L;
-
-        // init input
-        JSONObject input = new JSONObject();
-        input.put("method", "unVote");
-        JSONObject params = new JSONObject();
-        params.put("role", role);
-        params.put("address", address);
-        input.put("params", params);
-
-        return buildBlob(buAmount, input, fromAccAddr, nonce, feeLimit, gasPrice, contractAddress);
-    }
+//    /**
+//     * withdraw the vote
+//     */
+//    public TransactionBuildBlobResponse unVoteBuildBlob(String fromAccAddr, String role, String address, String fee, String contractAddress) throws Exception {
+//        Long nonce = getAccountNonce(fromAccAddr) + 1;
+//        Long gasPrice = 1000L;
+//        Long feeLimit = ToBaseUnit.BU2MO(fee);
+//        Long buAmount = 0L;
+//
+//        // init input
+//        JSONObject input = new JSONObject();
+//        input.put("method", "unVote");
+//        JSONObject params = new JSONObject();
+//        params.put("role", role);
+//        params.put("address", address);
+//        input.put("params", params);
+//
+//        return buildBlob(buAmount, input, fromAccAddr, nonce, feeLimit, gasPrice, contractAddress);
+//    }
 
     /**
      * build blob
@@ -778,7 +779,7 @@ public class Wallet {
         return transactionBuildBlobResponse;
     }
 
-    public TransactionBuildBlobResponse buildBlob(String amount, String input, String sourceAddress, String fee, String contractAddress) throws Exception {
+    public TransactionBuildBlobResponse buildBlob(String amount, String input, String sourceAddress, String fee, String contractAddress,String transMetadata) throws Exception {
         Long nonce = getAccountNonce(sourceAddress) + 1;
         Long gasPrice = 1000L;
         Long feeLimit = ToBaseUnit.BU2MO(fee);
@@ -788,6 +789,8 @@ public class Wallet {
         contractInvokeByBUOperation.setContractAddress(contractAddress);
         contractInvokeByBUOperation.setBuAmount(buAmount);
         contractInvokeByBUOperation.setInput(input);
+        contractInvokeByBUOperation.setMetadata(transMetadata);
+
 
         TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
         transactionBuildBlobRequest.setSourceAddress(sourceAddress);
@@ -795,6 +798,7 @@ public class Wallet {
         transactionBuildBlobRequest.setFeeLimit(feeLimit);
         transactionBuildBlobRequest.setGasPrice(gasPrice);
         transactionBuildBlobRequest.addOperation(contractInvokeByBUOperation);
+        transactionBuildBlobRequest.setMetadata(transMetadata);
 
         TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
         LogUtils.e("transactionBuildBlobResponse:" + transactionBuildBlobResponse.getErrorCode() + "" +
@@ -802,7 +806,7 @@ public class Wallet {
         return transactionBuildBlobResponse;
     }
 
-    public TransactionBuildBlobResponse applyCoBuildBlob(String sourceAddress, String amount, String initInput, String payload, double fee) throws Exception {
+    public TransactionBuildBlobResponse applyCoBuildBlob(String sourceAddress, String amount, String initInput, String payload, double fee, String transMetaData) throws Exception {
         Long initBalance = ToBaseUnit.BU2MO(amount);
         // The fixed write 1000L ，the unit is MO
         Long gasPrice = 1000L;
@@ -817,6 +821,7 @@ public class Wallet {
         operation.setInitBalance(initBalance);
         operation.setPayload(payload);
         operation.setInitInput(initInput);
+        operation.setMetadata(transMetaData);
 
         TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
         transactionBuildBlobRequest.setSourceAddress(sourceAddress);
@@ -824,6 +829,7 @@ public class Wallet {
         transactionBuildBlobRequest.setFeeLimit(feeLimit);
         transactionBuildBlobRequest.setGasPrice(gasPrice);
         transactionBuildBlobRequest.addOperation(operation);
+        transactionBuildBlobRequest.setMetadata(transMetaData);
 
         TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
         LogUtils.e("transactionBuildBlobResponse:" + transactionBuildBlobResponse.getErrorCode() + "" +
