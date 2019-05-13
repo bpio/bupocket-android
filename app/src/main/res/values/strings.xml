@@ -599,6 +599,7 @@
 
     <string name="comm_out">−</string>
     <string name="comm_in">+</string>
+    <string name="transaction_metadata">调用合约</string>
 
 
 </resources>

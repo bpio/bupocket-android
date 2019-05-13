@@ -641,20 +641,106 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
                     } else if (resultContent.contains(Constants.INFO_UDCBU)) {
                         final String udcbuContent = resultContent.replace(Constants.INFO_UDCBU, "");
+                       UDCBUModel udcbuModel=null;
+                        try{
+                            udcbuModel = new Gson().fromJson(udcbuContent.trim(), UDCBUModel.class);
+                        }catch (Exception e){
+                           ToastUtil.showToast(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT);
+                        }
+                        if (udcbuModel==null) {
+                            return;
+                        }
 
-                        new Thread(new Runnable() {
+                        final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
+                        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
+
+                        TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
+                        mTransactionDetailTv.setText(R.string.transaction_metadata);
+                        TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
+                        TextView mDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.destAddressTvHint);
+                        if (TextUtils.isEmpty(udcbuModel.getDest_address())) {
+                            mDestAddressTv.setVisibility(View.GONE);
+                            mDestAddressTvHint.setVisibility(View.GONE);
+                        } else {
+                            mDestAddressTv.setVisibility(View.VISIBLE);
+                            mDestAddressTvHint.setVisibility(View.VISIBLE);
+                            mDestAddressTv.setText(udcbuModel.getDest_address());
+                        }
+
+                        TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
+                        mTxFeeTv.setText(udcbuModel.getTx_fee());
+
+
+                        qmuiBottomSheet.findViewById(R.id.detailBtn).setOnClickListener(new View.OnClickListener() {
                             @Override
-                            public void run() {
-                                try {
-                                    UDCBUModel udcbuModel = new Gson().fromJson(udcbuContent.trim(), UDCBUModel.class);
-                                    TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(udcbuModel.getAmount(), udcbuModel.getInput(), currentWalletAddress, udcbuModel.getTx_fee(), udcbuModel.getDest_address(), "");
-                                    submitTransactionBase(buildBlobResponse);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
+                            public void onClick(View v) {
+                                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.GONE);
+                                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.VISIBLE);
+                            }
+                        });
+
+                        // confirm details page
+                        TextView mSourceAddressTv = qmuiBottomSheet.findViewById(R.id.sourceAddressTv);
+                        mSourceAddressTv.setText(currentWalletAddress);
+                        TextView mDetailsDestAddressTv = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTv);
+                        TextView mDetailsDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTvHint);
+                        if (TextUtils.isEmpty(udcbuModel.getDest_address())) {
+                            mDetailsDestAddressTv.setVisibility(View.GONE);
+                            mDetailsDestAddressTvHint.setVisibility(View.GONE);
+                        } else {
+                            mDetailsDestAddressTv.setVisibility(View.VISIBLE);
+                            mDetailsDestAddressTvHint.setVisibility(View.VISIBLE);
+                            mDetailsDestAddressTv.setText(udcbuModel.getDest_address());
+                        }
+                        TextView mDetailsAmountTv = qmuiBottomSheet.findViewById(R.id.detailsAmountTv);
+                        mDetailsAmountTv.setText(CommonUtil.thousandSeparator(udcbuModel.getAmount()));
+                        TextView mDetailsTxFeeTv = qmuiBottomSheet.findViewById(R.id.detailsTxFeeTv);
+                        mDetailsTxFeeTv.setText(udcbuModel.getTx_fee());
+                        TextView mTransactionParamsTv = qmuiBottomSheet.findViewById(R.id.transactionParamsTv);
+                        mTransactionParamsTv.setText(udcbuModel.getInput());
+
+                        // title view listener
+                        qmuiBottomSheet.findViewById(R.id.goBackBtn).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.VISIBLE);
+                                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.GONE);
+                            }
+                        });
+                        qmuiBottomSheet.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                qmuiBottomSheet.dismiss();
+                            }
+                        });
+                        qmuiBottomSheet.findViewById(R.id.detailsCancelBtn).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                qmuiBottomSheet.dismiss();
+                            }
+                        });
+                        final UDCBUModel finalUdcbuModel = udcbuModel;
+                        qmuiBottomSheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                qmuiBottomSheet.dismiss();
+                                new Thread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(finalUdcbuModel.getAmount(), finalUdcbuModel.getInput(), currentWalletAddress, finalUdcbuModel.getTx_fee(), finalUdcbuModel.getDest_address(), getString(R.string.transaction_metadata));
+                                            submitTransactionBase(buildBlobResponse);
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+                                }).start();
 
                             }
-                        }).start();
+                        });
+                        qmuiBottomSheet.show();
+
 
 
                     } else {
