@@ -96,9 +96,9 @@ public class MyTokenTxAdapter extends BaseAdapter {
             String amountStr = null;
             String txStartStr = null;
             if(obj.getOutinType().equals(OutinTypeEnum.OUT.getCode())){
-                amountStr = "-" + obj.getAmount();
+                amountStr = mContext.getString(R.string.comm_out)  + obj.getAmount();
             }else {
-                amountStr = "+" + obj.getAmount();
+                amountStr =  mContext.getString(R.string.comm_in) + obj.getAmount();
             }
 
             if(TxStatusEnum.SUCCESS.getCode().equals(obj.getTxStatus())){

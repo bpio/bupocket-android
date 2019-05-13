@@ -15,7 +15,6 @@ import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.adaptor.MyTokenTxAdapter;
 import com.bupocket.base.BaseFragment;
-import com.bupocket.common.Constants;
 import com.bupocket.enums.OutinTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
@@ -41,7 +40,6 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -271,9 +269,9 @@ public class BPAssetsDetailFragment extends BaseFragment {
                     amountStr = obj.getAmount();
                 } else {
                     if (obj.getOutinType().equals(OutinTypeEnum.OUT.getCode())) {
-                        amountStr = "-" + obj.getAmount();
+                        amountStr =getString(R.string.comm_out) + obj.getAmount();
                     } else {
-                        amountStr = "+" + obj.getAmount();
+                        amountStr = getString(R.string.comm_in) + obj.getAmount();
                     }
                 }
 

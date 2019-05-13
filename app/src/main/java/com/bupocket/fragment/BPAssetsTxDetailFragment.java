@@ -175,7 +175,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     if (txInfoRespBoBean.getAmount().equals("0")) {
                         mSendAmountTv.setText(txInfoRespBoBean.getAmount());
                     }else{
-                        mSendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(outinType) ? "+" : "-") + txInfoRespBoBean.getAmount());
+                        mSendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(outinType) ? mContext.getString(R.string.comm_in) :mContext.getString(R.string.comm_out)) + txInfoRespBoBean.getAmount());
                     }
 
                     mTxFromAccAddrTv.setText(txDeatilRespBoBean.getSourceAddress());
