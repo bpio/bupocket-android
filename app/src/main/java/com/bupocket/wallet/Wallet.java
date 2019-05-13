@@ -789,7 +789,11 @@ public class Wallet {
         contractInvokeByBUOperation.setContractAddress(contractAddress);
         contractInvokeByBUOperation.setBuAmount(buAmount);
         contractInvokeByBUOperation.setInput(input);
-        contractInvokeByBUOperation.setMetadata(transMetadata);
+
+        if (!transMetadata.isEmpty()) {
+            contractInvokeByBUOperation.setMetadata(transMetadata);
+        }
+
 
 
         TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
@@ -798,7 +802,9 @@ public class Wallet {
         transactionBuildBlobRequest.setFeeLimit(feeLimit);
         transactionBuildBlobRequest.setGasPrice(gasPrice);
         transactionBuildBlobRequest.addOperation(contractInvokeByBUOperation);
-        transactionBuildBlobRequest.setMetadata(transMetadata);
+        if (!transMetadata.isEmpty()) {
+            transactionBuildBlobRequest.setMetadata(transMetadata);
+        }
 
         TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
         LogUtils.e("transactionBuildBlobResponse:" + transactionBuildBlobResponse.getErrorCode() + "" +
@@ -876,7 +882,7 @@ public class Wallet {
             }
 
 //          errorCode  152
-            LogUtils.e("\nFailure，code=" + transactionSubmitResponse.getErrorCode() + "\n，hash=" + transactionSubmitResponse.getResult().getHash() + "");
+            LogUtils.e("\nFailure，code=" + transactionSubmitResponse.getErrorCode()+transactionSubmitResponse.getErrorDesc() + "\n，hash=" + transactionSubmitResponse.getResult().getHash() + "");
             System.out.println("Failure，hash=" + transactionSubmitResponse.getResult().getHash() + "");
             System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
         }

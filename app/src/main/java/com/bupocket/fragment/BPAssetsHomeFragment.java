@@ -646,11 +646,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
                             @Override
                             public void run() {
                                 try {
-                                    UDCBUModel udcbuModel = new Gson().fromJson(udcbuContent, UDCBUModel.class);
-                                    TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(udcbuModel.getAmount(), udcbuModel.getInput(), currentWalletAddress, String.valueOf(scanTxFee), udcbuModel.getDest_address(), udcbuModel.getTx_fee());
+                                    UDCBUModel udcbuModel = new Gson().fromJson(udcbuContent.trim(), UDCBUModel.class);
+                                    TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(udcbuModel.getAmount(), udcbuModel.getInput(), currentWalletAddress, udcbuModel.getTx_fee(), udcbuModel.getDest_address(), "");
                                     submitTransactionBase(buildBlobResponse);
-
-
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
