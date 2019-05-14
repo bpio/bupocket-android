@@ -102,7 +102,7 @@
 
     <string name="send_status_fee">Estimated maximum payment</string>
     <string name="send_tx_fee_not_enough">Transaction not enough</string>
-    <string name="send_tx_bu_not_enough" >BU not enough</string>
+    <string name="send_tx_bu_not_enough">BU not enough</string>
     <string name="tx_timeout_err">Transaction timeout</string>
     <string name="send_status_note">Remark</string>
 
@@ -223,7 +223,7 @@
     <string name="time_just_now">Just now</string>
 
 
-    <string formatted="false" name="srl_component_falsify">%s falsify area,\n Represents the height[%.1fdp] of drag at run time,\n It does not show anything.</string>
+    <string name="srl_component_falsify" formatted="false">%s falsify area,\n Represents the height[%.1fdp] of drag at run time,\n It does not show anything.</string>
     <string name="srl_content_empty">The content view in SmartRefreshLayout is empty. Do you forget to add it in xml layout file?</string>
     <string name="srl_footer_failed">Load Failed</string>
     <string name="srl_footer_finish">Load Success</string>
@@ -402,8 +402,6 @@
     <string name="capture_activity_photo_album">Album</string>
 
 
-
-
     <string name="card_package_txt">Cards</string>
     <string name="run_for_node_txt">Node Campaign</string>
     <string name="build_node_txt">Node Co-funding</string>
@@ -441,7 +439,6 @@
     <string name="node_introduce_txt">Introduction to node</string>
 
 
-
     <string name="invite_vote_image_txt">Welcome to vote in BU Pocket</string>
     <string name="long_press_qr_txt">（Scan the QR code）</string>
     <string name="weixin_txt">WeChat</string>
@@ -451,8 +448,6 @@
     <string name="copy_command_txt">Copy</string>
 
     <string name="xiaobu_command_content_txt">#&lt;font color=\'#02CA71\'>BU Link&lt;/font>#I participate to the BUMO Super Node Campaign&lt;font color=\'#151515\'>%1$s&lt;/font>Click the link to vote for him&lt;font color=\'#02CA71\'>%2$s&lt;/font></string>
-
-
 
 
     <string name="build_purchase_amount">Minimum purchase</string>
@@ -490,10 +485,8 @@
         3. Before the node co-funding project is completed, the node co-funding project sponsors can manually withdraw all BUs sponsored. If the project initiator cancels the project before the project is completed, the node co-funding sponsors can also manually withdraw all BUs sponsored.     </string>
 
 
-
     <string name="build_detail_support">Project</string>
     <string name="build_support_amount_hint">Shares</string>
-
 
 
     <string name="transaction_timeout">The request has timed out; please do it again</string>
@@ -534,7 +527,6 @@
     <string name="confirm_build_exit">Are you sure to withdraw the amount voted?</string>
 
 
-
     <string name="vote_record_txt">Record of Votes</string>
     <string name="bu_share">BU/ share</string>
 
@@ -546,7 +538,6 @@
     <string name="reward_sharing_ratio">Award ratio</string>
 
     <string name="build_exit_all">Withdraw</string>
-
 
 
     <string name="error_timeout">The request is expired</string>
@@ -581,5 +572,15 @@
     <string name="qq_open_error">Error! Please try again later</string>
     <string name="qq_code_error">Please use it after upgrading to the latest version</string>
     <string name="error_qr_message_txt_2">This operation is not supported now.</string>
+
+
+    <!--login-->
+    <!--<string name="refresh_qr_tips_txt">请刷新二维码，再进行扫码</string>-->
+    <string name="scan_qr_login_management_system_not_bound_txt">The wallet account is not bound to the platform </string>
+    <string name="bound_address_note_txt"> Please refresh the QR code and scan the code again </string>
+    <!--<string name="node_plan_management_system_txt">节点计划运营管理系统</string>-->
+    <!--<string name="scan_qr_login_management_system_note_txt">即将登录节点计划运营管理系统，请确认是本人操作。</string>-->
+    <!--<string name="address_be_made_public_note_txt">您的账户地址将被公开</string>-->
+    <string name="confirm_login_txt">Confirm login</string>
 
 </resources>
