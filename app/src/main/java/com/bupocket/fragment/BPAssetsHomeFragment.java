@@ -738,7 +738,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                                 }
                                             });
 
-//                                            submitTransactionBase(buildBlobResponse);
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }

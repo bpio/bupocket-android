@@ -226,7 +226,7 @@ public class BPSendTokenFragment extends BaseFragment {
         tokenDecimals = getArguments().getString("tokenDecimals");
         String tokenBalance = getArguments().getString("tokenBalance");
         mTokenCodeTv.setText(tokenCode);
-        mSendTokenAmountLable.setText(getResources().getText(R.string.send_amount_title) + "（" + tokenCode + "）");
+        mSendTokenAmountLable.setText(getResources().getText(R.string.send_amount_title) + "(" + tokenCode + ")");
         getAccountAvailableTokenBalance(tokenType, tokenBalance);
 
     }

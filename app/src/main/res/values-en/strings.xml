@@ -564,8 +564,8 @@
     <string name="tx_time">Timestamp</string>
     <string name="tx_value">Value</string>
     <string name="tx_value_bu">Value(BU)</string>
-    <string name="tx_to_bu">对方账户(BU地址）</string>
-    <string name="tx_fee_bu">交易费(BU)</string>
+    <string name="tx_to_bu">The receiving account(BU)</string>
+    <string name="tx_fee_bu">Transaction fees(BU)</string>
 
     <string name="tx_from_en">From</string>
     <string name="tx_to_en">To</string>

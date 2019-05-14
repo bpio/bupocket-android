@@ -123,7 +123,7 @@
     <string name="tx_time">交易时间</string>
     <string name="tx_value">数量</string>
     <string name="tx_value_bu">数量(BU)</string>
-    <string name="tx_to_bu">对方账户(BU地址）</string>
+    <string name="tx_to_bu">对方账户(BU地址)</string>
     <string name="tx_fee_bu">交易费(BU)</string>
 
     <string name="tx_from_en">From</string>
@@ -155,7 +155,7 @@
     <!-- 确认转账 -->
     <string name="send_confirm_title">确认转账</string>
     <string name="send_confirm_txt">请确认转账信息是否有误</string>
-    <string name="send_confirm_estimate_txt">预估最多支付费用</string>
+
     <string name="send_confirm_submit_btn_txt">提交</string>
     <!-- 使用条款 -->
     <string name="use_terms_title">使用条款</string>

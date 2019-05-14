@@ -123,7 +123,7 @@
     <string name="tx_time">交易时间</string>
     <string name="tx_value">数量</string>
     <string name="tx_value_bu">数量(BU)</string>
-    <string name="tx_to_bu">对方账户(BU地址）</string>
+    <string name="tx_to_bu">对方账户(BU地址)</string>
     <string name="tx_fee_bu">交易费(BU)</string>
 
     <string name="tx_from_en">From</string>
@@ -155,7 +155,7 @@
     <!-- 确认转账 -->
     <string name="send_confirm_title">确认转账</string>
     <string name="send_confirm_txt">请确认转账信息是否有误</string>
-    <string name="send_confirm_estimate_txt">预估最多支付费用</string>
+
     <string name="send_confirm_submit_btn_txt">提交</string>
     <!-- 使用条款 -->
     <string name="use_terms_title">使用条款</string>
@@ -455,6 +455,8 @@
 
 
     <string name="parameter_txt">参数</string>
+
+
     <string name="refresh_qr_tips_txt">请刷新二维码，再进行扫码</string>
     <string name="scan_qr_login_management_system_not_bound_txt">该钱包账户未在该平台绑定</string>
     <string name="bound_address_note_txt">请联系该平台管理进行绑定</string>
@@ -462,6 +464,10 @@
     <string name="scan_qr_login_management_system_note_txt">即将登录节点计划运营管理系统，请确认是本人操作。</string>
     <string name="address_be_made_public_note_txt">您的账户地址将被公开</string>
     <string name="confirm_login_txt">确认登录</string>
+
+
+
+
     <string name="weixin_txt">微信</string>
     <string name="qq_txt">QQ</string>
     <string name="copy_commond_txt">复制小布口令</string>

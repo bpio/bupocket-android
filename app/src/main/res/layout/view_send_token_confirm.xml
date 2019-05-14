@@ -108,7 +108,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/send_confirm_estimate_txt"
+                    android:text="@string/send_fee_title"
                     android:textColor="@color/send_confirm_gray_color"
                     android:textSize="15sp" />
 
