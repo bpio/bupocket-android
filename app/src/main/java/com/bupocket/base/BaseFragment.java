@@ -155,6 +155,7 @@ public abstract class BaseFragment extends QMUIFragment {
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
+                                    txSendingTipDialog.dismiss();
                                 }
 
                                 if (pkbyAccountPassword == null || pkbyAccountPassword.isEmpty()) {

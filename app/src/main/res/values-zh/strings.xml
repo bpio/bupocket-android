@@ -100,6 +100,11 @@
 
 
     <string name="send_tx_handleing_txt">处理中...</string>
+    <string name="send_tx_sign_txt">签名中</string>
+    <string name="send_tx_verify">数据效验中</string>
+
+
+
     <string name="send_tx_bu_not_enough">BU余额不足</string>
     <string name="send_tx_fee_not_enough">交易费用不足</string>
     <string name="send_status_fee">预估最多支付费用</string>
@@ -546,7 +551,7 @@
     <string name="error_1038">您已成功撤回，不能重复操作</string>
 
 
-    <string name="send_tx_verify">数据验证中</string>
+
     <string name="share_close">投票通道还未开启，请在开启后进行分享</string>
 
     <string name="transaction_timeout_title">交易状态</string>
@@ -596,6 +601,10 @@
 
     <string name="error_qr_message_txt_2">暂不支持该操作</string>
 
+
+    <string name="comm_out">−</string>
+    <string name="comm_in">+</string>
+    <string name="transaction_metadata">调用合约</string>
 
 
 </resources>

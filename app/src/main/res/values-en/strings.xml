@@ -96,6 +96,10 @@
 
 
     <string name="send_tx_handleing_txt">Processing...</string>
+    <string name="send_tx_verify">Checking data</string>
+    <string name="send_tx_sign_txt">Signing</string>
+
+
     <string name="send_status_fee">Estimated maximum payment</string>
     <string name="send_tx_fee_not_enough">Transaction not enough</string>
     <string name="send_tx_bu_not_enough" >BU not enough</string>
@@ -538,7 +542,6 @@
     <string name="transaction_timeout_hint">Transaction is broadcast successfully</string>
     <string name="transaction_timeout_info">Transaction is broadcast successfully; please copy the transaction summary to&lt;font color=\'#02CA71\'>https://explorer.bumo.io&lt;/font> to query the final transaction status ;</string>
     <string name="build_bu">&#160;BU</string>
-    <string name="send_tx_verify">Checking data</string>
     <string name="transaction_info">Transaction summary</string>
     <string name="reward_sharing_ratio">Award ratio</string>
 
