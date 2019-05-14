@@ -67,7 +67,7 @@
 
                 <include
                     layout="@layout/view_empty_record"
-                    android:visibility="gone" />
+                    android:visibility="visible" />
 
             </LinearLayout>
 

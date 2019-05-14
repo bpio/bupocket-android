@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -33,6 +34,7 @@ import com.bupocket.model.NodeBuildSupportModel;
 import com.bupocket.model.TransConfirmModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
+import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -351,6 +353,11 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 break;
             case R.id.btnBuildSupport:
                 if (detailModel != null) {
+                    String accountBUBalance = Wallet.getInstance().getAccountBUBalance(getWalletAddress());
+                    if (TextUtils.isEmpty(accountBUBalance)||(Double.parseDouble(accountBUBalance)<Double.parseDouble(detailModel.getPerAmount()))) {
+                        ToastUtil.showToast(getActivity(), R.string.balance_not_enough, Toast.LENGTH_SHORT);
+                        return;
+                    }
                     ShowSupport();
                 }
 
