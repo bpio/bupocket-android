@@ -28,6 +28,7 @@ import com.bupocket.R;
 import com.bupocket.adaptor.SuperNodeAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.common.SingatureListener;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.SuperNodeStatusEnum;
 import com.bupocket.enums.SuperNodeTypeEnum;
@@ -458,59 +459,68 @@ public class BPNodePlanFragment extends BaseFragment {
     }
 
     private void confirmUnVote(final JSONObject input, final String nodeId) {
-        final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
-                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                .setTipWord(getResources().getString(R.string.send_tx_verify))
-                .create();
-        txSendingTipDialog.show();
-
 
         final String amount = "0";
-        new Thread(new Runnable() {
+
+        getSignatureInfo(new SingatureListener() {
             @Override
-            public void run() {
-                try {
-                    final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input.toJSONString(), currentWalletAddress, String.valueOf(Constants.NODE_REVOKE_FEE), Constants.CONTRACT_ADDRESS,metaData);
-                    String txHash = buildBlobResponse.getResult().getHash();
-                    NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
-                    Call<ApiResult> call;
-                    Map<String, Object> paramsMap = new HashMap<>();
-                    paramsMap.put("hash", txHash);
-                    paramsMap.put("nodeId", nodeId);
-                    paramsMap.put("initiatorAddress", currentWalletAddress);
-                    call = nodePlanService.revokeVote(paramsMap);
-                    call.enqueue(new Callback<ApiResult>() {
-                        @Override
-                        public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
+            public void success(final String privateKey) {
+                final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                        .setTipWord(getResources().getString(R.string.send_tx_verify))
+                        .create();
+                txSendingTipDialog.show();
 
-                            txSendingTipDialog.dismiss();
-                            ApiResult respDto = response.body();
-                            if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
-                                submitTransactionBase(buildBlobResponse);
-                            } else {
-                                String msg = CommonUtil.byCodeToMsg(mContext, respDto.getErrCode());
-                                if (!msg.isEmpty()) {
-                                    CommonUtil.showMessageDialog(getContext(), msg);
-                                    return;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input.toJSONString(), currentWalletAddress, String.valueOf(Constants.NODE_REVOKE_FEE), Constants.CONTRACT_ADDRESS,metaData);
+                            String txHash = buildBlobResponse.getResult().getHash();
+                            NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
+                            Call<ApiResult> call;
+                            Map<String, Object> paramsMap = new HashMap<>();
+                            paramsMap.put("hash", txHash);
+                            paramsMap.put("nodeId", nodeId);
+                            paramsMap.put("initiatorAddress", currentWalletAddress);
+                            call = nodePlanService.revokeVote(paramsMap);
+                            call.enqueue(new Callback<ApiResult>() {
+                                @Override
+                                public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
+
+                                    txSendingTipDialog.dismiss();
+                                    ApiResult respDto = response.body();
+                                    if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
+                                        submitTransactionBase(privateKey,buildBlobResponse);
+                                    } else {
+                                        String msg = CommonUtil.byCodeToMsg(mContext, respDto.getErrCode());
+                                        if (!msg.isEmpty()) {
+                                            CommonUtil.showMessageDialog(getContext(), msg);
+                                            return;
+                                        }
+                                        CommonUtil.showMessageDialog(getContext(), respDto.getMsg());
+
+                                    }
                                 }
-                                CommonUtil.showMessageDialog(getContext(), respDto.getMsg());
 
-                            }
-                        }
+                                @Override
+                                public void onFailure(Call<ApiResult> call, Throwable t) {
+                                    Toast.makeText(getContext(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
+                                    txSendingTipDialog.dismiss();
+                                }
+                            });
+                        } catch (Exception e) {
 
-                        @Override
-                        public void onFailure(Call<ApiResult> call, Throwable t) {
-                            Toast.makeText(getContext(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
+                            ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
                             txSendingTipDialog.dismiss();
                         }
-                    });
-                } catch (Exception e) {
+                    }
+                }).start();
 
-                    ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
-                    txSendingTipDialog.dismiss();
-                }
             }
-        }).start();
+        });
+
+
     }
 
     private void setEmpty(boolean isVisible) {

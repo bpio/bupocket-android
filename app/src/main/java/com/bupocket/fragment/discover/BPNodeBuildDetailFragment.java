@@ -21,6 +21,7 @@ import com.bupocket.R;
 import com.bupocket.adaptor.NodeBuildDetailAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.common.SingatureListener;
 import com.bupocket.enums.CoBuildDetailStatusEnum;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.NodeBuildService;
@@ -435,11 +436,11 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
     private void confirmExit() {
 
-        final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
-                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                .setTipWord(getResources().getString(R.string.send_tx_verify))
-                .create();
-        txSendingTipDialog.show();
+//        final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+//                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+//                .setTipWord(getResources().getString(R.string.send_tx_verify))
+//                .create();
+//        txSendingTipDialog.show();
         final String amount = "0";
 
 
@@ -449,11 +450,9 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 try {
                     final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, inputExit, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_FEE), detailModel.getContractAddress(),transMetaData);
 
-                    String hash = transBlob.getResult().getHash();
+                    final String hash = transBlob.getResult().getHash();
                     LogUtils.e(hash);
-
                     if (TextUtils.isEmpty(hash)) {
-
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -461,46 +460,63 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                                 CommonUtil.showMessageDialog(mContext, transBlob.getErrorDesc());
                             }
                         });
-                        txSendingTipDialog.dismiss();
                         return;
                     }
-                    HashMap<String, Object> map = new HashMap<>();
-                    map.put("nodeId", detailModel.getNodeId());
-                    map.put("hash", hash);
-                    map.put("initiatorAddress", getWalletAddress());
-                    NodeBuildService nodeBuildService = RetrofitFactory.getInstance().getRetrofit().create(NodeBuildService.class);
-                    nodeBuildService.verifyExit(map).enqueue(new Callback<ApiResult<TransConfirmModel>>() {
+
+                    getSignatureInfo(new SingatureListener() {
                         @Override
-                        public void onResponse(Call<ApiResult<TransConfirmModel>> call, Response<ApiResult<TransConfirmModel>> response) {
-                            ApiResult<TransConfirmModel> body = response.body();
-                            txSendingTipDialog.dismiss();
+                        public void success(final String privateKey) {
+                            final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                                    .setTipWord(getResources().getString(R.string.send_tx_verify))
+                                    .create();
+                            txSendingTipDialog.show();
 
-                            if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
-                                submitTransactionBase(transBlob);
-                            } else {
 
-                                if (ExceptionEnum.ERROR_TRANSACTION_OTHER_1011.getCode().equals(body.getErrCode())) {
-                                    String expiryTime = body.getData().getExpiryTime();
-                                    CommonUtil.setExpiryTime(expiryTime, mContext);
+                            HashMap<String, Object> map = new HashMap<>();
+                            map.put("nodeId", detailModel.getNodeId());
+                            map.put("hash", hash);
+                            map.put("initiatorAddress", getWalletAddress());
+                            NodeBuildService nodeBuildService = RetrofitFactory.getInstance().getRetrofit().create(NodeBuildService.class);
+                            nodeBuildService.verifyExit(map).enqueue(new Callback<ApiResult<TransConfirmModel>>() {
+                                @Override
+                                public void onResponse(Call<ApiResult<TransConfirmModel>> call, Response<ApiResult<TransConfirmModel>> response) {
+                                    ApiResult<TransConfirmModel> body = response.body();
+                                    txSendingTipDialog.dismiss();
 
-                                } else {
-                                    CommonUtil.showMessageDialog(mContext, body.getMsg(), body.getErrCode());
+                                    if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
+                                        submitTransactionBase(privateKey,transBlob);
+                                    } else {
+
+                                        if (ExceptionEnum.ERROR_TRANSACTION_OTHER_1011.getCode().equals(body.getErrCode())) {
+                                            String expiryTime = body.getData().getExpiryTime();
+                                            CommonUtil.setExpiryTime(expiryTime, mContext);
+
+                                        } else {
+                                            CommonUtil.showMessageDialog(mContext, body.getMsg(), body.getErrCode());
+                                        }
+
+                                    }
                                 }
 
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ApiResult<TransConfirmModel>> call, Throwable t) {
-                            txSendingTipDialog.dismiss();
-                        }
-                    });
+                                @Override
+                                public void onFailure(Call<ApiResult<TransConfirmModel>> call, Throwable t) {
+                                    txSendingTipDialog.dismiss();
+                                }
+                            });
 
 //                    submitTransactionBase(transBlob);
 
+
+                        }
+                    });
+
+
+
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
-                    txSendingTipDialog.dismiss();
                 }
             }
         }).start();
@@ -658,13 +674,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     }
 
     private void confirmSupport() {
-        final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
-                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                .setTipWord(getResources().getString(R.string.send_tx_verify))
-                .create();
-        txSendingTipDialog.show();
-
-
         final String amount = tvDialogTotalAmount.getText().toString();
         final String num = numSupport.getText().toString();
         final String contractAddress = detailModel.getContractAddress();
@@ -676,7 +685,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
                     final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, inputSupport, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_MIN_FEE), contractAddress,supportTransMetaData);
 
-                    String hash = transBlob.getResult().getHash();
+                    final String hash = transBlob.getResult().getHash();
                     if (TextUtils.isEmpty(hash)) {
 
                         getActivity().runOnUiThread(new Runnable() {
@@ -685,44 +694,62 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                                 CommonUtil.showMessageDialog(mContext, transBlob.getErrorDesc());
                             }
                         });
-                        txSendingTipDialog.dismiss();
                         return;
                     }
 
-                    HashMap<String, Object> map = new HashMap<>();
-                    map.put("nodeId", detailModel.getNodeId());
-                    map.put("hash", hash);
-                    map.put("copies", num + "");
-                    map.put("initiatorAddress", getWalletAddress());
-                    NodeBuildService nodeBuildService = RetrofitFactory.getInstance().getRetrofit().create(NodeBuildService.class);
-                    nodeBuildService.verifySupport(map).enqueue(new Callback<ApiResult<TransConfirmModel>>() {
-                        @Override
-                        public void onResponse(Call<ApiResult<TransConfirmModel>> call, Response<ApiResult<TransConfirmModel>> response) {
-                            ApiResult<TransConfirmModel> body = response.body();
-                            txSendingTipDialog.dismiss();
-                            if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
-                                submitTransactionBase(transBlob);
-                            } else {
-                                if (ExceptionEnum.ERROR_TRANSACTION_OTHER_1011.getCode().equals(body.getErrCode())) {
-                                    String expiryTime = body.getData().getExpiryTime();
-                                    CommonUtil.setExpiryTime(expiryTime, mContext);
 
-                                } else {
-                                    CommonUtil.showMessageDialog(mContext, body.getMsg(), body.getErrCode());
+                    getSignatureInfo(new SingatureListener() {
+                        @Override
+                        public void success(final String privateKey) {
+
+                            final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                                    .setTipWord(getResources().getString(R.string.send_tx_verify))
+                                    .create();
+                            txSendingTipDialog.show();
+
+                            HashMap<String, Object> map = new HashMap<>();
+                            map.put("nodeId", detailModel.getNodeId());
+                            map.put("hash", hash);
+                            map.put("copies", num + "");
+                            map.put("initiatorAddress", getWalletAddress());
+                            NodeBuildService nodeBuildService = RetrofitFactory.getInstance().getRetrofit().create(NodeBuildService.class);
+                            nodeBuildService.verifySupport(map).enqueue(new Callback<ApiResult<TransConfirmModel>>() {
+                                @Override
+                                public void onResponse(Call<ApiResult<TransConfirmModel>> call, Response<ApiResult<TransConfirmModel>> response) {
+                                    ApiResult<TransConfirmModel> body = response.body();
+                                    txSendingTipDialog.dismiss();
+                                    if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
+                                        submitTransactionBase(privateKey,transBlob);
+                                    } else {
+                                        if (ExceptionEnum.ERROR_TRANSACTION_OTHER_1011.getCode().equals(body.getErrCode())) {
+                                            String expiryTime = body.getData().getExpiryTime();
+                                            CommonUtil.setExpiryTime(expiryTime, mContext);
+
+                                        } else {
+                                            CommonUtil.showMessageDialog(mContext, body.getMsg(), body.getErrCode());
+                                        }
+                                    }
                                 }
-                            }
-                        }
 
-                        @Override
-                        public void onFailure(Call<ApiResult<TransConfirmModel>> call, Throwable t) {
-                            txSendingTipDialog.dismiss();
+                                @Override
+                                public void onFailure(Call<ApiResult<TransConfirmModel>> call, Throwable t) {
+                                    txSendingTipDialog.dismiss();
+                                }
+                            });
+
+
                         }
                     });
 
 
+
+
+
+
+
                 } catch (Exception e) {
                     e.printStackTrace();
-                    txSendingTipDialog.dismiss();
                 }
             }
         }).start();

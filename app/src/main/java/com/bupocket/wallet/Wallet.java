@@ -355,7 +355,7 @@ public class Wallet {
         return hash;
     }
 
-    private String getPKBYAccountPassword(String password, String bPData, String fromAccAddr) throws Exception {
+    public String getPKBYAccountPassword(String password, String bPData, String fromAccAddr) throws Exception {
         String senderPrivateKey = null;
         List<WalletBPData.AccountsBean> accountsBeans = JSON.parseArray(bPData, WalletBPData.AccountsBean.class);
 
@@ -841,6 +841,45 @@ public class Wallet {
         LogUtils.e("transactionBuildBlobResponse:" + transactionBuildBlobResponse.getErrorCode() + "" +
                 "t" + transactionBuildBlobResponse.getErrorDesc());
         return transactionBuildBlobResponse;
+    }
+
+
+    public String submitTransaction(String senderPrivateKey, TransactionBuildBlobResponse transactionBuildBlobResponse) throws Exception {
+        String transactionBlob = transactionBuildBlobResponse.getResult().getTransactionBlob();
+
+        String[] signerPrivateKeyArr = {senderPrivateKey};
+        TransactionSignRequest transactionSignRequest = new TransactionSignRequest();
+        transactionSignRequest.setBlob(transactionBlob);
+        for (int i = 0; i < signerPrivateKeyArr.length; i++) {
+            transactionSignRequest.addPrivateKey(signerPrivateKeyArr[i]);
+        }
+        TransactionSignResponse transactionSignResponse = sdk.getTransactionService().sign(transactionSignRequest);
+
+        // 6. Broadcast transaction
+        TransactionSubmitRequest transactionSubmitRequest = new TransactionSubmitRequest();
+        transactionSubmitRequest.setTransactionBlob(transactionBlob);
+        transactionSubmitRequest.setSignatures(transactionSignResponse.getResult().getSignatures());
+        TransactionSubmitResponse transactionSubmitResponse = sdk.getTransactionService().submit(transactionSubmitRequest);
+        String txHash = null;
+        if (0 == transactionSubmitResponse.getErrorCode()) {
+            txHash = transactionSubmitResponse.getResult().getHash();
+            LogUtils.e("Success，hash=" + transactionSubmitResponse.getResult().getHash());
+            System.out.println("Success，hash=" + transactionSubmitResponse.getResult().getHash());
+        } else {
+            if (BUChainExceptionEnum.ERRCODE_FEE_NOT_ENOUGH.getCode().equals(transactionSubmitResponse.getErrorCode())) {
+                throw new WalletException(ExceptionEnum.FEE_NOT_ENOUGH);
+            } else if (BUChainExceptionEnum.ERRCODE_ACCOUNT_LOW_RESERVE.getCode().equals(transactionSubmitResponse.getErrorCode())) {
+                throw new WalletException(ExceptionEnum.BU_NOT_ENOUGH);
+            } else if (BUChainExceptionEnum.ERRCODE_OTHER.getCode().equals(transactionSubmitResponse.getErrorCode())) {
+                throw new WalletException(ExceptionEnum.SUBMIT_TRANSACTION_ERROR);
+            }
+
+//          errorCode  152
+            LogUtils.e("\nFailure，code=" + transactionSubmitResponse.getErrorCode()+transactionSubmitResponse.getErrorDesc() + "\n，hash=" + transactionSubmitResponse.getResult().getHash() + "");
+            System.out.println("Failure，hash=" + transactionSubmitResponse.getResult().getHash() + "");
+            System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
+        }
+        return txHash;
     }
 
 

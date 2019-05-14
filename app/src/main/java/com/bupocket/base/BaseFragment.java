@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.common.Constants;
+import com.bupocket.common.SingatureListener;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.fragment.BPSendStatusFragment;
 import com.bupocket.fragment.BPTransactionTimeoutFragment;
@@ -50,7 +51,7 @@ public abstract class BaseFragment extends QMUIFragment {
     private final static String BP_FILE_NAME = "buPocket";
     public SharedPreferencesHelper spHelper;
     public Context mContext;
-    private QMUITipDialog txSendingTipDialog;
+    private QMUITipDialog submitDialog;
 
 
     @Override
@@ -68,8 +69,6 @@ public abstract class BaseFragment extends QMUIFragment {
     protected int backViewInitOffset() {
         return QMUIDisplayHelper.dp2px(getContext(), 100);
     }
-
-
 
 
     public String getWalletAddress() {
@@ -105,9 +104,7 @@ public abstract class BaseFragment extends QMUIFragment {
     }
 
 
-
-    protected void submitTransactionBase(final TransactionBuildBlobResponse transBlob) {
-
+    protected void getSignatureInfo(final SingatureListener listener) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -116,7 +113,7 @@ public abstract class BaseFragment extends QMUIFragment {
                 qmuiDialog.setContentView(R.layout.view_password_comfirm);
 
                 qmuiDialog.show();
-                LogUtils.e("Thread==="+Thread.currentThread().getName());
+                LogUtils.e("Thread===" + Thread.currentThread().getName());
 
                 QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
 
@@ -142,23 +139,36 @@ public abstract class BaseFragment extends QMUIFragment {
                     public void onClick(View v) {
                         qmuiDialog.dismiss();
 
-                        txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                        final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
                                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                                .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
+                                .setTipWord(getResources().getString(R.string.send_tx_sign_txt))
                                 .create();
                         txSendingTipDialog.show();
 
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
-                                txHash = submitTransaction(tvPw.getText().toString(), transBlob);
-                                if (TextUtils.isEmpty(txHash)) {
+                                String pkbyAccountPassword = null;
+                                try {
+                                    pkbyAccountPassword = Wallet.getInstance().getPKBYAccountPassword(tvPw.getText().toString(), getBPAccountData(), getWalletAddress());
                                     txSendingTipDialog.dismiss();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
+                                }
+
+                                if (pkbyAccountPassword == null || pkbyAccountPassword.isEmpty()) {
                                     return;
                                 }
 
-                                LogUtils.e("submit hash="+txHash);
-                                ByHashQueryResult(txHash);
+                                final String finalPkbyAccountPassword = pkbyAccountPassword;
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        listener.success(finalPkbyAccountPassword);
+                                    }
+                                });
+
 
                             }
                         }).start();
@@ -168,17 +178,118 @@ public abstract class BaseFragment extends QMUIFragment {
 
             }
         });
+    }
 
+    protected void submitTransactionBase(final String privateKey, final TransactionBuildBlobResponse transBlob) {
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                submitDialog = new QMUITipDialog.Builder(getContext())
+                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                        .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
+                        .create();
+                submitDialog.show();
+            }
+        });
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                txHash = submitTransaction(privateKey, transBlob);
+                if (TextUtils.isEmpty(txHash)) {
+                    submitDialog.dismiss();
+                    return;
+                }
+
+                LogUtils.e("submit hash=" + txHash);
+                ByHashQueryResult(txHash);
+
+            }
+        }).start();
+    }
+
+//    protected void submitTransactionBase(final TransactionBuildBlobResponse transBlob) {
+//
+//        getActivity().runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
+//                qmuiDialog.setCanceledOnTouchOutside(false);
+//                qmuiDialog.setContentView(R.layout.view_password_comfirm);
+//
+//                qmuiDialog.show();
+//                LogUtils.e("Thread===" + Thread.currentThread().getName());
+//
+//                QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
+//
+//                ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
+//                final EditText tvPw = qmuiDialog.findViewById(R.id.passwordConfirmEt);
+//
+//                mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        qmuiDialog.dismiss();
+//                    }
+//                });
+//
+//                tvPw.postDelayed(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        showSoftInputFromWindow(tvPw);
+//                    }
+//                }, 10);
+//
+//                mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        qmuiDialog.dismiss();
+//
+//                        submitDialog = new QMUITipDialog.Builder(getContext())
+//                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+//                                .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
+//                                .create();
+//                        submitDialog.show();
+//
+//                        new Thread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                txHash = submitTransaction(tvPw.getText().toString(), transBlob);
+//                                if (TextUtils.isEmpty(txHash)) {
+//                                    submitDialog.dismiss();
+//                                    return;
+//                                }
+//
+//                                LogUtils.e("submit hash=" + txHash);
+//                                ByHashQueryResult(txHash);
+//
+//                            }
+//                        }).start();
+//
+//                    }
+//                });
+//
+//            }
+//        });
+//
+//    }
+//
+
+    private String getPrivateKey(String password) {
+        try {
+            Wallet.getInstance().getPKBYAccountPassword(password, getBPAccountData(), getWalletAddress());
+        } catch (Exception e) {
+            e.printStackTrace();
+            ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
+        }
+        return "";
     }
 
 
-
-
-    private String submitTransaction(final String password, final TransactionBuildBlobResponse buildBlobResponse) {
+    private String submitTransaction(final String privateKey, final TransactionBuildBlobResponse buildBlobResponse) {
 
         String hash = "";
         try {
-            hash = Wallet.getInstance().submitTransaction(password, getBPAccountData(), getWalletAddress(), buildBlobResponse);
+            hash = Wallet.getInstance().submitTransaction(privateKey, buildBlobResponse);
 
         } catch (WalletException e) {
             e.printStackTrace();
@@ -186,7 +297,7 @@ public abstract class BaseFragment extends QMUIFragment {
                 ToastUtil.showToast(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT);
             } else if (com.bupocket.wallet.enums.ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
                 ToastUtil.showToast(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT);
-            }else if (ExceptionEnum.PASSWORD_ERROR.getCode().equals(e.getErrCode())){
+            } else if (ExceptionEnum.PASSWORD_ERROR.getCode().equals(e.getErrCode())) {
                 ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
             } else {
                 ToastUtil.showToast(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT);
@@ -200,7 +311,9 @@ public abstract class BaseFragment extends QMUIFragment {
 
         return hash;
     }
-    private TimerTask timerTask=null;
+
+
+    private TimerTask timerTask = null;
     private String txHash;
     private int timerTimes = 0;
     private final Timer timer = new Timer();
@@ -212,12 +325,12 @@ public abstract class BaseFragment extends QMUIFragment {
                 case 1:
                     if (timerTimes > Constants.TX_REQUEST_TIMEOUT_TIMES) {
                         timerTask.cancel();
-                        if (txSendingTipDialog!=null) {
-                            txSendingTipDialog.dismiss();
+                        if (submitDialog != null) {
+                            submitDialog.dismiss();
                         }
                         BPTransactionTimeoutFragment fragment = new BPTransactionTimeoutFragment();
                         Bundle args = new Bundle();
-                        args.putString("txHash",txHash);
+                        args.putString("txHash", txHash);
                         fragment.setArguments(args);
                         startFragment(fragment);
                         return;
@@ -238,8 +351,8 @@ public abstract class BaseFragment extends QMUIFragment {
                             } else {
                                 TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
                                 timerTask.cancel();
-                                if (txSendingTipDialog!=null) {
-                                    txSendingTipDialog.dismiss();
+                                if (submitDialog != null) {
+                                    submitDialog.dismiss();
                                 }
                                 if (com.bupocket.wallet.enums.ExceptionEnum.BU_NOT_ENOUGH_FOR_PAYMENT.getCode().equals(txDetailRespBoBean.getErrorCode())) {
                                     Toast.makeText(getActivity(), R.string.balance_not_enough, Toast.LENGTH_SHORT).show();
@@ -252,7 +365,7 @@ public abstract class BaseFragment extends QMUIFragment {
                                 argz.putString("note", txDetailRespBoBean.getOriginalMetadata());
                                 argz.putString("state", txDetailRespBoBean.getStatus().toString());
                                 argz.putString("sendTime", txDetailRespBoBean.getApplyTimeDate());
-                                argz.putString("txHash",txHash);
+                                argz.putString("txHash", txHash);
                                 BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
                                 bpSendStatusFragment.setArguments(argz);
                                 startFragment(bpSendStatusFragment);
@@ -261,8 +374,8 @@ public abstract class BaseFragment extends QMUIFragment {
 
                         @Override
                         public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
-                            if (txSendingTipDialog!=null) {
-                                txSendingTipDialog.dismiss();
+                            if (submitDialog != null) {
+                                submitDialog.dismiss();
                             }
                         }
                     });
@@ -275,11 +388,9 @@ public abstract class BaseFragment extends QMUIFragment {
     };
 
 
-
-
-    public void ByHashQueryResult(@NonNull String hash){
-        txHash=hash;
-        if (timerTask!=null) {
+    public void ByHashQueryResult(@NonNull String hash) {
+        txHash = hash;
+        if (timerTask != null) {
             timerTask.cancel();
         }
 

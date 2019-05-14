@@ -9,7 +9,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Base64;
@@ -30,6 +29,7 @@ import com.bupocket.activity.CaptureActivity;
 import com.bupocket.adaptor.TokensAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.common.SingatureListener;
 import com.bupocket.enums.BackupTipsStateEnum;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.CurrencyTypeEnum;
@@ -64,6 +64,7 @@ import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.header.MaterialHeader;
@@ -72,7 +73,6 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import io.bumo.encryption.key.PublicKey;
 import io.bumo.model.response.TransactionBuildBlobResponse;
-import io.socket.client.Manager;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -641,13 +641,13 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
                     } else if (resultContent.contains(Constants.INFO_UDCBU)) {
                         final String udcbuContent = resultContent.replace(Constants.INFO_UDCBU, "");
-                       UDCBUModel udcbuModel=null;
-                        try{
+                        UDCBUModel udcbuModel = null;
+                        try {
                             udcbuModel = new Gson().fromJson(udcbuContent.trim(), UDCBUModel.class);
-                        }catch (Exception e){
-                           ToastUtil.showToast(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT);
+                        } catch (Exception e) {
+                            ToastUtil.showToast(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT);
                         }
-                        if (udcbuModel==null) {
+                        if (udcbuModel == null) {
                             return;
                         }
 
@@ -728,8 +728,17 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                     @Override
                                     public void run() {
                                         try {
-                                            TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(finalUdcbuModel.getAmount(), finalUdcbuModel.getInput(), currentWalletAddress, finalUdcbuModel.getTx_fee(), finalUdcbuModel.getDest_address(), getString(R.string.transaction_metadata));
-                                            submitTransactionBase(buildBlobResponse);
+                                            final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(finalUdcbuModel.getAmount(), finalUdcbuModel.getInput(), currentWalletAddress, finalUdcbuModel.getTx_fee(), finalUdcbuModel.getDest_address(), getString(R.string.transaction_metadata));
+
+                                            getSignatureInfo(new SingatureListener() {
+                                                @Override
+                                                public void success(String privateKey) {
+
+                                                    submitTransactionBase(privateKey, buildBlobResponse);
+                                                }
+                                            });
+
+//                                            submitTransactionBase(buildBlobResponse);
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                         }
@@ -740,7 +749,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
                             }
                         });
                         qmuiBottomSheet.show();
-
 
 
                     } else {
@@ -901,11 +909,11 @@ public class BPAssetsHomeFragment extends BaseFragment {
             Toast.makeText(getContext(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT).show();
             return;
         }
-        final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
-                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                .setTipWord(getResources().getString(R.string.send_tx_verify))
-                .create();
-        txSendingTipDialog.show();
+//        final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+//                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+//                .setTipWord(getResources().getString(R.string.send_tx_verify))
+//                .create();
+//        txSendingTipDialog.show();
 
 
         new Thread(new Runnable() {
@@ -924,52 +932,65 @@ public class BPAssetsHomeFragment extends BaseFragment {
                     } else {
                         buildBlobResponse = Wallet.getInstance().buildBlob(amount, script, currentWalletAddress, String.valueOf(scanTxFee), contractAddress, transMetaData);
                     }
-                    String txHash = buildBlobResponse.getResult().getHash();
-                    NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
-                    Call<ApiResult<TransConfirmModel>> call;
-                    Map<String, Object> paramsMap = new HashMap<>();
-                    paramsMap.put("qrcodeSessionId", qrCodeSessionID);
-                    paramsMap.put("hash", txHash);
-                    paramsMap.put("initiatorAddress", currentWalletAddress);
-                    call = nodePlanService.confirmTransaction(paramsMap);
-                    call.enqueue(new Callback<ApiResult<TransConfirmModel>>() {
+                    final String txHash = buildBlobResponse.getResult().getHash();
+
+                    getSignatureInfo(new SingatureListener() {
                         @Override
-                        public void onResponse(Call<ApiResult<TransConfirmModel>> call, Response<ApiResult<TransConfirmModel>> response) {
-                            txSendingTipDialog.dismiss();
-                            ApiResult<TransConfirmModel> respDto = response.body();
-                            if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
-                                expiryTime = respDto.getData().getExpiryTime();
-                                submitTransactionBase(buildBlobResponse);
-                            } else {
+                        public void success(final String privateKey) {
 
-                                if (ExceptionEnum.ERROR_TRANSACTION_OTHER_1011.getCode().equals(respDto.getErrCode())) {
-                                    expiryTime = respDto.getData().getExpiryTime();
-                                    CommonUtil.setExpiryTime(expiryTime, mContext);
 
-                                } else {
-                                    CommonUtil.showMessageDialog(getContext(), respDto.getMsg(), respDto.getErrCode());
+                            final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                                    .setTipWord(getResources().getString(R.string.send_tx_verify))
+                                    .create();
+                            txSendingTipDialog.show();
+
+                            NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
+                            Call<ApiResult<TransConfirmModel>> call;
+                            Map<String, Object> paramsMap = new HashMap<>();
+                            paramsMap.put("qrcodeSessionId", qrCodeSessionID);
+                            paramsMap.put("hash", txHash);
+                            paramsMap.put("initiatorAddress", currentWalletAddress);
+                            call = nodePlanService.confirmTransaction(paramsMap);
+                            call.enqueue(new Callback<ApiResult<TransConfirmModel>>() {
+                                @Override
+                                public void onResponse(Call<ApiResult<TransConfirmModel>> call, Response<ApiResult<TransConfirmModel>> response) {
+                                    txSendingTipDialog.dismiss();
+                                    ApiResult<TransConfirmModel> respDto = response.body();
+                                    if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
+                                        expiryTime = respDto.getData().getExpiryTime();
+                                        submitTransactionBase(privateKey, buildBlobResponse);
+                                    } else {
+                                        if (ExceptionEnum.ERROR_TRANSACTION_OTHER_1011.getCode().equals(respDto.getErrCode())) {
+                                            expiryTime = respDto.getData().getExpiryTime();
+                                            CommonUtil.setExpiryTime(expiryTime, mContext);
+
+                                        } else {
+                                            CommonUtil.showMessageDialog(getContext(), respDto.getMsg(), respDto.getErrCode());
+                                        }
+                                    }
                                 }
 
-
-                            }
-
-
-                        }
-
-                        @Override
-                        public void onFailure(Call<ApiResult<TransConfirmModel>> call, Throwable t) {
-                            getActivity().runOnUiThread(new Runnable() {
                                 @Override
-                                public void run() {
-                                    Toast.makeText(getContext(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
+                                public void onFailure(Call<ApiResult<TransConfirmModel>> call, Throwable t) {
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getContext(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                                    txSendingTipDialog.dismiss();
                                 }
                             });
 
-                            txSendingTipDialog.dismiss();
                         }
                     });
+
+
                 } catch (Exception e) {
-                    Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+
+
                 }
             }
         }).start();
