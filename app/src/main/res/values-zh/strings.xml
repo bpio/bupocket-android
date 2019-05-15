@@ -99,9 +99,9 @@
     <string name="send_status_success_txt">转账成功</string>
 
 
-    <string name="send_tx_handleing_txt">处理中...</string>
+    <string name="send_tx_handleing_txt">处理中</string>
     <string name="send_tx_sign_txt">签名中</string>
-    <string name="send_tx_verify">数据效验中</string>
+    <string name="send_tx_verify">效验中</string>
 
 
 
@@ -455,6 +455,8 @@
 
 
     <string name="parameter_txt">参数</string>
+
+
     <string name="refresh_qr_tips_txt">请刷新二维码，再进行扫码</string>
     <string name="scan_qr_login_management_system_not_bound_txt">该钱包账户未在该平台绑定</string>
     <string name="bound_address_note_txt">请联系该平台管理进行绑定</string>
@@ -462,6 +464,10 @@
     <string name="scan_qr_login_management_system_note_txt">即将登录节点计划运营管理系统，请确认是本人操作。</string>
     <string name="address_be_made_public_note_txt">您的账户地址将被公开</string>
     <string name="confirm_login_txt">确认登录</string>
+
+
+
+
     <string name="weixin_txt">微信</string>
     <string name="qq_txt">QQ</string>
     <string name="copy_commond_txt">复制小布口令</string>
@@ -601,10 +607,19 @@
 
     <string name="error_qr_message_txt_2">暂不支持该操作</string>
 
-
     <string name="comm_out">−</string>
     <string name="comm_in">+</string>
     <string name="transaction_metadata">调用合约</string>
+
+
+    <!-- transfer confirm-->
+    <string name="transfer_address_empty">目标地址不能为空</string>
+    <string name="transfer_empty">交易费不能为空</string>
+    <string name="transfer_bu_empty">交易BU数量不能为空</string>
+    <string name="transfer_parameter_empty">合约参数不能为空</string>
+    <string name="transfer_fee_empty">无效的交易费用</string>
+    <string name="transfer_amount_bu_empty">无效的交易BU数量</string>
+
 
 
 </resources>

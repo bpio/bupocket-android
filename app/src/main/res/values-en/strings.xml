@@ -95,9 +95,9 @@
     <string name="send_status_success_txt">Transferred successfully</string>
 
 
-    <string name="send_tx_handleing_txt">Processing...</string>
-    <string name="send_tx_verify">Checking data</string>
-    <string name="send_tx_sign_txt">Signing</string>
+    <string name="send_tx_handleing_txt">Processing</string>
+    <string name="send_tx_verify">Checking</string>
+    <string name="send_tx_sign_txt">Checking</string>
 
 
     <string name="send_status_fee">Estimated maximum payment</string>
@@ -582,5 +582,15 @@
     <!--<string name="scan_qr_login_management_system_note_txt">即将登录节点计划运营管理系统，请确认是本人操作。</string>-->
     <!--<string name="address_be_made_public_note_txt">您的账户地址将被公开</string>-->
     <string name="confirm_login_txt">Confirm login</string>
+
+
+    <!-- transfer confirm-->
+    <string name="transaction_metadata">Contract call</string>
+    <string name="transfer_address_empty">The target address cannot be empty</string>
+    <string name="transfer_empty">The transaction cannot be empty</string>
+    <string name="transfer_bu_empty">The transaction amount of BU cannot be empty</string>
+    <string name="transfer_parameter_empty">The contract parameter cannot be empty</string>
+    <string name="transfer_fee_empty">Invalid transaction fee</string>
+    <string name="transfer_amount_bu_empty">Invalid transaction amount of BU</string>
 
 </resources>

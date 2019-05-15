@@ -99,9 +99,9 @@
     <string name="send_status_success_txt">转账成功</string>
 
 
-    <string name="send_tx_handleing_txt">处理中...</string>
+    <string name="send_tx_handleing_txt">处理中</string>
     <string name="send_tx_sign_txt">签名中</string>
-    <string name="send_tx_verify">数据效验中</string>
+    <string name="send_tx_verify">效验中</string>
 
 
 
@@ -607,10 +607,19 @@
 
     <string name="error_qr_message_txt_2">暂不支持该操作</string>
 
-
     <string name="comm_out">−</string>
     <string name="comm_in">+</string>
     <string name="transaction_metadata">调用合约</string>
+
+
+    <!-- transfer confirm-->
+    <string name="transfer_address_empty">目标地址不能为空</string>
+    <string name="transfer_empty">交易费不能为空</string>
+    <string name="transfer_bu_empty">交易BU数量不能为空</string>
+    <string name="transfer_parameter_empty">合约参数不能为空</string>
+    <string name="transfer_fee_empty">无效的交易费用</string>
+    <string name="transfer_amount_bu_empty">无效的交易BU数量</string>
+
 
 
 </resources>
