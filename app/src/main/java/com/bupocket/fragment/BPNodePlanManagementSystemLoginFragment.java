@@ -1,6 +1,7 @@
 package com.bupocket.fragment;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -36,6 +37,9 @@ public class BPNodePlanManagementSystemLoginFragment extends BaseFragment {
     TextView mAppNameTv;
     @BindView(R.id.appPicIv)
     ImageView mAppPicIv;
+    @BindView(R.id.tvSystemLoginInfo)
+    TextView tvSystemLoginInfo;
+
 
     private String appId;
     private String uuid;
@@ -69,8 +73,15 @@ public class BPNodePlanManagementSystemLoginFragment extends BaseFragment {
     }
 
     private void initUI() {
-        mAppNameTv.setText(appName);
+
         Picasso.get().load(appPic).into(mAppPicIv);
+
+        if (!TextUtils.isEmpty(appName)) {
+            mAppNameTv.setText(appName);
+            String format = String.format(getString(R.string.scan_qr_login_management_system_note_txt).toString(), appName);
+            tvSystemLoginInfo.setText(format);
+        }
+
     }
 
     private void setListener() {
@@ -106,6 +117,10 @@ public class BPNodePlanManagementSystemLoginFragment extends BaseFragment {
                             if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                                 popBackStack();
                             }else{
+
+
+
+
                                 Bundle argz = new Bundle();
                                 argz.putString("errorCode",respDto.getErrCode());
                                 BPScanErrorFragment bpNodePlanManagementSystemLoginErrorFragment = new BPScanErrorFragment();

@@ -461,7 +461,7 @@
     <string name="scan_qr_login_management_system_not_bound_txt">该钱包账户未在该平台绑定</string>
     <string name="bound_address_note_txt">请联系该平台管理进行绑定</string>
     <string name="node_plan_management_system_txt">节点计划运营管理系统</string>
-    <string name="scan_qr_login_management_system_note_txt">即将登录节点计划运营管理系统，请确认是本人操作。</string>
+    <string name="scan_qr_login_management_system_note_txt">即将登录%1$s，请确认是本人操作。</string>
     <string name="address_be_made_public_note_txt">您的账户地址将被公开</string>
     <string name="confirm_login_txt">确认登录</string>
 
@@ -529,9 +529,7 @@
     <string name="transaction_process_title_info">业务数据根据链上交易元数据进行分析处理，预计
 20秒内处理完成</string>
     <string name="transaction_refresh_title">数据已刷新</string>
-    <string name="transaction_success_hint">
-        温馨提示：\n
-        节点的投票、撤票等操作链上交易成功后，相关数据的统计有延迟，预计30秒内完成，此为正常现象。</string>
+    <string name="transaction_success_hint">温馨提示：\n节点的投票、撤票等操作链上交易成功后，相关数据的统计有延迟，预计30秒内完成，此为正常现象。</string>
 
 
     <string name="error_vote_close">投票通道还未开启，请在开启后进行投票</string>
@@ -542,8 +540,7 @@
     <string name="error_1011_m">您有尚未完成的操作, %1$s 分钟 %2$s 秒后可再次进行交易</string>
     <string name="error_1011_s">您有尚未完成的操作, %1$s 秒后可再次进行交易</string>
     <string name="error_100055">the contact is already existed</string>
-    <string name="error_build_success_01">抱歉，该共建项目已被认购完</string>
-    <string name="error_build_success_02">抱歉，该共建项目已完成，目前您不能退出</string>
+
 
 
     <string name="error_build_1024">没有权限，请使用委员会钱包进行扫码</string>

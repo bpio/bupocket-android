@@ -461,7 +461,7 @@
     <string name="scan_qr_login_management_system_not_bound_txt">该钱包账户未在该平台绑定</string>
     <string name="bound_address_note_txt">请联系该平台管理进行绑定</string>
     <string name="node_plan_management_system_txt">节点计划运营管理系统</string>
-    <string name="scan_qr_login_management_system_note_txt">即将登录节点计划运营管理系统，请确认是本人操作。</string>
+    <string name="scan_qr_login_management_system_note_txt">即将登录%1$s，请确认是本人操作。</string>
     <string name="address_be_made_public_note_txt">您的账户地址将被公开</string>
     <string name="confirm_login_txt">确认登录</string>
 
