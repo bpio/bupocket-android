@@ -35,6 +35,7 @@ import com.bupocket.model.TransConfirmModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.ToastUtil;
+import com.bupocket.utils.TransferUtils;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -114,6 +115,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private View headerView;
     private String transMetaData;
     private String supportTransMetaData;
+    private String amountExit;
 
     @Override
     protected View onCreateView() {
@@ -294,7 +296,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     }
 
 
-
                     ArrayList<NodeBuildSupportModel> nodelist = body.getData().getSupportList();
 
                     if (nodelist == null || nodelist.size() == 0) {
@@ -353,8 +354,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 break;
             case R.id.btnBuildSupport:
                 if (detailModel != null) {
-                    String accountBUBalance = Wallet.getInstance().getAccountBUBalance(getWalletAddress());
-                    if (TextUtils.isEmpty(accountBUBalance)||(Double.parseDouble(accountBUBalance)<Double.parseDouble(detailModel.getPerAmount()))) {
+                    String accountBUBalance = spHelper.getSharedPreference(getWalletAddress() + "tokenBalance", "0").toString();
+                    if (TextUtils.isEmpty(accountBUBalance) || (Double.parseDouble(accountBUBalance) < Double.parseDouble(detailModel.getPerAmount()))) {
                         ToastUtil.showToast(getActivity(), R.string.balance_not_enough, Toast.LENGTH_SHORT);
                         return;
                     }
@@ -366,60 +367,16 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     }
 
     private void showExit() {
-
-
-        final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
-        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
-        TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
+        amountExit = "0";
         transMetaData = String.format(getString(R.string.build_exit_confirm_title), detailModel.getTitle());
-        mTransactionDetailTv.setText(transMetaData);
-        TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
-        mDestAddressTv.setText(detailModel.getContractAddress());
-        TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
-        mTxFeeTv.setText(String.valueOf(Constants.NODE_REVOKE_FEE));
 
-        qmuiBottomSheet.findViewById(R.id.detailBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.GONE);
-                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.VISIBLE);
-            }
-        });
-
-        TextView mSourceAddressTv = qmuiBottomSheet.findViewById(R.id.sourceAddressTv);
-        mSourceAddressTv.setText(detailModel.getOriginatorAddress());
-        TextView mDetailsDestAddressTv = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTv);
-        mDetailsDestAddressTv.setText(detailModel.getContractAddress());
-        TextView mDetailsAmountTv = qmuiBottomSheet.findViewById(R.id.detailsAmountTv);
-        mDetailsAmountTv.setText("0");
-        TextView mDetailsTxFeeTv = qmuiBottomSheet.findViewById(R.id.detailsTxFeeTv);
-        mDetailsTxFeeTv.setText(String.valueOf(Constants.NODE_REVOKE_FEE));
-        TextView mTransactionParamsTv = qmuiBottomSheet.findViewById(R.id.transactionParamsTv);
-        mTransactionParamsTv.setText(inputExit);
-
-        qmuiBottomSheet.findViewById(R.id.goBackBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.VISIBLE);
-                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.GONE);
-            }
-        });
-
-
-        qmuiBottomSheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.dismiss();
-                confirmExit();
-            }
-        });
-        qmuiBottomSheet.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.dismiss();
-            }
-        });
-        qmuiBottomSheet.show();
+        TransferUtils.confirmTxSheet(mContext, detailModel.getOriginatorAddress(), detailModel.getContractAddress(),
+                amountExit, Constants.NODE_REVOKE_FEE, transMetaData, inputExit, new TransferUtils.TransferListener() {
+                    @Override
+                    public void confirm() {
+                        confirmExit();
+                    }
+                });
     }
 
     private void showMessagePositiveDialog() {
@@ -443,19 +400,11 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
     private void confirmExit() {
 
-//        final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
-//                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-//                .setTipWord(getResources().getString(R.string.send_tx_verify))
-//                .create();
-//        txSendingTipDialog.show();
-        final String amount = "0";
-
-
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, inputExit, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_FEE), detailModel.getContractAddress(),transMetaData);
+                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amountExit, inputExit, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_FEE), detailModel.getContractAddress(), transMetaData);
 
                     final String hash = transBlob.getResult().getHash();
                     LogUtils.e(hash);
@@ -492,7 +441,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                                     txSendingTipDialog.dismiss();
 
                                     if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
-                                        submitTransactionBase(privateKey,transBlob);
+                                        submitTransactionBase(privateKey, transBlob);
                                     } else {
 
                                         if (ExceptionEnum.ERROR_TRANSACTION_OTHER_1011.getCode().equals(body.getErrCode())) {
@@ -512,14 +461,9 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                                 }
                             });
 
-//                    submitTransactionBase(transBlob);
-
 
                         }
                     });
-
-
-
 
 
                 } catch (Exception e) {
@@ -618,66 +562,20 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     }
 
     private void confirmSheet() {
-        final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
-        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
-        TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
         supportTransMetaData = String.format(getString(R.string.build_support_confirm_title), detailModel.getTitle());
-        mTransactionDetailTv.setText(supportTransMetaData);
-        TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
-
-        mDestAddressTv.setText(detailModel.getContractAddress());
-        TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
-        mTxFeeTv.setText(String.valueOf(Constants.NODE_REVOKE_FEE));
-
-
-        qmuiBottomSheet.findViewById(R.id.detailBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.GONE);
-                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.VISIBLE);
-            }
-        });
-
         final String num = numSupport.getText().toString();
         JSONObject params = new JSONObject();
         params.put("shares", num);
         inputSupport = "{\"method\":\"subscribe\",\"params\":" + params.toJSONString() + " }";
-
-        TextView mSourceAddressTv = qmuiBottomSheet.findViewById(R.id.sourceAddressTv);
-        mSourceAddressTv.setText(getWalletAddress());
-        TextView mDetailsDestAddressTv = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTv);
-        mDetailsDestAddressTv.setText(detailModel.getContractAddress());
-        TextView mDetailsAmountTv = qmuiBottomSheet.findViewById(R.id.detailsAmountTv);
-        mDetailsAmountTv.setText(CommonUtil.format(tvDialogTotalAmount.getText().toString()));
-        TextView mDetailsTxFeeTv = qmuiBottomSheet.findViewById(R.id.detailsTxFeeTv);
-        mDetailsTxFeeTv.setText(String.valueOf(Constants.NODE_REVOKE_FEE));
-        TextView mTransactionParamsTv = qmuiBottomSheet.findViewById(R.id.transactionParamsTv);
-        mTransactionParamsTv.setText(inputSupport);
-
-        qmuiBottomSheet.findViewById(R.id.goBackBtn).setOnClickListener(new View.OnClickListener() {
+        TransferUtils.confirmTxSheet(mContext, getWalletAddress(), detailModel.getContractAddress(),
+                tvDialogTotalAmount.getText().toString(),
+                Constants.NODE_REVOKE_FEE, supportTransMetaData,
+                inputSupport, new TransferUtils.TransferListener() {
             @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.VISIBLE);
-                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.GONE);
-            }
-        });
-
-
-        qmuiBottomSheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.dismiss();
+            public void confirm() {
                 confirmSupport();
             }
         });
-        qmuiBottomSheet.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.dismiss();
-            }
-        });
-        qmuiBottomSheet.show();
-
     }
 
     private void confirmSupport() {
@@ -690,7 +588,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             public void run() {
                 try {
 
-                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, inputSupport, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_MIN_FEE), contractAddress,supportTransMetaData);
+                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, inputSupport, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_MIN_FEE), contractAddress, supportTransMetaData);
 
                     final String hash = transBlob.getResult().getHash();
                     if (TextUtils.isEmpty(hash)) {
@@ -727,7 +625,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                                     ApiResult<TransConfirmModel> body = response.body();
                                     txSendingTipDialog.dismiss();
                                     if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
-                                        submitTransactionBase(privateKey,transBlob);
+                                        submitTransactionBase(privateKey, transBlob);
                                     } else {
                                         if (ExceptionEnum.ERROR_TRANSACTION_OTHER_1011.getCode().equals(body.getErrCode())) {
                                             String expiryTime = body.getData().getExpiryTime();
@@ -748,11 +646,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
                         }
                     });
-
-
-
-
-
 
 
                 } catch (Exception e) {

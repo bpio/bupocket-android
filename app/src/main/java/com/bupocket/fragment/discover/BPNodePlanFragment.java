@@ -41,6 +41,7 @@ import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.ToastUtil;
+import com.bupocket.utils.TransferUtils;
 import com.bupocket.wallet.Wallet;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
@@ -398,64 +399,14 @@ public class BPNodePlanFragment extends BaseFragment {
 
         String transactionParams = input.toJSONString();
 
-        final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
-        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
-        TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
-        mTransactionDetailTv.setText(transactionDetail);
-        TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
-        mDestAddressTv.setText(destAddress);
-        TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
-        mTxFeeTv.setText(String.valueOf(Constants.NODE_REVOKE_FEE));
-
-        qmuiBottomSheet.findViewById(R.id.detailBtn).setOnClickListener(new View.OnClickListener() {
+        TransferUtils.confirmTxSheet(mContext, getWalletAddress(), destAddress,
+                transactionAmount, Constants.NODE_REVOKE_FEE,
+                transactionDetail, transactionParams, new TransferUtils.TransferListener() {
             @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.GONE);
-                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.VISIBLE);
-            }
-        });
-
-        // confirm details page
-        TextView mSourceAddressTv = qmuiBottomSheet.findViewById(R.id.sourceAddressTv);
-        mSourceAddressTv.setText(currentWalletAddress);
-        TextView mDetailsDestAddressTv = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTv);
-        mDetailsDestAddressTv.setText(destAddress);
-        TextView mDetailsAmountTv = qmuiBottomSheet.findViewById(R.id.detailsAmountTv);
-        mDetailsAmountTv.setText(CommonUtil.addSuffix(transactionAmount, "BU"));
-        TextView mDetailsTxFeeTv = qmuiBottomSheet.findViewById(R.id.detailsTxFeeTv);
-        mDetailsTxFeeTv.setText(String.valueOf(Constants.NODE_REVOKE_FEE));
-        TextView mTransactionParamsTv = qmuiBottomSheet.findViewById(R.id.transactionParamsTv);
-        mTransactionParamsTv.setText(transactionParams);
-
-        // title view listener
-        qmuiBottomSheet.findViewById(R.id.goBackBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.VISIBLE);
-                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.GONE);
-            }
-        });
-        qmuiBottomSheet.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.dismiss();
-            }
-        });
-        qmuiBottomSheet.findViewById(R.id.detailsCancelBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.dismiss();
-            }
-        });
-        qmuiBottomSheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.dismiss();
+            public void confirm() {
                 confirmUnVote(input, nodeId);
             }
         });
-        qmuiBottomSheet.show();
-
     }
 
     private void confirmUnVote(final JSONObject input, final String nodeId) {
@@ -465,6 +416,11 @@ public class BPNodePlanFragment extends BaseFragment {
         getSignatureInfo(new SingatureListener() {
             @Override
             public void success(final String privateKey) {
+
+                if (privateKey.isEmpty()) {
+                    return;
+                }
+
                 final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                         .setTipWord(getResources().getString(R.string.send_tx_verify))

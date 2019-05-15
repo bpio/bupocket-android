@@ -12,6 +12,7 @@ import android.os.Message;
 import android.support.v4.app.ActivityCompat;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.MonthDisplayHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
@@ -57,6 +58,7 @@ import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
+import com.bupocket.utils.TransferUtils;
 import com.bupocket.wallet.Wallet;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -64,14 +66,11 @@ import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-
-import org.w3c.dom.Text;
 
 import io.bumo.encryption.key.PublicKey;
 import io.bumo.model.response.TransactionBuildBlobResponse;
@@ -536,90 +535,14 @@ public class BPAssetsHomeFragment extends BaseFragment {
             scanTxFee = Constants.MIN_FEE;
         }
 
-        // confirm page
-        final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
-        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
-
-        TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
-        mTransactionDetailTv.setText(transactionDetail);
-        TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
-        TextView mDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.destAddressTvHint);
-        if (TextUtils.isEmpty(destAddress)) {
-            mDestAddressTv.setVisibility(View.GONE);
-            mDestAddressTvHint.setVisibility(View.GONE);
-        } else {
-            mDestAddressTv.setVisibility(View.VISIBLE);
-            mDestAddressTvHint.setVisibility(View.VISIBLE);
-            if (TextUtils.isEmpty(accountTag)) {
-                mDestAddressTv.setText(destAddress);
-            } else {
-                mDestAddressTv.setText(destAddress.concat(accountTag));
-            }
-
-        }
-
-        TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
-        mTxFeeTv.setText(String.valueOf(scanTxFee));
-
-
-        qmuiBottomSheet.findViewById(R.id.detailBtn).setOnClickListener(new View.OnClickListener() {
+        TransferUtils.confirmTxSheet(mContext, getWalletAddress(), destAddress,
+                accountTag, transactionAmount, scanTxFee,
+                transactionDetail, transactionParams, new TransferUtils.TransferListener() {
             @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.GONE);
-                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.VISIBLE);
-            }
-        });
-
-        // confirm details page
-        TextView mSourceAddressTv = qmuiBottomSheet.findViewById(R.id.sourceAddressTv);
-        mSourceAddressTv.setText(currentWalletAddress);
-        TextView mDetailsDestAddressTv = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTv);
-        TextView mDetailsDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTvHint);
-        if (TextUtils.isEmpty(destAddress)) {
-            mDetailsDestAddressTv.setVisibility(View.GONE);
-            mDetailsDestAddressTvHint.setVisibility(View.GONE);
-        } else {
-            mDetailsDestAddressTv.setVisibility(View.VISIBLE);
-            mDetailsDestAddressTvHint.setVisibility(View.VISIBLE);
-            mDetailsDestAddressTv.setText(destAddress);
-        }
-
-
-        TextView mDetailsAmountTv = qmuiBottomSheet.findViewById(R.id.detailsAmountTv);
-        mDetailsAmountTv.setText(CommonUtil.thousandSeparator(transactionAmount));
-        TextView mDetailsTxFeeTv = qmuiBottomSheet.findViewById(R.id.detailsTxFeeTv);
-        mDetailsTxFeeTv.setText(String.valueOf(scanTxFee));
-        TextView mTransactionParamsTv = qmuiBottomSheet.findViewById(R.id.transactionParamsTv);
-        mTransactionParamsTv.setText(transactionParams);
-
-        // title view listener
-        qmuiBottomSheet.findViewById(R.id.goBackBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.VISIBLE);
-                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.GONE);
-            }
-        });
-        qmuiBottomSheet.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.dismiss();
-            }
-        });
-        qmuiBottomSheet.findViewById(R.id.detailsCancelBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.dismiss();
-            }
-        });
-        qmuiBottomSheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.dismiss();
+            public void confirm() {
                 confirmTransaction(contentDto);
             }
         });
-        qmuiBottomSheet.show();
     }
 
     private void confirmTransaction(final GetQRContentDto contentDto) {
@@ -636,12 +559,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
             Toast.makeText(getContext(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT).show();
             return;
         }
-//        final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
-//                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-//                .setTipWord(getResources().getString(R.string.send_tx_verify))
-//                .create();
-//        txSendingTipDialog.show();
-
 
         new Thread(new Runnable() {
             @Override
@@ -908,81 +825,12 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                 return;
                             }
 
-
-
-                            final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
-                            qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
-
-                            TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
-                            mTransactionDetailTv.setText(R.string.transaction_metadata);
-                            TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
-                            TextView mDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.destAddressTvHint);
-                            if (TextUtils.isEmpty(udcbuModel.getDest_address())) {
-                                mDestAddressTv.setVisibility(View.GONE);
-                                mDestAddressTvHint.setVisibility(View.GONE);
-                            } else {
-                                mDestAddressTv.setVisibility(View.VISIBLE);
-                                mDestAddressTvHint.setVisibility(View.VISIBLE);
-                                mDestAddressTv.setText(udcbuModel.getDest_address());
-                            }
-
-                            TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
-                            mTxFeeTv.setText(udcbuModel.getTx_fee());
-
-
-                            qmuiBottomSheet.findViewById(R.id.detailBtn).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.GONE);
-                                    qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.VISIBLE);
-                                }
-                            });
-
-                            // confirm details page
-                            TextView mSourceAddressTv = qmuiBottomSheet.findViewById(R.id.sourceAddressTv);
-                            mSourceAddressTv.setText(currentWalletAddress);
-                            TextView mDetailsDestAddressTv = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTv);
-                            TextView mDetailsDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTvHint);
-                            if (TextUtils.isEmpty(udcbuModel.getDest_address())) {
-                                mDetailsDestAddressTv.setVisibility(View.GONE);
-                                mDetailsDestAddressTvHint.setVisibility(View.GONE);
-                            } else {
-                                mDetailsDestAddressTv.setVisibility(View.VISIBLE);
-                                mDetailsDestAddressTvHint.setVisibility(View.VISIBLE);
-                                mDetailsDestAddressTv.setText(udcbuModel.getDest_address());
-                            }
-                            TextView mDetailsAmountTv = qmuiBottomSheet.findViewById(R.id.detailsAmountTv);
-                            mDetailsAmountTv.setText(CommonUtil.thousandSeparator(udcbuModel.getAmount()));
-                            TextView mDetailsTxFeeTv = qmuiBottomSheet.findViewById(R.id.detailsTxFeeTv);
-                            mDetailsTxFeeTv.setText(udcbuModel.getTx_fee());
-                            TextView mTransactionParamsTv = qmuiBottomSheet.findViewById(R.id.transactionParamsTv);
-                            mTransactionParamsTv.setText(udcbuModel.getInput());
-
-                            // title view listener
-                            qmuiBottomSheet.findViewById(R.id.goBackBtn).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.VISIBLE);
-                                    qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.GONE);
-                                }
-                            });
-                            qmuiBottomSheet.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    qmuiBottomSheet.dismiss();
-                                }
-                            });
-                            qmuiBottomSheet.findViewById(R.id.detailsCancelBtn).setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    qmuiBottomSheet.dismiss();
-                                }
-                            });
                             final UDCBUModel finalUdcbuModel = udcbuModel;
-                            qmuiBottomSheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
+                            TransferUtils.confirmTxSheet(mContext,getWalletAddress(),udcbuModel.getDest_address()
+                                    ,udcbuModel.getAmount(),Double.parseDouble(udcbuModel.getTx_fee()),
+                                    getString(R.string.transaction_metadata), udcbuModel.getInput(),new TransferUtils.TransferListener() {
                                 @Override
-                                public void onClick(View v) {
-                                    qmuiBottomSheet.dismiss();
+                                public void confirm() {
                                     new Thread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -1003,10 +851,8 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
                                         }
                                     }).start();
-
                                 }
                             });
-                            qmuiBottomSheet.show();
 
                         } catch (Exception e) {
                             ToastUtil.showToast(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT);
