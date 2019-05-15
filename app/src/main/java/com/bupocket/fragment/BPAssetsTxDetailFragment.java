@@ -181,7 +181,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     mTxFromAccAddrTv.setText(txDeatilRespBoBean.getSourceAddress());
                     mTxToAccAddrTv.setText(txDeatilRespBoBean.getDestAddress());
                     mTxDetailFeeTv.setText(txDeatilRespBoBean.getFee() + " BU");
-                    mTxDetailSendDateTv.setText(TimeUtil.timeStamp2Date(txDeatilRespBoBean.getApplyTimeDate().toString().substring(0,10),"yyyy.MM.dd HH:mm:ss"));
+                    mTxDetailSendDateTv.setText(TimeUtil.getDateDiff(Long.parseLong(txDeatilRespBoBean.getApplyTimeDate()),mContext));
                     mTxDetailTXHashTv.setText(txInfoRespBoBean.getHash());
                     mTxDetailNoteTv.setText(txDeatilRespBoBean.getTxMetadata());
 
@@ -282,7 +282,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
 
 
             TextView sdLabelTv = new TextView(getContext());
-            sdLabelTv.setText("Singed Data");
+            sdLabelTv.setText("Signed Data");
             sdLabelTv.setPadding(20,10,10,20);
             sdLabelTv.setTextColor(0xFF888888);
 
