@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
@@ -358,7 +359,8 @@ public class BPWalletManageFragment extends BaseFragment {
                                     Handler handler = new Handler(Looper.getMainLooper());
                                     class PopBackStackThread implements Runnable {
                                         public void run() {
-                                            popBackStack();
+//                                            popBackStack();
+                                            startFragment(new HomeFragment());
                                         }
                                     }
                                     handler.post(new PopBackStackThread());
