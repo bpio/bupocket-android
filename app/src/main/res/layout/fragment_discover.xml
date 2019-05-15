@@ -56,7 +56,6 @@
             style="@style/dis_item_style">
 
             <ImageView
-                android:id="@+id/cardPackageIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -96,7 +95,6 @@
                 android:layout_height="50dp">
 
                 <ImageView
-                    android:id="@+id/nodePlanIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -140,7 +138,6 @@
                 android:layout_height="50dp">
 
                 <ImageView
-                    android:id="@+id/nodeBuildIcon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -179,7 +176,6 @@
             >
 
             <ImageView
-                android:id="@+id/informationIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -214,7 +210,6 @@
             style="@style/dis_item_style">
 
             <ImageView
-                android:id="@+id/xiaobuYoupinIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"

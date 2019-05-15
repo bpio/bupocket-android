@@ -21,7 +21,6 @@
 
             <ImageView
                 android:layout_centerInParent="true"
-                android:id="@+id/assetIconBgIv"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="@mipmap/icon_token_bg_list"/>

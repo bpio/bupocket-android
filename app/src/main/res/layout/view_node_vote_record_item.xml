@@ -91,7 +91,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/statusLl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="64.5dp"
@@ -113,7 +112,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/timeLl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
