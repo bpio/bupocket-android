@@ -529,9 +529,7 @@
     <string name="transaction_process_title_info">业务数据根据链上交易元数据进行分析处理，预计
 20秒内处理完成</string>
     <string name="transaction_refresh_title">数据已刷新</string>
-    <string name="transaction_success_hint">
-        温馨提示：\n
-        节点的投票、撤票等操作链上交易成功后，相关数据的统计有延迟，预计30秒内完成，此为正常现象。</string>
+    <string name="transaction_success_hint">温馨提示：\n节点的投票、撤票等操作链上交易成功后，相关数据的统计有延迟，预计30秒内完成，此为正常现象。</string>
 
 
     <string name="error_vote_close">投票通道还未开启，请在开启后进行投票</string>
@@ -542,8 +540,7 @@
     <string name="error_1011_m">您有尚未完成的操作, %1$s 分钟 %2$s 秒后可再次进行交易</string>
     <string name="error_1011_s">您有尚未完成的操作, %1$s 秒后可再次进行交易</string>
     <string name="error_100055">the contact is already existed</string>
-    <string name="error_build_success_01">抱歉，该共建项目已被认购完</string>
-    <string name="error_build_success_02">抱歉，该共建项目已完成，目前您不能退出</string>
+
 
 
     <string name="error_build_1024">没有权限，请使用委员会钱包进行扫码</string>

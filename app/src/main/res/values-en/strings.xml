@@ -497,7 +497,7 @@
     <string name="transaction_refresh_title">Data is refreshed</string>
     <string name="transaction_success_hint">
         Tips:\n
-         after transactions such as voting to  node or withdrawing votes from  node are successful on the chain, the statistics of related data are delayed, and it is expected to be completed within 30 seconds.</string>
+         After transactions such as voting to  node or withdrawing votes from  node are successful on the chain, the statistics of related data are delayed, and it is expected to be completed within 30 seconds.</string>
 
 
     <string name="build_exit_confirm_title">Withdraw sponsor \"%1$s\" project</string>
@@ -532,7 +532,7 @@
 
     <string name="transaction_timeout_title">Transaction status</string>
     <string name="transaction_timeout_hint">Transaction is broadcast successfully</string>
-    <string name="transaction_timeout_info">Transaction is broadcast successfully; please copy the transaction summary to&lt;font color=\'#02CA71\'>https://explorer.bumo.io&lt;/font> to query the final transaction status ;</string>
+    <string name="transaction_timeout_info">Transaction is broadcast successfully; please copy the transaction summary to&lt;font color=\'#02CA71\'>https://explorer.bumo.io&lt;/font> to query the final transaction status;</string>
     <string name="build_bu">&#160;BU</string>
     <string name="transaction_info">Transaction summary</string>
     <string name="reward_sharing_ratio">Award ratio</string>
@@ -576,8 +576,8 @@
 
     <!--login-->
     <!--<string name="refresh_qr_tips_txt">请刷新二维码，再进行扫码</string>-->
-    <string name="scan_qr_login_management_system_not_bound_txt">The wallet account is not bound to the platform </string>
-    <string name="bound_address_note_txt"> Please refresh the QR code and scan the code again </string>
+    <string name="scan_qr_login_management_system_not_bound_txt">The wallet account is not bound to the platform</string>
+    <string name="bound_address_note_txt"> Please refresh the QR code and scan the code again</string>
     <!--<string name="node_plan_management_system_txt">节点计划运营管理系统</string>-->
     <!--<string name="scan_qr_login_management_system_note_txt">即将登录节点计划运营管理系统，请确认是本人操作。</string>-->
     <!--<string name="address_be_made_public_note_txt">您的账户地址将被公开</string>-->
@@ -592,5 +592,30 @@
     <string name="transfer_parameter_empty">The contract parameter cannot be empty</string>
     <string name="transfer_fee_empty">Invalid transaction fee</string>
     <string name="transfer_amount_bu_empty">Invalid transaction amount of BU</string>
+
+
+
+
+    <string name="refresh_qr_tips_txt">Please update the QR code and then scan again</string>
+    <string name="node_plan_management_system_txt">Operation and management system of node initiative</string>
+    <string name="scan_qr_login_management_system_note_txt">Log in to the operation and management system of node initiative soon; please confirm it is conducted by yourself.</string>
+    <string name="address_be_made_public_note_txt"> Your account address will be made public</string>
+    <string name="reload_txt">Reload</string>
+
+
+    <string name="building">Co-funding</string>
+    <string name="build_success">Co-funded successfully</string>
+    <string name="build_failure">Failed to co-fund</string>
+
+    <string name="super_status_info">The current node is in %1$s&quot; status, which does not support vote invitation.</string>
+    <string name="node_associated_with_me_help_txt2">Filter nodes related to me such as nodes I voted/campaign nodes.</string>
+
+
+    <string name="super_status_success">Application success</string>
+    <string name="super_status_running">Exiting</string>
+    <string name="super_status_failed">Exited</string>
+
+
+    <string name="send_dailog">Please operate by scanning</string>
 
 </resources>
