@@ -618,5 +618,10 @@
     <string name="transfer_amount_bu_empty">无效的交易BU数量</string>
 
 
+    <string name="wallet_bu_info">价格基于第三方交易所平台数据估算，仅供参考</string>
+
+    <string name="address_not_exist">当前账户暂未激活，可转入至少 0.02BU 进行激活，账户激活后方可进行交易操作。</string>
+
+
 
 </resources>

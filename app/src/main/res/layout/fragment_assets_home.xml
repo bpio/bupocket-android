@@ -110,14 +110,35 @@
 
                         </RelativeLayout>
 
-                        <TextView
-                            android:id="@+id/totalAssetsTitleTv"
+
+                        <LinearLayout
+                            android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="@string/total_assets_title_txt"
-                            android:textColor="@color/app_color_white"
-                            android:textSize="15sp" />
+                            android:gravity="center_vertical"
+                            >
+                            <TextView
+                                android:id="@+id/totalAssetsTitleTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/total_assets_title_txt"
+                                android:textColor="@color/app_color_white"
+                                android:textSize="15sp" />
+
+                            <ImageView
+                                android:id="@+id/ivAssetsInfo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="5dp"
+                                android:layout_marginLeft="5dp"
+                                android:layout_gravity="center_vertical"
+                                android:background="@mipmap/ic_sheet_hint_white"
+                                />
+
+                        </LinearLayout>
+
+
 
                         <LinearLayout
                             android:layout_width="340dp"

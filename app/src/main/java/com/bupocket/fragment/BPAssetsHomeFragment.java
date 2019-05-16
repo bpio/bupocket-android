@@ -10,9 +10,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Base64;
-import android.util.MonthDisplayHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.*;
@@ -60,13 +60,16 @@ import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.wallet.Wallet;
+import com.bupocket.wallet.exception.WalletException;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -83,6 +86,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class BPAssetsHomeFragment extends BaseFragment {
 
@@ -120,6 +125,8 @@ public class BPAssetsHomeFragment extends BaseFragment {
     ImageView mManageWalletBtn;
     @BindView(R.id.currentWalletNameTv)
     TextView mCurrentWalletNameTv;
+    @BindView(R.id.ivAssetsInfo)
+    ImageView ivAssetsInfo;
 
     protected SharedPreferencesHelper sharedPreferencesHelper;
     private TokensAdapter mTokensAdapter;
@@ -234,6 +241,34 @@ public class BPAssetsHomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 startFragment(new BPWalletsHomeFragment());
+            }
+        });
+
+        ivAssetsInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                QMUIPopup myNodeExplainPopup=null;
+                if (myNodeExplainPopup == null) {
+                    myNodeExplainPopup = new QMUIPopup(getContext(), QMUIPopup.DIRECTION_NONE);
+                    TextView textView = new TextView(getContext());
+                    textView.setLayoutParams(myNodeExplainPopup.generateLayoutParam(
+                            QMUIDisplayHelper.dp2px(getContext(), 280),
+                            WRAP_CONTENT
+                    ));
+                    textView.setLineSpacing(QMUIDisplayHelper.dp2px(getContext(), 4), 1.0f);
+                    int padding = QMUIDisplayHelper.dp2px(getContext(), 10);
+                    textView.setPadding(padding, padding, padding, padding);
+                    textView.setText(getString(R.string.wallet_bu_info));
+                    textView.setTextColor(ContextCompat.getColor(getContext(), R.color.app_color_white));
+                    textView.setBackgroundColor(getResources().getColor(R.color.popup_background_color));
+                    myNodeExplainPopup.setContentView(textView);
+
+                }
+                myNodeExplainPopup.setAnimStyle(QMUIPopup.ANIM_GROW_FROM_CENTER);
+                myNodeExplainPopup.setPreferredDirection(QMUIPopup.DIRECTION_BOTTOM);
+                myNodeExplainPopup.show(v);
+                ImageView arrowUp = myNodeExplainPopup.getDecorView().findViewById(R.id.arrow_up);
+                arrowUp.setImageDrawable(getResources().getDrawable(R.mipmap.triangle));
             }
         });
     }
@@ -495,7 +530,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
     }
 
 
-
     private void showTransactionConfirmView(final GetQRContentDto contentDto) {
         String destAddress = contentDto.getDestAddress();
         String transactionAmount = contentDto.getAmount();
@@ -538,11 +572,11 @@ public class BPAssetsHomeFragment extends BaseFragment {
         TransferUtils.confirmTxSheet(mContext, getWalletAddress(), destAddress,
                 accountTag, transactionAmount, scanTxFee,
                 transactionDetail, transactionParams, new TransferUtils.TransferListener() {
-            @Override
-            public void confirm() {
-                confirmTransaction(contentDto);
-            }
-        });
+                    @Override
+                    public void confirm() {
+                        confirmTransaction(contentDto);
+                    }
+                });
     }
 
     private void confirmTransaction(final GetQRContentDto contentDto) {
@@ -632,6 +666,10 @@ public class BPAssetsHomeFragment extends BaseFragment {
                     });
 
 
+                } catch (WalletException e) {
+                    if (e.getErrCode().equals(com.bupocket.wallet.enums.ExceptionEnum.ADDRESS_NOT_EXIST.getCode())) {
+                        ToastUtil.showToast(getActivity(), getString(R.string.address_not_exist), Toast.LENGTH_SHORT);
+                    }
                 } catch (Exception e) {
 
 
@@ -647,7 +685,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
         LogUtils.e("address:\t" + getWalletAddress());
 
     }
-
 
 
     private void handleResult(String resultContent) {
@@ -806,53 +843,57 @@ public class BPAssetsHomeFragment extends BaseFragment {
                             }
 
                             if (TextUtils.isEmpty(udcbuModel.getDest_address())) {
-                                ToastUtil.showToast(getActivity(),R.string.transfer_address_empty,Toast.LENGTH_SHORT);
+                                ToastUtil.showToast(getActivity(), R.string.transfer_address_empty, Toast.LENGTH_SHORT);
                                 return;
                             }
 
-                            if (TextUtils.isEmpty(udcbuModel.getAmount())){
-                                ToastUtil.showToast(getActivity(),R.string.transfer_bu_empty,Toast.LENGTH_SHORT);
+                            if (TextUtils.isEmpty(udcbuModel.getAmount())) {
+                                ToastUtil.showToast(getActivity(), R.string.transfer_bu_empty, Toast.LENGTH_SHORT);
                                 return;
                             }
 
-                            if (TextUtils.isEmpty(udcbuModel.getInput())){
-                                ToastUtil.showToast(getActivity(),R.string.transfer_parameter_empty,Toast.LENGTH_SHORT);
+                            if (TextUtils.isEmpty(udcbuModel.getInput())) {
+                                ToastUtil.showToast(getActivity(), R.string.transfer_parameter_empty, Toast.LENGTH_SHORT);
                                 return;
                             }
 
-                            if (TextUtils.isEmpty(udcbuModel.getTx_fee())){
-                                ToastUtil.showToast(getActivity(),R.string.transfer_fee_empty,Toast.LENGTH_SHORT);
+                            if (TextUtils.isEmpty(udcbuModel.getTx_fee())) {
+                                ToastUtil.showToast(getActivity(), R.string.transfer_fee_empty, Toast.LENGTH_SHORT);
                                 return;
                             }
 
                             final UDCBUModel finalUdcbuModel = udcbuModel;
-                            TransferUtils.confirmTxSheet(mContext,getWalletAddress(),udcbuModel.getDest_address()
-                                    ,udcbuModel.getAmount(),Double.parseDouble(udcbuModel.getTx_fee()),
-                                    getString(R.string.transaction_metadata), udcbuModel.getInput(),new TransferUtils.TransferListener() {
-                                @Override
-                                public void confirm() {
-                                    new Thread(new Runnable() {
+                            TransferUtils.confirmTxSheet(mContext, getWalletAddress(), udcbuModel.getDest_address()
+                                    , udcbuModel.getAmount(), Double.parseDouble(udcbuModel.getTx_fee()),
+                                    getString(R.string.transaction_metadata), udcbuModel.getInput(), new TransferUtils.TransferListener() {
                                         @Override
-                                        public void run() {
-                                            try {
-                                                final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(finalUdcbuModel.getAmount(), finalUdcbuModel.getInput(), currentWalletAddress, finalUdcbuModel.getTx_fee(), finalUdcbuModel.getDest_address(), getString(R.string.transaction_metadata));
+                                        public void confirm() {
+                                            new Thread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    try {
+                                                        final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(finalUdcbuModel.getAmount(), finalUdcbuModel.getInput(), currentWalletAddress, finalUdcbuModel.getTx_fee(), finalUdcbuModel.getDest_address(), getString(R.string.transaction_metadata));
 
-                                                getSignatureInfo(new SingatureListener() {
-                                                    @Override
-                                                    public void success(String privateKey) {
+                                                        getSignatureInfo(new SingatureListener() {
+                                                            @Override
+                                                            public void success(String privateKey) {
 
-                                                        submitTransactionBase(privateKey, buildBlobResponse);
+                                                                submitTransactionBase(privateKey, buildBlobResponse);
+                                                            }
+                                                        });
+
+                                                    }catch (WalletException e) {
+                                                        if (e.getErrCode().equals(com.bupocket.wallet.enums.ExceptionEnum.ADDRESS_NOT_EXIST.getCode())) {
+                                                            ToastUtil.showToast(getActivity(), getString(R.string.address_not_exist), Toast.LENGTH_SHORT);
+                                                        }
+                                                    }catch (Exception e) {
+                                                        e.printStackTrace();
                                                     }
-                                                });
 
-                                            } catch (Exception e) {
-                                                e.printStackTrace();
-                                            }
-
+                                                }
+                                            }).start();
                                         }
-                                    }).start();
-                                }
-                            });
+                                    });
 
                         } catch (Exception e) {
                             ToastUtil.showToast(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT);

@@ -154,7 +154,7 @@ public class Wallet {
         AccountGetBalanceResponse response = sdk.getAccountService().getBalance(request);
 
         System.out.println(JSON.toJSONString(response, true));
-        LogUtils.e("getAccountBUBalance:" + JSON.toJSONString(response, true));
+        LogUtils.e("getAccountBUBalance:" + response.getErrorCode()+"\t"+response.getErrorDesc());
         if (0 == response.getErrorCode()) {
             return ToBaseUnit.MO2BU(response.getResult().getBalance().toString());
         }

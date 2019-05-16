@@ -467,7 +467,9 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     });
 
                 } catch (WalletException e) {
-                    ToastUtil.showToast(getActivity(), e.getErrMsg(), Toast.LENGTH_SHORT);
+                    if (e.getErrCode().equals(com.bupocket.wallet.enums.ExceptionEnum.ADDRESS_NOT_EXIST.getCode())) {
+                        ToastUtil.showToast(getActivity(), getString(R.string.address_not_exist), Toast.LENGTH_SHORT);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
