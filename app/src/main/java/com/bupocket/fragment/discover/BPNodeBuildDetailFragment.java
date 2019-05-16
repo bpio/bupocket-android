@@ -37,6 +37,7 @@ import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.wallet.Wallet;
+import com.bupocket.wallet.exception.WalletException;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
@@ -465,7 +466,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                         }
                     });
 
-
+                } catch (WalletException e) {
+                    ToastUtil.showToast(getActivity(), e.getErrMsg(), Toast.LENGTH_SHORT);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -571,11 +573,11 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 tvDialogTotalAmount.getText().toString(),
                 Constants.NODE_REVOKE_FEE, supportTransMetaData,
                 inputSupport, new TransferUtils.TransferListener() {
-            @Override
-            public void confirm() {
-                confirmSupport();
-            }
-        });
+                    @Override
+                    public void confirm() {
+                        confirmSupport();
+                    }
+                });
     }
 
     private void confirmSupport() {
@@ -648,6 +650,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     });
 
 
+                } catch (WalletException walletException) {
+                    ToastUtil.showToast(getActivity(), walletException.getErrMsg(), Toast.LENGTH_SHORT);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

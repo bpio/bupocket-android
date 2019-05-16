@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.bumptech.glide.util.ExceptionCatchingInputStream;
 import com.bupocket.common.Constants;
 import com.bupocket.http.api.AccountService;
 import com.bupocket.http.api.RetrofitFactory;
@@ -153,7 +154,7 @@ public class Wallet {
         AccountGetBalanceResponse response = sdk.getAccountService().getBalance(request);
 
         System.out.println(JSON.toJSONString(response, true));
-        LogUtils.e("getAccountBUBalance:"+JSON.toJSONString(response, true));
+        LogUtils.e("getAccountBUBalance:" + JSON.toJSONString(response, true));
         if (0 == response.getErrorCode()) {
             return ToBaseUnit.MO2BU(response.getResult().getBalance().toString());
         }
@@ -525,6 +526,8 @@ public class Wallet {
             throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
         } else if (20000 == response.getErrorCode()) {
             throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
+        }else if (4==response.getErrorCode()){
+            throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
         }
         return null;
     }
@@ -779,36 +782,41 @@ public class Wallet {
         return transactionBuildBlobResponse;
     }
 
-    public TransactionBuildBlobResponse buildBlob(String amount, String input, String sourceAddress, String fee, String contractAddress,String transMetadata) throws Exception {
-        Long nonce = getAccountNonce(sourceAddress) + 1;
-        Long gasPrice = 1000L;
-        Long feeLimit = ToBaseUnit.BU2MO(fee);
-        Long buAmount = ToBaseUnit.BU2MO(amount);
+    public TransactionBuildBlobResponse buildBlob(String amount, String input, String sourceAddress, String fee, String contractAddress, String transMetadata) throws Exception {
 
-        ContractInvokeByBUOperation contractInvokeByBUOperation = new ContractInvokeByBUOperation();
-        contractInvokeByBUOperation.setContractAddress(contractAddress);
-        contractInvokeByBUOperation.setBuAmount(buAmount);
-        contractInvokeByBUOperation.setInput(input);
+        TransactionBuildBlobResponse transactionBuildBlobResponse = null;
+        try {
+            Long nonce = getAccountNonce(sourceAddress) + 1;
+            Long gasPrice = 1000L;
+            Long feeLimit = ToBaseUnit.BU2MO(fee);
+            Long buAmount = ToBaseUnit.BU2MO(amount);
 
-        if (!transMetadata.isEmpty()) {
-            contractInvokeByBUOperation.setMetadata(transMetadata);
+            ContractInvokeByBUOperation contractInvokeByBUOperation = new ContractInvokeByBUOperation();
+            contractInvokeByBUOperation.setContractAddress(contractAddress);
+            contractInvokeByBUOperation.setBuAmount(buAmount);
+            contractInvokeByBUOperation.setInput(input);
+
+            if (!transMetadata.isEmpty()) {
+                contractInvokeByBUOperation.setMetadata(transMetadata);
+            }
+
+
+            TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
+            transactionBuildBlobRequest.setSourceAddress(sourceAddress);
+            transactionBuildBlobRequest.setNonce(nonce);
+            transactionBuildBlobRequest.setFeeLimit(feeLimit);
+            transactionBuildBlobRequest.setGasPrice(gasPrice);
+            transactionBuildBlobRequest.addOperation(contractInvokeByBUOperation);
+            if (!transMetadata.isEmpty()) {
+                transactionBuildBlobRequest.setMetadata(transMetadata);
+            }
+
+            transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
+            LogUtils.e("transactionBuildBlobResponse:" + transactionBuildBlobResponse.getErrorCode() + "" +
+                    "t" + transactionBuildBlobResponse.getErrorDesc());
+        } catch (WalletException response) {
+            throw new WalletException(response.getErrCode(), response.getErrMsg());
         }
-
-
-
-        TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
-        transactionBuildBlobRequest.setSourceAddress(sourceAddress);
-        transactionBuildBlobRequest.setNonce(nonce);
-        transactionBuildBlobRequest.setFeeLimit(feeLimit);
-        transactionBuildBlobRequest.setGasPrice(gasPrice);
-        transactionBuildBlobRequest.addOperation(contractInvokeByBUOperation);
-        if (!transMetadata.isEmpty()) {
-            transactionBuildBlobRequest.setMetadata(transMetadata);
-        }
-
-        TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
-        LogUtils.e("transactionBuildBlobResponse:" + transactionBuildBlobResponse.getErrorCode() + "" +
-                "t" + transactionBuildBlobResponse.getErrorDesc());
         return transactionBuildBlobResponse;
     }
 
@@ -875,7 +883,7 @@ public class Wallet {
             }
 
 //          errorCode  152
-            LogUtils.e("\nFailure，code=" + transactionSubmitResponse.getErrorCode()+transactionSubmitResponse.getErrorDesc() + "\n，hash=" + transactionSubmitResponse.getResult().getHash() + "");
+            LogUtils.e("\nFailure，code=" + transactionSubmitResponse.getErrorCode() + transactionSubmitResponse.getErrorDesc() + "\n，hash=" + transactionSubmitResponse.getResult().getHash() + "");
             System.out.println("Failure，hash=" + transactionSubmitResponse.getResult().getHash() + "");
             System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
         }
@@ -921,7 +929,7 @@ public class Wallet {
             }
 
 //          errorCode  152
-            LogUtils.e("\nFailure，code=" + transactionSubmitResponse.getErrorCode()+transactionSubmitResponse.getErrorDesc() + "\n，hash=" + transactionSubmitResponse.getResult().getHash() + "");
+            LogUtils.e("\nFailure，code=" + transactionSubmitResponse.getErrorCode() + transactionSubmitResponse.getErrorDesc() + "\n，hash=" + transactionSubmitResponse.getResult().getHash() + "");
             System.out.println("Failure，hash=" + transactionSubmitResponse.getResult().getHash() + "");
             System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
         }

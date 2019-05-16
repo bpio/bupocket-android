@@ -12,8 +12,7 @@
         android:layout_marginBottom="10dp"
         android:background="@drawable/edit_border_bg_white"
         android:paddingLeft="13sp"
-
-        android:paddingBottom="15dp">
+        android:paddingBottom="10dp">
 
         <TextView
             android:id="@+id/tvBuildName"
@@ -66,7 +65,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvBuildAmountHint"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="11dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -97,14 +96,14 @@
             android:id="@+id/tvRemainNumHint"
             style="@style/tv_node_build_gray_style"
             android:layout_below="@+id/llProgress"
-            android:layout_marginTop="15dp" />
+            android:layout_marginTop="13dp" />
 
         <TextView
             android:id="@+id/tvRemainNum"
             style="@style/tv_node_build_gray_style"
             android:layout_below="@+id/llProgress"
             android:layout_marginLeft="2dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="8dp"
             android:layout_toRightOf="@+id/tvRemainNumHint"
             tools:text="5,000,000 BU" />
 
@@ -121,7 +120,7 @@
             android:layout_below="@+id/llProgress"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="7dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="8dp"
             android:paddingRight="10dp"
             tools:text="30份" />
 
