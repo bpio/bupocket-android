@@ -18,18 +18,9 @@
         app:qmui_topbar_title_text_size="21sp" />
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/build_node_txt"
-        android:theme="@style/BPViewTitle" />
-
-
-
     <include
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
         layout="@layout/view_common_listview_layout"/>
 
 

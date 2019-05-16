@@ -16,9 +16,6 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <include
-            layout="@layout/view_load_failed"
-            android:visibility="gone" />
 
 
         <com.github.ksoichiro.android.observablescrollview.ObservableListView
@@ -28,6 +25,10 @@
             android:divider="@null"
             android:fadeScrollbars="false"
             android:scrollbars="none" />
+
+        <include
+            layout="@layout/view_load_failed"
+            android:visibility="gone" />
 
         <include
             layout="@layout/view_empty_record"
