@@ -59,6 +59,7 @@ import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
+import com.bupocket.utils.WalletUtils;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.google.gson.Gson;
@@ -247,28 +248,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         ivAssetsInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                QMUIPopup myNodeExplainPopup=null;
-                if (myNodeExplainPopup == null) {
-                    myNodeExplainPopup = new QMUIPopup(getContext(), QMUIPopup.DIRECTION_NONE);
-                    TextView textView = new TextView(getContext());
-                    textView.setLayoutParams(myNodeExplainPopup.generateLayoutParam(
-                            QMUIDisplayHelper.dp2px(getContext(), 280),
-                            WRAP_CONTENT
-                    ));
-                    textView.setLineSpacing(QMUIDisplayHelper.dp2px(getContext(), 4), 1.0f);
-                    int padding = QMUIDisplayHelper.dp2px(getContext(), 10);
-                    textView.setPadding(padding, padding, padding, padding);
-                    textView.setText(getString(R.string.wallet_bu_info));
-                    textView.setTextColor(ContextCompat.getColor(getContext(), R.color.app_color_white));
-                    textView.setBackgroundColor(getResources().getColor(R.color.popup_background_color));
-                    myNodeExplainPopup.setContentView(textView);
-
-                }
-                myNodeExplainPopup.setAnimStyle(QMUIPopup.ANIM_GROW_FROM_CENTER);
-                myNodeExplainPopup.setPreferredDirection(QMUIPopup.DIRECTION_BOTTOM);
-                myNodeExplainPopup.show(v);
-                ImageView arrowUp = myNodeExplainPopup.getDecorView().findViewById(R.id.arrow_up);
-                arrowUp.setImageDrawable(getResources().getDrawable(R.mipmap.triangle));
+                WalletUtils.showWalletPopup(mContext,getString(R.string.wallet_bu_info),v);
             }
         });
     }
