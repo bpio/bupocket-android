@@ -84,7 +84,7 @@ public class BPNodeBuildFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                NodeBuildModel nodeBuildModel = nodeList.get(position);
+                NodeBuildModel nodeBuildModel = nodeList.get(position-1);
                 if (nodeBuildModel == null) {
                     return;
                 }
