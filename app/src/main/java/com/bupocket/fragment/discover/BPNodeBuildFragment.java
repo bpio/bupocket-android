@@ -115,7 +115,7 @@ public class BPNodeBuildFragment extends BaseFragment {
         lvNodeBuild.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
             @Override
             public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-                LogUtils.e("scrollY:" + scrollY + "\tfirstScroll:" + firstScroll + "\tdragging:" + dragging);
+//                LogUtils.e("scrollY:" + scrollY + "\tfirstScroll:" + firstScroll + "\tdragging:" + dragging);
                 if (!dragging) {
 
                     int toolbarHeight = headerView.getHeight();
@@ -132,7 +132,7 @@ public class BPNodeBuildFragment extends BaseFragment {
 
             @Override
             public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-                LogUtils.e("scrollState" + scrollState);
+//                LogUtils.e("scrollState" + scrollState);
                 int toolbarHeight = headerView.getHeight();
                 int scrollY = lvNodeBuild.getCurrentScrollY();
                 if (scrollState == ScrollState.DOWN) {
