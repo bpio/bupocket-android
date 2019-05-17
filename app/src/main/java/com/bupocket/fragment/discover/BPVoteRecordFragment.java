@@ -123,6 +123,7 @@ public class BPVoteRecordFragment extends BaseFragment {
                         && body.getData().getList() != null&&body.getData().getList().size()>0 ) {
                     voteRecordAdapter.setNewData(body.getData().getList());
                     voteRecordAdapter.notifyDataSetChanged();
+                    addressRecordEmptyLL.setVisibility(View.GONE);
                 }else{
                     addressRecordEmptyLL.setVisibility(View.VISIBLE);
                 }
