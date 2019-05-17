@@ -248,7 +248,8 @@ public class BPAssetsHomeFragment extends BaseFragment {
         ivAssetsInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WalletUtils.showWalletPopup(mContext,getString(R.string.wallet_bu_info),v);
+//                WalletUtils.showWalletPopup(mContext,getString(R.string.wallet_bu_info),v);
+                CommonUtil.showMessageDialog(mContext,getString(R.string.wallet_bu_info));
             }
         });
     }

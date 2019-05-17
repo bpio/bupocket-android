@@ -244,7 +244,7 @@
     <string name="no_backup_tips_btn">Please backup</string>
     <string name="no_backup_mneonic_btn_code">Back up later</string>
 
-    <string name="total_assets_title_txt">Total tokens</string>
+    <string name="total_assets_title_txt">Estimated Total Assets</string>
     <string name="assets_add_txt">Add tokens</string>
     <string name="my_assets_title_txt">My tokens</string>
     <string name="add_token_search_hint">Please enter the complete token code</string>

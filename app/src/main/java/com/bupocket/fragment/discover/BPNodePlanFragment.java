@@ -238,8 +238,7 @@ public class BPNodePlanFragment extends BaseFragment {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshData();
-                refreshLayout.finishRefresh();
-                refreshLayout.setNoMoreData(false);
+
             }
         });
 
@@ -554,6 +553,8 @@ public class BPNodePlanFragment extends BaseFragment {
 
             @Override
             public void onResponse(Call<ApiResult<SuperNodeDto>> call, Response<ApiResult<SuperNodeDto>> response) {
+
+                refreshLayout.finishRefresh();
                 ApiResult<SuperNodeDto> body = response.body();
                 llLoadFailed.setVisibility(View.GONE);
                 if (body == null) {
@@ -580,6 +581,7 @@ public class BPNodePlanFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<SuperNodeDto>> call, Throwable t) {
+                refreshLayout.finishRefresh();
                 llLoadFailed.setVisibility(View.VISIBLE);
 
             }

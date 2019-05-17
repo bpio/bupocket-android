@@ -106,8 +106,6 @@ public class BPNodeBuildFragment extends BaseFragment {
             public void onRefresh(final RefreshLayout refreshlayout) {
 
                 getBuildData();
-                refreshlayout.finishRefresh();
-                refreshLayout.setNoMoreData(false);
             }
         });
         refreshLayout.setEnableLoadMore(false);
@@ -187,10 +185,14 @@ public class BPNodeBuildFragment extends BaseFragment {
         nodeBuildService.getNodeBuildList(map).enqueue(new Callback<ApiResult<CoBuildListModel>>() {
             @Override
             public void onResponse(Call<ApiResult<CoBuildListModel>> call, Response<ApiResult<CoBuildListModel>> response) {
+
+                refreshLayout.finishRefresh();
+
                 ApiResult<CoBuildListModel> body = response.body();
                 llLoadFailed.setVisibility(View.GONE);
                 if (body != null && ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())
-                        && body.getData() != null && body.getData().getNodeList() != null && body.getData().getNodeList().size() > 0) {
+                        && body.getData() != null && body.getData().getNodeList() != null
+                        && body.getData().getNodeList().size() > 0) {
                     nodeList = body.getData().getNodeList();
                     if (nodeList != null) {
                         nodeBuildAdapter.setNewData(nodeList);
@@ -205,6 +207,7 @@ public class BPNodeBuildFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<CoBuildListModel>> call, Throwable t) {
+                refreshLayout.finishRefresh();
                 llLoadFailed.setVisibility(View.VISIBLE);
                 nodeBuildAdapter.setNewData(new ArrayList<NodeBuildModel>());
                 nodeBuildAdapter.notifyDataSetChanged();

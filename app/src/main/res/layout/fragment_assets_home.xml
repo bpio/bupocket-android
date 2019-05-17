@@ -133,10 +133,10 @@
                                 android:layout_height="wrap_content"
                                 android:paddingLeft="5dp"
                                 android:paddingRight="15dp"
-                                android:paddingTop="5dp"
+                                android:paddingTop="6dp"
                                 android:paddingBottom="5dp"
                                 android:layout_gravity="center_vertical"
-                                android:src="@mipmap/ic_sheet_hint_white"
+                                android:src="@mipmap/ic_hint_question_white"
                                 />
 
                         </LinearLayout>

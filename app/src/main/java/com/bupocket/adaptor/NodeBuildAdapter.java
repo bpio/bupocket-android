@@ -36,7 +36,7 @@ public class NodeBuildAdapter extends AbsViewHolderAdapter<NodeBuildModel> {
         holder.setText(R.id.tvBuildName, itemData.getTitle());
 
 
-        holder.setText(R.id.tvBuildRewardRate, itemData.getRewardRate() + "%");
+//        holder.setText(R.id.tvBuildRewardRate, itemData.getRewardRate() + "%");
 
         ProgressBar pbBuild = holder.getView(R.id.pbBuild);
         pbBuild.setMax(itemData.getCobuildCopies());
