@@ -569,10 +569,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         final String transactionType = contentDto.getType();
         final String transMetaData = contentDto.getQrRemarkEn();
 
-        if (TextUtils.isEmpty(tokenBalance) || (Double.valueOf(tokenBalance) < Double.valueOf(amount))) {
-            Toast.makeText(getContext(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT).show();
-            return;
-        }
+
 
         new Thread(new Runnable() {
             @Override
@@ -591,6 +588,12 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         buildBlobResponse = Wallet.getInstance().buildBlob(amount, script, currentWalletAddress, String.valueOf(scanTxFee), contractAddress, transMetaData);
                     }
                     final String txHash = buildBlobResponse.getResult().getHash();
+
+
+                    if (TextUtils.isEmpty(tokenBalance) || (Double.valueOf(tokenBalance) < Double.valueOf(amount))) {
+                       ToastUtil.showToast(getActivity(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT);
+                        return;
+                    }
 
                     getSignatureInfo(new SingatureListener() {
                         @Override
@@ -854,6 +857,10 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                                     try {
                                                         final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(finalUdcbuModel.getAmount(), finalUdcbuModel.getInput(), currentWalletAddress, finalUdcbuModel.getTx_fee(), finalUdcbuModel.getDest_address(), getString(R.string.transaction_metadata));
 
+                                                        if (TextUtils.isEmpty(tokenBalance) || (Double.valueOf(tokenBalance) < Double.valueOf(finalUdcbuModel.getAmount()))) {
+                                                            ToastUtil.showToast(getActivity(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT);
+                                                            return;
+                                                        }
                                                         getSignatureInfo(new SingatureListener() {
                                                             @Override
                                                             public void success(String privateKey) {

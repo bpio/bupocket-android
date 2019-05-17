@@ -181,7 +181,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     mTxFromAccAddrTv.setText(txDeatilRespBoBean.getSourceAddress());
                     mTxToAccAddrTv.setText(txDeatilRespBoBean.getDestAddress());
                     mTxDetailFeeTv.setText(txDeatilRespBoBean.getFee() + " BU");
-                    mTxDetailSendDateTv.setText(TimeUtil.getDateDiff(Long.parseLong(txDeatilRespBoBean.getApplyTimeDate()),mContext));
+                    mTxDetailSendDateTv.setText(TimeUtil.timeStamp2Date(txDeatilRespBoBean.getApplyTimeDate()));
                     mTxDetailTXHashTv.setText(txInfoRespBoBean.getHash());
                     mTxDetailNoteTv.setText(txDeatilRespBoBean.getTxMetadata());
 
@@ -224,7 +224,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     mTxDetailBlockInfoBlockHashTv.setText(blockInfoRespBoBean.getHash());
                     mTxDetailBlockInfoPrevBlockHashTv.setText(blockInfoRespBoBean.getPreviousHash());
                     mTxDetailBlockInfoTXCountTv.setText(blockInfoRespBoBean.getTxCount() + "");
-                    mTxDetailBlockInfoConsensusTimeTv.setText(TimeUtil.timeStamp2Date(blockInfoRespBoBean.getCloseTimeDate().toString().substring(0,10),"yyyy.MM.dd HH:mm:ss"));
+                    mTxDetailBlockInfoConsensusTimeTv.setText(TimeUtil.timeStamp2Date(blockInfoRespBoBean.getCloseTimeDate()));
 
 
                 }else{

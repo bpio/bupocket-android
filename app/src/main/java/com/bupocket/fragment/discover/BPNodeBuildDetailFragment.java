@@ -355,11 +355,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 break;
             case R.id.btnBuildSupport:
                 if (detailModel != null) {
-                    String accountBUBalance = spHelper.getSharedPreference(getWalletAddress() + "tokenBalance", "0").toString();
-                    if (TextUtils.isEmpty(accountBUBalance) || (Double.parseDouble(accountBUBalance) < Double.parseDouble(detailModel.getPerAmount()))) {
-                        ToastUtil.showToast(getActivity(), R.string.balance_not_enough, Toast.LENGTH_SHORT);
-                        return;
-                    }
                     ShowSupport();
                 }
 
@@ -407,6 +402,12 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 try {
                     final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amountExit, inputExit, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_FEE), detailModel.getContractAddress(), transMetaData);
 
+
+                    String accountBUBalance = spHelper.getSharedPreference(getWalletAddress() + "tokenBalance", "0").toString();
+                    if (TextUtils.isEmpty(accountBUBalance) || (Double.parseDouble(accountBUBalance)<=0)) {
+                        ToastUtil.showToast(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT);
+                        return;
+                    }
                     final String hash = transBlob.getResult().getHash();
                     LogUtils.e(hash);
                     if (TextUtils.isEmpty(hash)) {
@@ -593,7 +594,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 try {
 
                     final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, inputSupport, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_MIN_FEE), contractAddress, supportTransMetaData);
-
                     final String hash = transBlob.getResult().getHash();
                     if (TextUtils.isEmpty(hash)) {
 
@@ -605,7 +605,11 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                         });
                         return;
                     }
-
+                    String accountBUBalance = spHelper.getSharedPreference(getWalletAddress() + "tokenBalance", "0").toString();
+                    if (TextUtils.isEmpty(accountBUBalance) || (Double.parseDouble(accountBUBalance) < Double.parseDouble(detailModel.getPerAmount()))) {
+                        ToastUtil.showToast(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT);
+                        return;
+                    }
 
                     getSignatureInfo(new SingatureListener() {
                         @Override
