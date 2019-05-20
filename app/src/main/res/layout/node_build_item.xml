@@ -1,127 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="13dp"
-    android:layout_marginRight="13dp"
-    android:layout_marginBottom="10dp"
-    android:background="@drawable/edit_border_bg_white"
-    android:paddingLeft="13sp"
-    android:paddingBottom="10dp">
-
-    <TextView
-        android:id="@+id/tvBuildName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:textColor="@color/app_color_black"
-        android:textSize="15sp"
-        tools:text="百信共建小分队" />
-
-
-    <LinearLayout
-        android:id="@+id/llBuildNum"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvBuildName"
-        android:layout_marginTop="8dp"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tvBuildNum"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/app_color_green"
-            android:textSize="18sp"
-            tools:text="10,000" />
-
-        <TextView
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:text="@string/bu_share"
-            android:textColor="@color/app_color_green"
-            android:textSize="12sp" />
-
-    </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/tvBuildAmountHint"
-        style="@style/tv_node_build_gray_style"
-        android:layout_below="@+id/llBuildNum"
-        android:layout_marginTop="2.5dp"
-        android:text="@string/build_purchase_amount_hint" />
-
-
-    <LinearLayout
-        android:id="@+id/llProgress"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvBuildAmountHint"
-        android:layout_marginTop="11dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:layout_marginLeft="13dp"
+        android:layout_marginRight="13dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/edit_border_bg_white"
+        android:paddingLeft="13sp"
+        android:paddingBottom="10dp">
 
-        <ProgressBar
-            android:id="@+id/pbBuild"
-            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-            android:layout_width="0dp"
-            android:layout_height="5dp"
-            android:layout_weight="1"
-            android:progressDrawable="@drawable/progress_horizontal_green"
-            tools:max="100"
-            tools:progress="60" />
 
         <TextView
-            android:id="@+id/tvProgress"
-            android:layout_width="50dp"
+            android:id="@+id/tvBuildName"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="3dp"
-            android:layout_marginRight="5dp"
-            android:gravity="center"
-            android:text="66.66%" />
+            android:layout_marginTop="15dp"
+            android:textColor="@color/app_color_black"
+            android:textSize="15sp"
+            tools:text="百信共建小分队" />
 
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/llBuildNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvBuildName"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvBuildNum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/app_color_green"
+                android:textSize="18sp"
+                tools:text="10,000" />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="@string/bu_share"
+                android:textColor="@color/app_color_green"
+                android:textSize="12sp" />
+
+        </LinearLayout>
 
 
-    <TextView
-        android:id="@+id/tvRemainNumHint"
-        style="@style/tv_node_build_gray_style"
-        android:layout_below="@+id/llProgress"
-        android:layout_marginTop="13dp" />
-
-    <TextView
-        android:id="@+id/tvRemainNum"
-        style="@style/tv_node_build_gray_style"
-        android:layout_below="@+id/llProgress"
-        android:layout_marginLeft="2dp"
-        android:layout_marginTop="8dp"
-        android:layout_toRightOf="@+id/tvRemainNumHint"
-        tools:text="5,000,000 BU" />
-
-    <TextView
-        android:id="@+id/tvRemainCopyHint"
-        style="@style/tv_node_build_gray_style"
-        android:layout_below="@+id/llProgress"
-        android:layout_marginTop="15dp"
-        android:layout_toLeftOf="@+id/tvRemainCopy" />
-
-    <TextView
-        android:id="@+id/tvRemainCopy"
-        style="@style/tv_node_build_gray_style"
-        android:layout_below="@+id/llProgress"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="7dp"
-        android:layout_marginTop="8dp"
-        android:paddingRight="10dp"
-        tools:text="30份" />
+        <TextView
+            android:id="@+id/tvBuildAmountHint"
+            style="@style/tv_node_build_gray_style"
+            android:layout_below="@+id/llBuildNum"
+            android:layout_marginTop="2.5dp"
+            android:text="@string/build_purchase_amount_hint" />
 
 
-    <!--<LinearLayout-->
+        <LinearLayout
+            android:id="@+id/llProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvBuildAmountHint"
+            android:layout_marginTop="11dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ProgressBar
+                android:id="@+id/pbBuild"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="5dp"
+                android:layout_weight="1"
+                android:progressDrawable="@drawable/progress_horizontal_green"
+                tools:max="100"
+                tools:progress="60" />
+
+            <TextView
+                android:id="@+id/tvProgress"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="5dp"
+                android:gravity="center"
+                android:text="66.66%" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tvRemainNumHint"
+            style="@style/tv_node_build_gray_style"
+            android:layout_below="@+id/llProgress"
+            android:layout_marginTop="13dp" />
+
+        <TextView
+            android:id="@+id/tvRemainNum"
+            style="@style/tv_node_build_gray_style"
+            android:layout_below="@+id/llProgress"
+            android:layout_marginLeft="2dp"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@+id/tvRemainNumHint"
+            tools:text="5,000,000 BU" />
+
+        <TextView
+            android:id="@+id/tvRemainCopyHint"
+            style="@style/tv_node_build_gray_style"
+            android:layout_below="@+id/llProgress"
+            android:layout_marginTop="15dp"
+            android:layout_toLeftOf="@+id/tvRemainCopy" />
+
+        <TextView
+            android:id="@+id/tvRemainCopy"
+            style="@style/tv_node_build_gray_style"
+            android:layout_below="@+id/llProgress"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="7dp"
+            android:layout_marginTop="8dp"
+            android:paddingRight="10dp"
+            tools:text="30份" />
+
+
+        <!--<LinearLayout-->
         <!--android:layout_width="wrap_content"-->
         <!--android:layout_height="wrap_content"-->
         <!--android:layout_alignParentRight="true"-->
@@ -131,28 +135,33 @@
         <!--android:visibility="gone">-->
 
         <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_marginTop="10dp"-->
-            <!--android:drawableRight="@mipmap/icon_help_tips"-->
-            <!--android:drawablePadding="3.5dp"-->
-            <!--android:text="@string/reward_sharing_ratio"-->
-            <!--android:textColor="@color/app_color_white"-->
-            <!--android:textSize="12sp" />-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginTop="10dp"-->
+        <!--android:drawableRight="@mipmap/icon_help_tips"-->
+        <!--android:drawablePadding="3.5dp"-->
+        <!--android:text="@string/reward_sharing_ratio"-->
+        <!--android:textColor="@color/app_color_white"-->
+        <!--android:textSize="12sp" />-->
 
         <!--<TextView-->
-            <!--android:id="@+id/tvBuildRewardRate"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:layout_marginTop="3dp"-->
-            <!--android:textColor="@color/app_color_white"-->
-            <!--android:textSize="21sp"-->
-            <!--tools:text="100%" />-->
+        <!--android:id="@+id/tvBuildRewardRate"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:layout_marginTop="3dp"-->
+        <!--android:textColor="@color/app_color_white"-->
+        <!--android:textSize="21sp"-->
+        <!--tools:text="100%" />-->
 
 
-    <!--</LinearLayout>-->
+        <!--</LinearLayout>-->
 
-</RelativeLayout>
+    </RelativeLayout>
+
+</FrameLayout>
+
+
+
 
