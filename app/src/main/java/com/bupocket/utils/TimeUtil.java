@@ -20,7 +20,7 @@ public class TimeUtil {
     private static long day = hour * 24;
     private static long halfamonth = day * 15;
     private static long month = day * 30;
-    public static String TIME_TYPE = "yyyy-MM-dd hh:mm:ss";
+    public static String TIME_TYPE = "yyyy-MM-dd HH:mm:ss";
 
 
     // string类型转换为long类型
@@ -106,7 +106,7 @@ public class TimeUtil {
             return "";
         }
         seconds=seconds.substring(0,10)+"000";
-        if (format == null || format.isEmpty()) format = "yyyy-MM-dd HH:mm:ss";
+        if (format == null || format.isEmpty()) format = TIME_TYPE;
         SimpleDateFormat sdf = new SimpleDateFormat(format);
         Long date = Long.valueOf(seconds);
         return sdf.format(new Date(date));

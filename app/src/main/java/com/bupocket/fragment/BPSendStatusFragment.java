@@ -155,7 +155,7 @@ public class BPSendStatusFragment extends BaseFragment {
         sendFeeTv.setText(txFee);
         sendNoteTv.setText(note);
         tvTransHash.setText(txHash);
-        mSendTimeTv.setText(TimeUtil.timeStamp2Date(sendTime.substring(0, 10), "yyyy.MM.dd HH:mm:ss"));
+        mSendTimeTv.setText(TimeUtil.timeStamp2Date(sendTime));
 
 
 
