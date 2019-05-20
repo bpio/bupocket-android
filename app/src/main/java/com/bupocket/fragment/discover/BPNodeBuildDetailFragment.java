@@ -578,7 +578,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         final int num = Integer.parseInt(numSupport.getText().toString());
         JSONObject params = new JSONObject();
         params.put("shares", num);
-        inputSupport = "{\"method\":\"subscribe\",\"params\":" + params.toJSONString() + " }";
+        inputSupport = "{\"method\":\"subscribe\",\"params\":" + params.toJSONString() + "}";
         TransferUtils.confirmTxSheet(mContext, getWalletAddress(), detailModel.getContractAddress(),
                 tvDialogTotalAmount.getText().toString(),
                 Constants.NODE_REVOKE_FEE, supportTransMetaData,
