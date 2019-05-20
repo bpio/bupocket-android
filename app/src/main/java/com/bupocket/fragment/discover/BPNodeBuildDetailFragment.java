@@ -3,6 +3,8 @@ package com.bupocket.fragment.discover;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.Html;
+import android.text.Selection;
+import android.text.Spannable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -149,6 +151,12 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 refreshLayout.autoRefresh(200);
             }
         });
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     private void initData() {
@@ -573,8 +581,10 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         //init
         tvDialogAmount.setText(CommonUtil.format(detailModel.getPerAmount()));
         numSupport.setText("1");
+        numSupport.setSelection(1);
         tvDialogTotalAmount.setText(CommonUtil.format(detailModel.getPerAmount()));
         supportDialog.show();
+
 
     }
 

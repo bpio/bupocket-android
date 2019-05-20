@@ -121,8 +121,6 @@
             android:background="@null"
             android:textSize="16sp"
             android:textColor="@color/search_token_asset_code_txt_color"
-
-
             />
         <TextView
             android:id="@+id/tvDialogAdd"
