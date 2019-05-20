@@ -107,7 +107,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private String nodeId;
     private GetTokensRespDto.TokenListBean tokenListBean;
     private boolean isExit;
-
     final String inputExit = "{\"method\":\"revoke\"}";
     private String inputSupport;
     private View ivSheetHint;
@@ -362,6 +361,13 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 break;
             case R.id.btnBuildSupport:
                 if (detailModel != null) {
+
+                    String perAmount = detailModel.getPerAmount();
+                    String accountBUBalance = spHelper.getSharedPreference(getWalletAddress() + "tokenBalance", "0").toString();
+                    if (TextUtils.isEmpty(accountBUBalance) || (Double.parseDouble(accountBUBalance)<=Integer.parseInt(perAmount))) {
+                        ToastUtil.showToast(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT);
+                        return;
+                    }
                     ShowSupport();
                 }
 
@@ -565,10 +571,9 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         });
 
         //init
-        tvDialogAmount.setText(detailModel.getPerAmount());
+        tvDialogAmount.setText(CommonUtil.format(detailModel.getPerAmount()));
         numSupport.setText("1");
-        tvDialogTotalAmount.setText(detailModel.getPerAmount());
-
+        tvDialogTotalAmount.setText(CommonUtil.format(detailModel.getPerAmount()));
         supportDialog.show();
 
     }
@@ -580,7 +585,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         params.put("shares", num);
         inputSupport = "{\"method\":\"subscribe\",\"params\":" + params.toJSONString() + "}";
         TransferUtils.confirmTxSheet(mContext, getWalletAddress(), detailModel.getContractAddress(),
-                tvDialogTotalAmount.getText().toString(),
+                tvDialogTotalAmount.getText().toString().replace(",",""),
                 Constants.NODE_REVOKE_FEE, supportTransMetaData,
                 inputSupport, new TransferUtils.TransferListener() {
                     @Override
@@ -591,7 +596,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     }
 
     private void confirmSupport() {
-        final String amount = tvDialogTotalAmount.getText().toString();
+        final String amount = tvDialogTotalAmount.getText().toString().replace(",","");
         final String num = numSupport.getText().toString();
         final String contractAddress = detailModel.getContractAddress();
 
@@ -613,7 +618,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                         return;
                     }
                     String accountBUBalance = spHelper.getSharedPreference(getWalletAddress() + "tokenBalance", "0").toString();
-                    if (TextUtils.isEmpty(accountBUBalance) || (Double.parseDouble(accountBUBalance) < Double.parseDouble(detailModel.getPerAmount()))) {
+                    if (TextUtils.isEmpty(accountBUBalance) || (Double.parseDouble(accountBUBalance) <=Double.parseDouble(detailModel.getPerAmount()))) {
                         ToastUtil.showToast(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT);
                         return;
                     }
@@ -684,7 +689,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
         int leftCopies = detailModel.getLeftCopies();
         double myAmount = Double.parseDouble(tokenListBean.getAmount());
-        int perAmount = Integer.parseInt(tvDialogAmount.getText().toString());
+        int perAmount = Integer.parseInt(detailModel.getPerAmount());
         int myLeftCopies = (int) (myAmount / perAmount);
 
         if (myLeftCopies < leftCopies) {
@@ -716,7 +721,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
 
         int tvAmount = num * perAmount;
-        tvDialogTotalAmount.setText(tvAmount + "");
+        tvDialogTotalAmount.setText(CommonUtil.format(tvAmount + ""));
 
         return num;
     }

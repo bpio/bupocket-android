@@ -591,7 +591,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                     final String txHash = buildBlobResponse.getResult().getHash();
 
 
-                    if (TextUtils.isEmpty(tokenBalance) || (Double.valueOf(tokenBalance) < Double.valueOf(amount))) {
+                    if (TextUtils.isEmpty(tokenBalance) || (Double.valueOf(tokenBalance) <=Double.valueOf(amount))) {
                        ToastUtil.showToast(getActivity(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT);
                         return;
                     }
@@ -858,7 +858,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                                     try {
                                                         final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(finalUdcbuModel.getAmount(), finalUdcbuModel.getInput(), currentWalletAddress, finalUdcbuModel.getTx_fee(), finalUdcbuModel.getDest_address(), getString(R.string.transaction_metadata));
 
-                                                        if (TextUtils.isEmpty(tokenBalance) || (Double.valueOf(tokenBalance) < Double.valueOf(finalUdcbuModel.getAmount()))) {
+                                                        if (TextUtils.isEmpty(tokenBalance) || (Double.valueOf(tokenBalance) <=Double.valueOf(finalUdcbuModel.getAmount()))) {
                                                             ToastUtil.showToast(getActivity(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT);
                                                             return;
                                                         }

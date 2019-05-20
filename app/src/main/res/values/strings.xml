@@ -566,7 +566,7 @@
     <string name="build_exit_confirm_title">撤回支持\"%1$s&quot;\"项目</string>
     <string name="build_support_confirm_title">支持\"&quot;%1$s&quot;\"项目</string>
     <string name="build_type_support">支持</string>
-    <string name="build_type_exit">撤销</string>
+    <string name="build_type_exit">撤回</string>
     <string name="build_left_copies">剩余&lt;font color=\'#151515\'> %1$s &lt;/font>份</string>
     <string name="build_support_copies">已获得支持&lt;font color=\'#333333\'> %1$s &lt;/font>份</string>
     <string name="build_left_copies_s">剩余&lt;font color=\'#151515\'> %1$s &lt;/font>份</string>
@@ -621,6 +621,7 @@
     <string name="wallet_bu_info">价格基于第三方交易所平台数据估算，仅供参考。</string>
     <string name="address_not_exist">当前账户暂未激活，可转入至少 0.02BU 进行激活，账户激活后方可进行交易操作。</string>
 
+    <string name="build_total">共计：</string>
 
 
 </resources>

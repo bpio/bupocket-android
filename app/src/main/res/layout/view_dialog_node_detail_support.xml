@@ -70,7 +70,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="BU/份"
+            android:text="@string/bu_share"
             android:paddingRight="5dp"
             android:textSize="12sp"
             android:textColor="#151515 "
@@ -151,7 +151,7 @@
         android:textSize="14sp"
         android:gravity="center_vertical"
         android:textColor="@color/send_confirm_gray_color"
-        android:text="共计："
+        android:text="@string/build_total"
         />
 
         <TextView

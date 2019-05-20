@@ -618,5 +618,8 @@
     <string name="wallet_bu_info">The price is based on data from the third-party exchanges, only for your reference.</string>
     <string name="address_not_exist">The current account is not activated. You can transfer 0.02BU to this account to activate it. After the account is activated, transactions can be done.</string>
 
+    <string name="build_total">Total：</string>
+
+
 
 </resources>
