@@ -136,7 +136,7 @@
                                 android:paddingTop="6dp"
                                 android:paddingBottom="5dp"
                                 android:layout_gravity="center_vertical"
-                                android:src="@mipmap/ic_hint_question_white"
+                                android:src="@mipmap/ic_hint_question_blue"
                                 />
 
                         </LinearLayout>
