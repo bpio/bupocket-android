@@ -107,9 +107,6 @@ public class BPNodePlanFragment extends BaseFragment {
     LinearLayout llHeadView;
 
 
-    private String txHash;
-    private QMUITipDialog txSendingTipDialog;
-    private TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean;
     private String currentWalletAddress;
     private SuperNodeAdapter superNodeAdapter;
     private QMUIPopup myNodeExplainPopup;
@@ -516,8 +513,6 @@ public class BPNodePlanFragment extends BaseFragment {
     }
 
     private void initData() {
-//        refreshLayout.autoRefresh();
-
         if (myVoteInfoList == null) {
             myVoteInfoList = new ArrayList<>();
         }

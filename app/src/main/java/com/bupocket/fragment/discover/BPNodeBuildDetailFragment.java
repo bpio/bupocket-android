@@ -117,6 +117,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private String transMetaData;
     private String supportTransMetaData;
     private String amountExit;
+    private View emptyLayout;
 
     @Override
     protected View onCreateView() {
@@ -138,8 +139,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             public void onRefresh(final RefreshLayout refreshlayout) {
 
                 getBuildData();
-                refreshlayout.finishRefresh();
-                refreshLayout.setNoMoreData(false);
+
             }
         });
         refreshLayout.setEnableLoadMore(false);
@@ -177,6 +177,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         tvTotalAmount = ((TextView) headerView.findViewById(R.id.tvDetailTotalAmount));
         tvTotalAmount = ((TextView) headerView.findViewById(R.id.tvDetailTotalAmount));
         ivSheetHint = headerView.findViewById(R.id.ivSheetHint);
+        emptyLayout = headerView.findViewById(R.id.addressRecordEmptyLL);
         ivSheetHint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -300,9 +301,11 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     ArrayList<NodeBuildSupportModel> nodelist = body.getData().getSupportList();
 
                     if (nodelist == null || nodelist.size() == 0) {
-                        addressRecordEmptyLL.setVisibility(View.VISIBLE);
+//                        addressRecordEmptyLL.setVisibility(View.VISIBLE);
+                        emptyLayout.setVisibility(View.VISIBLE);
                     } else {
-                        addressRecordEmptyLL.setVisibility(View.GONE);
+//                        addressRecordEmptyLL.setVisibility(View.GONE);
+                        emptyLayout.setVisibility(View.GONE);
                     }
                     lvBuildDetail.setVisibility(View.VISIBLE);
                     nodeBuildDetailAdapter.setNewData(nodelist);
@@ -310,11 +313,15 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
                 }
 
-
+                refreshLayout.finishRefresh();
+                refreshLayout.setNoMoreData(false);
+                
             }
 
             @Override
             public void onFailure(Call<ApiResult<NodeBuildDetailModel>> call, Throwable t) {
+                refreshLayout.finishRefresh();
+                refreshLayout.setNoMoreData(false);
 
                 llLoadFailed.setVisibility(View.VISIBLE);
                 lvBuildDetail.setVisibility(View.GONE);

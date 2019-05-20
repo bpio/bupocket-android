@@ -253,4 +253,9 @@
         android:textColor="@color/app_txt_color_gray"
         android:textSize="13sp" />
 
+
+    <include
+        android:visibility="gone"
+        layout="@layout/view_empty_record"/>
+
 </LinearLayout>

@@ -59,7 +59,6 @@ public class BPNodeBuildFragment extends BaseFragment {
 
     private Unbinder bind;
     private NodeBuildAdapter nodeBuildAdapter;
-    public static String NODE_INFO = "nodeInfo";
     private ArrayList<NodeBuildModel> nodeList;
     private View headerView;
     private TextView tvTitle;
