@@ -575,7 +575,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
     private void confirmSheet() {
         supportTransMetaData = String.format(getString(R.string.build_support_confirm_title), detailModel.getTitle());
-        final String num = numSupport.getText().toString();
+        final int num = Integer.parseInt(numSupport.getText().toString());
         JSONObject params = new JSONObject();
         params.put("shares", num);
         inputSupport = "{\"method\":\"subscribe\",\"params\":" + params.toJSONString() + " }";
@@ -600,7 +600,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             public void run() {
                 try {
 
-                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, inputSupport, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_MIN_FEE), contractAddress, supportTransMetaData);
+                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, inputSupport, getWalletAddress(), String.valueOf(Constants.NODE_REVOKE_FEE), contractAddress, supportTransMetaData);
                     final String hash = transBlob.getResult().getHash();
                     if (TextUtils.isEmpty(hash)) {
 
@@ -696,7 +696,9 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             numSupport.setText(num + "");
         } else if (num == 1) {
             subBtn.setSelected(false);
+            addBtn.setSelected(true);
         } else if (num == leftCopies) {
+            subBtn.setSelected(true);
             addBtn.setSelected(false);
         } else if (num > leftCopies) {
             addBtn.setSelected(false);
