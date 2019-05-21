@@ -63,8 +63,6 @@ public class BPNodeShareFragment extends BaseFragment {
     TextView mNodeTypeTv;
     @BindView(R.id.haveVotesNumTv)
     TextView mHaveVotesNumTv;
-    @BindView(R.id.shareBtn)
-    LinearLayout mShareBtn;
     @BindView(R.id.supportPeopleTv)
     TextView mSupportPeopleTv;
     @BindView(R.id.nodeIconIv)
