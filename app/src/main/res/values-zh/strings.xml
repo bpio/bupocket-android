@@ -101,7 +101,7 @@
 
     <string name="send_tx_handleing_txt">处理中</string>
     <string name="send_tx_sign_txt">签名中</string>
-    <string name="send_tx_verify">效验中</string>
+    <string name="send_tx_verify">校验中</string>
 
 
 
@@ -622,6 +622,8 @@
     <string name="address_not_exist">当前账户暂未激活，可转入至少 0.02BU 进行激活，账户激活后方可进行交易操作。</string>
 
     <string name="build_total">共计：</string>
+    <string name="tv_confirm_support">确认支持</string>
+
 
 
 </resources>

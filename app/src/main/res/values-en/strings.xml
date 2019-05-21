@@ -619,7 +619,7 @@
     <string name="address_not_exist">The current account is not activated. You can transfer 0.02BU to this account to activate it. After the account is activated, transactions can be done.</string>
 
     <string name="build_total">Total：</string>
-
+    <string name="tv_confirm_support">Confirm</string>
 
 
 </resources>
