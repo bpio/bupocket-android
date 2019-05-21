@@ -20,6 +20,7 @@ import com.bupocket.common.SingatureListener;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.fragment.BPSendStatusFragment;
 import com.bupocket.fragment.BPTransactionTimeoutFragment;
+import com.bupocket.fragment.discover.BPNodeBuildFragment;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
@@ -362,5 +363,16 @@ public abstract class BaseFragment extends QMUIFragment {
     public void onPause() {
         super.onPause();
         MobclickAgent.onPageEnd(this.getTag());
+    }
+
+    @Override
+    protected void popBackStack() {
+        super.popBackStack();
+        try {
+            getChildFragmentManager().beginTransaction().attach(this);
+            getChildFragmentManager().beginTransaction().remove(this);
+        } catch (Exception e) {
+        }
+
     }
 }

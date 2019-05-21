@@ -32,10 +32,9 @@ public class BPApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
-        if (LeakCanary.isInAnalyzerProcess(this)) {
-            return;
-        }
-        LeakCanary.install(this);
+
+        initLeakCanary();
+
         LocaleUtil.changeAppLanguage(context);
         QMUISwipeBackActivityManager.init(this);
         switchNetConfig(null);
@@ -45,6 +44,13 @@ public class BPApplication extends Application {
         initCrash();
 
         initUMeng();
+    }
+
+    private void initLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        LeakCanary.install(this);
     }
 
     private void initUMeng() {

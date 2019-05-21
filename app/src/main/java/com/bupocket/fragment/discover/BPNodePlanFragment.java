@@ -190,7 +190,7 @@ public class BPNodePlanFragment extends BaseFragment {
             public void onClick(int position, int btn) {
 
                 SuperNodeModel superNodeModel = superNodeAdapter.getItem(position);
-                LogUtils.e("position=" + position + "\n" + btn);
+//                LogUtils.e("position=" + position + "\n" + btn);
                 switch (btn) {
                     case R.id.revokeVoteBtn:
                         if ("0".equals(superNodeModel.getMyVoteCount())) {
@@ -262,7 +262,7 @@ public class BPNodePlanFragment extends BaseFragment {
         lvPlan.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
             @Override
             public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-                LogUtils.e("scrollY:" + scrollY + "\tfirstScroll:" + firstScroll + "\tdragging:" + dragging);
+//                LogUtils.e("scrollY:" + scrollY + "\tfirstScroll:" + firstScroll + "\tdragging:" + dragging);
 
                 if (dragging) {
                     int toolbarHeight = tvTitle.getHeight();
@@ -615,13 +615,6 @@ public class BPNodePlanFragment extends BaseFragment {
     private void initListView() {
         superNodeAdapter = new SuperNodeAdapter(this.getContext());
         lvPlan.setAdapter(superNodeAdapter);
-
-//        lvPlan.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
-//            @Override
-//            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-//                LogUtils.e("lvPlan:\t left:"+left+"\t top" +top+"\t right" +right+"\t bottom" +top+"\t oldLeft" +oldLeft+"\t oldTop" +oldTop+"\t oldRight" +oldRight);
-//            }
-//        });
     }
 
     private void initTopBar() {
