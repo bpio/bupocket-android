@@ -1,5 +1,6 @@
 package com.bupocket.fragment.discover;
 
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.Html;
@@ -157,6 +158,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        getBuildData();
     }
 
     private void initData() {
@@ -215,7 +217,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         lvBuildDetail.setVisibility(View.GONE);
 //        addressRecordEmptyLL.setVisibility(View.VISIBLE);
 
-        getBuildData();
+
     }
 
 
@@ -746,4 +748,14 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         return num;
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode==BaseFragment.TRANSFER_CODE){
+            LogUtils.e("获取了数据");
+            getBuildData();
+        }
+    }
 }

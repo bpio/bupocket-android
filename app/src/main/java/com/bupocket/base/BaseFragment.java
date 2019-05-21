@@ -50,6 +50,7 @@ import retrofit2.Response;
 public abstract class BaseFragment extends QMUIFragment {
 
     private final static String BP_FILE_NAME = "buPocket";
+    public static final int TRANSFER_CODE = 200001;
     public SharedPreferencesHelper spHelper;
     public Context mContext;
     private QMUITipDialog submitDialog;
@@ -305,7 +306,7 @@ public abstract class BaseFragment extends QMUIFragment {
                                 argz.putString("txHash", txHash);
                                 BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
                                 bpSendStatusFragment.setArguments(argz);
-                                startFragment(bpSendStatusFragment);
+                                startFragmentForResult(bpSendStatusFragment,TRANSFER_CODE);
                             }
                         }
 
