@@ -50,7 +50,7 @@
                 android:focusable="true"
                 android:gravity="center"
                 android:padding="10dp"
-                android:textSize="18sp"
+                android:textSize="@dimen/common_btn_size"
                 android:text="@string/copy_command_txt"
                 android:textColor="@color/qmui_config_color_white"
                 app:qmui_backgroundColor="@color/app_color_main"

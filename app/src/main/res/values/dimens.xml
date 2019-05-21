@@ -35,6 +35,7 @@
 
 
     <dimen name="common_padding_border">10dp</dimen>
+    <dimen name="common_btn_size">18sp</dimen>
 
 
 </resources>

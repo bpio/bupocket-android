@@ -748,9 +748,11 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                         bpScanErrorFragment.setArguments(argz);
                                         startFragment(bpScanErrorFragment);
                                     } else if (ExceptionLoginEnum.ERROR_VOTE_CLOSE.getCode().equals(respDto.getErrCode())) {
+
                                         Bundle argz = new Bundle();
                                         argz.putString("errorCode", respDto.getErrCode());
-                                        argz.putString("errorMessage", mContext.getString(ExceptionLoginEnum.ERROR_VOTE_CLOSE.getMsg()));
+                                        argz.putString("errorMessage", respDto.getData().getErrorMsg());
+                                        argz.putString("errorDescription",respDto.getData().getErrorDescription());
                                         BPScanErrorFragment bpScanErrorFragment = new BPScanErrorFragment();
                                         bpScanErrorFragment.setArguments(argz);
                                         startFragment(bpScanErrorFragment);

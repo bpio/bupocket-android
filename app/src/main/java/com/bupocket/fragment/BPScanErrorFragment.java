@@ -27,6 +27,8 @@ public class BPScanErrorFragment extends BaseFragment {
 
     private String errorCode;
     private String errorMessage;
+    private String errorDescription;
+
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_scan_error, null);
@@ -46,6 +48,7 @@ public class BPScanErrorFragment extends BaseFragment {
         if(null != bundle){
             errorCode = bundle.getString("errorCode");
             errorMessage = bundle.getString("errorMessage");
+            errorDescription = bundle.getString("errorDescription");
             if (errorCode.equals(ExceptionEnum.ERROR_TIMEOUT.getCode())) {
                 errorMessage=mContext.getResources().getString(R.string.error_timeout);
             }
@@ -56,7 +59,7 @@ public class BPScanErrorFragment extends BaseFragment {
 
         if (ExceptionLoginEnum.ERROR_VOTE_CLOSE.getCode().equals(errorCode)) {
             mErrorTypeTv.setText(errorMessage);
-            mErrorMessageTv.setText(getResources().getString(R.string.bound_address_note_txt));
+            mErrorMessageTv.setText(errorDescription);
         }else if (!ExceptionEnum.SUCCESS.equals(errorCode)){
 
             mErrorTypeTv.setText(errorMessage);

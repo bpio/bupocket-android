@@ -5,6 +5,24 @@ public class UserScanQrLoginDto {
     private String appId;
     private String appName;
     private String appPic;
+    private String errorDescription;
+    private String errorMsg;
+
+    public String getErrorDescription() {
+        return errorDescription;
+    }
+
+    public void setErrorDescription(String errorDescription) {
+        this.errorDescription = errorDescription;
+    }
+
+    public String getErrorMsg() {
+        return errorMsg;
+    }
+
+    public void setErrorMsg(String errorMsg) {
+        this.errorMsg = errorMsg;
+    }
 
     public String getUuid() {
         return uuid;
