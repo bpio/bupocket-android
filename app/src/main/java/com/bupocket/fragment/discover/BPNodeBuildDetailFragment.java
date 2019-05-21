@@ -749,13 +749,13 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     }
 
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode==BaseFragment.TRANSFER_CODE){
-            LogUtils.e("获取了数据");
-            getBuildData();
-        }
-    }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//
+//        if (requestCode==BaseFragment.TRANSFER_CODE){
+//            LogUtils.e("获取了数据");
+//            getBuildData();
+//        }
+//    }
 }
