@@ -11,8 +11,8 @@
         android:layout_height="match_parent"
         android:background="@color/app_bg_color_gray_4"
         android:orientation="vertical"
-        android:paddingLeft="12.5dp"
-        android:paddingRight="12.5dp">
+        android:paddingLeft="@dimen/common_padding_border"
+        android:paddingRight="@dimen/common_padding_border">
 
         <TextView
             android:layout_width="match_parent"

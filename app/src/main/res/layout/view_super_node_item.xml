@@ -9,8 +9,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="13dp"
-        android:layout_marginRight="13dp"
+        android:layout_marginLeft="@dimen/common_padding_border"
+        android:layout_marginRight="@dimen/common_padding_border"
         android:layout_marginBottom="10dp"
         android:orientation="vertical"
         android:background="@drawable/shape_corner"
@@ -89,7 +89,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="46dp"
+                android:layout_marginTop="40dp"
                 android:layout_toRightOf="@+id/nodeIconRl"
                 android:orientation="horizontal">
 

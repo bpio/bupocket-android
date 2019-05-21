@@ -8,10 +8,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="13dp"
-        android:layout_marginRight="13dp"
+        android:layout_marginLeft="@dimen/common_padding_border"
+        android:layout_marginRight="@dimen/common_padding_border"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/edit_border_bg_white">
+        android:background="@drawable/shape_corner">
 
         <ImageView
             android:id="@+id/ivBuildSupportHead"

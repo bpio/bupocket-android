@@ -34,4 +34,7 @@
     <dimen name="transaction_status_width">100dp</dimen>
 
 
+    <dimen name="common_padding_border">10dp</dimen>
+
+
 </resources>
