@@ -456,13 +456,13 @@
     <string name="build_sharing_ratio">Award sharing ratio</string>
     <string name="build_target_num">Target number</string>
     <string name="build_target_amount">Target amount</string>
-    <string name="build_support_amount">BUs received</string>
+    <string name="build_support_amount">Total amount received</string>
 
-    <string name="build_left_copies">Share left&lt;font color=\'#151515\'> %1$s &lt;/font></string>
-    <string name="build_support_copies">BUs received&lt;font color=\'#333333\'> %1$s &lt;/font>Share</string>
+    <string name="build_left_copies">&lt;font color=\'#151515\'> %1$s &lt;/font> share left</string>
+    <string name="build_support_copies">&lt;font color=\'#333333\'> %1$s &lt;/font> share received</string>
 
-    <string name="build_left_copies_s">Shares left&lt;font color=\'#151515\'> %1$s &lt;/font></string>
-    <string name="build_support_copies_s">BUs received&lt;font color=\'#333333\'> %1$s &lt;/font>Shares</string>
+    <string name="build_left_copies_s">&lt;font color=\'#151515\'> %1$s &lt;/font> shares left</string>
+    <string name="build_support_copies_s">&lt;font color=\'#333333\'> %1$s &lt;/font> shares received</string>
 
     <string name="building_information_details">Details of Co-funding</string>
     <string name="build_runing">Processing</string>
@@ -470,7 +470,7 @@
     <string name="build_finish">Completed</string>
     <string name="build_origin_purchase_amount">Deposit</string>
     <string name="build_rist_info_record">Risk Statement</string>
-    <string name="build_support_record">Record of node Co-funding</string>
+    <string name="build_support_record">Record of Node Co-funding</string>
 
     <string name="build_exit">Withdraw</string>
     <string name="build_support">Sponsor</string>
@@ -599,9 +599,9 @@
     <string name="reload_txt">Reload</string>
 
 
-    <string name="building">Co-funding</string>
-    <string name="build_success">Co-funded successfully</string>
-    <string name="build_failure">Failed to co-fund</string>
+    <string name="building">In progress</string>
+    <string name="build_success">Success</string>
+    <string name="build_failure">Failure</string>
 
     <string name="super_status_info">The current node is in %1$s&quot; status, which does not support vote invitation.</string>
     <string name="node_associated_with_me_help_txt2">Filter nodes related to me such as nodes I voted/campaign nodes.</string>

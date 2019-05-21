@@ -322,7 +322,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
                 refreshLayout.finishRefresh();
                 refreshLayout.setNoMoreData(false);
-                
+
             }
 
             @Override
@@ -370,12 +370,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             case R.id.btnBuildSupport:
                 if (detailModel != null) {
 
-                    String perAmount = detailModel.getPerAmount();
-                    String accountBUBalance = spHelper.getSharedPreference(getWalletAddress() + "tokenBalance", "0").toString();
-                    if (TextUtils.isEmpty(accountBUBalance) || (Double.parseDouble(accountBUBalance)<=Integer.parseInt(perAmount))) {
-                        ToastUtil.showToast(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT);
-                        return;
-                    }
                     ShowSupport();
                 }
 
@@ -425,7 +419,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
 
                     String accountBUBalance = spHelper.getSharedPreference(getWalletAddress() + "tokenBalance", "0").toString();
-                    if (TextUtils.isEmpty(accountBUBalance) || (Double.parseDouble(accountBUBalance)<=0)) {
+                    if (TextUtils.isEmpty(accountBUBalance) || (Double.parseDouble(accountBUBalance) <= 0)) {
                         ToastUtil.showToast(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT);
                         return;
                     }
@@ -527,7 +521,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 } else {
                     addNum = Integer.parseInt(addStr) + 1;
                 }
-
                 setBtnStatus(addNum);
             }
         });
@@ -538,7 +531,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 String subStr = numSupport.getText().toString();
-                if (TextUtils.isEmpty(subStr)) {
+                if (TextUtils.isEmpty(subStr) || Integer.parseInt(subStr) == 1) {
                     return;
                 }
                 int numSub = Integer.parseInt(subStr) - 1;
@@ -560,7 +553,9 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 String supportAmount = s.toString();
-                if (!TextUtils.isEmpty(supportAmount)) {
+                if (TextUtils.isEmpty(supportAmount)) {
+                    tvDialogTotalAmount.setText("");
+                } else {
                     setNumStatus(Integer.parseInt(supportAmount));
                 }
             }
@@ -570,8 +565,16 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         supportDialog.findViewById(R.id.tvDialogSupport).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                supportDialog.cancel();
+                if (tvDialogTotalAmount.getText().toString().isEmpty()){
+                    return;
+                }
+                String accountBUBalance = spHelper.getSharedPreference(getWalletAddress() + "tokenBalance", "0").toString();
+                if (TextUtils.isEmpty(accountBUBalance) || (Double.parseDouble(accountBUBalance) <= Integer.parseInt(tvDialogTotalAmount.getText().toString().replace(",", "")))) {
+                    ToastUtil.showToast(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT);
+                    return;
+                }
 
+                supportDialog.cancel();
                 confirmSheet();
 
 
@@ -595,7 +598,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         params.put("shares", num);
         inputSupport = "{\"method\":\"subscribe\",\"params\":" + params.toJSONString() + "}";
         TransferUtils.confirmTxSheet(mContext, getWalletAddress(), detailModel.getContractAddress(),
-                tvDialogTotalAmount.getText().toString().replace(",",""),
+                tvDialogTotalAmount.getText().toString().replace(",", ""),
                 Constants.NODE_REVOKE_FEE, supportTransMetaData,
                 inputSupport, new TransferUtils.TransferListener() {
                     @Override
@@ -606,7 +609,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     }
 
     private void confirmSupport() {
-        final String amount = tvDialogTotalAmount.getText().toString().replace(",","");
+        final String amount = tvDialogTotalAmount.getText().toString().replace(",", "");
         final String num = numSupport.getText().toString();
         final String contractAddress = detailModel.getContractAddress();
 
@@ -628,7 +631,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                         return;
                     }
                     String accountBUBalance = spHelper.getSharedPreference(getWalletAddress() + "tokenBalance", "0").toString();
-                    if (TextUtils.isEmpty(accountBUBalance) || (Double.parseDouble(accountBUBalance) <=Double.parseDouble(detailModel.getPerAmount()))) {
+                    if (TextUtils.isEmpty(accountBUBalance) || (Double.parseDouble(accountBUBalance) <= Double.parseDouble(detailModel.getPerAmount()))) {
                         ToastUtil.showToast(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT);
                         return;
                     }
@@ -692,26 +695,35 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private void setBtnStatus(int num) {
         setNumStatus(num);
         numSupport.setText(num + "");
+        numSupport.setSelection(numSupport.length());
 
     }
 
     private int setNumStatus(int num) {
 
         int leftCopies = detailModel.getLeftCopies();
-        double myAmount = Double.parseDouble(tokenListBean.getAmount());
+//        double myAmount = Double.parseDouble(tokenListBean.getAmount());
         int perAmount = Integer.parseInt(detailModel.getPerAmount());
-        int myLeftCopies = (int) (myAmount / perAmount);
+//        int myLeftCopies = (int) (myAmount / perAmount);
 
-        if (myLeftCopies < leftCopies) {
-            leftCopies = myLeftCopies;
-        }
+//        if (myLeftCopies < leftCopies) {
+//            leftCopies = myLeftCopies;
+//        }
+
         if (num < 1) {
             subBtn.setSelected(false);
             num = 1;
             numSupport.setText(num + "");
+            numSupport.setSelection(numSupport.length());
         } else if (num == 1) {
-            subBtn.setSelected(false);
-            addBtn.setSelected(true);
+            if (leftCopies == 1) {
+                subBtn.setSelected(false);
+                addBtn.setSelected(false);
+            } else {
+                subBtn.setSelected(false);
+                addBtn.setSelected(true);
+            }
+
         } else if (num == leftCopies) {
             subBtn.setSelected(true);
             addBtn.setSelected(false);
@@ -719,6 +731,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             addBtn.setSelected(false);
             num = leftCopies;
             numSupport.setText(num + "");
+            numSupport.setSelection(numSupport.length());
         } else {
             if (!subBtn.isSelected()) {
                 subBtn.setSelected(true);
@@ -726,13 +739,10 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
             if (!addBtn.isSelected()) {
                 addBtn.setSelected(true);
             }
-
         }
-
 
         int tvAmount = num * perAmount;
         tvDialogTotalAmount.setText(CommonUtil.format(tvAmount + ""));
-
         return num;
     }
 

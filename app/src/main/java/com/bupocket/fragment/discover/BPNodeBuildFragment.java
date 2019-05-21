@@ -1,6 +1,7 @@
 package com.bupocket.fragment.discover;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -83,7 +84,7 @@ public class BPNodeBuildFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                NodeBuildModel nodeBuildModel = nodeList.get(position-1);
+                NodeBuildModel nodeBuildModel = nodeList.get(position - 1);
                 if (nodeBuildModel == null) {
                     return;
                 }
@@ -116,7 +117,7 @@ public class BPNodeBuildFragment extends BaseFragment {
                 if (!dragging) {
 
                     int toolbarHeight = headerView.getHeight();
-                    if (scrollY < toolbarHeight*0.8) {
+                    if (scrollY < toolbarHeight * 0.8) {
                         showToolbar();
                     }
                 }
@@ -225,6 +226,8 @@ public class BPNodeBuildFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 popBackStack();
+//                getChildFragmentManager().beginTransaction().attach(BPNodeBuildFragment.this);
+
             }
         });
         tvTitle = mTopBar.setTitle(getResources().getString(R.string.build_node_txt));
