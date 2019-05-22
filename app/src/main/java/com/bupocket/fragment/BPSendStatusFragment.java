@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bupocket.R;
@@ -81,6 +82,7 @@ public class BPSendStatusFragment extends BaseFragment {
     TextView tvFormAddress;
 
     private AdModel ad;
+    private String fragmentTag;
 
 
     protected View onCreateView() {
@@ -119,6 +121,8 @@ public class BPSendStatusFragment extends BaseFragment {
         String sendTokenStatus = getArguments().getString("sendTokenStatusKey");
         String txHash = getArguments().getString("txHash");
 
+        fragmentTag = getArguments().getString("fragmentTag");
+
         String txStatusStr;
         llTransactionSuccess.setVisibility(View.GONE);
         llStatusFailed.setVisibility(View.GONE);
@@ -156,6 +160,7 @@ public class BPSendStatusFragment extends BaseFragment {
         sendNoteTv.setText(note);
         tvTransHash.setText(txHash);
         mSendTimeTv.setText(TimeUtil.timeStamp2Date(sendTime));
+
 
 
 
@@ -200,8 +205,24 @@ public class BPSendStatusFragment extends BaseFragment {
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startFragmentAndDestroyCurrent(new HomeFragment());
+                    popBackStack();
             }
         });
     }
+
+    @Override
+    public void popBackStack() {
+        if (!TextUtils.isEmpty(fragmentTag)&&fragmentTag.equals(HomeFragment.class.getSimpleName())) {
+            startFragmentAndDestroyCurrent(new HomeFragment());
+        }else {
+            super.popBackStack();
+
+        }
+
+    }
+
+    public void onBackPressed() {
+        startFragmentAndDestroyCurrent(new HomeFragment());
+    }
+
 }

@@ -15,9 +15,12 @@
 
         <TextView
             android:id="@+id/tvBuildDetailName"
-            android:layout_width="250dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="百信共建小分队"
+            android:gravity="left"
+            tools:text="百信共建小分队百信共建小分队百信共建小分队百信共建小分队"
+            android:paddingRight="5dp"
+            android:layout_toLeftOf="@+id/tvNodeBuilding"
             android:textColor="@color/app_color_black"
             android:textSize="18sp" />
 
@@ -97,11 +100,11 @@
 
             <TextView
                 android:id="@+id/tvProgress"
-                android:layout_width="50dp"
+                android:layout_width="55dp"
                 android:gravity="center"
                 android:layout_marginLeft="3dp"
                 android:layout_height="wrap_content"
-                tools:text="66.66%" />
+                tools:text="166.66%" />
 
 
         </LinearLayout>
@@ -181,8 +184,8 @@
                 android:layout_below="@+id/tvBuildDetailSharingRatio"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="3dp"
-                android:visibility="invisible"
-                android:text="@string/build_sharing_ratio" />
+                android:text="@string/build_sharing_ratio"
+                android:visibility="invisible" />
 
 
 

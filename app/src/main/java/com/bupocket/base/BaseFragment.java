@@ -18,9 +18,11 @@ import com.bupocket.R;
 import com.bupocket.common.Constants;
 import com.bupocket.common.SingatureListener;
 import com.bupocket.enums.TxStatusEnum;
+import com.bupocket.fragment.BPAssetsHomeFragment;
 import com.bupocket.fragment.BPSendStatusFragment;
 import com.bupocket.fragment.BPTransactionTimeoutFragment;
 import com.bupocket.fragment.discover.BPNodeBuildFragment;
+import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
@@ -305,8 +307,18 @@ public abstract class BaseFragment extends QMUIFragment {
                                 argz.putString("sendTime", txDetailRespBoBean.getApplyTimeDate());
                                 argz.putString("txHash", txHash);
                                 BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
-                                bpSendStatusFragment.setArguments(argz);
-                                startFragmentForResult(bpSendStatusFragment,TRANSFER_CODE);
+
+
+                                if (((BaseFragmentActivity) getActivity()).getCurrentFragment().getTag().equals(HomeFragment.class.getSimpleName())) {
+                                    argz.putString("fragmentTag",HomeFragment.class.getSimpleName());
+                                    bpSendStatusFragment.setArguments(argz);
+                                    startFragmentForResult(bpSendStatusFragment,TRANSFER_CODE);
+                                }else {
+                                    bpSendStatusFragment.setArguments(argz);
+                                    startFragment(bpSendStatusFragment);
+                                }
+
+
                             }
                         }
 

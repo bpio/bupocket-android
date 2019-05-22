@@ -256,7 +256,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     tvProgress.setText(CommonUtil.setRatio(supportCopies, detailModel.getCobuildCopies()));
 
 
-                    tvBuildDetailSharingRatio.setText(detailModel.getRewardRate() + "%");
+//                    tvBuildDetailSharingRatio.setText(CommonUtil.setRatio(detailModel.getRewardRate()));
 
                     tvTotalAmount.setText(CommonUtil.format(detailModel.getTotalAmount()) + getString(R.string.build_bu));
                     tvBuildDetailOriginAmount.setText(CommonUtil.format(detailModel.getInitiatorAmount()) + getString(R.string.build_bu));
@@ -306,6 +306,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                         llBtnBuild.setVisibility(View.VISIBLE);
                         btnBuildSupport.setVisibility(View.GONE);
                         btnBuildExit.setText(getString(R.string.build_exit_all));
+                    } else {
+                        llBtnBuild.setVisibility(View.GONE);
                     }
 
 
@@ -571,7 +573,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         supportDialog.findViewById(R.id.tvDialogSupport).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (tvDialogTotalAmount.getText().toString().isEmpty()){
+                if (tvDialogTotalAmount.getText().toString().isEmpty()) {
                     return;
                 }
                 String accountBUBalance = spHelper.getSharedPreference(getWalletAddress() + "tokenBalance", "0").toString();

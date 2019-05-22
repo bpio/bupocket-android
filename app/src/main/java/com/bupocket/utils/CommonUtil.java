@@ -919,13 +919,24 @@ public class CommonUtil {
     public static String setRatio(int support, int total) {
         String strRatio = "0";
         double ratio = ((double) support / total) * 100;
-        if (support == 0) {
-            strRatio = "0";
-        } else if (support == total) {
-            strRatio = "100";
-        } else {
+//        if (support == total) {
+//            strRatio = "100";
+//        } else {
             DecimalFormat df = new DecimalFormat("#0.00");
             strRatio = df.format(ratio);
+//        }
+        return strRatio + "%";
+    }
+
+    public static String setRatio(String total) {
+
+        String strRatio = "0.00";
+        if (total.equals("100")) {
+            strRatio = "100";
+        } else {
+
+            DecimalFormat df = new DecimalFormat("#0.00");
+            strRatio = df.format(Double.parseDouble(total));
         }
         return strRatio + "%";
     }

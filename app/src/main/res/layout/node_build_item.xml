@@ -81,12 +81,12 @@
 
             <TextView
                 android:id="@+id/tvProgress"
-                android:layout_width="50dp"
+                android:layout_width="55dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_marginRight="5dp"
                 android:gravity="center"
-                android:text="66.66%" />
+                android:text="166.66%" />
 
 
         </LinearLayout>

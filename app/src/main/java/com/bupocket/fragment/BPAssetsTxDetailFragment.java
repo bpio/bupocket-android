@@ -161,12 +161,12 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     if(txDeatilRespBoBean.getStatus().equals(TxStatusEnum.SUCCESS.getCode())){
                         if(isAdded()){
                             txStatusIconDrawable = ContextCompat.getDrawable(Objects.requireNonNull(getContext()),R.mipmap.icon_send_success);
-                            txStatusStr = getResources().getString(R.string.tx_status_success_txt1);
+                            txStatusStr = getResources().getString(R.string.tx_status_success_txt);
                         }
                     }else{
                         if(isAdded()){
                             txStatusIconDrawable = ContextCompat.getDrawable(Objects.requireNonNull(getContext()),R.mipmap.icon_send_fail);
-                            txStatusStr = getResources().getString(R.string.tx_status_fail_txt1);
+                            txStatusStr = getResources().getString(R.string.tx_status_fail_txt);
                         }
                     }
                     mTxStatusIcon.setImageDrawable(txStatusIconDrawable);

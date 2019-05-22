@@ -3,7 +3,7 @@
     <string name="app_name">Bu Pocket</string>
 
     <string name="tabbar_assets_txt">Tokens</string>
-    <string name="tabbar_discover_txt">Discovery</string>
+    <string name="tabbar_discover_txt">Explore</string>
     <string name="tabbar_profile_txt">Profile</string>
 
     <string name="fragment_title_tx_detail_txt">Transaction detail</string>

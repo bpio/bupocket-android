@@ -60,11 +60,17 @@
     <string name="wallet_scan_cancel">取消扫描</string>
     <string name="recently_tx_txt">最近交易记录</string>
     <string name="no_recently_tx_record">暂无交易记录</string>
+
+
     <string name="tx_status_success_txt">成功</string>
     <string name="tx_status_fail_txt">失败</string>
     <string name="tx_status_runing">处理中</string>
+
+
     <string name="tx_status_success_txt1">转账成功</string>
     <string name="tx_status_fail_txt1">转账失败</string>
+
+
     <string name="tx_status_fail_txt3">合约调用失败</string>
     <string name="tx_timeout_txt1">请求超时</string>
 
