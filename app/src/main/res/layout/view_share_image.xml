@@ -6,29 +6,39 @@
     android:layout_height="342dp"
     android:background="@mipmap/ic_share_bg">
 
-    <RelativeLayout
+
+
+    <include
         android:id="@+id/nodeIconRl"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="168dp">
+        android:layout_marginTop="168dp"
+        layout="@layout/view_circle_head_layout"/>
 
-        <ImageView
-            android:id="@+id/nodeIconBgIv"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_centerInParent="true"
-            android:background="@mipmap/icon_token_bg_list" />
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/nodeIconRl"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="168dp">-->
 
-        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-            android:id="@+id/nodeIconIv"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_centerInParent="true"
-            app:qmui_border_width="0dp"
-            app:qmui_is_circle="true" />
+        <!--<ImageView-->
+            <!--android:id="@+id/nodeIconBgIv"-->
+            <!--android:layout_width="60dp"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:background="@mipmap/icon_token_bg_list" />-->
 
-    </RelativeLayout>
+        <!--<com.qmuiteam.qmui.widget.QMUIRadiusImageView-->
+            <!--android:id="@+id/nodeIconIv"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--app:qmui_border_width="0dp"-->
+            <!--app:qmui_is_circle="true" />-->
+
+    <!--</RelativeLayout>-->
 
     <TextView
         android:id="@+id/nodeNameTv"

@@ -252,9 +252,9 @@ public class BPNodeShareFragment extends BaseFragment {
         mShareImageRl = LayoutInflater.from(getActivity()).inflate(R.layout.view_share_image, null);
         TextView mNodeNameTv = mShareImageRl.findViewById(R.id.nodeNameTv);
         mNodeNameTv.setText(itemInfo.getNodeName());
-        QMUIRadiusImageView nodeIconIv = mShareImageRl.findViewById(R.id.nodeIconIv);
+        QMUIRadiusImageView nodeIconIv = mShareImageRl.findViewById(R.id.assetIconIv);
         nodeIconIv.setImageBitmap(nodeLogoBitmap);
-        nodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
+//        nodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
         ImageView mQrIv = mShareImageRl.findViewById(R.id.qrIv);
         Bitmap QRBitmap = QRCodeUtil.createQRCodeBitmap(shareUrl, 356, 356);
         mQrIv.setImageBitmap(QRBitmap);
