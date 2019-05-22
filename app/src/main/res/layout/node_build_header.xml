@@ -239,11 +239,13 @@
         android:layout_margin="13dp"
         android:background="@drawable/edit_border_bg_white"
         android:padding="13dp"
+        android:lineSpacingMultiplier="1.5"
         android:text="@string/build_risk_info"
         android:textColor="@color/app_txt_color_gray_2"
         android:textSize="13sp" />
 
     <TextView
+        android:id="@+id/tvRecord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="13dp"

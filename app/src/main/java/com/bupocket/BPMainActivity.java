@@ -106,7 +106,8 @@ public class BPMainActivity extends BaseFragmentActivity {
             ((BPCreateWalletFragment)getCurrentFragment()).onBackPressed();
         }else{
 
-            super.onBackPressed();
+            ((BaseFragment) getCurrentFragment()).popBackStack();
+//            super.onBackPressed();
         }
     }
 }

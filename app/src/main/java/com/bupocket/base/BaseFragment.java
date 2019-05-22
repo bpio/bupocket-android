@@ -367,7 +367,7 @@ public abstract class BaseFragment extends QMUIFragment {
     }
 
     @Override
-    protected void popBackStack() {
+    public void popBackStack() {
         super.popBackStack();
         try {
             getChildFragmentManager().beginTransaction().attach(this);

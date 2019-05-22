@@ -120,6 +120,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private String supportTransMetaData;
     private String amountExit;
     private View emptyLayout;
+    private View tvRecord;
 
     @Override
     protected View onCreateView() {
@@ -216,6 +217,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         lvBuildDetail.addHeaderView(headerView);
         lvBuildDetail.setVisibility(View.GONE);
 //        addressRecordEmptyLL.setVisibility(View.VISIBLE);
+        tvRecord = headerView.findViewById(R.id.tvRecord);
 
 
     }
@@ -311,10 +313,12 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
                     if (nodelist == null || nodelist.size() == 0) {
 //                        addressRecordEmptyLL.setVisibility(View.VISIBLE);
-                        emptyLayout.setVisibility(View.VISIBLE);
+//                        emptyLayout.setVisibility(View.VISIBLE);
+                        tvRecord.setVisibility(View.GONE);
                     } else {
 //                        addressRecordEmptyLL.setVisibility(View.GONE);
-                        emptyLayout.setVisibility(View.GONE);
+//                        emptyLayout.setVisibility(View.GONE);
+                        tvRecord.setVisibility(View.VISIBLE);
                     }
                     lvBuildDetail.setVisibility(View.VISIBLE);
                     nodeBuildDetailAdapter.setNewData(nodelist);
