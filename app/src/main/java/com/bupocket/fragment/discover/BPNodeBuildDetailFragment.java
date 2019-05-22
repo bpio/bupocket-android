@@ -313,12 +313,12 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
                     if (nodelist == null || nodelist.size() == 0) {
 //                        addressRecordEmptyLL.setVisibility(View.VISIBLE);
-//                        emptyLayout.setVisibility(View.VISIBLE);
-                        tvRecord.setVisibility(View.GONE);
+                        emptyLayout.setVisibility(View.VISIBLE);
+//                        tvRecord.setVisibility(View.GONE);
                     } else {
 //                        addressRecordEmptyLL.setVisibility(View.GONE);
-//                        emptyLayout.setVisibility(View.GONE);
-                        tvRecord.setVisibility(View.VISIBLE);
+                        emptyLayout.setVisibility(View.GONE);
+//                        tvRecord.setVisibility(View.VISIBLE);
                     }
                     lvBuildDetail.setVisibility(View.VISIBLE);
                     nodeBuildDetailAdapter.setNewData(nodelist);
