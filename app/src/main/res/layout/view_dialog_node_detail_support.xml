@@ -180,7 +180,7 @@
             android:layout_width="146dp"
             android:layout_height="match_parent"
             android:text="@string/tv_confirm_support"
-            android:textSize="16sp"
+            android:textSize="@dimen/common_btn_size"
             android:gravity="center"
             android:background="@color/app_color_green"
             android:padding="5dp"

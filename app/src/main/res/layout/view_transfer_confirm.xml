@@ -295,6 +295,7 @@
                 android:focusable="true"
                 android:padding="10dp"
                 android:text="@string/common_dialog_confirm"
+                android:textSize="@dimen/common_btn_size"
                 android:textColor="@color/qmui_config_color_white"
                 app:qmui_backgroundColor="@color/app_color_main"
                 app:qmui_borderColor="@color/app_color_main"
