@@ -299,15 +299,15 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     isExit = CoBuildDetailStatusEnum.CO_BUILD_FAILURE.getCode().equals(detailModel.getStatus());
 
 
-
                     //origin
                     if (CoBuildDetailStatusEnum.CO_BUILD_RUNING.getCode().equals(detailModel.getStatus()) &&
                             !getWalletAddress().equals(detailModel.getOriginatorAddress())) {
-                        llBtnBuild.setVisibility(View.VISIBLE);
+
                         if (detailModel.getLeftCopies() == 0) {
                             llBtnBuild.setVisibility(View.GONE);
+                        } else {
+                            llBtnBuild.setVisibility(View.VISIBLE);
                         }
-
                     } else if (CoBuildDetailStatusEnum.CO_BUILD_FAILURE.getCode().equals(detailModel.getStatus())) {
                         llBtnBuild.setVisibility(View.VISIBLE);
                         btnBuildSupport.setVisibility(View.GONE);
@@ -315,8 +315,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                     } else {
                         llBtnBuild.setVisibility(View.GONE);
                     }
-
-
 
 
                     ArrayList<NodeBuildSupportModel> nodelist = body.getData().getSupportList();
