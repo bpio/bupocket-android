@@ -34,9 +34,11 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="12dp"
+                android:lineSpacingMultiplier="1.2"
                 android:textSize="14sp"
+                tools:text="@string/xiaobu_command_content_txt"
                 android:background="@drawable/shape_corner_bg_gray_2"
-                android:gravity="center"
+                android:gravity="left"
                 android:padding="6dp" />
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
