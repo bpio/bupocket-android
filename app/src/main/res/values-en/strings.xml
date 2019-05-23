@@ -468,7 +468,7 @@
     <string name="build_runing">Processing</string>
     <string name="tx_status_runing">Processing</string>
     <string name="build_finish">Completed</string>
-    <string name="build_origin_purchase_amount">Margin</string>
+    <string name="build_origin_purchase_amount">Margin of Co-funding</string>
     <string name="build_rist_info_record">Risk Statement</string>
     <string name="build_support_record">Record of Node Co-funding</string>
 

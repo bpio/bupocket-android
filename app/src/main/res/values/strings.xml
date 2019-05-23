@@ -515,9 +515,9 @@
     <string name="build_purchase_amount">起购金额</string>
     <string name="build_purchase_amount_hint">起购金额</string>
     <string name="build_support_amount_hint">支持份数</string>
-    <string name="build_origin_purchase_amount">保证金</string>
-    <string name="build_target_amount">目标共建总额</string>
-    <string name="build_support_amount">已获得支持总额</string>
+    <string name="build_origin_purchase_amount">共建保证金</string>
+    <string name="build_target_amount">目标金额</string>
+    <string name="build_support_amount">已获得支持金额</string>
     <string name="build_sharing_ratio">奖励分享比例</string>
     <string name="build_target_num">目标数量</string>
     <string name="reward_sharing_ratio">奖励分享比例</string>
@@ -590,7 +590,7 @@
     <string name="build_success">共建成功</string>
     <string name="build_failure">共建失败</string>
     
-    <string name="build_cooperate_bond">节点共建项目发起者转入保证金作为节点共建的锁仓金额</string>
+    <string name="build_cooperate_bond">节点共建项目发起者转入共建保证金作为节点共建的锁仓金额</string>
 
 
     <string name="super_status_info">当前节点处于%1$s&quot;状态，暂不支持邀请投票。</string>
