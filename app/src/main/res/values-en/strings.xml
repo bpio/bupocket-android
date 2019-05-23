@@ -146,7 +146,7 @@
     <string name="send_err1">You can\'t transfer tokens to yourself</string>
     <string name="invalid_amount">Invalid transfer amount</string>
     <string name="amount_too_small">Each transfer cannot be less than</string>
-    <string name="amount_too_big">Each transfer cannot exceed 100,000,000bu</string>
+    <string name="amount_too_big">Each transfer cannot exceed 100,000,000</string>
     <string name="invalid_tx_fee">The format of maximum payment transaction fee is incorrect. Please enter again</string>
     <string name="balance_not_enough">Insufficient balance available</string>
     <string name="send_token_note_too_long">Remarks cannot exceed 20 characterscharacters</string>
@@ -468,7 +468,7 @@
     <string name="build_runing">Processing</string>
     <string name="tx_status_runing">Processing</string>
     <string name="build_finish">Completed</string>
-    <string name="build_origin_purchase_amount">Deposit</string>
+    <string name="build_origin_purchase_amount">Margin</string>
     <string name="build_rist_info_record">Risk Statement</string>
     <string name="build_support_record">Record of Node Co-funding</string>
 
@@ -542,7 +542,7 @@
 
     <string name="error_timeout">The request is expired</string>
     <string name="parameter_txt">Parameter</string>
-    <string name="build_cooperate_bond">The initiator of the node co-funding project transfers the deposit to an account as the amount to be locked in node co-funding</string>
+    <string name="build_cooperate_bond">The initiator of the node co-funding project transfers the margin to an account as the amount to be locked in node co-funding</string>
 
     <string name="revoke_vote_tx_details_txt">Cancel votes to\"%1$s\"</string>
 

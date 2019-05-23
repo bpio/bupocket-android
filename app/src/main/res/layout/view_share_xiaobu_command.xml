@@ -34,9 +34,10 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="12dp"
+                android:textSize="14sp"
                 android:background="@drawable/shape_corner_bg_gray_2"
                 android:gravity="center"
-                android:padding="10dp" />
+                android:padding="6dp" />
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                 android:id="@+id/copyCommandBtn"
