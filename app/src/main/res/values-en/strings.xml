@@ -542,7 +542,7 @@
 
     <string name="error_timeout">The request is expired</string>
     <string name="parameter_txt">Parameter</string>
-    <string name="build_cooperate_bond">The initiator of the node co-funding project transfers the margin to an account as the amount to be locked in node co-funding</string>
+    <string name="build_cooperate_bond">The initiator of the node co-funding project transfers the margin of co-funding to an account as the amount to be locked in node co-funding</string>
 
     <string name="revoke_vote_tx_details_txt">Cancel votes to\"%1$s\"</string>
 
