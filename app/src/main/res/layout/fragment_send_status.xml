@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="@string/send_status_success_txt"
+                android:text="@string/tx_status_success_txt"
                 android:textAlignment="center"
                 android:textColor="@color/app_txt_color_gray"
                 android:textSize="16sp" />
