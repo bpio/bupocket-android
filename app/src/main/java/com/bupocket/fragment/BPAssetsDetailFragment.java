@@ -394,26 +394,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
                 Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
             } else if (!PublicKey.isAddressValid(result.getContents())) {
 
-//                String resultContent = result.getContents();
-//                if (CommonUtil.checkIsBase64(resultContent)) {
-//                    showSendDialog();
-//                } else {
-//                    try {
-//                        java.net.URL url = new java.net.URL(resultContent);
-//                        String path = url.getPath();
-//                        resultContent = path;
-//                    } catch (MalformedURLException e) {
-//                        e.printStackTrace();
-//                    }
-//                    if (resultContent.startsWith(Constants.QR_LOGIN_PREFIX)
-//                            | resultContent.startsWith(Constants.QR_NODE_PLAN_PREFIX)) {
-//                        showSendDialog();
-//                    } else {
-//                        Toast.makeText(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-
-                ToastUtil.showToast((Activity) mContext, R.string.error_qr_message_txt_2, Toast.LENGTH_LONG);
+                CommonUtil.showMessageDialog(mContext,R.string.error_qr_message_txt_2);
 
             } else {
                 Bundle argz = new Bundle();

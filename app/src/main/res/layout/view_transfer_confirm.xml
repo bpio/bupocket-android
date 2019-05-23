@@ -23,29 +23,33 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
+                android:gravity="center_vertical"
+                >
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/confirm_transfer_title_txt"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
                     android:textColor="@color/app_txt_color_gray_2"
                     android:textSize="16sp" />
 
                 <ImageView
+                    android:layout_centerVertical="true"
                     android:id="@+id/cancelBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:padding="5dp"
                     android:src="@mipmap/icon_cancel" />
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/bg_solid_line" />
 
+                android:background="@drawable/bg_solid_line" />
 
 
             <TextView
@@ -122,12 +126,14 @@
             android:layout_marginLeft="18dp"
             android:layout_marginRight="18dp"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="gone"
+            >
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
+                android:gravity="center_vertical"
+               >
 
                 <ImageView
                     android:id="@+id/goBackBtn"
@@ -144,22 +150,26 @@
                     android:layout_marginLeft="7dp"
                     android:layout_toRightOf="@id/goBackBtn"
                     android:text="@string/details"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
                     android:textColor="@color/app_txt_color_gray_2"
                     android:textSize="16sp"
 
                     />
 
                 <ImageView
+                    android:id="@+id/tvConfirmCancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:padding="5dp"
                     android:src="@mipmap/icon_cancel" />
             </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
-                android:layout_marginTop="15dp"
                 android:background="@drawable/bg_solid_line" />
 
 
@@ -295,8 +305,8 @@
                 android:focusable="true"
                 android:padding="10dp"
                 android:text="@string/common_dialog_confirm"
-                android:textSize="@dimen/common_btn_size"
                 android:textColor="@color/qmui_config_color_white"
+                android:textSize="@dimen/common_btn_size"
                 app:qmui_backgroundColor="@color/app_color_main"
                 app:qmui_borderColor="@color/app_color_main"
                 app:qmui_radius="4dp" />

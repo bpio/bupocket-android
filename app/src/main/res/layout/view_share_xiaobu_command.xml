@@ -36,7 +36,6 @@
                 android:layout_marginRight="12dp"
                 android:background="@drawable/shape_corner_bg_gray_2"
                 android:gravity="center"
-                android:lineSpacingMultiplier="1.3"
                 android:padding="10dp" />
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton

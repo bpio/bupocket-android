@@ -98,6 +98,12 @@ public class TransferUtils {
                 qmuiBottomSheet.dismiss();
             }
         });
+        qmuiBottomSheet.findViewById(R.id.tvConfirmCancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiBottomSheet.dismiss();
+            }
+        });
         qmuiBottomSheet.show();
 
     }

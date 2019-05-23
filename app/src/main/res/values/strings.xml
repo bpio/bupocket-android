@@ -177,7 +177,7 @@
     <string name="send_err1">不能给自己转账</string>
     <string name="invalid_amount">无效的转账数量</string>
     <string name="amount_too_small">转账数量单笔不可少于</string>
-    <string name="amount_too_big">转账数量单笔不可超过 1,000,000</string>
+    <string name="amount_too_big">转账数量单笔不可超过 100,000,000bu</string>
     <string name="invalid_tx_fee">最多支付交易费用格式有误，请重新输入</string>
     <string name="tx_fee_too_big">最多支付交易费用不可超过10 BU</string>
     <string name="balance_not_enough">可用余额不足</string>
