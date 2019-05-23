@@ -38,7 +38,7 @@
                 android:textSize="14sp"
                 tools:text="@string/xiaobu_command_content_txt"
                 android:background="@drawable/shape_corner_bg_gray_2"
-                android:gravity="left"
+                android:gravity="center"
                 android:padding="6dp" />
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
