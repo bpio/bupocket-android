@@ -28,7 +28,7 @@
 
             <View
                 android:layout_width="1.5dp"
-                android:layout_height="45dp"
+                android:layout_height="50dp"
                 android:background="@color/app_color_green_normal" />
 
             <ImageView
@@ -43,7 +43,7 @@
 
             <View
                 android:layout_width="1.5dp"
-                android:layout_height="30dp"
+                android:layout_height="36dp"
                 android:background="@color/app_txt_color_gray_3" />
 
             <ImageView
@@ -58,6 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="13dp"
+            android:layout_marginTop="5dp"
             android:orientation="vertical">
 
             <TextView
@@ -65,7 +66,7 @@
                 android:text="@string/transaction_success_title" />
 
             <TextView
-                style="@style/tv_node_build_black_style"
+                style="@style/tv_node_build_black_style3"
                 android:layout_marginTop="12dp"
                 android:text="@string/transaction_success_title_info" />
 
@@ -75,10 +76,11 @@
                 android:text="@string/transaction_process_title" />/>
 
             <TextView
-                style="@style/tv_node_build_black_style"
-                android:layout_height="68dp"
+                style="@style/tv_node_build_black_style3"
+                android:layout_height="72dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
+                android:lineSpacingMultiplier="1.2"
                 android:text="@string/transaction_process_title_info" />
 
 
@@ -96,8 +98,10 @@
         android:layout_marginLeft="13dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="13dp"
-        android:background="@color/app_bg_color_gray_3"
+        android:background="@drawable/shape_corner_bg_gray_2"
         android:padding="15dp"
+        android:textColor="@color/app_txt_color_gray"
+        android:lineSpacingMultiplier="1.5"
         android:text="@string/transaction_success_hint" />
 
 

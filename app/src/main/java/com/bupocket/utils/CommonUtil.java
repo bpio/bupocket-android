@@ -884,6 +884,13 @@ public class CommonUtil {
     }
 
     public static boolean isSingle(String num) {
+        boolean isSingle;
+        try {
+            isSingle = isSingle(Integer.parseInt(num));
+        } catch (Exception e) {
+            return false;
+        }
+
         return isSingle(Integer.parseInt(num));
     }
 
@@ -922,8 +929,8 @@ public class CommonUtil {
 //        if (support == total) {
 //            strRatio = "100";
 //        } else {
-            DecimalFormat df = new DecimalFormat("#0.00");
-            strRatio = df.format(ratio);
+        DecimalFormat df = new DecimalFormat("#0.00");
+        strRatio = df.format(ratio);
 //        }
         return strRatio + "%";
     }
