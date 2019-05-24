@@ -86,7 +86,6 @@ public class BPDiscoverHomeFragment extends BaseFragment {
         banListData = new ArrayList<>();
         disBannerAdapter = new DisBannerAdapter(this,banListData, vpDisBanner);
         vpDisBanner.setAdapter(disBannerAdapter);
-
         requestData();
 
     }
