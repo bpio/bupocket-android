@@ -59,6 +59,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
     private boolean isStop;
     private boolean isDownStop;
     private Unbinder bind;
+    private ArrayList<SlideModel.ImageInfo> slideshow;
 
 
     @Override
@@ -86,6 +87,11 @@ public class BPDiscoverHomeFragment extends BaseFragment {
         disBannerAdapter = new DisBannerAdapter(this,banListData, vpDisBanner);
         vpDisBanner.setAdapter(disBannerAdapter);
 
+        requestData();
+
+    }
+
+    private void requestData() {
         DiscoverService discoverService = RetrofitFactory.getInstance().getRetrofit().create(DiscoverService.class);
         discoverService.slideShow().enqueue(new Callback<ApiResult<SlideModel>>() {
             @Override
@@ -97,7 +103,8 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
                 SlideModel imageList = body.getData();
                 if (imageList != null) {
-                    disBannerAdapter.setData(imageList.getSlideshow());
+                    slideshow = imageList.getSlideshow();
+                    disBannerAdapter.setData(slideshow);
                     disBannerAdapter.notifyDataSetChanged();
                     vpDisBanner.setCurrentItem(vpDisBanner.getCurrentItem() + 100);
                 }
@@ -110,14 +117,17 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
             }
         });
-
-
     }
 
     @Override
     public void onResume() {
         super.onResume();
         isDownStop = false;
+
+        if (slideshow==null||slideshow.size()==0) {
+            requestData();
+        }
+
     }
 
     @Override
@@ -249,6 +259,9 @@ public class BPDiscoverHomeFragment extends BaseFragment {
             return true;
         }
     }
+
+
+
 
 
 }
