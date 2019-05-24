@@ -57,11 +57,10 @@
 
                 <TextView
                     android:id="@+id/nodeNameTv"
-                    style="@style/tv_node_plan_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
-                    tools:text="node name" />
+                    tools:text="node namesfadsfasdfdasfadfdsf" />
 
                 <TextView
                     android:id="@+id/nodeTypeTv"
