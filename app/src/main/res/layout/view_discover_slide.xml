@@ -6,22 +6,24 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <!--<com.qmuiteam.qmui.widget.QMUIRadiusImageView-->
-    <!--android:id="@+id/ivSlide"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:background="@drawable/shape_corner"-->
-    <!--app:qmui_corner_radius="4dp"-->
-    <!--app:qmui_border_width="0dp"-->
-    <!--/>-->
 
 
-    <ImageView
+    <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/ivSlide"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitXY"
-        android:background="@drawable/shape_corner" />
+        android:background="@drawable/shape_corner"
+        app:riv_corner_radius="4dp"
+        />
+
+
+    <!--<ImageView-->
+        <!--android:id="@+id/ivSlide"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:scaleType="fitXY"-->
+        <!--android:background="@drawable/shape_corner" />-->
 
 
 </LinearLayout>
