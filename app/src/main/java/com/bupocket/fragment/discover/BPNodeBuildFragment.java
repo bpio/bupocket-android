@@ -172,7 +172,8 @@ public class BPNodeBuildFragment extends BaseFragment {
         headerView = LayoutInflater.from(mContext).inflate(R.layout.view_com_title, null);
         lvNodeBuild.addHeaderView(headerView);
 
-        getBuildData();
+        refreshLayout.autoRefresh();
+//        getBuildData();
 
     }
 

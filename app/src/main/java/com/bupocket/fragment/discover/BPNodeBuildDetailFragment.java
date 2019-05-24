@@ -159,7 +159,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        getBuildData();
+//        getBuildData();
+        refreshLayout.autoRefresh();
     }
 
     private void initData() {
