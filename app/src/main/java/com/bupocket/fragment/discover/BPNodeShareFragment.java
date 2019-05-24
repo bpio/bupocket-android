@@ -81,8 +81,8 @@ public class BPNodeShareFragment extends BaseFragment {
 
     private String shareUrl = "https://bumo.io/technology";
 
-    private static final String VALIDATE_PATH = "dpos/detail/validate/";
-    private static final String KOL_PATH = "dpos/detail/kol/";
+    private static final String VALIDATE_PATH = "supernodes/detail/validate/";
+    private static final String KOL_PATH = "supernodes/detail/kol/";
 
     private SuperNodeModel itemInfo;
     private SuperNodeModel itemData;

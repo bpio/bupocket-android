@@ -183,9 +183,6 @@
     <com.qmuiteam.qmui.widget.QMUITopBar
         android:id="@+id/topbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/qmui_topbar_height"
-        app:qmui_topbar_bg_color="@color/app_color_white"
-        app:qmui_topbar_need_separator="false"
-        app:qmui_topbar_title_color="@color/app_color_black" />
+        android:layout_height="?attr/qmui_topbar_height" />
 
 </android.support.design.widget.CoordinatorLayout>

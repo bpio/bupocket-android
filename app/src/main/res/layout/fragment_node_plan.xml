@@ -106,11 +106,6 @@
         android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/qmui_topbar_height"
-        app:qmui_config_color_gray_1="#333333"
-        app:qmui_topbar_bg_color="@color/app_color_white"
-        app:qmui_topbar_need_separator="false"
-        app:qmui_topbar_title_color="@color/app_color_black"
-        app:qmui_topbar_title_text_size="21sp"
         />
 
 </android.support.design.widget.CoordinatorLayout>
