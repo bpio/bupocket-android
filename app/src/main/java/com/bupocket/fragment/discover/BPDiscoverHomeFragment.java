@@ -99,7 +99,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                 if (imageList != null) {
                     disBannerAdapter.setData(imageList.getSlideshow());
                     disBannerAdapter.notifyDataSetChanged();
-                    vpDisBanner.setCurrentItem(vpDisBanner.getCurrentItem() + 1);
+                    vpDisBanner.setCurrentItem(vpDisBanner.getCurrentItem() + 100);
                 }
 
 
