@@ -3,6 +3,7 @@ package com.bupocket.fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.AdvertisingEnum;
 import com.bupocket.enums.ExceptionEnum;
+import com.bupocket.fragment.discover.BPBannerFragment;
 import com.bupocket.http.api.AdvertisingService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
@@ -75,6 +77,12 @@ public class BPTransactionTimeoutFragment extends BaseFragment {
                 if (ad!=null) {
                     if (AdvertisingEnum.APP.getCode().equals(ad.getType())) {
                         CommonUtil.goWeChat(getContext(),WeChat_APPID,XB_YOUPING_USERNAME);
+                    }else if (AdvertisingEnum.H5.getCode().endsWith(ad.getType())){
+                        BPBannerFragment fragment = new BPBannerFragment();
+                        Bundle args = new Bundle();
+                        args.putString("url",ad.getUrl());
+                        fragment.setArguments(args);
+                        startFragment(fragment);
                     }
                 }
 

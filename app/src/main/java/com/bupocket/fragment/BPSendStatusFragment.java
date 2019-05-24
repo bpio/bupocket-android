@@ -1,6 +1,7 @@
 package com.bupocket.fragment;
 
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,6 +17,7 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.AdvertisingEnum;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.TxStatusEnum;
+import com.bupocket.fragment.discover.BPBannerFragment;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.AdvertisingService;
 import com.bupocket.http.api.RetrofitFactory;
@@ -101,6 +103,12 @@ public class BPSendStatusFragment extends BaseFragment {
                 if (ad!=null) {
                     if (AdvertisingEnum.APP.getCode().equals(ad.getType())) {
                         CommonUtil.goWeChat(getContext(),WeChat_APPID,XB_YOUPING_USERNAME);
+                    }else if (AdvertisingEnum.H5.getCode().endsWith(ad.getType())){
+                        BPBannerFragment fragment = new BPBannerFragment();
+                        Bundle args = new Bundle();
+                        args.putString("url",ad.getUrl());
+                        fragment.setArguments(args);
+                        startFragment(fragment);
                     }
                 }
             }
