@@ -103,7 +103,7 @@ public class BPSendStatusFragment extends BaseFragment {
                 if (ad!=null) {
                     if (AdvertisingEnum.APP.getCode().equals(ad.getType())) {
                         CommonUtil.goWeChat(getContext(),WeChat_APPID,XB_YOUPING_USERNAME);
-                    }else if (AdvertisingEnum.H5.getCode().endsWith(ad.getType())){
+                    }else if (AdvertisingEnum.H5.getCode().equals(ad.getType())){
                         BPBannerFragment fragment = new BPBannerFragment();
                         Bundle args = new Bundle();
                         args.putString("url",ad.getUrl());
