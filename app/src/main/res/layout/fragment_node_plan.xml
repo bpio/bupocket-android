@@ -31,7 +31,6 @@
                 android:id="@+id/llNodeSearch"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:gravity="center_vertical"
                 android:paddingRight="13dp">
 
                 <CheckBox
@@ -52,6 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
+                    android:gravity="center"
                     android:layout_toRightOf="@+id/myNodeCB"
                     android:text="@string/node_associated_with_me_txt"
                     android:textColor="@color/app_txt_color_gray"
@@ -59,10 +59,10 @@
 
                 <ImageView
                     android:id="@+id/myNodeTipsIv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginLeft="5dp"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="13.5dp"
+                    android:padding="4dp"
                     android:layout_toRightOf="@+id/myNodeTv"
                     android:src="@mipmap/ic_sheet_hint" />
 
