@@ -65,7 +65,7 @@ public class BPVoteRecordFragment extends BaseFragment {
 
     private void init() {
         initUI();
-        initData();
+//        initData();
         setListener();
     }
 
@@ -75,8 +75,7 @@ public class BPVoteRecordFragment extends BaseFragment {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshData();
-                refreshLayout.finishRefresh();
-                refreshLayout.setNoMoreData(false);
+
             }
         });
 
@@ -128,14 +127,16 @@ public class BPVoteRecordFragment extends BaseFragment {
                     addressRecordEmptyLL.setVisibility(View.VISIBLE);
                 }
 
-
+                refreshLayout.finishRefresh();
+                refreshLayout.setNoMoreData(false);
             }
 
             @Override
             public void onFailure(Call<ApiResult<MyVoteRecordModel>> call, Throwable t) {
 
                 llLoadFailed.setVisibility(View.VISIBLE);
-
+                refreshLayout.finishRefresh();
+                refreshLayout.setNoMoreData(false);
             }
         });
 
@@ -151,6 +152,8 @@ public class BPVoteRecordFragment extends BaseFragment {
 //        }
 //        voteRecordAdapter.setNewData(myVoteRecordModels);
         lvVoteRecord.setAdapter(voteRecordAdapter);
+
+        refreshLayout.autoRefresh();
 
     }
 
