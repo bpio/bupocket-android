@@ -4,7 +4,7 @@
     package="com.bupocket"
     android:debuggable="false"
     android:versionCode="161"
-    android:versionName="V1.6.1"
+    android:versionName="V1.6.0"
     tools:ignore="HardcodedDebugMode">
 
     <uses-permission android:name="android.permission.INTERNET" />

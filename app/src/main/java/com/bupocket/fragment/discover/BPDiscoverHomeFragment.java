@@ -76,14 +76,14 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
     private void init() {
         initUI();
-        setListener();
         initData();
+        setListener();
         autoPlayView();
     }
 
     private void initData() {
         banListData = new ArrayList<>();
-        disBannerAdapter = new DisBannerAdapter(banListData, vpDisBanner);
+        disBannerAdapter = new DisBannerAdapter(this,banListData, vpDisBanner);
         vpDisBanner.setAdapter(disBannerAdapter);
 
         DiscoverService discoverService = RetrofitFactory.getInstance().getRetrofit().create(DiscoverService.class);
@@ -196,6 +196,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
             }
         });
+
     }
 
 
