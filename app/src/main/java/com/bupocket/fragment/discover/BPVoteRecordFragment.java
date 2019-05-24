@@ -82,7 +82,7 @@ public class BPVoteRecordFragment extends BaseFragment {
         copyCommandBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initData();
+                refreshLayout.autoRefresh(0,200,1,false);
             }
         });
 

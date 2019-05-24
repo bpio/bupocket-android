@@ -94,7 +94,7 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 refreshData();
-                refreshLayout.finishRefresh();
+//                refreshLayout.finishRefresh();
                 refreshLayout.setNoMoreData(false);
             }
         });
@@ -102,7 +102,7 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
         copyCommandBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                initData();
+                refreshLayout.autoRefresh(0,200,1,false);
             }
         });
 
@@ -170,12 +170,16 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
                 }
 
 
+
+                refreshLayout.finishRefresh();
             }
 
             @Override
             public void onFailure(Call<ApiResult<MyVoteRecordModel>> call, Throwable t) {
 
                 llLoadFailed.setVisibility(View.VISIBLE);
+
+                refreshLayout.finishRefresh();
 
             }
         });
