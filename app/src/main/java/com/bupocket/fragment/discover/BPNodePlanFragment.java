@@ -254,7 +254,7 @@ public class BPNodePlanFragment extends BaseFragment {
         copyCommandBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refreshData();
+                refreshLayout.autoRefresh(0,200,1,false);
             }
         });
 
@@ -572,12 +572,15 @@ public class BPNodePlanFragment extends BaseFragment {
                 }
 
 
+                refreshLayout.finishRefresh();
             }
 
             @Override
             public void onFailure(Call<ApiResult<SuperNodeDto>> call, Throwable t) {
                 refreshLayout.finishRefresh();
                 llLoadFailed.setVisibility(View.VISIBLE);
+
+                refreshLayout.finishRefresh();
 
             }
         });

@@ -98,7 +98,7 @@ public class BPNodeBuildFragment extends BaseFragment {
         copyCommandBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getBuildData();
+                refreshLayout.autoRefresh(0,200,1,false);
             }
         });
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {

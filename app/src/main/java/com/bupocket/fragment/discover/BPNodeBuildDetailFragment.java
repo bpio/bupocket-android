@@ -150,7 +150,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
         copyCommandBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refreshLayout.autoRefresh(200);
+                refreshLayout.autoRefresh(0,200,1,false);
             }
         });
     }
