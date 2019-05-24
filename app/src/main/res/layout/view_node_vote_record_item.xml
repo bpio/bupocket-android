@@ -27,8 +27,8 @@
                 android:id="@+id/recordTypeTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="3dp"
-                android:paddingRight="3dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
                 android:paddingTop="2dp"
                 android:paddingBottom="2dp"
                 android:background="@drawable/shape_corner_green"
@@ -39,7 +39,6 @@
 
             <TextView
                 android:id="@+id/voterName"
-                style="@style/tv_node_plan_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
