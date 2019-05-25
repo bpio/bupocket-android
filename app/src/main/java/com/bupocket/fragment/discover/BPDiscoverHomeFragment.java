@@ -106,6 +106,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                     disBannerAdapter.setData(slideshow);
                     disBannerAdapter.notifyDataSetChanged();
                     vpDisBanner.setCurrentItem(vpDisBanner.getCurrentItem() + 100);
+                    vpDisBanner.setVisibility(View.VISIBLE);
                 }else {
                     vpDisBanner.setVisibility(View.GONE);
                 }
