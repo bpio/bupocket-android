@@ -406,7 +406,7 @@
     <string name="run_for_node_txt">Node Campaign</string>
     <string name="build_node_txt">Node Co-funding</string>
     <string name="information_txt">Information</string>
-    <string name="xiaobu_youpin_txt">BU Pocket Goods</string>
+    <string name="xiaobu_youpin_txt">YoPin</string>
     <string name="confirm_transfer_title_txt">Confirm transaction</string>
 
 
@@ -621,7 +621,7 @@
     <string name="build_total">Total：</string>
     <string name="tv_confirm_support">Confirm</string>
 
-    <string name="open_youpin">Service provide and liability covered by third party (BU YOUPIN) .For any questions,contact the company.</string>
+    <string name="open_youpin">Service provide and liability covered by third party (YoPin) .For any questions,contact the company.</string>
     <string name="open_youpin_title">Disclaimer</string>
 
 
