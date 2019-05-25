@@ -631,5 +631,9 @@
     <string name="tv_confirm_support">确认支持</string>
 
 
+    <string name="open_youpin">本服务由小布有品提供。相关服务和责任将由该第三方承担。如有问题请仔细该公司客服。</string>
+    <string name="open_youpin_title">免责声明</string>
+
+
 
 </resources>

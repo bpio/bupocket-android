@@ -621,5 +621,8 @@
     <string name="build_total">Total：</string>
     <string name="tv_confirm_support">Confirm</string>
 
+    <string name="open_youpin">Service provide and liability covered by third party (BU YOUPIN) .For any questions,contact the company.</string>
+    <string name="open_youpin_title">Disclaimer</string>
+
 
 </resources>

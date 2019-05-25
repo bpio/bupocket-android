@@ -3,6 +3,7 @@ package com.bupocket.fragment.discover;
 import android.content.Intent;
 import android.os.SystemClock;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -86,6 +87,10 @@ public class BPDiscoverHomeFragment extends BaseFragment {
         banListData = new ArrayList<>();
         disBannerAdapter = new DisBannerAdapter(this,banListData, vpDisBanner);
         vpDisBanner.setAdapter(disBannerAdapter);
+        String youpin = (String) spHelper.getSharedPreference("youpin", "");
+        if (TextUtils.isEmpty(youpin)) {
+            spHelper.put("youpin","0");
+        }
         requestData();
 
     }
@@ -204,7 +209,24 @@ public class BPDiscoverHomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-                CommonUtil.goWeChat(mContext,WeChat_APPID,XB_YOUPING_USERNAME);
+                String youpin = (String) spHelper.getSharedPreference("youpin", "0");
+                if (youpin.equals("1")) {
+                    CommonUtil.goWeChat(mContext,WeChat_APPID,XB_YOUPING_USERNAME);
+                }else{
+
+                    CommonUtil.showMessageDialog(mContext, getString(R.string.open_youpin),getString(R.string.open_youpin_title), new CommonUtil.KnowListener() {
+                        @Override
+                        public void Know() {
+                            spHelper.put("youpin","1");
+                            CommonUtil.goWeChat(mContext,WeChat_APPID,XB_YOUPING_USERNAME);
+                        }
+                    });
+                }
+
+
+
+
+
 
             }
         });

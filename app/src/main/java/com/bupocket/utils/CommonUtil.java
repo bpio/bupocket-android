@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.provider.Settings;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
@@ -19,7 +18,6 @@ import com.bupocket.R;
 import com.bupocket.enums.CurrencyTypeEnum;
 import com.bupocket.enums.ExceptionEnum;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -44,7 +42,6 @@ import java.util.regex.Pattern;
 
 import static com.bupocket.common.Constants.WeChat_APPID;
 import static com.bupocket.common.Constants.XB_YOUPING_USERNAME;
-import static com.qmuiteam.qmui.widget.dialog.QMUIDialogAction.ACTION_PROP_POSITIVE;
 
 /**
  * 通用工具类.
@@ -836,6 +833,25 @@ public class CommonUtil {
 
     }
 
+
+    public static void showMessageDialog(Context mContext, String msg, String title, final KnowListener knowListener) {
+        final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
+                setLayout(R.layout.qmui_com_dialog_green).create();
+        qmuiDialog.findViewById(R.id.tvComKnow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+                knowListener.Know();
+            }
+        });
+        TextView tvTitle = qmuiDialog.findViewById(R.id.tvComTitle);
+        tvTitle.setVisibility(View.VISIBLE);
+        tvTitle.setText(title);
+        ((TextView) qmuiDialog.findViewById(R.id.tvComMassage)).setText(msg);
+        qmuiDialog.show();
+
+    }
+
     /**
      * @param mContext
      * @param notice   error massage
@@ -1048,5 +1064,12 @@ public class CommonUtil {
             }
         }
     }
+
+
+    public interface KnowListener {
+
+        void Know();
+    }
+
 
 }
