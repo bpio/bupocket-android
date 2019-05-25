@@ -11,20 +11,19 @@
         android:layout_height="match_parent"
         android:background="@color/app_bg_color_gray_4"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/common_padding_border"
-        android:paddingRight="@dimen/common_padding_border">
+      >
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="?attr/qmui_topbar_height"
             android:layout_gravity="center"
             android:fitsSystemWindows="true"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
             android:gravity="center"
+            android:textSize="16sp"
             android:text="@string/tabbar_discover_txt"
+            android:background="@color/app_btn_color_white"
             android:textColor="@color/send_confirm_title_color"
-            android:textSize="21sp" />
+           />
 
 
         <android.support.v4.view.ViewPager
@@ -32,6 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="190dp"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="@dimen/common_padding_border"
+            android:layout_marginRight="@dimen/common_padding_border"
             android:background="@mipmap/ic_banner_empty"
             />
 
@@ -87,6 +88,8 @@
             android:layout_width="match_parent"
             android:layout_height="100dp"
             style="@style/dis_item_style"
+            android:layout_marginLeft="@dimen/common_padding_border"
+            android:layout_marginRight="@dimen/common_padding_border"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -168,6 +171,8 @@
         <RelativeLayout
             android:id="@+id/informationRl"
             style="@style/dis_item_style"
+            android:layout_marginLeft="@dimen/common_padding_border"
+            android:layout_marginRight="@dimen/common_padding_border"
             >
 
             <ImageView
@@ -202,7 +207,10 @@
 
         <RelativeLayout
             android:id="@+id/xiaobuYoupinRl"
-            style="@style/dis_item_style">
+            style="@style/dis_item_style"
+            android:layout_marginLeft="@dimen/common_padding_border"
+            android:layout_marginRight="@dimen/common_padding_border"
+            >
 
             <ImageView
                 android:layout_width="wrap_content"

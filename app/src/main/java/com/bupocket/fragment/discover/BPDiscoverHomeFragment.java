@@ -101,11 +101,13 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                 }
 
                 SlideModel imageList = body.getData();
-                if (imageList != null) {
+                if (imageList != null&&imageList.getSlideshow()!=null&&imageList.getSlideshow().size()>0) {
                     slideshow = imageList.getSlideshow();
                     disBannerAdapter.setData(slideshow);
                     disBannerAdapter.notifyDataSetChanged();
                     vpDisBanner.setCurrentItem(vpDisBanner.getCurrentItem() + 100);
+                }else {
+                    vpDisBanner.setVisibility(View.GONE);
                 }
 
 
@@ -113,7 +115,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<SlideModel>> call, Throwable t) {
-
+                vpDisBanner.setVisibility(View.GONE);
             }
         });
     }

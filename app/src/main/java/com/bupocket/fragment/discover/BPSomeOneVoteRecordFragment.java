@@ -24,6 +24,7 @@ import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -69,6 +70,9 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
     LinearLayout llLoadFailed;
     @BindView(R.id.haveVotesNumTvHint)
     TextView haveVotesNumTvHint;
+    @BindView(R.id.qmuiEmptyView)
+    QMUIEmptyView qmuiEmptyView;
+
 
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String currentIdentityWalletAddress;
@@ -168,10 +172,8 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
                     voteRecordAdapter.setNewData(data.getList());
                     voteRecordAdapter.notifyDataSetChanged();
                 }
-
-
-
                 refreshLayout.finishRefresh();
+                qmuiEmptyView.show(null,null);
             }
 
             @Override
@@ -180,6 +182,7 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
                 llLoadFailed.setVisibility(View.VISIBLE);
 
                 refreshLayout.finishRefresh();
+                qmuiEmptyView.show(null,null);
 
             }
         });
@@ -192,7 +195,7 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
         voteRecordAdapter = new VoteRecordAdapter(getContext());
         voteRecordAdapter.setAdapterType(VoteRecordAdapter.SOME_RECORD);
         lvVoteRecord.setAdapter(voteRecordAdapter);
-
+        qmuiEmptyView.show();
     }
 
     private void initTopBar() {

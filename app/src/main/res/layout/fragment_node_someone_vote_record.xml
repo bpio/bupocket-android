@@ -203,7 +203,7 @@
 
 
             <include
-                layout="@layout/view_common_listview_layout"/>
+                layout="@layout/view_common_lv_layout"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -42,6 +42,7 @@ import com.bupocket.utils.TransferUtils;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
+import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
@@ -87,6 +88,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     LinearLayout addressRecordEmptyLL;
     @BindView(R.id.copyCommandBtn)
     QMUIRoundButton copyCommandBtn;
+    @BindView(R.id.qmuiEmptyView)
+    QMUIEmptyView  qmuiEmptyView;
 
 
     private Unbinder bind;
@@ -159,8 +162,9 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-//        getBuildData();
-        refreshLayout.autoRefresh();
+        getBuildData();
+
+//        refreshLayout.autoRefresh();
     }
 
     private void initData() {
@@ -220,7 +224,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 //        addressRecordEmptyLL.setVisibility(View.VISIBLE);
         tvRecord = headerView.findViewById(R.id.tvRecord);
 
-
+        qmuiEmptyView.show(true);
     }
 
 
@@ -338,6 +342,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 refreshLayout.finishRefresh();
                 refreshLayout.setNoMoreData(false);
 
+                qmuiEmptyView.show(null,null);
+
             }
 
             @Override
@@ -348,6 +354,7 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
                 llLoadFailed.setVisibility(View.VISIBLE);
                 lvBuildDetail.setVisibility(View.GONE);
                 llBtnBuild.setVisibility(View.GONE);
+                qmuiEmptyView.show(null,null);
             }
 
 

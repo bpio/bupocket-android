@@ -25,6 +25,7 @@ import com.github.ksoichiro.android.observablescrollview.ScrollState;
 import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
+import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -56,6 +57,8 @@ public class BPNodeBuildFragment extends BaseFragment {
     LinearLayout addressRecordEmptyLL;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
+    @BindView(R.id.qmuiEmptyView)
+    QMUIEmptyView qmuiEmptyView;
 
 
     private Unbinder bind;
@@ -172,8 +175,9 @@ public class BPNodeBuildFragment extends BaseFragment {
         headerView = LayoutInflater.from(mContext).inflate(R.layout.view_com_title, null);
         lvNodeBuild.addHeaderView(headerView);
 
-        refreshLayout.autoRefresh();
-//        getBuildData();
+//        refreshLayout.autoRefresh();
+        getBuildData();
+        qmuiEmptyView.show(true);
 
     }
 
@@ -204,6 +208,8 @@ public class BPNodeBuildFragment extends BaseFragment {
                     addressRecordEmptyLL.setVisibility(View.VISIBLE);
                 }
 
+                qmuiEmptyView.show(null,null);
+
             }
 
             @Override
@@ -212,6 +218,8 @@ public class BPNodeBuildFragment extends BaseFragment {
                 llLoadFailed.setVisibility(View.VISIBLE);
                 nodeBuildAdapter.setNewData(new ArrayList<NodeBuildModel>());
                 nodeBuildAdapter.notifyDataSetChanged();
+
+                qmuiEmptyView.show(null,null);
             }
 
 
