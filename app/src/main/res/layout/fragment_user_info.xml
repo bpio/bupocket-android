@@ -72,7 +72,7 @@
                     android:layout_gravity="left|center_vertical"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="30dp"
-                    android:background="@mipmap/icon_help_tips" />
+                    android:background="@mipmap/ic_sheet_hint" />
 
                 <TextView
                     android:id="@+id/identityIdTv"

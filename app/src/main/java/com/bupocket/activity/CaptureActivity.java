@@ -1,22 +1,51 @@
 package com.bupocket.activity;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
+import com.bupocket.base.BaseFragment;
+import com.bupocket.base.BaseFragmentActivity;
+import com.bupocket.common.Constants;
+import com.bupocket.enums.TokenActionTypeEnum;
+import com.bupocket.fragment.BPIssueTokenFragment;
+import com.bupocket.fragment.BPRegisterTokenFragment;
+import com.bupocket.fragment.BPSendTokenFragment;
+import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.ImageUtil;
 import com.bupocket.utils.LocaleUtil;
 import com.journeyapps.barcodescanner.CaptureManager;
 import com.journeyapps.barcodescanner.DecoratedBarcodeView;
+import com.qmuiteam.qmui.util.QMUIViewHelper;
+import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.uuzuche.lib_zxing.activity.CodeUtils;
+
+import java.io.UnsupportedEncodingException;
+
+import io.bumo.encryption.key.PublicKey;
 
 
-public class CaptureActivity extends AppCompatActivity {
+public class CaptureActivity extends BaseFragmentActivity {
+
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleUtil.attachBaseContext(base));
@@ -34,7 +63,12 @@ public class CaptureActivity extends AppCompatActivity {
     /**
      * 标题栏
      */
-    private Toolbar mToolbar;
+    private QMUITopBar mTopbar;
+
+    @Override
+    protected int getContextViewId() {
+        return R.id.captureLayout;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,16 +97,35 @@ public class CaptureActivity extends AppCompatActivity {
      * 初始化标题栏
      */
     private void initToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle(R.string.capture_activity_title);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        mTopbar = findViewById(R.id.topbar);
+        mTopbar.setBackgroundAlpha(0);
+        mTopbar.setTitle(R.string.capture_activity_title);
+        mTopbar.addLeftTextButton(getResources().getString(R.string.capture_activity_cancel), QMUIViewHelper.generateViewId()).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        mTopbar.addRightTextButton(getResources().getString(R.string.capture_activity_photo_album),QMUIViewHelper.generateViewId()).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, Constants.REQUEST_READ_STORAGE_PERMISSION);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "缺少文件读取权限", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                selectImage();
+            }
+        });
+    }
+
+    private void selectImage() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");
+        startActivityForResult(intent, Constants.REQUEST_IMAGE);
     }
 
     @Override
@@ -115,4 +168,36 @@ public class CaptureActivity extends AppCompatActivity {
         return mBarcodeView.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);
     }
 
+    @Override
+    public void onBackPressed() {
+        popBackStack();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.REQUEST_IMAGE) {
+            if (data != null) {
+                Uri uri = data.getData();
+                try {
+                    CodeUtils.analyzeBitmap(ImageUtil.getImageAbsolutePath(getApplicationContext(), uri), new CodeUtils.AnalyzeCallback() {
+                        @Override
+                        public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
+                            Intent intent = new Intent();
+                            intent.putExtra("resultFromBitmap",result);
+                            setResult(Constants.REQUEST_IMAGE, intent);
+                            popBackStack();
+                        }
+
+                        @Override
+                        public void onAnalyzeFailed() {
+                            Toast.makeText(getApplicationContext(), R.string.error_qr_message_txt, Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }

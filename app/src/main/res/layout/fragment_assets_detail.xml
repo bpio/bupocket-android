@@ -1,183 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/app_color_white">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/app_color_white"
-        android:fitsSystemWindows="false"
-        android:gravity="center_horizontal"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="60dp">
-
-            <ImageView
-                android:layout_centerInParent="true"
-                android:id="@+id/assetIconBgIv"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@mipmap/icon_token_bg_list"/>
-
-            <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                android:layout_centerInParent="true"
-                android:id="@+id/assetIconIv"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                app:qmui_border_width="0dp"
-                app:qmui_is_circle="true"/>
-
-        </RelativeLayout>
-
-        <TextView
-            android:id="@+id/amountTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:textColor="@color/app_color_black"
-            tools:text="9223372036854775807"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/assetAmountTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            tools:text="9223372036854775807"
-            android:textColor="@color/send_confirm_gray_color" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="@dimen/view_padding">
-            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                android:id="@+id/walletScanBtn"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
-                android:drawableStart="@mipmap/icon_scan_white"
-                android:drawableLeft="@mipmap/icon_scan_white"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/bp_btn_hight"
-                android:layout_weight="1"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:gravity="center"
-                android:text="@string/wallet_scan_txt"
-                app:qmui_borderColor="@color/app_btn_color_white"
-                app:qmui_backgroundColor="@color/scan_btn_background_color"
-                app:qmui_radius="5dp"
-                android:textColor="@color/app_color_font"
-                android:textSize="@dimen/bp_btn_text_size"/>
-            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                android:id="@+id/walletSendBtn"
-                android:paddingLeft="30dp"
-                android:paddingRight="30dp"
-                android:drawableStart="@mipmap/icon_send_img"
-                android:drawableLeft="@mipmap/icon_send_img"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/bp_btn_hight"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:text="@string/wallet_send_txt"
-                app:qmui_borderColor="@color/transfer_btn_background_color"
-                app:qmui_backgroundColor="@color/transfer_btn_background_color"
-                app:qmui_radius="5dp"
-                android:textColor="@color/app_color_font"
-                android:textSize="@dimen/bp_btn_text_size"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:padding="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@color/app_bg_color_gray">
-
-            <TextView
-                android:id="@+id/myTokenTxTitleTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:text="@string/recently_tx_txt" />
-
-            <com.qmuiteam.qmui.widget.QMUIEmptyView
-                android:id="@+id/emptyView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="10dp">
-                <com.scwang.smartrefresh.layout.SmartRefreshLayout
-                    android:id="@+id/refreshLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:srlEnableScrollContentWhenLoaded="true"
-                    app:srlEnableFooterFollowWhenLoadFinished="true">
-
-                    <com.scwang.smartrefresh.layout.header.ClassicsHeader
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"/>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
-                        <ListView
-                            android:id="@+id/myTokenTxLv"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:divider="@color/tx_list_view_background_col"
-                            android:dividerHeight="10dp"
-                            android:scrollbars="none"
-                            android:fadeScrollbars="false"/>
-                        <LinearLayout
-                            android:id="@+id/recentlyTxRecordEmptyLL"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:gravity="center"
-                            android:background="@color/app_bg_color_gray"
-                            android:orientation="vertical"
-                            android:visibility="gone">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="20dp"
-                                android:src="@mipmap/icon_no_recently_record">
-                            </ImageView>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:textAlignment="center"
-                                android:text="@string/no_recently_tx_record">
-                            </TextView>
-
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:srlClassicsSpinnerStyle="Translate"/>
-
-                </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-            </com.qmuiteam.qmui.widget.QMUIEmptyView>
-
-        </LinearLayout>
-    </LinearLayout>
+    android:background="@color/app_color_white"
+    android:fitsSystemWindows="false"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
 
     <com.qmuiteam.qmui.widget.QMUITopBar
@@ -187,4 +17,148 @@
         app:qmui_topbar_bg_color="@color/qmui_config_color_transparent"
         app:qmui_topbar_need_separator="false"
         app:qmui_topbar_title_color="@color/app_color_black" />
-</android.support.design.widget.CoordinatorLayout>
+
+
+
+
+    <include
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="5dp"
+        layout="@layout/view_circle_head_layout"/>
+
+
+    <TextView
+        android:id="@+id/amountTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@color/app_color_black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/assetAmountTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@color/send_confirm_gray_color"
+       />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/view_padding">
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/walletScanBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/bp_btn_hight"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:drawableStart="@mipmap/icon_scan_white"
+            android:drawableLeft="@mipmap/icon_scan_white"
+            android:gravity="center"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="@string/wallet_scan_txt"
+            android:textColor="@color/app_color_font"
+            android:textSize="@dimen/bp_btn_text_size"
+            app:qmui_backgroundColor="@color/scan_btn_background_color"
+            app:qmui_borderColor="@color/app_btn_color_white"
+            app:qmui_radius="5dp" />
+
+        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            android:id="@+id/walletSendBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/bp_btn_hight"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:drawableStart="@mipmap/icon_send_img"
+            android:drawableLeft="@mipmap/icon_send_img"
+            android:gravity="center"
+            android:paddingLeft="30dp"
+            android:paddingRight="30dp"
+            android:text="@string/wallet_send_txt"
+            android:textColor="@color/app_color_font"
+            android:textSize="@dimen/bp_btn_text_size"
+            app:qmui_backgroundColor="@color/transfer_btn_background_color"
+            app:qmui_borderColor="@color/transfer_btn_background_color"
+            app:qmui_radius="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_bg_color_gray"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/myTokenTxTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/recently_tx_txt"
+            android:textSize="15sp" />
+
+        <include
+            android:visibility="gone"
+            layout="@layout/view_load_failed"/>
+
+        <com.qmuiteam.qmui.widget.QMUIEmptyView
+            android:id="@+id/emptyView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="10dp">
+
+            <com.scwang.smartrefresh.layout.SmartRefreshLayout
+                android:id="@+id/refreshLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srlEnableFooterFollowWhenLoadFinished="true"
+                app:srlEnableScrollContentWhenLoaded="true">
+
+                <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <ListView
+                        android:id="@+id/myTokenTxLv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:divider="@color/tx_list_view_background_col"
+                        android:dividerHeight="10dp"
+                        android:fadeScrollbars="false"
+                        android:scrollbars="none" />
+
+
+                    <include
+                        android:id="@+id/recentlyTxRecordEmptyLL"
+                        android:visibility="gone"
+                        layout="@layout/view_empty_record"/>
+
+                </LinearLayout>
+
+                <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:srlClassicsSpinnerStyle="Translate" />
+
+            </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        </com.qmuiteam.qmui.widget.QMUIEmptyView>
+
+    </LinearLayout>
+</LinearLayout>

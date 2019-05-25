@@ -138,7 +138,7 @@ public class BPAddressEditFragment extends BaseFragment {
             public void onClick(View v) {
                 final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
                 qmuiDialog.setCanceledOnTouchOutside(false);
-                qmuiDialog.setContentView(R.layout.delete_linkaddress_confirm_layout);
+                qmuiDialog.setContentView(R.layout.view_delete_linkaddress_confirm);
                 qmuiDialog.show();
 
                 TextView cancelTv = qmuiDialog.findViewById(R.id.cancel);

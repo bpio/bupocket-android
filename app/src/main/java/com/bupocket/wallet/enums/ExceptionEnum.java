@@ -2,6 +2,7 @@ package com.bupocket.wallet.enums;
 
 public enum ExceptionEnum {
     SUCCESS("0","success"),
+    ADDRESS_NOT_EXIST("4","address not exist"),
     BU_NOT_ENOUGH_FOR_PAYMENT("100", "bu not enough for payment"),
     SYS_ERR("10000","system exception"),
     INVALID_PASSWORD("10001","Invalid password"),
@@ -9,7 +10,8 @@ public enum ExceptionEnum {
     BU_NOT_ENOUGH("10003","bu not enough"),
     IMPORT_KEYSTORE_VERSION_ERROR("20001","the keyStore version was wrong"),
     IMPORT_KEYSTORE_ADDRESS_ERROR("20002","the address in the keyStore was wrong, please check"),
-    ADDRESS_ALREADY_EXISTED("100055","the contact is already existed")
+    SUBMIT_TRANSACTION_ERROR("152","submit transaction error  not  hash"),
+    PASSWORD_ERROR("1011001","password error"),
     ;
 
     private final String code;

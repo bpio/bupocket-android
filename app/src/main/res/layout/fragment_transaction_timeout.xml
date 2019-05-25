@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_color_white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <com.qmuiteam.qmui.widget.QMUITopBar
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/qmui_topbar_height"
+        app:qmui_config_color_gray_1="#333333"
+        app:qmui_topbar_bg_color="@color/app_color_white"
+        app:qmui_topbar_need_separator="false"
+        app:qmui_topbar_title_color="@color/app_color_black"
+        app:qmui_topbar_title_text_size="21sp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@mipmap/ic_transaction_timeout" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/transaction_timeout_hint"
+        android:textColor="@color/app_txt_color_gray_2"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tvTransactionInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="36dp"
+        tools:text="@string/transaction_timeout_info" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="25dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/tv_node_build_black_style3"
+            android:text="@string/transaction_info" />
+
+        <TextView
+            android:id="@+id/tvTimeoutHash"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            tools:text="86b3b94···c57eac8e" />
+
+        <ImageView
+            android:id="@+id/ivTimeoutCopy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:background="@mipmap/icon_transaction_timeout_copy" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_bg_color_gray_3"
+        android:orientation="vertical">
+
+        <com.qmuiteam.qmui.widget.QMUIRadiusImageView
+            android:id="@+id/ivTimeout"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="10dp"
+            android:background="@mipmap/ic_ad_empty"
+            app:qmui_border_width="0dp" />
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

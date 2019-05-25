@@ -39,7 +39,7 @@ public class TxDetailSignatureAdapter extends BaseAdapter {
         ViewHolder holder;
         if(convertView == null){
             holder = new ViewHolder();
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.tx_detail_signature_item_layout, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.view_tx_detail_signature_item, null);
             holder.mTxDetailTxInfoTxSignaturePkTv = convertView.findViewById(R.id.txDetailTxInfoTxSignaturePkTv);
             holder.mTxDetailTxInfoTxSignatureSdTv = convertView.findViewById(R.id.txDetailTxInfoTxSignatureSdTv);
             convertView.setTag(holder);

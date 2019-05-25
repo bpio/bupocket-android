@@ -1,5 +1,6 @@
 package com.bupocket.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -7,11 +8,19 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.provider.Settings;
+import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
+import com.bupocket.R;
 import com.bupocket.enums.CurrencyTypeEnum;
+import com.bupocket.enums.ExceptionEnum;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
@@ -30,6 +39,9 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import static com.bupocket.common.Constants.WeChat_APPID;
+import static com.bupocket.common.Constants.XB_YOUPING_USERNAME;
 
 /**
  * 通用工具类.
@@ -69,12 +81,12 @@ public class CommonUtil {
         return x + 100000;
     }
 
-    public static boolean isBU(String str){
+    public static boolean isBU(String str) {
         Pattern pattern = Pattern.compile("^(([0-9]+\\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\\.[0-9]+)|([0-9]*[1-9][0-9]*))$");
-        Matcher match= pattern.matcher(str);
-        if(match.matches()==false) {
+        Matcher match = pattern.matcher(str);
+        if (match.matches() == false) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
@@ -259,9 +271,6 @@ public class CommonUtil {
         String uuid = UUID.randomUUID().toString().trim().replaceAll("-", "");
         return uuid.toUpperCase();
     }
-
-
-
 
 
     /**
@@ -499,7 +508,6 @@ public class CommonUtil {
     }
 
 
-
     /**
      * 验证是否为日期
      *
@@ -580,7 +588,6 @@ public class CommonUtil {
     }
 
 
-
     /**
      * 生成随机密码
      *
@@ -619,6 +626,7 @@ public class CommonUtil {
         }
         return code;
     }
+
     public static String packageName(Context context) {
         PackageManager manager = context.getPackageManager();
         String name = null;
@@ -636,14 +644,14 @@ public class CommonUtil {
         return str == null || str.length() == 0;
     }
 
-    public static boolean isNull(String str){
-        if(isEmpty(str) || str == ""){
+    public static boolean isNull(String str) {
+        if (isEmpty(str) || str == "") {
             return true;
         }
         return false;
     }
 
-    public static String getUniqueId(Context context){
+    public static String getUniqueId(Context context) {
         String androidID = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         String id = androidID + Build.SERIAL;
         try {
@@ -671,7 +679,7 @@ public class CommonUtil {
         return sb.toString();
     }
 
-    public static Bitmap base64ToBitmap(String base64Data) throws IllegalArgumentException{
+    public static Bitmap base64ToBitmap(String base64Data) throws IllegalArgumentException {
         base64Data = base64Data.split(",")[1];
         byte[] bytes = Base64.decode(base64Data, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
@@ -684,35 +692,35 @@ public class CommonUtil {
     /*
      * add asset suffix
      */
-    public static String addSuffix(String originalStr,String suffix){
+    public static String addSuffix(String originalStr, String suffix) {
         return originalStr + " " + suffix;
     }
 
     /*
      *check number format
      */
-    public static Boolean checkSendAmountDecimals(String srcAmount, String decimals){
-        BigDecimal value = BigDecimal.valueOf(DecimalCalculate.mul(Double.parseDouble(srcAmount),Math.pow(10, Double.parseDouble(decimals))));
+    public static Boolean checkSendAmountDecimals(String srcAmount, String decimals) {
+        BigDecimal value = BigDecimal.valueOf(DecimalCalculate.mul(Double.parseDouble(srcAmount), Math.pow(10, Double.parseDouble(decimals))));
 //        System.out.println(value.toPlainString());
 //        System.out.println(value.remainder(BigDecimal.ONE));
-        if(value.remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0){
+        if (value.remainder(BigDecimal.ONE).compareTo(BigDecimal.ZERO) == 0) {
             return false;
-        }else {
+        } else {
             return true;
         }
     }
 
-    public static String calculateMinSendAmount(String decimalsStr){
+    public static String calculateMinSendAmount(String decimalsStr) {
         BigDecimal one = new BigDecimal(1);
         BigDecimal ten = new BigDecimal(10);
         return one.divide(ten.pow(Integer.valueOf(decimalsStr))).toPlainString();
     }
 
-    public static String rvZeroAndDot(String s){
+    public static String rvZeroAndDot(String s) {
         if (s.isEmpty()) {
             return null;
         }
-        if(s.indexOf(".") > 0){
+        if (s.indexOf(".") > 0) {
             //去掉多余的0
             s = s.replaceAll("0+?$", "");
             //如最后一位是.则去掉
@@ -726,23 +734,29 @@ public class CommonUtil {
         return Pattern.matches(base64Pattern, str);
     }
 
+    /**
+     * 数字添加千分符
+     *
+     * @param str
+     * @return
+     */
     public static String thousandSeparator(String str) {
         DecimalFormat df = new DecimalFormat("###,###.########");
         return df.format(new BigDecimal(str));
     }
 
-    public static Boolean checkAmount(String issueAmount,String decimals){
-        try{
+    public static Boolean checkAmount(String issueAmount, String decimals) {
+        try {
             Long.parseLong(new BigDecimal(issueAmount).multiply(new BigDecimal(Math.pow(10, Double.parseDouble(decimals)))).setScale(0).toPlainString());
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return false;
         }
         return true;
     }
 
-    public static String addCurrencySymbol(String assetAmount,String currencyType){
-        for(CurrencyTypeEnum currencyTypeEnum : CurrencyTypeEnum.values()){
-            if(currencyTypeEnum.getName().equals(currencyType)){
+    public static String addCurrencySymbol(String assetAmount, String currencyType) {
+        for (CurrencyTypeEnum currencyTypeEnum : CurrencyTypeEnum.values()) {
+            if (currencyTypeEnum.getName().equals(currencyType)) {
                 return "≈" + currencyTypeEnum.getSymbol() + " " + assetAmount;
             }
         }
@@ -777,5 +791,285 @@ public class CommonUtil {
         }
         return false;
     }
+
+
+    private static String getAccountBPData(Context context, boolean isWhetherIdentityWallet, String currentWalletAddress) {
+
+        SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(context, "buPocket");
+        String accountBPData = null;
+        if (isWhetherIdentityWallet) {
+            accountBPData = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
+        } else {
+            accountBPData = sharedPreferencesHelper.getSharedPreference(currentWalletAddress + "-BPdata", "").toString();
+        }
+        return accountBPData;
+    }
+
+    public static void showMessageDialog(Context mContext, String msg) {
+//        int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
+//        int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog_Action;
+//        int mCurrentDialogStyle = R.style.qmui_com_dialog;
+//        QMUIDialog qmuiDialog = new QMUIDialog.MessageDialogBuilder(mContext)
+//                .setMessage(msg)
+//                .addAction(R.drawable.shape_corner_green,R.string.i_knew_btn_txt, new QMUIDialogAction.ActionListener() {
+//                    @Override
+//                    public void onClick(QMUIDialog dialog, int index) {
+//                        dialog.dismiss();
+//                    }
+//                })
+//                .create(mCurrentDialogStyle);
+//        qmuiDialog.show();
+
+        final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
+                setLayout(R.layout.qmui_com_dialog_green).create();
+        qmuiDialog.findViewById(R.id.tvComKnow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+            }
+        });
+        ((TextView) qmuiDialog.findViewById(R.id.tvComMassage)).setText(msg);
+        qmuiDialog.show();
+
+    }
+
+
+    public static void showMessageDialog(Context mContext, String msg, String title, final KnowListener knowListener) {
+        final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
+                setLayout(R.layout.qmui_com_dialog_green).create();
+        qmuiDialog.findViewById(R.id.tvComKnow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+                knowListener.Know();
+            }
+        });
+        TextView tvTitle = qmuiDialog.findViewById(R.id.tvComTitle);
+        tvTitle.setVisibility(View.VISIBLE);
+        tvTitle.setText(title);
+        ((TextView) qmuiDialog.findViewById(R.id.tvComMassage)).setText(msg);
+        qmuiDialog.show();
+
+    }
+
+    /**
+     * @param mContext
+     * @param notice   error massage
+     * @param code     error code
+     */
+    public static void showMessageDialog(Context mContext, String notice, String code) {
+        String errMsg = byCodeToMsg(mContext, code);
+        if (!errMsg.isEmpty()) {
+            notice = errMsg;
+        }
+
+        showMessageDialog(mContext, notice);
+
+    }
+
+
+    public static void showMessageDialog(Context mContext, int notice) {
+        showMessageDialog(mContext, mContext.getResources().getString(notice));
+    }
+
+    /**
+     * get  error massage
+     *
+     * @param mContext
+     * @param code     error code
+     * @return error massage
+     */
+    public static String byCodeToMsg(Context mContext, String code) {
+        ExceptionEnum byValue = ExceptionEnum.getByValue(code);
+        if (byValue == null) {
+            return "";
+        }
+        return mContext.getResources().getString(byValue.getMsg());
+    }
+
+
+    /**
+     * @param
+     * @return true==single
+     */
+    public static boolean isSingle(int num) {
+        if (num == 0 || num == 1) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isSingle(String num) {
+        boolean isSingle;
+        try {
+            isSingle = isSingle(Integer.parseInt(num));
+        } catch (Exception e) {
+            return false;
+        }
+
+        return isSingle(Integer.parseInt(num));
+    }
+
+
+    public static String format(String num) {
+        String format = "";
+        try {
+            int num1 = Integer.parseInt(num);
+            format = DecimalFormat.getNumberInstance().format(num1);
+            if (TextUtils.isEmpty(format)) {
+                return "0";
+            }
+        } catch (Exception e) {
+            return "0";
+        }
+        return format;
+    }
+
+    public static boolean goWeChat(Context context, String appid, String username) {
+
+        IWXAPI api = WXAPIFactory.createWXAPI(context, WeChat_APPID);
+        WXLaunchMiniProgram.Req req = new WXLaunchMiniProgram.Req();
+        req.userName = XB_YOUPING_USERNAME;
+        req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
+        boolean isSend = api.sendReq(req);
+        if (!isSend) {
+            showMessageDialog(context, R.string.wechat_down_load_info);
+        }
+        return isSend;
+    }
+
+
+    public static String setRatio(int support, int total) {
+        String strRatio = "0";
+        double ratio = ((double) support / total) * 100;
+//        if (support == total) {
+//            strRatio = "100";
+//        } else {
+        DecimalFormat df = new DecimalFormat("#0.00");
+        strRatio = df.format(ratio);
+//        }
+        return strRatio + "%";
+    }
+
+    public static String setRatio(String total) {
+
+        String strRatio = "0.00";
+        if (total.equals("100")) {
+            strRatio = "100";
+        } else {
+
+            DecimalFormat df = new DecimalFormat("#0.00");
+            strRatio = df.format(Double.parseDouble(total));
+        }
+        return strRatio + "%";
+    }
+
+
+    public static void TransactionConfirmSheet(Context context, String transactionDetail, String sourceAddress, String destAddress, String amount, String fee) {
+//        final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(context);
+//        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
+//
+//        TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
+//        mTransactionDetailTv.setText(transactionDetail);
+//        TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
+//        TextView mDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.destAddressTvHint);
+//        if (TextUtils.isEmpty(destAddress)) {
+//            mDestAddressTv.setVisibility(View.GONE);
+//            mDestAddressTvHint.setVisibility(View.GONE);
+//        } else {
+//            mDestAddressTv.setVisibility(View.VISIBLE);
+//            mDestAddressTvHint.setVisibility(View.VISIBLE);
+//            if (TextUtils.isEmpty(accountTag)) {
+//                mDestAddressTv.setText(destAddress);
+//            } else {
+//                mDestAddressTv.setText(destAddress.concat(accountTag));
+//            }
+//
+//        }
+//
+//        TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
+//        mTxFeeTv.setText(String.valueOf(scanTxFee));
+//
+//
+//        qmuiBottomSheet.findViewById(R.id.detailBtn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.GONE);
+//                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.VISIBLE);
+//            }
+//        });
+//
+//
+//        TextView mSourceAddressTv = qmuiBottomSheet.findViewById(R.id.sourceAddressTv);
+//        mSourceAddressTv.setText(sourceAddress);
+//        TextView mDetailsDestAddressTv = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTv);
+//        TextView mDetailsDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTvHint);
+//        if (TextUtils.isEmpty(destAddress)) {
+//            mDetailsDestAddressTv.setVisibility(View.GONE);
+//            mDetailsDestAddressTvHint.setVisibility(View.GONE);
+//        } else {
+//            mDetailsDestAddressTv.setVisibility(View.VISIBLE);
+//            mDetailsDestAddressTvHint.setVisibility(View.VISIBLE);
+//            mDetailsDestAddressTv.setText(destAddress);
+//        }
+//
+//
+//        TextView mDetailsAmountTv = qmuiBottomSheet.findViewById(R.id.detailsAmountTv);
+//        mDetailsAmountTv.setText(CommonUtil.thousandSeparator(transactionAmount));
+//        TextView mDetailsTxFeeTv = qmuiBottomSheet.findViewById(R.id.detailsTxFeeTv);
+//        mDetailsTxFeeTv.setText(String.valueOf(scanTxFee));
+//        TextView mTransactionParamsTv = qmuiBottomSheet.findViewById(R.id.transactionParamsTv);
+//        mTransactionParamsTv.setText(transactionParams);
+//
+//        // title view listener
+//        qmuiBottomSheet.findViewById(R.id.goBackBtn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.VISIBLE);
+//                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.GONE);
+//            }
+//        });
+//        qmuiBottomSheet.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                qmuiBottomSheet.dismiss();
+//            }
+//        });
+//        qmuiBottomSheet.findViewById(R.id.detailsCancelBtn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                qmuiBottomSheet.dismiss();
+//            }
+//        });
+//        qmuiBottomSheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                qmuiBottomSheet.dismiss();
+//                confirmTransaction(contentDto);
+//            }
+//        });
+//        qmuiBottomSheet.show();
+    }
+
+
+    public static void setExpiryTime(String expiryTime, Context context) {
+        if (!TextUtils.isEmpty(expiryTime)) {
+            String[] strings = TimeUtil.time_mmss(Long.parseLong(expiryTime) - System.currentTimeMillis());
+            if (strings[0].isEmpty()) {
+                @SuppressLint("StringFormatMatches") String format = String.format(context.getString(R.string.error_1011_s, strings[1] + ""));
+                CommonUtil.showMessageDialog(context, format);
+            } else {
+                @SuppressLint("StringFormatMatches") String format = String.format(context.getString(R.string.error_1011_m, strings[0] + "", strings[1] + ""));
+                CommonUtil.showMessageDialog(context, format);
+            }
+        }
+    }
+
+
+    public interface KnowListener {
+
+        void Know();
+    }
+
 
 }

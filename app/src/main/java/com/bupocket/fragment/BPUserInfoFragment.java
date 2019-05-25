@@ -86,7 +86,7 @@ public class BPUserInfoFragment extends BaseFragment {
             public void onClick(View view) {
                 final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
                 qmuiDialog.setCanceledOnTouchOutside(false);
-                qmuiDialog.setContentView(R.layout.password_comfirm_layout);
+                qmuiDialog.setContentView(R.layout.view_password_comfirm);
                 qmuiDialog.show();
                 QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
 
@@ -239,7 +239,7 @@ public class BPUserInfoFragment extends BaseFragment {
     private void showPasswordComfirmDialog() {
         final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
         qmuiDialog.setCanceledOnTouchOutside(false);
-        qmuiDialog.setContentView(R.layout.password_comfirm_layout);
+        qmuiDialog.setContentView(R.layout.view_password_comfirm);
         qmuiDialog.show();
         QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
         ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);

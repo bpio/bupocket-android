@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_btn_color_white"
+        android:paddingTop="10dp"
+        android:paddingLeft="13sp">
+
+        <TextView
+            android:id="@+id/tvBuildDetailName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            tools:text="百信共建小分队百信共建小分队百信共建小分队百信共建小分队"
+            android:paddingRight="5dp"
+            android:layout_toLeftOf="@+id/tvNodeBuilding"
+            android:textColor="@color/app_color_black"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvNodeBuilding"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="2dp"
+            android:paddingLeft="8dp"
+            android:paddingRight="5dp"
+            android:background="@drawable/selector_node_build"
+            android:gravity="center"
+            android:text="@string/build_runing"
+            android:textColor="@color/app_btn_color_white"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/app_btn_color_white"
+        android:paddingLeft="13sp"
+        android:paddingRight="10dp"
+        android:paddingBottom="15dp">
+
+
+
+        <TextView
+            android:id="@+id/tvBuildDetailAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_alignParentTop="true"
+            tools:text="10000"
+            android:textColor="@color/app_color_green"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tvBuildBu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/bu_share"
+            android:paddingBottom="2dp"
+            android:layout_alignBottom="@id/tvBuildDetailAmount"
+            android:layout_marginLeft="4dp"
+            android:layout_toRightOf="@id/tvBuildDetailAmount"
+            android:textColor="@color/app_color_green"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/tvPurchaseAmountHint"
+            style="@style/tv_node_build_gray_style"
+            android:layout_below="@+id/tvBuildDetailAmount"
+            android:layout_marginTop="3dp"
+            android:text="@string/build_purchase_amount" />
+
+        <LinearLayout
+            android:id="@+id/llProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvPurchaseAmountHint"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ProgressBar
+                android:id="@+id/pbBuild"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="0dp"
+                android:layout_height="5dp"
+                android:layout_weight="1"
+                android:progressDrawable="@drawable/progress_horizontal_green"
+                tools:max="100"
+                tools:progress="60" />
+
+            <TextView
+                android:id="@+id/tvProgress"
+                android:layout_width="55dp"
+                android:gravity="center"
+                android:layout_marginLeft="3dp"
+                android:layout_height="wrap_content"
+                tools:text="166.66%" />
+
+
+        </LinearLayout>
+
+
+
+
+        <TextView
+            android:id="@+id/tvBuildDetailLeftCopies"
+            style="@style/tv_node_build_gray_style"
+            android:layout_below="@+id/tvPurchaseAmountHint"
+            android:layout_marginTop="32dp"
+            tools:text="剩余37份" />
+
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:layout_below="@+id/tvBuildDetailLeftCopies"
+            android:layout_marginTop="15dp"
+            android:background="@color/app_txt_color_gray_3" />
+
+
+        <TextView
+            android:id="@+id/tvTargetAmountHint"
+            style="@style/tv_node_build_black_style"
+            android:layout_below="@+id/tvBuildDetailLeftCopies"
+            android:layout_marginTop="30dp"
+            android:text="@string/build_target_amount" />
+
+        <TextView
+            android:id="@+id/tvSupportAmountHint"
+            style="@style/tv_node_build_black_style"
+            android:layout_below="@+id/tvTargetAmountHint"
+            android:layout_marginTop="15dp"
+            android:text="@string/build_support_amount" />
+        <TextView
+            android:id="@+id/tvOriginPurchaseAmountHint"
+            style="@style/tv_node_build_black_style"
+            android:layout_below="@+id/tvSupportAmountHint"
+            android:layout_marginTop="18dp"
+            android:text="@string/build_origin_purchase_amount" />
+
+
+        <ImageView
+            android:id="@+id/ivSheetHint"
+            android:layout_toRightOf="@+id/tvOriginPurchaseAmountHint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2.5dp"
+            android:layout_alignTop="@id/tvOriginPurchaseAmountHint"
+            android:background="@mipmap/ic_sheet_hint"
+            />
+
+
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="12dp">
+
+            <TextView
+                android:id="@+id/tvBuildDetailSharingRatio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                tools:text="86%"
+                android:visibility="invisible"
+                android:textColor="@color/app_txt_color_red_5"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tvSharingRatioHint"
+                style="@style/tv_node_build_gray_style"
+                android:layout_below="@+id/tvBuildDetailSharingRatio"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="3dp"
+                android:text="@string/build_sharing_ratio"
+                android:visibility="invisible" />
+
+
+
+            <TextView
+                android:id="@+id/tvBuildDetailSupportNum"
+                style="@style/tv_node_build_gray_style"
+                android:layout_below="@+id/tvSharingRatioHint"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="32dp"
+                tools:text="560支持" />
+
+
+            <TextView
+                android:id="@+id/tvDetailTotalAmount"
+                style="@style/tv_node_build_black_style2"
+                android:layout_below="@+id/tvBuildDetailSupportNum"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="30dp"
+                tools:text="50000000" />
+
+            <TextView
+                android:id="@+id/tvBuildDetailSupportAmount"
+                style="@style/tv_node_build_black_style2"
+                android:layout_below="@+id/tvDetailTotalAmount"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                tools:text="5000" />
+
+            <TextView
+                android:id="@+id/tvBuildDetailOriginAmount"
+                style="@style/tv_node_build_black_style2"
+                android:layout_below="@+id/tvBuildDetailSupportAmount"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="18dp"
+                tools:text="2000" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+    <TextView
+        style="@style/tv_node_build_gray_style"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/build_rist_info_record"
+        android:textColor="@color/app_txt_color_gray"
+        android:textSize="13sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="13dp"
+        android:background="@drawable/edit_border_bg_white"
+        android:padding="13dp"
+        android:lineSpacingMultiplier="1.5"
+        android:text="@string/build_risk_info"
+        android:textColor="@color/app_txt_color_gray_2"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/tvRecord"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="12dp"
+        android:text="@string/build_support_record"
+        android:textColor="@color/app_txt_color_gray"
+        android:textSize="13sp" />
+
+
+    <include
+        android:visibility="gone"
+        layout="@layout/view_empty_record"/>
+
+</LinearLayout>

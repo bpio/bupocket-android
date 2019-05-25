@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_bg_color_gray_4"
+        android:orientation="vertical"
+      >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="?attr/qmui_topbar_height"
+            android:layout_gravity="center"
+            android:fitsSystemWindows="true"
+            android:gravity="center"
+            android:textSize="16sp"
+            android:text="@string/tabbar_discover_txt"
+            android:background="@color/app_btn_color_white"
+            android:textColor="@color/send_confirm_title_color"
+           />
+
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vpDisBanner"
+            android:layout_width="match_parent"
+            android:layout_height="190dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="@dimen/common_padding_border"
+            android:layout_marginRight="@dimen/common_padding_border"
+            android:background="@mipmap/ic_banner_empty"
+            />
+
+        <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="187.5dp"-->
+        <!--android:layout_marginTop="11.5dp"-->
+        <!--android:background="@drawable/shape_corner"-->
+        <!--android:orientation="vertical"-->
+        <!--android:visibility="gone">-->
+
+        <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@mipmap/ic_discover_bg"-->
+        <!--tools:ignore="ContentDescription" />-->
+        <!--</LinearLayout>-->
+
+        <RelativeLayout
+            android:visibility="gone"
+            android:id="@+id/cardPackageRl"
+            style="@style/dis_item_style">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:background="@mipmap/icon_discover_cards" />
+
+            <TextView
+                style="@style/tvDisStyle"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="47dp"
+                android:layout_marginLeft="47dp"
+                android:text="@string/card_package_txt" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="13.25dp"
+                android:layout_marginRight="13.25dp"
+                android:background="@mipmap/icon_right_arrow" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            style="@style/dis_item_style"
+            android:layout_marginLeft="@dimen/common_padding_border"
+            android:layout_marginRight="@dimen/common_padding_border"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/nodePlanRl"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="@mipmap/icon_discover_node_plan" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="47dp"
+                    android:layout_marginLeft="47dp"
+                    android:text="@string/run_for_node_txt"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="13.25dp"
+                    android:layout_marginRight="13.25dp"
+                    android:background="@mipmap/icon_right_arrow" />
+            </RelativeLayout>
+
+            <View style="@style/divide_line" />
+
+
+            <RelativeLayout
+                android:id="@+id/nodeBuildRl"
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="@mipmap/icon_discover_node_build" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="47dp"
+                    android:layout_marginLeft="47dp"
+                    android:text="@string/build_node_txt"
+                    android:textSize="15sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="13.25dp"
+                    android:layout_marginRight="13.25dp"
+                    android:background="@mipmap/icon_right_arrow" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/informationRl"
+            style="@style/dis_item_style"
+            android:layout_marginLeft="@dimen/common_padding_border"
+            android:layout_marginRight="@dimen/common_padding_border"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:background="@mipmap/icon_discover_information" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="47dp"
+                android:layout_marginLeft="47dp"
+                android:text="@string/information_txt"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="13.25dp"
+                android:layout_marginRight="13.25dp"
+                android:background="@mipmap/icon_right_arrow" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/xiaobuYoupinRl"
+            style="@style/dis_item_style"
+            android:layout_marginLeft="@dimen/common_padding_border"
+            android:layout_marginRight="@dimen/common_padding_border"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:layout_marginLeft="15dp"
+                android:background="@mipmap/icon_discover_youpin" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="47dp"
+                android:layout_marginLeft="47dp"
+                android:text="@string/xiaobu_youpin_txt"
+                android:textSize="15sp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="13.25dp"
+                android:layout_marginRight="13.25dp"
+                android:background="@mipmap/icon_right_arrow" />
+        </RelativeLayout>
+    </LinearLayout>
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

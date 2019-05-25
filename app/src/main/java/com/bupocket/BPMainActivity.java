@@ -10,12 +10,17 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.base.BaseFragmentActivity;
 import com.bupocket.fragment.BPBackupWalletFragment;
 import com.bupocket.fragment.BPCreateWalletFragment;
+import com.bupocket.fragment.BPSendStatusFragment;
+import com.bupocket.fragment.BPSendTokenFragment;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.manager.BPUpgradeManager;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
+import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.umeng.analytics.MobclickAgent;
+import com.umeng.commonsdk.UMConfigure;
 
 public class BPMainActivity extends BaseFragmentActivity {
     private static final String KEY_FRAGMENT = "key_fragment";
@@ -102,10 +107,16 @@ public class BPMainActivity extends BaseFragmentActivity {
             ((HomeFragment)getCurrentFragment()).onBackPressed();
         }else if(getCurrentFragment().getTag().equals("BPCreateWalletFragment")){
             ((BPCreateWalletFragment)getCurrentFragment()).onBackPressed();
-        }else{
+        }
 
-            super.onBackPressed();
+//        else if (getCurrentFragment().getTag().equals(BPSendStatusFragment.class.getSimpleName())){
+//            ((BPSendStatusFragment)getCurrentFragment()).onBackPressed();
+//        }
+
+        else{
+
+            ((BaseFragment) getCurrentFragment()).popBackStack();
+//            super.onBackPressed();
         }
     }
-
 }

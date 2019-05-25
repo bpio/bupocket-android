@@ -3,10 +3,7 @@ package com.bupocket.fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,10 +16,7 @@ import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.HiddenFunctionStatusEnum;
 import com.bupocket.enums.LanguageEnum;
 import com.bupocket.fragment.home.HomeFragment;
-import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.utils.SharedPreferencesHelper;
-import com.bupocket.utils.SocketUtil;
-import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
@@ -162,7 +156,7 @@ public class BPSettingFragment extends BaseFragment {
                 }
             }
         }
-        View languageRightView = LayoutInflater.from(getContext()).inflate(R.layout.setting_list_right_layout,null);
+        View languageRightView = LayoutInflater.from(getContext()).inflate(R.layout.view_setting_list_right,null);
         if(LanguageEnum.CHINESE.getId() == language){
             TextView textView = languageRightView.findViewById(R.id.atOptionTv);
             textView.setText(getString(R.string.language_cn));
@@ -184,7 +178,7 @@ public class BPSettingFragment extends BaseFragment {
 
         // monetary unit item
         String currencyType = sharedPreferencesHelper.getSharedPreference("currencyType","CNY").toString();
-        View monetaryRightView = LayoutInflater.from(getContext()).inflate(R.layout.setting_list_right_layout,null);
+        View monetaryRightView = LayoutInflater.from(getContext()).inflate(R.layout.view_setting_list_right,null);
         TextView monetaryRightTextView = monetaryRightView.findViewById(R.id.atOptionTv);
         monetaryRightTextView.setText(currencyType);
         QMUICommonListItemView monetary = mSettingLv.createItemView(getString(R.string.monetary_title_txt));

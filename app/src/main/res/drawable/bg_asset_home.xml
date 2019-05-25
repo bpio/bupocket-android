@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<bitmap xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/assetHomeBackground"
-    android:src="@mipmap/ic_asset_home_bg"
-    android:tileMode="disabled" android:gravity="top" >
-</bitmap>

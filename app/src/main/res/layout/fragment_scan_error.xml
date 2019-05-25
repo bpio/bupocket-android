@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/closeIv"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="8.15dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/icon_cancel_big"/>
+
+    <ImageView
+        android:layout_marginTop="130dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:src="@mipmap/icon_login_error" />
+
+    <TextView
+        android:id="@+id/errorTypeTv"
+        android:layout_marginTop="26dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        tools:text="@string/scan_qr_login_management_system_not_bound_txt"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:textColor="@color/app_color_black"/>
+
+    <TextView
+        android:id="@+id/errorMessageTv"
+        android:layout_marginTop="15.5dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:textColor="@color/app_txt_color_gray"
+        tools:text="@string/bound_address_note_txt"/>
+
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:id="@+id/confirmBtn"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="47dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:padding="10dp"
+        android:text="@string/common_dialog_confirm"
+        android:textSize="18sp"
+        android:textColor="@color/qmui_config_color_white"
+        app:qmui_backgroundColor="@color/app_color_main"
+        app:qmui_borderColor="@color/app_color_main"
+        app:qmui_radius="4dp" />
+
+</LinearLayout>

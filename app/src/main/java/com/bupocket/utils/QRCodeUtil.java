@@ -32,7 +32,7 @@ public class QRCodeUtil {
      */
     @Nullable
     public static Bitmap createQRCodeBitmap(String content, int width, int height){
-        return createQRCodeBitmap(content, width, height, "UTF-8", "H", "2", Color.BLACK, Color.WHITE);
+        return createQRCodeBitmap(content, width, height, "UTF8", null, "2", Color.BLACK, Color.WHITE);
     }
 
     /**
@@ -64,18 +64,18 @@ public class QRCodeUtil {
 
         try {
             /** 2.设置二维码相关配置,生成BitMatrix(位矩阵)对象 */
-            Hashtable<EncodeHintType, String> hints = new Hashtable<>();
+            Hashtable<EncodeHintType, Object> hints = new Hashtable<>();
 
             if(!TextUtils.isEmpty(character_set)) {
                 hints.put(EncodeHintType.CHARACTER_SET, character_set); // 字符转码格式设置
             }
 
             if(!TextUtils.isEmpty(error_correction)){
-                hints.put(EncodeHintType.ERROR_CORRECTION, error_correction); // 容错级别设置
+                hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H); // 容错级别设置
             }
 
             if(!TextUtils.isEmpty(margin)){
-                hints.put(EncodeHintType.MARGIN, margin); // 空白边距设置
+                hints.put(EncodeHintType.MARGIN, Integer.valueOf(margin)); // 空白边距设置
             }
             BitMatrix bitMatrix = new QRCodeWriter().encode(content, BarcodeFormat.QR_CODE, width, height, hints);
 
