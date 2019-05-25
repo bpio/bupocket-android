@@ -86,6 +86,8 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
     QMUIEmptyView mEmptyView;
     @BindView(R.id.assetCodeTv)
     TextView mAssetCodeTv;
+    @BindView(R.id.txSignatureTitleTv)
+    TextView mTxSignatureTitleTv;
 
     @BindView(R.id.txDetailLl)
     LinearLayout mTxDetailLl;
@@ -159,21 +161,27 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     if(txDeatilRespBoBean.getStatus().equals(TxStatusEnum.SUCCESS.getCode())){
                         if(isAdded()){
                             txStatusIconDrawable = ContextCompat.getDrawable(Objects.requireNonNull(getContext()),R.mipmap.icon_send_success);
-                            txStatusStr = getResources().getString(R.string.tx_status_success_txt1);
+                            txStatusStr = getResources().getString(R.string.tx_status_success_txt);
                         }
                     }else{
                         if(isAdded()){
                             txStatusIconDrawable = ContextCompat.getDrawable(Objects.requireNonNull(getContext()),R.mipmap.icon_send_fail);
-                            txStatusStr = getResources().getString(R.string.tx_status_fail_txt1);
+                            txStatusStr = getResources().getString(R.string.tx_status_fail_txt);
                         }
                     }
                     mTxStatusIcon.setImageDrawable(txStatusIconDrawable);
                     mTxStatusTv.setText(txStatusStr);
-                    mSendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(outinType) ? "+" : "-") + txInfoRespBoBean.getAmount());
+
+                    if (txInfoRespBoBean.getAmount().equals("0")) {
+                        mSendAmountTv.setText(txInfoRespBoBean.getAmount());
+                    }else{
+                        mSendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(outinType) ? mContext.getString(R.string.comm_in) :mContext.getString(R.string.comm_out)) + txInfoRespBoBean.getAmount());
+                    }
+
                     mTxFromAccAddrTv.setText(txDeatilRespBoBean.getSourceAddress());
                     mTxToAccAddrTv.setText(txDeatilRespBoBean.getDestAddress());
                     mTxDetailFeeTv.setText(txDeatilRespBoBean.getFee() + " BU");
-                    mTxDetailSendDateTv.setText(TimeUtil.timeStamp2Date(txDeatilRespBoBean.getApplyTimeDate().toString().substring(0,10),"yyyy.MM.dd HH:mm:ss"));
+                    mTxDetailSendDateTv.setText(TimeUtil.timeStamp2Date(txDeatilRespBoBean.getApplyTimeDate()));
                     mTxDetailTXHashTv.setText(txInfoRespBoBean.getHash());
                     mTxDetailNoteTv.setText(txDeatilRespBoBean.getTxMetadata());
 
@@ -184,21 +192,27 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     mTxDetailTxInfoNonceTv.setText(txInfoRespBoBean.getNonce() + "");
 
                     String signatureStr = txInfoRespBoBean.getSignatureStr();
-                    JSONArray signatureArr = JSON.parseArray(signatureStr);
-                    JSONObject signatureObj = null;
-                    List<TxDetailSignatureAdapter.Signature> signatures = new ArrayList<>();
-                    TxDetailSignatureAdapter.Signature signature = null;
-                    for (int i = 0; i < signatureArr.size(); i++) {
-                        signatureObj = JSON.parseObject(signatureArr.getString(i));
-                        signature = new TxDetailSignatureAdapter.Signature();
-                        signature.setPublicKey(signatureObj.getString("publicKey"));
-                        signature.setSignData(signatureObj.getString("signData"));
-                        signatures.add(signature);
+                    if(signatureStr != null){
+                        JSONArray signatureArr = JSON.parseArray(signatureStr);
+                        JSONObject signatureObj = null;
+                        List<TxDetailSignatureAdapter.Signature> signatures = new ArrayList<>();
+                        TxDetailSignatureAdapter.Signature signature = null;
+                        for (int i = 0; i < signatureArr.size(); i++) {
+                            signatureObj = JSON.parseObject(signatureArr.getString(i));
+                            signature = new TxDetailSignatureAdapter.Signature();
+                            signature.setPublicKey(signatureObj.getString("publicKey"));
+                            signature.setSignData(signatureObj.getString("signData"));
+                            signatures.add(signature);
+                        }
+
+                        if(isAdded()){
+                            loads(signatures);
+                        }
+                    }else {
+                        mTxSignatureTitleTv.setVisibility(View.GONE);
+                        txDetailSignatureListLl.setVisibility(View.GONE);
                     }
 
-                    if(isAdded()){
-                        loads(signatures);
-                    }
 //                    txDetailSignatureAdapter = new TxDetailSignatureAdapter(signatures, getContext());
 //                    mTxDetailSignatureItemLv.setAdapter(txDetailSignatureAdapter);
 //                    setListViewHeightBasedOnChildren(mTxDetailSignatureItemLv);
@@ -210,7 +224,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                     mTxDetailBlockInfoBlockHashTv.setText(blockInfoRespBoBean.getHash());
                     mTxDetailBlockInfoPrevBlockHashTv.setText(blockInfoRespBoBean.getPreviousHash());
                     mTxDetailBlockInfoTXCountTv.setText(blockInfoRespBoBean.getTxCount() + "");
-                    mTxDetailBlockInfoConsensusTimeTv.setText(TimeUtil.timeStamp2Date(blockInfoRespBoBean.getCloseTimeDate().toString().substring(0,10),"yyyy.MM.dd HH:mm:ss"));
+                    mTxDetailBlockInfoConsensusTimeTv.setText(TimeUtil.timeStamp2Date(blockInfoRespBoBean.getCloseTimeDate()));
 
 
                 }else{
@@ -268,7 +282,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
 
 
             TextView sdLabelTv = new TextView(getContext());
-            sdLabelTv.setText("Singed Data");
+            sdLabelTv.setText("Signed Data");
             sdLabelTv.setPadding(20,10,10,20);
             sdLabelTv.setTextColor(0xFF888888);
 

@@ -16,8 +16,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
-import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
@@ -34,6 +32,7 @@ import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.SocketUtil;
+import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
@@ -137,7 +136,7 @@ public class BPIssueTokenFragment extends BaseFragment {
     private void showPasswordConfirmDialog() {
         final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
         qmuiDialog.setCanceledOnTouchOutside(false);
-        qmuiDialog.setContentView(R.layout.password_comfirm_layout);
+        qmuiDialog.setContentView(R.layout.view_password_comfirm);
         qmuiDialog.show();
         QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
         ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
@@ -179,11 +178,11 @@ public class BPIssueTokenFragment extends BaseFragment {
                             e.printStackTrace();
                             Looper.prepare();
                             if(ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())){
-                                Toast.makeText(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT).show();
+                               ToastUtil.showToast(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT);
                             }else if(ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())){
-                                Toast.makeText(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT).show();
+                                ToastUtil.showToast(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT);
                             }else {
-                                Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
+                                ToastUtil.showToast(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT);
                             }
                             txSendingTipDialog.dismiss();
                             Looper.loop();

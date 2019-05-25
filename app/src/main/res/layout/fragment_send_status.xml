@@ -6,7 +6,14 @@
     android:layout_height="match_parent"
     android:background="@color/qmui_config_color_white">
 
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true" />
     <LinearLayout
+        android:id="@+id/llStatusFailed"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/qmui_topbar_height"
@@ -39,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="@string/send_status_success_txt"
+                android:text="@string/tx_status_success_txt"
                 android:textAlignment="center"
                 android:textColor="@color/app_txt_color_gray"
                 android:textSize="16sp" />
@@ -69,17 +76,43 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
+                    android:orientation="horizontal"
                     android:padding="10dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/transaction_status_width"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:layout_marginEnd="60dp"
-                        android:layout_marginRight="60dp"
                         android:layout_marginBottom="10dp"
-                        android:text="@string/send_status_target_addr"
+                        android:text="@string/tx_from"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/tvFromAddress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:gravity="right"
+                        android:textAlignment="textEnd"
+                        android:textSize="14sp"
+                        android:textIsSelectable="true"
+                        tools:ignore="RtlCompat"
+                        tools:text="buQWJtxqTzUaMUxuC93zA5aoJcDdHPQ21d92asdasdasdasdasdasd" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="@dimen/transaction_status_width"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:layout_marginBottom="10dp"
+                        android:text="@string/tx_to"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="14sp" />
 
@@ -88,8 +121,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
-                        android:textAlignment="textStart"
-                        android:textColor="@color/app_txt_color_gray"
+                        android:textAlignment="textEnd"
                         android:textSize="14sp"
                         android:textIsSelectable="true"
                         tools:ignore="RtlCompat"
@@ -104,12 +136,10 @@
                     android:padding="10dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/transaction_status_width"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:layout_marginEnd="60dp"
-                        android:layout_marginRight="60dp"
-                        android:text="@string/send_status_amount"
+                        android:text="@string/tx_value"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="14sp" />
 
@@ -119,7 +149,6 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:textAlignment="textEnd"
-                        android:textColor="@color/app_txt_color_gray"
                         android:textSize="14sp"
                         tools:text="100 BU" />
 
@@ -132,12 +161,10 @@
                     android:padding="10dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/transaction_status_width"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:layout_marginEnd="60dp"
-                        android:layout_marginRight="60dp"
-                        android:text="@string/tx_detail_fee_label"
+                        android:text="@string/tx_fee"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="14sp" />
 
@@ -148,11 +175,9 @@
                         android:layout_gravity="end"
                         android:text="0.01 BU"
                         android:textAlignment="textEnd"
-                        android:textColor="@color/app_txt_color_gray"
                         android:textSize="14sp" />
 
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -160,26 +185,26 @@
                     android:padding="10dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/transaction_status_width"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:layout_marginEnd="60dp"
-                        android:layout_marginRight="60dp"
-                        android:text="@string/send_status_note"
+                        android:text="@string/tx_hash"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="14sp" />
 
                     <TextView
-                        android:id="@+id/sendNote"
+                        android:id="@+id/sendTransHash"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:textAlignment="textEnd"
-                        android:textColor="@color/app_txt_color_gray"
                         android:textSize="14sp"
-                        tools:text="转账" />
+                        android:textIsSelectable="true"
+                        tools:text="assss" />
 
                 </LinearLayout>
+
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -188,12 +213,10 @@
                     android:padding="10dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="@dimen/transaction_status_width"
                         android:layout_height="wrap_content"
                         android:layout_gravity="left"
-                        android:layout_marginEnd="60dp"
-                        android:layout_marginRight="60dp"
-                        android:text="@string/send_status_time"
+                        android:text="@string/tx_time"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="14sp" />
 
@@ -203,11 +226,36 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="end"
                         android:textAlignment="textEnd"
-                        android:textColor="@color/app_txt_color_gray"
                         android:textSize="14sp"
                         tools:text="2018-09-08 14:22" />
 
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="@dimen/transaction_status_width"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="left"
+                        android:text="@string/tx_memo"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/sendNote"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:textAlignment="textEnd"
+                        android:textSize="14sp"
+                        tools:text="转账" />
+
+                </LinearLayout>
+
 
             </LinearLayout>
 
@@ -216,9 +264,13 @@
     </LinearLayout>
 
 
-    <com.qmuiteam.qmui.widget.QMUITopBarLayout
-        android:id="@+id/topbar"
+
+    <include
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        layout="@layout/fragment_transaction_success"
+        android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true" />
+        android:visibility="gone"
+        />
+
 </android.support.design.widget.CoordinatorLayout>

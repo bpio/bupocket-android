@@ -65,16 +65,7 @@
         <item name="qmui_topbar_image_btn_height">48dp</item>
     </style>
 
-    <style name="QDRadiusButton" parent="@style/Button">
-        <item name="android:layout_height">40dp</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:paddingLeft">?attr/qmui_content_spacing_horizontal</item>
-        <item name="android:paddingRight">?attr/qmui_content_spacing_horizontal</item>
-        <item name="android:background">@drawable/s_radius_button_bg</item>
-        <item name="android:textColor">@color/s_app_color_blue_2</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:gravity">center</item>
-    </style>
+
 
     <style name="button_wrapper_style">
         <item name="android:layout_width">match_parent</item>
@@ -211,4 +202,84 @@
         <item name="colorAccent">@color/app_color_main</item>
     </style>
 
+    <style name="tvDisStyle">
+
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/tv_black</item>
+        <item name="android:textSize">15sp</item>
+
+
+    </style>
+
+    <style name="dis_item_style">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:background">@drawable/shape_corner</item>
+        <item name="android:layout_marginTop">10dp</item>
+
+    </style>
+
+    <style name="tv_node_build_gray_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/multiline_edit_hint_color</item>
+    </style>
+
+    <style name="tv_node_build_black_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/app_txt_color_gray_2</item>
+    </style>
+
+    <style name="tv_com_gray66_style">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/app_txt_color_gray_2</item>
+    </style>
+
+
+    <style name="tv_node_build_black_style2">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/app_color_black</item>
+    </style>
+
+    <style name="tv_node_build_black_style3">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/app_txt_color_gray</item>
+    </style>
+
+
+
+    <style name="divide_line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:layout_marginLeft">13sp</item>
+        <item name="android:layout_marginRight">13sp</item>
+        <item name="android:background">@color/app_txt_color_gray_3</item>
+    </style>
+
+    <style name="tv_node_plan_style">
+        <item name="android:maxEms">8</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+
+    <style name="qmui_com_dialog"   parent="QMUI.Dialog">
+        <item name="android:textColor">@color/app_color_green</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:gravity">center_horizontal</item>
+        <item name="qmui_dialog_positive_action_text_color">@color/app_color_green</item>
+        <item name="qmui_dialog_negative_action_text_color">@color/app_color_green</item>
+
+    </style>
 </resources>

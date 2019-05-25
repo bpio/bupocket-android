@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="match_parent">
 
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -33,49 +33,49 @@
                     android:id="@+id/assetLinearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_asset_home"
+                    android:background="@mipmap/ic_asset_home_bg"
                     android:fitsSystemWindows="true"
                     android:gravity="center_horizontal"
                     android:orientation="vertical">
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="5dp">
 
                         <TextView
                             android:id="@+id/currentTestNetTipsTv"
-                            android:layout_width="wrap_content"
+                            android:layout_width="1dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:textColor="@color/app_color_green"
-                            android:paddingTop="10dp"
-                            android:paddingRight="35dp"
-                            android:paddingLeft="10dp"
                             android:layout_alignParentLeft="true"
-                            android:textSize="15sp" />
+                            android:paddingLeft="10dp"
+                            android:textColor="@color/app_color_green"
+                            android:textSize="15sp"
+                            tools:text="test" />
 
                         <TextView
                             android:id="@+id/currentWalletNameTv"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_centerInParent="true"
-                            android:paddingTop="10dp"
-                            android:layout_marginLeft="40dp"
-                            android:layout_marginRight="40dp"
+                            android:layout_weight="4"
+                            android:gravity="center"
                             android:textColor="@color/app_color_white"
                             android:textSize="20sp"
-                            android:gravity="center"
-                            tools:text="有钱的钱包"/>
+                            android:lines="1"
+                            tools:text="有钱的钱包" />
 
                         <ImageView
                             android:id="@+id/manageWalletBtn"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
                             android:layout_height="wrap_content"
-                            android:src="@mipmap/icon_wallet_white"
-                            android:layout_alignParentRight="true"
                             android:paddingRight="10dp"
-                            android:paddingTop="10dp"/>
-                    </RelativeLayout>
+                            android:src="@mipmap/icon_wallet_white" />
+                    </LinearLayout>
 
 
                     <LinearLayout
@@ -93,115 +93,146 @@
                                 android:id="@+id/totalAssetsValueTv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textColor="@color/app_color_white"
                                 android:text="≈0"
+                                android:textColor="@color/app_color_white"
                                 android:textSize="36sp" />
 
                             <TextView
                                 android:id="@+id/currencyTypeTv"
-                                android:layout_toRightOf="@+id/totalAssetsValueTv"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="￥"
-                                android:gravity="top"
                                 android:layout_marginLeft="5dp"
+                                android:layout_toRightOf="@+id/totalAssetsValueTv"
+                                android:gravity="top"
+                                android:text="￥"
                                 android:textColor="@color/app_color_white"
                                 android:textSize="18sp" />
 
                         </RelativeLayout>
 
-                        <TextView
-                            android:id="@+id/totalAssetsTitleTv"
+
+                        <LinearLayout
+                            android:orientation="horizontal"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:text="@string/total_assets_title_txt"
-                            android:textColor="@color/app_color_white"
-                            android:textSize="15sp" />
+                            android:gravity="center_vertical"
+                            >
+                            <TextView
+                                android:id="@+id/totalAssetsTitleTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:text="@string/total_assets_title_txt"
+                                android:textColor="@color/app_color_white"
+                                android:textSize="15sp" />
+
+                            <ImageView
+                                android:id="@+id/ivAssetsInfo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="5dp"
+                                android:paddingRight="15dp"
+                                android:paddingTop="6dp"
+                                android:paddingBottom="5dp"
+                                android:layout_gravity="center_vertical"
+                                android:src="@mipmap/ic_hint_question_blue"
+                                />
+
+                        </LinearLayout>
+
+
 
                         <LinearLayout
                             android:layout_width="340dp"
                             android:layout_height="110dp"
                             android:layout_marginTop="30dp"
-                            android:orientation="horizontal"
+                            android:background="@drawable/shape_corner"
                             android:gravity="center"
-                            android:background="@drawable/shape_corner">
+                            android:orientation="horizontal">
 
                             <LinearLayout
-                                android:layout_weight="1"
                                 android:layout_width="0dp"
-                                android:gravity="center"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
                                 <LinearLayout
                                     android:id="@+id/homeScanLl"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    android:gravity="center">
+                                    android:gravity="center"
+                                    android:orientation="vertical">
 
                                     <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:background="@mipmap/icon_scan_green"/>
+                                        android:background="@mipmap/icon_scan_green" />
+
                                     <TextView
-                                        android:layout_marginTop="12dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginTop="12dp"
                                         android:text="@string/wallet_scan_txt"
                                         android:textColor="@color/app_txt_color_gray"
-                                        android:textSize="15sp"/>
+                                        android:textSize="15sp" />
                                 </LinearLayout>
 
                             </LinearLayout>
+
                             <LinearLayout
-                                android:layout_weight="1"
                                 android:layout_width="0dp"
-                                android:gravity="center"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
                                 <LinearLayout
                                     android:id="@+id/receiveLl"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    android:gravity="center">
+                                    android:gravity="center"
+                                    android:orientation="vertical">
 
                                     <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:background="@mipmap/icon_qr_green"/>
+                                        android:background="@mipmap/icon_qr_green" />
+
                                     <TextView
-                                        android:layout_marginTop="12dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginTop="12dp"
                                         android:text="@string/receive_qr_txt"
                                         android:textColor="@color/app_txt_color_gray"
-                                        android:textSize="15sp"/>
+                                        android:textSize="15sp" />
                                 </LinearLayout>
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_weight="1"
                                 android:layout_width="0dp"
-                                android:gravity="center"
-                                android:layout_height="match_parent">
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
                                 <LinearLayout
                                     android:id="@+id/addTokenLl"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:orientation="vertical"
-                                    android:gravity="center">
+                                    android:gravity="center"
+                                    android:orientation="vertical">
 
                                     <ImageView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:background="@mipmap/icon_add_token_green"/>
+                                        android:background="@mipmap/icon_add_token_green" />
+
                                     <TextView
-                                        android:layout_marginTop="12dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginTop="12dp"
                                         android:text="@string/assets_add_txt"
                                         android:textColor="@color/app_txt_color_gray"
-                                        android:textSize="15sp"/>
+                                        android:textSize="15sp" />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -213,35 +244,36 @@
 
                 <LinearLayout
                     android:id="@+id/safetyTipsLl"
-                    android:visibility="visible"
-                    android:padding="12dp"
                     android:layout_width="340dp"
-                    android:layout_gravity="center_horizontal"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/shape_corner"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="12dp"
+                    android:visibility="visible">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/safety_tips_title"
                         android:textColor="@color/app_txt_color_gray_2"
-                        android:textSize="15sp"/>
+                        android:textSize="15sp" />
 
                     <TextView
-                        android:layout_marginTop="7.5dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/app_txt_color_gray_2"
+                        android:layout_marginTop="7.5dp"
                         android:text="@string/safety_tips_content_txt"
-                        android:textSize="14sp"/>
+                        android:textColor="@color/app_txt_color_gray_2"
+                        android:textSize="14sp" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:paddingTop="10dp">
+
                         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                             android:id="@+id/notBackupBtn"
                             android:layout_width="wrap_content"
@@ -249,24 +281,25 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="@string/no_backup_mneonic_btn_code"
-                            app:qmui_borderColor="@color/app_bg_color_purple"
-                            app:qmui_backgroundColor="@color/app_bg_color_purple"
-                            app:qmui_radius="5dp"
                             android:textColor="@color/app_txt_color_purple"
-                            android:textSize="@dimen/bp_btn_text_size"/>
+                            android:textSize="@dimen/bp_btn_text_size"
+                            app:qmui_backgroundColor="@color/app_bg_color_purple"
+                            app:qmui_borderColor="@color/app_bg_color_purple"
+                            app:qmui_radius="5dp" />
+
                         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                             android:id="@+id/immediatelyBackupBtn"
                             android:layout_width="wrap_content"
                             android:layout_height="40dp"
-                            android:layout_weight="1"
                             android:layout_marginLeft="25dp"
+                            android:layout_weight="1"
                             android:gravity="center"
                             android:text="@string/backup_immediately_txt"
-                            app:qmui_borderColor="@color/app_color_green"
-                            app:qmui_backgroundColor="@color/app_color_green"
-                            app:qmui_radius="5dp"
                             android:textColor="@color/app_color_font"
-                            android:textSize="@dimen/bp_btn_text_size"/>
+                            android:textSize="@dimen/bp_btn_text_size"
+                            app:qmui_backgroundColor="@color/app_color_green"
+                            app:qmui_borderColor="@color/app_color_green"
+                            app:qmui_radius="5dp" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -280,8 +313,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/my_assets_title_txt"
                         android:layout_marginBottom="10dp"
+                        android:text="@string/my_assets_title_txt"
                         android:textSize="16sp" />
 
                     <com.qmuiteam.qmui.widget.QMUIEmptyView
@@ -298,8 +331,7 @@
                             android:divider="@color/token_list_view_background_color"
                             android:dividerHeight="10dp"
                             android:fadeScrollbars="false"
-                            android:scrollbars="none">
-                        </com.bupocket.fragment.components.AssetsListView>
+                            android:scrollbars="none"></com.bupocket.fragment.components.AssetsListView>
 
                     </com.qmuiteam.qmui.widget.QMUIEmptyView>
 

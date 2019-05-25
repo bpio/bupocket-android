@@ -55,7 +55,7 @@ public class MyTokenTxAdapter extends BaseAdapter {
         ViewHolder holder;
         if(convertView == null){
             holder = new ViewHolder();
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.my_token_tx_item_layout, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.view_my_token_tx_item, null);
             holder.userAccAddrTV = convertView.findViewById(R.id.tx_account_address);
             holder.txAmountTV = convertView.findViewById(R.id.tx_amount);
             holder.txDateTV = convertView.findViewById(R.id.tx_date);
@@ -96,9 +96,9 @@ public class MyTokenTxAdapter extends BaseAdapter {
             String amountStr = null;
             String txStartStr = null;
             if(obj.getOutinType().equals(OutinTypeEnum.OUT.getCode())){
-                amountStr = "-" + obj.getAmount();
+                amountStr = mContext.getString(R.string.comm_out)  + obj.getAmount();
             }else {
-                amountStr = "+" + obj.getAmount();
+                amountStr =  mContext.getString(R.string.comm_in) + obj.getAmount();
             }
 
             if(TxStatusEnum.SUCCESS.getCode().equals(obj.getTxStatus())){

@@ -51,7 +51,7 @@ public class BPBackupWalletFragment extends BaseFragment {
 
                     final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
                     qmuiDialog.setCanceledOnTouchOutside(false);
-                    qmuiDialog.setContentView(R.layout.password_comfirm_layout);
+                    qmuiDialog.setContentView(R.layout.view_password_comfirm);
                     qmuiDialog.show();
                     QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
 

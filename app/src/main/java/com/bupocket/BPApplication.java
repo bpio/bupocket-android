@@ -4,25 +4,21 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
-import android.util.Log;
+
 import com.bupocket.common.Constants;
 import com.bupocket.enums.BackupTipsStateEnum;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.CrashHandler;
 import com.bupocket.utils.LocaleUtil;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.SocketUtil;
 import com.bupocket.wallet.Wallet;
+import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager;
 import com.squareup.leakcanary.LeakCanary;
-import io.socket.client.IO;
-import io.socket.client.Socket;
-import okhttp3.OkHttpClient;
-
-import javax.net.ssl.*;
-import java.net.URISyntaxException;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
+import com.umeng.commonsdk.UMConfigure;
 
 public class BPApplication extends Application {
     @SuppressLint("StaticFieldLeak")
@@ -36,14 +32,34 @@ public class BPApplication extends Application {
     public void onCreate() {
         super.onCreate();
         context = getApplicationContext();
+
+        initLeakCanary();
+
+        LocaleUtil.changeAppLanguage(context);
+        QMUISwipeBackActivityManager.init(this);
+        switchNetConfig(null);
+        SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(context,"buPocket");
+        sharedPreferencesHelper.put("backupTipsState",BackupTipsStateEnum.SHOW.getCode());
+
+        initCrash();
+
+        initUMeng();
+    }
+
+    private void initLeakCanary() {
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
         LeakCanary.install(this);
-        LocaleUtil.changeAppLanguage(context);
-        switchNetConfig(null);
-        SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(context,"buPocket");
-        sharedPreferencesHelper.put("backupTipsState",BackupTipsStateEnum.SHOW.getCode());
+    }
+
+    private void initUMeng() {
+
+//        UMConfigure.init(Context context, String appkey, String channel, int deviceType, String pushSecret);
+
+        UMConfigure.init(this, Constants.UM_APPID, "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "");
+
+
     }
 
     @Override
@@ -70,10 +86,22 @@ public class BPApplication extends Application {
             Constants.BUMO_NODE_URL = Constants.MainNetConfig.BUMO_NODE_URL.getValue();
             Constants.PUSH_MESSAGE_SOCKET_URL = Constants.MainNetConfig.PUSH_MESSAGE_SOCKET_URL.getValue();
             Constants.WEB_SERVER_DOMAIN = Constants.MainNetConfig.WEB_SERVER_DOMAIN.getValue();
+            Constants.NODE_PLAN_IMAGE_URL_PREFIX = Constants.MainNetConfig.WEB_SERVER_DOMAIN.getValue()+Constants.IMAGE_PATH;
+            LogUtils.mDebuggable=LogUtils.LEVEL_NONE;
+            CrashHandler.isWrite=false;
         }else {
             Constants.BUMO_NODE_URL = Constants.TestNetConfig.BUMO_NODE_URL.getValue();
             Constants.PUSH_MESSAGE_SOCKET_URL = Constants.TestNetConfig.PUSH_MESSAGE_SOCKET_URL.getValue();
             Constants.WEB_SERVER_DOMAIN = Constants.TestNetConfig.WEB_SERVER_DOMAIN.getValue();
+            Constants.NODE_PLAN_IMAGE_URL_PREFIX = Constants.TestNetConfig.WEB_SERVER_DOMAIN.getValue()+Constants.IMAGE_PATH;
+
+            LogUtils.mDebuggable=LogUtils.LEVEL_ERROR;
+            CrashHandler.isWrite=true;
         }
+    }
+
+    private void initCrash() {
+        CrashHandler crashHandler = CrashHandler.getInstance();
+        crashHandler.init(this);
     }
 }

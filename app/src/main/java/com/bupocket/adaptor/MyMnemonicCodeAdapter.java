@@ -42,7 +42,7 @@ public class MyMnemonicCodeAdapter extends BaseAdapter {
         MyMnemonicCodeAdapter.ViewHolder holder;
         if(convertView == null){
             holder = new MyMnemonicCodeAdapter.ViewHolder();
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.mnemonic_code_list_item_layout, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.view_mnemonic_code_list_item, null);
             holder.codeTV = convertView.findViewById(R.id.mnemonic_code);
             convertView.setTag(holder);
         } else {

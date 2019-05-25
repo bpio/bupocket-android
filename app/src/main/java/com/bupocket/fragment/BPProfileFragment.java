@@ -78,8 +78,13 @@ public class BPProfileFragment extends BaseFragment{
 
     private void init() {
         initData();
-        initUI();
         setListener();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        initUI();
     }
 
     private void initUI() {

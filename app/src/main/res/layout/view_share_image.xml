@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="240dp"
+    android:layout_height="342dp"
+    android:background="@mipmap/ic_share_bg">
+
+
+
+    <include
+        android:id="@+id/nodeIconRl"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="168dp"
+        layout="@layout/view_circle_head_layout"/>
+
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/nodeIconRl"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="168dp">-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/nodeIconBgIv"-->
+            <!--android:layout_width="60dp"-->
+            <!--android:layout_height="60dp"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:background="@mipmap/icon_token_bg_list" />-->
+
+        <!--<com.qmuiteam.qmui.widget.QMUIRadiusImageView-->
+            <!--android:id="@+id/nodeIconIv"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--app:qmui_border_width="0dp"-->
+            <!--app:qmui_is_circle="true" />-->
+
+    <!--</RelativeLayout>-->
+
+    <TextView
+        android:id="@+id/nodeNameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/nodeIconRl"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/app_color_main"
+        android:textSize="14sp"
+        tools:text="启赋超级节点" />
+
+
+    <LinearLayout
+        android:layout_width="240dp"
+        android:layout_height="67dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="@string/invite_vote_image_txt"
+                android:textColor="@color/app_txt_color_white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:gravity="center"
+                android:text="@string/long_press_qr_txt"
+                android:textColor="@color/app_txt_color_gray_7" />
+
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/qrIv"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/shape_corner" />
+    </LinearLayout>
+
+</RelativeLayout>

@@ -15,6 +15,8 @@ import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.BPAssetsHomeFragment;
 import com.bupocket.fragment.BPProfileFragment;
+import com.bupocket.fragment.discover.BPDiscoverHomeFragment;
+import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.widget.QMUIPagerAdapter;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 
@@ -23,6 +25,9 @@ import butterknife.ButterKnife;
 
 
 public class HomeFragment extends BaseFragment {
+
+
+    public static boolean isDisFragment;
 
     @BindView(R.id.pager)
     ViewPager mViewPager;
@@ -48,10 +53,41 @@ public class HomeFragment extends BaseFragment {
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_profile_selected),
                 getResources().getString(R.string.tabbar_profile_txt), false
         );
+        QMUITabSegment.Tab discover = new QMUITabSegment.Tab(
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_discover),
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_discover_selected),
+                getResources().getString(R.string.tabbar_discover_txt), false
+        );
         mTabSegment.addTab(assets);
+        mTabSegment.addTab(discover);
         mTabSegment.addTab(profile);
         mTabSegment.setDefaultSelectedColor(getContext().getResources().getColor(R.color.app_color_green));
 
+        mTabSegment.addOnTabSelectedListener(new QMUITabSegment.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(int index) {
+                if (index==1){
+                    isDisFragment=true;
+                }else{
+                    isDisFragment=false;
+                }
+            }
+
+            @Override
+            public void onTabUnselected(int index) {
+
+            }
+
+            @Override
+            public void onTabReselected(int index) {
+
+            }
+
+            @Override
+            public void onDoubleTap(int index) {
+
+            }
+        });
     }
 
     private void initPagers() {
@@ -66,7 +102,7 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public int getCount() {
-                return 2;
+                return 3;
             }
 
             @Override
@@ -75,6 +111,8 @@ public class HomeFragment extends BaseFragment {
                     case 0:
                         return getResources().getString(R.string.tabbar_assets_txt);
                     case 1:
+                        return getResources().getString(R.string.tabbar_discover_txt);
+                    case 3:
                     default:
                         return getResources().getString(R.string.tabbar_profile_txt);
                 }
@@ -96,6 +134,8 @@ public class HomeFragment extends BaseFragment {
                     case 0:
                         return new BPAssetsHomeFragment();
                     case 1:
+                        return new BPDiscoverHomeFragment();
+                    case 2:
                     default:
                         return new BPProfileFragment();
                 }

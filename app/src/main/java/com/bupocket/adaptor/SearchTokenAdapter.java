@@ -12,13 +12,11 @@ import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.BumoNodeEnum;
-import com.bupocket.enums.TokenTypeEnum;
 import com.bupocket.http.api.dto.resp.GetTokensRespDto;
 import com.bupocket.http.api.dto.resp.SearchTokenRespDto;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
-import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,7 +68,7 @@ public class SearchTokenAdapter extends BaseAdapter {
         final SearchTokenAdapter.ViewHolder holder;
         /*if(convertView == null){
             holder = new SearchTokenAdapter.ViewHolder();
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.search_token_result_item_layout, null);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.view_search_token_result_item, null);
             holder.assetIconIv = convertView.findViewById(R.id.assetIconIv);
             holder.assetCodeTv = convertView.findViewById(R.id.assetCodeTv);
             holder.assetNameTv = convertView.findViewById(R.id.assetNameTv);
@@ -83,7 +81,7 @@ public class SearchTokenAdapter extends BaseAdapter {
         }*/
 
         holder = new SearchTokenAdapter.ViewHolder();
-        convertView = LayoutInflater.from(mContext).inflate(R.layout.search_token_result_item_layout, null);
+        convertView = LayoutInflater.from(mContext).inflate(R.layout.view_search_token_result_item, null);
         holder.assetIconIv = convertView.findViewById(R.id.assetIconIv);
         holder.assetCodeTv = convertView.findViewById(R.id.assetCodeTv);
         holder.assetNameTv = convertView.findViewById(R.id.assetNameTv);

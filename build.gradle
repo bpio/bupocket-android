@@ -1,17 +1,18 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    
+
     repositories {
 
         google()
 //        jcenter()
         repositories {
-            maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
+            maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+            maven { url 'https://dl.bintray.com/umsdk/release' }
         }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.3.1'
+        classpath 'com.android.tools.build:gradle:3.3.2'
         classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
         classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
     }
@@ -20,13 +21,13 @@ buildscript {
 allprojects {
     repositories {
         mavenCentral()
-        maven{ url 'https://maven.google.com' }
+        maven { url 'https://maven.google.com' }
         google()
         jcenter()
-        maven{ url "http://maven.bumo.io/content/groups/public/"}
-        maven{ url "https://jitpack.io" }
-        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
-        maven{ url 'https://dl.bintray.com/bupocket/AppUpdate/'}
+        maven { url "http://maven.bumo.io/content/groups/public/" }
+        maven { url "https://jitpack.io" }
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven { url 'https://dl.bintray.com/bupocket/AppUpdate/' }
     }
 
     ext {
@@ -34,7 +35,7 @@ allprojects {
         minSdkVersion = 15
         targetSdkVersion = 28
         compileSdkVersion = 28
-        supportVersion = "27.1.1"
+        supportVersion = "27.1.0"
     }
 }
 

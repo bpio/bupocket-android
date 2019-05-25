@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
@@ -89,7 +90,7 @@ public class BPWalletManageFragment extends BaseFragment {
             public void onClick(View v) {
                 final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
                 qmuiDialog.setCanceledOnTouchOutside(false);
-                qmuiDialog.setContentView(R.layout.change_wallet_name_layout);
+                qmuiDialog.setContentView(R.layout.view_change_wallet_name);
                 qmuiDialog.show();
 
                 TextView cancelTv = qmuiDialog.findViewById(R.id.changeNameCancel);
@@ -155,7 +156,7 @@ public class BPWalletManageFragment extends BaseFragment {
             public void onClick(View v) {
                 final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
                 qmuiDialog.setCanceledOnTouchOutside(false);
-                qmuiDialog.setContentView(R.layout.password_comfirm_layout);
+                qmuiDialog.setContentView(R.layout.view_password_comfirm);
                 qmuiDialog.show();
                 QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
                 ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
@@ -227,7 +228,7 @@ public class BPWalletManageFragment extends BaseFragment {
             public void onClick(View v) {
                 final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
                 qmuiDialog.setCanceledOnTouchOutside(false);
-                qmuiDialog.setContentView(R.layout.password_comfirm_layout);
+                qmuiDialog.setContentView(R.layout.view_password_comfirm);
                 qmuiDialog.show();
                 QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
                 ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
@@ -266,12 +267,17 @@ public class BPWalletManageFragment extends BaseFragment {
                                 try {
                                     privateKeyStr = Wallet.getInstance().exportPrivateKey(password, bpData, walletAddress);
                                     exportingTipDialog.dismiss();
-                                    Bundle argz = new Bundle();
+                                    final Bundle argz = new Bundle();
                                     argz.putString("address", walletAddress);
                                     argz.putString("privateKey", privateKeyStr);
-                                    BPWalletExportPrivateFragment bpWalletExportPrivateFragment = new BPWalletExportPrivateFragment();
-                                    bpWalletExportPrivateFragment.setArguments(argz);
-                                    startFragment(bpWalletExportPrivateFragment);
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            BPWalletExportPrivateFragment bpWalletExportPrivateFragment = new BPWalletExportPrivateFragment();
+                                            bpWalletExportPrivateFragment.setArguments(argz);
+                                            startFragment(bpWalletExportPrivateFragment);
+                                        }
+                                    });
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     Looper.prepare();
@@ -300,7 +306,7 @@ public class BPWalletManageFragment extends BaseFragment {
             public void onClick(View v) {
                 final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
                 qmuiDialog.setCanceledOnTouchOutside(false);
-                qmuiDialog.setContentView(R.layout.password_comfirm_layout);
+                qmuiDialog.setContentView(R.layout.view_password_comfirm);
                 qmuiDialog.show();
                 QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
                 ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
@@ -353,7 +359,8 @@ public class BPWalletManageFragment extends BaseFragment {
                                     Handler handler = new Handler(Looper.getMainLooper());
                                     class PopBackStackThread implements Runnable {
                                         public void run() {
-                                            popBackStack();
+//                                            popBackStack();
+                                            startFragment(new HomeFragment());
                                         }
                                     }
                                     handler.post(new PopBackStackThread());
@@ -387,7 +394,7 @@ public class BPWalletManageFragment extends BaseFragment {
             public void onClick(View v) {
                 final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
                 qmuiDialog.setCanceledOnTouchOutside(false);
-                qmuiDialog.setContentView(R.layout.password_comfirm_layout);
+                qmuiDialog.setContentView(R.layout.view_password_comfirm);
                 qmuiDialog.show();
                 QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
 
