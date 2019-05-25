@@ -3,6 +3,7 @@ package com.bupocket.fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bupocket.R;
+import com.bupocket.activity.BPWebActivity;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.AdvertisingEnum;
 import com.bupocket.enums.ExceptionEnum;
@@ -74,15 +76,20 @@ public class BPTransactionTimeoutFragment extends BaseFragment {
         ivTimeout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ad!=null) {
+                if (ad != null) {
                     if (AdvertisingEnum.APP.getCode().equals(ad.getType())) {
-                        CommonUtil.goWeChat(getContext(),WeChat_APPID,XB_YOUPING_USERNAME);
-                    }else if (AdvertisingEnum.H5.getCode().equals(ad.getType())){
-                        BPBannerFragment fragment = new BPBannerFragment();
-                        Bundle args = new Bundle();
-                        args.putString("url",ad.getUrl());
-                        fragment.setArguments(args);
-                        startFragment(fragment);
+                        CommonUtil.goWeChat(getContext(), WeChat_APPID, XB_YOUPING_USERNAME);
+                    } else if (AdvertisingEnum.H5.getCode().equals(ad.getType())) {
+//                        BPBannerFragment fragment = new BPBannerFragment();
+//                        Bundle args = new Bundle();
+//                        args.putString("url",ad.getUrl());
+//                        fragment.setArguments(args);
+//                        startFragment(fragment);
+
+                        Intent intent = new Intent();
+                        intent.setClass(mContext, BPWebActivity.class);
+                        intent.putExtra("url", ad.getUrl());
+                        mContext.startActivity(intent);
                     }
                 }
 
@@ -97,7 +104,7 @@ public class BPTransactionTimeoutFragment extends BaseFragment {
     private void init() {
 
         txHash = getArguments().getString("txHash", "");
-        if (txHash!=null) {
+        if (txHash != null) {
             tvTimeoutHash.setText(AddressUtil.anonymous(txHash, 8));
         }
         tvTransactionInfo.setText(Html.fromHtml(getString(R.string.transaction_timeout_info)));

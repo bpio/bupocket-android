@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_bg_color_gray"
+    android:id="@+id/webActivity"
     android:orientation="vertical">
 
     <com.qmuiteam.qmui.widget.QMUITopBar

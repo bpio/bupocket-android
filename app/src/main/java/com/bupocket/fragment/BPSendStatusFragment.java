@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bupocket.R;
+import com.bupocket.activity.BPWebActivity;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.AdvertisingEnum;
 import com.bupocket.enums.ExceptionEnum;
@@ -104,11 +106,16 @@ public class BPSendStatusFragment extends BaseFragment {
                     if (AdvertisingEnum.APP.getCode().equals(ad.getType())) {
                         CommonUtil.goWeChat(getContext(),WeChat_APPID,XB_YOUPING_USERNAME);
                     }else if (AdvertisingEnum.H5.getCode().equals(ad.getType())){
-                        BPBannerFragment fragment = new BPBannerFragment();
-                        Bundle args = new Bundle();
-                        args.putString("url",ad.getUrl());
-                        fragment.setArguments(args);
-                        startFragment(fragment);
+//                        BPBannerFragment fragment = new BPBannerFragment();
+//                        Bundle args = new Bundle();
+//                        args.putString("url",ad.getUrl());
+//                        fragment.setArguments(args);
+//                        startFragment(fragment);
+
+                        Intent intent = new Intent();
+                        intent.setClass(mContext, BPWebActivity.class);
+                        intent.putExtra("url",ad.getUrl());
+                        mContext.startActivity(intent);
                     }
                 }
             }

@@ -1,6 +1,7 @@
 package com.bupocket.adaptor;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bupocket.R;
+import com.bupocket.activity.BPWebActivity;
 import com.bupocket.common.Constants;
 import com.bupocket.fragment.discover.BPBannerFragment;
 import com.bupocket.model.SlideModel;
@@ -68,11 +70,17 @@ public class DisBannerAdapter extends PagerAdapter {
                 public void onClick(View v) {
 
                     String url = images.get(index).getUrl();
-                    BPBannerFragment fragment = new BPBannerFragment();
-                    Bundle args = new Bundle();
-                    args.putString("url",url);
-                    fragment.setArguments(args);
-                    DisBannerAdapter.this.fragment.startFragmentForResult(fragment,1001);
+//                    BPBannerFragment fragment = new BPBannerFragment();
+//                    Bundle args = new Bundle();
+//                    args.putString("url",url);
+//                    fragment.setArguments(args);
+//                    DisBannerAdapter.this.fragment.startFragmentForResult(fragment,1001);
+
+
+                    Intent intent = new Intent();
+                    intent.setClass(mContext, BPWebActivity.class);
+                    intent.putExtra("url",url);
+                    mContext.startActivity(intent);
 
                 }
             });
