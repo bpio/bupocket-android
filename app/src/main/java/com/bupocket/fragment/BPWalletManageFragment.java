@@ -22,6 +22,7 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -438,11 +439,20 @@ public class BPWalletManageFragment extends BaseFragment {
                             public void run() {
                                 String ciphertextSkeyData = getSkeyStr();
                                 try {
+//                                    LogUtils.e("skeyByte"+password+"\n"+ciphertextSkeyData);
                                     byte[] skeyByte = Wallet.getInstance().getSkey(password, ciphertextSkeyData);
+//                                    LogUtils.e("skeyByte"+skeyByte);
                                     mnemonicCodeList = new MnemonicCode().toMnemonic(skeyByte);
                                     tipDialog.dismiss();
 
-                                    go2BPCreateWalletShowMneonicCodeFragment();
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            go2BPCreateWalletShowMneonicCodeFragment();
+                                        }
+                                    });
+
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     Looper.prepare();

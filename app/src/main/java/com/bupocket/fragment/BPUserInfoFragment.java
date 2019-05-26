@@ -134,7 +134,14 @@ public class BPUserInfoFragment extends BaseFragment {
                                     mnemonicCodeList = new MnemonicCode().toMnemonic(skeyByte);
                                     tipDialog.dismiss();
 
-                                    go2BPCreateWalletShowMneonicCodeFragment();
+
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            go2BPCreateWalletShowMneonicCodeFragment();
+                                        }
+                                    });
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     Looper.prepare();
