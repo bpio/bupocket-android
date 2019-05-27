@@ -72,7 +72,8 @@
                     android:layout_gravity="left|center_vertical"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="30dp"
-                    android:background="@mipmap/ic_sheet_hint" />
+                    android:padding="4dp"
+                    android:src="@mipmap/ic_sheet_hint" />
 
                 <TextView
                     android:id="@+id/identityIdTv"
