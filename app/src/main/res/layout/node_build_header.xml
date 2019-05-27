@@ -152,12 +152,12 @@
         <ImageView
             android:id="@+id/ivSheetHint"
             android:layout_toRightOf="@+id/tvOriginPurchaseAmountHint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="2.5dp"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_marginTop="0.5dp"
+            android:padding="3dp"
             android:layout_alignTop="@id/tvOriginPurchaseAmountHint"
-            android:background="@mipmap/ic_sheet_hint"
+            android:src="@mipmap/ic_sheet_hint"
             />
 
 
