@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.FileProvider;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
@@ -104,6 +105,30 @@ public class BPNodeShareFragment extends BaseFragment {
 
     private void initData() {
         itemData = getArguments().getParcelable("itemInfo");
+        mNodeNameTv.setText(itemData.getNodeName());
+        // set node type
+        if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(itemData.getIdentityType())) {
+            mNodeTypeTv.setText(getContext().getResources().getString(R.string.common_node));
+
+        } else if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(itemData.getIdentityType())) {
+            mNodeTypeTv.setText(getContext().getResources().getString(R.string.ecological_node));
+        }
+
+
+        if (CommonUtil.isSingle(itemData.getNodeVote())) {
+            haveVotesNumTvHint.setText(mContext.getString(R.string.number_have_votes));
+        } else {
+            haveVotesNumTvHint.setText(mContext.getString(R.string.number_have_votes_s));
+        }
+        mHaveVotesNumTv.setText(itemData.getNodeVote());
+
+
+        if (CommonUtil.isSingle(itemData.getMyVoteCount())) {
+            supportPeopleTvHint.setText(mContext.getString(R.string.my_votes_number));
+        } else {
+            supportPeopleTvHint.setText(mContext.getString(R.string.my_votes_number_s));
+        }
+        mSupportPeopleTv.setText(itemData.getMyVoteCount());
         getShareData();
         getUrlData();
     }
@@ -126,7 +151,7 @@ public class BPNodeShareFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<SuperNodeModel>> call, Throwable t) {
-                ToastUtil.showToast(getActivity(), t.getMessage().toString(), Toast.LENGTH_SHORT);
+//                ToastUtil.showToast(getActivity(), t.getMessage().toString(), Toast.LENGTH_SHORT);
             }
         });
 
@@ -158,7 +183,7 @@ public class BPNodeShareFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<ShareUrlModel>> call, Throwable t) {
-                ToastUtil.showToast(getActivity(), t.getMessage().toString(), Toast.LENGTH_SHORT);
+//                ToastUtil.showToast(getActivity(), t.getMessage().toString(), Toast.LENGTH_SHORT);
             }
         });
 
@@ -170,39 +195,20 @@ public class BPNodeShareFragment extends BaseFragment {
     }
 
     private void initNodeInfoUI() {
-        mNodeNameTv.setText(itemInfo.getNodeName());
-        // set node type
-        if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(itemInfo.getIdentityType())) {
-            mNodeTypeTv.setText(getContext().getResources().getString(R.string.common_node));
-
-        } else if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(itemInfo.getIdentityType())) {
-            mNodeTypeTv.setText(getContext().getResources().getString(R.string.ecological_node));
-        }
 
 
-        if (CommonUtil.isSingle(itemInfo.getNodeVote())) {
-            haveVotesNumTvHint.setText(mContext.getString(R.string.number_have_votes));
-        } else {
-            haveVotesNumTvHint.setText(mContext.getString(R.string.number_have_votes_s));
-        }
-        mHaveVotesNumTv.setText(itemInfo.getNodeVote());
 
 
-        if (CommonUtil.isSingle(itemInfo.getMyVoteCount())) {
-            supportPeopleTvHint.setText(mContext.getString(R.string.my_votes_number));
-        } else {
-            supportPeopleTvHint.setText(mContext.getString(R.string.my_votes_number_s));
-        }
-        mSupportPeopleTv.setText(itemInfo.getMyVoteCount());
-
+        final String nodeLogo = itemData.getNodeLogo();
+        Glide.with(getContext())
+                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
+                .into(mNodeIconIv);
 
         String source = itemInfo.getIntroduce().trim().toString();
         webView.loadDataWithBaseURL(null, source, "text/html", "utf-8", null);
 
-        final String nodeLogo = itemInfo.getNodeLogo();
-        Glide.with(getContext())
-                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
-                .into(mNodeIconIv);
+
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -385,7 +391,15 @@ public class BPNodeShareFragment extends BaseFragment {
         mTopBar.addRightImageButton(R.mipmap.icon_share_green, R.id.topbar_right_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (itemInfo==null) {
+                    return;
+                }
                 String shareStartTime = itemInfo.getShareStartTime();
+
+                if (TextUtils.isEmpty(shareStartTime)) {
+                    return;
+                }
                 if (TimeUtil.judgeTime(Long.parseLong(shareStartTime))) {
                     CommonUtil.showMessageDialog(getContext(), R.string.share_close);
                 } else {

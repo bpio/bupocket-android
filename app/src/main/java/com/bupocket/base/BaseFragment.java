@@ -378,14 +378,21 @@ public abstract class BaseFragment extends QMUIFragment {
         MobclickAgent.onPageEnd(this.getTag());
     }
 
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+    }
+
     @Override
     public void popBackStack() {
         super.popBackStack();
-        try {
-            getChildFragmentManager().beginTransaction().attach(this);
-            getChildFragmentManager().beginTransaction().remove(this);
-        } catch (Exception e) {
-        }
+//        LogUtils.e("popBackStack\t"+((BaseFragmentActivity) getActivity()).getCurrentFragment().getClass().getSimpleName());
+//        try {
+//            getChildFragmentManager().beginTransaction().detach(this).commit();
+//            getChildFragmentManager().beginTransaction().remove(this).commit();
+//        } catch (Exception e) {
+//        }
 
     }
 }
