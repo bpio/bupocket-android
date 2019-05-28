@@ -90,7 +90,6 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
         lvNodeBuild.addHeaderView(headerView);
 
         refreshLayout.setEnableLoadMore(false);
-
         qmuiEmptyView.show(true);
     }
 
@@ -192,7 +191,7 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
             @Override
             public void onResponse(Call<ApiResult<CoBuildListModel>> call, Response<ApiResult<CoBuildListModel>> response) {
 
-                refreshLayout.finishRefresh();
+
 
                 ApiResult<CoBuildListModel> body = response.body();
                 llLoadFailed.setVisibility(View.GONE);
@@ -210,17 +209,18 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
                 }
 
                 qmuiEmptyView.show(null,null);
-
+                refreshLayout.finishRefresh();
             }
 
             @Override
             public void onFailure(Call<ApiResult<CoBuildListModel>> call, Throwable t) {
-                refreshLayout.finishRefresh();
+
                 llLoadFailed.setVisibility(View.VISIBLE);
                 nodeBuildAdapter.setNewData(new ArrayList<NodeBuildModel>());
                 nodeBuildAdapter.notifyDataSetChanged();
 
                 qmuiEmptyView.show(null,null);
+                refreshLayout.finishRefresh();
             }
 
 

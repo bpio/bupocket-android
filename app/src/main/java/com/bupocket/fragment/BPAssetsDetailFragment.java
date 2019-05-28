@@ -47,6 +47,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import io.bumo.encryption.key.PublicKey;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -97,12 +98,13 @@ public class BPAssetsDetailFragment extends BaseFragment {
     private String assetAmount = "~";
     private String tokenType;
     private String currencyType;
+    private Unbinder bind;
 
     @Override
     protected View onCreateView() {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_assets_detail, null);
-        ButterKnife.bind(this, root);
+        bind = ButterKnife.bind(this, root);
         initData();
         initTopBar();
         initTxListView();
@@ -446,4 +448,9 @@ public class BPAssetsDetailFragment extends BaseFragment {
         intentIntegrator.initiateScan();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        bind.unbind();
+    }
 }

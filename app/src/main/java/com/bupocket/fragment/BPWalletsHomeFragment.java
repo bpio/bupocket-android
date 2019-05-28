@@ -27,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class BPWalletsHomeFragment extends BaseFragment {
 
@@ -56,11 +57,12 @@ public class BPWalletsHomeFragment extends BaseFragment {
     private List<String> importedWallets = new ArrayList<>();
     private List<WalletInfo> walletInfoList;
     private ImportedWalletAdapter importedWalletAdapter;
+    private Unbinder bind;
 
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_wallets_home, null);
-        ButterKnife.bind(this, root);
+        bind = ButterKnife.bind(this, root);
         init();
         return root;
     }
@@ -229,5 +231,12 @@ public class BPWalletsHomeFragment extends BaseFragment {
 
     private void importWallet() {
         startFragment(new BPWalletImportFragment());
+    }
+
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        bind.unbind();
     }
 }

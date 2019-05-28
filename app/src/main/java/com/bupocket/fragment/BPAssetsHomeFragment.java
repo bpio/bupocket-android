@@ -76,6 +76,7 @@ import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import butterknife.Unbinder;
 import io.bumo.encryption.key.PublicKey;
 import io.bumo.model.response.TransactionBuildBlobResponse;
 import retrofit2.Call;
@@ -152,11 +153,12 @@ public class BPAssetsHomeFragment extends BaseFragment {
     private String expiryTime;
     private View faildlayout;
     List<GetTokensRespDto.TokenListBean> mTokenList;
+    private Unbinder bind;
 
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_assets_home, null);
-        ButterKnife.bind(this, root);
+        bind = ButterKnife.bind(this, root);
         initView();
         initData();
         initWalletInfoView();
@@ -907,5 +909,11 @@ public class BPAssetsHomeFragment extends BaseFragment {
                 startFragment(sendTokenFragment);
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        bind.unbind();
     }
 }
