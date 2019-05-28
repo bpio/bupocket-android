@@ -78,7 +78,6 @@ public class BPBannerFragment extends BaseFragment {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
-                LogUtils.e("newProgress:" + newProgress);
                 if (newProgress == 100) {
                     progressBar.setVisibility(View.GONE);
                     //progressBar.setProgress(newProgress);

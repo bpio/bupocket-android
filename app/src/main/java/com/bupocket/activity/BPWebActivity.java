@@ -54,7 +54,6 @@ public class BPWebActivity extends AppCompatActivity {
         initTopBar();
         initData();
         initView();
-//        setListener();
     }
 
     private void initData() {
@@ -69,7 +68,6 @@ public class BPWebActivity extends AppCompatActivity {
         webSettings.setAllowFileAccess(true);
         //设置支持缩放
         webSettings.setBuiltInZoomControls(true);
-//        wvBanner.setWebViewClient(new BPBannerFragment.webViewClient());
         webSettings.setAppCacheEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.supportMultipleWindows();
@@ -82,19 +80,16 @@ public class BPWebActivity extends AppCompatActivity {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setLoadsImagesAutomatically(true);
 
-        wvBanner.setWebChromeClient(new WebChromeClient());//这行最好不要丢掉
         wvBanner.setWebChromeClient(new WebChromeClient() {
 
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
-                LogUtils.e("newProgress:" + newProgress);
                 if (newProgress == 100) {
                     progressBar.setVisibility(View.GONE);
-                    //progressBar.setProgress(newProgress);
                 } else {
                     progressBar.setVisibility(View.VISIBLE);
-                    progressBar.setProgress(newProgress);//设置加载进度
+                    progressBar.setProgress(newProgress);
                 }
 
             }
@@ -113,32 +108,11 @@ public class BPWebActivity extends AppCompatActivity {
 
             }
         });
-//         mTopBar.setTitle(getResources().getString(R.string.build_node_txt));
 
     }
 
 
-    private class webViewClient extends WebViewClient {
-//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//            view.loadurl(url)//返回true代表在当前webview中打开，返回false表示打开浏览器
-//            return super.shouldOverrideUrlLoading(view,url);       }
-//
-//        @Override
-//        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//            if(!dialog.isShowing()) {
-//                dialog.show();
-//            }
-//            super.onPageStarted(view, url, favicon);
-//        }
-//
-//        @Override
-//        public void onPageFinished(WebView view, String url) {
-//            if(dialog.isShowing()){
-//                dialog.dismiss();
-//            }
-//            super.onPageFinished(view, url);
-//        }
-    }
+
 
 
     @Override
