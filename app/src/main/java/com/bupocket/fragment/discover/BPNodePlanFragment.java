@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.adaptor.SuperNodeAdapter;
+import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.common.SingatureListener;
@@ -68,6 +69,7 @@ import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import io.bumo.model.response.TransactionBuildBlobResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -76,7 +78,7 @@ import retrofit2.Response;
 import static android.content.Context.INPUT_METHOD_SERVICE;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-public class BPNodePlanFragment extends BaseFragment {
+public class BPNodePlanFragment extends AbsBaseFragment {
 
 
     @BindView(R.id.topbar)
@@ -116,22 +118,41 @@ public class BPNodePlanFragment extends BaseFragment {
     private TextView mTopBarTitle;
     private String metaData;
 
+
+
     @Override
-    protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_node_plan, null);
-        ButterKnife.bind(this, root);
+    protected int getLayoutView() {
+        return R.layout.fragment_node_plan;
+    }
+
+    @Override
+    protected void initView() {
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        init();
-        return root;
+        initTopBar();
+        initListView();
+        setEmpty(true);
+    }
+    @Override
+    protected void initData() {
+        if (myVoteInfoList == null) {
+            myVoteInfoList = new ArrayList<>();
+        }
+        if (nodeList == null) {
+            nodeList = new ArrayList<>();
+        }
+
+        currentWalletAddress = getWalletAddress();
+        lvPlan.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getAllNode();
+            }
+        }, 200);
     }
 
-    private void init() {
-        initUI();
-        initData();
-        setListener();
-    }
 
-    private void setListener() {
+    @Override
+    protected void setListeners() {
         myNodeCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -310,6 +331,8 @@ public class BPNodePlanFragment extends BaseFragment {
             }
         });
     }
+
+
     private boolean toolbarIsShown() {
         return ViewHelper.getTranslationY(llHeadView) == 0;
     }
@@ -512,22 +535,9 @@ public class BPNodePlanFragment extends BaseFragment {
         return superNodeModels;
     }
 
-    private void initData() {
-        if (myVoteInfoList == null) {
-            myVoteInfoList = new ArrayList<>();
-        }
-        if (nodeList == null) {
-            nodeList = new ArrayList<>();
-        }
 
-        currentWalletAddress = getWalletAddress();
-        lvPlan.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getAllNode();
-            }
-        }, 200);
-    }
+
+
 
     private void getAllNode() {
 
@@ -637,5 +647,6 @@ public class BPNodePlanFragment extends BaseFragment {
         mTopBarTitle = mTopBar.setTitle(R.string.run_for_node_txt);
         ViewPropertyAnimator.animate(mTopBarTitle).alpha(0).setDuration(10).start();
     }
+
 
 }

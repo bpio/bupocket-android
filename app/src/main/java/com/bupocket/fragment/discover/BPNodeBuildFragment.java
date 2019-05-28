@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeBuildAdapter;
+import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.http.api.NodeBuildService;
 import com.bupocket.http.api.RetrofitFactory;
@@ -43,7 +44,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class BPNodeBuildFragment extends BaseFragment {
+public class BPNodeBuildFragment extends AbsBaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
@@ -61,28 +62,40 @@ public class BPNodeBuildFragment extends BaseFragment {
     QMUIEmptyView qmuiEmptyView;
 
 
-    private Unbinder bind;
+
     private NodeBuildAdapter nodeBuildAdapter;
     private ArrayList<NodeBuildModel> nodeList;
     private View headerView;
     private TextView tvTitle;
 
 
+
     @Override
-    protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_bpnode_build, null);
-        bind = ButterKnife.bind(this, root);
-        init();
-        return root;
+    protected int getLayoutView() {
+        return R.layout.fragment_bpnode_build;
     }
 
-    private void init() {
+    @Override
+    protected void initView() {
         initTopBar();
-        initData();
-        setListener();
+        if (nodeBuildAdapter == null) {
+            nodeBuildAdapter = new NodeBuildAdapter(getContext());
+        }
+
+        if (nodeList == null) {
+            nodeList = new ArrayList<>();
+        }
+        lvNodeBuild.setAdapter(nodeBuildAdapter);
+        headerView = LayoutInflater.from(mContext).inflate(R.layout.view_com_title, null);
+        lvNodeBuild.addHeaderView(headerView);
+
+        refreshLayout.setEnableLoadMore(false);
+
+        qmuiEmptyView.show(true);
     }
 
-    private void setListener() {
+    @Override
+    protected void setListeners(){
         lvNodeBuild.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -153,7 +166,6 @@ public class BPNodeBuildFragment extends BaseFragment {
 
 
     private void showToolbar() {
-
         ViewPropertyAnimator.animate(tvTitle).alpha(0).setDuration(200).start();
     }
 
@@ -162,24 +174,13 @@ public class BPNodeBuildFragment extends BaseFragment {
         ViewPropertyAnimator.animate(tvTitle).alpha(100).setDuration(200).start();
     }
 
+    @Override
+    protected void initData() {
 
-    private void initData() {
-        if (nodeBuildAdapter == null) {
-            nodeBuildAdapter = new NodeBuildAdapter(getContext());
-        }
-
-        if (nodeList == null) {
-            nodeList = new ArrayList<>();
-        }
-        lvNodeBuild.setAdapter(nodeBuildAdapter);
-        headerView = LayoutInflater.from(mContext).inflate(R.layout.view_com_title, null);
-        lvNodeBuild.addHeaderView(headerView);
-
-//        refreshLayout.autoRefresh();
         getBuildData();
-        qmuiEmptyView.show(true);
-
     }
+
+
 
     private void getBuildData() {
 

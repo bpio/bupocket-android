@@ -36,10 +36,6 @@ public class BPWebActivity extends AppCompatActivity {
     private String url;
 
 
-//    @Override
-//    protected int getContextViewId() {
-//        return R.id.webActivity;
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +60,7 @@ public class BPWebActivity extends AppCompatActivity {
         WebSettings webSettings = wvBanner.getSettings();
         //设置WebView属性，能够执行Javascript脚本
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setPluginState(WebSettings.PluginState.ON);
         //设置可以访问文件
         webSettings.setAllowFileAccess(true);
         //设置支持缩放
@@ -93,7 +90,9 @@ public class BPWebActivity extends AppCompatActivity {
                 }
 
             }
-        });//这行最好不要丢掉
+        });
+
+        wvBanner.setWebViewClient(new WebViewClient());
 
         wvBanner.loadUrl(url);
     }
