@@ -21,6 +21,7 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
+import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -37,7 +38,7 @@ import retrofit2.Response;
 public class BPVoteRecordFragment extends BaseFragment {
 
 
-    @BindView(R.id.lvVoteRecord)
+    @BindView(R.id.lvRefresh)
     ListView lvVoteRecord;
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
@@ -49,6 +50,8 @@ public class BPVoteRecordFragment extends BaseFragment {
     LinearLayout llLoadFailed;
     @BindView(R.id.copyCommandBtn)
     Button copyCommandBtn;
+    @BindView(R.id.qmuiEmptyView)
+    QMUIEmptyView qmuiEmptyView;
 
 
     private SharedPreferencesHelper sharedPreferencesHelper;
@@ -65,7 +68,7 @@ public class BPVoteRecordFragment extends BaseFragment {
 
     private void init() {
         initUI();
-//        initData();
+        initData();
         setListener();
     }
 
@@ -95,15 +98,9 @@ public class BPVoteRecordFragment extends BaseFragment {
     private void initData() {
 
 
-        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress", "").toString();
-        if (CommonUtil.isNull(currentWalletAddress) || currentWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString())) {
-            currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
-        }
-
         HashMap<String, Object> listReq = new HashMap<>();
 
-        listReq.put(Constants.ADDRESS, currentWalletAddress);
+        listReq.put(Constants.ADDRESS, getWalletAddress());
 
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
 
@@ -129,6 +126,7 @@ public class BPVoteRecordFragment extends BaseFragment {
 
                 refreshLayout.finishRefresh();
                 refreshLayout.setNoMoreData(false);
+                qmuiEmptyView.show(null,null);
             }
 
             @Override
@@ -137,6 +135,7 @@ public class BPVoteRecordFragment extends BaseFragment {
                 llLoadFailed.setVisibility(View.VISIBLE);
                 refreshLayout.finishRefresh();
                 refreshLayout.setNoMoreData(false);
+                qmuiEmptyView.show(null,null);
             }
         });
 
@@ -153,7 +152,8 @@ public class BPVoteRecordFragment extends BaseFragment {
 //        voteRecordAdapter.setNewData(myVoteRecordModels);
         lvVoteRecord.setAdapter(voteRecordAdapter);
 
-        refreshLayout.autoRefresh();
+//        refreshLayout.autoRefresh();
+        qmuiEmptyView.show();
 
     }
 

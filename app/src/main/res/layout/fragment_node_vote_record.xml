@@ -29,45 +29,8 @@
             android:textColor="@color/app_txt_color_gray"
             android:textSize="13sp" />
 
-        <com.scwang.smartrefresh.layout.SmartRefreshLayout
-            android:id="@+id/refreshLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:srlEnableFooterFollowWhenLoadFinished="true"
-            app:srlEnableScrollContentWhenLoaded="true">
-
-            <com.scwang.smartrefresh.layout.header.ClassicsHeader
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <include
-                    layout="@layout/view_load_failed"
-                    android:visibility="gone" />
-
-                <ListView
-                    android:id="@+id/lvVoteRecord"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@null"
-                    android:scrollbars="none">
-
-
-                </ListView>
-
-                <include
-                    layout="@layout/view_empty_record"
-                    android:visibility="visible" />
-
-            </LinearLayout>
-
-
-        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        <include
+            layout="@layout/view_common_lv_layout"/>
 
     </LinearLayout>
 
