@@ -9,10 +9,12 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragmentActivity;
 import com.bupocket.fragment.discover.BPBannerFragment;
+import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 
 import butterknife.BindView;
@@ -26,6 +28,8 @@ public class BPWebActivity extends AppCompatActivity {
     QMUITopBar mTopBar;
     @BindView(R.id.wvBanner)
     WebView wvBanner;
+    @BindView(R.id.pbWeb)
+    ProgressBar progressBar;
 
 
     private Unbinder bind;
@@ -79,7 +83,22 @@ public class BPWebActivity extends AppCompatActivity {
         webSettings.setLoadsImagesAutomatically(true);
 
         wvBanner.setWebChromeClient(new WebChromeClient());//这行最好不要丢掉
+        wvBanner.setWebChromeClient(new WebChromeClient() {
 
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                LogUtils.e("newProgress:" + newProgress);
+                if (newProgress == 100) {
+                    progressBar.setVisibility(View.GONE);
+                    //progressBar.setProgress(newProgress);
+                } else {
+                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setProgress(newProgress);//设置加载进度
+                }
+
+            }
+        });//这行最好不要丢掉
 
         wvBanner.loadUrl(url);
     }
