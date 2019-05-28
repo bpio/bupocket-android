@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.bupocket.R;
+import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.ExceptionEnum;
@@ -55,7 +56,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BPNodeShareFragment extends BaseFragment {
+public class BPNodeShareFragment extends AbsBaseFragment {
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
     @BindView(R.id.nodeNameTv)
@@ -89,21 +90,20 @@ public class BPNodeShareFragment extends BaseFragment {
     private SuperNodeModel itemData;
     private Bitmap nodeLogoBitmap = null;
 
+
     @Override
-    protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_node_share, null);
-        ButterKnife.bind(this, root);
-        init();
-        return root;
+    protected int getLayoutView() {
+        return R.layout.fragment_node_share;
     }
 
-    private void init() {
-        initUI();
-        initData();
-        setListener();
+    @Override
+    protected void initView() {
+        initTopBar();
     }
 
-    private void initData() {
+
+    @Override
+    protected void initData() {
         itemData = getArguments().getParcelable("itemInfo");
         mNodeNameTv.setText(itemData.getNodeName());
         // set node type
@@ -131,6 +131,11 @@ public class BPNodeShareFragment extends BaseFragment {
         mSupportPeopleTv.setText(itemData.getMyVoteCount());
         getShareData();
         getUrlData();
+    }
+
+    @Override
+    protected void setListeners() {
+
     }
 
     private void getShareData() {
@@ -190,9 +195,6 @@ public class BPNodeShareFragment extends BaseFragment {
 
     }
 
-    private void initUI() {
-        initTopBar();
-    }
 
     private void initNodeInfoUI() {
 
@@ -236,21 +238,7 @@ public class BPNodeShareFragment extends BaseFragment {
     }
 
 
-    private void setListener() {
-//        mShareBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                String shareStartTime = itemInfo.getShareStartTime();
-//                if (TimeUtil.judgeTime(Long.parseLong(shareStartTime))) {
-//                    CommonUtil.showMessageDialog(getContext(), R.string.share_close);
-//                } else {
-//                    showShareDialog();
-//                }
-//
-//            }
-//        });
-    }
+
 
     @SuppressLint("ResourceType")
     private void showShareDialog() {

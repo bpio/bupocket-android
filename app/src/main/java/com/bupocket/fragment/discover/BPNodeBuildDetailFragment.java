@@ -23,6 +23,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeBuildDetailAdapter;
+import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.common.SingatureListener;
@@ -58,9 +59,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
+
 import io.bumo.model.response.TransactionBuildBlobResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -68,7 +68,7 @@ import retrofit2.Response;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-public class BPNodeBuildDetailFragment extends BaseFragment {
+public class BPNodeBuildDetailFragment extends AbsBaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
@@ -92,7 +92,6 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     QMUIEmptyView  qmuiEmptyView;
 
 
-    private Unbinder bind;
     private NodeBuildDetailAdapter nodeBuildDetailAdapter;
     private TextView tvStutas;
     private View addBtn;
@@ -125,21 +124,21 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
     private View emptyLayout;
     private View tvRecord;
 
+
     @Override
-    protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_bpnode_build_detail, null);
-        bind = ButterKnife.bind(this, root);
-        init();
-        return root;
+    protected int getLayoutView() {
+        return R.layout.fragment_bpnode_build_detail;
     }
 
-    private void init() {
+    @Override
+    protected void initView() {
         initTopBar();
-        initData();
-        initListener();
     }
 
-    private void initListener() {
+
+
+    @Override
+    protected void setListeners() {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(final RefreshLayout refreshlayout) {
@@ -167,7 +166,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 //        refreshLayout.autoRefresh();
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
         GetTokensRespDto tokensCache = JSON.parseObject(spHelper.getSharedPreference(getWalletAddress() + "tokensInfoCache", "").toString(), GetTokensRespDto.class);
         tokenListBean = tokensCache.getTokenList().get(0);
         if (nodeBuildDetailAdapter == null) {
@@ -226,6 +226,8 @@ public class BPNodeBuildDetailFragment extends BaseFragment {
 
         qmuiEmptyView.show(true);
     }
+
+
 
 
     private void getBuildData() {

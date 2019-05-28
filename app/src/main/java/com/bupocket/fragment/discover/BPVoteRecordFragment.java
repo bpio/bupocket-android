@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.bupocket.R;
 import com.bupocket.adaptor.VoteRecordAdapter;
+import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.ExceptionEnum;
@@ -17,10 +18,6 @@ import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.MyVoteRecordModel;
-import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.LogUtils;
-import com.bupocket.utils.SharedPreferencesHelper;
-import com.bupocket.utils.ToastUtil;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -30,12 +27,11 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.HashMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BPVoteRecordFragment extends BaseFragment {
+public class BPVoteRecordFragment extends AbsBaseFragment {
 
 
     @BindView(R.id.lvRefresh)
@@ -54,26 +50,28 @@ public class BPVoteRecordFragment extends BaseFragment {
     QMUIEmptyView qmuiEmptyView;
 
 
-    private SharedPreferencesHelper sharedPreferencesHelper;
     private VoteRecordAdapter voteRecordAdapter;
-    private String currentWalletAddress;
+
+
 
     @Override
-    protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_node_vote_record, null);
-        ButterKnife.bind(this, root);
-        init();
-        return root;
+    protected int getLayoutView() {
+        return R.layout.fragment_node_vote_record;
     }
 
-    private void init() {
-        initUI();
-        initData();
-        setListener();
-    }
-
-    private void setListener() {
+    @Override
+    protected void initView() {
+        initTopBar();
+        voteRecordAdapter = new VoteRecordAdapter(getContext());
+        lvVoteRecord.setAdapter(voteRecordAdapter);
+        qmuiEmptyView.show();
         refreshLayout.setEnableLoadMore(false);
+    }
+
+
+    @Override
+    protected void setListeners() {
+
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -95,7 +93,8 @@ public class BPVoteRecordFragment extends BaseFragment {
         initData();
     }
 
-    private void initData() {
+    @Override
+    protected void initData() {
 
 
         HashMap<String, Object> listReq = new HashMap<>();
@@ -142,20 +141,7 @@ public class BPVoteRecordFragment extends BaseFragment {
 
     }
 
-    private void initUI() {
-        initTopBar();
-        voteRecordAdapter = new VoteRecordAdapter(getContext());
-//        ArrayList<MyVoteInfoModel> myVoteRecordModels = new ArrayList<>();
-//        for (int i = 0; i < 3; i++) {
-//            myVoteRecordModels.add(new MyVoteInfoModel());
-//        }
-//        voteRecordAdapter.setNewData(myVoteRecordModels);
-        lvVoteRecord.setAdapter(voteRecordAdapter);
 
-//        refreshLayout.autoRefresh();
-        qmuiEmptyView.show();
-
-    }
 
     private void initTopBar() {
         mTopBar.setBackgroundDividerEnabled(false);
