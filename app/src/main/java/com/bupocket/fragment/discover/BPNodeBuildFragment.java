@@ -191,8 +191,6 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
             @Override
             public void onResponse(Call<ApiResult<CoBuildListModel>> call, Response<ApiResult<CoBuildListModel>> response) {
 
-
-
                 ApiResult<CoBuildListModel> body = response.body();
                 llLoadFailed.setVisibility(View.GONE);
                 if (body != null && ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())
