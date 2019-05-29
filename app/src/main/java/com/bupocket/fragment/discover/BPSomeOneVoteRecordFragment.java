@@ -46,19 +46,17 @@ public class BPSomeOneVoteRecordFragment extends AbsBaseFragment {
     LinearLayout addressRecordEmptyLL;
     @BindView(R.id.lvRefresh)
     ListView lvVoteRecord;
-    @BindView(R.id.nodeIconBgIv)
-    ImageView nodeIconBgIv;
-    @BindView(R.id.nodeIconIv)
+    @BindView(R.id.assetIconIv)
     QMUIRadiusImageView nodeIconIv;
-    @BindView(R.id.nodeIconRl)
-    RelativeLayout nodeIconRl;
     @BindView(R.id.nodeNameTv)
     TextView nodeNameTv;
     @BindView(R.id.nodeTypeTv)
     TextView nodeTypeTv;
     @BindView(R.id.haveVotesNumTv)
     TextView haveVotesNumTv;
-    @BindView(R.id.myVotesNumTv)
+    @BindView(R.id.supportPeopleTvHint)
+    TextView myVotesNunTvHint;
+    @BindView(R.id.supportPeopleTv)
     TextView myVotesNumTv;
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
@@ -128,6 +126,13 @@ public class BPSomeOneVoteRecordFragment extends AbsBaseFragment {
             haveVotesNumTvHint.setText(getString(R.string.number_have_votes_s));
         }
         haveVotesNumTv.setText(itemNodeInfo.getNodeVote());
+
+
+        if (CommonUtil.isSingle(itemNodeInfo.getMyVoteCount())) {
+            myVotesNunTvHint.setText(mContext.getString(R.string.my_votes_number));
+        } else {
+            myVotesNunTvHint.setText(mContext.getString(R.string.my_votes_number_s));
+        }
         myVotesNumTv.setText(itemNodeInfo.getMyVoteCount());
 
         String identityType = itemNodeInfo.getIdentityType();
@@ -142,7 +147,6 @@ public class BPSomeOneVoteRecordFragment extends AbsBaseFragment {
         Glide.with(getContext())
                 .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
                 .into(nodeIconIv);
-        nodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
 
 
         HashMap<String, Object> listReq = new HashMap<>();

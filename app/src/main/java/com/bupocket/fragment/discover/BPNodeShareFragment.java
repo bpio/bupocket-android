@@ -67,7 +67,7 @@ public class BPNodeShareFragment extends AbsBaseFragment {
     TextView mHaveVotesNumTv;
     @BindView(R.id.supportPeopleTv)
     TextView mSupportPeopleTv;
-    @BindView(R.id.nodeIconIv)
+    @BindView(R.id.assetIconIv)
     QMUIRadiusImageView mNodeIconIv;
     @BindView(R.id.wbShare)
     WebView webView;

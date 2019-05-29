@@ -43,7 +43,7 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
 
         String nodeLogo = itemData.getNodeLogo();
 
-        ImageView nodeIconIv = holder.getView(R.id.nodeIconIv);
+        ImageView nodeIconIv = holder.getView(R.id.assetIconIv);
 
 
         if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(identityType)) {
@@ -55,7 +55,6 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         Glide.with(context)
                 .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
                 .into(nodeIconIv);
-        nodeIconIv.setBackgroundColor(context.getResources().getColor(R.color.app_color_white));
 
         TextView haveVotesNumTvHint = holder.getView(R.id.haveVotesNumTvHint);
         if (CommonUtil.isSingle(itemData.getNodeVote())) {
