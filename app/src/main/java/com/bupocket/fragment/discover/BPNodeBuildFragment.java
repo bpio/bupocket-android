@@ -94,6 +94,12 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
     }
 
     @Override
+    protected void initData() {
+
+        getBuildData();
+    }
+
+    @Override
     protected void setListeners(){
         lvNodeBuild.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -173,11 +179,7 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
         ViewPropertyAnimator.animate(tvTitle).alpha(100).setDuration(200).start();
     }
 
-    @Override
-    protected void initData() {
 
-        getBuildData();
-    }
 
 
 
@@ -213,7 +215,9 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
             @Override
             public void onFailure(Call<ApiResult<CoBuildListModel>> call, Throwable t) {
 
-                llLoadFailed.setVisibility(View.VISIBLE);
+                if (llLoadFailed!=null) {
+                    llLoadFailed.setVisibility(View.VISIBLE);
+                }
                 nodeBuildAdapter.setNewData(new ArrayList<NodeBuildModel>());
                 nodeBuildAdapter.notifyDataSetChanged();
 

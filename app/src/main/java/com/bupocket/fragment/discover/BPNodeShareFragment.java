@@ -129,6 +129,12 @@ public class BPNodeShareFragment extends AbsBaseFragment {
             supportPeopleTvHint.setText(mContext.getString(R.string.my_votes_number_s));
         }
         mSupportPeopleTv.setText(itemData.getMyVoteCount());
+
+
+        Glide.with(getContext())
+                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(itemData.getNodeLogo()))
+                .into(mNodeIconIv);
+
         getShareData();
         getUrlData();
     }
@@ -202,10 +208,6 @@ public class BPNodeShareFragment extends AbsBaseFragment {
 
 
         final String nodeLogo = itemData.getNodeLogo();
-        Glide.with(getContext())
-                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
-                .into(mNodeIconIv);
-
         String source = itemInfo.getIntroduce().trim().toString();
         webView.loadDataWithBaseURL(null, source, "text/html", "utf-8", null);
 

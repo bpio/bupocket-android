@@ -174,7 +174,10 @@ public class BPSomeOneVoteRecordFragment extends AbsBaseFragment {
             @Override
             public void onFailure(Call<ApiResult<MyVoteRecordModel>> call, Throwable t) {
 
-                llLoadFailed.setVisibility(View.VISIBLE);
+                if (llLoadFailed != null) {
+                    llLoadFailed.setVisibility(View.VISIBLE);
+                }
+
 
                 refreshLayout.finishRefresh();
                 qmuiEmptyView.show(null, null);
@@ -184,9 +187,6 @@ public class BPSomeOneVoteRecordFragment extends AbsBaseFragment {
 
 
     }
-
-
-
 
 
     private void initTopBar() {
