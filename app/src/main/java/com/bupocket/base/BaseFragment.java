@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.common.Constants;
 import com.bupocket.common.SingatureListener;
@@ -39,6 +40,7 @@ import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+import com.squareup.leakcanary.RefWatcher;
 import com.umeng.analytics.MobclickAgent;
 
 import java.lang.ref.WeakReference;
@@ -56,7 +58,7 @@ public abstract class BaseFragment extends QMUIFragment {
     private final static String BP_FILE_NAME = "buPocket";
     public static final int TRANSFER_CODE = 200001;
     public SharedPreferencesHelper spHelper;
-    public Context mContext;
+    protected Context mContext;
     private QMUITipDialog submitDialog;
     private TransferHandler transferHandler;
 
@@ -303,11 +305,7 @@ public abstract class BaseFragment extends QMUIFragment {
     }
 
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        transferHandler.removeCallbacksAndMessages(null);
-    }
+
 
     @Override
     public void popBackStack() {
@@ -410,6 +408,15 @@ public abstract class BaseFragment extends QMUIFragment {
 
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        transferHandler.removeCallbacksAndMessages(null);
+        RefWatcher refWatcher = BPApplication.getRefWatcher(getActivity());
+        refWatcher.watch(this);
+    }
+
 
 
 }

@@ -1,60 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+    android:background="@color/app_color_white"
+    android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <com.qmuiteam.qmui.widget.QMUITopBar
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:background="@color/app_btn_color_white"
+        android:fitsSystemWindows="true"
+        android:gravity="center"
+        android:text="@string/tabbar_discover_txt"
+        android:textColor="@color/send_confirm_title_color"
+        android:textSize="16sp" />
+
+
+    <LinearLayout
+        android:background="@color/app_bg_color_gray_4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/app_bg_color_gray_4"
         android:orientation="vertical"
-      >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="?attr/qmui_topbar_height"
-            android:layout_gravity="center"
-            android:fitsSystemWindows="true"
-            android:gravity="center"
-            android:textSize="16sp"
-            android:text="@string/tabbar_discover_txt"
-            android:background="@color/app_btn_color_white"
-            android:textColor="@color/send_confirm_title_color"
-           />
-
+        >
 
         <android.support.v4.view.ViewPager
             android:id="@+id/vpDisBanner"
             android:layout_width="match_parent"
             android:layout_height="190dp"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="@dimen/common_padding_border"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="@dimen/common_padding_border"
-            android:background="@mipmap/ic_banner_empty"
-            />
-
-        <!--<LinearLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="187.5dp"-->
-        <!--android:layout_marginTop="11.5dp"-->
-        <!--android:background="@drawable/shape_corner"-->
-        <!--android:orientation="vertical"-->
-        <!--android:visibility="gone">-->
-
-        <!--<ImageView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:background="@mipmap/ic_discover_bg"-->
-        <!--tools:ignore="ContentDescription" />-->
-        <!--</LinearLayout>-->
+            android:background="@mipmap/ic_banner_empty" />
 
         <RelativeLayout
-            android:visibility="gone"
             android:id="@+id/cardPackageRl"
-            style="@style/dis_item_style">
+            style="@style/dis_item_style"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -85,9 +68,9 @@
         </RelativeLayout>
 
         <LinearLayout
+            style="@style/dis_item_style"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            style="@style/dis_item_style"
             android:layout_marginLeft="@dimen/common_padding_border"
             android:layout_marginRight="@dimen/common_padding_border"
             android:orientation="vertical">
@@ -172,8 +155,7 @@
             android:id="@+id/informationRl"
             style="@style/dis_item_style"
             android:layout_marginLeft="@dimen/common_padding_border"
-            android:layout_marginRight="@dimen/common_padding_border"
-            >
+            android:layout_marginRight="@dimen/common_padding_border">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -209,8 +191,7 @@
             android:id="@+id/xiaobuYoupinRl"
             style="@style/dis_item_style"
             android:layout_marginLeft="@dimen/common_padding_border"
-            android:layout_marginRight="@dimen/common_padding_border"
-            >
+            android:layout_marginRight="@dimen/common_padding_border">
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -241,5 +222,7 @@
                 android:layout_marginRight="13.25dp"
                 android:background="@mipmap/icon_right_arrow" />
         </RelativeLayout>
+
     </LinearLayout>
-</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
+
+</LinearLayout>
