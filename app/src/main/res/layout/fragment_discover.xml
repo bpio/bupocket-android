@@ -15,7 +15,7 @@
         android:gravity="center"
         android:text="@string/tabbar_discover_txt"
         android:textColor="@color/send_confirm_title_color"
-        android:textSize="16sp" />
+        />
 
 
     <LinearLayout
