@@ -89,7 +89,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
     @BindView(R.id.copyCommandBtn)
     QMUIRoundButton copyCommandBtn;
     @BindView(R.id.qmuiEmptyView)
-    QMUIEmptyView  qmuiEmptyView;
+    QMUIEmptyView qmuiEmptyView;
 
 
     private NodeBuildDetailAdapter nodeBuildDetailAdapter;
@@ -123,6 +123,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
     private String amountExit;
     private View emptyLayout;
     private View tvRecord;
+    private Call<ApiResult<NodeBuildDetailModel>> serviceNodeBuildDetail;
 
 
     @Override
@@ -134,7 +135,6 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
     protected void initView() {
         initTopBar();
     }
-
 
 
     @Override
@@ -152,7 +152,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
         copyCommandBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refreshLayout.autoRefresh(0,200,1,false);
+                refreshLayout.autoRefresh(0, 200, 1, false);
             }
         });
     }
@@ -162,8 +162,6 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
     public void onResume() {
         super.onResume();
         getBuildData();
-
-//        refreshLayout.autoRefresh();
     }
 
     @Override
@@ -221,13 +219,10 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
 
         lvBuildDetail.addHeaderView(headerView);
         lvBuildDetail.setVisibility(View.GONE);
-//        addressRecordEmptyLL.setVisibility(View.VISIBLE);
         tvRecord = headerView.findViewById(R.id.tvRecord);
 
         qmuiEmptyView.show(true);
     }
-
-
 
 
     private void getBuildData() {
@@ -241,7 +236,8 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
 
         final NodeBuildService nodeBuildService = RetrofitFactory.getInstance().getRetrofit().create(NodeBuildService.class);
 
-        nodeBuildService.getNodeBuildDetail(map).enqueue(new Callback<ApiResult<NodeBuildDetailModel>>() {
+        serviceNodeBuildDetail = nodeBuildService.getNodeBuildDetail(map);
+        serviceNodeBuildDetail.enqueue(new Callback<ApiResult<NodeBuildDetailModel>>() {
             @Override
             public void onResponse(Call<ApiResult<NodeBuildDetailModel>> call, Response<ApiResult<NodeBuildDetailModel>> response) {
                 ApiResult<NodeBuildDetailModel> body = response.body();
@@ -262,8 +258,6 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
 
                     tvProgress.setText(CommonUtil.setRatio(supportCopies, detailModel.getCobuildCopies()));
 
-
-//                    tvBuildDetailSharingRatio.setText(CommonUtil.setRatio(detailModel.getRewardRate()));
 
                     tvTotalAmount.setText(CommonUtil.format(detailModel.getTotalAmount()) + getString(R.string.build_bu));
                     tvBuildDetailOriginAmount.setText(CommonUtil.format(detailModel.getInitiatorAmount()) + getString(R.string.build_bu));
@@ -327,13 +321,9 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
                     ArrayList<NodeBuildSupportModel> nodelist = body.getData().getSupportList();
 
                     if (nodelist == null || nodelist.size() == 0) {
-//                        addressRecordEmptyLL.setVisibility(View.VISIBLE);
                         emptyLayout.setVisibility(View.VISIBLE);
-//                        tvRecord.setVisibility(View.GONE);
                     } else {
-//                        addressRecordEmptyLL.setVisibility(View.GONE);
                         emptyLayout.setVisibility(View.GONE);
-//                        tvRecord.setVisibility(View.VISIBLE);
                     }
                     lvBuildDetail.setVisibility(View.VISIBLE);
                     nodeBuildDetailAdapter.setNewData(nodelist);
@@ -344,7 +334,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
                 refreshLayout.finishRefresh();
                 refreshLayout.setNoMoreData(false);
 
-                qmuiEmptyView.show(null,null);
+                qmuiEmptyView.show(null, null);
 
             }
 
@@ -356,7 +346,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
                 llLoadFailed.setVisibility(View.VISIBLE);
                 lvBuildDetail.setVisibility(View.GONE);
                 llBtnBuild.setVisibility(View.GONE);
-                qmuiEmptyView.show(null,null);
+                qmuiEmptyView.show(null, null);
             }
 
 
@@ -726,13 +716,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
     private int setNumStatus(int num) {
 
         int leftCopies = detailModel.getLeftCopies();
-//        double myAmount = Double.parseDouble(tokenListBean.getAmount());
         int perAmount = Integer.parseInt(detailModel.getPerAmount());
-//        int myLeftCopies = (int) (myAmount / perAmount);
-
-//        if (myLeftCopies < leftCopies) {
-//            leftCopies = myLeftCopies;
-//        }
 
         if (num < 1) {
             subBtn.setSelected(false);
@@ -770,14 +754,10 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
         return num;
     }
 
+    @Override
+    public void onDestroy() {
+        serviceNodeBuildDetail.cancel();
+        super.onDestroy();
+    }
 
-//    @Override
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (requestCode==BaseFragment.TRANSFER_CODE){
-//            LogUtils.e("获取了数据");
-//            getBuildData();
-//        }
-//    }
 }

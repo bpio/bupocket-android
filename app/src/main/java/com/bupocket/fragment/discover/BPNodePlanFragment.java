@@ -4,14 +4,11 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
@@ -28,7 +25,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.adaptor.SuperNodeAdapter;
 import com.bupocket.base.AbsBaseFragment;
-import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.common.SingatureListener;
 import com.bupocket.enums.ExceptionEnum;
@@ -38,10 +34,8 @@ import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.SuperNodeDto;
-import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.wallet.Wallet;
@@ -53,7 +47,6 @@ import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -68,8 +61,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import io.bumo.model.response.TransactionBuildBlobResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -117,7 +108,7 @@ public class BPNodePlanFragment extends AbsBaseFragment {
     private int mBaseTranslationY;
     private TextView mTopBarTitle;
     private String metaData;
-
+    private Call<ApiResult<SuperNodeDto>> serviceSuperNode;
 
 
     @Override
@@ -541,27 +532,18 @@ public class BPNodePlanFragment extends AbsBaseFragment {
 
     private void getAllNode() {
 
-        HashMap<String, Object> listReq = null;
-        if (listReq == null) {
-            listReq = new HashMap<>();
-        }
+        HashMap<String, Object> listReq = new HashMap<>();;
         listReq.put(Constants.ADDRESS, currentWalletAddress);
 
-
-        Call<ApiResult<SuperNodeDto>> superNodeList = null;
-
-        if (superNodeList == null) {
-            NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
-            superNodeList = nodePlanService.getSuperNodeList(listReq);
-        }
-        superNodeList.enqueue(new Callback<ApiResult<SuperNodeDto>>() {
+        NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
+        serviceSuperNode = nodePlanService.getSuperNodeList(listReq);
+        serviceSuperNode.enqueue(new Callback<ApiResult<SuperNodeDto>>() {
 
             @Override
             public void onResponse(Call<ApiResult<SuperNodeDto>> call, Response<ApiResult<SuperNodeDto>> response) {
 
-                refreshLayout.finishRefresh();
                 ApiResult<SuperNodeDto> body = response.body();
-                llLoadFailed.setVisibility(View.GONE);
+
                 if (body == null) {
                     return;
                 }
@@ -581,15 +563,13 @@ public class BPNodePlanFragment extends AbsBaseFragment {
                     setEmpty(true);
                 }
 
-
+                llLoadFailed.setVisibility(View.GONE);
                 refreshLayout.finishRefresh();
             }
 
             @Override
             public void onFailure(Call<ApiResult<SuperNodeDto>> call, Throwable t) {
-                refreshLayout.finishRefresh();
                 llLoadFailed.setVisibility(View.VISIBLE);
-
                 refreshLayout.finishRefresh();
 
             }
@@ -619,11 +599,6 @@ public class BPNodePlanFragment extends AbsBaseFragment {
         return superNodeModels;
     }
 
-    private void initUI() {
-        initTopBar();
-        initListView();
-        setEmpty(true);
-    }
 
     private void initListView() {
         superNodeAdapter = new SuperNodeAdapter(this.getContext());
@@ -649,4 +624,13 @@ public class BPNodePlanFragment extends AbsBaseFragment {
     }
 
 
+    @Override
+    public void onDestroy() {
+        serviceSuperNode.cancel();
+        super.onDestroy();
+
+        myVoteInfoList=null;
+        nodeList=null;
+        currentWalletAddress=null;
+    }
 }

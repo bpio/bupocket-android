@@ -137,8 +137,9 @@ public class CrashHandler  implements Thread.UncaughtExceptionHandler {
         for (Map.Entry<String, String> entry : info.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            sb.append(key + "=" + value + "\r\n");
+            sb.append(key + "=" + value + "\r");
         }
+        sb.append("\n");
         Writer writer = new StringWriter();
         PrintWriter pw = new PrintWriter(writer);
         ex.printStackTrace(pw);

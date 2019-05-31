@@ -71,6 +71,7 @@ public class BPSomeOneVoteRecordFragment extends AbsBaseFragment {
 
 
     private VoteRecordAdapter voteRecordAdapter;
+    private Call<ApiResult<MyVoteRecordModel>> serviceMyVoteList;
 
 
     @Override
@@ -155,8 +156,8 @@ public class BPSomeOneVoteRecordFragment extends AbsBaseFragment {
 
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
 
-        Call<ApiResult<MyVoteRecordModel>> superNodeList = nodePlanService.getMyVoteList(listReq);
-        superNodeList.enqueue(new Callback<ApiResult<MyVoteRecordModel>>() {
+        serviceMyVoteList = nodePlanService.getMyVoteList(listReq);
+        serviceMyVoteList.enqueue(new Callback<ApiResult<MyVoteRecordModel>>() {
 
             @Override
             public void onResponse(Call<ApiResult<MyVoteRecordModel>> call, Response<ApiResult<MyVoteRecordModel>> response) {
@@ -205,4 +206,9 @@ public class BPSomeOneVoteRecordFragment extends AbsBaseFragment {
     }
 
 
+    @Override
+    public void onDestroy() {
+       serviceMyVoteList.cancel();
+        super.onDestroy();
+    }
 }

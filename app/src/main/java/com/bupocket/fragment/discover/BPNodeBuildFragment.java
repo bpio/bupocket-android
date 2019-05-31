@@ -1,30 +1,24 @@
 package com.bupocket.fragment.discover;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeBuildAdapter;
 import com.bupocket.base.AbsBaseFragment;
-import com.bupocket.base.BaseFragment;
 import com.bupocket.http.api.NodeBuildService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.CoBuildListModel;
 import com.bupocket.model.NodeBuildModel;
-import com.bupocket.utils.LogUtils;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
-import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -37,8 +31,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -67,7 +59,7 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
     private ArrayList<NodeBuildModel> nodeList;
     private View headerView;
     private TextView tvTitle;
-
+    private Call<ApiResult<CoBuildListModel>> serviceCoBuild;
 
 
     @Override
@@ -189,7 +181,8 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
         HashMap<String, Object> map = new HashMap<>();
 
         final NodeBuildService nodeBuildService = RetrofitFactory.getInstance().getRetrofit().create(NodeBuildService.class);
-        nodeBuildService.getNodeBuildList(map).enqueue(new Callback<ApiResult<CoBuildListModel>>() {
+        serviceCoBuild = nodeBuildService.getNodeBuildList(map);
+        serviceCoBuild.enqueue(new Callback<ApiResult<CoBuildListModel>>() {
             @Override
             public void onResponse(Call<ApiResult<CoBuildListModel>> call, Response<ApiResult<CoBuildListModel>> response) {
 
@@ -229,6 +222,7 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
         });
 
 
+
     }
 
 
@@ -247,4 +241,9 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
 
     }
 
+    @Override
+    public void onDestroy() {
+        serviceCoBuild.cancel();
+        super.onDestroy();
+    }
 }

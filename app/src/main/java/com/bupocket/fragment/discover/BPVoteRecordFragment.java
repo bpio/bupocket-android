@@ -51,7 +51,7 @@ public class BPVoteRecordFragment extends AbsBaseFragment {
 
 
     private VoteRecordAdapter voteRecordAdapter;
-
+    private Call<ApiResult<MyVoteRecordModel>> serviceMyVoteList;
 
 
     @Override
@@ -103,8 +103,8 @@ public class BPVoteRecordFragment extends AbsBaseFragment {
 
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
 
-        Call<ApiResult<MyVoteRecordModel>> superNodeList = nodePlanService.getMyVoteList(listReq);
-        superNodeList.enqueue(new Callback<ApiResult<MyVoteRecordModel>>() {
+        serviceMyVoteList = nodePlanService.getMyVoteList(listReq);
+        serviceMyVoteList.enqueue(new Callback<ApiResult<MyVoteRecordModel>>() {
 
             @Override
             public void onResponse(Call<ApiResult<MyVoteRecordModel>> call, Response<ApiResult<MyVoteRecordModel>> response) {
@@ -154,4 +154,9 @@ public class BPVoteRecordFragment extends AbsBaseFragment {
         TextView title = mTopBar.setTitle(getResources().getString(R.string.vote_record_txt));
     }
 
+    @Override
+    public void onDestroy() {
+        serviceMyVoteList.cancel();
+        super.onDestroy();
+    }
 }

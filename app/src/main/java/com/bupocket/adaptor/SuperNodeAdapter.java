@@ -20,7 +20,7 @@ import com.qmuiteam.qmui.widget.popup.QMUIListPopup;
 
 public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
 
-    QMUIListPopup morePop;
+
 
 
     public SuperNodeAdapter(@NonNull Context context) {
@@ -99,9 +99,6 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
             }
         });
 
-
-
-        LogUtils.e("node address:\t"+itemData.getNodeId());
     }
 
 
