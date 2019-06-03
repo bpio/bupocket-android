@@ -273,7 +273,15 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
                                             sharedPreferencesHelper.put("currentWalletAddress",walletBPData.getAccounts().get(1).getAddress());
                                             sharedPreferencesHelper.put("mnemonicWordBackupState", "0");
                                             tipDialog.dismiss();
-                                            startFragmentAndDestroyCurrent(new HomeFragment(), false);
+
+                                            getActivity().runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    startFragmentAndDestroyCurrent(new HomeFragment(), false);
+                                                }
+                                            });
+
+
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                             Looper.prepare();

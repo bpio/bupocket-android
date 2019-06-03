@@ -14,9 +14,8 @@ import android.widget.Toast;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.BPAssetsHomeFragment;
-import com.bupocket.fragment.BPProfileFragment;
+import com.bupocket.fragment.BPProfileHomeFragment;
 import com.bupocket.fragment.discover.BPDiscoverHomeFragment;
-import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.widget.QMUIPagerAdapter;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 
@@ -137,7 +136,7 @@ public class HomeFragment extends BaseFragment {
                         return new BPDiscoverHomeFragment();
                     case 2:
                     default:
-                        return new BPProfileFragment();
+                        return new BPProfileHomeFragment();
                 }
             }
 
