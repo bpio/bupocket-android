@@ -21,8 +21,6 @@ import com.qmuiteam.qmui.widget.popup.QMUIListPopup;
 public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
 
 
-
-
     public SuperNodeAdapter(@NonNull Context context) {
         super(context);
     }
@@ -38,12 +36,15 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         if (itemData == null) {
             return;
         }
-        holder.setText(R.id.nodeNameTv, itemData.getNodeName());
-        String identityType = itemData.getIdentityType();
 
         String nodeLogo = itemData.getNodeLogo();
-
         ImageView nodeIconIv = holder.getView(R.id.assetIconIv);
+        Glide.with(context)
+                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
+                .into(nodeIconIv);
+
+        holder.setText(R.id.nodeNameTv, itemData.getNodeName());
+        String identityType = itemData.getIdentityType();
 
 
         if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(identityType)) {
@@ -52,23 +53,19 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
             holder.setText(R.id.nodeTypeTv, context.getResources().getString(R.string.ecological_node));
         }
 
-        Glide.with(context)
-                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
-                .into(nodeIconIv);
-
         TextView haveVotesNumTvHint = holder.getView(R.id.haveVotesNumTvHint);
         if (CommonUtil.isSingle(itemData.getNodeVote())) {
             haveVotesNumTvHint.setText(context.getString(R.string.number_have_votes));
-        }else{
+        } else {
             haveVotesNumTvHint.setText(context.getString(R.string.number_have_votes_s));
         }
         holder.setText(R.id.haveVotesNumTv, itemData.getNodeVote());
 
 
         TextView myVotesNumTvHint = holder.getView(R.id.myVotesNumTvHint);
-        if (CommonUtil.isSingle( itemData.getMyVoteCount())){
+        if (CommonUtil.isSingle(itemData.getMyVoteCount())) {
             myVotesNumTvHint.setText(context.getString(R.string.my_votes_number));
-        }else {
+        } else {
             myVotesNumTvHint.setText(context.getString(R.string.my_votes_number_s));
         }
 
@@ -79,7 +76,7 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
             @Override
             public void onClick(View v) {
 
-                onItemBtnListener.onClick(holder.getPosition(),shareBtn.getId());
+                onItemBtnListener.onClick(holder.getPosition(), shareBtn.getId());
             }
         });
 
@@ -87,7 +84,7 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         revokeVoteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemBtnListener.onClick(holder.getPosition(),revokeVoteBtn.getId());
+                onItemBtnListener.onClick(holder.getPosition(), revokeVoteBtn.getId());
             }
         });
 
@@ -95,17 +92,17 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         voteRecordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemBtnListener.onClick(holder.getPosition(),R.id.voteRecordBtn);
+                onItemBtnListener.onClick(holder.getPosition(), R.id.voteRecordBtn);
             }
         });
 
     }
 
 
-
     public interface OnItemBtnListener {
-        void onClick(int position,int btn);
+        void onClick(int position, int btn);
     }
+
     private OnItemBtnListener onItemBtnListener;
 
     public void setOnItemBtnListener(OnItemBtnListener onItemBtnListener) {
