@@ -230,7 +230,6 @@ public class BPNodeShareFragment extends AbsBaseFragment {
                 }
             }
         }).start();
-        mNodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
     }
 
 

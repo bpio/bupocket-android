@@ -231,7 +231,7 @@ public class BPNodePlanFragment extends AbsBaseFragment {
 
                         break;
                     case R.id.voteRecordBtn:
-                        BPSomeOneVoteRecordFragment fragment = new BPSomeOneVoteRecordFragment();
+                        BPMeNodeVoteRecordFragment fragment = new BPMeNodeVoteRecordFragment();
                         Bundle args1 = new Bundle();
                         args1.putParcelable("itemNodeInfo", superNodeModel);
                         fragment.setArguments(args1);

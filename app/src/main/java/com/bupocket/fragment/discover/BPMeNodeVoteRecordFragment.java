@@ -2,19 +2,15 @@ package com.bupocket.fragment.discover;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.adaptor.VoteRecordAdapter;
 import com.bupocket.base.AbsBaseFragment;
-import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.http.api.NodePlanService;
@@ -37,7 +33,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BPSomeOneVoteRecordFragment extends AbsBaseFragment {
+public class BPMeNodeVoteRecordFragment extends AbsBaseFragment {
 
 
     @BindView(R.id.topbar)
@@ -76,7 +72,7 @@ public class BPSomeOneVoteRecordFragment extends AbsBaseFragment {
 
     @Override
     protected int getLayoutView() {
-        return R.layout.fragment_node_someone_vote_record;
+        return R.layout.fragment_node_me_vote_record;
     }
 
     @Override
