@@ -99,6 +99,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
     private String tokenType;
     private String currencyType;
     private Unbinder bind;
+    private Call<ApiResult<GetMyTxsRespDto>> callTxService;
 
     @Override
     protected View onCreateView() {
@@ -201,7 +202,6 @@ public class BPAssetsDetailFragment extends BaseFragment {
     private void loadMyTxList() {
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
         TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
-        Call<ApiResult<GetMyTxsRespDto>> call;
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("tokenType", tokenType);
         paramsMap.put("assetCode", assetCode);
@@ -210,8 +210,8 @@ public class BPAssetsDetailFragment extends BaseFragment {
         paramsMap.put("startPage", pageStart);
         paramsMap.put("pageSize", pageSize);
         paramsMap.put("currencyType", currencyType);
-        call = txService.getMyTxs(paramsMap);
-        call.enqueue(new Callback<ApiResult<GetMyTxsRespDto>>() {
+        callTxService = txService.getMyTxs(paramsMap);
+        callTxService.enqueue(new Callback<ApiResult<GetMyTxsRespDto>>() {
             @Override
             public void onResponse(Call<ApiResult<GetMyTxsRespDto>> call, Response<ApiResult<GetMyTxsRespDto>> response) {
                 ApiResult<GetMyTxsRespDto> respDto = response.body();
@@ -231,6 +231,9 @@ public class BPAssetsDetailFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<GetMyTxsRespDto>> call, Throwable t) {
+                if (call.isCanceled()) {
+                    return;
+                }
                 t.printStackTrace();
                 if (isAdded()) {
                     llLoadFailed.setVisibility(View.VISIBLE);
@@ -450,6 +453,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
 
     @Override
     public void onDestroy() {
+        callTxService.cancel();
         super.onDestroy();
         bind.unbind();
     }

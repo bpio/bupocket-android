@@ -290,7 +290,6 @@ public class BPNodePlanFragment extends AbsBaseFragment {
         }
         setEmpty(notifyNodeList.size()==0);
         superNodeAdapter.setNewData(notifyNodeList);
-
     }
 
     private ArrayList<SuperNodeModel> searchData(ArrayList<SuperNodeModel> sourceData) {
@@ -531,7 +530,7 @@ public class BPNodePlanFragment extends AbsBaseFragment {
                 myVoteInfoList = myVoteInfoList(nodeList);
 
                 notifyData();
-
+                showToolbar();
                 llLoadFailed.setVisibility(View.GONE);
                 refreshLayout.finishRefresh();
             }
