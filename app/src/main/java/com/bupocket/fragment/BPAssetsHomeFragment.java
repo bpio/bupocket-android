@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -47,30 +46,24 @@ import com.bupocket.http.api.TokenService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetQRContentDto;
 import com.bupocket.http.api.dto.resp.GetTokensRespDto;
-import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.http.api.dto.resp.UserScanQrLoginDto;
 import com.bupocket.model.TransConfirmModel;
 import com.bupocket.model.UDCBUModel;
-import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LocaleUtil;
-import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
-import com.bupocket.utils.WalletUtils;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
-import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
-import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -88,8 +81,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class BPAssetsHomeFragment extends BaseFragment {
 
@@ -143,11 +134,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
     private String currencyType;
     private Integer bumoNodeType;
     private String localTokenListSharedPreferenceKey;
-
-    private String txHash;
     private Boolean whetherIdentityWallet = false;
-
-    private TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean;
 
     private Double scanTxFee;
     private String expiryTime;
@@ -161,7 +148,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
         bind = ButterKnife.bind(this, root);
         initView();
         initData();
-        initWalletInfoView();
         setListeners();
         backupState();
         initPermission();
@@ -251,7 +237,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 //                WalletUtils.showWalletPopup(mContext,getString(R.string.wallet_bu_info),v);
-                CommonUtil.showMessageDialog(mContext,getString(R.string.wallet_bu_info));
+                CommonUtil.showMessageDialog(mContext, getString(R.string.wallet_bu_info));
             }
         });
     }
@@ -310,9 +296,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
         ;
     };
 
-    private void initWalletInfoView() {
-        String shortCurrentAccAddress = AddressUtil.anonymous(currentWalletAddress);
-    }
 
     private void initTokensView() {
         mMaterialHeader = (MaterialHeader) refreshLayout.getRefreshHeader();
@@ -528,26 +511,17 @@ public class BPAssetsHomeFragment extends BaseFragment {
                 transactionDetail = contentDto.getQrRemarkEn();
                 break;
         }
-        if (ScanTransactionTypeEnum.ADD_MARGIN.getCode().equals(transactionType)) {
-            scanTxFee = Constants.ADD_MARGIN;
-        } else if (ScanTransactionTypeEnum.NODE_VOTE.getCode().equals(transactionType)) {
-            scanTxFee = Constants.NODE_VOTE_FEE;
-        } else if (ScanTransactionTypeEnum.CO_BUILD_APPLY.getCode().equals(transactionType)) {
-            scanTxFee = Constants.NODE_AUDIT_FEE;
-        } else if (ScanTransactionTypeEnum.APPLY_CO_BUILD.getCode().equals(transactionType)) {
-            scanTxFee = Constants.NODE_CO_BUILD_FEE;
-        } else if (ScanTransactionTypeEnum.CO_BUILD_SUPPORT.getCode().equals(transactionType)) {
-            scanTxFee = Constants.NODE_CO_BUILD_SUPPORT;
-        } else if (ScanTransactionTypeEnum.CO_BUILD_APPLY.getCode().equals(transactionType)
+        if (ScanTransactionTypeEnum.NODE_ADD_MARGIN.getCode().equals(transactionType)
+                || ScanTransactionTypeEnum.NODE_VOTE.getCode().equals(transactionType)
+                || ScanTransactionTypeEnum.NODE_EXIT.getCode().equals(transactionType)
+                || ScanTransactionTypeEnum.CO_BUILD_SUPPORT.getCode().equals(transactionType)
                 || ScanTransactionTypeEnum.CO_BUILD_APPLY_KOL.getCode().equals(transactionType)
-                || ScanTransactionTypeEnum.COMMITTEE_EXIT.getCode().equals(transactionType)) {
-            scanTxFee = Constants.NODE_CO_BUILD_SUPPORT;
-        } else if (ScanTransactionTypeEnum.COMMITTEE_APPLY.getCode().equals(transactionType)) {
-            scanTxFee = Constants.COMMITTEE_APPLY;
-        } else if (ScanTransactionTypeEnum.COMMITTEE_EXIT.getCode().equals(transactionType)) {
-            scanTxFee = Constants.COMMITTEE_APPLY;
-        } else if (ScanTransactionTypeEnum.NODE_EXIT.getCode().equals(transactionType)) {
-            scanTxFee = Constants.NODE_EXIT;
+                || ScanTransactionTypeEnum.CO_BUILD_APPLY_KOL_EXIT.getCode().equals(transactionType)
+                || ScanTransactionTypeEnum.COMMITTEE_EXIT.getCode().equals(transactionType)
+                || ScanTransactionTypeEnum.COMMITTEE_APPLY.getCode().equals(transactionType)) {
+            scanTxFee = Constants.NODE_COMMON_FEE;
+        } else if (ScanTransactionTypeEnum.CO_BUILD_PURCHASE.getCode().equals(transactionType)) {
+            scanTxFee = Constants.NODE_CO_BUILD_PURCHASE_FEE;
         } else {
             scanTxFee = Constants.MIN_FEE;
         }
@@ -573,28 +547,27 @@ public class BPAssetsHomeFragment extends BaseFragment {
         final String transMetaData = contentDto.getQrRemarkEn();
 
 
-
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
 
                     final TransactionBuildBlobResponse buildBlobResponse;
-                    if (ScanTransactionTypeEnum.APPLY_CO_BUILD.getCode().equals(transactionType)) {
+                    if (ScanTransactionTypeEnum.CO_BUILD_PURCHASE.getCode().equals(transactionType)) {
                         // handle script
 
                         org.json.JSONObject jsonObj = new org.json.JSONObject(script);
                         String input = jsonObj.getString("input");
                         String payload = jsonObj.getString("payload");
-                        buildBlobResponse = Wallet.getInstance().applyCoBuildBlob(currentWalletAddress, String.valueOf(Double.parseDouble(amount) + Constants.NODE_CO_BUILD_AMOUNT_FEE), input.toString(), payload, Constants.NODE_CO_BUILD_FEE, transMetaData);
+                        buildBlobResponse = Wallet.getInstance().applyCoBuildBlob(currentWalletAddress, String.valueOf(Double.parseDouble(amount) + Constants.NODE_CO_BUILD_AMOUNT_FEE), input.toString(), payload, Constants.NODE_CO_BUILD_PURCHASE_FEE, transMetaData);
                     } else {
                         buildBlobResponse = Wallet.getInstance().buildBlob(amount, script, currentWalletAddress, String.valueOf(scanTxFee), contractAddress, transMetaData);
                     }
                     final String txHash = buildBlobResponse.getResult().getHash();
 
 
-                    if (TextUtils.isEmpty(tokenBalance) || (Double.valueOf(tokenBalance) <=Double.valueOf(amount))) {
-                       ToastUtil.showToast(getActivity(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT);
+                    if (TextUtils.isEmpty(tokenBalance) || (Double.valueOf(tokenBalance) <= Double.valueOf(amount))) {
+                        ToastUtil.showToast(getActivity(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT);
                         return;
                     }
 
@@ -665,20 +638,11 @@ public class BPAssetsHomeFragment extends BaseFragment {
     }
 
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        LogUtils.e("address:\t" + getWalletAddress());
-
-    }
-
-
     private void handleResult(String resultContent) {
         if (null == resultContent) {
             Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
         } else {
             if (!PublicKey.isAddressValid(resultContent)) {
-                LogUtils.e("resultContent:\t" + resultContent);
                 if (CommonUtil.checkIsBase64(resultContent)) {
                     String jsonStr = null;
                     try {
@@ -754,7 +718,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                         Bundle argz = new Bundle();
                                         argz.putString("errorCode", respDto.getErrCode());
                                         argz.putString("errorMessage", respDto.getData().getErrorMsg());
-                                        argz.putString("errorDescription",respDto.getData().getErrorDescription());
+                                        argz.putString("errorDescription", respDto.getData().getErrorDescription());
                                         BPScanErrorFragment bpScanErrorFragment = new BPScanErrorFragment();
                                         bpScanErrorFragment.setArguments(argz);
                                         startFragment(bpScanErrorFragment);
@@ -862,7 +826,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                                     try {
                                                         final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(finalUdcbuModel.getAmount(), finalUdcbuModel.getInput(), currentWalletAddress, finalUdcbuModel.getTx_fee(), finalUdcbuModel.getDest_address(), getString(R.string.transaction_metadata));
 
-                                                        if (TextUtils.isEmpty(tokenBalance) || (Double.valueOf(tokenBalance) <=Double.valueOf(finalUdcbuModel.getAmount()))) {
+                                                        if (TextUtils.isEmpty(tokenBalance) || (Double.valueOf(tokenBalance) <= Double.valueOf(finalUdcbuModel.getAmount()))) {
                                                             ToastUtil.showToast(getActivity(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT);
                                                             return;
                                                         }
@@ -874,11 +838,11 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                                             }
                                                         });
 
-                                                    }catch (WalletException e) {
+                                                    } catch (WalletException e) {
                                                         if (e.getErrCode().equals(com.bupocket.wallet.enums.ExceptionEnum.ADDRESS_NOT_EXIST.getCode())) {
                                                             ToastUtil.showToast(getActivity(), getString(R.string.address_not_exist), Toast.LENGTH_SHORT);
                                                         }
-                                                    }catch (Exception e) {
+                                                    } catch (Exception e) {
                                                         e.printStackTrace();
                                                     }
 

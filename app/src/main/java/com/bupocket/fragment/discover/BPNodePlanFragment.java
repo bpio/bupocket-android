@@ -36,7 +36,6 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.SuperNodeDto;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.wallet.Wallet;
@@ -54,7 +53,6 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.squareup.okhttp.internal.framed.Variant;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -427,7 +425,7 @@ public class BPNodePlanFragment extends AbsBaseFragment {
         String transactionParams = input.toJSONString();
 
         TransferUtils.confirmTxSheet(mContext, getWalletAddress(), destAddress,
-                transactionAmount, Constants.NODE_REVOKE_FEE,
+                transactionAmount, Constants.NODE_COMMON_FEE,
                 transactionDetail, transactionParams, new TransferUtils.TransferListener() {
                     @Override
                     public void confirm() {
@@ -458,7 +456,7 @@ public class BPNodePlanFragment extends AbsBaseFragment {
                     @Override
                     public void run() {
                         try {
-                            final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input.toJSONString(), currentWalletAddress, String.valueOf(Constants.NODE_REVOKE_FEE), Constants.CONTRACT_ADDRESS, metaData);
+                            final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input.toJSONString(), currentWalletAddress, String.valueOf(Constants.NODE_COMMON_FEE), Constants.CONTRACT_ADDRESS, metaData);
                             String txHash = buildBlobResponse.getResult().getHash();
                             NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
                             Call<ApiResult> call;

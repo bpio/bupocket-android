@@ -1,11 +1,8 @@
 package com.bupocket.fragment.discover;
 
-import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.Html;
-import android.text.Selection;
-import android.text.Spannable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -24,7 +21,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeBuildDetailAdapter;
 import com.bupocket.base.AbsBaseFragment;
-import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.common.SingatureListener;
 import com.bupocket.enums.CoBuildDetailStatusEnum;
@@ -396,7 +392,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
         transMetaData = String.format(getString(R.string.build_exit_confirm_title), detailModel.getTitle());
 
         TransferUtils.confirmTxSheet(mContext, detailModel.getOriginatorAddress(), detailModel.getContractAddress(),
-                amountExit, Constants.NODE_REVOKE_FEE, transMetaData, inputExit, new TransferUtils.TransferListener() {
+                amountExit, Constants.NODE_COMMON_FEE, transMetaData, inputExit, new TransferUtils.TransferListener() {
                     @Override
                     public void confirm() {
                         confirmExit();
@@ -429,8 +425,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
             @Override
             public void run() {
                 try {
-                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amountExit, inputExit, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_FEE), detailModel.getContractAddress(), transMetaData);
-
+                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amountExit, inputExit, getWalletAddress(), String.valueOf(Constants.NODE_CO_BUILD_PURCHASE_FEE), detailModel.getContractAddress(), transMetaData);
 
                     String accountBUBalance = spHelper.getSharedPreference(getWalletAddress() + "tokenBalance", "0").toString();
                     if (TextUtils.isEmpty(accountBUBalance) || (Double.parseDouble(accountBUBalance) <= 0)) {
@@ -613,7 +608,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
         inputSupport = "{\"method\":\"subscribe\",\"params\":" + params.toJSONString() + "}";
         TransferUtils.confirmTxSheet(mContext, getWalletAddress(), detailModel.getContractAddress(),
                 tvDialogTotalAmount.getText().toString().replace(",", ""),
-                Constants.NODE_REVOKE_FEE, supportTransMetaData,
+                Constants.NODE_COMMON_FEE, supportTransMetaData,
                 inputSupport, new TransferUtils.TransferListener() {
                     @Override
                     public void confirm() {
@@ -632,7 +627,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
             public void run() {
                 try {
 
-                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, inputSupport, getWalletAddress(), String.valueOf(Constants.NODE_REVOKE_FEE), contractAddress, supportTransMetaData);
+                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(amount, inputSupport, getWalletAddress(), String.valueOf(Constants.NODE_COMMON_FEE), contractAddress, supportTransMetaData);
                     final String hash = transBlob.getResult().getHash();
                     if (TextUtils.isEmpty(hash)) {
 
