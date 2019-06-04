@@ -117,7 +117,7 @@ public class BPNodePlanFragment extends AbsBaseFragment {
 
     @Override
     protected void initView() {
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+//        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         initTopBar();
         initListView();
         setEmpty(true);

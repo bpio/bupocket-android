@@ -137,7 +137,7 @@ public class CrashHandler  implements Thread.UncaughtExceptionHandler {
         for (Map.Entry<String, String> entry : info.entrySet()) {
             String key = entry.getKey();
             String value = entry.getValue();
-            sb.append(key + "=" + value + "\r");
+            sb.append(key + "=" + value + ";\r");
         }
         sb.append("\n");
         Writer writer = new StringWriter();
@@ -150,7 +150,7 @@ public class CrashHandler  implements Thread.UncaughtExceptionHandler {
             cause = cause.getCause();
         }
         pw.close();// 记得关闭
-        String result = writer.toString();
+        String result = writer.toString().replace("at ","\nat ");
         sb.append(result);
         // 保存文件
         long timetamp = System.currentTimeMillis();
