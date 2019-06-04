@@ -269,10 +269,7 @@ public class BPNodePlanFragment extends AbsBaseFragment {
                         showToolbar();
                     }
                 } else {
-                    // Even if onScrollChanged occurs without scrollY changing, toolbar should be adjusted
                     if (!toolbarIsShown() && !toolbarIsHidden()) {
-                        // Toolbar is moving but doesn't know which to move:
-                        // you can change this to hideToolbar()
                         showToolbar();
                     }
                 }
