@@ -581,12 +581,6 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
                 if (tvDialogTotalAmount.getText().toString().isEmpty()) {
                     return;
                 }
-                String accountBUBalance = spHelper.getSharedPreference(getWalletAddress() + "tokenBalance", "0").toString();
-                if (TextUtils.isEmpty(accountBUBalance) || (Double.parseDouble(accountBUBalance) <= Integer.parseInt(tvDialogTotalAmount.getText().toString().replace(",", "")))) {
-                    ToastUtil.showToast(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT);
-                    return;
-                }
-
                 supportDialog.cancel();
                 confirmSheet();
 
@@ -695,7 +689,11 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
 
 
                 } catch (WalletException walletException) {
-                    ToastUtil.showToast(getActivity(), walletException.getErrMsg(), Toast.LENGTH_SHORT);
+
+                    if (walletException.getErrCode().equals(com.bupocket.wallet.enums.ExceptionEnum.ADDRESS_NOT_EXIST.getCode())) {
+                        ToastUtil.showToast(getActivity(), getString(R.string.address_not_exist), Toast.LENGTH_SHORT);
+                    }
+//                    ToastUtil.showToast(getActivity(), walletException.getErrMsg(), Toast.LENGTH_SHORT);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
