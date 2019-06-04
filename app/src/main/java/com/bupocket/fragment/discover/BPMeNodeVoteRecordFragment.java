@@ -174,11 +174,13 @@ public class BPMeNodeVoteRecordFragment extends AbsBaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<MyVoteRecordModel>> call, Throwable t) {
+                if (call.isCanceled()) {
+                    return;
+                }
 
                 if (llLoadFailed != null) {
                     llLoadFailed.setVisibility(View.VISIBLE);
                 }
-
 
                 refreshLayout.finishRefresh();
                 qmuiEmptyView.show(null, null);

@@ -336,6 +336,10 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<NodeBuildDetailModel>> call, Throwable t) {
+                if (call.isCanceled()) {
+                    return;
+                }
+
                 refreshLayout.finishRefresh();
                 refreshLayout.setNoMoreData(false);
 

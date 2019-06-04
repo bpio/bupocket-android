@@ -207,6 +207,9 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<CoBuildListModel>> call, Throwable t) {
+                if (call.isCanceled()) {
+                    return;
+                }
 
                 if (llLoadFailed!=null) {
                     llLoadFailed.setVisibility(View.VISIBLE);
@@ -242,8 +245,14 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
     }
 
     @Override
-    public void onDestroy() {
+    public void onPause() {
+        super.onPause();
         serviceCoBuild.cancel();
+    }
+
+    @Override
+    public void onDestroy() {
+
         super.onDestroy();
     }
 }

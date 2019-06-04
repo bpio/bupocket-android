@@ -89,6 +89,8 @@ public class BPNodeShareFragment extends AbsBaseFragment {
     private SuperNodeModel itemInfo;
     private SuperNodeModel itemData;
     private Bitmap nodeLogoBitmap = null;
+    private Call<ApiResult<SuperNodeModel>> callShareService;
+    private Call<ApiResult<ShareUrlModel>> callShareUrl;
 
 
     @Override
@@ -150,7 +152,8 @@ public class BPNodeShareFragment extends AbsBaseFragment {
         map.put("address", getWalletAddress());
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
 
-        nodePlanService.getShareData(map).enqueue(new Callback<ApiResult<SuperNodeModel>>() {
+        callShareService = nodePlanService.getShareData(map);
+        callShareService.enqueue(new Callback<ApiResult<SuperNodeModel>>() {
             @Override
             public void onResponse(Call<ApiResult<SuperNodeModel>> call, Response<ApiResult<SuperNodeModel>> response) {
                 ApiResult<SuperNodeModel> body = response.body();
@@ -162,7 +165,7 @@ public class BPNodeShareFragment extends AbsBaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<SuperNodeModel>> call, Throwable t) {
-//                ToastUtil.showToast(getActivity(), t.getMessage().toString(), Toast.LENGTH_SHORT);
+
             }
         });
 
@@ -182,7 +185,8 @@ public class BPNodeShareFragment extends AbsBaseFragment {
         map.put(Constants.PATH, path);
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
 
-        nodePlanService.getShareUrl(map).enqueue(new Callback<ApiResult<ShareUrlModel>>() {
+        callShareUrl = nodePlanService.getShareUrl(map);
+        callShareUrl.enqueue(new Callback<ApiResult<ShareUrlModel>>() {
             @Override
             public void onResponse(Call<ApiResult<ShareUrlModel>> call, Response<ApiResult<ShareUrlModel>> response) {
                 ApiResult<ShareUrlModel> body = response.body();
@@ -194,7 +198,7 @@ public class BPNodeShareFragment extends AbsBaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<ShareUrlModel>> call, Throwable t) {
-//                ToastUtil.showToast(getActivity(), t.getMessage().toString(), Toast.LENGTH_SHORT);
+
             }
         });
 
@@ -420,6 +424,9 @@ public class BPNodeShareFragment extends AbsBaseFragment {
 
     @Override
     public void onDestroyView() {
+
+        callShareService.cancel();
+        callShareUrl.cancel();
         super.onDestroyView();
         webView.destroy();
     }

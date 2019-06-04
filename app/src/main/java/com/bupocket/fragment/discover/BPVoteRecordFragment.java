@@ -130,6 +130,9 @@ public class BPVoteRecordFragment extends AbsBaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<MyVoteRecordModel>> call, Throwable t) {
+                if (call.isCanceled()) {
+                    return;
+                }
 
                 llLoadFailed.setVisibility(View.VISIBLE);
                 refreshLayout.finishRefresh();

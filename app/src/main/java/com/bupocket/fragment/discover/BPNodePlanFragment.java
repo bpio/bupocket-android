@@ -538,6 +538,10 @@ public class BPNodePlanFragment extends AbsBaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<SuperNodeDto>> call, Throwable t) {
+                if (call.isCanceled()) {
+                    return;
+                }
+
                 llLoadFailed.setVisibility(View.VISIBLE);
                 refreshLayout.finishRefresh();
                 setEmpty(false);
@@ -595,8 +599,14 @@ public class BPNodePlanFragment extends AbsBaseFragment {
 
 
     @Override
-    public void onDestroy() {
+    public void onPause() {
+        super.onPause();
         serviceSuperNode.cancel();
+    }
+
+    @Override
+    public void onDestroy() {
+
         super.onDestroy();
 
         myVoteInfoList = null;
