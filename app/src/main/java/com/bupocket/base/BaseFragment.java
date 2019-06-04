@@ -66,7 +66,7 @@ public abstract class BaseFragment extends QMUIFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mContext = this.getActivity().getApplicationContext();
+        mContext = this.getContext();
         if (spHelper == null) {
             spHelper = new SharedPreferencesHelper(getContext(), BP_FILE_NAME);
         }
