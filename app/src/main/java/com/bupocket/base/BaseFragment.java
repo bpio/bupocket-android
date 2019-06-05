@@ -1,7 +1,5 @@
 package com.bupocket.base;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,12 +16,10 @@ import android.widget.Toast;
 import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.common.Constants;
-import com.bupocket.common.SingatureListener;
+import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.enums.TxStatusEnum;
-import com.bupocket.fragment.BPAssetsHomeFragment;
 import com.bupocket.fragment.BPSendStatusFragment;
 import com.bupocket.fragment.BPTransactionTimeoutFragment;
-import com.bupocket.fragment.discover.BPNodeBuildFragment;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
@@ -116,7 +112,7 @@ public abstract class BaseFragment extends QMUIFragment {
     }
 
 
-    protected void getSignatureInfo(final SingatureListener listener) {
+    protected void getSignatureInfo(final SignatureListener listener) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

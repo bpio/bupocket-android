@@ -22,7 +22,7 @@ import com.bupocket.R;
 import com.bupocket.adaptor.NodeBuildDetailAdapter;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
-import com.bupocket.common.SingatureListener;
+import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.enums.CoBuildDetailStatusEnum;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.NodeBuildService;
@@ -449,7 +449,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
                         return;
                     }
 
-                    getSignatureInfo(new SingatureListener() {
+                    getSignatureInfo(new SignatureListener() {
                         @Override
                         public void success(final String privateKey) {
                             final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
@@ -643,7 +643,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
                         return;
                     }
 
-                    getSignatureInfo(new SingatureListener() {
+                    getSignatureInfo(new SignatureListener() {
                         @Override
                         public void success(final String privateKey) {
 

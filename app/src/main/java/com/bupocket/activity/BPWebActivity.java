@@ -1,22 +1,15 @@
 package com.bupocket.activity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
-
 import com.bupocket.R;
-import com.bupocket.base.BaseFragmentActivity;
-import com.bupocket.fragment.discover.BPBannerFragment;
-import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.widget.QMUITopBar;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -34,7 +27,6 @@ public class BPWebActivity extends AppCompatActivity {
 
     private Unbinder bind;
     private String url;
-
 
 
     @Override
@@ -77,6 +69,12 @@ public class BPWebActivity extends AppCompatActivity {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setLoadsImagesAutomatically(true);
 
+        //去掉缩放按钮
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            webSettings.setDisplayZoomControls(false);
+        }
+
+
         wvBanner.setWebChromeClient(new WebChromeClient() {
 
             @Override
@@ -93,7 +91,6 @@ public class BPWebActivity extends AppCompatActivity {
         });
 
         wvBanner.setWebViewClient(new WebViewClient());
-
         wvBanner.loadUrl(url);
     }
 
@@ -107,22 +104,17 @@ public class BPWebActivity extends AppCompatActivity {
 
             }
         });
-
-    }
-
-
-
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        wvBanner.destroy();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        wvBanner.destroy();
     }
 }

@@ -29,7 +29,7 @@ import com.bupocket.activity.CaptureActivity;
 import com.bupocket.adaptor.TokensAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
-import com.bupocket.common.SingatureListener;
+import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.enums.BackupTipsStateEnum;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.CurrencyTypeEnum;
@@ -571,7 +571,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         return;
                     }
 
-                    getSignatureInfo(new SingatureListener() {
+                    getSignatureInfo(new SignatureListener() {
                         @Override
                         public void success(final String privateKey) {
 
@@ -830,7 +830,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                                             ToastUtil.showToast(getActivity(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT);
                                                             return;
                                                         }
-                                                        getSignatureInfo(new SingatureListener() {
+                                                        getSignatureInfo(new SignatureListener() {
                                                             @Override
                                                             public void success(String privateKey) {
 

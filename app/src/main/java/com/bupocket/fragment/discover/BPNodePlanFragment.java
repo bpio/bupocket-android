@@ -9,7 +9,6 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -26,7 +25,7 @@ import com.bupocket.R;
 import com.bupocket.adaptor.SuperNodeAdapter;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
-import com.bupocket.common.SingatureListener;
+import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.SuperNodeStatusEnum;
 import com.bupocket.enums.SuperNodeTypeEnum;
@@ -434,7 +433,7 @@ public class BPNodePlanFragment extends AbsBaseFragment {
 
         final String amount = "0";
 
-        getSignatureInfo(new SingatureListener() {
+        getSignatureInfo(new SignatureListener() {
             @Override
             public void success(final String privateKey) {
 
