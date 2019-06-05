@@ -45,16 +45,8 @@
             </RelativeLayout>
 
             <View
-                android:layout_width="match_parent"
-                android:background="@color/app_txt_color_gray_3"
-                android:layout_height="1dp"
+                style="@style/BPDivideLine1"
                 android:layout_alignTop="@+id/sendConfirmBtnRl" />
-
-            <View
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@drawable/bg_solid_line" />
 
 
             <TextView
@@ -170,10 +162,9 @@
                     android:src="@mipmap/icon_cancel" />
             </RelativeLayout>
 
+
             <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@drawable/bg_solid_line" />
+               style="@style/BPDivideLine1"/>
 
 
             <ScrollView
@@ -282,22 +273,12 @@
 
 
         <View
-            style="@style/BPDivideLine"
+            android:id="@+id/v_gray_line"
+            style="@style/BPDivideLine1"
             android:layout_marginLeft="18dp"
             android:layout_marginRight="18dp"
             android:layout_marginBottom="15dp"
             android:layout_alignTop="@+id/sendConfirmBtnRl" />
-
-        <View
-            android:visibility="gone"
-            android:id="@+id/v_gray_line"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_alignTop="@+id/sendConfirmBtnRl"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp"
-            android:layout_marginBottom="15dp"
-            android:background="@drawable/bg_solid_line" />
 
         <RelativeLayout
             android:id="@+id/sendConfirmBtnRl"

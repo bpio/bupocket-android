@@ -269,6 +269,13 @@
         <item name="android:background">@color/app_txt_color_gray_3</item>
     </style>
 
+
+    <style name="BPDivideLine1">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/app_txt_color_gray_3</item>
+    </style>
+
     <style name="BPTextNodePlan">
         <item name="android:maxEms">8</item>
         <item name="android:ellipsize">end</item>
