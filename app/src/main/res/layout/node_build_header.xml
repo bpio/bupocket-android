@@ -74,7 +74,7 @@
 
         <TextView
             android:id="@+id/tvPurchaseAmountHint"
-            style="@style/tv_node_build_gray_style"
+            style="@style/BPTextBuildHeaderHint"
             android:layout_below="@+id/tvBuildDetailAmount"
             android:layout_marginTop="3dp"
             android:text="@string/build_purchase_amount" />
@@ -114,7 +114,7 @@
 
         <TextView
             android:id="@+id/tvBuildDetailLeftCopies"
-            style="@style/tv_node_build_gray_style"
+            style="@style/BPTextBuildHeaderHint"
             android:layout_below="@+id/tvPurchaseAmountHint"
             android:layout_marginTop="32dp"
             tools:text="剩余37份" />
@@ -130,20 +130,20 @@
 
         <TextView
             android:id="@+id/tvTargetAmountHint"
-            style="@style/tv_node_build_black_style"
+            style="@style/BPTextBuildHeadGray"
             android:layout_below="@+id/tvBuildDetailLeftCopies"
             android:layout_marginTop="30dp"
             android:text="@string/build_target_amount" />
 
         <TextView
             android:id="@+id/tvSupportAmountHint"
-            style="@style/tv_node_build_black_style"
+            style="@style/BPTextBuildHeadGray"
             android:layout_below="@+id/tvTargetAmountHint"
             android:layout_marginTop="15dp"
             android:text="@string/build_support_amount" />
         <TextView
             android:id="@+id/tvOriginPurchaseAmountHint"
-            style="@style/tv_node_build_black_style"
+            style="@style/BPTextBuildHeadGray"
             android:layout_below="@+id/tvSupportAmountHint"
             android:layout_marginTop="18dp"
             android:text="@string/build_origin_purchase_amount" />
@@ -180,7 +180,7 @@
 
             <TextView
                 android:id="@+id/tvSharingRatioHint"
-                style="@style/tv_node_build_gray_style"
+                style="@style/BPTextBuildHeaderHint"
                 android:layout_below="@+id/tvBuildDetailSharingRatio"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="3dp"
@@ -191,7 +191,7 @@
 
             <TextView
                 android:id="@+id/tvBuildDetailSupportNum"
-                style="@style/tv_node_build_gray_style"
+                style="@style/BPTextBuildHeaderHint"
                 android:layout_below="@+id/tvSharingRatioHint"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="32dp"
@@ -200,7 +200,7 @@
 
             <TextView
                 android:id="@+id/tvDetailTotalAmount"
-                style="@style/tv_node_build_black_style2"
+                style="@style/BPTextBuildBlack"
                 android:layout_below="@+id/tvBuildDetailSupportNum"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="30dp"
@@ -208,7 +208,7 @@
 
             <TextView
                 android:id="@+id/tvBuildDetailSupportAmount"
-                style="@style/tv_node_build_black_style2"
+                style="@style/BPTextBuildBlack"
                 android:layout_below="@+id/tvDetailTotalAmount"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="15dp"
@@ -216,7 +216,7 @@
 
             <TextView
                 android:id="@+id/tvBuildDetailOriginAmount"
-                style="@style/tv_node_build_black_style2"
+                style="@style/BPTextBuildBlack"
                 android:layout_below="@+id/tvBuildDetailSupportAmount"
                 android:layout_alignParentRight="true"
                 android:layout_marginTop="18dp"
@@ -228,7 +228,7 @@
 
 
     <TextView
-        style="@style/tv_node_build_gray_style"
+        style="@style/BPTextBuildHeaderHint"
         android:layout_width="match_parent"
         android:layout_marginLeft="13dp"
         android:layout_marginTop="15dp"

@@ -54,7 +54,7 @@
         android:orientation="horizontal">
 
         <TextView
-            style="@style/tv_node_build_black_style3"
+            style="@style/BPTextBuildGray1"
             android:text="@string/transaction_info" />
 
         <TextView

@@ -36,7 +36,7 @@
 
         <RelativeLayout
             android:id="@+id/cardPackageRl"
-            style="@style/dis_item_style"
+            style="@style/BPLayoutDiscover"
             android:visibility="gone">
 
             <ImageView
@@ -50,7 +50,7 @@
                 android:background="@mipmap/icon_discover_cards" />
 
             <TextView
-                style="@style/tvDisStyle"
+                style="@style/BPTextDis"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="47dp"
                 android:layout_marginLeft="47dp"
@@ -68,7 +68,7 @@
         </RelativeLayout>
 
         <LinearLayout
-            style="@style/dis_item_style"
+            style="@style/BPLayoutDiscover"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_marginLeft="@dimen/common_padding_border"
@@ -110,7 +110,7 @@
                     android:background="@mipmap/icon_right_arrow" />
             </RelativeLayout>
 
-            <View style="@style/divide_line" />
+            <View style="@style/BPDivideLine" />
 
 
             <RelativeLayout
@@ -153,7 +153,7 @@
 
         <RelativeLayout
             android:id="@+id/informationRl"
-            style="@style/dis_item_style"
+            style="@style/BPLayoutDiscover"
             android:layout_marginLeft="@dimen/common_padding_border"
             android:layout_marginRight="@dimen/common_padding_border">
 
@@ -189,7 +189,7 @@
 
         <RelativeLayout
             android:id="@+id/xiaobuYoupinRl"
-            style="@style/dis_item_style"
+            style="@style/BPLayoutDiscover"
             android:layout_marginLeft="@dimen/common_padding_border"
             android:layout_marginRight="@dimen/common_padding_border">
 

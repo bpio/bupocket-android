@@ -38,7 +38,7 @@
 
                 <TextView
                     android:id="@+id/nodeNameTv"
-                    style="@style/tv_node_plan_style"
+                    style="@style/BPTextNodePlan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -116,7 +116,7 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <View style="@style/divide_line" />
+        <View style="@style/BPDivideLine" />
 
         <LinearLayout
             android:layout_width="match_parent"

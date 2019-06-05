@@ -195,14 +195,14 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="checkboxTheme">
+    <style name="BPCheckboxTheme">
         <!--波纹的颜色-->
         <!--<item name="android:colorControlHighlight">@color/colorPrimary</item>-->
         <!--选中的颜色-->
         <item name="colorAccent">@color/app_color_main</item>
     </style>
 
-    <style name="tvDisStyle">
+    <style name="BPTextDis">
 
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -212,7 +212,7 @@
 
     </style>
 
-    <style name="dis_item_style">
+    <style name="BPLayoutDiscover">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:background">@drawable/shape_corner</item>
@@ -220,21 +220,28 @@
 
     </style>
 
-    <style name="tv_node_build_gray_style">
+    <style name="BPTextBuildHeaderHint">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/multiline_edit_hint_color</item>
     </style>
 
-    <style name="tv_node_build_black_style">
+    <style name="BPTextBuildHeadGray">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/app_txt_color_gray_2</item>
     </style>
 
-    <style name="tv_com_gray66_style">
+    <style name="BPTextBuildGray1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/app_txt_color_gray</item>
+    </style>
+
+    <style name="BPTextTransSuccess">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">16sp</item>
@@ -243,23 +250,18 @@
     </style>
 
 
-    <style name="tv_node_build_black_style2">
+    <style name="BPTextBuildBlack">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/app_color_black</item>
     </style>
 
-    <style name="tv_node_build_black_style3">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">13sp</item>
-        <item name="android:textColor">@color/app_txt_color_gray</item>
-    </style>
 
 
 
-    <style name="divide_line">
+
+    <style name="BPDivideLine">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0.5dp</item>
         <item name="android:layout_marginLeft">13sp</item>
@@ -267,14 +269,14 @@
         <item name="android:background">@color/app_txt_color_gray_3</item>
     </style>
 
-    <style name="tv_node_plan_style">
+    <style name="BPTextNodePlan">
         <item name="android:maxEms">8</item>
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>
     </style>
 
 
-    <style name="qmui_com_dialog"   parent="QMUI.Dialog">
+    <style name="QMUICustomDialog"   parent="QMUI.Dialog">
         <item name="android:textColor">@color/app_color_green</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center_horizontal</item>

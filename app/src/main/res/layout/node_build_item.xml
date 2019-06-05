@@ -54,7 +54,7 @@
 
         <TextView
             android:id="@+id/tvBuildAmountHint"
-            style="@style/tv_node_build_gray_style"
+            style="@style/BPTextBuildHeaderHint"
             android:layout_below="@+id/llBuildNum"
             android:layout_marginTop="2.5dp"
             android:text="@string/build_purchase_amount_hint" />
@@ -94,13 +94,13 @@
 
         <TextView
             android:id="@+id/tvRemainNumHint"
-            style="@style/tv_node_build_gray_style"
+            style="@style/BPTextBuildHeaderHint"
             android:layout_below="@+id/llProgress"
             android:layout_marginTop="13dp" />
 
         <TextView
             android:id="@+id/tvRemainNum"
-            style="@style/tv_node_build_gray_style"
+            style="@style/BPTextBuildHeaderHint"
             android:layout_below="@+id/llProgress"
             android:layout_marginLeft="2dp"
             android:layout_marginTop="8dp"
@@ -109,14 +109,14 @@
 
         <TextView
             android:id="@+id/tvRemainCopyHint"
-            style="@style/tv_node_build_gray_style"
+            style="@style/BPTextBuildHeaderHint"
             android:layout_below="@+id/llProgress"
             android:layout_marginTop="15dp"
             android:layout_toLeftOf="@+id/tvRemainCopy" />
 
         <TextView
             android:id="@+id/tvRemainCopy"
-            style="@style/tv_node_build_gray_style"
+            style="@style/BPTextBuildHeaderHint"
             android:layout_below="@+id/llProgress"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="7dp"
