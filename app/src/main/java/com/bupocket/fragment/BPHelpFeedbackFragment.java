@@ -1,5 +1,7 @@
 package com.bupocket.fragment;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
@@ -14,6 +16,7 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.UserService;
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
@@ -44,14 +47,56 @@ public class BPHelpFeedbackFragment extends BaseFragment{
         ButterKnife.bind(this, root);
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
+
+        getPhoneInfo();
         mNextHelpFeedbackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SubmitFeedback();
+//                getPhoneInfo();
             }
         });
         buildWatcher();
         return root;
+    }
+
+    private void getPhoneInfo() {
+        String walletAddress = getWalletAddress();
+
+        try {
+            //
+            PackageManager pm = mContext.getPackageManager();// 获得包管理器
+            PackageInfo pi = null;// 得到该应用的信息，即主Activity
+
+            pi = pm.getPackageInfo(mContext.getPackageName(),
+                    PackageManager.GET_ACTIVITIES);
+
+            if (pi != null) {
+                String versionName = pi.versionName == null ? "null"
+                        : pi.versionName;
+                String versionCode = pi.versionCode + "";
+
+                String sdk = Build.VERSION.SDK;//27
+                String model = Build.MODEL;//手机型号 Redmi 6Pro
+
+                String brand = Build.BRAND;//xiaomi
+                String id = Build.ID;//OPM1.171019.019
+                String release = Build.VERSION.RELEASE;//8.1.0
+
+                LogUtils.e(walletAddress
+                        +"\n"+versionCode
+                        +"\n"+versionName
+                        +"\nAndroid " +sdk
+                        +"\n"+brand
+                        +"\n"+id
+                        +"\n"+model
+                        +"\n"+release
+                );
+
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
