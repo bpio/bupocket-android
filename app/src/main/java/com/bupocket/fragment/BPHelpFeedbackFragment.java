@@ -30,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BPHelpFeedbackFragment extends BaseFragment{
+public class BPHelpFeedbackFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
     @BindView(R.id.feedbackContentET)
@@ -48,56 +48,17 @@ public class BPHelpFeedbackFragment extends BaseFragment{
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
 
-        getPhoneInfo();
         mNextHelpFeedbackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SubmitFeedback();
-//                getPhoneInfo();
             }
         });
         buildWatcher();
         return root;
     }
 
-    private void getPhoneInfo() {
-        String walletAddress = getWalletAddress();
 
-        try {
-            //
-            PackageManager pm = mContext.getPackageManager();// 获得包管理器
-            PackageInfo pi = null;// 得到该应用的信息，即主Activity
-
-            pi = pm.getPackageInfo(mContext.getPackageName(),
-                    PackageManager.GET_ACTIVITIES);
-
-            if (pi != null) {
-                String versionName = pi.versionName == null ? "null"
-                        : pi.versionName;
-                String versionCode = pi.versionCode + "";
-
-                String sdk = Build.VERSION.SDK;//27
-                String model = Build.MODEL;//手机型号 Redmi 6Pro
-
-                String brand = Build.BRAND;//xiaomi
-                String id = Build.ID;//OPM1.171019.019
-                String release = Build.VERSION.RELEASE;//8.1.0
-
-                LogUtils.e(walletAddress
-                        +"\n"+versionCode
-                        +"\n"+versionName
-                        +"\nAndroid " +sdk
-                        +"\n"+brand
-                        +"\n"+id
-                        +"\n"+model
-                        +"\n"+release
-                );
-
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void buildWatcher() {
@@ -118,10 +79,10 @@ public class BPHelpFeedbackFragment extends BaseFragment{
             public void afterTextChanged(Editable s) {
                 boolean signContent = mFeedbackContentET.getText().toString().trim().length() > 0;
                 boolean signContact = mContactET.getText().toString().trim().length() > 0;
-                if(signContent && signContact){
+                if (signContent && signContact) {
                     mNextHelpFeedbackBtn.setEnabled(true);
                     mNextHelpFeedbackBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
-                }else {
+                } else {
                     mNextHelpFeedbackBtn.setEnabled(false);
                     mNextHelpFeedbackBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
                 }
@@ -141,13 +102,13 @@ public class BPHelpFeedbackFragment extends BaseFragment{
         });
     }
 
-    private void SubmitFeedback(){
+    private void SubmitFeedback() {
 
         UserService userService = RetrofitFactory.getInstance().getRetrofit().create(UserService.class);
         Map<String, Object> parmasMap = new HashMap<>();
         String content = mFeedbackContentET.getText().toString();
         String contact = mContactET.getText().toString();
-        if(content.equals("")||content == null){
+        if (content.equals("") || content == null) {
             final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                     .setTipWord(getResources().getString(R.string.content_empty_msg))
                     .create();
@@ -158,7 +119,7 @@ public class BPHelpFeedbackFragment extends BaseFragment{
                     tipDialog.dismiss();
                 }
             }, 1500);
-        }else if(contact.equals("")||contact == null){
+        } else if (contact.equals("") || contact == null) {
             final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                     .setTipWord(getResources().getString(R.string.contact_empty_msg))
                     .create();
@@ -191,9 +152,29 @@ public class BPHelpFeedbackFragment extends BaseFragment{
                     tipDialog.dismiss();
                 }
             }, 1500);
-        }else {
-            parmasMap.put("content",content);
-            parmasMap.put("contact",contact);
+        } else {
+            parmasMap.put("content", content);
+            parmasMap.put("contact", contact);
+            parmasMap.put("walletAddress", getWalletAddress());
+            parmasMap.put("osVer", "android:"+Build.VERSION.SDK.concat("/").concat(Build.DISPLAY));
+            parmasMap.put("brandName", Build.MODEL.concat("/").concat(Build.BRAND));
+
+
+            try {
+                //
+                PackageManager pm = mContext.getPackageManager();// 获得包管理器
+                PackageInfo pi = null;// 得到该应用的信息，即主Activity
+                pi = pm.getPackageInfo(mContext.getPackageName(),
+                        PackageManager.GET_ACTIVITIES);
+                if (pi != null) {
+                    String versionName = pi.versionName == null ? "null"
+                            : pi.versionName;
+                    parmasMap.put("walletVer", versionName);
+
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
 
             Call<ApiResult> call = userService.submitFeedback(parmasMap);
             call.enqueue(new Callback<ApiResult>() {

@@ -287,7 +287,7 @@ public class BPNodePlanFragment extends AbsBaseFragment {
         } else {
             notifyNodeList = nodeList;
         }
-        setEmpty(notifyNodeList.size()==0);
+        setEmpty(notifyNodeList.size() == 0);
         superNodeAdapter.setNewData(notifyNodeList);
     }
 
@@ -539,7 +539,8 @@ public class BPNodePlanFragment extends AbsBaseFragment {
                 if (call.isCanceled()) {
                     return;
                 }
-
+                myVoteInfoList.clear();
+                nodeList.clear();
                 llLoadFailed.setVisibility(View.VISIBLE);
                 refreshLayout.finishRefresh();
                 setEmpty(false);
