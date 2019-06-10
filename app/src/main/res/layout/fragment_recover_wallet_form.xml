@@ -121,6 +121,7 @@
                     android:layout_height="@dimen/bp_btn_hight"
                     android:layout_gravity="bottom"
                     android:layout_marginTop="55dp"
+                    android:layout_marginBottom="120dp"
                     android:gravity="center"
                     android:text="@string/recover_wallet_next_btn"
                     android:textColor="@color/app_btn_color_white"
