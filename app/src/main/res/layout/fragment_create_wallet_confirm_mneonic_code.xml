@@ -5,100 +5,102 @@
     android:layout_height="match_parent"
     android:background="@color/qmui_config_color_white">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/qmui_topbar_height"
-        android:background="@color/app_btn_color_white"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/view_title_confirm_mneonic_code"
-            android:theme="@style/BPViewTitle"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:paddingLeft="@dimen/view_padding"/>
+        android:layout_marginBottom="80dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="@dimen/view_padding">
+            android:layout_height="match_parent"
+
+            android:background="@color/app_btn_color_white"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/confirm_mneonic_code_txt"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
-                android:textColor="@color/app_txt_color_gray" />
+                android:paddingLeft="@dimen/view_padding"
+                android:text="@string/view_title_confirm_mneonic_code"
+                android:theme="@style/BPViewTitle" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:layout_marginTop="28dp"
-                android:background="@color/app_bg_color_gray"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
-                android:padding="15dp">
+                android:padding="@dimen/view_padding">
 
                 <TextView
-                    android:id="@+id/mnemonicCodeListSelected"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:text="@string/confirm_mneonic_code_txt"
+                    android:textColor="@color/app_txt_color_gray" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="28dp"
+                    android:layout_marginRight="5dp"
+                    android:background="@color/app_bg_color_gray"
+                    android:orientation="vertical"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:id="@+id/mnemonicCodeListSelected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/dotted_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@drawable/bg_dotted_line"
+                    android:layerType="software" />
+
+                <android.support.v7.widget.GridLayout
+                    android:id="@+id/confirmMneonicCodeGL"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="19dp"
+                    app:columnCount="4"
+                    app:rowCount="3"></android.support.v7.widget.GridLayout>
             </LinearLayout>
 
-            <View
-                android:id="@+id/dotted_line"
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/bg_dotted_line"
-                android:layerType="software" />
 
-            <android.support.v7.widget.GridLayout
-                android:id="@+id/confirmMneonicCodeGL"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="19dp"
-                app:columnCount="4"
-                app:rowCount="3">
-            </android.support.v7.widget.GridLayout>
+
+
+
         </LinearLayout>
-    </LinearLayout>
 
-    <LinearLayout
+
+    </ScrollView>
+
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        android:id="@+id/completeMnemonicCodeBtn"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="bottom">
-
-        <RelativeLayout
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:padding="10dp">
-
-            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                android:id="@+id/completeMnemonicCodeBtn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/bp_btn_hight"
-                android:layout_centerInParent="true"
-                android:enabled="false"
-                android:gravity="center"
-                android:text="@string/confirm_mneonic_code_btn_txt"
-                android:textColor="@color/app_color_font"
-                android:textSize="@dimen/bp_btn_text_size"
-                app:qmui_backgroundColor="@color/disabled_btn_color"
-                app:qmui_borderColor="@color/disabled_btn_color"
-                app:qmui_radius="5dp" />
-
-        </RelativeLayout>
-    </LinearLayout>
-
+        android:layout_height="@dimen/bp_btn_hight"
+        android:layout_centerInParent="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_gravity="bottom"
+        android:enabled="false"
+        android:gravity="center"
+        android:text="@string/confirm_mneonic_code_btn_txt"
+        android:textColor="@color/app_color_font"
+        android:textSize="@dimen/bp_btn_text_size"
+        app:qmui_backgroundColor="@color/disabled_btn_color"
+        app:qmui_borderColor="@color/disabled_btn_color"
+        app:qmui_radius="5dp" />
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
         android:id="@+id/topbar"
         android:layout_width="match_parent"
