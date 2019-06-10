@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/app_color_white">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="80dp"
         android:background="@color/app_color_white"
         android:fitsSystemWindows="false"
         android:gravity="center_horizontal"
@@ -21,26 +23,26 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/icon_export_private_bg"/>
+                android:background="@mipmap/icon_export_private_bg" />
 
         </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:textColor="@color/app_txt_color_gray"
-            android:gravity="center"
             android:layout_marginLeft="26.5dp"
+            android:layout_marginTop="25dp"
             android:layout_marginRight="26.5dp"
+            android:gravity="center"
             android:text="@string/export_private_tips_txt"
+            android:textColor="@color/app_txt_color_gray"
             android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginTop="30dp"
+            android:orientation="vertical"
             android:paddingLeft="12.5dp"
             android:paddingRight="12.5dp">
 
@@ -48,54 +50,55 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/wallet_address_txt"
-                android:textSize="16sp"
-                android:textColor="@color/app_txt_color_gray_2"/>
+                android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/walletAddressTv"
-                android:layout_marginTop="9dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:textColor="@color/app_txt_color_gray_2"
                 android:textSize="14sp"
-                tools:text="buQaSaFMhB7XT4hD1wj6WxGqNJjtwhHfJ17U"
-                android:textColor="@color/app_txt_color_gray_2"/>
+                tools:text="buQaSaFMhB7XT4hD1wj6WxGqNJjtwhHfJ17U" />
 
             <TextView
-                android:layout_marginTop="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:text="@string/wallet_private_txt"
-                android:textSize="16sp"
-                android:textColor="@color/app_txt_color_gray_2"/>
+                android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/walletPrivateTv"
-                android:layout_marginTop="9dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:textColor="@color/app_txt_color_gray_2"
                 android:textSize="14sp"
-                tools:text="privbw99K9WGkaFVBsZDvv97a6JLnkbYt55r5P1tLZCad8PRZocVn86a"
-                android:textColor="@color/app_txt_color_gray_2"/>
+                tools:text="privbw99K9WGkaFVBsZDvv97a6JLnkbYt55r5P1tLZCad8PRZocVn86a" />
 
         </LinearLayout>
 
-        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-            android:id="@+id/copyPrivateBtn"
-            android:layout_width="match_parent"
-            android:layout_height="43.5dp"
-            android:gravity="center"
-            android:layout_marginLeft="12.5dp"
-            android:layout_marginRight="12.5dp"
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="60dp"
-            android:text="@string/copy_private_txt"
-            app:qmui_borderColor="@color/app_color_main"
-            app:qmui_backgroundColor="@color/app_color_main"
-            app:qmui_radius="5dp"
-            android:textColor="@color/app_color_font"
-            android:textSize="@dimen/bp_btn_text_size"/>
+
     </LinearLayout>
 
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        android:id="@+id/copyPrivateBtn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bp_btn_hight"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="12.5dp"
+        android:layout_marginRight="12.5dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:text="@string/copy_private_txt"
+        android:textColor="@color/app_color_font"
+        android:textSize="@dimen/bp_btn_text_size"
+        app:qmui_backgroundColor="@color/app_color_main"
+        app:qmui_borderColor="@color/app_color_main"
+        app:qmui_radius="5dp" />
 
     <com.qmuiteam.qmui.widget.QMUITopBar
         android:id="@+id/topbar"
