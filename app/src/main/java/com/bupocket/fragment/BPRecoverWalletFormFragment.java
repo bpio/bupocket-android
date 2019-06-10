@@ -9,8 +9,10 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -39,6 +41,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class BPRecoverWalletFormFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -121,6 +125,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
 
     private void initData() {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+
     }
 
     private void initTopBar() {
