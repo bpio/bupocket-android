@@ -20,6 +20,7 @@ import com.bupocket.enums.HiddenFunctionStatusEnum;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -61,6 +62,7 @@ public class BPUserInfoFragment extends BaseFragment {
     private SharedPreferencesHelper sharedPreferencesHelper;
     private List<String> mnemonicCodeList;
     private QMUIPopup identityIdExplainPopup;
+
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_user_info, null);
@@ -107,7 +109,7 @@ public class BPUserInfoFragment extends BaseFragment {
                         // 检查合法性
                         EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
                         final String password = mPasswordConfirmEt.getText().toString().trim();
-                        if(CommonUtil.isNull(password)){
+                        if (CommonUtil.isNull(password)) {
                             final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                                     .setTipWord(getResources().getString(R.string.common_dialog_input_pwd))
                                     .create();
@@ -130,7 +132,7 @@ public class BPUserInfoFragment extends BaseFragment {
                             public void run() {
                                 String ciphertextSkeyData = getSkeyStr();
                                 try {
-                                    byte[] skeyByte = Wallet.getInstance().getSkey(password,ciphertextSkeyData);
+                                    byte[] skeyByte = Wallet.getInstance().getSkey(password, ciphertextSkeyData);
                                     mnemonicCodeList = new MnemonicCode().toMnemonic(skeyByte);
                                     tipDialog.dismiss();
 
@@ -144,10 +146,8 @@ public class BPUserInfoFragment extends BaseFragment {
 
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                    Looper.prepare();
-                                    Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+                                    ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
                                     tipDialog.dismiss();
-                                    Looper.loop();
                                     return;
                                 }
                             }
@@ -199,7 +199,7 @@ public class BPUserInfoFragment extends BaseFragment {
         }
     }
 
-    private void go2BPCreateWalletShowMneonicCodeFragment(){
+    private void go2BPCreateWalletShowMneonicCodeFragment() {
         BPCreateWalletShowMneonicCodeFragment createWalletShowMneonicCodeFragment = new BPCreateWalletShowMneonicCodeFragment();
         Bundle argz = new Bundle();
         argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) mnemonicCodeList);
@@ -208,8 +208,8 @@ public class BPUserInfoFragment extends BaseFragment {
 
     }
 
-    private String getSkeyStr(){
-        return sharedPreferencesHelper.getSharedPreference("skey","").toString();
+    private String getSkeyStr() {
+        return sharedPreferencesHelper.getSharedPreference("skey", "").toString();
     }
 
     private void initTopBar() {
@@ -237,13 +237,13 @@ public class BPUserInfoFragment extends BaseFragment {
                     @Override
                     public void onClick(QMUIDialog dialog, int index) {
                         dialog.dismiss();
-                        showPasswordComfirmDialog();
+                        showPasswordConfirmDialog();
                     }
                 })
                 .create(mCurrentDialogStyle).show();
     }
 
-    private void showPasswordComfirmDialog() {
+    private void showPasswordConfirmDialog() {
         final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
         qmuiDialog.setCanceledOnTouchOutside(false);
         qmuiDialog.setContentView(R.layout.view_password_comfirm);
@@ -265,7 +265,7 @@ public class BPUserInfoFragment extends BaseFragment {
             public void onClick(View view) {
                 EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
                 final String password = mPasswordConfirmEt.getText().toString().trim();
-                if(CommonUtil.isNull(password)){
+                if (CommonUtil.isNull(password)) {
                     final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.common_dialog_input_pwd))
                             .create();
@@ -289,19 +289,23 @@ public class BPUserInfoFragment extends BaseFragment {
                     public void run() {
                         String ciphertextSkeyData = getSkeyStr();
                         try {
-                            Wallet.getInstance().checkPwd(password,ciphertextSkeyData);
+                            Wallet.getInstance().checkPwd(password, ciphertextSkeyData);
                             sharedPreferencesHelper.clear();
-                            SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus",HiddenFunctionStatusEnum.DISABLE.getCode());
+                            SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus", HiddenFunctionStatusEnum.DISABLE.getCode());
                             SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.MAIN.getCode());
                             BPApplication.switchNetConfig(BumoNodeEnum.MAIN.getName());
                             tipDialog.dismiss();
-                            startFragment(new BPCreateWalletFragment());
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    startFragment(new BPCreateWalletFragment());
+                                }
+                            });
+
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Looper.prepare();
-                            Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+                            ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
                             tipDialog.dismiss();
-                            Looper.loop();
                             return;
                         }
                     }
