@@ -34,8 +34,10 @@
     <string name="view_title_backup_wallet">备份钱包</string>
     <string name="view_title_create_wallet_identity">创建身份</string>
     <string name="create_wallet_prompt_dialog_title">温馨提示</string>
-    <string name="create_wallet_prompt_txt1">密码用于加密保护私钥，以及转账、调用合约等，所以强度非常重要。
-        小布口袋不存储密码，也无法帮您找回，请务必牢记。</string>
+    <string name="create_wallet_prompt_txt1">
+        •安全密码用于加密保护私钥、确认交易转账和调用合约等，强度非常重要，请您务必牢记\n\n
+        • 小布口袋不会存储您的密码\n\n
+        • 安全密码只能修改，无法找回或重置，请务必牢记</string>
     <string name="create_wallet_prompt_txt2">6~30个字符，建议混合大小写字母加数字</string>
     <string name="backup_wallet_txt1">没有妥善备份就无法保障资产安全，删除程序或钱包后，你需要备份文件来恢复钱包</string>
     <string name="backup_wallet_txt2">请确保在四周无人，没有摄像头的安全环境下备份</string>

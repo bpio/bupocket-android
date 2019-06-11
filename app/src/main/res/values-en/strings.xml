@@ -36,7 +36,6 @@
     <string name="view_title_backup_wallet">Backup wallet</string>
     <string name="view_title_create_wallet_identity">Create an identity</string>
     <string name="create_wallet_prompt_dialog_title">Tips</string>
-    <string name="create_wallet_prompt_txt1">The password must be strong as it is used to encrypt and protect the private key, transfer coins, call contracts, etc. Please bear in mind that BU Pocket does not store passwords, and can\'t help you retrieve passwords.</string>
     <string name="create_wallet_prompt_txt2">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>
     <string name="backup_wallet_txt1">Token security cannot be guaranteed without proper backup. After deleting the  program or wallet, you need to back up the file to restore the wallet.</string>
     <string name="backup_wallet_txt2">Make sure to back up in a safe environment with no people around and no cameras</string>

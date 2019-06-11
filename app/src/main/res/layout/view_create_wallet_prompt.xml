@@ -48,14 +48,7 @@
                 android:textColor="@color/app_txt_color_red"
                 android:textSize="14sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="12dp"
-                android:text="@string/create_wallet_prompt_txt2"
-                android:textColor="@color/app_txt_color_black"
-                android:textSize="14sp" />
+
 
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton

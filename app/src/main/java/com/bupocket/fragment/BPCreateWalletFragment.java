@@ -49,6 +49,11 @@ public class BPCreateWalletFragment extends BaseFragment {
         
         return root;
     }
+
+    @Override
+    protected boolean canDragBack() {
+        return false;
+    }
     private long exitTime = 0;
     public void onBackPressed() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {
