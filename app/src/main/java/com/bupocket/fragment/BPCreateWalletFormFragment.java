@@ -20,6 +20,7 @@ import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.MatchPassword;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
@@ -303,7 +304,12 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
                 }
                 break;
             case R.id.create_wallet_set_pwd_et:
-
+                if (!mSetPwdEt.getText().toString().isEmpty() &&
+                        MatchPassword.isValidPW(mSetPwdEt.getText().toString())) {
+                    tvCreateWalletPwErrHint.setVisibility(View.INVISIBLE);
+                } else {
+                    tvCreateWalletPwErrHint.setVisibility(View.VISIBLE);
+                }
 
                 break;
             case R.id.create_wallet_repeat_pwd_et:
