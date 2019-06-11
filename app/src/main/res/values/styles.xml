@@ -291,4 +291,11 @@
         <item name="qmui_dialog_negative_action_text_color">@color/app_color_green</item>
 
     </style>
+
+    <style name="CreateWalletErr">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:visibility">invisible</item>
+        <item name="android:textColor">@color/qmui_config_color_red</item>
+    </style>
 </resources>

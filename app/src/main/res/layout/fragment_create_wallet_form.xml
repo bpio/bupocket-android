@@ -7,8 +7,8 @@
     <ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/app_color_white_background">
+        android:background="@color/app_color_white_background"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -21,7 +21,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/view_title_create_wallet_identity"
-                android:theme="@style/BPViewTitle" />
+                android:theme="@style/BPViewTitle"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/create_wallet_prompt_txt3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,6 +43,11 @@
                     android:hint="@string/hint_wallet_create_form_input_identity_name"
                     android:inputType=""
                     android:theme="@style/BPEditText" />
+
+                <TextView
+                    android:id="@+id/tv_create_wallet_name_err_hint"
+                    style="@style/CreateWalletErr"
+                    android:text="@string/create_wallet_name_err_hint" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -65,7 +76,10 @@
                         android:contentDescription="TODO"
                         android:src="@mipmap/icon_close_eye" />
                 </RelativeLayout>
-
+                <TextView
+                    android:id="@+id/tv_create_wallet_pw_err_hint"
+                    style="@style/CreateWalletErr"
+                    android:text="@string/create_wallet_pw_err_hint" />
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="80dp">
@@ -93,7 +107,10 @@
                         android:contentDescription="TODO"
                         android:src="@mipmap/icon_close_eye" />
                 </RelativeLayout>
-
+                <TextView
+                    android:id="@+id/tv_create_wallet_pw_confirm_err_hint"
+                    style="@style/CreateWalletErr"
+                    android:text="@string/create_wallet_pw_confirm_err_hint" />
                 <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                     android:id="@+id/createWalletSubmitBtn"
                     android:layout_width="match_parent"

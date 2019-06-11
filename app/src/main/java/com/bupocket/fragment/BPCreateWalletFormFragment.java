@@ -13,9 +13,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
@@ -32,9 +32,14 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
+import org.bouncycastle.pqc.jcajce.provider.rainbow.BCRainbowPrivateKey;
+
 import java.util.ArrayList;
 
-public class BPCreateWalletFormFragment extends BaseFragment {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class BPCreateWalletFormFragment extends BaseFragment implements View.OnFocusChangeListener {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
 
@@ -53,9 +58,16 @@ public class BPCreateWalletFormFragment extends BaseFragment {
 
     @BindView(R.id.createWalletSubmitBtn)
     QMUIRoundButton mCreateWalletSubmitBtn;
+    @BindView(R.id.tv_create_wallet_name_err_hint)
+    TextView tvCreateWalletNameErrHint;
+    @BindView(R.id.tv_create_wallet_pw_err_hint)
+    TextView tvCreateWalletPwErrHint;
+    @BindView(R.id.tv_create_wallet_pw_confirm_err_hint)
+    TextView tvCreateWalletPwConfirmErrHint;
     private boolean isPwdHideFirst = false;
     private boolean isConfirmPwdHideFirst = false;
     private SharedPreferencesHelper sharedPreferencesHelper;
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected View onCreateView() {
@@ -74,15 +86,15 @@ public class BPCreateWalletFormFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 if (!isPwdHideFirst) {
-                    mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_open_eye));
+                    mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_open_eye));
                     mSetPwdEt.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mSetPwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance ());
+                    mSetPwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     mSetPwdEt.setSelection(mSetPwdEt.getText().length());
                     isPwdHideFirst = true;
                 } else {
-                    mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_close_eye));
+                    mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
                     mSetPwdEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    mSetPwdEt.setTransformationMethod(PasswordTransformationMethod.getInstance ());
+                    mSetPwdEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     mSetPwdEt.setSelection(mSetPwdEt.getText().length());
                     isPwdHideFirst = false;
                 }
@@ -92,23 +104,28 @@ public class BPCreateWalletFormFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 if (!isConfirmPwdHideFirst) {
-                    mConfirmPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_open_eye));
+                    mConfirmPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_open_eye));
                     mRepeatPwdEt.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mRepeatPwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance ());
+                    mRepeatPwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     mRepeatPwdEt.setSelection(mRepeatPwdEt.getText().length());
                     isConfirmPwdHideFirst = true;
                 } else {
-                    mConfirmPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_close_eye));
+                    mConfirmPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
                     mRepeatPwdEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    mRepeatPwdEt.setTransformationMethod(PasswordTransformationMethod.getInstance ());
+                    mRepeatPwdEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     mRepeatPwdEt.setSelection(mRepeatPwdEt.getText().length());
                     isConfirmPwdHideFirst = false;
                 }
             }
         });
+
+        mSetIdentityNameEt.setOnFocusChangeListener(this);
+        mSetPwdEt.setOnFocusChangeListener(this);
+        mRepeatPwdEt.setOnFocusChangeListener(this);
+
     }
 
-    private void initData(){
+    private void initData() {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
 
@@ -117,37 +134,37 @@ public class BPCreateWalletFormFragment extends BaseFragment {
     }
 
 
-    private boolean validateData(){
+    private boolean validateData() {
         String indntityName = mSetIdentityNameEt.getText().toString().trim();
-        if("".equals(indntityName)){
-            Toast.makeText(getActivity(), R.string.wallet_create_form_input_identity_name_empty,Toast.LENGTH_SHORT).show();
+        if ("".equals(indntityName)) {
+            Toast.makeText(getActivity(), R.string.wallet_create_form_input_identity_name_empty, Toast.LENGTH_SHORT).show();
             return false;
         }
 
-        if(!CommonUtil.validateNickname(indntityName)){
-            Toast.makeText(getActivity(), R.string.wallet_create_form_error4,Toast.LENGTH_SHORT).show();
+        if (!CommonUtil.validateNickname(indntityName)) {
+            Toast.makeText(getActivity(), R.string.wallet_create_form_error4, Toast.LENGTH_SHORT).show();
             return false;
         }
 
         String password = mSetPwdEt.getText().toString().trim();
 
-        if("".equals(password)){
-            Toast.makeText(getActivity(), R.string.wallet_create_form_input_password_empty,Toast.LENGTH_SHORT).show();
+        if ("".equals(password)) {
+            Toast.makeText(getActivity(), R.string.wallet_create_form_input_password_empty, Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(!CommonUtil.validatePassword(password)){
-            Toast.makeText(getActivity(), R.string.wallet_create_form_error2,Toast.LENGTH_SHORT).show();
+        if (!CommonUtil.validatePassword(password)) {
+            Toast.makeText(getActivity(), R.string.wallet_create_form_error2, Toast.LENGTH_SHORT).show();
             return false;
         }
 
         String repeatPassword = mRepeatPwdEt.getText().toString().trim();
 
-        if("".equals(repeatPassword)){
-            Toast.makeText(getActivity(), R.string.wallet_create_form_input_rePassword_empty,Toast.LENGTH_SHORT).show();
+        if ("".equals(repeatPassword)) {
+            Toast.makeText(getActivity(), R.string.wallet_create_form_input_rePassword_empty, Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(!repeatPassword.equals(password)){
-            Toast.makeText(getActivity(), R.string.wallet_create_form_error1,Toast.LENGTH_SHORT).show();
+        if (!repeatPassword.equals(password)) {
+            Toast.makeText(getActivity(), R.string.wallet_create_form_error1, Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -155,14 +172,14 @@ public class BPCreateWalletFormFragment extends BaseFragment {
     }
 
 
-    private void onSubmitBtnListener(){
+    private void onSubmitBtnListener() {
         mCreateWalletSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Boolean flag = validateData();
-               if(!flag){
-                   return;
-               }
+                Boolean flag = validateData();
+                if (!flag) {
+                    return;
+                }
 
 
                 final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
@@ -177,7 +194,7 @@ public class BPCreateWalletFormFragment extends BaseFragment {
 
                         WalletBPData walletBPData = null;
                         try {
-                            walletBPData = Wallet.getInstance().create(accountPwd,getContext());
+                            walletBPData = Wallet.getInstance().create(accountPwd, getContext());
                             sharedPreferencesHelper.put("skey", walletBPData.getSkey());
                             sharedPreferencesHelper.put("currentAccNick", mSetIdentityNameEt.getText().toString());
                             sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
@@ -185,7 +202,7 @@ public class BPCreateWalletFormFragment extends BaseFragment {
                             sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
                             sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.CREATE_MNEONIC_CODE.getCode());
 
-                            sharedPreferencesHelper.put("currentWalletAddress",walletBPData.getAccounts().get(1).getAddress());
+                            sharedPreferencesHelper.put("currentWalletAddress", walletBPData.getAccounts().get(1).getAddress());
 
                             final WalletBPData finalWalletBPData = walletBPData;
                             getActivity().runOnUiThread(new Runnable() {
@@ -203,7 +220,7 @@ public class BPCreateWalletFormFragment extends BaseFragment {
                             tipDialog.dismiss();
                         } catch (WalletException e) {
                             e.printStackTrace();
-                            ToastUtil.showToast(getActivity(), R.string.create_wallet_fail,Toast.LENGTH_SHORT);
+                            ToastUtil.showToast(getActivity(), R.string.create_wallet_fail, Toast.LENGTH_SHORT);
                             return;
                         }
                     }
@@ -225,7 +242,7 @@ public class BPCreateWalletFormFragment extends BaseFragment {
         });
     }
 
-    private void initCreateWalletPromptView(){
+    private void initCreateWalletPromptView() {
         final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
         qmuiDialog.setCanceledOnTouchOutside(false);
         qmuiDialog.setContentView(R.layout.view_create_wallet_prompt);
@@ -241,7 +258,7 @@ public class BPCreateWalletFormFragment extends BaseFragment {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    private void buildWatcher(){
+    private void buildWatcher() {
         TextWatcher watcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -259,11 +276,11 @@ public class BPCreateWalletFormFragment extends BaseFragment {
             public void afterTextChanged(Editable s) {
                 boolean signIdentityName = mSetIdentityNameEt.getText().toString().trim().length() > 0;
                 boolean signSetPwd = mSetPwdEt.getText().toString().trim().length() > 0;
-                boolean signRepeatPwd = mRepeatPwdEt.getText().toString().trim().length() >0;
-                if(signIdentityName && signSetPwd && signRepeatPwd){
+                boolean signRepeatPwd = mRepeatPwdEt.getText().toString().trim().length() > 0;
+                if (signIdentityName && signSetPwd && signRepeatPwd) {
                     mCreateWalletSubmitBtn.setEnabled(true);
                     mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
-                }else {
+                } else {
                     mCreateWalletSubmitBtn.setEnabled(false);
                     mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
                 }
@@ -274,5 +291,33 @@ public class BPCreateWalletFormFragment extends BaseFragment {
         mRepeatPwdEt.addTextChangedListener(watcher);
     }
 
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
 
+        switch (v.getId()) {
+            case R.id.create_wallet_identity_name_et:
+                if (mSetIdentityNameEt.getText().toString().length() > 20) {
+                    tvCreateWalletNameErrHint.setVisibility(View.VISIBLE);
+                } else {
+                    tvCreateWalletNameErrHint.setVisibility(View.INVISIBLE);
+                }
+                break;
+            case R.id.create_wallet_set_pwd_et:
+
+
+                break;
+            case R.id.create_wallet_repeat_pwd_et:
+
+                if (!mSetPwdEt.getText().toString().isEmpty() &&
+                        !mSetPwdEt.getText().toString().equals(mRepeatPwdEt.getText().toString())) {
+                    tvCreateWalletPwConfirmErrHint.setVisibility(View.VISIBLE);
+                } else {
+                    tvCreateWalletPwConfirmErrHint.setVisibility(View.INVISIBLE);
+                }
+
+                break;
+        }
+
+
+    }
 }
