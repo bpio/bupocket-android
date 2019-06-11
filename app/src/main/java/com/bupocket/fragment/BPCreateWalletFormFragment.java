@@ -6,6 +6,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -32,8 +33,6 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
-
-import org.bouncycastle.pqc.jcajce.provider.rainbow.BCRainbowPrivateKey;
 
 import java.util.ArrayList;
 
@@ -285,6 +284,9 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
                     mCreateWalletSubmitBtn.setEnabled(false);
                     mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
                 }
+
+
+                setPwEditEquals();
             }
         };
         mSetIdentityNameEt.addTextChangedListener(watcher);
@@ -295,17 +297,30 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
 
+        if (hasFocus) {
+            return;
+        }
+
         switch (v.getId()) {
             case R.id.create_wallet_identity_name_et:
-                if (mSetIdentityNameEt.getText().toString().length() > 20) {
+                String name = mSetIdentityNameEt.getText().toString();
+
+                if (TextUtils.isEmpty(name)||name.length() > 20) {
                     tvCreateWalletNameErrHint.setVisibility(View.VISIBLE);
-                } else {
-                    tvCreateWalletNameErrHint.setVisibility(View.INVISIBLE);
+                    return;
                 }
+                if (name.length() > 20) {
+                    tvCreateWalletNameErrHint.setVisibility(View.VISIBLE);
+                    return;
+                }
+
+                tvCreateWalletNameErrHint.setVisibility(View.INVISIBLE);
+
+
                 break;
             case R.id.create_wallet_set_pwd_et:
-                if (!mSetPwdEt.getText().toString().isEmpty() &&
-                        MatchPassword.isValidPW(mSetPwdEt.getText().toString())) {
+
+                if (MatchPassword.isValidPW(mSetPwdEt.getText().toString())) {
                     tvCreateWalletPwErrHint.setVisibility(View.INVISIBLE);
                 } else {
                     tvCreateWalletPwErrHint.setVisibility(View.VISIBLE);
@@ -313,17 +328,20 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
 
                 break;
             case R.id.create_wallet_repeat_pwd_et:
-
-                if (!mSetPwdEt.getText().toString().isEmpty() &&
-                        !mSetPwdEt.getText().toString().equals(mRepeatPwdEt.getText().toString())) {
-                    tvCreateWalletPwConfirmErrHint.setVisibility(View.VISIBLE);
-                } else {
-                    tvCreateWalletPwConfirmErrHint.setVisibility(View.INVISIBLE);
-                }
-
+                setPwEditEquals();
                 break;
         }
 
+
+    }
+
+    private void setPwEditEquals() {
+        if (!mSetPwdEt.getText().toString().isEmpty() &&
+                !mSetPwdEt.getText().toString().equals(mRepeatPwdEt.getText().toString())) {
+            tvCreateWalletPwConfirmErrHint.setVisibility(View.VISIBLE);
+        } else {
+            tvCreateWalletPwConfirmErrHint.setVisibility(View.INVISIBLE);
+        }
 
     }
 }

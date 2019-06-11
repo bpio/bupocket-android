@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class MatchPassword {
 
-    static final String  PASSWORD_PATTERN="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{6,30}$";
+    static final String  PASSWORD_PATTERN="^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{6,30}$";
 
     public static boolean isValidPW(final String pw) {
         if (TextUtils.isEmpty(pw)) {

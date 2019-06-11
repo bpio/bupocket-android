@@ -55,7 +55,7 @@
 
 
 
-    <string name="backup_wallet_txt1">没有妥善备份就无法保障资产安全，删除程序或钱包后，你需要备份文件来恢复钱包</string>
+    <string name="backup_wallet_txt1">没有妥善备份就无法保障资金安全，删除钱包或卸载程序后，您需要助记词来恢复钱包/身份</string>
     <string name="backup_wallet_txt2">请确保在四周无人，没有摄像头的安全环境下备份</string>
     <string name="backup_wallet_btn_txt">备份助记词</string>
     <string name="view_title_backup_mneonic_code">备份助记词</string>
