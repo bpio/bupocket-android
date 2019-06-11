@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:layout_marginBottom="80dp"
+        android:scrollbars="none"
         >
         <LinearLayout
             android:layout_width="match_parent"
