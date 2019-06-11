@@ -54,9 +54,9 @@ public class BPUserTermsFragment extends BaseFragment {
         initTopBar();
         eventListeners();
         int language = SharedPreferencesHelper.getInstance().getInt("currentLanguage", currentLanguage);
-        if(language == -1){
+        if (language == -1) {
             myLocaleStr = getContext().getResources().getConfiguration().locale.getLanguage();
-            switch (myLocaleStr){
+            switch (myLocaleStr) {
                 case "zh": {
                     language = 0;
                     break;
@@ -65,7 +65,7 @@ public class BPUserTermsFragment extends BaseFragment {
                     language = 1;
                     break;
                 }
-                default : {
+                default: {
                     language = 1;
                 }
             }
@@ -73,10 +73,11 @@ public class BPUserTermsFragment extends BaseFragment {
         changeLang(language);
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
 
-        WebSettings webSettings=mUseTermsContentWv.getSettings();
+        WebSettings webSettings = mUseTermsContentWv.getSettings();
         webSettings.setDefaultTextEncodingName("UTF-8");
         return root;
     }
+
     private String getRawFileFromResource(int resourceId) {
         StringBuilder sb = new StringBuilder();
         Scanner s = new Scanner(getResources().openRawResource(resourceId));
@@ -120,7 +121,12 @@ public class BPUserTermsFragment extends BaseFragment {
         mUserTermsNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startFragment(new BPCreateWalletFormFragment());
+
+                if (getArguments().getString("tag").equals(BPRecoverWalletFormFragment.class.getSimpleName())) {
+                    startFragment(new BPRecoverWalletFormFragment());
+                } else {
+                    startFragment(new BPCreateWalletFormFragment());
+                }
             }
         });
 

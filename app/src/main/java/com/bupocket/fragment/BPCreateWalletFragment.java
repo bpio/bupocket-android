@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
@@ -27,14 +28,22 @@ public class BPCreateWalletFragment extends BaseFragment {
         mCreateWalletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startFragment(new BPUserTermsFragment());
+                BPUserTermsFragment fragment = new BPUserTermsFragment();
+                Bundle args = new Bundle();
+                args.putString("tag",BPCreateWalletFormFragment.class.getSimpleName());
+                fragment.setArguments(args);
+                startFragment(fragment);
             }
         });
 
         mToRecoverWalletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startFragment(new BPRecoverWalletFormFragment());
+                BPUserTermsFragment fragment = new BPUserTermsFragment();
+                Bundle args = new Bundle();
+                args.putString("tag",BPRecoverWalletFormFragment.class.getSimpleName());
+                fragment.setArguments(args);
+                startFragment(fragment);
             }
         });
         
