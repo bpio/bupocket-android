@@ -71,7 +71,7 @@
     <string name="recover_wallet_title">Recover identity</string>
     <!--<string name="recover_edit_mneonic_code_hint">Enter mnemonics, separated by spaces</string>-->
     <string name="recover_mneonic_input_error">The mnemonics input are incorrect. Please enter again</string>
-    <string name="recover_edit_new_wallet_name_hint">Please enter a new identity name</string>
+    <!--<string name="recover_edit_new_wallet_name_hint">Please enter a new identity name</string>-->
     <string name="recover_input_wallet_name_error">Only letters, numerals, and underscores are allowed and it cannot exceed 20 characters</string>
     <string name="recover_set_pwd_hint">Please set a password</string>
     <string name="recover_set_pwd_error">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>
