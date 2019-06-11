@@ -18,13 +18,39 @@
             android:background="@color/qmui_config_color_white"
             android:orientation="vertical">
 
-            <TextView
+            <!--<TextView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:padding="10dp"-->
+            <!--android:text="@string/recover_wallet_title"-->
+            <!--android:theme="@style/BPViewTitle" />-->
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:padding="10dp"
-                android:text="@string/recover_wallet_title"
-                android:theme="@style/BPViewTitle" />
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/recover_edit_mneonic_code" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="@string/understand_mnemonic_txt" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/ic_hint_question_blue" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -61,6 +87,11 @@
                     android:inputType=""
                     android:theme="@style/BPEditText" />
 
+                <TextView
+                    android:id="@+id/tv_create_wallet_name_err_hint"
+                    style="@style/CreateWalletErr"
+                    android:text="@string/create_wallet_name_err_hint" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -88,6 +119,10 @@
                         android:src="@mipmap/icon_close_eye" />
                 </RelativeLayout>
 
+                <TextView
+                    android:id="@+id/tv_create_wallet_pw_err_hint"
+                    style="@style/CreateWalletErr"
+                    android:text="@string/create_wallet_pw_err_hint" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -116,13 +151,18 @@
                         android:src="@mipmap/icon_close_eye" />
                 </RelativeLayout>
 
+                <TextView
+                    android:id="@+id/tv_create_wallet_pw_confirm_err_hint"
+                    style="@style/CreateWalletErr"
+                    android:text="@string/create_wallet_pw_confirm_err_hint" />
+
                 <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                     android:id="@+id/recoverWalletSubmitBtn"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/bp_btn_hight"
                     android:layout_gravity="bottom"
-                    android:layout_marginTop="55dp"
-                    android:layout_marginBottom="120dp"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginBottom="20dp"
                     android:gravity="center"
                     android:text="@string/recover_wallet_title"
                     android:textColor="@color/app_btn_color_white"
@@ -130,6 +170,13 @@
                     app:qmui_backgroundColor="@color/disabled_btn_color"
                     app:qmui_borderColor="@color/disabled_btn_color"
                     app:qmui_radius="5dp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/app_color_white"
+                    android:padding="@dimen/view_padding"
+                    android:text="@string/create_wallet_prompt_txt3" />
             </LinearLayout>
 
 

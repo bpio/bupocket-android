@@ -97,6 +97,8 @@
     <string name="password_comfirm_dialog_to_backup">请填写身份密码以确认备份</string>
     <!-- 恢复身份 -->
     <string name="recover_wallet_title">恢复身份</string>
+
+    <string name="recover_edit_mneonic_code">请填写您的助记词</string>
     <string name="recover_edit_mneonic_code_hint">12个英文单词，请按空格分隔单词</string>
     <string name="recover_mneonic_input_error">助记词输入有误，请重新输入</string>
     <string name="recover_edit_new_wallet_name_hint">请设置新的身份名</string>
