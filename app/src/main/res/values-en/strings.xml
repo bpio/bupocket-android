@@ -16,8 +16,8 @@
     <string name="wallet_create_create_btn_txt">Create now</string>
     <string name="wallet_create_recover_btn_txt">Restore identity</string>
     <string name="hint_wallet_create_form_input_identity_name">Please create your identity name</string>
-    <string name="hint_wallet_create_form_input_password">Please set your password</string>
-    <string name="hint_wallet_create_form_input_rePassword">Please confirm your password</string>
+    <!--<string name="hint_wallet_create_form_input_password">Please set your password</string>-->
+    <!--<string name="hint_wallet_create_form_input_rePassword">Please confirm your password</string>-->
 
     <string name="wallet_create_form_input_identity_name_empty">Please enter your identity name</string>
     <string name="wallet_create_form_input_password_empty">Please enter your password</string>
@@ -69,7 +69,7 @@
     <string name="password_comfirm_dialog_to_backup">Please enter the identity password to confirm the backup</string>
     <!-- 恢复身份 -->
     <string name="recover_wallet_title">Recover identity</string>
-    <string name="recover_edit_mneonic_code_hint">Enter mnemonics, separated by spaces</string>
+    <!--<string name="recover_edit_mneonic_code_hint">Enter mnemonics, separated by spaces</string>-->
     <string name="recover_mneonic_input_error">The mnemonics input are incorrect. Please enter again</string>
     <string name="recover_edit_new_wallet_name_hint">Please enter a new identity name</string>
     <string name="recover_input_wallet_name_error">Only letters, numerals, and underscores are allowed and it cannot exceed 20 characters</string>

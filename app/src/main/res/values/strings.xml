@@ -14,8 +14,8 @@
     <string name="wallet_create_create_btn_txt">立即创建</string>
     <string name="wallet_create_recover_btn_txt">恢复身份</string>
     <string name="hint_wallet_create_form_input_identity_name">请创建身份名</string>
-    <string name="hint_wallet_create_form_input_password">请设置密码</string>
-    <string name="hint_wallet_create_form_input_rePassword">请再次确认密码</string>
+    <string name="hint_wallet_create_form_input_password">请设置安全密码</string>
+    <string name="hint_wallet_create_form_input_rePassword">请再次确认安全密码</string>
 
     <string name="wallet_create_form_input_identity_name_empty">请输入身份名</string>
     <string name="wallet_create_form_input_password_empty">请输入密码</string>
@@ -97,7 +97,7 @@
     <string name="password_comfirm_dialog_to_backup">请填写身份密码以确认备份</string>
     <!-- 恢复身份 -->
     <string name="recover_wallet_title">恢复身份</string>
-    <string name="recover_edit_mneonic_code_hint">输入助记词，用空格分割</string>
+    <string name="recover_edit_mneonic_code_hint">12个英文单词，请按空格分隔单词</string>
     <string name="recover_mneonic_input_error">助记词输入有误，请重新输入</string>
     <string name="recover_edit_new_wallet_name_hint">请输入新身份名</string>
     <string name="recover_input_wallet_name_error">只允许输入字母、汉字、数字、下划线。长度为20个字符</string>
