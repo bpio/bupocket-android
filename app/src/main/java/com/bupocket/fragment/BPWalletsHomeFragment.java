@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
@@ -20,6 +21,7 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.ArrayList;
@@ -173,6 +175,34 @@ public class BPWalletsHomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 popBackStack();
+            }
+        });
+        mTopBar.addRightImageButton(R.mipmap.icon_import_wallet,R.id.topbar_right_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final QMUIBottomSheet walletBottom = new QMUIBottomSheet(mContext);
+                walletBottom.setContentView(R.layout.view_create_wallet);
+                walletBottom.findViewById(R.id.tvCreateWallet).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        walletBottom.dismiss();
+                    }
+                });
+                walletBottom.findViewById(R.id.tvRecoverWallet).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        importWallet();
+                        walletBottom.dismiss();
+                    }
+                });
+                walletBottom.findViewById(R.id.tvDeleteWallet).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        walletBottom.dismiss();
+                    }
+                });
+                walletBottom.show();
             }
         });
     }

@@ -126,9 +126,10 @@
                 <ImageView
                     android:id="@+id/importSmallWalletBtnIv"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="19dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
+                    android:layout_marginRight="0dp"
                     android:src="@mipmap/icon_import_wallet" />
 
             </RelativeLayout>
