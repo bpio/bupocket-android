@@ -33,6 +33,7 @@
     <string name="otc_top_bar_sell_txt">出售</string>
     <string name="view_title_backup_wallet">备份钱包</string>
     <string name="view_title_create_wallet_identity">创建身份</string>
+    <string name="view_title_create_wallet">创建钱包</string>
 
 
     <!--create wallet-->

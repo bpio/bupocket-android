@@ -67,6 +67,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
     private boolean isPwdHideFirst = false;
     private boolean isConfirmPwdHideFirst = false;
     private SharedPreferencesHelper sharedPreferencesHelper;
+    private String argFragment;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -128,7 +129,6 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
     private void initData() {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-
         initCreateWalletPromptView();
         initTopBar();
     }
@@ -240,6 +240,18 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
                 popBackStack();
             }
         });
+        mTopBar.setTitle(R.string.view_title_create_wallet_identity);
+//        Bundle arguments = getArguments();
+//        if (arguments!=null&&TextUtils.isEmpty(argFragment)){
+//            argFragment = arguments.getString("tagFragment");
+//            if (argFragment.equals(BPWalletsHomeFragment.class.getSimpleName())) {
+//                mTopBar.setTitle(R.string.view_title_create_wallet);
+//            }
+//        }else{
+//            mTopBar.setTitle(R.string.view_title_create_wallet_identity);
+//        }
+
+
     }
 
     private void initCreateWalletPromptView() {
