@@ -6,6 +6,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -106,17 +107,28 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
 
             @Override
             public void afterTextChanged(Editable s) {
-                boolean signMneonicCode = mMneonicCodeEt.getText().toString().trim().length() > 0;
-                boolean signWalleName = mWalletNameEt.getText().toString().trim().length() > 0;
-                boolean signPwd = mPwdEt.getText().toString().trim().length() > 0;
-                boolean signConfirm = mConfirmPwdEt.getText().toString().trim().length() > 0;
-                if (signMneonicCode && signWalleName && signPwd && signConfirm) {
+                String mneonicCode = mMneonicCodeEt.getText().toString().trim();
+                String name = mWalletNameEt.getText().toString().trim();
+                String password = mPwdEt.getText().toString().trim();
+                String passwordConfirm = mConfirmPwdEt.getText().toString().trim();
+
+                if (!passwordConfirm.isEmpty()) {
+                    setPwEditEquals();
+                }
+
+                if (!TextUtils.isEmpty(mneonicCode)&&
+                        CommonUtil.validateName(name)&&
+                        CommonUtil.validatePassword(password)&&
+                        CommonUtil.validatePasswordEquals(password, passwordConfirm)) {
                     recoverSubmit.setEnabled(true);
                     recoverSubmit.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
                 } else {
                     recoverSubmit.setEnabled(false);
                     recoverSubmit.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
                 }
+
+
+
             }
         };
         mMneonicCodeEt.addTextChangedListener(watcher);
@@ -323,9 +335,9 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
             }
         });
 
-        tvCreateWalletNameErrHint.setOnFocusChangeListener(this);
-        tvCreateWalletPwErrHint.setOnFocusChangeListener(this);
-        tvCreateWalletPwConfirmErrHint.setOnFocusChangeListener(this);
+        mWalletNameEt.setOnFocusChangeListener(this);
+        mPwdEt.setOnFocusChangeListener(this);
+        mConfirmPwdEt.setOnFocusChangeListener(this);
     }
 
     private List<String> getMnemonicCode() {
@@ -338,7 +350,31 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
+        switch (v.getId()) {
+            case R.id.recoverWalletNameEt:
+                if (CommonUtil.validateNickname(mWalletNameEt.getText().toString()))
+                    tvCreateWalletNameErrHint.setVisibility(View.INVISIBLE);
+                else
+                    tvCreateWalletNameErrHint.setVisibility(View.VISIBLE);
+                break;
+            case R.id.recoverPwdEt:
+                if (CommonUtil.validatePassword(mPwdEt.getText().toString()))
+                    tvCreateWalletPwErrHint.setVisibility(View.INVISIBLE);
+                else
+                    tvCreateWalletPwErrHint.setVisibility(View.VISIBLE);
+                break;
+            case R.id.recoverConfirmPwdEt:
+                setPwEditEquals();
+                break;
+        }
+
+    }
 
 
+    private void setPwEditEquals() {
+        if (CommonUtil.validatePasswordEquals(mPwdEt.getText().toString(), mConfirmPwdEt.getText().toString()))
+            tvCreateWalletPwConfirmErrHint.setVisibility(View.INVISIBLE);
+        else
+            tvCreateWalletPwConfirmErrHint.setVisibility(View.VISIBLE);
     }
 }
