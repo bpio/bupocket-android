@@ -60,7 +60,7 @@ public class CommonUtil {
 
     public static final Pattern ADDRESS_DESCRIBE_PATTERN = Pattern.compile(".{0,30}$");
 
-//    public static final Pattern PASSWORD_PATTERN = Pattern.compile(".{6,30}$");
+    //    public static final Pattern PASSWORD_PATTERN = Pattern.compile(".{6,30}$");
     public static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{6,30}$");
 
 
@@ -1051,6 +1051,14 @@ public class CommonUtil {
                 CommonUtil.showMessageDialog(context, format);
             }
         }
+    }
+
+    public static boolean validatePasswordEquals(String pw, String pwConfirm) {
+        if (pw.equals(pwConfirm)) {
+            return true;
+        }
+
+        return false;
     }
 
 

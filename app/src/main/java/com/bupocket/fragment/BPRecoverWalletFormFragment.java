@@ -9,20 +9,16 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
-import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
-import com.bupocket.enums.BumoNodeEnum;
-import com.bupocket.enums.HiddenFunctionStatusEnum;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
@@ -42,9 +38,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.content.Context.INPUT_METHOD_SERVICE;
-
-public class BPRecoverWalletFormFragment extends BaseFragment {
+public class BPRecoverWalletFormFragment extends BaseFragment implements View.OnFocusChangeListener {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
 
@@ -68,6 +62,13 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
 
     @BindView(R.id.recoverWalletSubmitBtn)
     QMUIRoundButton recoverSubmit;
+
+    @BindView(R.id.tv_create_wallet_name_err_hint)
+    TextView tvCreateWalletNameErrHint;
+    @BindView(R.id.tv_create_wallet_pw_err_hint)
+    TextView tvCreateWalletPwErrHint;
+    @BindView(R.id.tv_create_wallet_pw_confirm_err_hint)
+    TextView tvCreateWalletPwConfirmErrHint;
 
     private boolean isPwdHideFirst = false;
     private boolean isConfirmPwdHideFirst = false;
@@ -156,7 +157,6 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
             }
         });
     }
-
 
 
     private boolean mneonicFlag() {
@@ -293,7 +293,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
                                             sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
                                             sharedPreferencesHelper.put("identityId", walletBPData.getAccounts().get(0).getAddress());
                                             sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.BACKUPED_MNEONIC_CODE.getCode());
-                                            sharedPreferencesHelper.put("currentWalletAddress",walletBPData.getAccounts().get(1).getAddress());
+                                            sharedPreferencesHelper.put("currentWalletAddress", walletBPData.getAccounts().get(1).getAddress());
                                             sharedPreferencesHelper.put("mnemonicWordBackupState", "0");
                                             tipDialog.dismiss();
 
@@ -322,6 +322,10 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
                         .create().show();
             }
         });
+
+        tvCreateWalletNameErrHint.setOnFocusChangeListener(this);
+        tvCreateWalletPwErrHint.setOnFocusChangeListener(this);
+        tvCreateWalletPwConfirmErrHint.setOnFocusChangeListener(this);
     }
 
     private List<String> getMnemonicCode() {
@@ -332,4 +336,8 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+
+    }
 }

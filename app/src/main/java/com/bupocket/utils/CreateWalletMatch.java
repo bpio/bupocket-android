@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MatchPassword {
+public class CreateWalletMatch {
 
     static final String  PASSWORD_PATTERN="^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{6,30}$";
 

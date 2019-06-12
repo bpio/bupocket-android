@@ -21,7 +21,7 @@ import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.MatchPassword;
+import com.bupocket.utils.CreateWalletMatch;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
@@ -262,22 +262,24 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
         TextWatcher watcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                mCreateWalletSubmitBtn.setEnabled(false);
-                mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mCreateWalletSubmitBtn.setEnabled(false);
-                mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                boolean signIdentityName = mSetIdentityNameEt.getText().toString().trim().length() > 0;
-                boolean signSetPwd = mSetPwdEt.getText().toString().trim().length() > 0;
-                boolean signRepeatPwd = mRepeatPwdEt.getText().toString().trim().length() > 0;
-                if (signIdentityName && signSetPwd && signRepeatPwd) {
+
+                String name = mSetIdentityNameEt.getText().toString().trim();
+                String password = mSetPwdEt.getText().toString().trim();
+                String passwordConfirm = mRepeatPwdEt.getText().toString().trim();
+
+                if (!passwordConfirm.isEmpty()) {
+                    setPwEditEquals();
+                }
+
+                if (CommonUtil.validateName(name) && CommonUtil.validatePassword(password) && CommonUtil.validatePasswordEquals(password,passwordConfirm)) {
                     mCreateWalletSubmitBtn.setEnabled(true);
                     mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
                 } else {
@@ -286,7 +288,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
                 }
 
 
-                setPwEditEquals();
+
             }
         };
         mSetIdentityNameEt.addTextChangedListener(watcher);
@@ -297,35 +299,18 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
 
-        if (hasFocus) {
-            return;
-        }
 
         switch (v.getId()) {
             case R.id.create_wallet_identity_name_et:
-                String name = mSetIdentityNameEt.getText().toString();
-
-                if (TextUtils.isEmpty(name)||name.length() > 20) {
+                if (CommonUtil.validateNickname(mSetIdentityNameEt.getText().toString()))
+                    tvCreateWalletNameErrHint.setVisibility(View.INVISIBLE);
+                else
                     tvCreateWalletNameErrHint.setVisibility(View.VISIBLE);
-                    return;
-                }
-                if (name.length() > 20) {
-                    tvCreateWalletNameErrHint.setVisibility(View.VISIBLE);
-                    return;
-                }
-
-                tvCreateWalletNameErrHint.setVisibility(View.INVISIBLE);
-
-
                 break;
             case R.id.create_wallet_set_pwd_et:
-
-                if (MatchPassword.isValidPW(mSetPwdEt.getText().toString())) {
+                if (CommonUtil.validatePassword(mSetPwdEt.getText().toString()))
                     tvCreateWalletPwErrHint.setVisibility(View.INVISIBLE);
-                } else {
-                    tvCreateWalletPwErrHint.setVisibility(View.VISIBLE);
-                }
-
+                else tvCreateWalletPwErrHint.setVisibility(View.VISIBLE);
                 break;
             case R.id.create_wallet_repeat_pwd_et:
                 setPwEditEquals();
@@ -336,12 +321,10 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
     }
 
     private void setPwEditEquals() {
-        if (!mSetPwdEt.getText().toString().isEmpty() &&
-                !mSetPwdEt.getText().toString().equals(mRepeatPwdEt.getText().toString())) {
-            tvCreateWalletPwConfirmErrHint.setVisibility(View.VISIBLE);
-        } else {
+        if (CommonUtil.validatePasswordEquals(mSetPwdEt.getText().toString(), mRepeatPwdEt.getText().toString()))
             tvCreateWalletPwConfirmErrHint.setVisibility(View.INVISIBLE);
-        }
+        else
+            tvCreateWalletPwConfirmErrHint.setVisibility(View.VISIBLE);
 
     }
 }
