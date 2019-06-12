@@ -319,7 +319,7 @@
     <string name="switch_to_test_net_message_txt">You have started the test network</string>
     <string name="issue_token_password_confirm_txt">Please fill in the wallet password to confirm the issuance</string>
     <string name="recover_identity_confirm_message_txt">Are you sure to update your password and import your identity</string>
-    <string name="wallet_management_txt">Wallet Management</string>
+    <!--<string name="wallet_management_txt">Wallet Management</string>-->
     <string name="current_identity_wallet_title_txt">Wallet in the Current Identity</string>
     <string name="imported_wallet_title_txt">Imported Wallets</string>
     <string name="manage_txt">Manage</string>

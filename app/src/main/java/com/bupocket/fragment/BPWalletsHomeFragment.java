@@ -177,6 +177,7 @@ public class BPWalletsHomeFragment extends BaseFragment {
                 popBackStack();
             }
         });
+        mTopBar.setTitle(R.string.tabbr_wallet_txt);
         mTopBar.addRightImageButton(R.mipmap.icon_import_wallet,R.id.topbar_right_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

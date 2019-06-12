@@ -33,6 +33,7 @@
     <string name="otc_top_bar_sell_txt">出售</string>
     <string name="view_title_backup_wallet">备份钱包</string>
     <string name="view_title_create_wallet_identity">创建身份</string>
+    <string name="view_title_create_wallet">创建钱包</string>
 
 
     <!--create wallet-->
@@ -373,7 +374,7 @@
     <string name="issue_token_password_confirm_txt">请填写钱包密码以确认发行</string>
     <string name="recover_identity_confirm_message_txt">是否确认更新密码及导入身份</string>
 
-    <string name="wallet_management_txt">钱包管理</string>
+    <string name="wallet_management_txt">钱包</string>
     <string name="current_identity_wallet_title_txt">当前身份下的钱包</string>
     <string name="imported_wallet_title_txt">导入的钱包</string>
     <string name="manage_txt">管理</string>
