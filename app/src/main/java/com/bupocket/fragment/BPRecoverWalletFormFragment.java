@@ -339,5 +339,6 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
 
+
     }
 }

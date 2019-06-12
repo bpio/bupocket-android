@@ -279,14 +279,13 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
                     setPwEditEquals();
                 }
 
-                if (CommonUtil.validateName(name) && CommonUtil.validatePassword(password) && CommonUtil.validatePasswordEquals(password,passwordConfirm)) {
+                if (CommonUtil.validateName(name) && CommonUtil.validatePassword(password) && CommonUtil.validatePasswordEquals(password, passwordConfirm)) {
                     mCreateWalletSubmitBtn.setEnabled(true);
                     mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
                 } else {
                     mCreateWalletSubmitBtn.setEnabled(false);
                     mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
                 }
-
 
 
             }
@@ -310,7 +309,8 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
             case R.id.create_wallet_set_pwd_et:
                 if (CommonUtil.validatePassword(mSetPwdEt.getText().toString()))
                     tvCreateWalletPwErrHint.setVisibility(View.INVISIBLE);
-                else tvCreateWalletPwErrHint.setVisibility(View.VISIBLE);
+                else
+                    tvCreateWalletPwErrHint.setVisibility(View.VISIBLE);
                 break;
             case R.id.create_wallet_repeat_pwd_et:
                 setPwEditEquals();
