@@ -57,6 +57,9 @@ public class BPWalletManageFragment extends BaseFragment {
     RelativeLayout mExportPrivateRl;
     @BindView(R.id.backupMnemonicRl)
     RelativeLayout mBackupMnemonicRl;
+    @BindView(R.id.changePwRl)
+    RelativeLayout mChangePwRl;
+
 
     private String walletAddress;
     private String currentWalletAddress;
@@ -481,6 +484,13 @@ public class BPWalletManageFragment extends BaseFragment {
 
                     }
                 });
+            }
+        });
+
+        mChangePwRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new BPChangePwdFragment());
             }
         });
     }

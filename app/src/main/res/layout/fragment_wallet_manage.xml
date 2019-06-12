@@ -155,8 +155,41 @@
                     android:layout_alignParentRight="true"
                     android:paddingRight="15dp"/>
             </RelativeLayout>
-        </LinearLayout>
 
+
+        </LinearLayout>
+        <RelativeLayout
+            android:id="@+id/changePwRl"
+            android:layout_width="match_parent"
+            android:layout_height="58.5dp"
+            android:background="@drawable/shape_corner"
+            android:layout_marginLeft="12.5dp"
+            android:layout_marginRight="12.5dp"
+            android:gravity="center_vertical"
+            android:layout_marginTop="12dp"
+            >
+
+            <ImageView
+                android:id="@+id/changePwIconIv"
+                android:layout_marginLeft="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_backup_mnemonic"/>
+
+            <TextView
+                android:layout_toRightOf="@+id/changePwIconIv"
+                android:layout_marginLeft="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_change_wallet_pw"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/icon_right_arrow"
+                android:layout_alignParentRight="true"
+                android:paddingRight="15dp"/>
+        </RelativeLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
