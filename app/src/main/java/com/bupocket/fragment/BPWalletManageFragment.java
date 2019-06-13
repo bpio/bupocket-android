@@ -29,6 +29,7 @@ import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+import com.squareup.okhttp.internal.framed.Variant;
 
 import org.bitcoinj.crypto.MnemonicCode;
 
@@ -92,66 +93,14 @@ public class BPWalletManageFragment extends BaseFragment {
         mWalletInfoLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
-                qmuiDialog.setCanceledOnTouchOutside(false);
-                qmuiDialog.setContentView(R.layout.view_change_wallet_name);
-                qmuiDialog.show();
 
-                TextView cancelTv = qmuiDialog.findViewById(R.id.changeNameCancel);
-                final TextView confirmTv = qmuiDialog.findViewById(R.id.changeNameConfirm);
-                final EditText walletNewNameEt = qmuiDialog.findViewById(R.id.walletNewNameEt);
-                walletNewNameEt.setHint(walletName);
-
-                cancelTv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        qmuiDialog.dismiss();
-                    }
-                });
-
-                TextWatcher watcher = new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                        confirmTv.setClickable(false);
-                        confirmTv.setEnabled(false);
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-                        confirmTv.setClickable(false);
-                        confirmTv.setEnabled(false);
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable s) {
-                        if (walletNewNameEt.getText().toString().trim().length() > 0) {
-                            confirmTv.setClickable(true);
-                            confirmTv.setEnabled(true);
-                        }
-                    }
-                };
-                walletNewNameEt.addTextChangedListener(watcher);
-
-                confirmTv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        EditText walletNewNameEt = qmuiDialog.findViewById(R.id.walletNewNameEt);
-                        String walletNewName = walletNewNameEt.getText().toString().trim();
-                        if (!CommonUtil.validateNickname(walletNewName)) {
-                            Toast.makeText(getActivity(), R.string.error_import_wallet_name_message_txt, Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                        if (whetherIdentityWallet) {
-                            sharedPreferencesHelper.put("currentIdentityWalletName", walletNewName);
-                            refreshIdentityWalletName();
-                        } else {
-                            sharedPreferencesHelper.put(walletAddress + "-walletName", walletNewName);
-                            refreshWalletName();
-                        }
-
-                        qmuiDialog.dismiss();
-                    }
-                });
+                SettingUserInfoFragment fragment = new SettingUserInfoFragment();
+                Bundle args = new Bundle();
+                args.putString("address", walletAddress);
+                args.putString("walletName", walletName);
+                args.putString("walletIon", "walletIon");
+                fragment.setArguments(args);
+                startFragment(fragment);
             }
         });
 
@@ -275,7 +224,7 @@ public class BPWalletManageFragment extends BaseFragment {
                             @Override
                             public void run() {
                                 String bpData = getAccountBPData();
-                                LogUtils.e("bpData::::"+bpData);
+                                LogUtils.e("bpData::::" + bpData);
                                 try {
                                     privateKeyStr = Wallet.getInstance().exportPrivateKey(password, bpData, walletAddress);
                                     exportingTipDialog.dismiss();
@@ -493,7 +442,7 @@ public class BPWalletManageFragment extends BaseFragment {
             public void onClick(View v) {
                 BPChangePwdFragment fragment = new BPChangePwdFragment();
                 Bundle args = new Bundle();
-                args.putString("address",walletAddress);
+                args.putString("address", walletAddress);
                 fragment.setArguments(args);
                 startFragment(fragment);
             }
@@ -543,6 +492,20 @@ public class BPWalletManageFragment extends BaseFragment {
             mDeleteWalletBtn.setVisibility(View.GONE);
             mBackupMnemonicRl.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        String walletName;
+        if (checkIdentity(walletAddress)) {
+            walletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName", "Wallet-1").toString();
+        } else {
+            walletName = sharedPreferencesHelper.getSharedPreference(walletAddress + "-walletName", "").toString();
+        }
+
+
+        mWalletNameTv.setText(walletName);
     }
 
     private void refreshIdentityWalletName() {

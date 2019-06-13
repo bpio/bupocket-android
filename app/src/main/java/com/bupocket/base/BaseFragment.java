@@ -87,6 +87,17 @@ public abstract class BaseFragment extends QMUIFragment {
         return currentIdentityWalletAddress;
     }
 
+    public boolean checkIdentity(String address) {
+        if (TextUtils.isEmpty(address)) {
+            return false;
+        }
+        String currentAccAddr = spHelper.getSharedPreference("currentAccAddr", "").toString();
+        if (address.equals(currentAccAddr))
+            return true;
+        else
+            return false;
+    }
+
     /**
      * @return false currentAccAddr  true currentWalletAddress
      */
@@ -301,8 +312,6 @@ public abstract class BaseFragment extends QMUIFragment {
     }
 
 
-
-
     @Override
     public void popBackStack() {
         super.popBackStack();
@@ -412,7 +421,6 @@ public abstract class BaseFragment extends QMUIFragment {
         RefWatcher refWatcher = BPApplication.getRefWatcher(getActivity());
         refWatcher.watch(this);
     }
-
 
 
 }

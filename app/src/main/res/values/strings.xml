@@ -658,4 +658,15 @@
 
 
 
+    <!--setting user info-->
+    <string name="setting_user_head_hint">更改钱包头像</string>
+    <string name="setting_user_name_hint">更改钱包名称</string>
+
+    <string name="settting_user_title">钱包详情</string>
+    
+    <string name="settting_change_name_limit1">
+        • 不能超过20个字符\n• 允许输入字母、汉字、数字、下划线</string>
+
+
+
 </resources>

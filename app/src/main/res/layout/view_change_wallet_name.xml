@@ -43,8 +43,16 @@
                 android:paddingBottom="20dp"
                 android:textSize="14sp" />
 
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/settting_change_name_limit1"
+                />
+
             <View
-                android:layout_marginTop="26dp"
+                android:layout_marginTop="16dp"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
                 android:background="@color/app_txt_color_gray_3"/>
