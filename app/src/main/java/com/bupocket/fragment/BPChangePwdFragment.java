@@ -72,7 +72,6 @@ public class BPChangePwdFragment extends BaseFragment{
         eventListeners();
 
 
-
         mNextChangePwdBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,8 +87,9 @@ public class BPChangePwdFragment extends BaseFragment{
                         public void run() {
                             String oldPwd = mOldPasswordET.getText().toString().trim();
                             String newPwd = mNewPasswordET.getText().toString().trim();
+
                             try {
-                                String identityWalletAddress = spHelper.getSharedPreference("currentWalletAddress", "").toString();
+                                String identityWalletAddress = spHelper.getSharedPreference("currentAccAddr", "").toString();
                                 String skey;
                                 if (walletAddress.equals(identityWalletAddress)) {
                                     skey = sharedPreferencesHelper.getSharedPreference("skey", "").toString();
@@ -111,7 +111,7 @@ public class BPChangePwdFragment extends BaseFragment{
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        startFragment(new HomeFragment());
+                                       popBackStack();
                                     }
                                 });
 
