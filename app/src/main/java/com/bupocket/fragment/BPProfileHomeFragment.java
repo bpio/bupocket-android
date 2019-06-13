@@ -10,18 +10,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
-import com.bupocket.common.Constants;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.HiddenFunctionStatusEnum;
-import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
-import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
+import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
@@ -29,7 +26,23 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class BPProfileHomeFragment extends BaseFragment{
+public class BPProfileHomeFragment extends BaseFragment {
+    @BindView(R.id.topbar)
+    QMUITopBar topbar;
+    @BindView(R.id.tvProfileAddress)
+    TextView tvProfileAddress;
+    @BindView(R.id.llProfileIdentity)
+    LinearLayout llProfileIdentity;
+    @BindView(R.id.ivProfileAddressManage)
+    ImageView ivProfileAddressManage;
+    @BindView(R.id.ivProfileWalletManage)
+    ImageView ivProfileWalletManage;
+    @BindView(R.id.settingIcon)
+    ImageView settingIcon;
+    @BindView(R.id.addressBookIcon)
+    ImageView addressBookIcon;
+    @BindView(R.id.manageWalletIcon)
+    ImageView manageWalletIcon;
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String currentAccNick;
 
@@ -42,23 +55,17 @@ public class BPProfileHomeFragment extends BaseFragment{
     @BindView(R.id.helpFeedbackRL)
     RelativeLayout mHelpRL;
     @BindView(R.id.settingRL)
-    RelativeLayout mSettingRL;
+    LinearLayout mSettingRL;
     @BindView(R.id.versionNameTv)
     TextView mVersionNameTv;
     @BindView(R.id.profileAvatarIv)
     ImageView mProfileAvatarIv;
-    @BindView(R.id.currentTestNetTipsTv)
-    TextView mCurrentTestNetTipsTv;
-    @BindView(R.id.meLinearLayout)
-    LinearLayout mMeLinearLayout;
     @BindView(R.id.versionRL)
     RelativeLayout mVersionRl;
-    @BindView(R.id.avatarNickLl)
-    LinearLayout mAvatarNickLl;
     @BindView(R.id.manageWalletRl)
     RelativeLayout mManageWalletRl;
     @BindView(R.id.addressBookRL)
-    RelativeLayout mAddressBookRl;
+    LinearLayout mAddressBookRl;
 
     private final static int CLICKCOUNTS = 5;
     private final static long DURATION = 2 * 1000;
@@ -77,6 +84,7 @@ public class BPProfileHomeFragment extends BaseFragment{
     }
 
     private void init() {
+        topbar.setTitle(R.string.tabbar_profile_txt);
         initData();
         setListener();
     }
@@ -88,14 +96,10 @@ public class BPProfileHomeFragment extends BaseFragment{
     }
 
     private void initUI() {
-        if(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE)== BumoNodeEnum.TEST.getCode()){
-            mCurrentTestNetTipsTv.setText(getString(R.string.current_test_message_txt));
-            mMeLinearLayout.setBackgroundResource(R.mipmap.ic_me_header_bg_test_net);
-        }
         userNickTx.setText(currentAccNick);
         mVersionNameTv.setText(CommonUtil.packageName(getContext()));
-        if(userNickTx.getWidth() > 260){
-            userNickTx.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT,Gravity.LEFT));
+        if (userNickTx.getWidth() > 260) {
+            userNickTx.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.LEFT));
         }
     }
 
@@ -130,19 +134,19 @@ public class BPProfileHomeFragment extends BaseFragment{
                 gotoAddressBookFragment();
             }
         });
-        mProfileAvatarIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle argz = new Bundle();
-                argz.putString("accName",currentAccNick);
-                BPUserInfoFragment bpUserInfoFragment = new BPUserInfoFragment();
-                bpUserInfoFragment.setArguments(argz);
-                startFragment(bpUserInfoFragment);
-            }
-        });
+//        mProfileAvatarIv.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Bundle argz = new Bundle();
+//                argz.putString("accName", currentAccNick);
+//                BPUserInfoFragment bpUserInfoFragment = new BPUserInfoFragment();
+//                bpUserInfoFragment.setArguments(argz);
+//                startFragment(bpUserInfoFragment);
+//            }
+//        });
 
-        int hiddenFunctionStatus = sharedPreferencesHelper.getInt("hiddenFunctionStatus",HiddenFunctionStatusEnum.DISABLE.getCode());
-        if(HiddenFunctionStatusEnum.DISABLE.getCode() == hiddenFunctionStatus){
+        int hiddenFunctionStatus = sharedPreferencesHelper.getInt("hiddenFunctionStatus", HiddenFunctionStatusEnum.DISABLE.getCode());
+        if (HiddenFunctionStatusEnum.DISABLE.getCode() == hiddenFunctionStatus) {
             mVersionRl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -151,14 +155,40 @@ public class BPProfileHomeFragment extends BaseFragment{
             });
         }
 
+
+        llProfileIdentity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle argz = new Bundle();
+                argz.putString("accName", currentAccNick);
+                BPUserInfoFragment bpUserInfoFragment = new BPUserInfoFragment();
+                bpUserInfoFragment.setArguments(argz);
+                startFragment(bpUserInfoFragment);
+            }
+        });
+        ivProfileAddressManage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoAddressBookFragment();
+            }
+        });
+
+        ivProfileWalletManage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoManageWalletFragment();
+            }
+        });
+
     }
 
     long[] mHits = new long[CLICKCOUNTS];
-    public void straightClick(){
+
+    public void straightClick() {
         // Listening to the straight click 5 times
         System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
         mHits[mHits.length - 1] = SystemClock.uptimeMillis();
-        if(mHits[0] > SystemClock.uptimeMillis() - DURATION){
+        if (mHits[0] > SystemClock.uptimeMillis() - DURATION) {
 
             new QMUIDialog.MessageDialogBuilder(getActivity())
                     .setMessage(getString(R.string.switch_test_net_message_txt))
@@ -171,7 +201,7 @@ public class BPProfileHomeFragment extends BaseFragment{
                     .addAction(getString(R.string.yes_txt), new QMUIDialogAction.ActionListener() {
                         @Override
                         public void onClick(QMUIDialog dialog, int index) {
-                            SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus",HiddenFunctionStatusEnum.ENABLE.getCode());
+                            SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus", HiddenFunctionStatusEnum.ENABLE.getCode());
                             SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
                             BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
                             dialog.dismiss();
@@ -183,21 +213,21 @@ public class BPProfileHomeFragment extends BaseFragment{
         }
     }
 
-    private void initData(){
+    private void initData() {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
     }
 
 
-    private void gotoChangePwdFragment(){
+    private void gotoChangePwdFragment() {
         startFragment(new BPChangePwdFragment());
     }
 
-    private void gotoHelpFeedbackFragment(){
+    private void gotoHelpFeedbackFragment() {
         startFragment(new BPHelpFeedbackFragment());
     }
 
-    private void gotoSettingFragment(){
+    private void gotoSettingFragment() {
         startFragment(new BPSettingFragment());
     }
 
@@ -208,4 +238,5 @@ public class BPProfileHomeFragment extends BaseFragment{
     private void gotoAddressBookFragment() {
         startFragment(new BPAddressBookFragment());
     }
+
 }

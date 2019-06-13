@@ -5,43 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        >
         <LinearLayout
-            android:id="@+id/meLinearLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/ic_me_header_bg"
-            android:fitsSystemWindows="true"
-            android:gravity="center_horizontal"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/currentTestNetTipsTv"
-                android:layout_width="wrap_content"
+            <com.qmuiteam.qmui.widget.QMUITopBar
+                android:id="@+id/topbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:paddingLeft="35dp"
-                android:paddingRight="35dp"
-                android:textColor="@color/app_color_green"
-                android:textSize="15sp" />
+                android:fitsSystemWindows="true"
+                android:visibility="invisible" />
 
             <LinearLayout
-                android:id="@+id/avatarNickLl"
-                android:layout_width="wrap_content"
+                android:id="@+id/llProfileIdentity"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="start"
-                android:layout_marginTop="85dp"
-                android:gravity="left"
-                android:orientation="vertical"
-                android:paddingStart="35dp"
-                android:paddingLeft="35dp"
-                android:paddingEnd="35dp"
-                android:paddingRight="35dp">
+                android:layout_marginTop="?attr/qmui_topbar_height"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/profileAvatarIv"
@@ -50,37 +39,80 @@
                     android:background="@mipmap/avatar"
                     android:clickable="false" />
 
-                <TextView
-                    android:id="@+id/userNick"
+                <LinearLayout
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/userNick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="name" />
+
+                    <TextView
+                        android:id="@+id/tvProfileAddress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="address" />
+                </LinearLayout>
+
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:textColor="@color/app_color_black"
-                    android:textSize="18sp"
-                    tools:text="二十" />
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="17.5dp"
+                    android:layout_marginRight="17.5dp"
+                    android:background="@mipmap/icon_right_arrow" />
+
+
             </LinearLayout>
 
-        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/ivProfileAddressManage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@mipmap/icon_create_wallet_logo" />
+
+                <ImageView
+                    android:id="@+id/ivProfileWalletManage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:background="@mipmap/icon_create_wallet_logo" />
+
+            </LinearLayout>
 
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/user_setting" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:layout_marginBottom="50dp"
                 android:orientation="vertical">
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/settingRL"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginTop="16dp">
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical">
 
                     <ImageView
                         android:id="@+id/settingIcon"
@@ -91,18 +123,25 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="15dp"
                         android:layout_marginLeft="15dp"
-                        android:background="@mipmap/icon_setting" />
+                        android:background="@mipmap/icon_monetary_unit" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="13dp"
                         android:layout_marginLeft="13dp"
                         android:layout_toEndOf="@id/settingIcon"
                         android:layout_toRightOf="@id/settingIcon"
-                        android:text="@string/profile_setting_txt"
+                        android:layout_weight="1"
+                        android:text="@string/profile_currency"
                         android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvProfileCurrency"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="CNY" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -113,13 +152,14 @@
                         android:layout_marginEnd="17.5dp"
                         android:layout_marginRight="17.5dp"
                         android:background="@mipmap/icon_right_arrow" />
-                </RelativeLayout>
+                </LinearLayout>
 
-                <RelativeLayout
+                <LinearLayout
                     android:id="@+id/addressBookRL"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginTop="16dp">
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical">
 
                     <ImageView
                         android:id="@+id/addressBookIcon"
@@ -130,18 +170,25 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="15dp"
                         android:layout_marginLeft="15dp"
-                        android:background="@mipmap/icon_address_book" />
+                        android:background="@mipmap/icon_profile_item_language" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginStart="13dp"
                         android:layout_marginLeft="13dp"
                         android:layout_toEndOf="@id/addressBookIcon"
                         android:layout_toRightOf="@id/addressBookIcon"
-                        android:text="@string/address_book_txt"
+                        android:layout_weight="1"
+                        android:text="@string/profile_language"
                         android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tvProfileLanguage"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="语言" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -152,7 +199,7 @@
                         android:layout_marginEnd="17.5dp"
                         android:layout_marginRight="17.5dp"
                         android:background="@mipmap/icon_right_arrow" />
-                </RelativeLayout>
+                </LinearLayout>
 
                 <RelativeLayout
                     android:id="@+id/manageWalletRl"
@@ -169,7 +216,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="15dp"
                         android:layout_marginLeft="15dp"
-                        android:background="@mipmap/icon_wallet_green" />
+                        android:background="@mipmap/icon_switch_node" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -179,7 +226,7 @@
                         android:layout_marginLeft="13dp"
                         android:layout_toEndOf="@id/manageWalletIcon"
                         android:layout_toRightOf="@id/manageWalletIcon"
-                        android:text="@string/wallet_management_txt"
+                        android:text="@string/profile_node_setting"
                         android:textSize="15sp" />
 
                     <ImageView
@@ -193,12 +240,20 @@
                         android:background="@mipmap/icon_right_arrow" />
                 </RelativeLayout>
 
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
                 <RelativeLayout
-                    android:visibility="gone"
                     android:id="@+id/changePwdRL"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:layout_marginTop="16dp">
+                    android:layout_marginTop="16dp"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/pwdicon"
@@ -233,6 +288,43 @@
                         android:background="@mipmap/icon_right_arrow" />
                 </RelativeLayout>
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/others" />
+
+                <LinearLayout
+                    android:id="@+id/llProfileProtocol"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="16dp"
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginLeft="15dp"
+                        android:background="@mipmap/icon_profile_item_help" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="13dp"
+                        android:layout_marginLeft="13dp"
+                        android:layout_toEndOf="@id/helpIcon"
+                        android:layout_toRightOf="@id/helpIcon"
+                        android:text="@string/profile_user_protocol"
+                        android:textSize="15sp" />
+
+
+                </LinearLayout>
+
+
                 <RelativeLayout
                     android:id="@+id/helpFeedbackRL"
                     android:layout_width="match_parent"
@@ -258,7 +350,7 @@
                         android:layout_marginLeft="13dp"
                         android:layout_toEndOf="@id/helpIcon"
                         android:layout_toRightOf="@id/helpIcon"
-                        android:text="@string/help_txt"
+                        android:text="@string/profile_user_help"
                         android:textSize="15sp" />
 
                     <ImageView
@@ -297,11 +389,12 @@
                         android:layout_marginLeft="13dp"
                         android:layout_toEndOf="@id/versionIcon"
                         android:layout_toRightOf="@id/versionIcon"
-                        android:text="@string/version_txt"
+                        android:text="@string/profile_about_us"
                         android:textSize="15sp" />
 
                     <TextView
                         android:id="@+id/versionNameTv"
+                        android:visibility="invisible"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -312,14 +405,12 @@
                         android:text="" />
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="16dp">
 
-                </RelativeLayout>
             </LinearLayout>
-        </ScrollView>
 
-    </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

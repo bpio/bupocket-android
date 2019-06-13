@@ -668,5 +668,16 @@
         • 不能超过20个字符\n• 允许输入字母、汉字、数字、下划线</string>
 
 
+    <!--profile-->
+    <string name="user_setting">使用设置</string>
+    <string name="others" >其他</string>
+
+    <string name="profile_currency">计价货币</string>
+    <string name="profile_language">显示语言</string>
+    <string name="profile_node_setting">节点设置</string>
+    <string name="profile_user_protocol">用户协议</string>
+    <string name="profile_user_help">意见反馈</string>
+    <string name="profile_about_us">关于我们</string>
+
 
 </resources>
