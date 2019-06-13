@@ -2,6 +2,7 @@ package com.bupocket.fragment;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebChromeClient;
@@ -10,6 +11,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -43,6 +45,9 @@ public class BPUserTermsFragment extends BaseFragment {
     @BindView(R.id.useTermsContentWv)
     WebView mUseTermsContentWv;
 
+    @BindView(R.id.llAgreeProtocol)
+    LinearLayout llAgreeProtocol;
+
     private Boolean isAgreeTerms = false;
     private int currentLanguage = -1;
     String myLocaleStr;
@@ -75,6 +80,12 @@ public class BPUserTermsFragment extends BaseFragment {
 
         WebSettings webSettings = mUseTermsContentWv.getSettings();
         webSettings.setDefaultTextEncodingName("UTF-8");
+
+        Bundle arguments = getArguments();
+        if (arguments==null) {
+            llAgreeProtocol.setVisibility(View.GONE);
+        }
+
         return root;
     }
 
@@ -122,7 +133,11 @@ public class BPUserTermsFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
 
-                if (getArguments().getString("tag").equals(BPRecoverWalletFormFragment.class.getSimpleName())) {
+                Bundle arguments = getArguments();
+                if (arguments==null) {
+                    return;
+                }
+                if (arguments.getString("tag").equals(BPRecoverWalletFormFragment.class.getSimpleName())) {
                     startFragment(new BPRecoverWalletFormFragment());
                 } else {
                     startFragment(new BPCreateWalletFormFragment());

@@ -66,6 +66,8 @@ public class BPProfileHomeFragment extends BaseFragment {
     RelativeLayout mManageWalletRl;
     @BindView(R.id.addressBookRL)
     LinearLayout mAddressBookRl;
+    @BindView(R.id.llProfileProtocol)
+    LinearLayout llProfileProtocol;
 
     private final static int CLICKCOUNTS = 5;
     private final static long DURATION = 2 * 1000;
@@ -177,6 +179,13 @@ public class BPProfileHomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 gotoManageWalletFragment();
+            }
+        });
+
+        llProfileProtocol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new BPUserTermsFragment());
             }
         });
 
