@@ -16,6 +16,7 @@ import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.HiddenFunctionStatusEnum;
+import com.bupocket.enums.LanguageEnum;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -68,6 +69,10 @@ public class BPProfileHomeFragment extends BaseFragment {
     LinearLayout mAddressBookRl;
     @BindView(R.id.llProfileProtocol)
     LinearLayout llProfileProtocol;
+    @BindView(R.id.tvProfileCurrency)
+    TextView tvProfileCurrency;
+    @BindView(R.id.tvProfileLanguage)
+    TextView  tvProfileLanguage;
 
     private final static int CLICKCOUNTS = 5;
     private final static long DURATION = 2 * 1000;
@@ -86,9 +91,40 @@ public class BPProfileHomeFragment extends BaseFragment {
     }
 
     private void init() {
-        topbar.setTitle(R.string.tabbar_profile_txt);
+        initView();
         initData();
         setListener();
+    }
+
+    private void initView() {
+        topbar.setTitle(R.string.tabbar_profile_txt);
+        String currencyType = spHelper.getSharedPreference("currencyType","CNY").toString();
+        tvProfileCurrency.setText(currencyType);
+
+        int language = SharedPreferencesHelper.getInstance().getInt("currentLanguage", LanguageEnum.UNDEFINED.getId());
+        if(LanguageEnum.UNDEFINED.getId() == language){
+            String myLocaleStr = getContext().getResources().getConfiguration().locale.getLanguage();
+            switch (myLocaleStr){
+                case "zh": {
+                    language = LanguageEnum.CHINESE.getId();
+                    break;
+                }
+                case "en": {
+                    language = LanguageEnum.ENGLISH.getId();
+                    break;
+                }
+                default : {
+                    language = LanguageEnum.ENGLISH.getId();
+                }
+            }
+        }
+        if(LanguageEnum.CHINESE.getId() == language){
+
+            tvProfileLanguage.setText(getString(R.string.language_cn));
+        }else{
+            tvProfileLanguage.setText(getString(R.string.language_en));
+        }
+
     }
 
     @Override
@@ -171,7 +207,7 @@ public class BPProfileHomeFragment extends BaseFragment {
         ivProfileAddressManage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoAddressBookFragment();
+                startFragment(new BPAddressBookFragment());
             }
         });
 
@@ -237,7 +273,7 @@ public class BPProfileHomeFragment extends BaseFragment {
     }
 
     private void gotoSettingFragment() {
-        startFragment(new BPSettingFragment());
+        startFragment(new BPCurrencyFragment());
     }
 
     private void gotoManageWalletFragment() {
@@ -245,7 +281,7 @@ public class BPProfileHomeFragment extends BaseFragment {
     }
 
     private void gotoAddressBookFragment() {
-        startFragment(new BPAddressBookFragment());
+        startFragment(new BPLanguageFragment());
     }
 
 }
