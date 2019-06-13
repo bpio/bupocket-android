@@ -194,6 +194,7 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:visibility="gone"
                     android:id="@+id/changePwdRL"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"

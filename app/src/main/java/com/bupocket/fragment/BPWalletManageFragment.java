@@ -275,6 +275,7 @@ public class BPWalletManageFragment extends BaseFragment {
                             @Override
                             public void run() {
                                 String bpData = getAccountBPData();
+                                LogUtils.e("bpData::::"+bpData);
                                 try {
                                     privateKeyStr = Wallet.getInstance().exportPrivateKey(password, bpData, walletAddress);
                                     exportingTipDialog.dismiss();
@@ -490,7 +491,11 @@ public class BPWalletManageFragment extends BaseFragment {
         mChangePwRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startFragment(new BPChangePwdFragment());
+                BPChangePwdFragment fragment = new BPChangePwdFragment();
+                Bundle args = new Bundle();
+                args.putString("address",walletAddress);
+                fragment.setArguments(args);
+                startFragment(fragment);
             }
         });
     }

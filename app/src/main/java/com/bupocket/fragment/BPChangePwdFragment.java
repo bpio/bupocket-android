@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.location.Address;
 import android.os.Build;
 import android.os.Looper;
 import android.support.annotation.RequiresApi;
@@ -20,6 +21,7 @@ import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
@@ -54,6 +56,8 @@ public class BPChangePwdFragment extends BaseFragment{
     private boolean isNewPwdHideFirst = false;
     private boolean isOldPwdHideFirst = false;
     private boolean isConfirmPwdHideFirst = false;
+    private String walletAddress;
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
 
 
@@ -85,11 +89,23 @@ public class BPChangePwdFragment extends BaseFragment{
                             String oldPwd = mOldPasswordET.getText().toString().trim();
                             String newPwd = mNewPasswordET.getText().toString().trim();
                             try {
-                                WalletBPData walletBPData = Wallet.getInstance().updateAccountPassword(oldPwd,newPwd,sharedPreferencesHelper.getSharedPreference("skey", "").toString(),getContext());
+                                String identityWalletAddress = spHelper.getSharedPreference("currentWalletAddress", "").toString();
+                                String skey;
+                                if (walletAddress.equals(identityWalletAddress)) {
+                                    skey = sharedPreferencesHelper.getSharedPreference("skey", "").toString();
+                                }else{
+                                    skey = sharedPreferencesHelper.getSharedPreference(BPChangePwdFragment.this.walletAddress + "-skey", "").toString();
+                                }
 
-                                sharedPreferencesHelper.put("skey", walletBPData.getSkey());
-                                sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
+                                WalletBPData walletBPData = Wallet.getInstance().updateAccountPassword(oldPwd,newPwd,skey,getContext());
 
+                                if (walletAddress.equals(identityWalletAddress)) {
+                                    sharedPreferencesHelper.put("skey", walletBPData.getSkey());
+                                    sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
+                                }else{
+                                    sharedPreferencesHelper.put(walletAddress + "-skey", walletBPData.getSkey());
+                                    sharedPreferencesHelper.put(walletAddress+"-BPdata", JSON.toJSONString(walletBPData.getAccounts()));
+                                }
                                 tipDialog.dismiss();
 
                                 getActivity().runOnUiThread(new Runnable() {
@@ -214,6 +230,7 @@ public class BPChangePwdFragment extends BaseFragment{
 
     private void initData(){
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+        walletAddress = getArguments().getString("address", "");
     }
 
     private boolean validateData(){

@@ -335,6 +335,7 @@ public class BPWalletImportFragment extends BaseFragment {
                                     }else {
                                         sharedPreferencesHelper.put(address + "-walletName", walletName);
                                         sharedPreferencesHelper.put(address + "-BPdata", bpData);
+                                        sharedPreferencesHelper.put(address+"-skey",walletBPData.getSkey());
                                         importedWallets.add(address);
                                         sharedPreferencesHelper.put("importedWallets",JSONObject.toJSONString(importedWallets));
                                         Looper.prepare();
@@ -704,6 +705,7 @@ public class BPWalletImportFragment extends BaseFragment {
                                     }else {
                                         sharedPreferencesHelper.put(address + "-walletName", walletName);
                                         sharedPreferencesHelper.put(address + "-BPdata", bpData);
+                                        sharedPreferencesHelper.put(address+"-skey",walletBPData.getSkey());
                                         importedWallets.add(address);
                                         sharedPreferencesHelper.put("importedWallets",JSONObject.toJSONString(importedWallets));
                                         Looper.prepare();
