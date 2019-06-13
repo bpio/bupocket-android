@@ -28,7 +28,6 @@
                 android:id="@+id/llProfileIdentity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="?attr/qmui_topbar_height"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
