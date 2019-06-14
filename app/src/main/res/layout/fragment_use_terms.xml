@@ -14,6 +14,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/use_terms_title"
+            android:textSize="32sp"
+            android:paddingBottom="17dp"
             android:theme="@style/BPViewTitle" />
 
         <ScrollView
@@ -52,6 +54,7 @@
                 android:checked="false"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:textSize="14sp"
                 android:text="@string/use_terms_checkbox_agree"
                 android:textColor="@color/app_txt_color_gray_2"
                 android:theme="@style/BPCheckboxTheme" />
@@ -63,6 +66,7 @@
                 android:background="@color/terms_unagree_btn_grey"
                 android:enabled="false"
                 android:gravity="center"
+                android:textSize="18sp"
                 android:text="@string/use_terms_next_btn"
                 android:textColor="@color/app_btn_color_white">
 

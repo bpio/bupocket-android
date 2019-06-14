@@ -38,17 +38,13 @@
 
     <!--create wallet-->
     <string name="create_wallet_prompt_dialog_title">温馨提示</string>
-    <string name="create_wallet_prompt_txt1">
-        •安全密码用于加密保护私钥、确认交易转账和调用合约等，强度非常重要，请您务必牢记\n\n
-        • 小布口袋不会存储您的密码\n\n
-        • 安全密码只能修改，无法找回或重置，请务必牢记</string>
-
+    <string name="create_wallet_prompt_txt1">1、安全密码用于加密保护私钥、确认交易转账和调用合约等，强度非常重要，请您务必牢记；\n
+        2、小布口袋不会存储您的密码；\n
+        3、安全密码只能修改，无法找回或重置，请务必牢记。</string>
     <string name="create_wallet_prompt_txt3">
-        温馨提示\n\n
-        •安全密码用于加密保护私钥、确认交易转账和调用合约等，强度非常重要，请您务必牢记\n
-        • 小布口袋不会存储您的密码\n
-        • 安全密码只能修改，无法找回或重置，请务必牢记
-    </string>
+        •安全密码用于加密保护私钥、确认交易转账和调用合约等，强度非常重要，请您务必牢记；\n
+        • 小布口袋不会存储您的密码；\n
+        • 安全密码只能修改，无法找回或重置，请务必牢记。</string>
     <string name="create_wallet_prompt_txt2">6~30个字符，建议混合大小写字母加数字</string>
     <string name="create_wallet_name_err_hint">不能超过20个字符</string>
     <string name="create_wallet_pw_err_hint">6-30个字符，建议大小写字母和数字组合</string>
@@ -59,6 +55,7 @@
     <string name="backup_wallet_txt1">没有妥善备份就无法保障资金安全，删除钱包或卸载程序后，您需要助记词来恢复钱包/身份</string>
     <string name="backup_wallet_txt2">请确保在四周无人，没有摄像头的安全环境下备份</string>
     <string name="backup_wallet_btn_txt">备份助记词</string>
+    <string name="view_change_wallet_pw">修改钱包密码</string>
     <string name="view_title_backup_mneonic_code">备份助记词</string>
     <string name="skip_backup_mneonic_btn_code">跳过</string>
     <string name="no_backup_mneonic_btn_code">暂不备份</string>
@@ -297,7 +294,7 @@
     <string name="srl_header_secondary">释放进入二楼</string>
     <string name="srl_header_update">上次更新 M-d HH:mm</string>
 
-    <string name="total_assets_title_txt">总资产估值</string>
+    <string name="total_assets_title_txt">资产估值</string>
     <string name="assets_add_txt">添加资产</string>
     <string name="my_assets_title_txt">我的资产</string>
     <string name="add_token_search_hint">请输入完整的资产代码</string>s
@@ -655,6 +652,37 @@
     <string name="open_youpin">本服务由小布有品提供。相关服务和责任将由该第三方承担。如有问题请咨询该公司客服。</string>
     <string name="open_youpin_title">免责声明</string>
 
+
+
+    <!--setting user info-->
+    <string name="setting_user_head_hint">更改钱包头像</string>
+    <string name="setting_user_name_hint">更改钱包名称</string>
+
+    <string name="settting_user_title">钱包详情</string>
+
+    <string name="settting_change_name_limit1">
+        • 不能超过20个字符\n• 允许输入字母、汉字、数字、下划线</string>
+
+
+    <!--profile-->
+    <string name="user_setting">使用设置</string>
+    <string name="others" >其他</string>
+
+    <string name="profile_currency">计价货币</string>
+    <string name="profile_language">显示语言</string>
+    <string name="profile_node_setting">节点设置</string>
+    <string name="profile_user_protocol">用户协议</string>
+    <string name="profile_user_help">意见反馈</string>
+    <string name="profile_about_us">关于我们</string>
+
+
+
+    <!--collection-->
+    <string name="collection_title">收款</string>
+    <string name="collection_address">收款地址</string>
+
+    <!--node  setting-->
+    <string name="node_setting_title">节点设置</string>
 
 
 </resources>

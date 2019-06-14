@@ -15,23 +15,13 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:background="@color/qmui_config_color_white"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/view_title_create_wallet_identity"
-                android:theme="@style/BPViewTitle"
-                android:visibility="gone" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/view_padding"
-                android:background="@color/app_color_white"
-                android:text="@string/create_wallet_prompt_txt3" />
+            <include
+                layout="@layout/view_create_wallet_hint"/>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
