@@ -14,8 +14,7 @@
     <string name="wallet_create_create_btn_txt">立即创建</string>
     <string name="wallet_create_recover_btn_txt">恢复身份</string>
     <string name="hint_wallet_create_form_input_identity_name">请创建身份名</string>
-    <string name="hint_wallet_create_form_input_password">请设置安全密码</string>
-    <string name="hint_wallet_create_form_input_rePassword">请再次确认安全密码</string>
+
 
     <string name="wallet_create_form_input_identity_name_empty">请输入身份名</string>
     <string name="wallet_create_form_input_password_empty">请输入密码</string>
@@ -36,7 +35,7 @@
 
 
     <!--create wallet-->
-
+    <string name="wallet_management_txt">钱包</string>
     <string name="view_title_create_wallet">创建钱包</string>
     <string name="start_create_wallet">开始创建</string>
     <string name="create_wallet_prompt_dialog_title">温馨提示</string>
@@ -52,12 +51,13 @@
     <string name="create_wallet_pw_err_hint">6-30个字符，建议大小写字母和数字组合</string>
     <string name="create_wallet_pw_confirm_err_hint">两次密码不一致</string>
 
-
+    <string name="view_change_wallet_pw">修改钱包密码</string>
 
     <string name="backup_wallet_txt1">没有妥善备份就无法保障资金安全，删除钱包或卸载程序后，您需要助记词来恢复钱包/身份</string>
+
     <string name="backup_wallet_txt2">请确保在四周无人，没有摄像头的安全环境下备份</string>
     <string name="backup_wallet_btn_txt">备份助记词</string>
-    <string name="view_change_wallet_pw">修改钱包密码</string>
+
     <string name="view_title_backup_mneonic_code">备份助记词</string>
     <string name="skip_backup_mneonic_btn_code">跳过</string>
     <string name="no_backup_mneonic_btn_code">暂不备份</string>
@@ -95,21 +95,7 @@
     <string name="password_comfirm_dialog_title">密码确认</string>
     <string name="password_comfirm_dialog_sub_txt">请填写钱包密码以确认转出</string>
     <string name="password_comfirm_dialog_to_backup">请填写身份密码以确认备份</string>
-    <!-- 恢复身份 -->
-    <string name="recover_wallet_title">恢复身份</string>
 
-    <string name="recover_edit_mneonic_code">请填写您的助记词</string>
-    <string name="recover_edit_mneonic_code_hint">12个英文单词，请按空格分隔单词</string>
-    <string name="recover_mneonic_input_error">助记词输入有误，请重新输入</string>
-    <string name="recover_edit_new_wallet_name_hint">请设置新的身份名</string>
-    <string name="recover_input_wallet_name_error">只允许输入字母、汉字、数字、下划线。长度为20个字符</string>
-    <string name="recover_set_pwd_hint">请设置密码</string>
-    <string name="recover_set_pwd_error">6~30个字符，建议混合大小写字母加数字</string>
-    <string name="recover_confirm_pwd_hint">请确认密码</string>
-    <string name="recover_confirm_pwd_error">密码与确认密码不一致</string>
-    <string name="recover_wallet_next_btn">恢复</string>
-    <string name="recover_wallet_reloading">恢复中</string>
-    <string name="recover_wallet_error_tip">助记词输入有误，请重新输入</string>
 
     <string name="view_title_wallet_sendBU">转账</string>
 
@@ -373,7 +359,7 @@
     <string name="issue_token_password_confirm_txt">请填写钱包密码以确认发行</string>
     <string name="recover_identity_confirm_message_txt">是否确认更新密码及导入身份</string>
 
-    <string name="wallet_management_txt">钱包</string>
+
     <string name="current_identity_wallet_title_txt">当前身份下的钱包</string>
     <string name="imported_wallet_title_txt">导入的钱包</string>
     <string name="manage_txt">管理</string>
@@ -570,7 +556,6 @@
 
 
     <string name="error_build_1024">没有权限，请使用委员会钱包进行扫码</string>
-    <string name="error_build_1028">copies is not available</string>
     <string name="error_1031">当前项目已获得目标共建总金额，  您可选择其他项目进行支持</string>
     <string name="error_1032">剩余份数不足，建议您调整支持份数</string>
     <string name="error_1033">您还未支持过此项目，暂不能撤回</string>
@@ -686,6 +671,25 @@
     <!--node  setting-->
     <string name="node_setting_title">节点设置</string>
 
+    <!--create wallet-->
 
+    <string name="import_mnemonic_wallet_name">请设置钱包名称</string>
+    <string name="import_mnemonic_wallet_name_hint">请设置钱包名称，用于区分其他钱包</string>
+    <string name="hint_wallet_create_form_input_password">请设置安全密码</string>
+    <string name="hint_wallet_create_form_input_rePassword">请再次确认安全密码</string>
+    <!-- 恢复身份 -->
+    <string name="recover_edit_mneonic_code">请填写您的助记词</string>
+    <string name="recover_edit_mneonic_code_hint">12个英文单词，请按空格分隔单词</string>
+    <string name="recover_wallet_title">恢复身份</string>
+    <string name="recover_mneonic_input_error">助记词输入有误，请重新输入</string>
+    <string name="recover_edit_new_wallet_name_hint">请设置新的身份名</string>
+    <string name="recover_input_wallet_name_error">只允许输入字母、汉字、数字、下划线。长度为20个字符</string>
+    <string name="recover_set_pwd_hint">请设置密码</string>
+    <string name="recover_set_pwd_error">6~30个字符，建议混合大小写字母加数字</string>
+    <string name="recover_confirm_pwd_hint">请确认密码</string>
+    <string name="recover_confirm_pwd_error">密码与确认密码不一致</string>
+    <string name="recover_wallet_next_btn">恢复</string>
+    <string name="recover_wallet_reloading">恢复中</string>
+    <string name="recover_wallet_error_tip">助记词输入有误，请重新输入</string>
 
 </resources>

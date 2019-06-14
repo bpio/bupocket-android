@@ -11,31 +11,63 @@
         android:paddingLeft="12.5dp"
         android:paddingRight="12.5dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="@string/wallet_import_mnemonic_word_tips_txt"
-            android:textColor="@color/app_txt_color_gray"
-            android:textSize="14sp" />
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/recover_edit_mneonic_code"
+                android:textColor="@color/app_txt_color_gray"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:id="@+id/understandMnemonicWordLl"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/understand_mnemonic_txt"
+                    android:textColor="@color/app_color_green"
+                    android:textSize="14sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:src="@mipmap/icon_help_tips" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
 
         <EditText
             android:id="@+id/mnemonicWordEt"
             android:layout_width="match_parent"
-            android:layout_height="119.5dp"
+            android:layout_height="120dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/shape_corner_gray"
             android:gravity="top"
-            android:hint="@string/wallet_import_mnemonic_word_et_hint_txt"
+            android:hint="@string/recover_edit_mneonic_code_hint"
             android:paddingLeft="15dp"
-            android:textSize="15sp"
-            android:paddingTop="12dp" />
+            android:paddingTop="12dp"
+            android:textSize="15sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="17.5dp"
-            android:text="@string/wallet_import_wallet_name_txt"
+            android:text="@string/import_mnemonic_wallet_name"
             android:textColor="@color/app_txt_color_gray_2"
             android:textSize="16sp" />
 
@@ -43,15 +75,15 @@
             android:id="@+id/walletNameEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/wallet_import_wallet_name_et_hint_txt"
+            android:hint="@string/import_mnemonic_wallet_name_hint"
             android:textSize="14sp"
-            android:theme="@style/BPEditText"/>
+            android:theme="@style/BPEditText" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="17.5dp"
-            android:text="@string/wallet_import_set_password_txt"
+            android:text="@string/hint_wallet_create_form_input_password"
             android:textColor="@color/app_txt_color_gray_2"
             android:textSize="16sp" />
 
@@ -63,7 +95,7 @@
                 android:id="@+id/passwordEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/recover_set_pwd_hint"
+                android:hint="@string/hint_wallet_create_form_input_password"
                 android:inputType="textPassword"
                 android:textSize="14sp"
                 android:theme="@style/BPEditText" />
@@ -72,8 +104,8 @@
                 android:id="@+id/passwordIv"
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
                 android:layout_alignParentRight="true"
+                android:paddingTop="20dp"
                 android:src="@mipmap/icon_close_eye" />
 
         </RelativeLayout>
@@ -82,7 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="17.5dp"
-            android:text="@string/wallet_import_confirm_password_txt"
+            android:text="@string/hint_wallet_create_form_input_rePassword"
             android:textColor="@color/app_txt_color_gray_2"
             android:textSize="16sp" />
 
@@ -94,7 +126,7 @@
                 android:id="@+id/passwordConfirmEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/recover_confirm_pwd_hint"
+                android:hint="@string/hint_wallet_create_form_input_rePassword"
                 android:inputType="textPassword"
                 android:textSize="14sp"
                 android:theme="@style/BPEditText" />
@@ -103,8 +135,8 @@
                 android:id="@+id/passwordConfirmIv"
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
                 android:layout_alignParentRight="true"
+                android:paddingTop="20dp"
                 android:src="@mipmap/icon_close_eye" />
 
         </RelativeLayout>
@@ -114,6 +146,7 @@
             android:layout_width="match_parent"
             android:layout_height="43.5dp"
             android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
             android:gravity="center"
             android:text="@string/start_import_wallet"
             android:textColor="@color/app_color_font"
@@ -122,25 +155,11 @@
             app:qmui_borderColor="@color/disabled_btn_color"
             app:qmui_radius="5dp" />
 
-        <LinearLayout
-            android:id="@+id/understandMnemonicWordLl"
+
+        <include
+            layout="@layout/view_create_wallet_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:gravity="right|center_vertical"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/understand_mnemonic_txt" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:src="@mipmap/icon_help_tips" />
-        </LinearLayout>
+            android:layout_marginBottom="27dp" />
     </LinearLayout>
 </ScrollView>

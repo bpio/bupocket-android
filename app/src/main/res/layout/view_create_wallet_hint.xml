@@ -4,8 +4,6 @@
     android:layout_height="wrap_content"
     android:background="@drawable/shape_corner_gray_no_stroke"
     android:orientation="vertical"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
     android:paddingLeft="14dp"
     android:paddingTop="10dp"
     android:paddingRight="14dp"

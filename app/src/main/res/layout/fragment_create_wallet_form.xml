@@ -7,10 +7,10 @@
     <ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:background="@color/app_color_white_background"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:scrollbars="none">
 
 
         <LinearLayout
@@ -24,13 +24,16 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:background="@color/gray_line"
                 android:layout_marginBottom="10dp"
-                />
+                android:background="@color/gray_line" />
 
 
             <include
-                layout="@layout/view_create_wallet_hint"/>
+                layout="@layout/view_create_wallet_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
 
 
             <LinearLayout
@@ -80,10 +83,12 @@
                         android:contentDescription="TODO"
                         android:src="@mipmap/icon_close_eye" />
                 </RelativeLayout>
+
                 <TextView
                     android:id="@+id/tv_create_wallet_pw_err_hint"
                     style="@style/BPETCreateWalletError"
                     android:text="@string/create_wallet_pw_err_hint" />
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="80dp">
@@ -111,10 +116,12 @@
                         android:contentDescription="TODO"
                         android:src="@mipmap/icon_close_eye" />
                 </RelativeLayout>
+
                 <TextView
                     android:id="@+id/tv_create_wallet_pw_confirm_err_hint"
                     style="@style/BPETCreateWalletError"
                     android:text="@string/create_wallet_pw_confirm_err_hint" />
+
                 <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                     android:id="@+id/createWalletSubmitBtn"
                     android:layout_width="match_parent"
