@@ -12,11 +12,21 @@
         android:background="@color/app_color_white_background"
         android:orientation="vertical">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/qmui_config_color_white"
+
             android:orientation="vertical">
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_line"
+                android:layout_marginBottom="10dp"
+                />
 
 
             <include
@@ -40,7 +50,7 @@
 
                 <TextView
                     android:id="@+id/tv_create_wallet_name_err_hint"
-                    style="@style/CreateWalletErr"
+                    style="@style/BPETCreateWalletError"
                     android:text="@string/create_wallet_name_err_hint" />
 
                 <RelativeLayout
@@ -72,7 +82,7 @@
                 </RelativeLayout>
                 <TextView
                     android:id="@+id/tv_create_wallet_pw_err_hint"
-                    style="@style/CreateWalletErr"
+                    style="@style/BPETCreateWalletError"
                     android:text="@string/create_wallet_pw_err_hint" />
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -103,17 +113,17 @@
                 </RelativeLayout>
                 <TextView
                     android:id="@+id/tv_create_wallet_pw_confirm_err_hint"
-                    style="@style/CreateWalletErr"
+                    style="@style/BPETCreateWalletError"
                     android:text="@string/create_wallet_pw_confirm_err_hint" />
                 <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                     android:id="@+id/createWalletSubmitBtn"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/bp_btn_hight"
-                    android:layout_marginTop="55dp"
+                    android:layout_marginTop="50dp"
                     android:layout_marginBottom="120dp"
                     android:enabled="false"
                     android:gravity="center"
-                    android:text="@string/hint_wallet_create_form_create_btn_txt"
+                    android:text="@string/start_create_wallet"
                     android:textColor="@color/app_btn_color_white"
                     android:textSize="18sp"
                     app:qmui_backgroundColor="@color/disabled_btn_color"

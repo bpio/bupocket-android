@@ -160,10 +160,11 @@
     <style name="BPEditText">
         <item name="colorControlNormal">@color/edit_text_color_control_normal</item>
         <item name="colorControlActivated">@color/edit_text_color_control_activated</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:textSize">14sp</item>
         <item name="android:paddingBottom">15dp</item>
     </style>
+
 
     <style name="BPEditTextBorder">
         <item name="colorControlNormal">@color/edit_text_color_control_normal</item>
@@ -292,10 +293,11 @@
 
     </style>
 
-    <style name="CreateWalletErr">
+    <style name="BPETCreateWalletError">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:visibility">invisible</item>
-        <item name="android:textColor">@color/qmui_config_color_red</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/app_txt_color_red_4</item>
     </style>
 </resources>

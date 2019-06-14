@@ -89,7 +89,7 @@
 
                 <TextView
                     android:id="@+id/tv_create_wallet_name_err_hint"
-                    style="@style/CreateWalletErr"
+                    style="@style/BPETCreateWalletError"
                     android:text="@string/create_wallet_name_err_hint" />
 
                 <RelativeLayout
@@ -121,7 +121,7 @@
 
                 <TextView
                     android:id="@+id/tv_create_wallet_pw_err_hint"
-                    style="@style/CreateWalletErr"
+                    style="@style/BPETCreateWalletError"
                     android:text="@string/create_wallet_pw_err_hint" />
 
                 <RelativeLayout
@@ -153,7 +153,7 @@
 
                 <TextView
                     android:id="@+id/tv_create_wallet_pw_confirm_err_hint"
-                    style="@style/CreateWalletErr"
+                    style="@style/BPETCreateWalletError"
                     android:text="@string/create_wallet_pw_confirm_err_hint" />
 
                 <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
