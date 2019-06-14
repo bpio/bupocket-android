@@ -241,17 +241,6 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
             }
         });
         mTopBar.setTitle(R.string.view_title_create_wallet_identity);
-//        Bundle arguments = getArguments();
-//        if (arguments!=null&&TextUtils.isEmpty(argFragment)){
-//            argFragment = arguments.getString("tagFragment");
-//            if (argFragment.equals(BPWalletsHomeFragment.class.getSimpleName())) {
-//                mTopBar.setTitle(R.string.view_title_create_wallet);
-//            }
-//        }else{
-//            mTopBar.setTitle(R.string.view_title_create_wallet_identity);
-//        }
-
-
     }
 
     private void initCreateWalletPromptView() {
