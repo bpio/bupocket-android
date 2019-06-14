@@ -11,44 +11,8 @@
         android:paddingLeft="12.5dp"
         android:paddingRight="12.5dp">
 
-        <LinearLayout
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/recover_edit_mneonic_code"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="14sp" />
-
-            <LinearLayout
-                android:id="@+id/understandMnemonicWordLl"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/understand_mnemonic_txt"
-                    android:textColor="@color/app_color_green"
-                    android:textSize="14sp" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:src="@mipmap/icon_help_tips" />
-
-            </LinearLayout>
-
-
-        </LinearLayout>
+        <include layout="@layout/view_mnemonic_hint" />
 
 
         <EditText

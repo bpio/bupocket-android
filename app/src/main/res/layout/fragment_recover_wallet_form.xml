@@ -26,31 +26,12 @@
             <!--android:text="@string/recover_wallet_title"-->
             <!--android:theme="@style/BPViewTitle" />-->
 
-            <LinearLayout
+            <include
+                layout="@layout/view_mnemonic_hint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/recover_edit_mneonic_code" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:text="@string/understand_mnemonic_txt" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@mipmap/ic_hint_question_blue" />
-
-            </LinearLayout>
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -171,12 +152,6 @@
                     app:qmui_borderColor="@color/disabled_btn_color"
                     app:qmui_radius="5dp" />
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/app_color_white"
-                    android:padding="@dimen/view_padding"
-                    android:text="@string/create_wallet_prompt_txt3" />
             </LinearLayout>
 
 
