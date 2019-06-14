@@ -277,7 +277,7 @@ public class BPProfileHomeFragment extends BaseFragment {
     }
 
     private void gotoManageWalletFragment() {
-        startFragment(new BPWalletsHomeFragment());
+        startFragment(new BPNodeSetting());
     }
 
     private void gotoAddressBookFragment() {

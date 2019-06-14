@@ -298,7 +298,7 @@
     <string name="srl_header_secondary">释放进入二楼</string>
     <string name="srl_header_update">上次更新 M-d HH:mm</string>
 
-    <string name="total_assets_title_txt">总资产估值</string>
+    <string name="total_assets_title_txt">资产估值</string>
     <string name="assets_add_txt">添加资产</string>
     <string name="my_assets_title_txt">我的资产</string>
     <string name="add_token_search_hint">请输入完整的资产代码</string>s
@@ -678,6 +678,15 @@
     <string name="profile_user_protocol">用户协议</string>
     <string name="profile_user_help">意见反馈</string>
     <string name="profile_about_us">关于我们</string>
+
+
+
+    <!--collection-->
+    <string name="collection_title">收款</string>
+    <string name="collection_address">收款地址</string>
+
+    <!--node  setting-->
+    <string name="node_setting_title">节点设置</string>
 
 
 </resources>

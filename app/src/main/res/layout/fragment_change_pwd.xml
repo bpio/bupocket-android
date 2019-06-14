@@ -152,7 +152,7 @@
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
         android:id="@+id/topbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/qmui_topbar_height"
         android:fitsSystemWindows="true" />
 
 </android.support.design.widget.CoordinatorLayout>
