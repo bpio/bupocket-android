@@ -19,7 +19,7 @@
     <string name="wallet_create_form_input_identity_name_empty">请输入身份名</string>
     <string name="wallet_create_form_input_password_empty">请输入密码</string>
     <string name="wallet_create_form_input_rePassword_empty">请再次确认密码</string>
-    <string name="wallet_create_form_error1">密码与确认密码不一致</string>
+    <string name="wallet_create_form_error1">两次密码输入不一致</string>
     <string name="wallet_create_form_error2">密码必须是6-30个字符，大小写字母和数字任意两种的组合</string>
     <string name="wallet_create_form_error4">身份名只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
 

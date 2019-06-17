@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,8 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
     EditText mConfirmPwdEt;
     @BindView(R.id.recoverWalletSubmitBtn)
     QMUIRoundButton recoverSubmit;
+    @BindView(R.id.understandMnemonicWordLl)
+    LinearLayout mnemonicWordLl;
 
 
     private boolean isPwdHideFirst = false;
@@ -187,7 +190,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
         String pwd = mPwdEt.getText().toString().trim();
         String confirmPwd = mConfirmPwdEt.getText().toString().trim();
         if (!confirmPwd.equals(pwd)) {
-            CommonUtil.showTitleDialog(mContext, R.string.recover_confirm_pwd_error, R.string.error_hint);
+            CommonUtil.showTitleDialog(mContext, R.string.wallet_create_form_error1, R.string.error_hint);
             return false;
         }
         return true;
@@ -306,6 +309,13 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
         mWalletNameEt.setOnFocusChangeListener(this);
         mPwdEt.setOnFocusChangeListener(this);
         mConfirmPwdEt.setOnFocusChangeListener(this);
+
+        mnemonicWordLl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new BPWalletUnderstandMnemonicWordFragment());
+            }
+        });
     }
 
     private List<String> getMnemonicCode() {

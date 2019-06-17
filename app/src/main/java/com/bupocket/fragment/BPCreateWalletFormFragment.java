@@ -133,14 +133,14 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
         String indntityName = mSetIdentityNameEt.getText().toString().trim();
 
         if (!CommonUtil.validateNickname(indntityName)) {
-            CommonUtil.showTitleDialog(mContext, getString(R.string.create_wallet_name_err_hint), getString(R.string.error_hint));
+            CommonUtil.showTitleDialog(mContext, getString(R.string.wallet_create_form_error4), getString(R.string.error_hint));
             return false;
         }
 
         String password = mSetPwdEt.getText().toString().trim();
 
         if (!CommonUtil.validatePassword(password)) {
-            CommonUtil.showTitleDialog(mContext, R.string.hint_wallet_create_password, R.string.error_hint);
+            CommonUtil.showTitleDialog(mContext, R.string.wallet_create_form_error2, R.string.error_hint);
             return false;
         }
 
