@@ -92,7 +92,14 @@ public class BPChangePwdFragment extends BaseFragment{
 
                                 tipDialog.dismiss();
 
-                                startFragment(new HomeFragment());
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        startFragment(new HomeFragment());
+                                    }
+                                });
+
+
 
                             } catch (WalletException e) {
                                 e.printStackTrace();

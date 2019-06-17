@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.support.v4.content.FileProvider;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.bupocket.R;
+import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.ExceptionEnum;
@@ -54,7 +56,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BPNodeShareFragment extends BaseFragment {
+public class BPNodeShareFragment extends AbsBaseFragment {
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
     @BindView(R.id.nodeNameTv)
@@ -65,7 +67,7 @@ public class BPNodeShareFragment extends BaseFragment {
     TextView mHaveVotesNumTv;
     @BindView(R.id.supportPeopleTv)
     TextView mSupportPeopleTv;
-    @BindView(R.id.nodeIconIv)
+    @BindView(R.id.assetIconIv)
     QMUIRadiusImageView mNodeIconIv;
     @BindView(R.id.wbShare)
     WebView webView;
@@ -87,25 +89,61 @@ public class BPNodeShareFragment extends BaseFragment {
     private SuperNodeModel itemInfo;
     private SuperNodeModel itemData;
     private Bitmap nodeLogoBitmap = null;
+    private Call<ApiResult<SuperNodeModel>> callShareService;
+    private Call<ApiResult<ShareUrlModel>> callShareUrl;
+
 
     @Override
-    protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_node_share, null);
-        ButterKnife.bind(this, root);
-        init();
-        return root;
+    protected int getLayoutView() {
+        return R.layout.fragment_node_share;
     }
 
-    private void init() {
-        initUI();
-        initData();
-        setListener();
+    @Override
+    protected void initView() {
+        initTopBar();
     }
 
-    private void initData() {
+
+    @Override
+    protected void initData() {
         itemData = getArguments().getParcelable("itemInfo");
+        mNodeNameTv.setText(itemData.getNodeName());
+        // set node type
+        if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(itemData.getIdentityType())) {
+            mNodeTypeTv.setText(getContext().getResources().getString(R.string.common_node));
+
+        } else if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(itemData.getIdentityType())) {
+            mNodeTypeTv.setText(getContext().getResources().getString(R.string.ecological_node));
+        }
+
+
+        if (CommonUtil.isSingle(itemData.getNodeVote())) {
+            haveVotesNumTvHint.setText(mContext.getString(R.string.number_have_votes));
+        } else {
+            haveVotesNumTvHint.setText(mContext.getString(R.string.number_have_votes_s));
+        }
+        mHaveVotesNumTv.setText(itemData.getNodeVote());
+
+
+        if (CommonUtil.isSingle(itemData.getMyVoteCount())) {
+            supportPeopleTvHint.setText(mContext.getString(R.string.my_votes_number));
+        } else {
+            supportPeopleTvHint.setText(mContext.getString(R.string.my_votes_number_s));
+        }
+        mSupportPeopleTv.setText(itemData.getMyVoteCount());
+
+
+        Glide.with(getContext())
+                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(itemData.getNodeLogo()))
+                .into(mNodeIconIv);
+
         getShareData();
         getUrlData();
+    }
+
+    @Override
+    protected void setListeners() {
+
     }
 
     private void getShareData() {
@@ -114,7 +152,8 @@ public class BPNodeShareFragment extends BaseFragment {
         map.put("address", getWalletAddress());
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
 
-        nodePlanService.getShareData(map).enqueue(new Callback<ApiResult<SuperNodeModel>>() {
+        callShareService = nodePlanService.getShareData(map);
+        callShareService.enqueue(new Callback<ApiResult<SuperNodeModel>>() {
             @Override
             public void onResponse(Call<ApiResult<SuperNodeModel>> call, Response<ApiResult<SuperNodeModel>> response) {
                 ApiResult<SuperNodeModel> body = response.body();
@@ -126,7 +165,7 @@ public class BPNodeShareFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<SuperNodeModel>> call, Throwable t) {
-                ToastUtil.showToast(getActivity(), t.getMessage().toString(), Toast.LENGTH_SHORT);
+
             }
         });
 
@@ -146,7 +185,8 @@ public class BPNodeShareFragment extends BaseFragment {
         map.put(Constants.PATH, path);
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
 
-        nodePlanService.getShareUrl(map).enqueue(new Callback<ApiResult<ShareUrlModel>>() {
+        callShareUrl = nodePlanService.getShareUrl(map);
+        callShareUrl.enqueue(new Callback<ApiResult<ShareUrlModel>>() {
             @Override
             public void onResponse(Call<ApiResult<ShareUrlModel>> call, Response<ApiResult<ShareUrlModel>> response) {
                 ApiResult<ShareUrlModel> body = response.body();
@@ -158,51 +198,25 @@ public class BPNodeShareFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<ShareUrlModel>> call, Throwable t) {
-                ToastUtil.showToast(getActivity(), t.getMessage().toString(), Toast.LENGTH_SHORT);
+
             }
         });
 
 
     }
 
-    private void initUI() {
-        initTopBar();
-    }
 
     private void initNodeInfoUI() {
-        mNodeNameTv.setText(itemInfo.getNodeName());
-        // set node type
-        if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(itemInfo.getIdentityType())) {
-            mNodeTypeTv.setText(getContext().getResources().getString(R.string.common_node));
-
-        } else if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(itemInfo.getIdentityType())) {
-            mNodeTypeTv.setText(getContext().getResources().getString(R.string.ecological_node));
-        }
 
 
-        if (CommonUtil.isSingle(itemInfo.getNodeVote())) {
-            haveVotesNumTvHint.setText(mContext.getString(R.string.number_have_votes));
-        } else {
-            haveVotesNumTvHint.setText(mContext.getString(R.string.number_have_votes_s));
-        }
-        mHaveVotesNumTv.setText(itemInfo.getNodeVote());
 
 
-        if (CommonUtil.isSingle(itemInfo.getMyVoteCount())) {
-            supportPeopleTvHint.setText(mContext.getString(R.string.my_votes_number));
-        } else {
-            supportPeopleTvHint.setText(mContext.getString(R.string.my_votes_number_s));
-        }
-        mSupportPeopleTv.setText(itemInfo.getMyVoteCount());
-
-
+        final String nodeLogo = itemData.getNodeLogo();
         String source = itemInfo.getIntroduce().trim().toString();
         webView.loadDataWithBaseURL(null, source, "text/html", "utf-8", null);
 
-        final String nodeLogo = itemInfo.getNodeLogo();
-        Glide.with(getContext())
-                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
-                .into(mNodeIconIv);
+
+
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -220,7 +234,6 @@ public class BPNodeShareFragment extends BaseFragment {
                 }
             }
         }).start();
-        mNodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
     }
 
 
@@ -230,21 +243,7 @@ public class BPNodeShareFragment extends BaseFragment {
     }
 
 
-    private void setListener() {
-//        mShareBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                String shareStartTime = itemInfo.getShareStartTime();
-//                if (TimeUtil.judgeTime(Long.parseLong(shareStartTime))) {
-//                    CommonUtil.showMessageDialog(getContext(), R.string.share_close);
-//                } else {
-//                    showShareDialog();
-//                }
-//
-//            }
-//        });
-    }
+
 
     @SuppressLint("ResourceType")
     private void showShareDialog() {
@@ -385,7 +384,15 @@ public class BPNodeShareFragment extends BaseFragment {
         mTopBar.addRightImageButton(R.mipmap.icon_share_green, R.id.topbar_right_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (itemInfo==null) {
+                    return;
+                }
                 String shareStartTime = itemInfo.getShareStartTime();
+
+                if (TextUtils.isEmpty(shareStartTime)) {
+                    return;
+                }
                 if (TimeUtil.judgeTime(Long.parseLong(shareStartTime))) {
                     CommonUtil.showMessageDialog(getContext(), R.string.share_close);
                 } else {
@@ -417,6 +424,9 @@ public class BPNodeShareFragment extends BaseFragment {
 
     @Override
     public void onDestroyView() {
+
+        callShareService.cancel();
+        callShareUrl.cancel();
         super.onDestroyView();
         webView.destroy();
     }

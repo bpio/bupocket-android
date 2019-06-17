@@ -53,7 +53,7 @@
                 android:paddingRight="10dp"
                 android:text="@string/use_terms_checkbox_agree"
                 android:textColor="@color/app_txt_color_gray_2"
-                android:theme="@style/checkboxTheme" />
+                android:theme="@style/BPCheckboxTheme" />
 
             <TextView
                 android:id="@+id/userTermsNextBtn"

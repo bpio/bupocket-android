@@ -49,30 +49,11 @@
                         android:dividerHeight="10dp"
                         android:scrollbars="none"
                         android:fadeScrollbars="false"/>
-                    <LinearLayout
+
+
+                    <include
                         android:id="@+id/addressRecordEmptyLL"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:background="@color/app_bg_color_gray"
-                        android:orientation="vertical"
-                        android:visibility="gone">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="20dp"
-                            android:src="@mipmap/icon_no_recently_record">
-                        </ImageView>
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:textAlignment="center"
-                            android:text="@string/no_record">
-                        </TextView>
-
-                    </LinearLayout>
+                        layout="@layout/view_empty_record"/>
                 </LinearLayout>
 
                 <com.scwang.smartrefresh.layout.footer.ClassicsFooter

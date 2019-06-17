@@ -1,5 +1,7 @@
 package com.bupocket.fragment;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
@@ -14,6 +16,7 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.UserService;
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
@@ -27,7 +30,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BPHelpFeedbackFragment extends BaseFragment{
+public class BPHelpFeedbackFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
     @BindView(R.id.feedbackContentET)
@@ -44,6 +47,7 @@ public class BPHelpFeedbackFragment extends BaseFragment{
         ButterKnife.bind(this, root);
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
+
         mNextHelpFeedbackBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,6 +57,8 @@ public class BPHelpFeedbackFragment extends BaseFragment{
         buildWatcher();
         return root;
     }
+
+
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     private void buildWatcher() {
@@ -73,10 +79,10 @@ public class BPHelpFeedbackFragment extends BaseFragment{
             public void afterTextChanged(Editable s) {
                 boolean signContent = mFeedbackContentET.getText().toString().trim().length() > 0;
                 boolean signContact = mContactET.getText().toString().trim().length() > 0;
-                if(signContent && signContact){
+                if (signContent && signContact) {
                     mNextHelpFeedbackBtn.setEnabled(true);
                     mNextHelpFeedbackBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
-                }else {
+                } else {
                     mNextHelpFeedbackBtn.setEnabled(false);
                     mNextHelpFeedbackBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
                 }
@@ -96,13 +102,13 @@ public class BPHelpFeedbackFragment extends BaseFragment{
         });
     }
 
-    private void SubmitFeedback(){
+    private void SubmitFeedback() {
 
         UserService userService = RetrofitFactory.getInstance().getRetrofit().create(UserService.class);
         Map<String, Object> parmasMap = new HashMap<>();
         String content = mFeedbackContentET.getText().toString();
         String contact = mContactET.getText().toString();
-        if(content.equals("")||content == null){
+        if (content.equals("") || content == null) {
             final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                     .setTipWord(getResources().getString(R.string.content_empty_msg))
                     .create();
@@ -113,7 +119,7 @@ public class BPHelpFeedbackFragment extends BaseFragment{
                     tipDialog.dismiss();
                 }
             }, 1500);
-        }else if(contact.equals("")||contact == null){
+        } else if (contact.equals("") || contact == null) {
             final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                     .setTipWord(getResources().getString(R.string.contact_empty_msg))
                     .create();
@@ -146,9 +152,29 @@ public class BPHelpFeedbackFragment extends BaseFragment{
                     tipDialog.dismiss();
                 }
             }, 1500);
-        }else {
-            parmasMap.put("content",content);
-            parmasMap.put("contact",contact);
+        } else {
+            parmasMap.put("content", content);
+            parmasMap.put("contact", contact);
+            parmasMap.put("walletAddress", getWalletAddress());
+            parmasMap.put("osVer", "android:"+Build.VERSION.SDK.concat("/").concat(Build.DISPLAY));
+            parmasMap.put("brandName", Build.MODEL.concat("/").concat(Build.BRAND));
+
+
+            try {
+                //
+                PackageManager pm = mContext.getPackageManager();// 获得包管理器
+                PackageInfo pi = null;// 得到该应用的信息，即主Activity
+                pi = pm.getPackageInfo(mContext.getPackageName(),
+                        PackageManager.GET_ACTIVITIES);
+                if (pi != null) {
+                    String versionName = pi.versionName == null ? "null"
+                            : pi.versionName;
+                    parmasMap.put("walletVer", versionName);
+
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
 
             Call<ApiResult> call = userService.submitFeedback(parmasMap);
             call.enqueue(new Callback<ApiResult>() {

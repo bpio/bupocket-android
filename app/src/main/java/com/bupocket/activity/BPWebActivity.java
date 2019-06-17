@@ -1,20 +1,15 @@
 package com.bupocket.activity;
 
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
+import android.widget.ProgressBar;
 import com.bupocket.R;
-import com.bupocket.base.BaseFragmentActivity;
-import com.bupocket.fragment.discover.BPBannerFragment;
 import com.qmuiteam.qmui.widget.QMUITopBar;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -26,16 +21,13 @@ public class BPWebActivity extends AppCompatActivity {
     QMUITopBar mTopBar;
     @BindView(R.id.wvBanner)
     WebView wvBanner;
+    @BindView(R.id.pbWeb)
+    ProgressBar progressBar;
 
 
     private Unbinder bind;
     private String url;
 
-
-//    @Override
-//    protected int getContextViewId() {
-//        return R.id.webActivity;
-//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +42,6 @@ public class BPWebActivity extends AppCompatActivity {
         initTopBar();
         initData();
         initView();
-//        setListener();
     }
 
     private void initData() {
@@ -61,11 +52,11 @@ public class BPWebActivity extends AppCompatActivity {
         WebSettings webSettings = wvBanner.getSettings();
         //设置WebView属性，能够执行Javascript脚本
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setPluginState(WebSettings.PluginState.ON);
         //设置可以访问文件
         webSettings.setAllowFileAccess(true);
         //设置支持缩放
         webSettings.setBuiltInZoomControls(true);
-//        wvBanner.setWebViewClient(new BPBannerFragment.webViewClient());
         webSettings.setAppCacheEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.supportMultipleWindows();
@@ -78,9 +69,28 @@ public class BPWebActivity extends AppCompatActivity {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setLoadsImagesAutomatically(true);
 
-        wvBanner.setWebChromeClient(new WebChromeClient());//这行最好不要丢掉
+        //去掉缩放按钮
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            webSettings.setDisplayZoomControls(false);
+        }
 
 
+        wvBanner.setWebChromeClient(new WebChromeClient() {
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100) {
+                    progressBar.setVisibility(View.GONE);
+                } else {
+                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setProgress(newProgress);
+                }
+
+            }
+        });
+
+        wvBanner.setWebViewClient(new WebViewClient());
         wvBanner.loadUrl(url);
     }
 
@@ -94,43 +104,17 @@ public class BPWebActivity extends AppCompatActivity {
 
             }
         });
-//         mTopBar.setTitle(getResources().getString(R.string.build_node_txt));
-
-    }
-
-
-    private class webViewClient extends WebViewClient {
-//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//            view.loadurl(url)//返回true代表在当前webview中打开，返回false表示打开浏览器
-//            return super.shouldOverrideUrlLoading(view,url);       }
-//
-//        @Override
-//        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//            if(!dialog.isShowing()) {
-//                dialog.show();
-//            }
-//            super.onPageStarted(view, url, favicon);
-//        }
-//
-//        @Override
-//        public void onPageFinished(WebView view, String url) {
-//            if(dialog.isShowing()){
-//                dialog.dismiss();
-//            }
-//            super.onPageFinished(view, url);
-//        }
-    }
-
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        wvBanner.destroy();
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         finish();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        wvBanner.destroy();
     }
 }

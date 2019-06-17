@@ -8,6 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:scrollbars="none"
         android:background="@color/app_color_white_background">
 
         <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -121,6 +122,7 @@
                     android:layout_height="@dimen/bp_btn_hight"
                     android:layout_gravity="bottom"
                     android:layout_marginTop="55dp"
+                    android:layout_marginBottom="120dp"
                     android:gravity="center"
                     android:text="@string/recover_wallet_next_btn"
                     android:textColor="@color/app_btn_color_white"

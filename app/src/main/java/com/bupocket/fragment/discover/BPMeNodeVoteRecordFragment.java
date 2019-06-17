@@ -2,18 +2,15 @@ package com.bupocket.fragment.discover;
 
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.adaptor.VoteRecordAdapter;
-import com.bupocket.base.BaseFragment;
+import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.http.api.NodePlanService;
@@ -22,8 +19,6 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.MyVoteRecordModel;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.LogUtils;
-import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -34,12 +29,11 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.HashMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BPSomeOneVoteRecordFragment extends BaseFragment {
+public class BPMeNodeVoteRecordFragment extends AbsBaseFragment {
 
 
     @BindView(R.id.topbar)
@@ -48,19 +42,17 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
     LinearLayout addressRecordEmptyLL;
     @BindView(R.id.lvRefresh)
     ListView lvVoteRecord;
-    @BindView(R.id.nodeIconBgIv)
-    ImageView nodeIconBgIv;
-    @BindView(R.id.nodeIconIv)
+    @BindView(R.id.assetIconIv)
     QMUIRadiusImageView nodeIconIv;
-    @BindView(R.id.nodeIconRl)
-    RelativeLayout nodeIconRl;
     @BindView(R.id.nodeNameTv)
     TextView nodeNameTv;
     @BindView(R.id.nodeTypeTv)
     TextView nodeTypeTv;
     @BindView(R.id.haveVotesNumTv)
     TextView haveVotesNumTv;
-    @BindView(R.id.myVotesNumTv)
+    @BindView(R.id.supportPeopleTvHint)
+    TextView myVotesNunTvHint;
+    @BindView(R.id.supportPeopleTv)
     TextView myVotesNumTv;
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
@@ -74,26 +66,28 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
     QMUIEmptyView qmuiEmptyView;
 
 
-    private SharedPreferencesHelper sharedPreferencesHelper;
-    private String currentIdentityWalletAddress;
     private VoteRecordAdapter voteRecordAdapter;
+    private Call<ApiResult<MyVoteRecordModel>> serviceMyVoteList;
+
 
     @Override
-    protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_node_someone_vote_record, null);
-        ButterKnife.bind(this, root);
-        init();
-        return root;
+    protected int getLayoutView() {
+        return R.layout.fragment_node_me_vote_record;
     }
 
-    private void init() {
-        initUI();
-        initData();
-        setListener();
-    }
-
-    private void setListener() {
+    @Override
+    protected void initView() {
+        initTopBar();
+        voteRecordAdapter = new VoteRecordAdapter(getContext());
+        voteRecordAdapter.setAdapterType(VoteRecordAdapter.SOME_RECORD);
+        lvVoteRecord.setAdapter(voteRecordAdapter);
+        qmuiEmptyView.show();
         refreshLayout.setEnableLoadMore(false);
+    }
+
+    @Override
+    protected void setListeners() {
+
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -106,7 +100,7 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
         copyCommandBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refreshLayout.autoRefresh(0,200,1,false);
+                refreshLayout.autoRefresh(0, 200, 1, false);
             }
         });
 
@@ -117,17 +111,25 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
     }
 
 
-    private void initData() {
+    @Override
+    protected void initData() {
 
         SuperNodeModel itemNodeInfo = getArguments().getParcelable("itemNodeInfo");
 
         nodeNameTv.setText(itemNodeInfo.getNodeName());
         if (CommonUtil.isSingle(itemNodeInfo.getNodeVote())) {
             haveVotesNumTvHint.setText(getString(R.string.number_have_votes));
-        }else{
+        } else {
             haveVotesNumTvHint.setText(getString(R.string.number_have_votes_s));
         }
         haveVotesNumTv.setText(itemNodeInfo.getNodeVote());
+
+
+        if (CommonUtil.isSingle(itemNodeInfo.getMyVoteCount())) {
+            myVotesNunTvHint.setText(mContext.getString(R.string.my_votes_number));
+        } else {
+            myVotesNunTvHint.setText(mContext.getString(R.string.my_votes_number_s));
+        }
         myVotesNumTv.setText(itemNodeInfo.getMyVoteCount());
 
         String identityType = itemNodeInfo.getIdentityType();
@@ -142,22 +144,16 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
         Glide.with(getContext())
                 .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
                 .into(nodeIconIv);
-        nodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
 
-        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress", "").toString();
-        if (CommonUtil.isNull(currentIdentityWalletAddress) || currentIdentityWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString())) {
-            currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
-        }
 
         HashMap<String, Object> listReq = new HashMap<>();
-        listReq.put(Constants.ADDRESS, currentIdentityWalletAddress);
+        listReq.put(Constants.ADDRESS, getWalletAddress());
         listReq.put(Constants.NODE_ID, itemNodeInfo.getNodeId());
 
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
 
-        Call<ApiResult<MyVoteRecordModel>> superNodeList = nodePlanService.getMyVoteList(listReq);
-        superNodeList.enqueue(new Callback<ApiResult<MyVoteRecordModel>>() {
+        serviceMyVoteList = nodePlanService.getMyVoteList(listReq);
+        serviceMyVoteList.enqueue(new Callback<ApiResult<MyVoteRecordModel>>() {
 
             @Override
             public void onResponse(Call<ApiResult<MyVoteRecordModel>> call, Response<ApiResult<MyVoteRecordModel>> response) {
@@ -167,22 +163,27 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
                 if (body == null | body.getData() == null |
                         body.getData().getList() == null | body.getData().getList().size() == 0) {
                     addressRecordEmptyLL.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     MyVoteRecordModel data = body.getData();
                     voteRecordAdapter.setNewData(data.getList());
                     voteRecordAdapter.notifyDataSetChanged();
                 }
                 refreshLayout.finishRefresh();
-                qmuiEmptyView.show(null,null);
+                qmuiEmptyView.show(null, null);
             }
 
             @Override
             public void onFailure(Call<ApiResult<MyVoteRecordModel>> call, Throwable t) {
+                if (call.isCanceled()) {
+                    return;
+                }
 
-                llLoadFailed.setVisibility(View.VISIBLE);
+                if (llLoadFailed != null) {
+                    llLoadFailed.setVisibility(View.VISIBLE);
+                }
 
                 refreshLayout.finishRefresh();
-                qmuiEmptyView.show(null,null);
+                qmuiEmptyView.show(null, null);
 
             }
         });
@@ -190,13 +191,6 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
 
     }
 
-    private void initUI() {
-        initTopBar();
-        voteRecordAdapter = new VoteRecordAdapter(getContext());
-        voteRecordAdapter.setAdapterType(VoteRecordAdapter.SOME_RECORD);
-        lvVoteRecord.setAdapter(voteRecordAdapter);
-        qmuiEmptyView.show();
-    }
 
     private void initTopBar() {
         mTopBar.setBackgroundDividerEnabled(false);
@@ -210,5 +204,9 @@ public class BPSomeOneVoteRecordFragment extends BaseFragment {
     }
 
 
-
+    @Override
+    public void onDestroy() {
+       serviceMyVoteList.cancel();
+        super.onDestroy();
+    }
 }

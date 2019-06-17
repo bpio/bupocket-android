@@ -62,21 +62,21 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/tv_com_gray66_style"
+                style="@style/BPTextTransSuccess"
                 android:text="@string/transaction_success_title" />
 
             <TextView
-                style="@style/tv_node_build_black_style3"
+                style="@style/BPTextBuildGray1"
                 android:layout_marginTop="12dp"
                 android:text="@string/transaction_success_title_info" />
 
             <TextView
-                style="@style/tv_com_gray66_style"
+                style="@style/BPTextTransSuccess"
                 android:layout_marginTop="20dp"
                 android:text="@string/transaction_process_title" />/>
 
             <TextView
-                style="@style/tv_node_build_black_style3"
+                style="@style/BPTextBuildGray1"
                 android:layout_height="72dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
@@ -85,7 +85,7 @@
 
 
             <TextView
-                style="@style/tv_com_gray66_style"
+                style="@style/BPTextTransSuccess"
                 android:text="@string/transaction_refresh_title" />/>
 
 
@@ -94,7 +94,7 @@
     </LinearLayout>
 
     <TextView
-        style="@style/tv_node_build_black_style"
+        style="@style/BPTextBuildHeadGray"
         android:layout_marginLeft="13dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="13dp"

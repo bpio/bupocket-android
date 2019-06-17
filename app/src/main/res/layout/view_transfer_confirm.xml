@@ -23,33 +23,30 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                >
+                android:gravity="center_vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/confirm_transfer_title_txt"
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp"
+                    android:text="@string/confirm_transfer_title_txt"
                     android:textColor="@color/app_txt_color_gray_2"
                     android:textSize="16sp" />
 
                 <ImageView
-                    android:layout_centerVertical="true"
                     android:id="@+id/cancelBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:padding="5dp"
                     android:src="@mipmap/icon_cancel" />
             </RelativeLayout>
 
             <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-
-                android:background="@drawable/bg_solid_line" />
+                style="@style/BPDivideLine1"
+                android:layout_alignTop="@+id/sendConfirmBtnRl" />
 
 
             <TextView
@@ -126,14 +123,12 @@
             android:layout_marginLeft="18dp"
             android:layout_marginRight="18dp"
             android:orientation="vertical"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-               >
+                android:gravity="center_vertical">
 
                 <ImageView
                     android:id="@+id/goBackBtn"
@@ -149,9 +144,9 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="7dp"
                     android:layout_toRightOf="@id/goBackBtn"
-                    android:text="@string/details"
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp"
+                    android:text="@string/details"
                     android:textColor="@color/app_txt_color_gray_2"
                     android:textSize="16sp"
 
@@ -167,10 +162,9 @@
                     android:src="@mipmap/icon_cancel" />
             </RelativeLayout>
 
+
             <View
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:background="@drawable/bg_solid_line" />
+               style="@style/BPDivideLine1"/>
 
 
             <ScrollView
@@ -277,15 +271,14 @@
 
         </LinearLayout>
 
+
         <View
             android:id="@+id/v_gray_line"
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_alignTop="@+id/sendConfirmBtnRl"
+            style="@style/BPDivideLine1"
             android:layout_marginLeft="18dp"
             android:layout_marginRight="18dp"
             android:layout_marginBottom="15dp"
-            android:background="@drawable/bg_solid_line" />
+            android:layout_alignTop="@+id/sendConfirmBtnRl" />
 
         <RelativeLayout
             android:id="@+id/sendConfirmBtnRl"

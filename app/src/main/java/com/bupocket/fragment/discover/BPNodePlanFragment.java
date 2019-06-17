@@ -4,15 +4,11 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -27,9 +23,9 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.adaptor.SuperNodeAdapter;
-import com.bupocket.base.BaseFragment;
+import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
-import com.bupocket.common.SingatureListener;
+import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.SuperNodeStatusEnum;
 import com.bupocket.enums.SuperNodeTypeEnum;
@@ -37,10 +33,8 @@ import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.SuperNodeDto;
-import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.wallet.Wallet;
@@ -52,7 +46,6 @@ import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -67,7 +60,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.bumo.model.response.TransactionBuildBlobResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -76,7 +68,7 @@ import retrofit2.Response;
 import static android.content.Context.INPUT_METHOD_SERVICE;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-public class BPNodePlanFragment extends BaseFragment {
+public class BPNodePlanFragment extends AbsBaseFragment {
 
 
     @BindView(R.id.topbar)
@@ -113,44 +105,48 @@ public class BPNodePlanFragment extends BaseFragment {
     private ArrayList<SuperNodeModel> myVoteInfoList;
     private ArrayList<SuperNodeModel> nodeList;
     private int mBaseTranslationY;
-    private TextView mTopBarTitle;
     private String metaData;
+    private Call<ApiResult<SuperNodeDto>> serviceSuperNode;
+
 
     @Override
-    protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_node_plan, null);
-        ButterKnife.bind(this, root);
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
-        init();
-        return root;
+    protected int getLayoutView() {
+        return R.layout.fragment_node_plan;
     }
 
-    private void init() {
-        initUI();
-        initData();
-        setListener();
+    @Override
+    protected void initView() {
+//        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        initTopBar();
+        initListView();
+        setEmpty(true);
     }
 
-    private void setListener() {
+    @Override
+    protected void initData() {
+        if (myVoteInfoList == null) {
+            myVoteInfoList = new ArrayList<>();
+        }
+        if (nodeList == null) {
+            nodeList = new ArrayList<>();
+        }
+
+        currentWalletAddress = getWalletAddress();
+        lvPlan.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                reqAllNodeData();
+            }
+        }, 200);
+    }
+
+
+    @Override
+    protected void setListeners() {
         myNodeCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                if (isChecked) {
-                    ArrayList<SuperNodeModel> superNodeModels = myVoteInfoList((ArrayList<SuperNodeModel>) superNodeAdapter.getData());
-                    setEmpty(superNodeModels.size() == 0);
-                    superNodeAdapter.setNewData(superNodeModels);
-                } else {
-                    setEmpty(nodeList.size() == 0);
-                    if (etNodeSearch.getText().toString().isEmpty()) {
-                        superNodeAdapter.setNewData(nodeList);
-                    } else {
-                        searchNode(etNodeSearch.getText().toString());
-                    }
-
-                }
-
-                superNodeAdapter.notifyDataSetChanged();
+                notifyData();
             }
         });
 
@@ -167,7 +163,7 @@ public class BPNodePlanFragment extends BaseFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                searchNode(s.toString());
+                notifyData();
             }
         });
 
@@ -188,54 +184,26 @@ public class BPNodePlanFragment extends BaseFragment {
         superNodeAdapter.setOnItemBtnListener(new SuperNodeAdapter.OnItemBtnListener() {
             @Override
             public void onClick(int position, int btn) {
-
                 SuperNodeModel superNodeModel = superNodeAdapter.getItem(position);
-//                LogUtils.e("position=" + position + "\n" + btn);
                 switch (btn) {
                     case R.id.revokeVoteBtn:
-                        if ("0".equals(superNodeModel.getMyVoteCount())) {
-                            CommonUtil.showMessageDialog(getContext(), getString(R.string.revoke_no_vote_error_message_txt));
-                        } else {
-                            showRevokeVoteDialog(superNodeModel);
-                        }
+                        GoRevokeVote(superNodeModel);
                         break;
                     case R.id.shareBtn:
-                        String status = superNodeModel.getStatus();
-                        if (SuperNodeStatusEnum.RUNNING.getCode().equals(status)) {
-
-                            CommonUtil.showMessageDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
-                        } else if (SuperNodeStatusEnum.FAILED.getCode().equals(status)) {
-
-                            CommonUtil.showMessageDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.FAILED.getNameRes())));
-
-                        } else {
-                            Bundle args = new Bundle();
-                            args.putParcelable("itemInfo", superNodeModel);
-                            BPNodeShareFragment bpNodeShareFragment = new BPNodeShareFragment();
-                            bpNodeShareFragment.setArguments(args);
-                            startFragment(bpNodeShareFragment);
-                        }
-
-
+                        GoShareVote(superNodeModel);
                         break;
                     case R.id.voteRecordBtn:
-                        BPSomeOneVoteRecordFragment fragment = new BPSomeOneVoteRecordFragment();
-                        Bundle args1 = new Bundle();
-                        args1.putParcelable("itemNodeInfo", superNodeModel);
-                        fragment.setArguments(args1);
-
-                        startFragment(fragment);
+                        GoVoteRecord(superNodeModel);
                         break;
                 }
             }
         });
 
-        refreshLayout.setEnableLoadMore(false);
+
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                refreshData();
-
+                reqAllNodeData();
             }
         });
 
@@ -254,7 +222,7 @@ public class BPNodePlanFragment extends BaseFragment {
         copyCommandBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refreshLayout.autoRefresh(0,200,1,false);
+                refreshLayout.autoRefresh(0, 200, 1, false);
             }
         });
 
@@ -300,16 +268,74 @@ public class BPNodePlanFragment extends BaseFragment {
                         showToolbar();
                     }
                 } else {
-                    // Even if onScrollChanged occurs without scrollY changing, toolbar should be adjusted
                     if (!toolbarIsShown() && !toolbarIsHidden()) {
-                        // Toolbar is moving but doesn't know which to move:
-                        // you can change this to hideToolbar()
                         showToolbar();
                     }
                 }
             }
         });
     }
+
+    private void notifyData() {
+        ArrayList<SuperNodeModel> notifyNodeList = new ArrayList<>();
+        if (myNodeCB.isChecked() && !etNodeSearch.getText().toString().isEmpty()) {
+            notifyNodeList = searchData(myVoteInfoList);
+        } else if (myNodeCB.isChecked()) {
+            notifyNodeList = myVoteInfoList;
+        } else if (!etNodeSearch.getText().toString().isEmpty()) {
+            notifyNodeList = searchData(nodeList);
+        } else {
+            notifyNodeList = nodeList;
+        }
+        setEmpty(notifyNodeList.size() == 0);
+        superNodeAdapter.setNewData(notifyNodeList);
+    }
+
+    private ArrayList<SuperNodeModel> searchData(ArrayList<SuperNodeModel> sourceData) {
+        ArrayList<SuperNodeModel> superNodeModels = new ArrayList<>();
+        String inputSearch = etNodeSearch.getText().toString();
+        Pattern pattern = Pattern.compile(inputSearch);
+        for (int i = 0; i < sourceData.size(); i++) {
+            Matcher matcher = pattern.matcher(sourceData.get(i).getNodeName());
+            if (matcher.find()) {
+                superNodeModels.add(sourceData.get(i));
+            }
+        }
+        return superNodeModels;
+    }
+
+    private void GoVoteRecord(SuperNodeModel superNodeModel) {
+        BPMeNodeVoteRecordFragment fragment = new BPMeNodeVoteRecordFragment();
+        Bundle args1 = new Bundle();
+        args1.putParcelable("itemNodeInfo", superNodeModel);
+        fragment.setArguments(args1);
+        startFragment(fragment);
+    }
+
+    private void GoShareVote(SuperNodeModel superNodeModel) {
+        String status = superNodeModel.getStatus();
+        if (SuperNodeStatusEnum.RUNNING.getCode().equals(status)) {
+            CommonUtil.showMessageDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
+        } else if (SuperNodeStatusEnum.FAILED.getCode().equals(status)) {
+            CommonUtil.showMessageDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.FAILED.getNameRes())));
+        } else {
+            Bundle args = new Bundle();
+            args.putParcelable("itemInfo", superNodeModel);
+            BPNodeShareFragment bpNodeShareFragment = new BPNodeShareFragment();
+            bpNodeShareFragment.setArguments(args);
+            startFragment(bpNodeShareFragment);
+        }
+    }
+
+    private void GoRevokeVote(SuperNodeModel superNodeModel) {
+        if ("0".equals(superNodeModel.getMyVoteCount())) {
+            CommonUtil.showMessageDialog(getContext(), getString(R.string.revoke_no_vote_error_message_txt));
+        } else {
+            showRevokeVoteDialog(superNodeModel);
+        }
+    }
+
+
     private boolean toolbarIsShown() {
         return ViewHelper.getTranslationY(llHeadView) == 0;
     }
@@ -325,8 +351,8 @@ public class BPNodePlanFragment extends BaseFragment {
             ViewPropertyAnimator.animate(llHeadView).translationY(0).setDuration(200).start();
         }
         setMargin(llHeadView.getHeight());
-//        mTopBar.setTitle("");
-        ViewPropertyAnimator.animate(mTopBarTitle).alpha(0).setDuration(200).start();
+        mTopBar.setTitle("");
+
     }
 
     private void hideToolbar() {
@@ -336,14 +362,13 @@ public class BPNodePlanFragment extends BaseFragment {
             ViewPropertyAnimator.animate(llHeadView).cancel();
             ViewPropertyAnimator.animate(llHeadView).translationY(-toolbarHeight).setDuration(200).start();
         }
-        setMargin(llHeadView.getHeight()-tvTitle.getHeight());
-//        mTopBar.setTitle(R.string.run_for_node_txt);
+        setMargin(llHeadView.getHeight() - tvTitle.getHeight());
+        mTopBar.setTitle(R.string.run_for_node_txt);
 
-        ViewPropertyAnimator.animate(mTopBarTitle).alpha(100).setDuration(200).start();
     }
 
 
-    private void setMargin(int margin){
+    private void setMargin(int margin) {
         FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) refreshLayout.getLayoutParams();
         lp.setMargins(0, margin, 0, 0);
         refreshLayout.getLayout().setLayoutParams(lp);
@@ -367,9 +392,6 @@ public class BPNodePlanFragment extends BaseFragment {
         }
     }
 
-    private void refreshData() {
-        getAllNode();
-    }
 
     private void showRevokeVoteDialog(SuperNodeModel itemInfo) {
         @SuppressLint("StringFormatMatches")
@@ -398,20 +420,20 @@ public class BPNodePlanFragment extends BaseFragment {
         String transactionParams = input.toJSONString();
 
         TransferUtils.confirmTxSheet(mContext, getWalletAddress(), destAddress,
-                transactionAmount, Constants.NODE_REVOKE_FEE,
+                transactionAmount, Constants.NODE_COMMON_FEE,
                 transactionDetail, transactionParams, new TransferUtils.TransferListener() {
-            @Override
-            public void confirm() {
-                confirmUnVote(input, nodeId);
-            }
-        });
+                    @Override
+                    public void confirm() {
+                        confirmUnVote(input, nodeId);
+                    }
+                });
     }
 
     private void confirmUnVote(final JSONObject input, final String nodeId) {
 
         final String amount = "0";
 
-        getSignatureInfo(new SingatureListener() {
+        getSignatureInfo(new SignatureListener() {
             @Override
             public void success(final String privateKey) {
 
@@ -429,7 +451,7 @@ public class BPNodePlanFragment extends BaseFragment {
                     @Override
                     public void run() {
                         try {
-                            final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input.toJSONString(), currentWalletAddress, String.valueOf(Constants.NODE_REVOKE_FEE), Constants.CONTRACT_ADDRESS,metaData);
+                            final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input.toJSONString(), currentWalletAddress, String.valueOf(Constants.NODE_COMMON_FEE), Constants.CONTRACT_ADDRESS, metaData);
                             String txHash = buildBlobResponse.getResult().getHash();
                             NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
                             Call<ApiResult> call;
@@ -445,7 +467,7 @@ public class BPNodePlanFragment extends BaseFragment {
                                     txSendingTipDialog.dismiss();
                                     ApiResult respDto = response.body();
                                     if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
-                                        submitTransactionBase(privateKey,buildBlobResponse);
+                                        submitTransactionBase(privateKey, buildBlobResponse);
                                     } else {
                                         String msg = CommonUtil.byCodeToMsg(mContext, respDto.getErrCode());
                                         if (!msg.isEmpty()) {
@@ -485,102 +507,44 @@ public class BPNodePlanFragment extends BaseFragment {
         }
     }
 
-    private ArrayList<SuperNodeModel> searchNode(String s) {
 
+    private void reqAllNodeData() {
 
-        ArrayList<SuperNodeModel> superNodeModels = new ArrayList<>();
-        if (nodeList == null) {
-            return superNodeModels;
-        }
-
-        ArrayList<SuperNodeModel> sourceData = new ArrayList<>();
-        if (myNodeCB.isChecked()) {
-            sourceData.addAll(myVoteInfoList);
-        } else {
-            sourceData.addAll(nodeList);
-        }
-        Pattern pattern = Pattern.compile(s);
-        for (int i = 0; i < sourceData.size(); i++) {
-            Matcher matcher = pattern.matcher(sourceData.get(i).getNodeName());
-            if (matcher.find()) {
-                superNodeModels.add(sourceData.get(i));
-            }
-        }
-        superNodeAdapter.setNewData(superNodeModels);
-        superNodeAdapter.notifyDataSetChanged();
-        setEmpty(superNodeModels.size() == 0);
-        return superNodeModels;
-    }
-
-    private void initData() {
-        if (myVoteInfoList == null) {
-            myVoteInfoList = new ArrayList<>();
-        }
-        if (nodeList == null) {
-            nodeList = new ArrayList<>();
-        }
-
-        currentWalletAddress = getWalletAddress();
-        lvPlan.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getAllNode();
-            }
-        }, 200);
-    }
-
-    private void getAllNode() {
-
-        HashMap<String, Object> listReq = null;
-        if (listReq == null) {
-            listReq = new HashMap<>();
-        }
+        HashMap<String, Object> listReq = new HashMap<>();
         listReq.put(Constants.ADDRESS, currentWalletAddress);
 
-
-        Call<ApiResult<SuperNodeDto>> superNodeList = null;
-
-        if (superNodeList == null) {
-            NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
-            superNodeList = nodePlanService.getSuperNodeList(listReq);
-        }
-        superNodeList.enqueue(new Callback<ApiResult<SuperNodeDto>>() {
+        NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
+        serviceSuperNode = nodePlanService.getSuperNodeList(listReq);
+        serviceSuperNode.enqueue(new Callback<ApiResult<SuperNodeDto>>() {
 
             @Override
             public void onResponse(Call<ApiResult<SuperNodeDto>> call, Response<ApiResult<SuperNodeDto>> response) {
 
-                refreshLayout.finishRefresh();
                 ApiResult<SuperNodeDto> body = response.body();
-                llLoadFailed.setVisibility(View.GONE);
+
                 if (body == null) {
                     return;
                 }
                 nodeList = body.getData().getNodeList();
-                if (nodeList != null) {
-                    setEmpty(nodeList.size() == 0);
-                    myVoteInfoList = myVoteInfoList(nodeList);
-                    if (myNodeCB.isChecked()) {
-                        superNodeAdapter.setNewData(myVoteInfoList);
-                    } else {
-                        superNodeAdapter.setNewData(nodeList);
-                    }
-                    superNodeAdapter.notifyDataSetChanged();
+                myVoteInfoList = myVoteInfoList(nodeList);
 
-
-                } else {
-                    setEmpty(true);
-                }
-
-
+                notifyData();
+                showToolbar();
+                llLoadFailed.setVisibility(View.GONE);
                 refreshLayout.finishRefresh();
             }
 
             @Override
             public void onFailure(Call<ApiResult<SuperNodeDto>> call, Throwable t) {
-                refreshLayout.finishRefresh();
+                if (call.isCanceled()) {
+                    return;
+                }
+                myVoteInfoList.clear();
+                nodeList.clear();
                 llLoadFailed.setVisibility(View.VISIBLE);
-
                 refreshLayout.finishRefresh();
+                setEmpty(false);
+                superNodeAdapter.setNewData(new ArrayList<SuperNodeModel>());
 
             }
         });
@@ -609,15 +573,11 @@ public class BPNodePlanFragment extends BaseFragment {
         return superNodeModels;
     }
 
-    private void initUI() {
-        initTopBar();
-        initListView();
-        setEmpty(true);
-    }
 
     private void initListView() {
         superNodeAdapter = new SuperNodeAdapter(this.getContext());
         lvPlan.setAdapter(superNodeAdapter);
+        refreshLayout.setEnableLoadMore(false);
     }
 
     private void initTopBar() {
@@ -634,8 +594,22 @@ public class BPNodePlanFragment extends BaseFragment {
                 startFragment(new BPVoteRecordFragment());
             }
         });
-        mTopBarTitle = mTopBar.setTitle(R.string.run_for_node_txt);
-        ViewPropertyAnimator.animate(mTopBarTitle).alpha(0).setDuration(10).start();
     }
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        serviceSuperNode.cancel();
+    }
+
+    @Override
+    public void onDestroy() {
+
+        super.onDestroy();
+
+        myVoteInfoList = null;
+        nodeList = null;
+        currentWalletAddress = null;
+    }
 }

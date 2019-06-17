@@ -29,7 +29,7 @@ import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class BPProfileFragment extends BaseFragment{
+public class BPProfileHomeFragment extends BaseFragment{
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String currentAccNick;
 

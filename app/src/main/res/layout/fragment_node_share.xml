@@ -13,140 +13,11 @@
         android:background="@color/app_bg_color_gray"
         android:orientation="vertical">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingBottom="5dp"
-            android:background="@color/app_color_white">
-
-            <RelativeLayout
-                android:id="@+id/nodeIconRl"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="12.5dp"
-                android:layout_marginTop="15dp">
-
-                <ImageView
-                    android:id="@+id/nodeIconBgIv"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_centerInParent="true"
-                    android:background="@mipmap/icon_token_bg_list" />
-
-                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                    android:id="@+id/nodeIconIv"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerInParent="true"
-                    app:qmui_border_width="0dp"
-                    app:qmui_is_circle="true" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/rl_node_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginRight="13dp"
-                android:layout_toRightOf="@+id/nodeIconRl"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/nodeNameTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:textSize="15sp"
-                    android:textStyle="bold"
-                    tools:text="股神股神 股神股神 股神股神 股sd神股神" />
-
-                <TextView
-                    android:id="@+id/nodeTypeTv"
-                    android:layout_width="wrap_content"
-                    android:layout_toRightOf="@+id/nodeNameTv"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/shape_corner_bg_gray"
-                    android:gravity="center"
-                    android:padding="3dp"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="#B2B2B2"
-                    android:textSize="11sp"
-                    tools:text="共识节点" />
-
-            </RelativeLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/rl_node_name"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="5dp"
-                android:layout_toRightOf="@+id/nodeIconRl">
-
-                <LinearLayout
-                    android:id="@+id/haveVotesNumLl"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/haveVotesNumTvHint"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/multiline_edit_hint_color"
-                        android:textSize="12sp"
-                        tools:text="@string/number_have_votes" />
-
-                    <TextView
-                        android:id="@+id/haveVotesNumTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
-                        android:textColor="@color/app_txt_color_gray_2"
-                        android:textSize="14sp"
-                        tools:text="7833993" />
 
 
-                </LinearLayout>
+        <include
+            layout="@layout/view_node_detail"/>
 
-                <LinearLayout
-                    android:id="@+id/myVotesNumLl"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginTop="0dp"
-                    android:layout_toRightOf="@+id/haveVotesNumLl"
-                    android:orientation="horizontal">
-
-
-                    <TextView
-                        android:id="@+id/supportPeopleTvHint"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/multiline_edit_hint_color"
-                        android:textSize="12sp"
-                        tools:text="@string/my_votes_number" />
-
-                    <TextView
-                        android:id="@+id/supportPeopleTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="6dp"
-                        android:textColor="@color/app_txt_color_gray_2"
-                        android:textSize="14sp"
-                        tools:text="7833993" />
-
-
-                </LinearLayout>
-            </LinearLayout>
-
-        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -166,7 +37,7 @@
             <WebView
                 android:id="@+id/wbShare"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/shape_corner"

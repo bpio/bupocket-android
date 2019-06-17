@@ -9,13 +9,13 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/qmui_topbar_height"
         android:background="@color/app_color_white_background"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="?attr/qmui_topbar_height"
             android:background="@color/app_color_white_background"
             android:orientation="vertical">
 
@@ -342,6 +342,7 @@
                         android:enabled="false"
                         android:focusable="true"
                         android:gravity="center"
+
                         android:text="@string/send_form_next_btn_txt"
                         android:textColor="@color/app_color_font"
                         android:textSize="@dimen/bp_btn_text_size"

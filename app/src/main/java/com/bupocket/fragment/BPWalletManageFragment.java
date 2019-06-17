@@ -22,6 +22,7 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -195,11 +196,18 @@ public class BPWalletManageFragment extends BaseFragment {
                                     String bpData = getAccountBPData();
                                     keystoreStr = Wallet.getInstance().exportKeyStore(password, bpData, walletAddress);
                                     exportingTipDialog.dismiss();
-                                    Bundle argz = new Bundle();
-                                    argz.putString("keystoreStr", keystoreStr);
-                                    BPWalletExportKeystoreFragment bpWalletExportKeystoreFragment = new BPWalletExportKeystoreFragment();
-                                    bpWalletExportKeystoreFragment.setArguments(argz);
-                                    startFragment(bpWalletExportKeystoreFragment);
+
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Bundle argz = new Bundle();
+                                            argz.putString("keystoreStr", keystoreStr);
+                                            BPWalletExportKeystoreFragment bpWalletExportKeystoreFragment = new BPWalletExportKeystoreFragment();
+                                            bpWalletExportKeystoreFragment.setArguments(argz);
+                                            startFragment(bpWalletExportKeystoreFragment);
+                                        }
+                                    });
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     Looper.prepare();
@@ -267,17 +275,24 @@ public class BPWalletManageFragment extends BaseFragment {
                                 try {
                                     privateKeyStr = Wallet.getInstance().exportPrivateKey(password, bpData, walletAddress);
                                     exportingTipDialog.dismiss();
-                                    final Bundle argz = new Bundle();
-                                    argz.putString("address", walletAddress);
-                                    argz.putString("privateKey", privateKeyStr);
+
                                     getActivity().runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            BPWalletExportPrivateFragment bpWalletExportPrivateFragment = new BPWalletExportPrivateFragment();
-                                            bpWalletExportPrivateFragment.setArguments(argz);
-                                            startFragment(bpWalletExportPrivateFragment);
+                                            final Bundle argz = new Bundle();
+                                            argz.putString("address", walletAddress);
+                                            argz.putString("privateKey", privateKeyStr);
+                                            getActivity().runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    BPWalletExportPrivateFragment bpWalletExportPrivateFragment = new BPWalletExportPrivateFragment();
+                                                    bpWalletExportPrivateFragment.setArguments(argz);
+                                                    startFragment(bpWalletExportPrivateFragment);
+                                                }
+                                            });
                                         }
                                     });
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     Looper.prepare();
@@ -438,11 +453,20 @@ public class BPWalletManageFragment extends BaseFragment {
                             public void run() {
                                 String ciphertextSkeyData = getSkeyStr();
                                 try {
+//                                    LogUtils.e("skeyByte"+password+"\n"+ciphertextSkeyData);
                                     byte[] skeyByte = Wallet.getInstance().getSkey(password, ciphertextSkeyData);
+//                                    LogUtils.e("skeyByte"+skeyByte);
                                     mnemonicCodeList = new MnemonicCode().toMnemonic(skeyByte);
                                     tipDialog.dismiss();
 
-                                    go2BPCreateWalletShowMneonicCodeFragment();
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            go2BPCreateWalletShowMneonicCodeFragment();
+                                        }
+                                    });
+
+
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                     Looper.prepare();
