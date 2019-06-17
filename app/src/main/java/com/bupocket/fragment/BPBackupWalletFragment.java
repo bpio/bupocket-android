@@ -2,19 +2,21 @@ package com.bupocket.fragment;
 
 import android.os.Bundle;
 import android.os.Looper;
-import android.view.LayoutInflater;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bupocket.R;
-import com.bupocket.base.BaseFragment;
+import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -25,25 +27,63 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
-public class BPBackupWalletFragment extends BaseFragment {
+public class BPBackupWalletFragment extends AbsBaseFragment {
     @BindView(R.id.backupWalletBtn)
     QMUIRoundButton mBackupWalletBtn;
     @BindView(R.id.skipBackupBtn)
     QMUIRoundButton mSkipBackupBtn;
+    @BindView(R.id.topbar)
+    QMUITopBarLayout mTopBar;
 
     private List<String> mnemonicCodeList;
     private SharedPreferencesHelper sharedPreferencesHelper;
 
     private long exitTime = 0;
-    @Override
-    protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_backup_wallet, null);
-        ButterKnife.bind(this, root);
-        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
-        initData();
 
+
+    @Override
+    protected int getLayoutView() {
+        return R.layout.fragment_backup_wallet;
+    }
+
+    @Override
+    protected void initView() {
+        QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
+        initTopBar();
+    }
+
+    private void initTopBar() {
+
+        mTopBar.setBackgroundDividerEnabled(false);
+//        mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                popBackStack();
+//            }
+//        });
+        mTopBar.setTitle(R.string.backup_wallet_btn_txt);
+        mTopBar.addRightTextButton(R.string.skip_backup_mneonic_btn_code, R.id.skipBackupBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sharedPreferencesHelper.put("isFirstCreateWallet", "0");
+                startFragment(new HomeFragment());
+            }
+        });
+        Button skipBackuoBtn = mTopBar.findViewById(R.id.skipBackupBtn);
+        skipBackuoBtn.setTextColor(ContextCompat.getColor(getContext(),R.color.app_color_main));
+    }
+
+
+    public void initData(){
+        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+        if(getArguments() != null){
+            mnemonicCodeList = getArguments().getStringArrayList("mneonicCodeList");
+        }
+    }
+
+    @Override
+    protected void setListeners() {
         mBackupWalletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,22 +146,6 @@ public class BPBackupWalletFragment extends BaseFragment {
                 }
             }
         });
-
-        mSkipBackupBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sharedPreferencesHelper.put("isFirstCreateWallet", "0");
-                startFragment(new HomeFragment());
-            }
-        });
-        return root;
-    }
-
-    private void initData(){
-        sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        if(getArguments() != null){
-            mnemonicCodeList = getArguments().getStringArrayList("mneonicCodeList");
-        }
     }
 
     private String getSkeyStr(){
@@ -136,6 +160,7 @@ public class BPBackupWalletFragment extends BaseFragment {
         startFragment(createWalletShowMneonicCodeFragment);
     }
 
+
     public void onBackPressed() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {
             Toast.makeText(getContext(), getResources().getText(R.string.next_key_down_err), Toast.LENGTH_SHORT).show();
@@ -145,4 +170,5 @@ public class BPBackupWalletFragment extends BaseFragment {
         }
 
     }
+
 }

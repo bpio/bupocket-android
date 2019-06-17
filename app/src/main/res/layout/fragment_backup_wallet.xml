@@ -5,98 +5,109 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/qmui_config_color_white"
-    android:orientation="vertical"
-    android:padding="@dimen/view_padding">
+    android:orientation="vertical">
 
-    <TextView
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="28dp"
-        android:layout_marginTop="70dp"
-        android:text="@string/view_title_backup_wallet"
-        android:paddingLeft="0dp"
-        android:theme="@style/BPViewTitle" />
+        android:layout_height="?attr/qmui_topbar_height"
+        android:fitsSystemWindows="true" />
     <View
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1.5"
-        />
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="TODO"
-        android:src="@mipmap/icon_backup_wallet" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="30dp"
-        android:gravity="center"
-        android:text="@string/backup_wallet_txt1"
-        android:textColor="@color/app_txt_color_gray_2"
-        android:textSize="15sp" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:gravity="center"
-        android:text="@string/backup_wallet_txt2"
-        android:textColor="@color/app_txt_color_gray"
-        android:textSize="14sp" />
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_height="0.5dp"
+        android:background="@color/gray_line"
         />
 
 
-    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-        android:id="@+id/backupWalletBtn"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_centerInParent="true"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:text="@string/backup_wallet_btn_txt"
-        android:textColor="@color/app_color_font"
-        android:textSize="18sp"
-        app:qmui_backgroundColor="@color/app_color_main"
-        app:qmui_borderColor="@color/app_color_main"
-        app:qmui_radius="5dp" />
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/BPTextViewCreateWallet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:text="@string/tv_backup_hint" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:contentDescription="TODO"
+                android:src="@mipmap/icon_backup_wallet" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="40dp"
+                android:layout_marginRight="30dp"
+                android:text="@string/backup_wallet_care_three"
+                android:textColor="@color/app_color_black"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="25dp"
+                android:lineSpacingMultiplier="1.5"
+                android:text="@string/backup_wallet_care_three_info"
+                android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="13sp" />
 
 
-    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-        android:id="@+id/skipBackupBtn"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_centerInParent="true"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/no_backup_mneonic_btn_code"
-        android:textColor="@color/app_color_main"
-        android:textSize="18sp"
-        app:qmui_backgroundColor="@color/app_btn_color_white"
-        app:qmui_borderColor="@color/app_color_main"
-        app:qmui_radius="5dp" />
+            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                android:id="@+id/backupWalletBtn"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="15dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="@string/backup_wallet_btn_txt"
+                android:textColor="@color/app_color_font"
+                android:textSize="18sp"
+                app:qmui_backgroundColor="@color/app_color_main"
+                app:qmui_borderColor="@color/app_color_main"
+                app:qmui_radius="5dp" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        />
+
+            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+                android:id="@+id/skipBackupBtn"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:text="@string/no_backup_mneonic_btn_code"
+                android:textColor="@color/app_color_main"
+                android:textSize="18sp"
+                android:visibility="gone"
+                app:qmui_backgroundColor="@color/app_btn_color_white"
+                app:qmui_borderColor="@color/app_color_main"
+                app:qmui_radius="5dp" />
+
+
+        </LinearLayout>
+
+    </ScrollView>
 
 
 </LinearLayout>
