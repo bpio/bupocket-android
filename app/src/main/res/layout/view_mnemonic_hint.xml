@@ -33,6 +33,7 @@ android:orientation="horizontal">
         android:layout_width="15dp"
         android:layout_height="15dp"
         android:layout_marginLeft="5dp"
+        android:layout_marginTop="1dp"
         android:src="@mipmap/icon_help_tips" />
 
 </LinearLayout>
