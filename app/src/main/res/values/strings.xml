@@ -50,8 +50,9 @@
     <string name="create_wallet_name_err_hint">允许输入字母/汉字/数字/下划线，且不能超过20个字符</string>
     <string name="create_wallet_pw_err_hint">6-30个字符，建议大小写字母和数字组合</string>
     <string name="create_wallet_pw_confirm_err_hint">两次密码不一致</string>
-
     <string name="view_change_wallet_pw">修改钱包密码</string>
+
+    <string name="create_wallet_name_error_info">身份名只允许输入字母/汉字/数字/下划线，并且长度不能超过20个字符</string>
 
     <string name="backup_wallet_txt1">没有妥善备份就无法保障资金安全，删除钱包或卸载程序后，您需要助记词来恢复钱包/身份</string>
 
