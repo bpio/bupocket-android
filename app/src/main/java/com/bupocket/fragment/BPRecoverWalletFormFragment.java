@@ -40,36 +40,24 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BPRecoverWalletFormFragment extends BaseFragment implements View.OnFocusChangeListener {
+
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
-
     @BindView(R.id.recoverShowPwdIv)
     ImageView mPwdShow;
-
     @BindView(R.id.recoverShowConfirmPwdIv)
     ImageView mConfirmPwdShow;
-
     @BindView(R.id.recoverMneonicCodeEt)
     EditText mMneonicCodeEt;
-
     @BindView(R.id.recoverWalletNameEt)
     EditText mWalletNameEt;
-
     @BindView(R.id.recoverPwdEt)
     EditText mPwdEt;
-
     @BindView(R.id.recoverConfirmPwdEt)
     EditText mConfirmPwdEt;
-
     @BindView(R.id.recoverWalletSubmitBtn)
     QMUIRoundButton recoverSubmit;
 
-    @BindView(R.id.tv_create_wallet_name_err_hint)
-    TextView tvCreateWalletNameErrHint;
-    @BindView(R.id.tv_create_wallet_pw_err_hint)
-    TextView tvCreateWalletPwErrHint;
-    @BindView(R.id.tv_create_wallet_pw_confirm_err_hint)
-    TextView tvCreateWalletPwConfirmErrHint;
 
     private boolean isPwdHideFirst = false;
     private boolean isConfirmPwdHideFirst = false;
@@ -112,21 +100,17 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
                 String password = mPwdEt.getText().toString().trim();
                 String passwordConfirm = mConfirmPwdEt.getText().toString().trim();
 
-                if (!passwordConfirm.isEmpty()) {
-                    setPwEditEquals();
-                }
 
-                if (!TextUtils.isEmpty(mneonicCode)&&
-                        CommonUtil.validateName(name)&&
-                        CommonUtil.validatePassword(password)&&
-                        CommonUtil.validatePasswordEquals(password, passwordConfirm)) {
+                if (!TextUtils.isEmpty(mneonicCode) &&
+                        !TextUtils.isEmpty(name) &&
+                        !TextUtils.isEmpty(password) &&
+                        !TextUtils.isEmpty(passwordConfirm)) {
                     recoverSubmit.setEnabled(true);
                     recoverSubmit.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
                 } else {
                     recoverSubmit.setEnabled(false);
                     recoverSubmit.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
                 }
-
 
 
             }
@@ -144,6 +128,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
 
     private void initTopBar() {
         mTopBar.setBackgroundDividerEnabled(false);
+        mTopBar.setTitle(R.string.recover_wallet_title);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,9 +145,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
         qmuiDialog.setCanceledOnTouchOutside(false);
         qmuiDialog.setContentView(R.layout.view_create_wallet_prompt);
         qmuiDialog.show();
-        QMUIRoundButton mreateWalletPromptConfirmBtn = qmuiDialog.findViewById(R.id.createWalletPromptConfirmBtn);
-
-        mreateWalletPromptConfirmBtn.setOnClickListener(new View.OnClickListener() {
+        qmuiDialog.findViewById(R.id.createWalletPromptConfirmBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 qmuiDialog.dismiss();
@@ -350,31 +333,6 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
-        switch (v.getId()) {
-            case R.id.recoverWalletNameEt:
-                if (CommonUtil.validateNickname(mWalletNameEt.getText().toString()))
-                    tvCreateWalletNameErrHint.setVisibility(View.INVISIBLE);
-                else
-                    tvCreateWalletNameErrHint.setVisibility(View.VISIBLE);
-                break;
-            case R.id.recoverPwdEt:
-                if (CommonUtil.validatePassword(mPwdEt.getText().toString()))
-                    tvCreateWalletPwErrHint.setVisibility(View.INVISIBLE);
-                else
-                    tvCreateWalletPwErrHint.setVisibility(View.VISIBLE);
-                break;
-            case R.id.recoverConfirmPwdEt:
-                setPwEditEquals();
-                break;
-        }
 
-    }
-
-
-    private void setPwEditEquals() {
-        if (CommonUtil.validatePasswordEquals(mPwdEt.getText().toString(), mConfirmPwdEt.getText().toString()))
-            tvCreateWalletPwConfirmErrHint.setVisibility(View.INVISIBLE);
-        else
-            tvCreateWalletPwConfirmErrHint.setVisibility(View.VISIBLE);
     }
 }

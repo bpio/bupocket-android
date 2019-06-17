@@ -48,7 +48,7 @@
         • 安全密码只能修改，无法找回或重置，请务必牢记。</string>
     <string name="create_wallet_prompt_txt2">6~30个字符，建议混合大小写字母加数字</string>
     <string name="create_wallet_name_err_hint">允许输入字母/汉字/数字/下划线，且不能超过20个字符</string>
-    <string name="create_wallet_pw_err_hint">6-30个字符，建议大小写字母和数字组合</string>
+    <string name="create_wallet_pw_err_hint">6-30个字符，大小写字母和数字任意两种组合</string>
     <string name="create_wallet_pw_confirm_err_hint">两次密码不一致</string>
     <string name="view_change_wallet_pw">修改钱包密码</string>
 
@@ -701,6 +701,10 @@
     <string name="backup_wallet_care_three">注意事项</string>
     <string name="backup_wallet_care_three_info">• 禁止截屏，请确保在四周无人、无摄像头的安全环境下进行备份\n• 请用纸和笔正确抄写助记词，并妥善保管至隔离网络的安全地方\n• 禁止以任何形式或方法将助记词透露或公开，比如邮件、相册等\n• 没有妥善备份就无法保障资产安全，删除钱包或卸载程序后，您可以通过助记词来恢复身份/钱包</string>
     <string name="backup_title">备份助记词</string>
+
+
+    <!--recover wallet-->
+    <string name="tv_recover_wallet_name">请创建身份名</string>
 
 
 </resources>
