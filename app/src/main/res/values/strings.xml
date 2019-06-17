@@ -705,6 +705,7 @@
 
     <!--recover wallet-->
     <string name="tv_recover_wallet_name">请创建身份名</string>
+    <string name="wallet_manage">钱包管理</string>
 
 
 </resources>
