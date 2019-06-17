@@ -23,7 +23,7 @@
     <string name="wallet_create_form_input_password_empty">Please enter your password</string>
     <string name="wallet_create_form_input_rePassword_empty">Please confirm your password</string>
     <string name="wallet_create_form_error1">Passwords do not match</string>
-    <string name="wallet_create_form_error2">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>
+    <!--<string name="wallet_create_form_error2">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>-->
     <string name="wallet_create_form_error4">The identity name is only allowed to enter letters, characters, numbers, underscores, and it cannot  exceed 20 characters in length</string>
 
     <string name="wallet_create_creating_txt">Creating</string>
@@ -70,13 +70,13 @@
     <!-- 恢复身份 -->
     <string name="recover_wallet_title">Recover identity</string>
     <!--<string name="recover_edit_mneonic_code_hint">Enter mnemonics, separated by spaces</string>-->
-    <string name="recover_mneonic_input_error">The mnemonics input are incorrect. Please enter again</string>
+    <!--<string name="recover_mneonic_input_error">The mnemonics input are incorrect. Please enter again</string>-->
     <!--<string name="recover_edit_new_wallet_name_hint">Please enter a new identity name</string>-->
     <string name="recover_input_wallet_name_error">Only letters, numerals, and underscores are allowed and it cannot exceed 20 characters</string>
     <string name="recover_set_pwd_hint">Please set a password</string>
     <string name="recover_set_pwd_error">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>
     <string name="recover_confirm_pwd_hint">Confirm password</string>
-    <string name="recover_confirm_pwd_error">Passwords do not match</string>
+    <!--<string name="recover_confirm_pwd_error">Passwords do not match</string>-->
     <string name="recover_wallet_next_btn">Restore</string>
     <string name="recover_wallet_reloading">Recovering</string>
     <string name="recover_wallet_error_tip">The mnemonic words entered are incorrect, please enter again</string>

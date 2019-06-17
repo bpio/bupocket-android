@@ -157,11 +157,9 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
     private boolean mneonicFlag() {
         String mneonic = mMneonicCodeEt.getText().toString().trim();
         String regex = "[a-zA-Z\\s]+";
-        if ("".equals(mneonic)) {
-            Toast.makeText(getActivity(), R.string.recover_edit_mneonic_code_hint, Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (!mneonic.matches(regex)) {
-            Toast.makeText(getActivity(), R.string.recover_mneonic_input_error, Toast.LENGTH_SHORT).show();
+        if (!mneonic.matches(regex)) {
+
+            CommonUtil.showTitleDialog(mContext, R.string.recover_mneonic_input_error, R.string.error_hint);
             return false;
         }
         return true;
@@ -169,11 +167,8 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
 
     private boolean walletNameFlag() {
         String walletName = mWalletNameEt.getText().toString().trim();
-        if ("".equals(walletName)) {
-            Toast.makeText(getActivity(), R.string.recover_edit_new_wallet_name_hint, Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (!CommonUtil.validateNickname(walletName)) {
-            Toast.makeText(getActivity(), R.string.wallet_create_form_error4, Toast.LENGTH_SHORT).show();
+        if (!CommonUtil.validateNickname(walletName)) {
+            CommonUtil.showTitleDialog(mContext, R.string.wallet_create_form_error4, R.string.error_hint);
             return false;
         }
         return true;
@@ -181,12 +176,8 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
 
     private boolean pwdFlag() {
         String password = mPwdEt.getText().toString().trim();
-        if ("".equals(password)) {
-            Toast.makeText(getActivity(), R.string.wallet_create_form_input_password_empty, Toast.LENGTH_SHORT).show();
-            return false;
-        }
         if (!CommonUtil.validatePassword(password)) {
-            Toast.makeText(getActivity(), R.string.wallet_create_form_error2, Toast.LENGTH_SHORT).show();
+            CommonUtil.showTitleDialog(mContext, R.string.wallet_create_form_error2, R.string.error_hint);
             return false;
         }
         return true;
@@ -195,14 +186,8 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
     private boolean confirmPwdFlag() {
         String pwd = mPwdEt.getText().toString().trim();
         String confirmPwd = mConfirmPwdEt.getText().toString().trim();
-        if ("".equals(confirmPwd)) {
-            Toast.makeText(getActivity(), R.string.recover_confirm_pwd_hint, Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (!CommonUtil.validatePassword(confirmPwd)) {
-            Toast.makeText(getActivity(), R.string.recover_set_pwd_error, Toast.LENGTH_SHORT).show();
-            return false;
-        } else if (!confirmPwd.equals(pwd)) {
-            Toast.makeText(getActivity(), R.string.recover_confirm_pwd_error, Toast.LENGTH_SHORT).show();
+        if (!confirmPwd.equals(pwd)) {
+            CommonUtil.showTitleDialog(mContext, R.string.recover_confirm_pwd_error, R.string.error_hint);
             return false;
         }
         return true;
@@ -261,13 +246,13 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
                             @Override
                             public void onClick(QMUIDialog dialog, int index) {
                                 dialog.dismiss();
-                                if (!mneonicFlag()) {
-                                    return;
-                                } else if (!walletNameFlag()) {
+                                if (!walletNameFlag()) {
                                     return;
                                 } else if (!pwdFlag()) {
                                     return;
                                 } else if (!confirmPwdFlag()) {
+                                    return;
+                                } else if (!mneonicFlag()) {
                                     return;
                                 }
                                 final String password = mPwdEt.getText().toString().trim();
@@ -303,7 +288,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                             Looper.prepare();
-                                            Toast.makeText(getActivity(), R.string.recover_wallet_error_tip, Toast.LENGTH_SHORT).show();
+                                            CommonUtil.showTitleDialog(mContext, R.string.recover_mneonic_input_error, R.string.error_hint);
                                             tipDialog.dismiss();
                                             Looper.loop();
                                             return;

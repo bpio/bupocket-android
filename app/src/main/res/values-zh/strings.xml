@@ -20,7 +20,7 @@
     <string name="wallet_create_form_input_password_empty">请输入密码</string>
     <string name="wallet_create_form_input_rePassword_empty">请再次确认密码</string>
     <string name="wallet_create_form_error1">密码与确认密码不一致</string>
-    <string name="wallet_create_form_error2">6~30个字符，建议混合大小写字母加数字</string>
+    <string name="wallet_create_form_error2">密码必须是6-30个字符，大小写字母和数字任意两种的组合</string>
     <string name="wallet_create_form_error4">身份名只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
 
     <string name="wallet_create_creating_txt">创建中</string>
@@ -48,10 +48,11 @@
         • 安全密码只能修改，无法找回或重置，请务必牢记。</string>
     <string name="create_wallet_prompt_txt2">6~30个字符，建议混合大小写字母加数字</string>
     <string name="create_wallet_name_err_hint">允许输入字母/汉字/数字/下划线，且不能超过20个字符</string>
-    <string name="create_wallet_pw_err_hint">6-30个字符，建议大小写字母和数字组合</string>
+    <string name="create_wallet_pw_err_hint">6-30个字符，大小写字母和数字任意两种组合</string>
     <string name="create_wallet_pw_confirm_err_hint">两次密码不一致</string>
-
     <string name="view_change_wallet_pw">修改钱包密码</string>
+
+    <string name="create_wallet_name_error_info">身份名只允许输入字母/汉字/数字/下划线，并且长度不能超过20个字符</string>
 
     <string name="backup_wallet_txt1">没有妥善备份就无法保障资金安全，删除钱包或卸载程序后，您需要助记词来恢复钱包/身份</string>
 
@@ -682,17 +683,28 @@
     <string name="recover_edit_mneonic_code_hint">12个英文单词，请按空格分隔单词</string>
     <string name="hint_wallet_create_password">6-30个字符，大小写字母和数字任意两种组合</string>
     <string name="recover_wallet_title">恢复身份</string>
-    <string name="recover_mneonic_input_error">助记词输入有误，请重新输入</string>
+    <string name="recover_mneonic_input_error">助记词输入有误</string>
     <string name="recover_edit_new_wallet_name_hint">请设置新的身份名</string>
     <string name="recover_input_wallet_name_error">只允许输入字母、汉字、数字、下划线。长度为20个字符</string>
     <string name="recover_set_pwd_hint">请设置密码</string>
     <string name="recover_set_pwd_error">6~30个字符，建议混合大小写字母加数字</string>
     <string name="recover_confirm_pwd_hint">请确认密码</string>
-    <string name="recover_confirm_pwd_error">密码与确认密码不一致</string>
+    <string name="recover_confirm_pwd_error">两次密码输入不一致</string>
     <string name="recover_wallet_next_btn">恢复</string>
     <string name="recover_wallet_reloading">恢复中</string>
     <string name="recover_wallet_error_tip">助记词输入有误，请重新输入</string>
     <string name="error_hint">错误提示</string>
+
+
+    <!--backup-->
+    <string name="tv_backup_hint">拥有助记词等于拥有钱包资产的所有权</string>
+    <string name="backup_wallet_care_three">注意事项</string>
+    <string name="backup_wallet_care_three_info">• 禁止截屏，请确保在四周无人、无摄像头的安全环境下进行备份\n• 请用纸和笔正确抄写助记词，并妥善保管至隔离网络的安全地方\n• 禁止以任何形式或方法将助记词透露或公开，比如邮件、相册等\n• 没有妥善备份就无法保障资产安全，删除钱包或卸载程序后，您可以通过助记词来恢复身份/钱包</string>
+    <string name="backup_title">备份助记词</string>
+
+
+    <!--recover wallet-->
+    <string name="tv_recover_wallet_name">请创建身份名</string>
 
 
 </resources>
