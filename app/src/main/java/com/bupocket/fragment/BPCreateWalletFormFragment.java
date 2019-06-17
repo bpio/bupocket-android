@@ -58,12 +58,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
 
     @BindView(R.id.createWalletSubmitBtn)
     QMUIRoundButton mCreateWalletSubmitBtn;
-    @BindView(R.id.tv_create_wallet_name_err_hint)
-    TextView tvCreateWalletNameErrHint;
-    @BindView(R.id.tv_create_wallet_pw_err_hint)
-    TextView tvCreateWalletPwErrHint;
-    @BindView(R.id.tv_create_wallet_pw_confirm_err_hint)
-    TextView tvCreateWalletPwConfirmErrHint;
+
     private boolean isPwdHideFirst = false;
     private boolean isConfirmPwdHideFirst = false;
     private SharedPreferencesHelper sharedPreferencesHelper;
@@ -136,35 +131,25 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
 
     private boolean validateData() {
         String indntityName = mSetIdentityNameEt.getText().toString().trim();
-        if ("".equals(indntityName)) {
-            Toast.makeText(getActivity(), R.string.wallet_create_form_input_identity_name_empty, Toast.LENGTH_SHORT).show();
-            return false;
-        }
 
         if (!CommonUtil.validateNickname(indntityName)) {
-            Toast.makeText(getActivity(), R.string.wallet_create_form_error4, Toast.LENGTH_SHORT).show();
+
+            CommonUtil.showTitleDialog(mContext, getString(R.string.create_wallet_name_err_hint), getString(R.string.error_hint));
+
             return false;
         }
 
         String password = mSetPwdEt.getText().toString().trim();
 
-        if ("".equals(password)) {
-            Toast.makeText(getActivity(), R.string.wallet_create_form_input_password_empty, Toast.LENGTH_SHORT).show();
-            return false;
-        }
         if (!CommonUtil.validatePassword(password)) {
-            Toast.makeText(getActivity(), R.string.wallet_create_form_error2, Toast.LENGTH_SHORT).show();
+            CommonUtil.showTitleDialog(mContext, R.string.hint_wallet_create_password, R.string.error_hint);
             return false;
         }
 
         String repeatPassword = mRepeatPwdEt.getText().toString().trim();
 
-        if ("".equals(repeatPassword)) {
-            Toast.makeText(getActivity(), R.string.wallet_create_form_input_rePassword_empty, Toast.LENGTH_SHORT).show();
-            return false;
-        }
         if (!repeatPassword.equals(password)) {
-            Toast.makeText(getActivity(), R.string.wallet_create_form_error1, Toast.LENGTH_SHORT).show();
+            CommonUtil.showTitleDialog(mContext, R.string.wallet_create_form_error1, R.string.error_hint);
             return false;
         }
 
@@ -275,11 +260,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
                 String password = mSetPwdEt.getText().toString().trim();
                 String passwordConfirm = mRepeatPwdEt.getText().toString().trim();
 
-                if (!passwordConfirm.isEmpty()) {
-                    setPwEditEquals();
-                }
-
-                if (CommonUtil.validateName(name) && CommonUtil.validatePassword(password) && CommonUtil.validatePasswordEquals(password, passwordConfirm)) {
+                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(passwordConfirm)) {
                     mCreateWalletSubmitBtn.setEnabled(true);
                     mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
                 } else {
@@ -295,36 +276,9 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
         mRepeatPwdEt.addTextChangedListener(watcher);
     }
 
+
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
-
-
-        switch (v.getId()) {
-            case R.id.create_wallet_identity_name_et:
-                if (CommonUtil.validateNickname(mSetIdentityNameEt.getText().toString()))
-                    tvCreateWalletNameErrHint.setVisibility(View.INVISIBLE);
-                else
-                    tvCreateWalletNameErrHint.setVisibility(View.VISIBLE);
-                break;
-            case R.id.create_wallet_set_pwd_et:
-                if (CommonUtil.validatePassword(mSetPwdEt.getText().toString()))
-                    tvCreateWalletPwErrHint.setVisibility(View.INVISIBLE);
-                else
-                    tvCreateWalletPwErrHint.setVisibility(View.VISIBLE);
-                break;
-            case R.id.create_wallet_repeat_pwd_et:
-                setPwEditEquals();
-                break;
-        }
-
-
-    }
-
-    private void setPwEditEquals() {
-        if (CommonUtil.validatePasswordEquals(mSetPwdEt.getText().toString(), mRepeatPwdEt.getText().toString()))
-            tvCreateWalletPwConfirmErrHint.setVisibility(View.INVISIBLE);
-        else
-            tvCreateWalletPwConfirmErrHint.setVisibility(View.VISIBLE);
 
     }
 }

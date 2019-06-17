@@ -840,6 +840,41 @@ public class CommonUtil {
 
     }
 
+    public static void showTitleDialog(Context mContext, String msg, String title) {
+        final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
+                setLayout(R.layout.qmui_com_dialog_green).create();
+        qmuiDialog.findViewById(R.id.tvComKnow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+            }
+        });
+        TextView tvTitle = qmuiDialog.findViewById(R.id.tvComTitle);
+        tvTitle.setVisibility(View.VISIBLE);
+        tvTitle.setText(title);
+        ((TextView) qmuiDialog.findViewById(R.id.tvComMassage)).setText(msg);
+        qmuiDialog.show();
+
+    }
+
+    public static void showTitleDialog(Context mContext, int msg, int title) {
+        final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
+                setLayout(R.layout.qmui_com_dialog_green).create();
+        qmuiDialog.findViewById(R.id.tvComKnow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+            }
+        });
+        TextView tvTitle = qmuiDialog.findViewById(R.id.tvComTitle);
+        tvTitle.setVisibility(View.VISIBLE);
+        tvTitle.setText(title);
+        ((TextView) qmuiDialog.findViewById(R.id.tvComMassage)).setText(msg);
+        qmuiDialog.show();
+
+    }
+
+
     /**
      * @param mContext
      * @param notice   error massage

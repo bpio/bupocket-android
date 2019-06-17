@@ -47,7 +47,7 @@
         • 小布口袋不会存储您的密码；\n
         • 安全密码只能修改，无法找回或重置，请务必牢记。</string>
     <string name="create_wallet_prompt_txt2">6~30个字符，建议混合大小写字母加数字</string>
-    <string name="create_wallet_name_err_hint">不能超过20个字符</string>
+    <string name="create_wallet_name_err_hint">允许输入字母/汉字/数字/下划线，且不能超过20个字符</string>
     <string name="create_wallet_pw_err_hint">6-30个字符，建议大小写字母和数字组合</string>
     <string name="create_wallet_pw_confirm_err_hint">两次密码不一致</string>
 
@@ -680,6 +680,7 @@
     <!-- 恢复身份 -->
     <string name="recover_edit_mneonic_code">请填写您的助记词</string>
     <string name="recover_edit_mneonic_code_hint">12个英文单词，请按空格分隔单词</string>
+    <string name="hint_wallet_create_password">6-30个字符，大小写字母和数字任意两种组合</string>
     <string name="recover_wallet_title">恢复身份</string>
     <string name="recover_mneonic_input_error">助记词输入有误，请重新输入</string>
     <string name="recover_edit_new_wallet_name_hint">请设置新的身份名</string>
@@ -691,5 +692,7 @@
     <string name="recover_wallet_next_btn">恢复</string>
     <string name="recover_wallet_reloading">恢复中</string>
     <string name="recover_wallet_error_tip">助记词输入有误，请重新输入</string>
+    <string name="error_hint">错误提示</string>
+
 
 </resources>

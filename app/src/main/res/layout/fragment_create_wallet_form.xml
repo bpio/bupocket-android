@@ -17,9 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/qmui_config_color_white"
-
             android:orientation="vertical">
-
 
             <View
                 android:layout_width="match_parent"
@@ -40,33 +38,39 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:layout_marginTop="32dp"
                 android:padding="@dimen/view_padding">
+
+
+                <TextView
+                    android:text="@string/hint_wallet_create_form_input_identity_name"
+                    style="@style/BPTextViewCreateWallet" />
+
 
                 <EditText
                     android:id="@+id/create_wallet_identity_name_et"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="30dp"
-                    android:hint="@string/hint_wallet_create_form_input_identity_name"
+                    android:hint="@string/create_wallet_name_err_hint"
                     android:inputType=""
                     android:theme="@style/BPEditText" />
 
+
                 <TextView
-                    android:id="@+id/tv_create_wallet_name_err_hint"
-                    style="@style/BPETCreateWalletError"
-                    android:text="@string/create_wallet_name_err_hint" />
+                    android:text="@string/hint_wallet_create_form_input_password"
+                    style="@style/BPTextViewCreateWallet" />
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80dp">
+                    android:layout_height="55dp">
 
                     <EditText
                         android:id="@+id/create_wallet_set_pwd_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
                         android:gravity="left"
-                        android:hint="@string/hint_wallet_create_form_input_password"
+                        android:hint="@string/hint_wallet_create_password"
                         android:inputType="textPassword"
                         android:paddingEnd="20dp"
                         android:paddingRight="20dp"
@@ -79,25 +83,24 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="22dp"
                         android:contentDescription="TODO"
                         android:src="@mipmap/icon_close_eye" />
                 </RelativeLayout>
 
                 <TextView
-                    android:id="@+id/tv_create_wallet_pw_err_hint"
-                    style="@style/BPETCreateWalletError"
-                    android:text="@string/create_wallet_pw_err_hint" />
+                    android:text="@string/hint_wallet_create_form_input_rePassword"
+                    style="@style/BPTextViewCreateWallet" />
+
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="80dp">
+                    android:layout_height="55dp">
 
                     <EditText
                         android:id="@+id/create_wallet_repeat_pwd_et"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
                         android:gravity="left"
                         android:hint="@string/hint_wallet_create_form_input_rePassword"
                         android:inputType="textPassword"
@@ -112,22 +115,17 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="16dp"
+                        android:layout_marginBottom="22dp"
                         android:contentDescription="TODO"
                         android:src="@mipmap/icon_close_eye" />
                 </RelativeLayout>
 
-                <TextView
-                    android:id="@+id/tv_create_wallet_pw_confirm_err_hint"
-                    style="@style/BPETCreateWalletError"
-                    android:text="@string/create_wallet_pw_confirm_err_hint" />
 
                 <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                     android:id="@+id/createWalletSubmitBtn"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/bp_btn_hight"
-                    android:layout_marginTop="50dp"
-                    android:layout_marginBottom="120dp"
+                    android:layout_marginTop="80dp"
                     android:enabled="false"
                     android:gravity="center"
                     android:text="@string/start_create_wallet"
