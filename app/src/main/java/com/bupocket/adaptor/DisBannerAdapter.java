@@ -86,6 +86,8 @@ public class DisBannerAdapter extends PagerAdapter {
             });
             Glide.with(mContext)
                     .load(info.getImageUrl())
+                    .error(R.mipmap.ic_banner_empty)
+                    .placeholder(R.mipmap.ic_banner_empty)
                     .into(ivSlide);
 
             viewPager.addView(inflate);

@@ -18,11 +18,13 @@ import com.bupocket.utils.SocketUtil;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager;
 import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 import com.umeng.commonsdk.UMConfigure;
 
 public class BPApplication extends Application {
     @SuppressLint("StaticFieldLeak")
     private static Context context;
+    private RefWatcher refWatcher;
 
     public static Context getContext() {
         return context;
@@ -50,7 +52,13 @@ public class BPApplication extends Application {
         if (LeakCanary.isInAnalyzerProcess(this)) {
             return;
         }
-        LeakCanary.install(this);
+        refWatcher = LeakCanary.install(this);
+    }
+
+
+    public static RefWatcher getRefWatcher(Context context) {
+        BPApplication application = (BPApplication) context.getApplicationContext();
+        return application.refWatcher;
     }
 
     private void initUMeng() {

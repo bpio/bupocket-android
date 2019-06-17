@@ -1,6 +1,5 @@
 package com.bupocket.base;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,14 +13,13 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.common.Constants;
-import com.bupocket.common.SingatureListener;
+import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.enums.TxStatusEnum;
-import com.bupocket.fragment.BPAssetsHomeFragment;
 import com.bupocket.fragment.BPSendStatusFragment;
 import com.bupocket.fragment.BPTransactionTimeoutFragment;
-import com.bupocket.fragment.discover.BPNodeBuildFragment;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
@@ -38,8 +36,10 @@ import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+import com.squareup.leakcanary.RefWatcher;
 import com.umeng.analytics.MobclickAgent;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -54,8 +54,9 @@ public abstract class BaseFragment extends QMUIFragment {
     private final static String BP_FILE_NAME = "buPocket";
     public static final int TRANSFER_CODE = 200001;
     public SharedPreferencesHelper spHelper;
-    public Context mContext;
+    protected Context mContext;
     private QMUITipDialog submitDialog;
+    private TransferHandler transferHandler;
 
 
     @Override
@@ -64,6 +65,9 @@ public abstract class BaseFragment extends QMUIFragment {
         mContext = this.getContext();
         if (spHelper == null) {
             spHelper = new SharedPreferencesHelper(getContext(), BP_FILE_NAME);
+        }
+        if (transferHandler == null) {
+            transferHandler = new TransferHandler(this);
         }
 
     }
@@ -108,7 +112,7 @@ public abstract class BaseFragment extends QMUIFragment {
     }
 
 
-    protected void getSignatureInfo(final SingatureListener listener) {
+    protected void getSignatureInfo(final SignatureListener listener) {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -205,8 +209,6 @@ public abstract class BaseFragment extends QMUIFragment {
                     submitDialog.dismiss();
                     return;
                 }
-
-                LogUtils.e("submit hash=" + txHash);
                 ByHashQueryResult(txHash);
 
             }
@@ -253,92 +255,12 @@ public abstract class BaseFragment extends QMUIFragment {
     }
 
 
-    private TimerTask timerTask = null;
+    private static TimerTask timerTask = null;
     private String txHash;
     private int timerTimes = 0;
-    private final Timer timer = new Timer();
-    @SuppressLint("HandlerLeak")
-    private Handler mHandler = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 1:
-                    if (timerTimes > Constants.TX_REQUEST_TIMEOUT_TIMES) {
-                        timerTask.cancel();
-                        if (submitDialog != null) {
-                            submitDialog.dismiss();
-                        }
-                        BPTransactionTimeoutFragment fragment = new BPTransactionTimeoutFragment();
-                        Bundle args = new Bundle();
-                        args.putString("txHash", txHash);
-                        fragment.setArguments(args);
-                        startFragment(fragment);
-                        return;
-                    }
-                    timerTimes++;
-                    System.out.println("timerTimes:" + timerTimes);
-                    TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
-                    Map<String, Object> paramsMap = new HashMap<>();
-                    paramsMap.put("hash", txHash);
-                    Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetailByHash(paramsMap);
-                    call.enqueue(new retrofit2.Callback<ApiResult<TxDetailRespDto>>() {
+    private static final Timer timer = new Timer();
 
-                        @Override
-                        public void onResponse(Call<ApiResult<TxDetailRespDto>> call, Response<ApiResult<TxDetailRespDto>> response) {
-                            ApiResult<TxDetailRespDto> resp = response.body();
-                            if (!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())) {
-                                return;
-                            } else {
-                                TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
-                                timerTask.cancel();
-                                if (submitDialog != null) {
-                                    submitDialog.dismiss();
-                                }
-                                if (com.bupocket.wallet.enums.ExceptionEnum.BU_NOT_ENOUGH_FOR_PAYMENT.getCode().equals(txDetailRespBoBean.getErrorCode())) {
-                                    Toast.makeText(getActivity(), R.string.balance_not_enough, Toast.LENGTH_SHORT).show();
-                                }
-                                Bundle argz = new Bundle();
-                                argz.putString("destAccAddr", txDetailRespBoBean.getDestAddress());
-                                argz.putString("sendAmount", txDetailRespBoBean.getAmount());
-                                argz.putString("txFee", txDetailRespBoBean.getFee());
-                                argz.putString("tokenCode", "BU");
-                                argz.putString("note", txDetailRespBoBean.getOriginalMetadata());
-                                argz.putString("state", txDetailRespBoBean.getStatus().toString());
-                                argz.putString("sendTime", txDetailRespBoBean.getApplyTimeDate());
-                                argz.putString("txHash", txHash);
-                                BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
-
-
-                                if (((BaseFragmentActivity) getActivity()).getCurrentFragment().getTag().equals(HomeFragment.class.getSimpleName())) {
-                                    argz.putString("fragmentTag",HomeFragment.class.getSimpleName());
-                                    bpSendStatusFragment.setArguments(argz);
-                                    startFragmentForResult(bpSendStatusFragment,TRANSFER_CODE);
-                                }else {
-                                    bpSendStatusFragment.setArguments(argz);
-                                    startFragment(bpSendStatusFragment);
-                                }
-
-
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
-                            if (submitDialog != null) {
-                                submitDialog.dismiss();
-                            }
-                        }
-                    });
-                    break;
-                default:
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
-
-
-    public void ByHashQueryResult(@NonNull String hash) {
+    private void ByHashQueryResult(@NonNull String hash) {
         txHash = hash;
         if (timerTask != null) {
             timerTask.cancel();
@@ -347,7 +269,7 @@ public abstract class BaseFragment extends QMUIFragment {
         timerTask = new TimerTask() {
             @Override
             public void run() {
-                mHandler.sendEmptyMessage(1);
+                transferHandler.sendEmptyMessage(1);
             }
         };
         timer.schedule(timerTask,
@@ -378,14 +300,119 @@ public abstract class BaseFragment extends QMUIFragment {
         MobclickAgent.onPageEnd(this.getTag());
     }
 
+
+
+
     @Override
     public void popBackStack() {
         super.popBackStack();
-        try {
-            getChildFragmentManager().beginTransaction().attach(this);
-            getChildFragmentManager().beginTransaction().remove(this);
-        } catch (Exception e) {
+    }
+
+
+    /**
+     *
+     */
+    private static class TransferHandler extends Handler {
+
+        private final WeakReference<BaseFragment> mFragment;
+
+        private TransferHandler(BaseFragment mFragment) {
+            this.mFragment = new WeakReference<BaseFragment>(mFragment);
         }
 
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            final BaseFragment mFragment = this.mFragment.get();
+            if (mFragment == null) {
+                return;
+            }
+
+            switch (msg.what) {
+                case 1:
+                    if (mFragment.timerTimes > Constants.TX_REQUEST_TIMEOUT_TIMES) {
+                        mFragment.timerTask.cancel();
+                        if (mFragment.submitDialog != null) {
+                            mFragment.submitDialog.dismiss();
+                        }
+                        BPTransactionTimeoutFragment fragment = new BPTransactionTimeoutFragment();
+                        Bundle args = new Bundle();
+                        args.putString("txHash", mFragment.txHash);
+                        fragment.setArguments(args);
+                        mFragment.startFragment(fragment);
+                        return;
+                    }
+                    mFragment.timerTimes++;
+                    System.out.println("timerTimes:" + mFragment.timerTimes);
+                    TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
+                    Map<String, Object> paramsMap = new HashMap<>();
+                    paramsMap.put("hash", mFragment.txHash);
+                    Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetailByHash(paramsMap);
+                    call.enqueue(new retrofit2.Callback<ApiResult<TxDetailRespDto>>() {
+
+                        @Override
+                        public void onResponse(Call<ApiResult<TxDetailRespDto>> call, Response<ApiResult<TxDetailRespDto>> response) {
+                            ApiResult<TxDetailRespDto> resp = response.body();
+                            if (!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())) {
+                                return;
+                            } else {
+                                TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
+                                mFragment.timerTask.cancel();
+                                if (mFragment.submitDialog != null) {
+                                    mFragment.submitDialog.dismiss();
+                                }
+                                if (com.bupocket.wallet.enums.ExceptionEnum.BU_NOT_ENOUGH_FOR_PAYMENT.getCode().equals(txDetailRespBoBean.getErrorCode())) {
+                                    Toast.makeText(mFragment.getActivity(), R.string.balance_not_enough, Toast.LENGTH_SHORT).show();
+                                }
+                                Bundle argz = new Bundle();
+                                argz.putString("destAccAddr", txDetailRespBoBean.getDestAddress());
+                                argz.putString("sendAmount", txDetailRespBoBean.getAmount());
+                                argz.putString("txFee", txDetailRespBoBean.getFee());
+                                argz.putString("tokenCode", "BU");
+                                argz.putString("note", txDetailRespBoBean.getOriginalMetadata());
+                                argz.putString("state", txDetailRespBoBean.getStatus().toString());
+                                argz.putString("sendTime", txDetailRespBoBean.getApplyTimeDate());
+                                argz.putString("txHash", mFragment.txHash);
+                                BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
+
+
+                                if (((BaseFragmentActivity) mFragment.getActivity()).getCurrentFragment().getTag().equals(HomeFragment.class.getSimpleName())) {
+                                    argz.putString("fragmentTag", HomeFragment.class.getSimpleName());
+                                    bpSendStatusFragment.setArguments(argz);
+                                    mFragment.startFragmentForResult(bpSendStatusFragment, TRANSFER_CODE);
+                                } else {
+                                    bpSendStatusFragment.setArguments(argz);
+                                    mFragment.startFragment(bpSendStatusFragment);
+                                }
+
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
+                            if (mFragment.submitDialog != null) {
+                                mFragment.submitDialog.dismiss();
+                            }
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
+
+
+        }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        transferHandler.removeCallbacksAndMessages(null);
+        RefWatcher refWatcher = BPApplication.getRefWatcher(getActivity());
+        refWatcher.watch(this);
+    }
+
+
+
 }

@@ -806,20 +806,6 @@ public class CommonUtil {
     }
 
     public static void showMessageDialog(Context mContext, String msg) {
-//        int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
-//        int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog_Action;
-//        int mCurrentDialogStyle = R.style.qmui_com_dialog;
-//        QMUIDialog qmuiDialog = new QMUIDialog.MessageDialogBuilder(mContext)
-//                .setMessage(msg)
-//                .addAction(R.drawable.shape_corner_green,R.string.i_knew_btn_txt, new QMUIDialogAction.ActionListener() {
-//                    @Override
-//                    public void onClick(QMUIDialog dialog, int index) {
-//                        dialog.dismiss();
-//                    }
-//                })
-//                .create(mCurrentDialogStyle);
-//        qmuiDialog.show();
-
         final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
                 setLayout(R.layout.qmui_com_dialog_green).create();
         qmuiDialog.findViewById(R.id.tvComKnow).setOnClickListener(new View.OnClickListener() {

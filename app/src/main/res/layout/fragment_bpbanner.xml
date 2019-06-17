@@ -2,29 +2,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/webActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/webActivity"
     android:orientation="vertical">
 
     <com.qmuiteam.qmui.widget.QMUITopBar
         android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/qmui_topbar_height"
+        android:fitsSystemWindows="true"
         app:qmui_config_color_gray_1="#333333"
         app:qmui_topbar_bg_color="@color/app_color_white"
         app:qmui_topbar_need_separator="false"
         app:qmui_topbar_title_color="@color/app_color_black"
         app:qmui_topbar_title_text_size="21sp" />
 
+    <ProgressBar
+        android:id="@+id/pbWeb"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:max="100"
+        android:progressDrawable="@drawable/progress_horizontal_green" />
+
 
     <WebView
         android:id="@+id/wvBanner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
-        >
-    </WebView>
+        android:scrollbars="none"></WebView>
 
 
 </LinearLayout>

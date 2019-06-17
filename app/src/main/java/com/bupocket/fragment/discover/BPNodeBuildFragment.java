@@ -1,29 +1,24 @@
 package com.bupocket.fragment.discover;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeBuildAdapter;
-import com.bupocket.base.BaseFragment;
+import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.http.api.NodeBuildService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.CoBuildListModel;
 import com.bupocket.model.NodeBuildModel;
-import com.bupocket.utils.LogUtils;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
 import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
-import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -36,14 +31,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class BPNodeBuildFragment extends BaseFragment {
+public class BPNodeBuildFragment extends AbsBaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
@@ -61,28 +54,45 @@ public class BPNodeBuildFragment extends BaseFragment {
     QMUIEmptyView qmuiEmptyView;
 
 
-    private Unbinder bind;
+
     private NodeBuildAdapter nodeBuildAdapter;
     private ArrayList<NodeBuildModel> nodeList;
     private View headerView;
     private TextView tvTitle;
+    private Call<ApiResult<CoBuildListModel>> serviceCoBuild;
 
 
     @Override
-    protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_bpnode_build, null);
-        bind = ButterKnife.bind(this, root);
-        init();
-        return root;
+    protected int getLayoutView() {
+        return R.layout.fragment_bpnode_build;
     }
 
-    private void init() {
+    @Override
+    protected void initView() {
         initTopBar();
-        initData();
-        setListener();
+        if (nodeBuildAdapter == null) {
+            nodeBuildAdapter = new NodeBuildAdapter(getContext());
+        }
+
+        if (nodeList == null) {
+            nodeList = new ArrayList<>();
+        }
+        lvNodeBuild.setAdapter(nodeBuildAdapter);
+        headerView = LayoutInflater.from(mContext).inflate(R.layout.view_com_title, null);
+        lvNodeBuild.addHeaderView(headerView);
+
+        refreshLayout.setEnableLoadMore(false);
+        qmuiEmptyView.show(true);
     }
 
-    private void setListener() {
+    @Override
+    protected void initData() {
+
+        getBuildData();
+    }
+
+    @Override
+    protected void setListeners(){
         lvNodeBuild.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -153,7 +163,6 @@ public class BPNodeBuildFragment extends BaseFragment {
 
 
     private void showToolbar() {
-
         ViewPropertyAnimator.animate(tvTitle).alpha(0).setDuration(200).start();
     }
 
@@ -163,23 +172,8 @@ public class BPNodeBuildFragment extends BaseFragment {
     }
 
 
-    private void initData() {
-        if (nodeBuildAdapter == null) {
-            nodeBuildAdapter = new NodeBuildAdapter(getContext());
-        }
 
-        if (nodeList == null) {
-            nodeList = new ArrayList<>();
-        }
-        lvNodeBuild.setAdapter(nodeBuildAdapter);
-        headerView = LayoutInflater.from(mContext).inflate(R.layout.view_com_title, null);
-        lvNodeBuild.addHeaderView(headerView);
 
-//        refreshLayout.autoRefresh();
-        getBuildData();
-        qmuiEmptyView.show(true);
-
-    }
 
     private void getBuildData() {
 
@@ -187,11 +181,10 @@ public class BPNodeBuildFragment extends BaseFragment {
         HashMap<String, Object> map = new HashMap<>();
 
         final NodeBuildService nodeBuildService = RetrofitFactory.getInstance().getRetrofit().create(NodeBuildService.class);
-        nodeBuildService.getNodeBuildList(map).enqueue(new Callback<ApiResult<CoBuildListModel>>() {
+        serviceCoBuild = nodeBuildService.getNodeBuildList(map);
+        serviceCoBuild.enqueue(new Callback<ApiResult<CoBuildListModel>>() {
             @Override
             public void onResponse(Call<ApiResult<CoBuildListModel>> call, Response<ApiResult<CoBuildListModel>> response) {
-
-                refreshLayout.finishRefresh();
 
                 ApiResult<CoBuildListModel> body = response.body();
                 llLoadFailed.setVisibility(View.GONE);
@@ -209,21 +202,28 @@ public class BPNodeBuildFragment extends BaseFragment {
                 }
 
                 qmuiEmptyView.show(null,null);
-
+                refreshLayout.finishRefresh();
             }
 
             @Override
             public void onFailure(Call<ApiResult<CoBuildListModel>> call, Throwable t) {
-                refreshLayout.finishRefresh();
-                llLoadFailed.setVisibility(View.VISIBLE);
+                if (call.isCanceled()) {
+                    return;
+                }
+
+                if (llLoadFailed!=null) {
+                    llLoadFailed.setVisibility(View.VISIBLE);
+                }
                 nodeBuildAdapter.setNewData(new ArrayList<NodeBuildModel>());
                 nodeBuildAdapter.notifyDataSetChanged();
 
                 qmuiEmptyView.show(null,null);
+                refreshLayout.finishRefresh();
             }
 
 
         });
+
 
 
     }
@@ -244,4 +244,15 @@ public class BPNodeBuildFragment extends BaseFragment {
 
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        serviceCoBuild.cancel();
+    }
+
+    @Override
+    public void onDestroy() {
+
+        super.onDestroy();
+    }
 }

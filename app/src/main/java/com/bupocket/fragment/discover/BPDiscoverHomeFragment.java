@@ -22,6 +22,7 @@ import com.bupocket.model.SlideModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -54,6 +55,10 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
     @BindView(R.id.vpDisBanner)
     ViewPager vpDisBanner;
+
+    @BindView(R.id.topbar)
+    QMUITopBar topBar;
+
     private ArrayList<SlideModel.ImageInfo> banListData;
     private DisBannerAdapter disBannerAdapter;
     private long PAGER_TIME = 3 * 1000;
@@ -177,6 +182,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
     private void initUI() {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
+        topBar.setTitle(R.string.tabbar_discover_txt);
     }
 
     private void setListener() {

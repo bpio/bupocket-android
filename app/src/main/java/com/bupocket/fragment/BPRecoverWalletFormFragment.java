@@ -9,8 +9,10 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -39,6 +41,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.content.Context.INPUT_METHOD_SERVICE;
 
 public class BPRecoverWalletFormFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -121,6 +125,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
 
     private void initData() {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+
     }
 
     private void initTopBar() {
@@ -273,7 +278,15 @@ public class BPRecoverWalletFormFragment extends BaseFragment {
                                             sharedPreferencesHelper.put("currentWalletAddress",walletBPData.getAccounts().get(1).getAddress());
                                             sharedPreferencesHelper.put("mnemonicWordBackupState", "0");
                                             tipDialog.dismiss();
-                                            startFragmentAndDestroyCurrent(new HomeFragment(), false);
+
+                                            getActivity().runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    startFragmentAndDestroyCurrent(new HomeFragment(), false);
+                                                }
+                                            });
+
+
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                             Looper.prepare();

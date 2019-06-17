@@ -21,6 +21,10 @@ public class ToastUtil {
 
     public static void showToast(final Activity context, final String titles, final int duration) {
 
+        if (context==null) {
+            return;
+        }
+
         if (titles==null||titles.isEmpty()) {
             return;
         }

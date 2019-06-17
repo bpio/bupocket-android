@@ -21,30 +21,13 @@
             android:paddingBottom="8dp"
             >
 
-
-            <RelativeLayout
+            <include
                 android:id="@+id/nodeIconRl"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp">
-
-                <ImageView
-                    android:id="@+id/nodeIconBgIv"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_centerInParent="true"
-                    android:background="@mipmap/icon_token_bg_list" />
-
-                <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                    android:id="@+id/nodeIconIv"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerInParent="true"
-                    app:qmui_border_width="0dp"
-                    app:qmui_is_circle="true" />
-
-            </RelativeLayout>
+                android:layout_marginTop="10dp"
+                layout="@layout/view_circle_head_layout"/>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -55,7 +38,7 @@
 
                 <TextView
                     android:id="@+id/nodeNameTv"
-                    style="@style/tv_node_plan_style"
+                    style="@style/BPTextNodePlan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"
@@ -133,7 +116,7 @@
             </LinearLayout>
         </RelativeLayout>
 
-        <View style="@style/divide_line" />
+        <View style="@style/BPDivideLine" />
 
         <LinearLayout
             android:layout_width="match_parent"

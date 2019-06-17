@@ -1,14 +1,10 @@
 package com.bupocket.http.api;
 
 import com.bupocket.utils.LogUtils;
-import com.orhanobut.logger.Logger;
-import com.squareup.okhttp.internal.http.HttpEngine;
-
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.concurrent.TimeUnit;
-
 import okhttp3.Interceptor;
 import okhttp3.MediaType;
 import okhttp3.Request;
@@ -43,8 +39,8 @@ public class LoggingInterceptor implements Interceptor {
             body = buffer.readString(charset);
         }
 
-        LogUtils.e("发送请求\nmethod：%s\nurl：%s\nheaders: %sbody：%s",
-                request.method(), request.url(), request.headers(), body);
+//        LogUtils.e("发送请求\nmethod：%s\nurl：%s\nheaders: %sbody：%s",
+//                request.method(), request.url(), request.headers(), body);
 
 
         long startNs = System.nanoTime();

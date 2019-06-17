@@ -1,14 +1,18 @@
 package com.bupocket.fragment.discover;
 
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 
 import butterknife.BindView;
@@ -22,7 +26,8 @@ public class BPBannerFragment extends BaseFragment {
     QMUITopBar mTopBar;
     @BindView(R.id.wvBanner)
     WebView wvBanner;
-
+    @BindView(R.id.pbWeb)
+    ProgressBar progressBar;
 
     private Unbinder bind;
     private String url;
@@ -55,7 +60,7 @@ public class BPBannerFragment extends BaseFragment {
         webSettings.setAllowFileAccess(true);
         //设置支持缩放
         webSettings.setBuiltInZoomControls(true);
-        wvBanner.setWebViewClient(new webViewClient ());
+        wvBanner.setWebViewClient(new webViewClient());
         webSettings.setAppCacheEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.supportMultipleWindows();
@@ -68,7 +73,21 @@ public class BPBannerFragment extends BaseFragment {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setLoadsImagesAutomatically(true);
 
-        wvBanner.setWebChromeClient(new WebChromeClient());//这行最好不要丢掉
+        wvBanner.setWebChromeClient(new WebChromeClient() {
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100) {
+                    progressBar.setVisibility(View.GONE);
+                    //progressBar.setProgress(newProgress);
+                } else {
+                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setProgress(newProgress);
+                }
+
+            }
+        });
 
 
         wvBanner.loadUrl(url);
@@ -90,25 +109,22 @@ public class BPBannerFragment extends BaseFragment {
 
 
     private class webViewClient extends WebViewClient {
-//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//            view.loadurl(url)//返回true代表在当前webview中打开，返回false表示打开浏览器
-//            return super.shouldOverrideUrlLoading(view,url);       }
-//
-//        @Override
-//        public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//            if(!dialog.isShowing()) {
-//                dialog.show();
-//            }
-//            super.onPageStarted(view, url, favicon);
-//        }
-//
-//        @Override
-//        public void onPageFinished(WebView view, String url) {
-//            if(dialog.isShowing()){
-//                dialog.dismiss();
-//            }
-//            super.onPageFinished(view, url);
-//        }
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+//            return super.shouldOverrideUrlLoading(view, request);
+            view.loadUrl(url);
+            return true;
+        }
     }
 
 

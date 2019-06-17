@@ -7,23 +7,38 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.bupocket.R;
+import com.qmuiteam.qmui.widget.QMUITopBar;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public class BumoNewsActivity extends AppCompatActivity {
-    private WebView mWebView;
+    @BindView(R.id.topbar)
+    QMUITopBar mTopBar;
+    @BindView(R.id.pbWeb)
+    ProgressBar progressBar;
+    @BindView(R.id.webView)
+    WebView mWebView;
     private static final String APP_CACHE_DIRNAME = "/webCache";
     private static final String URL = "https://m-news.bumo.io/";
+    private Unbinder bind;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bumo_news);
-        mWebView = (WebView)findViewById(R.id.webView);
 
+        bind = ButterKnife.bind(this);
+        initTopBar();
         mWebView.loadUrl(URL);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
@@ -41,11 +56,20 @@ public class BumoNewsActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             settings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
         }
-        /*if(isNetworkAvailable(getApplication())){
-            settings.setCacheMode(WebSettings.LOAD_DEFAULT);
-        }else {
-            settings.setCacheMode(WebSettings.LOAD_CACHE_ONLY);
-        }*/
+        mWebView.setWebChromeClient(new WebChromeClient() {
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                super.onProgressChanged(view, newProgress);
+                if (newProgress == 100) {
+                    progressBar.setVisibility(View.GONE);
+                } else {
+                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.setProgress(newProgress);
+                }
+
+            }
+        });
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         settings.setJavaScriptEnabled(true);
 
@@ -62,11 +86,9 @@ public class BumoNewsActivity extends AppCompatActivity {
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         if (connectivity != null) {
             NetworkInfo info = connectivity.getActiveNetworkInfo();
-            if (info != null && info.isConnected())
-            {
+            if (info != null && info.isConnected()) {
                 // 当前网络是连接的
-                if (info.getState() == NetworkInfo.State.CONNECTED)
-                {
+                if (info.getState() == NetworkInfo.State.CONNECTED) {
                     // 当前所连接的网络可用
                     return true;
                 }
@@ -77,10 +99,29 @@ public class BumoNewsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(mWebView.canGoBack()){
+        if (mWebView.canGoBack()) {
             mWebView.goBack();
-        }else {
+        } else {
             super.onBackPressed();
         }
+    }
+
+
+    private void initTopBar() {
+        mTopBar.setBackgroundDividerEnabled(false);
+        mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+
+            }
+        });
+        mTopBar.setTitle(R.string.information_txt);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        bind.unbind();
     }
 }

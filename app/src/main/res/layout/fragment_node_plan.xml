@@ -7,12 +7,13 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:background="@color/app_bg_color_gray">
 
 
         <include
-            layout="@layout/view_common_listview_layout"/>
+            layout="@layout/view_common_lv_layout"/>
 
         <LinearLayout
             android:id="@+id/llHeadView"
