@@ -47,8 +47,6 @@ public class BPWalletsHomeFragment extends BaseFragment {
     @BindView(R.id.identityWalletInfoLl)
     LinearLayout mIdentityWalletInfoRl;
 
-    @BindView(R.id.importSmallWalletBtnIv)
-    ImageView mImportSmallWalletBtnIv;
     @BindView(R.id.importBigWalletBtn)
     QMUIRoundButton mImportBigWalletBtn;
     @BindView(R.id.importWalletsLv)
@@ -103,11 +101,10 @@ public class BPWalletsHomeFragment extends BaseFragment {
 
     private void initImportedWalletView() {
         if(importedWallets == null || importedWallets.size() == 0){
-            mImportSmallWalletBtnIv.setVisibility(View.GONE);
+
             mImportWalletsLv.setVisibility(View.GONE);
             mImportBigWalletBtn.setVisibility(View.VISIBLE);
         }else{
-            mImportSmallWalletBtnIv.setVisibility(View.VISIBLE);
             mImportWalletsLv.setVisibility(View.VISIBLE);
             mImportBigWalletBtn.setVisibility(View.GONE);
 
@@ -220,13 +217,6 @@ public class BPWalletsHomeFragment extends BaseFragment {
                 BPWalletManageFragment bpWalletManageFragment = new BPWalletManageFragment();
                 bpWalletManageFragment.setArguments(argz);
                 startFragment(bpWalletManageFragment);
-            }
-        });
-
-        mImportSmallWalletBtnIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                importWallet();
             }
         });
 
