@@ -53,13 +53,13 @@ public class BPWalletManageFragment extends BaseFragment {
     @BindView(R.id.walletInfoLl)
     LinearLayout mWalletInfoLl;
     @BindView(R.id.exportKeystoreRl)
-    RelativeLayout mExportKeystoreRl;
+    LinearLayout mExportKeystoreRl;
     @BindView(R.id.exportPrivateRl)
-    RelativeLayout mExportPrivateRl;
+    LinearLayout mExportPrivateRl;
     @BindView(R.id.backupMnemonicRl)
-    RelativeLayout mBackupMnemonicRl;
+    LinearLayout mBackupMnemonicRl;
     @BindView(R.id.changePwRl)
-    RelativeLayout mChangePwRl;
+    LinearLayout mChangePwRl;
 
 
     private String walletAddress;
@@ -533,6 +533,6 @@ public class BPWalletManageFragment extends BaseFragment {
                 popBackStack();
             }
         });
-        mTopBar.setTitle(getString(R.string.manage_txt));
+        mTopBar.setTitle(getString(R.string.manage_wallet_title));
     }
 }
