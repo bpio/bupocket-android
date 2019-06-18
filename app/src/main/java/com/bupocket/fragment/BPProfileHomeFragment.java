@@ -49,8 +49,6 @@ public class BPProfileHomeFragment extends BaseFragment {
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String currentAccNick;
 
-    @BindString(R.string.qr_copy_success_message)
-    String copySuccessMessage;
     @BindView(R.id.userNick)
     TextView userNickTx;
     @BindView(R.id.changePwdRL)
@@ -174,16 +172,7 @@ public class BPProfileHomeFragment extends BaseFragment {
                 gotoAddressBookFragment();
             }
         });
-//        mProfileAvatarIv.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Bundle argz = new Bundle();
-//                argz.putString("accName", currentAccNick);
-//                BPUserInfoFragment bpUserInfoFragment = new BPUserInfoFragment();
-//                bpUserInfoFragment.setArguments(argz);
-//                startFragment(bpUserInfoFragment);
-//            }
-//        });
+
 
         int hiddenFunctionStatus = sharedPreferencesHelper.getInt("hiddenFunctionStatus", HiddenFunctionStatusEnum.DISABLE.getCode());
         if (HiddenFunctionStatusEnum.DISABLE.getCode() == hiddenFunctionStatus) {

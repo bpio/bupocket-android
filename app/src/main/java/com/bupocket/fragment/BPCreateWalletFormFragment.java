@@ -184,9 +184,8 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
                             sharedPreferencesHelper.put("identityId", walletBPData.getAccounts().get(0).getAddress());
                             sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
                             sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.CREATE_MNEONIC_CODE.getCode());
-
                             sharedPreferencesHelper.put("currentWalletAddress", walletBPData.getAccounts().get(1).getAddress());
-
+                            sharedPreferencesHelper.put("currentIdentityWalletName",mSetIdentityNameEt.getText().toString().trim());
                             final WalletBPData finalWalletBPData = walletBPData;
                             getActivity().runOnUiThread(new Runnable() {
                                 @Override
