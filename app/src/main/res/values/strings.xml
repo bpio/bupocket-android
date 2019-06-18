@@ -362,7 +362,7 @@
 
 
     <string name="current_identity_wallet_title_txt">当前身份下的钱包</string>
-    <string name="imported_wallet_title_txt">导入的钱包</string>
+    <string name="imported_wallet_title_txt">创建/导入的钱包</string>
     <string name="manage_txt">管理</string>
     <string name="export_keystore_txt">导出Keystore</string>
     <string name="export_private_txt">导出私钥</string>

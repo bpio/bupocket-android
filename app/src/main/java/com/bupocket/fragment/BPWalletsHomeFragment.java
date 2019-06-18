@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,22 +36,24 @@ public class BPWalletsHomeFragment extends BaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
-    @BindView(R.id.currentIdentityWalletNameTv)
+    @BindView(R.id.walletNameTv)
     TextView mCurrentIdentityWalletNameTv;
-    @BindView(R.id.currentIdentityWalletAddressTv)
+    @BindView(R.id.walletAddressTv)
     TextView mCurrentIdentityWalletAddressTv;
-    @BindView(R.id.manageIdentityWalletBtn)
+    @BindView(R.id.manageWalletBtn)
     QMUIRoundButton mManageIdentityWalletBtn;
-    @BindView(R.id.currentIdentityWalletSignTv)
+    @BindView(R.id.walletSignTv)
     TextView mCurrentIdentityWalletSignTv;
+    @BindView(R.id.identityWalletInfoLl)
+    LinearLayout mIdentityWalletInfoRl;
+
     @BindView(R.id.importSmallWalletBtnIv)
     ImageView mImportSmallWalletBtnIv;
     @BindView(R.id.importBigWalletBtn)
     QMUIRoundButton mImportBigWalletBtn;
     @BindView(R.id.importWalletsLv)
     ListView mImportWalletsLv;
-    @BindView(R.id.identityWalletInfoRl)
-    RelativeLayout mIdentityWalletInfoRl;
+
 
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String currentIdentityWalletName;
@@ -177,7 +180,6 @@ public class BPWalletsHomeFragment extends BaseFragment {
                 popBackStack();
             }
         });
-        mTopBar.setTitle(R.string.tabbr_wallet_txt);
         mTopBar.addRightImageButton(R.mipmap.icon_import_wallet,R.id.topbar_right_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,11 +189,6 @@ public class BPWalletsHomeFragment extends BaseFragment {
                     @Override
                     public void onClick(View v) {
 
-//                        BPCreateWalletFormFragment fragment = new BPCreateWalletFormFragment();
-//                        Bundle args = new Bundle();
-//                        args.putString("tagFragment",BPWalletsHomeFragment.class.getSimpleName());
-//                        fragment.setArguments(args);
-//                        startFragment(fragment);
 
                         walletBottom.dismiss();
                     }
