@@ -259,7 +259,8 @@
                 android:layout_marginRight="12.5dp"
                 android:gravity="center"
                 android:text="@string/delete_wallet_txt"
-                android:textColor="@color/app_txt_color_red_3"
+                android:textColor="@color/app_txt_color_red"
+                android:textSize="18sp"
                 app:qmui_backgroundColor="@color/app_color_white"
                 app:qmui_borderWidth="0dp"
                 app:qmui_radius="5dp" />
