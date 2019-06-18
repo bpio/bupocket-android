@@ -5,43 +5,45 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/app_color_white"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginTop="?attr/qmui_topbar_height"
             android:orientation="vertical">
 
-            <com.qmuiteam.qmui.widget.QMUITopBar
-                android:id="@+id/topbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/qmui_topbar_height"
-                android:fitsSystemWindows="true"
-                android:visibility="invisible" />
 
             <LinearLayout
                 android:id="@+id/llProfileIdentity"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
-                <ImageView
+
+                <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/profileAvatarIv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@mipmap/avatar"
-                    android:clickable="false" />
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginLeft="10dp"
+                    android:background="@mipmap/ic_launcher"
+                    android:scaleType="fitXY"
+                    app:riv_corner_radius="15dp" />
 
                 <LinearLayout
 
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
@@ -49,12 +51,17 @@
                         android:id="@+id/userNick"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/app_color_black"
+                        android:textSize="15sp"
                         tools:text="name" />
 
                     <TextView
                         android:id="@+id/tvProfileAddress"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textColor="@color/app_txt_color_gray_2"
+                        android:textSize="14sp"
                         tools:text="address" />
                 </LinearLayout>
 
@@ -83,64 +90,70 @@
 
 
                 <LinearLayout
+                    android:id="@+id/ivProfileAddressManage"
                     android:layout_width="0dp"
                     android:layout_height="80dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_corner_blue"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="23dp"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
+                        android:layout_weight="1"
                         android:text="@string/address_book_txt"
-                        android:textColor="@color/app_color_white" />
+                        android:textColor="@color/app_color_white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
+
 
                     <ImageView
-                        android:id="@+id/ivProfileAddressManage"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:background="@mipmap/ic_discover_address" />
 
                 </LinearLayout>
 
 
                 <LinearLayout
+                    android:id="@+id/ivProfileWalletManage"
                     android:layout_width="0dp"
                     android:layout_height="80dp"
                     android:layout_weight="1"
                     android:background="@drawable/shape_corner_green"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="23dp"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
+                        android:layout_weight="1"
                         android:text="@string/wallet_manage"
-                        android:textColor="@color/app_color_white" />
+                        android:textColor="@color/app_color_white"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
 
                     <ImageView
-                        android:id="@+id/ivProfileWalletManage"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp" />
+                        android:layout_gravity="bottom"
+                        android:background="@mipmap/ic_discover_wallet_manage" />
                 </LinearLayout>
 
 
             </LinearLayout>
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/user_setting" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:background="@color/app_color_gray" />
 
 
             <LinearLayout
@@ -150,10 +163,7 @@
 
                 <LinearLayout
                     android:id="@+id/settingRL"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="16dp"
-                    android:gravity="center_vertical">
+                    style="@style/BPLLDiscover">
 
                     <ImageView
                         android:id="@+id/settingIcon"
@@ -164,25 +174,19 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="15dp"
                         android:layout_marginLeft="15dp"
-                        android:background="@mipmap/icon_monetary_unit" />
+                        android:background="@mipmap/currency_price" />
 
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="13dp"
-                        android:layout_marginLeft="13dp"
-                        android:layout_toEndOf="@id/settingIcon"
-                        android:layout_toRightOf="@id/settingIcon"
-                        android:layout_weight="1"
-                        android:text="@string/profile_currency"
-                        android:textSize="15sp" />
+                        style="@style/BPTextViewDiscover"
+                        android:text="@string/profile_currency" />
 
                     <TextView
                         android:id="@+id/tvProfileCurrency"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="CNY" />
+                        android:text="CNY"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="15sp" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -195,12 +199,15 @@
                         android:background="@mipmap/icon_right_arrow" />
                 </LinearLayout>
 
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="40dp"
+                    android:background="@color/gray_line" />
+
                 <LinearLayout
                     android:id="@+id/addressBookRL"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="16dp"
-                    android:gravity="center_vertical">
+                    style="@style/BPLLDiscover">
 
                     <ImageView
                         android:id="@+id/addressBookIcon"
@@ -214,22 +221,16 @@
                         android:background="@mipmap/icon_profile_item_language" />
 
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="13dp"
-                        android:layout_marginLeft="13dp"
-                        android:layout_toEndOf="@id/addressBookIcon"
-                        android:layout_toRightOf="@id/addressBookIcon"
-                        android:layout_weight="1"
-                        android:text="@string/profile_language"
-                        android:textSize="15sp" />
+                        style="@style/BPTextViewDiscover"
+                        android:text="@string/profile_language" />
 
                     <TextView
                         android:id="@+id/tvProfileLanguage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="语言" />
+                        android:text="语言"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="15sp" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -241,12 +242,15 @@
                         android:layout_marginRight="17.5dp"
                         android:background="@mipmap/icon_right_arrow" />
                 </LinearLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="40dp"
+                    android:background="@color/gray_line" />
                 <RelativeLayout
                     android:id="@+id/manageWalletRl"
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="16dp">
+                    android:layout_height="55dp">
 
                     <ImageView
                         android:id="@+id/manageWalletIcon"
@@ -257,7 +261,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="15dp"
                         android:layout_marginLeft="15dp"
-                        android:background="@mipmap/icon_switch_node" />
+                        android:background="@mipmap/node_setting" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -268,6 +272,7 @@
                         android:layout_toEndOf="@id/manageWalletIcon"
                         android:layout_toRightOf="@id/manageWalletIcon"
                         android:text="@string/profile_node_setting"
+                        android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
 
                     <ImageView
@@ -283,6 +288,11 @@
 
 
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:background="@color/app_color_gray" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -329,18 +339,10 @@
                         android:background="@mipmap/icon_right_arrow" />
                 </RelativeLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/others" />
 
                 <LinearLayout
                     android:id="@+id/llProfileProtocol"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="16dp"
-                    android:gravity="center_vertical">
+                    style="@style/BPLLDiscover">
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -350,28 +352,24 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="15dp"
                         android:layout_marginLeft="15dp"
-                        android:background="@mipmap/icon_profile_item_help" />
+                        android:background="@mipmap/user_protocol" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="13dp"
-                        android:layout_marginLeft="13dp"
-                        android:layout_toEndOf="@id/helpIcon"
-                        android:layout_toRightOf="@id/helpIcon"
-                        android:text="@string/profile_user_protocol"
-                        android:textSize="15sp" />
+                        style="@style/BPTextViewDiscover"
+                        android:text="@string/profile_user_protocol" />
 
 
                 </LinearLayout>
 
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="40dp"
+                    android:background="@color/gray_line" />
                 <RelativeLayout
                     android:id="@+id/helpFeedbackRL"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="16dp">
+                    style="@style/BPLLDiscover"
+                    >
 
                     <ImageView
                         android:id="@+id/helpIcon"
@@ -382,7 +380,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="15dp"
                         android:layout_marginLeft="15dp"
-                        android:background="@mipmap/icon_profile_item_help" />
+                        android:background="@mipmap/feed_back" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -393,6 +391,7 @@
                         android:layout_toEndOf="@id/helpIcon"
                         android:layout_toRightOf="@id/helpIcon"
                         android:text="@string/profile_user_help"
+                        android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
 
                     <ImageView
@@ -405,12 +404,15 @@
                         android:layout_marginRight="17.5dp"
                         android:background="@mipmap/icon_right_arrow" />
                 </RelativeLayout>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="40dp"
+                    android:background="@color/gray_line" />
                 <RelativeLayout
                     android:id="@+id/versionRL"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="16dp">
+                    style="@style/BPLLDiscover"
+                    >
 
                     <ImageView
                         android:id="@+id/versionIcon"
@@ -421,7 +423,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="15dp"
                         android:layout_marginLeft="15dp"
-                        android:background="@mipmap/icon_profile_item_version" />
+                        android:background="@mipmap/icon_profile_item_help" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -432,8 +434,9 @@
                         android:layout_toEndOf="@id/versionIcon"
                         android:layout_toRightOf="@id/versionIcon"
                         android:text="@string/profile_about_us"
-                        android:textSize="15sp" />
-
+                        android:textSize="15sp"
+                        android:textColor="@color/app_txt_color_gray_2"
+                        />
                     <TextView
                         android:id="@+id/versionNameTv"
                         android:layout_width="wrap_content"
@@ -460,8 +463,25 @@
 
             </LinearLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:background="@color/app_color_gray" />
+
         </LinearLayout>
     </ScrollView>
 
+    <com.qmuiteam.qmui.widget.QMUITopBar
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/qmui_topbar_height"
+        android:fitsSystemWindows="true"
+        android:visibility="invisible" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        android:background="@color/gray_line" />
 
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
