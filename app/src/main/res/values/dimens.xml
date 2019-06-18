@@ -38,4 +38,7 @@
     <dimen name="common_btn_size">18sp</dimen>
 
 
+    <dimen name="common_left_padding">10dp</dimen>
+
+
 </resources>

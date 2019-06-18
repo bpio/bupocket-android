@@ -6,125 +6,149 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="?attr/qmui_topbar_height"
-        android:background="@color/qmui_config_color_white"
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/common_left_padding"
+            android:layout_marginRight="@dimen/common_left_padding"
             android:orientation="vertical">
 
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/wallet_info"
+                android:textColor="@color/app_txt_color_gray"
+                android:textSize="14sp" />
+
+
+            <include layout="@layout/view_wallet_info" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:text="@string/change_the_password_txt"
-                android:theme="@style/BPViewTitle" />
+                android:textColor="@color/app_txt_color_gray"
+                android:textSize="14sp" />
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12.5dp"
-                android:layout_marginTop="35dp"
-                android:text="@string/change_pwd_old_pwd"
-                android:textSize="16sp" />
-
-
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingRight="12.5dp">
+                android:background="@drawable/shape_corner_white"
+                android:orientation="vertical"
+                android:paddingBottom="34dp"
+                android:paddingLeft="15dp">
 
-                <EditText
-                    android:id="@+id/oldPasswordET"
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    style="@style/BPTextViewCreateWallet"
+                    android:text="@string/change_old_pwd" />
+
+
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12.5dp"
-                    android:hint="@string/change_pwd_old_pwd_hint"
-                    android:inputType="textPassword"
-                    android:paddingRight="20dp"
-                    android:textSize="15sp"
-                    android:theme="@style/BPEditText" />
+                    android:paddingRight="12.5dp">
 
-                <ImageView
-                    android:id="@+id/oldPasswordIv"
-                    android:layout_width="20dp"
+                    <EditText
+                        android:id="@+id/oldPasswordET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/change_old_pwd_hint"
+                        android:inputType="textPassword"
+                        android:paddingRight="20dp"
+                        android:textSize="15sp"
+                        android:theme="@style/BPEditText" />
+
+                    <ImageView
+                        android:id="@+id/oldPasswordIv"
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginTop="15dp"
+                        android:src="@mipmap/icon_close_eye" />
+
+                </RelativeLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:paddingTop="20dp"
-                    android:src="@mipmap/icon_close_eye" />
+                    android:layout_marginTop="10dp"
+                    style="@style/BPTextViewCreateWallet"
+                    android:text="@string/change_new_pwd" />
 
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12.5dp"
-                android:layout_marginTop="30dp"
-                android:text="@string/change_pwd_new_pwd"
-                android:textSize="16sp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingRight="12.5dp">
-
-                <EditText
-                    android:id="@+id/newPasswordET"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12.5dp"
-                    android:hint="@string/change_pwd_new_pwd_hint"
-                    android:inputType="textPassword"
-                    android:paddingRight="20dp"
-                    android:textSize="15sp"
-                    android:theme="@style/BPEditText" />
+                    android:paddingRight="12.5dp">
 
-                <ImageView
-                    android:id="@+id/newPasswordIv"
-                    android:layout_width="20dp"
+                    <EditText
+                        android:id="@+id/newPasswordET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hint_wallet_create_password"
+                        android:inputType="textPassword"
+                        android:paddingRight="20dp"
+                        android:textSize="15sp"
+                        android:theme="@style/BPEditText" />
+
+                    <ImageView
+                        android:id="@+id/newPasswordIv"
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:paddingTop="15dp"
+                        android:src="@mipmap/icon_close_eye" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:paddingTop="20dp"
-                    android:src="@mipmap/icon_close_eye" />
+                    android:layout_marginTop="10dp"
+                    style="@style/BPTextViewCreateWallet"
+                    android:text="@string/change_new_pwd_confirm" />
 
-            </RelativeLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12.5dp"
-                android:layout_marginTop="30dp"
-                android:text="@string/change_pwd_new_pwd_confirm"
-                android:textSize="16sp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingRight="12.5dp">
-
-                <EditText
-                    android:id="@+id/newPasswordConfirmET"
+                <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="12.5dp"
-                    android:hint="@string/change_pwd_new_pwd_confirm_hint"
-                    android:inputType="textPassword"
-                    android:paddingRight="20dp"
-                    android:textSize="15sp"
-                    android:theme="@style/BPEditText" />
+                    android:paddingRight="12.5dp">
 
-                <ImageView
-                    android:id="@+id/newPasswordConfirmIv"
-                    android:layout_width="20dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:paddingTop="20dp"
-                    android:src="@mipmap/icon_close_eye" />
+                    <EditText
+                        android:id="@+id/newPasswordConfirmET"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/change_new_pwd_confirm"
+                        android:inputType="textPassword"
+                        android:paddingRight="20dp"
+                        android:textSize="15sp"
+                        android:theme="@style/BPEditText" />
 
-            </RelativeLayout>
+                    <ImageView
+                        android:id="@+id/newPasswordConfirmIv"
+                        android:layout_width="20dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:paddingTop="15dp"
+                        android:src="@mipmap/icon_close_eye" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
 
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
@@ -133,14 +157,14 @@
                 android:layout_height="@dimen/bp_btn_hight"
                 android:layout_centerInParent="true"
                 android:layout_gravity="bottom"
-                android:layout_marginBottom="20dp"
                 android:layout_marginTop="40dp"
+                android:layout_marginBottom="20dp"
                 android:enabled="false"
                 android:focusable="true"
                 android:gravity="center"
-                android:text="@string/wallet_create_ok_btn"
+                android:text="@string/change_confirm_change"
                 android:textColor="@color/app_color_font"
-                android:textSize="@dimen/bp_btn_text_size"
+                android:textSize="18sp"
                 app:qmui_backgroundColor="@color/disabled_btn_color"
                 app:qmui_borderColor="@color/disabled_btn_color"
                 app:qmui_radius="5dp" />

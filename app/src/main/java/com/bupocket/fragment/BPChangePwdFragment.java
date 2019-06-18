@@ -4,6 +4,7 @@ import android.location.Address;
 import android.os.Build;
 import android.os.Looper;
 import android.support.annotation.RequiresApi;
+import android.support.annotation.VisibleForTesting;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.InputType;
@@ -14,15 +15,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.home.HomeFragment;
+import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletBPData;
@@ -34,7 +38,7 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class BPChangePwdFragment extends BaseFragment{
+public class BPChangePwdFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
     @BindView(R.id.oldPasswordET)
@@ -51,6 +55,10 @@ public class BPChangePwdFragment extends BaseFragment{
     ImageView mNewPasswordIv;
     @BindView(R.id.newPasswordConfirmIv)
     ImageView mNewPasswordConfirmIv;
+    @BindView(R.id.walletNameTv)
+    TextView walletNameTv;
+    @BindView(R.id.walletAddressTv)
+    TextView walletAddressTv;
 
     private SharedPreferencesHelper sharedPreferencesHelper;
     private boolean isNewPwdHideFirst = false;
@@ -75,7 +83,7 @@ public class BPChangePwdFragment extends BaseFragment{
         mNextChangePwdBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(validateData()){
+                if (validateData()) {
                     final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                             .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                             .setTipWord(getResources().getString(R.string.handling))
@@ -93,37 +101,36 @@ public class BPChangePwdFragment extends BaseFragment{
                                 String skey;
                                 if (walletAddress.equals(identityWalletAddress)) {
                                     skey = sharedPreferencesHelper.getSharedPreference("skey", "").toString();
-                                }else{
+                                } else {
                                     skey = sharedPreferencesHelper.getSharedPreference(BPChangePwdFragment.this.walletAddress + "-skey", "").toString();
                                 }
 
-                                WalletBPData walletBPData = Wallet.getInstance().updateAccountPassword(oldPwd,newPwd,skey,getContext());
+                                WalletBPData walletBPData = Wallet.getInstance().updateAccountPassword(oldPwd, newPwd, skey, getContext());
 
                                 if (walletAddress.equals(identityWalletAddress)) {
                                     sharedPreferencesHelper.put("skey", walletBPData.getSkey());
                                     sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
-                                }else{
+                                } else {
                                     sharedPreferencesHelper.put(walletAddress + "-skey", walletBPData.getSkey());
-                                    sharedPreferencesHelper.put(walletAddress+"-BPdata", JSON.toJSONString(walletBPData.getAccounts()));
+                                    sharedPreferencesHelper.put(walletAddress + "-BPdata", JSON.toJSONString(walletBPData.getAccounts()));
                                 }
                                 tipDialog.dismiss();
 
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                       popBackStack();
+                                        popBackStack();
                                     }
                                 });
-
 
 
                             } catch (WalletException e) {
                                 e.printStackTrace();
                                 Looper.prepare();
-                                Toast.makeText(getActivity(), R.string.change_pwd_form_error6,Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), R.string.change_pwd_form_error6, Toast.LENGTH_SHORT).show();
                                 tipDialog.dismiss();
                                 Looper.loop();
-                            }finally {
+                            } finally {
                                 tipDialog.dismiss();
                             }
                         }
@@ -142,15 +149,15 @@ public class BPChangePwdFragment extends BaseFragment{
             @Override
             public void onClick(View view) {
                 if (!isOldPwdHideFirst) {
-                    mOldPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_open_eye));
+                    mOldPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_open_eye));
                     mOldPasswordET.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mOldPasswordET.setTransformationMethod(HideReturnsTransformationMethod.getInstance ());
+                    mOldPasswordET.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     mOldPasswordET.setSelection(mOldPasswordET.getText().length());
                     isOldPwdHideFirst = true;
                 } else {
-                    mOldPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_close_eye));
+                    mOldPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
                     mOldPasswordET.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    mOldPasswordET.setTransformationMethod(PasswordTransformationMethod.getInstance ());
+                    mOldPasswordET.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     mOldPasswordET.setSelection(mOldPasswordET.getText().length());
                     isOldPwdHideFirst = false;
                 }
@@ -160,15 +167,15 @@ public class BPChangePwdFragment extends BaseFragment{
             @Override
             public void onClick(View view) {
                 if (!isNewPwdHideFirst) {
-                    mNewPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_open_eye));
+                    mNewPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_open_eye));
                     mNewPasswordET.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mNewPasswordET.setTransformationMethod(HideReturnsTransformationMethod.getInstance ());
+                    mNewPasswordET.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     mNewPasswordET.setSelection(mNewPasswordET.getText().length());
                     isNewPwdHideFirst = true;
                 } else {
-                    mNewPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_close_eye));
+                    mNewPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
                     mNewPasswordET.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    mNewPasswordET.setTransformationMethod(PasswordTransformationMethod.getInstance ());
+                    mNewPasswordET.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     mNewPasswordET.setSelection(mNewPasswordET.getText().length());
                     isNewPwdHideFirst = false;
                 }
@@ -178,15 +185,15 @@ public class BPChangePwdFragment extends BaseFragment{
             @Override
             public void onClick(View view) {
                 if (!isConfirmPwdHideFirst) {
-                    mNewPasswordConfirmIv.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_open_eye));
+                    mNewPasswordConfirmIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_open_eye));
                     mNewPasswordConfirmET.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mNewPasswordConfirmET.setTransformationMethod(HideReturnsTransformationMethod.getInstance ());
+                    mNewPasswordConfirmET.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     mNewPasswordConfirmET.setSelection(mNewPasswordConfirmET.getText().length());
                     isConfirmPwdHideFirst = true;
                 } else {
-                    mNewPasswordConfirmIv.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_close_eye));
+                    mNewPasswordConfirmIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
                     mNewPasswordConfirmET.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    mNewPasswordConfirmET.setTransformationMethod(PasswordTransformationMethod.getInstance ());
+                    mNewPasswordConfirmET.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     mNewPasswordConfirmET.setSelection(mNewPasswordConfirmET.getText().length());
                     isConfirmPwdHideFirst = false;
                 }
@@ -214,10 +221,10 @@ public class BPChangePwdFragment extends BaseFragment{
                 boolean signOldPassword = mOldPasswordET.getText().toString().trim().length() > 0;
                 boolean signNewPassword = mNewPasswordET.getText().toString().trim().length() > 0;
                 boolean signNewPasswordConfirm = mNewPasswordConfirmET.getText().toString().trim().length() > 0;
-                if(signOldPassword && signNewPassword && signNewPasswordConfirm){
+                if (signOldPassword && signNewPassword && signNewPasswordConfirm) {
                     mNextChangePwdBtn.setEnabled(true);
                     mNextChangePwdBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
-                }else {
+                } else {
                     mNextChangePwdBtn.setEnabled(false);
                     mNextChangePwdBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
                 }
@@ -228,12 +235,17 @@ public class BPChangePwdFragment extends BaseFragment{
         mNewPasswordConfirmET.addTextChangedListener(watcher);
     }
 
-    private void initData(){
+    private void initData() {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         walletAddress = getArguments().getString("address", "");
+
+        String walletName = WalletCurrentUtils.getWalletName(walletAddress, spHelper);
+        walletNameTv.setText(walletName);
+        walletAddressTv.setText(AddressUtil.anonymous(walletAddress));
+
     }
 
-    private boolean validateData(){
+    private boolean validateData() {
         final QMUITipDialog tipDialog;
 
         String oldPwd = mOldPasswordET.getText().toString().trim();
@@ -241,7 +253,7 @@ public class BPChangePwdFragment extends BaseFragment{
         String newPasswordConfirm = mNewPasswordConfirmET.getText().toString().trim();
 
 
-        if(CommonUtil.isNull(oldPwd)){
+        if (CommonUtil.isNull(oldPwd)) {
             tipDialog = new QMUITipDialog.Builder(getContext())
                     .setTipWord(getResources().getString(R.string.change_pwd_err1))
                     .create();
@@ -255,7 +267,7 @@ public class BPChangePwdFragment extends BaseFragment{
             return false;
         }
 
-        if(CommonUtil.isNull(newPwd)){
+        if (CommonUtil.isNull(newPwd)) {
             tipDialog = new QMUITipDialog.Builder(getContext())
                     .setTipWord(getResources().getString(R.string.change_pwd_err2))
                     .create();
@@ -269,7 +281,7 @@ public class BPChangePwdFragment extends BaseFragment{
             return false;
         }
 
-        if(!CommonUtil.validatePassword(newPwd)){
+        if (!CommonUtil.validatePassword(newPwd)) {
             tipDialog = new QMUITipDialog.Builder(getContext())
                     .setTipWord(getResources().getString(R.string.change_pwd_form_error5))
                     .create();
@@ -284,7 +296,7 @@ public class BPChangePwdFragment extends BaseFragment{
         }
 
 
-        if(CommonUtil.isNull(newPasswordConfirm)){
+        if (CommonUtil.isNull(newPasswordConfirm)) {
             tipDialog = new QMUITipDialog.Builder(getContext())
                     .setTipWord(getResources().getString(R.string.change_pwd_err3))
                     .create();
@@ -297,7 +309,7 @@ public class BPChangePwdFragment extends BaseFragment{
             }, 1500);
             return false;
         }
-        if(!newPasswordConfirm.equals(newPwd)){
+        if (!newPasswordConfirm.equals(newPwd)) {
             tipDialog = new QMUITipDialog.Builder(getContext())
                     .setTipWord(getResources().getString(R.string.change_pwd_form_error1))
                     .create();
@@ -321,5 +333,7 @@ public class BPChangePwdFragment extends BaseFragment{
                 popBackStack();
             }
         });
+
+        mTopBar.setTitle(R.string.change_the_password_txt);
     }
 }

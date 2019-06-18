@@ -41,20 +41,6 @@
                 android:textSize="16sp"
                 tools:text="Wallet-1" />
 
-            <TextView
-                android:id="@+id/walletSignTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
-                android:background="@drawable/shape_corner_green_min"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="3dp"
-                android:paddingBottom="3dp"
-                android:text="@string/current_wallet_sign_txt"
-                android:textColor="@color/app_color_white"
-                android:textSize="13sp"
-                android:visibility="invisible" />
         </LinearLayout>
 
 
@@ -69,25 +55,5 @@
             tools:text="buQhSMWw···4Bo73c8C" />
     </LinearLayout>
 
-    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-        android:id="@+id/manageWalletBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_gravity="right|center_vertical"
-        android:layout_marginRight="15dp"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:text="@string/manage_txt"
-        android:textColor="@color/app_color_main"
-        android:textSize="15sp"
-        app:qmui_backgroundColor="@color/app_color_white"
-        app:qmui_borderColor="@color/app_color_main"
-        app:qmui_borderWidth="0.5dp"
-        app:qmui_radius="3dp" />
 
 </LinearLayout>

@@ -120,7 +120,7 @@
     <string name="qr_pic_name_text">QR code of the wallet address </string>
     <string name="qr_copy_success_message">It has been copied to the clipboard</string>
     <!-- 我的 -->
-    <string name="change_the_password_txt">Change the Identity Password</string>
+    <!--<string name="change_the_password_txt">Change the Identity Password</string>-->
     <string name="export_keystore_txt">Export Keystore</string>
     <string name="help_txt">Feedback</string>
     <string name="version_txt">Version</string>

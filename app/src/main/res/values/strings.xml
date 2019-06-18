@@ -160,7 +160,7 @@
     <string name="qr_pic_name_text">钱包地址二维码</string>
     <string name="qr_copy_success_message">已复制到剪切板</string>
     <!-- 我的 -->
-    <string name="change_the_password_txt">修改身份密码</string>
+    <string name="change_the_password_txt">修改安全密码</string>
     <string name="help_txt">帮助与反馈</string>
     <string name="version_txt">版本号</string>
     <string name="language_txt">多语言</string>
@@ -707,6 +707,16 @@
     <string name="tv_recover_wallet_name">请创建身份名</string>
     <string name="wallet_manage">钱包管理</string>
     <string name="manage_wallet_title">管理钱包</string>
+
+
+    <!--change pwd-->
+    <string name="wallet_info">钱包信息</string>
+    <string name="change_old_pwd">请输入原安全密码</string>
+    <string name="change_old_pwd_hint">请输入当前钱包的安全密码</string>
+    <string name="change_new_pwd">请设置新安全密码</string>
+    <string name="change_new_pwd_confirm">再次确认新安全密码</string>
+    <string name="change_confirm_change">确认修改</string>
+
 
 
 </resources>
