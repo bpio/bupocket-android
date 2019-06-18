@@ -16,13 +16,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/common_left_padding"
+        android:layout_marginRight="@dimen/common_left_padding"
+        android:background="@drawable/shape_corner_white"
         android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/llSettingUserHead"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="55dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -30,13 +33,18 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/setting_user_head_hint" />
+                android:paddingLeft="15dp"
+                android:text="@string/setting_user_head_hint"
+                android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="15sp" />
 
-            <ImageView
+            <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/ivSettingUserIcon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/ic_launcher" />
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/ic_normal_head"
+                android:layout_marginRight="8dp"
+                app:riv_corner_radius="4dp" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -48,10 +56,17 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/gray_line" />
+
         <LinearLayout
             android:id="@+id/llSettingUserName"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="55dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -59,12 +74,18 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/setting_user_head_hint" />
+                android:paddingLeft="15dp"
+                android:text="@string/setting_user_head_hint"
+                android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/tvSettingUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/app_txt_color_gray"
+                android:textSize="15sp"
+                android:layout_marginRight="8dp"
                 tools:text="WalletName" />
 
             <ImageView
