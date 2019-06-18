@@ -321,7 +321,7 @@
     <string name="recover_identity_confirm_message_txt">Are you sure to update your password and import your identity</string>
     <!--<string name="wallet_management_txt">Wallet Management</string>-->
     <string name="current_identity_wallet_title_txt">Wallet in the Current Identity</string>
-    <string name="imported_wallet_title_txt">Imported Wallets</string>
+    <!--<string name="imported_wallet_title_txt">Imported Wallets</string>-->
     <string name="manage_txt">Manage</string>
     <string name="export_private_txt">Export Private Key</string>
     <string name="delete_wallet_txt">Delete Wallet</string>

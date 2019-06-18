@@ -19,7 +19,7 @@
     <string name="wallet_create_form_input_identity_name_empty">请输入身份名</string>
     <string name="wallet_create_form_input_password_empty">请输入密码</string>
     <string name="wallet_create_form_input_rePassword_empty">请再次确认密码</string>
-    <string name="wallet_create_form_error1">密码与确认密码不一致</string>
+    <string name="wallet_create_form_error1">两次密码输入不一致</string>
     <string name="wallet_create_form_error2">密码必须是6-30个字符，大小写字母和数字任意两种的组合</string>
     <string name="wallet_create_form_error4">身份名只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
 
@@ -362,7 +362,7 @@
 
 
     <string name="current_identity_wallet_title_txt">当前身份下的钱包</string>
-    <string name="imported_wallet_title_txt">导入的钱包</string>
+    <string name="imported_wallet_title_txt">创建/导入的钱包</string>
     <string name="manage_txt">管理</string>
     <string name="export_keystore_txt">导出Keystore</string>
     <string name="export_private_txt">导出私钥</string>
@@ -705,6 +705,7 @@
 
     <!--recover wallet-->
     <string name="tv_recover_wallet_name">请创建身份名</string>
+    <string name="wallet_manage">钱包管理</string>
 
 
 </resources>

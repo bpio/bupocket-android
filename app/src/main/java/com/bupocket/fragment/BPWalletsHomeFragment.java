@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.adaptor.ImportedWalletAdapter;
+import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.model.WalletInfo;
@@ -32,7 +33,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class BPWalletsHomeFragment extends BaseFragment {
+public class BPWalletsHomeFragment extends AbsBaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
@@ -60,29 +61,26 @@ public class BPWalletsHomeFragment extends BaseFragment {
     private List<String> importedWallets = new ArrayList<>();
     private List<WalletInfo> walletInfoList;
     private ImportedWalletAdapter importedWalletAdapter;
-    private Unbinder bind;
+
+
 
     @Override
-    protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_wallets_home, null);
-        bind = ButterKnife.bind(this, root);
-        init();
-        return root;
+    protected int getLayoutView() {
+        return R.layout.fragment_wallets_home;
+    }
+
+    @Override
+    protected void initView() {
+        initTopBar();
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        initData();
-        initUI();
-        setListener();
     }
 
-    private void init() {
-        initTopBar();
-    }
 
-    private void initData() {
+    public void initData() {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
         currentIdentityWalletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName","Wallet-1").toString();
@@ -91,13 +89,58 @@ public class BPWalletsHomeFragment extends BaseFragment {
             currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
         }
         importedWallets = JSONObject.parseArray(sharedPreferencesHelper.getSharedPreference("importedWallets","[]").toString(),String.class);
-    }
 
-    private void initUI() {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initCurrentIdentityView();
         initImportedWalletView();
     }
+
+    @Override
+    protected void setListeners() {
+            mManageIdentityWalletBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle argz = new Bundle();
+                    argz.putString("walletAddress",currentIdentityWalletAddress);
+                    BPWalletManageFragment bpWalletManageFragment = new BPWalletManageFragment();
+                    bpWalletManageFragment.setArguments(argz);
+                    startFragment(bpWalletManageFragment);
+                }
+            });
+
+            mImportBigWalletBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    importWallet();
+                }
+            });
+
+            mIdentityWalletInfoRl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sharedPreferencesHelper.put("currentWalletAddress",currentIdentityWalletAddress);
+                    mCurrentIdentityWalletSignTv.setVisibility(View.VISIBLE);
+                    currentWalletAddress = currentIdentityWalletAddress;
+                    if (walletInfoList != null && walletInfoList.size() > 0){
+                        importedWalletAdapter = new ImportedWalletAdapter(walletInfoList, getContext(), currentWalletAddress);
+                        mImportWalletsLv.setAdapter(importedWalletAdapter);
+                        importedWalletAdapter.setOnManageWalletBtnListener(new ImportedWalletAdapter.OnManageWalletBtnListener() {
+                            @Override
+                            public void onClick(int i) {
+                                Bundle argz = new Bundle();
+                                WalletInfo walletInfo = walletInfoList.get(i);
+                                argz.putString("walletAddress",walletInfo.getWalletAddress());
+                                BPWalletManageFragment bpWalletManageFragment = new BPWalletManageFragment();
+                                bpWalletManageFragment.setArguments(argz);
+                                startFragment(bpWalletManageFragment);
+                            }
+                        });
+                    }
+                    startFragment(new HomeFragment());
+                }
+            });
+        }
+
 
     private void initImportedWalletView() {
         if(importedWallets == null || importedWallets.size() == 0){
@@ -208,59 +251,10 @@ public class BPWalletsHomeFragment extends BaseFragment {
         });
     }
 
-    private void setListener() {
-        mManageIdentityWalletBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle argz = new Bundle();
-                argz.putString("walletAddress",currentIdentityWalletAddress);
-                BPWalletManageFragment bpWalletManageFragment = new BPWalletManageFragment();
-                bpWalletManageFragment.setArguments(argz);
-                startFragment(bpWalletManageFragment);
-            }
-        });
 
-        mImportBigWalletBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                importWallet();
-            }
-        });
-
-        mIdentityWalletInfoRl.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                sharedPreferencesHelper.put("currentWalletAddress",currentIdentityWalletAddress);
-                mCurrentIdentityWalletSignTv.setVisibility(View.VISIBLE);
-                currentWalletAddress = currentIdentityWalletAddress;
-                if (walletInfoList != null && walletInfoList.size() > 0){
-                    importedWalletAdapter = new ImportedWalletAdapter(walletInfoList, getContext(), currentWalletAddress);
-                    mImportWalletsLv.setAdapter(importedWalletAdapter);
-                    importedWalletAdapter.setOnManageWalletBtnListener(new ImportedWalletAdapter.OnManageWalletBtnListener() {
-                        @Override
-                        public void onClick(int i) {
-                            Bundle argz = new Bundle();
-                            WalletInfo walletInfo = walletInfoList.get(i);
-                            argz.putString("walletAddress",walletInfo.getWalletAddress());
-                            BPWalletManageFragment bpWalletManageFragment = new BPWalletManageFragment();
-                            bpWalletManageFragment.setArguments(argz);
-                            startFragment(bpWalletManageFragment);
-                        }
-                    });
-                }
-                startFragment(new HomeFragment());
-            }
-        });
-    }
 
     private void importWallet() {
         startFragment(new BPWalletImportFragment());
     }
 
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        bind.unbind();
-    }
 }
