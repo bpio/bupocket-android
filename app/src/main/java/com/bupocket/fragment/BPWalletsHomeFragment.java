@@ -82,6 +82,12 @@ public class BPWalletsHomeFragment extends AbsBaseFragment {
 
 
     public void initData() {
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
         currentIdentityWalletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName", Constants.NORMAL_WALLET_NAME).toString();
