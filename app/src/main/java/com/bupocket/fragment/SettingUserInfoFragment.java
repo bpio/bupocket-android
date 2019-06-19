@@ -15,10 +15,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bupocket.R;
+import com.bupocket.adaptor.HeadIconAdapter;
 import com.bupocket.base.AbsBaseFragment;
+import com.bupocket.model.HeadIconModel;
 import com.bupocket.utils.CommonUtil;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 
@@ -95,6 +99,15 @@ public class SettingUserInfoFragment extends AbsBaseFragment {
         qmuiDialog.setCanceledOnTouchOutside(false);
         qmuiDialog.setContentView(R.layout.view_change_wallet_head_icon);
         RecyclerView headIconRv = (RecyclerView) qmuiDialog.findViewById(R.id.headIconRV);
+        ArrayList<HeadIconModel> data = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            HeadIconModel headIconModel = new HeadIconModel();
+            headIconModel.setIconRes(R.mipmap.ic_normal_head);
+            headIconModel.setSelectedPosition(6);
+            data.add(headIconModel);
+        }
+
+        headIconRv.setAdapter(new HeadIconAdapter(mContext,data));
         LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         //设置布局管理器
         headIconRv.setLayoutManager(layoutManager);
