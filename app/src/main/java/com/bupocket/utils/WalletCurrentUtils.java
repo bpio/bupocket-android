@@ -2,6 +2,8 @@ package com.bupocket.utils;
 
 import android.text.TextUtils;
 
+import com.bupocket.common.Constants;
+
 public class WalletCurrentUtils {
 
 
@@ -12,7 +14,7 @@ public class WalletCurrentUtils {
         }
         String currentAccAddr = spHelper.getSharedPreference("currentAccAddr", "").toString();
         if (address.equals(currentAccAddr)) {
-            return spHelper.getSharedPreference("currentIdentityWalletName", "Wallet-1").toString();
+            return spHelper.getSharedPreference("currentIdentityWalletName", Constants.NORMAL_WALLET_NAME).toString();
         } else {
             return spHelper.getSharedPreference(address + "-walletName", "").toString();
         }

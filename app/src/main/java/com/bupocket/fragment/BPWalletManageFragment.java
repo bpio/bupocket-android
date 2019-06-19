@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.Constants;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
@@ -473,7 +474,7 @@ public class BPWalletManageFragment extends BaseFragment {
             currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
         }
         if (sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString().equals(walletAddress)) {
-            walletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName", "Wallet-1").toString();
+            walletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName", Constants.NORMAL_WALLET_NAME).toString();
             whetherIdentityWallet = true;
         } else {
             walletName = sharedPreferencesHelper.getSharedPreference(walletAddress + "-walletName", "").toString();
@@ -499,7 +500,7 @@ public class BPWalletManageFragment extends BaseFragment {
         super.onResume();
         String walletName;
         if (checkIdentity(walletAddress)) {
-            walletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName", "Wallet-1").toString();
+            walletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName", Constants.NORMAL_WALLET_NAME).toString();
         } else {
             walletName = sharedPreferencesHelper.getSharedPreference(walletAddress + "-walletName", "").toString();
         }
@@ -509,7 +510,7 @@ public class BPWalletManageFragment extends BaseFragment {
     }
 
     private void refreshIdentityWalletName() {
-        walletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName", "Wallet-1").toString();
+        walletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName", Constants.NORMAL_WALLET_NAME).toString();
         mWalletNameTv.setText(walletName);
     }
 

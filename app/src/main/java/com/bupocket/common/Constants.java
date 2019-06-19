@@ -51,6 +51,7 @@ public class Constants {
 
 
     public static final String UM_APPID = "5cc7a5e90cafb257820006d9";
+    public static final String NORMAL_WALLET_NAME = "Wallet_1";
 
 
     public static enum MainNetConfig {

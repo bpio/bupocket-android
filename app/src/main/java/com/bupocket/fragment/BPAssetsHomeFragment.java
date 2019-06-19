@@ -82,6 +82,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.bupocket.common.Constants.NORMAL_WALLET_NAME;
+
 public class BPAssetsHomeFragment extends BaseFragment {
 
     @BindView(R.id.refreshLayout)
@@ -441,7 +443,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress", "").toString();
         if (CommonUtil.isNull(currentWalletAddress) || currentWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString())) {
             currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
-            currentWalletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName", "Wallet-1").toString();
+            currentWalletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName", NORMAL_WALLET_NAME).toString();
             whetherIdentityWallet = true;
         } else {
             currentWalletName = sharedPreferencesHelper.getSharedPreference(currentWalletAddress + "-walletName", "").toString();

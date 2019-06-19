@@ -16,6 +16,7 @@ import com.bupocket.R;
 import com.bupocket.adaptor.ImportedWalletAdapter;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.Constants;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.model.WalletInfo;
 import com.bupocket.utils.AddressUtil;
@@ -83,7 +84,7 @@ public class BPWalletsHomeFragment extends AbsBaseFragment {
     public void initData() {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
-        currentIdentityWalletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName","Wallet-1").toString();
+        currentIdentityWalletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName", Constants.NORMAL_WALLET_NAME).toString();
         currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
         if(CommonUtil.isNull(currentWalletAddress)){
             currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
