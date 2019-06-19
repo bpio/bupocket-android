@@ -1,6 +1,10 @@
 package com.bupocket.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -74,7 +78,7 @@ public class SettingUserInfoFragment extends AbsBaseFragment {
         llSettingUserHead.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                settingHeadIcon();
             }
         });
 
@@ -84,6 +88,29 @@ public class SettingUserInfoFragment extends AbsBaseFragment {
                 settingName();
             }
         });
+    }
+
+    private void settingHeadIcon() {
+        final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
+        qmuiDialog.setCanceledOnTouchOutside(false);
+        qmuiDialog.setContentView(R.layout.view_change_wallet_head_icon);
+        RecyclerView headIconRv = (RecyclerView) qmuiDialog.findViewById(R.id.headIconRV);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        //设置布局管理器
+        headIconRv.setLayoutManager(layoutManager);
+        //设置为垂直布局，这也是默认的
+        layoutManager.setOrientation(OrientationHelper.HORIZONTAL);
+        //设置Adapter
+//        headIconRv.setAdapter();
+        //设置分隔线
+//        headIconRv.addItemDecoration(new DividerGridItemDecoration(this));
+        //设置增加或删除条目的动画
+        headIconRv.setItemAnimator(new DefaultItemAnimator());
+
+
+        qmuiDialog.show();
+
+
     }
 
     private void settingName() {

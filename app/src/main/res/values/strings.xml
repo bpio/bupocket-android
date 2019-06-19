@@ -721,5 +721,8 @@
     <!--wallet info-->
     <string name="change_wallet_name_hint">用于区分其他钱包，不能超过20个字符</string>
 
+    <!--setting user info-->
+    <string name="change_wallet_head_title" >选择头像</string>
+
 
 </resources>
