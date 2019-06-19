@@ -134,7 +134,7 @@ public class BPProfileHomeFragment extends BaseFragment {
     }
 
     private void initUI() {
-        userNickTx.setText(currentAccNick);
+
         mVersionNameTv.setText(CommonUtil.packageName(getContext()));
         if (userNickTx.getWidth() > 260) {
             userNickTx.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.LEFT));
@@ -252,11 +252,9 @@ public class BPProfileHomeFragment extends BaseFragment {
     private void initData() {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
-
-        String walletAddress = getWalletAddress();
-        tvProfileAddress.setText(AddressUtil.anonymous(walletAddress));
-        userNickTx.setText(WalletCurrentUtils.getWalletName(walletAddress,spHelper));
-
+        userNickTx.setText(currentAccNick);
+        String identityId = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
+        tvProfileAddress.setText(AddressUtil.anonymous(identityId));
     }
 
 
