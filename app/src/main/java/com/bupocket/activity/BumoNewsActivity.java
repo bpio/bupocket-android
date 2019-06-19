@@ -61,6 +61,9 @@ public class BumoNewsActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 super.onProgressChanged(view, newProgress);
+                if (progressBar == null) {
+                    return;
+                }
                 if (newProgress == 100) {
                     progressBar.setVisibility(View.GONE);
                 } else {

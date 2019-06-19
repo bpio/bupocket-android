@@ -668,7 +668,7 @@ public class BPSendTokenFragment extends BaseFragment {
 
                         BPTransactionTimeoutFragment fragment = new BPTransactionTimeoutFragment();
                         Bundle args = new Bundle();
-                        args.putString("txHash",hash);
+                        args.putString("txHash", hash);
                         fragment.setArguments(args);
                         startFragment(fragment);
                         return;
@@ -684,7 +684,9 @@ public class BPSendTokenFragment extends BaseFragment {
                         @Override
                         public void onResponse(Call<ApiResult<TxDetailRespDto>> call, Response<ApiResult<TxDetailRespDto>> response) {
                             ApiResult<TxDetailRespDto> resp = response.body();
-                            if (!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())) {
+
+                            if (resp == null || resp.getErrCode() == null ||
+                                    !TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())) {
                                 return;
                             } else {
                                 txDeatilRespBoBean = resp.getData().getTxDeatilRespBo();
@@ -702,7 +704,7 @@ public class BPSendTokenFragment extends BaseFragment {
                                 argz.putString("state", txDeatilRespBoBean.getStatus().toString());
                                 argz.putString("sendTime", txDeatilRespBoBean.getApplyTimeDate());
                                 argz.putString("sendTokenStatusKey", SEND_TOKEN_STATUS);
-                                argz.putString("txHash",hash);
+                                argz.putString("txHash", hash);
                                 BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
                                 bpSendStatusFragment.setArguments(argz);
                                 startFragmentAndDestroyCurrent(bpSendStatusFragment);
@@ -730,7 +732,6 @@ public class BPSendTokenFragment extends BaseFragment {
             }
         }
     };
-
 
 
 }
