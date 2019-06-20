@@ -110,7 +110,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
             @Override
             public void onClick(View v) {
                 walletBottom.dismiss();
-                getData().remove(currentPosition);
+                getData().remove(position);
                 notifyDataSetChanged();
             }
         });
