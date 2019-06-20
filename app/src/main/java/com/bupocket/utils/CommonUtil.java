@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.bupocket.R;
@@ -840,6 +841,35 @@ public class CommonUtil {
 
     }
 
+    public static void showEditMessageDialog(Context mContext, String msgHint, String title, final ConfirmListener confirmListener) {
+        final QMUIDialog qmuiDialog = new QMUIDialog(mContext);
+        qmuiDialog.setCanceledOnTouchOutside(false);
+        qmuiDialog.setContentView(R.layout.view_change_wallet_name);
+        TextView titleTV = qmuiDialog.findViewById(R.id.dialogEditTitle);
+        TextView cancelTv = qmuiDialog.findViewById(R.id.changeNameCancel);
+        TextView confirmTv = qmuiDialog.findViewById(R.id.changeNameConfirm);
+        final EditText infoET = qmuiDialog.findViewById(R.id.walletNewNameEt);
+        titleTV.setText(title);
+        infoET.setHint(msgHint);
+
+
+        cancelTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+            }
+        });
+        confirmTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+                confirmListener.confirm(infoET.getText().toString().trim());
+            }
+        });
+
+        qmuiDialog.show();
+    }
+
     public static void showTitleDialog(Context mContext, String msg, String title) {
         final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
                 setLayout(R.layout.qmui_com_dialog_green).create();
@@ -1100,6 +1130,11 @@ public class CommonUtil {
     public interface KnowListener {
 
         void Know();
+    }
+
+    public interface ConfirmListener {
+
+        void confirm(String url);
     }
 
 

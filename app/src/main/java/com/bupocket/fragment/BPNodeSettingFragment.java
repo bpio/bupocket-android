@@ -20,6 +20,7 @@ import com.bupocket.common.Constants;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.model.NodeSettingModel;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
@@ -32,7 +33,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
-public class BPNodeSetting extends AbsBaseFragment {
+public class BPNodeSettingFragment extends AbsBaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBarLayout topbar;
@@ -79,7 +80,18 @@ public class BPNodeSetting extends AbsBaseFragment {
 
     @Override
     protected void setListeners() {
+        llAddMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CommonUtil.showEditMessageDialog(mContext, getString(R.string.add_node_address_title),
+                        getString(R.string.add_node_address_title), new CommonUtil.ConfirmListener() {
+                            @Override
+                            public void confirm(String url) {
 
+                            }
+                        });
+            }
+        });
     }
 
     @SuppressLint("ResourceAsColor")
@@ -142,3 +154,4 @@ public class BPNodeSetting extends AbsBaseFragment {
                 }).setCanceledOnTouchOutside(false).create().show();
     }
 }
+

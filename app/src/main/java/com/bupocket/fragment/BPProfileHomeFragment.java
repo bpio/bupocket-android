@@ -20,12 +20,10 @@ import com.bupocket.enums.LanguageEnum;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
-import com.bupocket.utils.WalletCurrentUtils;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
-import butterknife.BindString;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -271,7 +269,7 @@ public class BPProfileHomeFragment extends BaseFragment {
     }
 
     private void gotoManageWalletFragment() {
-        startFragment(new BPNodeSetting());
+        startFragment(new BPNodeSettingFragment());
     }
 
     private void gotoAddressBookFragment() {

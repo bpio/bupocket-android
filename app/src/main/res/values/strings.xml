@@ -727,5 +727,6 @@
     <!--node setting -->
     <string name="add_node">添加自定义节点</string>
     <string name="node_setting_title">节点设置</string>
+    <string name="add_node_address_title">请输入有效的节点地址</string>
 
 </resources>
