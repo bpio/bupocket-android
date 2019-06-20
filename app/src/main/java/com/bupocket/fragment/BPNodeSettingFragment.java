@@ -27,6 +27,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -83,10 +84,20 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
         llAddMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonUtil.showEditMessageDialog(mContext, getString(R.string.add_node_address_title),
-                        getString(R.string.add_node_address_title), new CommonUtil.ConfirmListener() {
+                CommonUtil.showEditMessageDialog(mContext,
+                        getString(R.string.add_node_address_title),
+                        getString(R.string.add_node_address_title),
+                        new CommonUtil.ConfirmListener() {
                             @Override
                             public void confirm(String url) {
+
+                                List<NodeSettingModel> data = nodeSettingAdapter.getData();
+                                NodeSettingModel addNode = new NodeSettingModel();
+                                addNode.setUrl(url);
+                                addNode.setSelected(true);
+                                addNode.setMore(true);
+                                data.add(addNode);
+                                nodeSettingAdapter.setNewData(data);
 
                             }
                         });
