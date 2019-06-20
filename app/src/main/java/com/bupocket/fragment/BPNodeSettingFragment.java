@@ -67,14 +67,8 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
         NodeSettingModel mainNode = new NodeSettingModel();
         mainNode.setMore(false);
         mainNode.setSelected(true);
-        mainNode.setUrl(Constants.MainNetConfig.BUMO_NODE_URL.getValue());
-
-        NodeSettingModel testNode = new NodeSettingModel();
-        testNode.setMore(true);
-        testNode.setSelected(false);
-        testNode.setUrl(Constants.TestNetConfig.BUMO_NODE_URL.getValue());
+        mainNode.setUrl(Constants.BUMO_NODE_URL);
         nodeSettingModels.add(mainNode);
-        nodeSettingModels.add(testNode);
         nodeSettingAdapter.setNewData(nodeSettingModels);
 
     }
@@ -94,7 +88,7 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
                                 List<NodeSettingModel> data = nodeSettingAdapter.getData();
                                 NodeSettingModel addNode = new NodeSettingModel();
                                 addNode.setUrl(url);
-                                addNode.setSelected(true);
+                                addNode.setSelected(false);
                                 addNode.setMore(true);
                                 data.add(addNode);
                                 nodeSettingAdapter.setNewData(data);
@@ -119,12 +113,7 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                boolean isChecked = ivNodeSetMain.getVisibility() == View.VISIBLE;
-//                if (isChecked) {
-//                    showSwitchMainNetDialog();
-//                } else {
-//                    ShowSwitchTestNetConfirmDialog();
-//                }
+
             }
         });
         Button skipBackuoBtn = topbar.findViewById(R.id.skipBackupBtn);
@@ -132,37 +121,8 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
 
     }
 
-    private void ShowSwitchTestNetConfirmDialog() {
-        new QMUIDialog.MessageDialogBuilder(getActivity())
-                .setMessage(getString(R.string.switch_to_test_net_message_txt))
-                .addAction(getString(R.string.i_knew_btn_txt), new QMUIDialogAction.ActionListener() {
-                    @Override
-                    public void onClick(QMUIDialog dialog, int index) {
-                        SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
-                        BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
-                        dialog.dismiss();
-                        spHelper.put("tokensInfoCache", "");
-                        spHelper.put("tokenBalance", "");
-                        startFragment(new HomeFragment());
-                    }
-                }).setCanceledOnTouchOutside(false).create().show();
-    }
 
 
-    private void showSwitchMainNetDialog() {
-        new QMUIDialog.MessageDialogBuilder(getActivity())
-                .setMessage(getString(R.string.switch_main_net_message_txt))
-                .addAction(getString(R.string.i_knew_btn_txt), new QMUIDialogAction.ActionListener() {
-                    @Override
-                    public void onClick(QMUIDialog dialog, int index) {
-                        dialog.dismiss();
-                        SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.MAIN.getCode());
-                        BPApplication.switchNetConfig(BumoNodeEnum.MAIN.getName());
-                        spHelper.put("tokensInfoCache", "");
-                        spHelper.put("tokenBalance", "");
-                        startFragment(new HomeFragment());
-                    }
-                }).setCanceledOnTouchOutside(false).create().show();
-    }
+
 }
 

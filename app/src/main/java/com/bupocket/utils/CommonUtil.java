@@ -822,7 +822,6 @@ public class CommonUtil {
 
     }
 
-
     public static void showMessageDialog(Context mContext, String msg, String title, final KnowListener knowListener) {
         final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
                 setLayout(R.layout.qmui_com_dialog_green).create();
@@ -841,7 +840,13 @@ public class CommonUtil {
 
     }
 
-    public static void showEditMessageDialog(Context mContext, String msgHint, String title, final ConfirmListener confirmListener) {
+
+    public static void showEditMessageDialog(Context mContext, String title, String msg, final ConfirmListener confirmListener) {
+        showEditMessageDialog(mContext, title, msg, "", confirmListener);
+
+    }
+
+    public static void showEditMessageDialog(Context mContext, String title, String msgHint, String msg, final ConfirmListener confirmListener) {
         final QMUIDialog qmuiDialog = new QMUIDialog(mContext);
         qmuiDialog.setCanceledOnTouchOutside(false);
         qmuiDialog.setContentView(R.layout.view_change_wallet_name);
@@ -850,8 +855,11 @@ public class CommonUtil {
         TextView confirmTv = qmuiDialog.findViewById(R.id.changeNameConfirm);
         final EditText infoET = qmuiDialog.findViewById(R.id.walletNewNameEt);
         titleTV.setText(title);
-        infoET.setHint(msgHint);
 
+        infoET.setHint(msgHint);
+        if (!msg.isEmpty()) {
+            infoET.setText(msg);
+        }
 
         cancelTv.setOnClickListener(new View.OnClickListener() {
             @Override
