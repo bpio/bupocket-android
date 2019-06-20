@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,14 +14,18 @@ import android.widget.ListView;
 
 import com.bupocket.BPApplication;
 import com.bupocket.R;
+import com.bupocket.adaptor.NodeSettingAdapter;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.fragment.home.HomeFragment;
+import com.bupocket.model.NodeSettingModel;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +40,7 @@ public class BPNodeSetting extends AbsBaseFragment {
     ListView lvNodeSet;
     @BindView(R.id.llAddMore)
     LinearLayout llAddMore;
+    private NodeSettingAdapter nodeSettingAdapter;
 
 
     @Override
@@ -45,19 +51,30 @@ public class BPNodeSetting extends AbsBaseFragment {
     @Override
     protected void initView() {
         initTopBar();
+        initListView();
+    }
+
+    private void initListView() {
+        nodeSettingAdapter = new NodeSettingAdapter(mContext);
+        lvNodeSet.setAdapter(nodeSettingAdapter);
     }
 
     @Override
     protected void initData() {
+        ArrayList<NodeSettingModel> nodeSettingModels = new ArrayList<>();
+        NodeSettingModel mainNode = new NodeSettingModel();
+        mainNode.setMore(false);
+        mainNode.setSelected(true);
+        mainNode.setUrl(Constants.MainNetConfig.BUMO_NODE_URL.getValue());
 
+        NodeSettingModel testNode = new NodeSettingModel();
+        testNode.setMore(true);
+        testNode.setSelected(false);
+        testNode.setUrl(Constants.TestNetConfig.BUMO_NODE_URL.getValue());
+        nodeSettingModels.add(mainNode);
+        nodeSettingModels.add(testNode);
+        nodeSettingAdapter.setNewData(nodeSettingModels);
 
-//        if (SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()) {
-//            ivNodeSetTestMain.setVisibility(View.VISIBLE);
-//            ivNodeSetMain.setVisibility(View.INVISIBLE);
-//        } else {
-//            ivNodeSetTestMain.setVisibility(View.INVISIBLE);
-//            ivNodeSetMain.setVisibility(View.VISIBLE);
-//        }
     }
 
     @Override
@@ -88,7 +105,7 @@ public class BPNodeSetting extends AbsBaseFragment {
             }
         });
         Button skipBackuoBtn = topbar.findViewById(R.id.skipBackupBtn);
-        skipBackuoBtn.setTextColor(ContextCompat.getColor(getContext(),R.color.app_color_main));
+        skipBackuoBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.app_color_main));
 
     }
 
