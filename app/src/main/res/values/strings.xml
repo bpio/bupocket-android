@@ -669,8 +669,7 @@
     <string name="collection_title">收款</string>
     <string name="collection_address">收款地址</string>
 
-    <!--node  setting-->
-    <string name="node_setting_title">节点设置</string>
+
 
     <!--create wallet-->
 
@@ -724,5 +723,9 @@
     <!--setting user info-->
     <string name="change_wallet_head_title" >选择头像</string>
 
+
+    <!--node setting -->
+    <string name="add_node">添加自定义节点</string>
+    <string name="node_setting_title">节点设置</string>
 
 </resources>
