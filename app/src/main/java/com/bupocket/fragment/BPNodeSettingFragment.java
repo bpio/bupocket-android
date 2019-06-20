@@ -18,15 +18,19 @@ import com.bupocket.R;
 import com.bupocket.adaptor.NodeSettingAdapter;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.model.NodeSettingModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,13 +74,24 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
 
     @Override
     protected void initData() {
-        ArrayList<NodeSettingModel> nodeSettingModels = new ArrayList<>();
-        NodeSettingModel mainNode = new NodeSettingModel();
-        mainNode.setMore(false);
-        mainNode.setSelected(true);
-        mainNode.setUrl(Constants.BUMO_NODE_URL);
-        nodeSettingModels.add(mainNode);
-        nodeSettingAdapter.setNewData(nodeSettingModels);
+
+        String urlJson = (String) spHelper.getSharedPreference(Constants.BUMO_NODE_URL, "");
+        if (urlJson.isEmpty()) {
+            ArrayList<NodeSettingModel> nodeSettingModels = new ArrayList<>();
+            NodeSettingModel mainNode = new NodeSettingModel();
+            mainNode.setMore(false);
+            mainNode.setSelected(true);
+            mainNode.setUrl(Constants.BUMO_NODE_URL);
+            nodeSettingModels.add(mainNode);
+            nodeSettingAdapter.setNewData(nodeSettingModels);
+        } else {
+            Gson gson = new Gson();
+            Type type = new TypeToken<List<NodeSettingModel>>() {
+            }.getType();
+            List<NodeSettingModel> data = gson.fromJson(urlJson, type);
+            nodeSettingAdapter.setNewData(data);
+        }
+
 
     }
 
@@ -92,18 +107,30 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
                             @Override
                             public void confirm(String url) {
 
-                                List<NodeSettingModel> data = nodeSettingAdapter.getData();
-                                NodeSettingModel addNode = new NodeSettingModel();
-                                addNode.setUrl(url);
-                                addNode.setSelected(false);
-                                addNode.setMore(true);
-                                data.add(addNode);
-                                nodeSettingAdapter.setNewData(data);
-
+                                addNodeAddress(url);
                             }
                         });
             }
         });
+    }
+
+    private void addNodeAddress(String url) {
+        List<NodeSettingModel> data = nodeSettingAdapter.getData();
+        NodeSettingModel addNode = new NodeSettingModel();
+        addNode.setUrl(url);
+        addNode.setSelected(false);
+        addNode.setMore(true);
+        data.add(addNode);
+        nodeSettingAdapter.setNewData(data);
+
+//        nodeSettingAdapter.saveNodeData();
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        nodeSettingAdapter.saveNodeData();
     }
 
     @SuppressLint("ResourceAsColor")

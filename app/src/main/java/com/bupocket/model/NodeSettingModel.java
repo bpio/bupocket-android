@@ -1,6 +1,8 @@
 package com.bupocket.model;
 
-public class NodeSettingModel {
+import java.io.Serializable;
+
+public class NodeSettingModel implements Serializable {
     private String url;
     private boolean isSelected;
     private boolean isMore;

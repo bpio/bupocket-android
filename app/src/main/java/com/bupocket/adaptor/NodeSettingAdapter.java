@@ -2,6 +2,7 @@ package com.bupocket.adaptor;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,13 @@ import android.widget.TextView;
 import com.bupocket.R;
 import com.bupocket.base.AbsViewHolderAdapter;
 import com.bupocket.base.BaseViewHolder;
+import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.model.NodeSettingModel;
+import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.SharedPreferencesHelper;
+import com.google.gson.Gson;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 
 import java.util.List;
@@ -82,7 +88,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
                 walletBottom.dismiss();
                 String url = getData().get(position).getUrl();
                 CommonUtil.showEditMessageDialog(
-                         context,
+                        context,
                         context.getString(R.string.add_node_address_title),
                         context.getString(R.string.add_node_address_title),
                         url,
@@ -90,7 +96,8 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
                             @Override
                             public void confirm(String url) {
                                 getData().get(position).setUrl(url);
-//                                setSelectedPosition(position);
+
+//                                saveNodeData();
                                 notifyDataSetChanged();
                             }
                         });
@@ -118,6 +125,12 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
     }
 
 
+    public void saveNodeData() {
+        List<NodeSettingModel> data = getData();
+        String json = new Gson().toJson(data);
+        SharedPreferencesHelper spHelper = new SharedPreferencesHelper(context, ConstantsType.BU_POCKET);
+        spHelper.put(Constants.BUMO_NODE_URL, json);
+    }
 
 
 }
