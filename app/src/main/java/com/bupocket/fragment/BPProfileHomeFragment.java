@@ -177,6 +177,10 @@ public class BPProfileHomeFragment extends BaseFragment {
             mVersionRl.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+
+                    startFragment(new BPAboutUsFragment());
+
                     straightClick();
                 }
             });

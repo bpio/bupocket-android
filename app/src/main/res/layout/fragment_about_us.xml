@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/app_color_white"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_gravity="center"
+                android:background="@mipmap/icon_create_wallet_logo" />
+
+            <TextView
+                android:id="@+id/versionCodeTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="17dp"
+                tools:text="@string/about_us_version_code" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/shape_corner_white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/versionInfoListLL"
+                style="@style/BPLLDiscover">
+
+                <TextView
+                    style="@style/BPTextViewDiscover"
+                    android:text="@string/version_info" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginEnd="17.5dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@mipmap/icon_right_arrow" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@color/gray_line" />
+
+            <LinearLayout
+                android:id="@+id/addressBookRL"
+                style="@style/BPLLDiscover">
+
+
+                <TextView
+                    style="@style/BPTextViewDiscover"
+                    android:text="@string/version_refresh" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:padding="10dp"
+                    android:src="@drawable/version_refresh" />
+
+                <TextView
+                    android:id="@+id/tvProfileLanguage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:textColor="@color/app_txt_color_gray"
+                    android:textSize="15sp"
+                    tools:text="V1.0.0" />
+
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="40dp"
+                android:background="@color/gray_line" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/changeTestLL"
+            style="@style/BPLLDiscover"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/shape_corner_white">
+
+            <TextView
+                style="@style/BPTextViewDiscover"
+                android:text="@string/change_test" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="17.5dp"
+                android:layout_marginRight="15dp"
+                android:background="@mipmap/icon_right_arrow" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/customEnvironmentLL"
+            style="@style/BPLLDiscover"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/shape_corner_white">
+
+            <TextView
+                style="@style/BPTextViewDiscover"
+                android:text="@string/custom_environment" />
+
+            <TextView
+                android:id="@+id/changeTestTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:background="@mipmap/icon_switch_normal" />
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

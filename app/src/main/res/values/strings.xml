@@ -117,7 +117,6 @@
     <string name="send_tx_verify">校验中</string>
 
 
-
     <string name="send_tx_bu_not_enough">BU余额不足</string>
     <string name="send_tx_fee_not_enough">交易费用不足</string>
     <string name="send_status_fee">预估最多支付费用</string>
@@ -462,7 +461,6 @@
     <string name="revoke_vote_tx_details_txt">撤销对\"%1$s\"的投票</string>
 
 
-
     <string name="details_txt">详情>></string>
     <string name="details">详情</string>
 
@@ -477,8 +475,6 @@
     <string name="scan_qr_login_management_system_note_txt">即将登录%1$s，请确认是本人操作。</string>
     <string name="address_be_made_public_note_txt">您的账户地址将被公开</string>
     <string name="confirm_login_txt">确认登录</string>
-
-
 
 
     <string name="weixin_txt">微信</string>
@@ -555,7 +551,6 @@
     <string name="error_100055">the contact is already existed</string>
 
 
-
     <string name="error_build_1024">没有权限，请使用委员会钱包进行扫码</string>
     <string name="error_1031">当前项目已获得目标共建总金额，  您可选择其他项目进行支持</string>
     <string name="error_1032">剩余份数不足，建议您调整支持份数</string>
@@ -564,7 +559,6 @@
     <string name="error_1035">不是该节点发起者，无法发起该操作</string>
     <string name="error_1036">节点共建项目发起者不能参与支持</string>
     <string name="error_1038">您已成功撤回，不能重复操作</string>
-
 
 
     <string name="share_close">投票通道还未开启，请在开启后进行分享</string>
@@ -641,20 +635,19 @@
     <string name="open_youpin_title">免责声明</string>
 
 
-
     <!--setting user info-->
     <string name="setting_user_head_hint">更改钱包头像</string>
     <string name="setting_user_name_hint">更改钱包名称</string>
 
     <string name="settting_user_title">钱包详情</string>
-    
+
     <string name="settting_change_name_limit1">
         • 不能超过20个字符\n• 允许输入字母、汉字、数字、下划线</string>
 
 
     <!--profile-->
     <string name="user_setting">使用设置</string>
-    <string name="others" >其他</string>
+    <string name="others">其他</string>
 
     <string name="profile_currency">计价货币</string>
     <string name="profile_language">显示语言</string>
@@ -664,11 +657,9 @@
     <string name="profile_about_us">关于我们</string>
 
 
-
     <!--collection-->
     <string name="collection_title">收款</string>
     <string name="collection_address">收款地址</string>
-
 
 
     <!--create wallet-->
@@ -721,7 +712,7 @@
     <string name="change_wallet_name_hint">用于区分其他钱包，不能超过20个字符</string>
 
     <!--setting user info-->
-    <string name="change_wallet_head_title" >选择头像</string>
+    <string name="change_wallet_head_title">选择头像</string>
 
 
     <!--node setting -->
@@ -730,5 +721,13 @@
     <string name="add_node_address_title">请输入有效的节点地址</string>
     <string name="edit_node_info">编辑</string>
     <string name="confirm_delete_node">确定删除该节点吗？</string>
+
+
+    <!--about us-->
+    <string name="about_us_version_code">当前版本:</string>
+    <string name="version_info">版本日志</string>
+    <string name="version_refresh">版本更新</string>
+    <string name="change_test">切换测试网</string>
+    <string name="custom_environment">自定义环境</string>
 
 </resources>
