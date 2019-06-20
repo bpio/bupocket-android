@@ -822,6 +822,26 @@ public class CommonUtil {
 
     }
 
+    public static void showMsgDialog(Context mContext, String msg,final KnowListener knowListener){
+        final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
+                setLayout(R.layout.view_com_dialog_no_title).create();
+        ((TextView) qmuiDialog.findViewById(R.id.dialogMsgTV)).setText(msg);
+        qmuiDialog.findViewById(R.id.dialogCancelTV).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+            }
+        });
+        qmuiDialog.findViewById(R.id.dialogConfirmTV).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+                knowListener.Know();
+            }
+        });
+        qmuiDialog.show();
+    }
+
     public static void showMessageDialog(Context mContext, String msg, String title, final KnowListener knowListener) {
         final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
                 setLayout(R.layout.qmui_com_dialog_green).create();
@@ -839,6 +859,7 @@ public class CommonUtil {
         qmuiDialog.show();
 
     }
+
 
 
     public static void showEditMessageDialog(Context mContext, String title, String msg, final ConfirmListener confirmListener) {

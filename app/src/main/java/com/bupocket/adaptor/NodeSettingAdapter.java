@@ -110,8 +110,15 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
             @Override
             public void onClick(View v) {
                 walletBottom.dismiss();
-                getData().remove(position);
-                notifyDataSetChanged();
+
+                CommonUtil.showMsgDialog(context, context.getString(R.string.confirm_delete_node), new CommonUtil.KnowListener() {
+                    @Override
+                    public void Know() {
+                        getData().remove(position);
+                        notifyDataSetChanged();
+                    }
+                });
+
             }
         });
 

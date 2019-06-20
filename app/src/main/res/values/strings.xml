@@ -729,5 +729,6 @@
     <string name="node_setting_title">节点设置</string>
     <string name="add_node_address_title">请输入有效的节点地址</string>
     <string name="edit_node_info">编辑</string>
+    <string name="confirm_delete_node">确定删除该节点吗？</string>
 
 </resources>
