@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -59,6 +60,12 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
     private void initListView() {
         nodeSettingAdapter = new NodeSettingAdapter(mContext);
         lvNodeSet.setAdapter(nodeSettingAdapter);
+        lvNodeSet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                setSelectedPosition(position);
+            }
+        });
     }
 
     @Override
@@ -122,7 +129,15 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
     }
 
 
+    public void setSelectedPosition(int position) {
+        List<NodeSettingModel> data = nodeSettingAdapter.getData();
+        for (int i = 0; i < data.size(); i++) {
+            data.get(i).setSelected(false);
+        }
+        data.get(position).setSelected(true);
 
+        nodeSettingAdapter.setNewData(data);
+    }
 
 }
 

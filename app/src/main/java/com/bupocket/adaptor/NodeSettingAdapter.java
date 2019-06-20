@@ -118,13 +118,6 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
     }
 
 
-    public void setSelectedPosition(int position) {
-        for (int i = 0; i < getCount(); i++) {
-            if (position == i)
-                getData().get(position).setSelected(true);
-            else
-                getData().get(position).setSelected(false);
-        }
-    }
+
 
 }
