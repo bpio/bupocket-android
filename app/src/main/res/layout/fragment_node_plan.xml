@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
         android:layout_marginTop="?attr/qmui_topbar_height"
-        android:background="@color/app_bg_color_gray">
+        android:background="@color/app_bg_color_gray"
+        android:fitsSystemWindows="true">
 
 
-        <include
-            layout="@layout/view_common_lv_layout"/>
+        <include layout="@layout/view_common_lv_layout" />
 
         <LinearLayout
             android:id="@+id/llHeadView"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/tvTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/run_for_node_txt"
-                android:theme="@style/BPViewTitle"
-                />
+                android:theme="@style/BPViewTitle" />
 
             <RelativeLayout
                 android:id="@+id/llNodeSearch"
@@ -39,21 +39,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:drawableStart="@drawable/selector_my_node"
                     android:button="@null"
                     android:cropToPadding="true"
-                    android:paddingRight="6dp"
-                    android:paddingLeft="15dp"
+                    android:drawableStart="@drawable/selector_my_node"
                     android:drawableLeft="@drawable/selector_my_node"
-                    />
+                    android:paddingLeft="15dp"
+                    android:paddingRight="6dp" />
 
                 <TextView
                     android:id="@+id/myNodeTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:gravity="center"
                     android:layout_toRightOf="@+id/myNodeCB"
+                    android:gravity="center"
                     android:text="@string/node_associated_with_me_txt"
                     android:textColor="@color/app_txt_color_gray"
                     android:textSize="13sp" />
@@ -63,8 +62,8 @@
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:layout_marginTop="13.5dp"
-                    android:padding="4dp"
                     android:layout_toRightOf="@+id/myNodeTv"
+                    android:padding="4dp"
                     android:src="@mipmap/ic_sheet_hint" />
 
                 <LinearLayout
@@ -90,9 +89,9 @@
                         android:background="@null"
                         android:hint="@string/search_txt"
                         android:imeOptions="actionSearch"
-                        android:textCursorDrawable="@drawable/shape_cursor_et"
                         android:singleLine="true"
                         android:textColor="@color/multiline_edit_hint_color"
+                        android:textCursorDrawable="@drawable/shape_cursor_et"
                         android:textSize="11sp" />
 
                 </LinearLayout>
@@ -106,7 +105,7 @@
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
         android:id="@+id/topbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/qmui_topbar_height"
-        />
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true" />
 
-</android.support.design.widget.CoordinatorLayout>
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
