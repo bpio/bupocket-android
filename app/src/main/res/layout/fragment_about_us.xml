@@ -6,6 +6,7 @@
     android:orientation="vertical">
 
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true" />
@@ -38,6 +39,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="17dp"
+                android:textSize="15sp"
+                android:textColor="@color/app_txt_color_gray_2"
                 tools:text="@string/about_us_version_code" />
 
 
@@ -127,15 +130,13 @@
                 style="@style/BPTextViewDiscover"
                 android:text="@string/change_test" />
 
-            <ImageView
+            <TextView
+                android:id="@+id/changeTestTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="17.5dp"
                 android:layout_marginRight="15dp"
-                android:background="@mipmap/icon_right_arrow" />
+                android:background="@mipmap/icon_switch_normal" />
+
         </LinearLayout>
 
 
@@ -151,12 +152,16 @@
                 style="@style/BPTextViewDiscover"
                 android:text="@string/custom_environment" />
 
-            <TextView
-                android:id="@+id/changeTestTV"
+
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="17.5dp"
                 android:layout_marginRight="15dp"
-                android:background="@mipmap/icon_switch_normal" />
+                android:background="@mipmap/icon_right_arrow" />
         </LinearLayout>
 
 
