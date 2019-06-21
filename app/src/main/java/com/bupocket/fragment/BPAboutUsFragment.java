@@ -85,6 +85,12 @@ public class BPAboutUsFragment extends AbsBaseFragment {
                 }
             }
         });
+        versionInfoListLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new VersionLogFragment());
+            }
+        });
     }
 
 
