@@ -370,7 +370,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                     }
                 } else {
                     if (mAssetsHomeEmptyView != null) {
-                        mAssetsHomeEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
+                        mAssetsHomeEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), "");
                     }
                 }
             }

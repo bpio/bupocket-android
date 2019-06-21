@@ -686,7 +686,10 @@ public class BPSendTokenFragment extends BaseFragment {
                             ApiResult<TxDetailRespDto> resp = response.body();
 
                             if (resp == null || resp.getErrCode() == null ||
-                                    !TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())) {
+                                    resp.getData()==null||resp.getData().getTxDeatilRespBo()==null||
+                                    !TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())
+
+                            ) {
                                 return;
                             } else {
                                 txDeatilRespBoBean = resp.getData().getTxDeatilRespBo();

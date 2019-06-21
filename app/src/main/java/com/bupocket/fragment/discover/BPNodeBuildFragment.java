@@ -88,7 +88,13 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
     @Override
     protected void initData() {
 
-        getBuildData();
+        lvNodeBuild.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getBuildData();
+            }
+        },200);
+
     }
 
     @Override
