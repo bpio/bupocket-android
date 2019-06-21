@@ -72,7 +72,7 @@ public class BPMeNodeVoteRecordFragment extends AbsBaseFragment {
 
     @Override
     protected int getLayoutView() {
-        return R.layout.fragment_node_me_vote_record;
+        return R.layout.fragment_node_my_vote_record;
     }
 
     @Override
