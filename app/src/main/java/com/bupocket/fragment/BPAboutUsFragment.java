@@ -1,22 +1,23 @@
 package com.bupocket.fragment;
 
-import android.os.Build;
-import android.os.Bundle;
-import android.view.LayoutInflater;
+
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.enums.BumoNodeEnum;
+import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.CommonUtil;
-import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
+import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 public class BPAboutUsFragment extends AbsBaseFragment {
@@ -37,6 +38,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
     @BindView(R.id.customEnvironmentLL)
     LinearLayout customEnvironmentLL;
     Unbinder unbinder;
+    private boolean isSwitch;
 
     @Override
     protected int getLayoutView() {
@@ -61,12 +63,62 @@ public class BPAboutUsFragment extends AbsBaseFragment {
 
     @Override
     protected void initData() {
-
+        isSwitch = SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode();
+        if (isSwitch) {
+            changeTestTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_checked));
+        } else {
+            changeTestTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_normal));
+        }
     }
 
     @Override
     protected void setListeners() {
+        changeTestTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isSwitch) {
+                    SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.MAIN.getCode());
+                    BPApplication.switchNetConfig(BumoNodeEnum.MAIN.getName());
+                    showSwitchMainNetDialog();
+                }else {
+                    ShowSwitchTestNetConfirmDialog();
+                }
+            }
+        });
+    }
 
+
+    private void showSwitchMainNetDialog() {
+        new QMUIDialog.MessageDialogBuilder(getActivity())
+                .setMessage(getString(R.string.switch_main_net_message_txt))
+                .addAction(getString(R.string.i_knew_btn_txt), new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        dialog.dismiss();
+                        spHelper.put("tokensInfoCache","");
+                        spHelper.put("tokenBalance","");
+                       changeTestTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_normal));
+                        startFragment(new HomeFragment());
+                    }
+                }).setCanceledOnTouchOutside(false).create().show();
+    }
+
+
+    private void ShowSwitchTestNetConfirmDialog() {
+        new QMUIDialog.MessageDialogBuilder(getActivity())
+                .setMessage(getString(R.string.switch_to_test_net_message_txt))
+                .addAction(getString(R.string.i_knew_btn_txt), new QMUIDialogAction.ActionListener() {
+                    @Override
+                    public void onClick(QMUIDialog dialog, int index) {
+                        SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
+                        BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
+                        dialog.dismiss();
+                        spHelper.put("tokensInfoCache","");
+                        spHelper.put("tokenBalance","");
+                        changeTestTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_checked));
+                        startFragment(new HomeFragment());
+                    }
+                }).setCanceledOnTouchOutside(false).create().show();
     }
 
 }
