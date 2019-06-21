@@ -33,8 +33,8 @@ public class BPAboutUsFragment extends AbsBaseFragment {
     LinearLayout addressBookRL;
     @BindView(R.id.changeTestLL)
     LinearLayout changeTestLL;
-    @BindView(R.id.changeTestTV)
-    TextView changeTestTV;
+    @BindView(R.id.changeTestNetTV)
+    TextView changeTestNetTV;
     @BindView(R.id.customEnvironmentLL)
     LinearLayout customEnvironmentLL;
     Unbinder unbinder;
@@ -65,15 +65,15 @@ public class BPAboutUsFragment extends AbsBaseFragment {
     protected void initData() {
         isSwitch = SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode();
         if (isSwitch) {
-            changeTestTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_checked));
+            changeTestNetTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_checked));
         } else {
-            changeTestTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_normal));
+            changeTestNetTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_normal));
         }
     }
 
     @Override
     protected void setListeners() {
-        changeTestTV.setOnClickListener(new View.OnClickListener() {
+        changeTestNetTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (isSwitch) {
@@ -89,36 +89,33 @@ public class BPAboutUsFragment extends AbsBaseFragment {
 
 
     private void showSwitchMainNetDialog() {
-        new QMUIDialog.MessageDialogBuilder(getActivity())
-                .setMessage(getString(R.string.switch_main_net_message_txt))
-                .addAction(getString(R.string.i_knew_btn_txt), new QMUIDialogAction.ActionListener() {
-                    @Override
-                    public void onClick(QMUIDialog dialog, int index) {
-                        dialog.dismiss();
-                        spHelper.put("tokensInfoCache","");
-                        spHelper.put("tokenBalance","");
-                       changeTestTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_normal));
-                        startFragment(new HomeFragment());
-                    }
-                }).setCanceledOnTouchOutside(false).create().show();
+
+        CommonUtil.showMessageDialog(mContext, getString(R.string.switch_main_net_message_txt), "", new CommonUtil.KnowListener() {
+            @Override
+            public void Know() {
+                spHelper.put("tokensInfoCache","");
+                spHelper.put("tokenBalance","");
+                changeTestNetTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_normal));
+                startFragment(new HomeFragment());
+            }
+        });
+
     }
 
 
     private void ShowSwitchTestNetConfirmDialog() {
-        new QMUIDialog.MessageDialogBuilder(getActivity())
-                .setMessage(getString(R.string.switch_to_test_net_message_txt))
-                .addAction(getString(R.string.i_knew_btn_txt), new QMUIDialogAction.ActionListener() {
-                    @Override
-                    public void onClick(QMUIDialog dialog, int index) {
-                        SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
-                        BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
-                        dialog.dismiss();
-                        spHelper.put("tokensInfoCache","");
-                        spHelper.put("tokenBalance","");
-                        changeTestTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_checked));
-                        startFragment(new HomeFragment());
-                    }
-                }).setCanceledOnTouchOutside(false).create().show();
+
+        CommonUtil.showMessageDialog(mContext, getString(R.string.switch_to_test_net_message_txt), "", new CommonUtil.KnowListener() {
+            @Override
+            public void Know() {
+                SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
+                BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
+                spHelper.put("tokensInfoCache","");
+                spHelper.put("tokenBalance","");
+                changeTestNetTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_checked));
+                startFragment(new HomeFragment());
+            }
+        });
     }
 
 }

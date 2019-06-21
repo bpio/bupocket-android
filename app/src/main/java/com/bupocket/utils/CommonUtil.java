@@ -842,6 +842,8 @@ public class CommonUtil {
         qmuiDialog.show();
     }
 
+
+
     public static void showMessageDialog(Context mContext, String msg, String title, final KnowListener knowListener) {
         final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
                 setLayout(R.layout.qmui_com_dialog_green).create();
@@ -853,8 +855,11 @@ public class CommonUtil {
             }
         });
         TextView tvTitle = qmuiDialog.findViewById(R.id.tvComTitle);
-        tvTitle.setVisibility(View.VISIBLE);
-        tvTitle.setText(title);
+        if (!TextUtils.isEmpty(title)) {
+            tvTitle.setVisibility(View.VISIBLE);
+            tvTitle.setText(title);
+        }
+
         ((TextView) qmuiDialog.findViewById(R.id.tvComMassage)).setText(msg);
         qmuiDialog.show();
 
@@ -898,6 +903,7 @@ public class CommonUtil {
 
         qmuiDialog.show();
     }
+
 
     public static void showTitleDialog(Context mContext, String msg, String title) {
         final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
