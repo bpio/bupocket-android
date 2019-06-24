@@ -7,16 +7,29 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.bupocket.R;
+import com.bupocket.adaptor.VersionLogAdapter;
 import com.bupocket.base.AbsBaseFragment;
+import com.bupocket.common.ConstantsType;
+import com.bupocket.enums.ExceptionEnum;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.VersionService;
+import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.model.VersionLogModel;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
+import java.util.HashMap;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class VersionLogFragment extends AbsBaseFragment {
 
@@ -35,6 +48,9 @@ public class VersionLogFragment extends AbsBaseFragment {
     @BindView(R.id.qmuiEmptyView)
     QMUIEmptyView qmuiEmptyView;
     Unbinder unbinder;
+    private int pageStart;
+    private final int normalPageSize = 10;
+    private VersionLogAdapter adapter;
 
     @Override
     protected int getLayoutView() {
@@ -44,6 +60,12 @@ public class VersionLogFragment extends AbsBaseFragment {
     @Override
     protected void initView() {
         initTopBar();
+        initListView();
+    }
+
+    private void initListView() {
+        adapter = new VersionLogAdapter(mContext);
+        lvRefresh.setAdapter(adapter);
     }
 
     private void initTopBar() {
@@ -58,7 +80,45 @@ public class VersionLogFragment extends AbsBaseFragment {
 
     @Override
     protected void initData() {
+        pageStart = 1;
+        reqVersionLogData(pageStart);
 
+    }
+
+    private void reqVersionLogData(final int curPageStart) {
+
+        HashMap<Object, Object> reqMap = new HashMap<>();
+        reqMap.put(ConstantsType.APP_TYPE, 1);
+        reqMap.put(ConstantsType.PAGE_START, curPageStart);
+        reqMap.put(ConstantsType.PAGE_SIZE, normalPageSize);
+        VersionService versionService = RetrofitFactory.getInstance().getRetrofit().create(VersionService.class);
+        Call<ApiResult<VersionLogModel>> versionLog = versionService.getVersionLog(reqMap);
+        versionLog.enqueue(new Callback<ApiResult<VersionLogModel>>() {
+            @Override
+            public void onResponse(Call<ApiResult<VersionLogModel>> call, Response<ApiResult<VersionLogModel>> response) {
+
+
+//                if (response.body() != null && ExceptionEnum.SUCCESS.getCode().equals(response.body().getErrCode()) && response.body().getData() != null) {
+//                    List<VersionLogModel.LogListBean> logList = response.body().getData().getLogList();
+//                    if (curPageStart == 1) {
+//                        adapter.setNewData(logList);
+//                    } else {
+//                        adapter.addMoreDataList(logList);
+//                    }
+//                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<VersionLogModel>> call, Throwable t) {
+                if (call.isCanceled()) {
+                    return;
+                }
+
+
+            }
+        });
     }
 
     @Override

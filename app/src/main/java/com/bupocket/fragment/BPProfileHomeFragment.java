@@ -172,20 +172,20 @@ public class BPProfileHomeFragment extends BaseFragment {
         });
 
 
-        int hiddenFunctionStatus = sharedPreferencesHelper.getInt("hiddenFunctionStatus", HiddenFunctionStatusEnum.DISABLE.getCode());
-        if (HiddenFunctionStatusEnum.DISABLE.getCode() == hiddenFunctionStatus) {
-            mVersionRl.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+//        int hiddenFunctionStatus = sharedPreferencesHelper.getInt("hiddenFunctionStatus", HiddenFunctionStatusEnum.DISABLE.getCode());
+//        if (HiddenFunctionStatusEnum.DISABLE.getCode() == hiddenFunctionStatus) {
+
+//        }
+        mVersionRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
 
-                    startFragment(new BPAboutUsFragment());
+                startFragment(new BPAboutUsFragment());
 
-                    straightClick();
-                }
-            });
-        }
-
+//                    straightClick();
+            }
+        });
 
         llProfileIdentity.setOnClickListener(new View.OnClickListener() {
             @Override
