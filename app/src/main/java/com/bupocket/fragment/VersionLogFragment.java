@@ -1,6 +1,7 @@
 package com.bupocket.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +22,9 @@ import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +56,7 @@ public class VersionLogFragment extends AbsBaseFragment {
     private int pageStart;
     private final int normalPageSize = 10;
     private VersionLogAdapter adapter;
+    private VersionLogModel.PageBean page;
 
     @Override
     protected int getLayoutView() {
@@ -67,6 +72,7 @@ public class VersionLogFragment extends AbsBaseFragment {
     private void initListView() {
         adapter = new VersionLogAdapter(mContext);
         lvRefresh.setAdapter(adapter);
+
     }
 
     private void initTopBar() {
@@ -81,13 +87,13 @@ public class VersionLogFragment extends AbsBaseFragment {
 
     @Override
     protected void initData() {
-        pageStart = 1;
-        reqVersionLogData(pageStart);
+
+        reqVersionLogData(1);
 
     }
 
     private void reqVersionLogData(final int curPageStart) {
-
+        pageStart = curPageStart;
         HashMap<Object, Object> reqMap = new HashMap<>();
         reqMap.put(ConstantsType.APP_TYPE, 1);
         reqMap.put(ConstantsType.PAGE_START, curPageStart);
@@ -101,11 +107,17 @@ public class VersionLogFragment extends AbsBaseFragment {
 
                 if (response.body() != null && ExceptionEnum.SUCCESS.getCode().equals(response.body().getErrCode()) && response.body().getData() != null) {
                     List<LogListModel> logList = response.body().getData().getLogList();
+                    page = response.body().getData().getPage();
                     if (curPageStart == 1) {
                         adapter.setNewData(logList);
                     } else {
                         adapter.addMoreDataList(logList);
                     }
+
+                    addressRecordEmptyLL.setVisibility(View.GONE);
+                    llLoadFailed.setVisibility(View.GONE);
+                } else {
+                    addressRecordEmptyLL.setVisibility(View.VISIBLE);
                 }
 
 
@@ -116,7 +128,7 @@ public class VersionLogFragment extends AbsBaseFragment {
                 if (call.isCanceled()) {
                     return;
                 }
-
+                llLoadFailed.setVisibility(View.VISIBLE);
 
             }
         });
@@ -125,19 +137,67 @@ public class VersionLogFragment extends AbsBaseFragment {
     @Override
     protected void setListeners() {
 
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
+
+                refreshData();
+
+
+            }
+        });
+        refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
+
+
+                LoadMoreData();
+
+
+            }
+        });
+
+        copyCommandBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                refreshLayout.refresh
+                refreshData();
+            }
+        });
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
+    private void refreshData() {
+        refreshLayout.getLayout().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                reqVersionLogData(1);
+                refreshLayout.finishRefresh();
+                initData();
+            }
+        }, 500);
+
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    private void LoadMoreData() {
+        refreshLayout.getLayout().postDelayed(new Runnable() {
+
+
+            @Override
+            public void run() {
+                int curPageStart = pageStart + 1;
+                if (page.getEndOfGroup() < curPageStart) {
+                    refreshLayout.finishLoadMore();
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                    return;
+                }
+                reqVersionLogData(curPageStart);
+                refreshLayout.finishLoadMore();
+
+                initData();
+            }
+        }, 500);
+
     }
+
+
 }
