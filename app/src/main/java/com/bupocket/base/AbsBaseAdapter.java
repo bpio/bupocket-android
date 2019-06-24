@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
+ * base  adapter
  */
 public abstract class AbsBaseAdapter<T> extends BaseAdapter implements BaseAdapterDataListener<T> {
 

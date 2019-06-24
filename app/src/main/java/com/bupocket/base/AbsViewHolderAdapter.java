@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- *
+ *base  AbsViewHolderAdapter
  */
 public abstract class AbsViewHolderAdapter<ItemDataType> extends AbsBaseAdapter<ItemDataType> {
     protected abstract int getLayoutId();

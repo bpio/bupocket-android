@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Demo 中通用的 RecyclerView Adapter。
+ * Demo common RecyclerView Adapter。
  */
 public class QDRecyclerViewAdapter extends RecyclerView.Adapter<QDRecyclerViewAdapter.ViewHolder> {
 

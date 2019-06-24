@@ -70,11 +70,7 @@ public class CommonUtil {
 
     public static final Pattern BANK_CARD_PATTERN = Pattern.compile("^\\d{16,30}$");
 
-    /**
-     * 生成6位随机数字, 用于手机短信验证码.
-     *
-     * @return 6位随机数字
-     */
+
     public static int random() {
         int x = Math.abs(random.nextInt(899999));
 
@@ -92,12 +88,7 @@ public class CommonUtil {
     }
 
 
-    /**
-     * 对url字符串进行编码.
-     *
-     * @param url 要编码的url字符串
-     * @return 编码后的字符串
-     */
+
     public static String urlEncoder(String url) {
         if (isEmpty(url)) {
             return null;
@@ -110,12 +101,7 @@ public class CommonUtil {
         return null;
     }
 
-    /**
-     * 对url字符串进行解码.
-     *
-     * @param url 要解码的url字符串
-     * @return 解码后的字符串
-     */
+
     public static String urlDecoder(String url) {
         if (isEmpty(url)) {
             return null;
@@ -128,12 +114,7 @@ public class CommonUtil {
         return null;
     }
 
-    /**
-     * 验证字符串是不是邮箱.
-     *
-     * @param email 要验证的邮箱
-     * @return 是否正确邮箱
-     */
+
     public static boolean validateEmail(String email) {
         if (isEmpty(email)) {
             return false;
@@ -142,12 +123,7 @@ public class CommonUtil {
         return m.matches();
     }
 
-    /**
-     * 验证字符串是不是手机号.
-     *
-     * @param mobile 要验证的手机号
-     * @return 是否正确手机号
-     */
+
     public static boolean validateMobile(String mobile) {
         if (isEmpty(mobile)) {
             return false;
@@ -157,12 +133,7 @@ public class CommonUtil {
     }
 
 
-    /**
-     * 验证姓名是否有效.
-     *
-     * @param name 要验证的姓名
-     * @return 是否正确姓名
-     */
+
     public static boolean validateName(String name) {
         if (isEmpty(name) || name.replaceAll("[^.·]", "").length() > 1) {
             return false;
@@ -171,12 +142,7 @@ public class CommonUtil {
         return m.matches();
     }
 
-    /**
-     * 验证昵称是否有效.
-     *
-     * @param nickname 要验证的昵称
-     * @return 是否正确昵称
-     */
+
     public static boolean validateNickname(String nickname) {
 
         //规则
@@ -195,12 +161,7 @@ public class CommonUtil {
         return m.matches();
     }
 
-    /**
-     * 验证密码格式是否有效.
-     *
-     * @param password 要验证的密码
-     * @return 是否正确密码格式
-     */
+
     public static boolean validatePassword(String password) {
         if (isEmpty(password)) {
             return false;
@@ -209,12 +170,7 @@ public class CommonUtil {
         return m.matches();
     }
 
-    /**
-     * 验证区号是否有效.
-     *
-     * @param code 要验证的区号
-     * @return 是否正确身份证
-     */
+
     public static boolean validateCode(String code) {
         if (isEmpty(code)) {
             return false;
@@ -223,12 +179,7 @@ public class CommonUtil {
         return m.matches();
     }
 
-    /**
-     * 验证邮政编码是否有效.
-     *
-     * @param postcode 要验证的邮政编码
-     * @return 是否正确邮政编码
-     */
+
     public static boolean validatePostcode(String postcode) {
         if (isEmpty(postcode)) {
             return false;
@@ -237,12 +188,7 @@ public class CommonUtil {
         return m.matches();
     }
 
-    /**
-     * 验证银行卡是否有效.
-     *
-     * @param bankCardNumber 要验证的银行卡号
-     * @return 是否正确银行卡号
-     */
+
     public static boolean validateBankCardNumber(String bankCardNumber) {
         if (isEmpty(bankCardNumber)) {
             return false;
@@ -252,33 +198,20 @@ public class CommonUtil {
     }
 
 
-    /**
-     * 获取当前系统时间,以java.sql.Timestamp类型返回.
-     *
-     * @return 当前时间
-     */
+
     public static Timestamp getTimestamp() {
         Timestamp d = new Timestamp(System.currentTimeMillis());
         return d;
     }
 
-    /**
-     * 生成32位编码,不含横线
-     *
-     * @return uuid串
-     */
+
     public static String getUUID() {
         String uuid = UUID.randomUUID().toString().trim().replaceAll("-", "");
         return uuid.toUpperCase();
     }
 
 
-    /**
-     * 通过身份证获取性别
-     *
-     * @param idNumber 身份证号
-     * @return 返回性别, 0 保密 , 1 男 2 女
-     */
+
     public static Integer getGenderByIdNumber(String idNumber) {
 
         int gender = 0;
@@ -293,12 +226,7 @@ public class CommonUtil {
 
     }
 
-    /**
-     * 通过身份证获取生日
-     *
-     * @param idNumber 身份证号
-     * @return 返回生日, 格式为 yyyy-MM-dd 的字符串
-     */
+
     public static String getBirthdayByIdNumber(String idNumber) {
 
         String birthday = "";
@@ -314,12 +242,7 @@ public class CommonUtil {
     }
 
 
-    /**
-     * 通过身份证获取年龄
-     *
-     * @param idNumber 身份证号
-     * @return 返回年龄
-     */
+
     public static Integer getAgeByIdNumber(String idNumber) {
 
         String birthString = getBirthdayByIdNumber(idNumber);
@@ -331,13 +254,7 @@ public class CommonUtil {
 
     }
 
-    /**
-     * 通过身份证获取年龄
-     *
-     * @param idNumber     身份证号
-     * @param isNominalAge 是否按元旦算年龄，过了1月1日加一岁 true : 是 false : 否
-     * @return 返回年龄
-     */
+
     public static Integer getAgeByIdNumber(String idNumber, boolean isNominalAge) {
 
         String birthString = getBirthdayByIdNumber(idNumber);
@@ -349,12 +266,7 @@ public class CommonUtil {
 
     }
 
-    /**
-     * 通过生日日期获取年龄
-     *
-     * @param birthDate 生日日期
-     * @return 返回年龄
-     */
+
     public static Integer getAgeByBirthDate(Date birthDate) {
 
         return getAgeByBirthString(new SimpleDateFormat("yyyy-MM-dd").format(birthDate));
@@ -362,51 +274,27 @@ public class CommonUtil {
     }
 
 
-    /**
-     * 通过生日字符串获取年龄
-     *
-     * @param birthString 生日字符串
-     * @return 返回年龄
-     */
+
     public static Integer getAgeByBirthString(String birthString) {
 
         return getAgeByBirthString(birthString, "yyyy-MM-dd");
 
     }
 
-    /**
-     * 通过生日字符串获取年龄
-     *
-     * @param birthString  生日字符串
-     * @param isNominalAge 是否按元旦算年龄，过了1月1日加一岁 true : 是 false : 否
-     * @return 返回年龄
-     */
+
     public static Integer getAgeByBirthString(String birthString, boolean isNominalAge) {
 
         return getAgeByBirthString(birthString, "yyyy-MM-dd", isNominalAge);
 
     }
 
-    /**
-     * 通过生日字符串获取年龄
-     *
-     * @param birthString 生日字符串
-     * @param format      日期字符串格式,为空则默认"yyyy-MM-dd"
-     * @return 返回年龄
-     */
+
     public static Integer getAgeByBirthString(String birthString, String format) {
         return getAgeByBirthString(birthString, "yyyy-MM-dd", false);
     }
 
 
-    /**
-     * 通过生日字符串获取年龄
-     *
-     * @param birthString  生日字符串
-     * @param format       日期字符串格式,为空则默认"yyyy-MM-dd"
-     * @param isNominalAge 是否按元旦算年龄，过了1月1日加一岁 true : 是 false : 否
-     * @return 返回年龄
-     */
+
     public static Integer getAgeByBirthString(String birthString, String format, boolean isNominalAge) {
 
         int age = 0;
@@ -441,12 +329,7 @@ public class CommonUtil {
 
     }
 
-    /**
-     * 手机号中间四位替换成星号
-     *
-     * @param mobile
-     * @return
-     */
+
     public static String maskMobile(String mobile) {
         if (validateMobile(mobile)) {
             return mobile.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
@@ -454,13 +337,7 @@ public class CommonUtil {
         return mobile;
     }
 
-    /**
-     * 手机号中间四位自定义替换
-     *
-     * @param mobile
-     * @param transCode 中间四位目标值 如GXJF 将136GXJF1111
-     * @return
-     */
+
     public static String maskMobile(String mobile, String transCode) {
         if (validateMobile(mobile)) {
             transCode = isEmpty(transCode) ? "****" : transCode;
@@ -469,12 +346,7 @@ public class CommonUtil {
         return mobile;
     }
 
-    /**
-     * 邮箱地址加星号
-     *
-     * @param email
-     * @return
-     */
+
     public static String maskEmail(String email) {
         if (validateEmail(email)) {
             String userName = email.substring(0, email.indexOf("@"));
@@ -497,23 +369,13 @@ public class CommonUtil {
         return email;
     }
 
-    /**
-     * 账号中间四位自定义替换
-     *
-     * @param account
-     * @return
-     */
+
     public static String maskTradeAccount(String account) {
         return account.replaceAll("(\\d{7})\\d*(\\d{4})", "$1****$2");
     }
 
 
-    /**
-     * 验证是否为日期
-     *
-     * @param date
-     * @return
-     */
+
     public static boolean validateDate(String date) {
         boolean convertSuccess = true;
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
@@ -526,9 +388,7 @@ public class CommonUtil {
         return convertSuccess;
     }
 
-    /**
-     * 获取时间戳,作为递增的ID
-     */
+
     private static final Lock lock = new ReentrantLock();   //锁对象
 
     public static long getUniqueLong() {
@@ -542,13 +402,7 @@ public class CommonUtil {
         return l;
     }
 
-    /**
-     * 解析出url参数中的键值对
-     * 如 "index.jsp?Action=del&id=123"，解析出Action:del,id:123存入map中
-     *
-     * @param URL url地址
-     * @return url请求参数部分
-     */
+
     public static String getUrlParams(String URL, String key) {
         Map<String, String> mapRequest = new HashMap<String, String>();
         String[] arrSplit = null;
@@ -588,12 +442,7 @@ public class CommonUtil {
     }
 
 
-    /**
-     * 生成随机密码
-     *
-     * @param pwd_len 生成的密码的总长度
-     * @return 密码的字符串
-     */
+
     public static String genRandomNum(int pwd_len) {
         // 35是因为数组是从0开始的，26个字母+10个数字
         final int maxNum = 36;
@@ -734,12 +583,7 @@ public class CommonUtil {
         return Pattern.matches(base64Pattern, str);
     }
 
-    /**
-     * 数字添加千分符
-     *
-     * @param str
-     * @return
-     */
+
     public static String thousandSeparator(String str) {
         DecimalFormat df = new DecimalFormat("###,###.########");
         return df.format(new BigDecimal(str));
@@ -764,7 +608,9 @@ public class CommonUtil {
     }
 
     /**
-     * 显示软键盘
+     * show input
+     * @param context
+     * @param view
      */
     public static void showInputMethod(Context context, View view) {
         if (context == null || view == null) {
@@ -777,9 +623,7 @@ public class CommonUtil {
         }
     }
 
-    /**
-     * 关闭软键盘
-     */
+
     public static boolean hideInputMethod(Context context, View view) {
         if (context == null || view == null) {
             return false;
@@ -950,92 +794,6 @@ public class CommonUtil {
         return strRatio + "%";
     }
 
-
-    public static void TransactionConfirmSheet(Context context, String transactionDetail, String sourceAddress, String destAddress, String amount, String fee) {
-//        final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(context);
-//        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
-//
-//        TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
-//        mTransactionDetailTv.setText(transactionDetail);
-//        TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
-//        TextView mDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.destAddressTvHint);
-//        if (TextUtils.isEmpty(destAddress)) {
-//            mDestAddressTv.setVisibility(View.GONE);
-//            mDestAddressTvHint.setVisibility(View.GONE);
-//        } else {
-//            mDestAddressTv.setVisibility(View.VISIBLE);
-//            mDestAddressTvHint.setVisibility(View.VISIBLE);
-//            if (TextUtils.isEmpty(accountTag)) {
-//                mDestAddressTv.setText(destAddress);
-//            } else {
-//                mDestAddressTv.setText(destAddress.concat(accountTag));
-//            }
-//
-//        }
-//
-//        TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
-//        mTxFeeTv.setText(String.valueOf(scanTxFee));
-//
-//
-//        qmuiBottomSheet.findViewById(R.id.detailBtn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.GONE);
-//                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.VISIBLE);
-//            }
-//        });
-//
-//
-//        TextView mSourceAddressTv = qmuiBottomSheet.findViewById(R.id.sourceAddressTv);
-//        mSourceAddressTv.setText(sourceAddress);
-//        TextView mDetailsDestAddressTv = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTv);
-//        TextView mDetailsDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTvHint);
-//        if (TextUtils.isEmpty(destAddress)) {
-//            mDetailsDestAddressTv.setVisibility(View.GONE);
-//            mDetailsDestAddressTvHint.setVisibility(View.GONE);
-//        } else {
-//            mDetailsDestAddressTv.setVisibility(View.VISIBLE);
-//            mDetailsDestAddressTvHint.setVisibility(View.VISIBLE);
-//            mDetailsDestAddressTv.setText(destAddress);
-//        }
-//
-//
-//        TextView mDetailsAmountTv = qmuiBottomSheet.findViewById(R.id.detailsAmountTv);
-//        mDetailsAmountTv.setText(CommonUtil.thousandSeparator(transactionAmount));
-//        TextView mDetailsTxFeeTv = qmuiBottomSheet.findViewById(R.id.detailsTxFeeTv);
-//        mDetailsTxFeeTv.setText(String.valueOf(scanTxFee));
-//        TextView mTransactionParamsTv = qmuiBottomSheet.findViewById(R.id.transactionParamsTv);
-//        mTransactionParamsTv.setText(transactionParams);
-//
-//        // title view listener
-//        qmuiBottomSheet.findViewById(R.id.goBackBtn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.VISIBLE);
-//                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.GONE);
-//            }
-//        });
-//        qmuiBottomSheet.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                qmuiBottomSheet.dismiss();
-//            }
-//        });
-//        qmuiBottomSheet.findViewById(R.id.detailsCancelBtn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                qmuiBottomSheet.dismiss();
-//            }
-//        });
-//        qmuiBottomSheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                qmuiBottomSheet.dismiss();
-//                confirmTransaction(contentDto);
-//            }
-//        });
-//        qmuiBottomSheet.show();
-    }
 
 
     public static void setExpiryTime(String expiryTime, Context context) {
