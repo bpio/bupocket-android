@@ -14,6 +14,7 @@ import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.VersionService;
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.model.LogListModel;
 import com.bupocket.model.VersionLogModel;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
@@ -98,14 +99,14 @@ public class VersionLogFragment extends AbsBaseFragment {
             public void onResponse(Call<ApiResult<VersionLogModel>> call, Response<ApiResult<VersionLogModel>> response) {
 
 
-//                if (response.body() != null && ExceptionEnum.SUCCESS.getCode().equals(response.body().getErrCode()) && response.body().getData() != null) {
-//                    List<VersionLogModel.LogListBean> logList = response.body().getData().getLogList();
-//                    if (curPageStart == 1) {
-//                        adapter.setNewData(logList);
-//                    } else {
-//                        adapter.addMoreDataList(logList);
-//                    }
-//                }
+                if (response.body() != null && ExceptionEnum.SUCCESS.getCode().equals(response.body().getErrCode()) && response.body().getData() != null) {
+                    List<LogListModel> logList = response.body().getData().getLogList();
+                    if (curPageStart == 1) {
+                        adapter.setNewData(logList);
+                    } else {
+                        adapter.addMoreDataList(logList);
+                    }
+                }
 
 
             }

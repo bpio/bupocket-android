@@ -10,7 +10,7 @@ public class VersionLogModel {
      */
 
     private PageBean page;
-    private List<LogListBean> logList;
+    private List<LogListModel> logList;
 
     public PageBean getPage() {
         return page;
@@ -20,11 +20,11 @@ public class VersionLogModel {
         this.page = page;
     }
 
-    public List<LogListBean> getLogList() {
+    public List<LogListModel> getLogList() {
         return logList;
     }
 
-    public void setLogList(List<LogListBean> logList) {
+    public void setLogList(List<LogListModel> logList) {
         this.logList = logList;
     }
 
@@ -134,51 +134,5 @@ public class VersionLogModel {
         }
     }
 
-    public static class LogListBean {
-        /**
-         * createTime : 1550824464000
-         * englishVerContents : 1.Optimized the entry to back up mnemonics for the identity wallet.
-         2.Added an address book to ease the selection of a destination address to transfer.
-         * verContents : 1.优化身份钱包助记词备份入口
-         2.增加地址簿功能，方便选择转账目标地址
-         * verNumber : 1.5.2
-         */
 
-        private String createTime;
-        private String englishVerContents;
-        private String verContents;
-        private String verNumber;
-
-        public String getCreateTime() {
-            return createTime;
-        }
-
-        public void setCreateTime(String createTime) {
-            this.createTime = createTime;
-        }
-
-        public String getEnglishVerContents() {
-            return englishVerContents;
-        }
-
-        public void setEnglishVerContents(String englishVerContents) {
-            this.englishVerContents = englishVerContents;
-        }
-
-        public String getVerContents() {
-            return verContents;
-        }
-
-        public void setVerContents(String verContents) {
-            this.verContents = verContents;
-        }
-
-        public String getVerNumber() {
-            return verNumber;
-        }
-
-        public void setVerNumber(String verNumber) {
-            this.verNumber = verNumber;
-        }
-    }
 }

@@ -10,11 +10,12 @@ import com.bupocket.R;
 import com.bupocket.base.AbsViewHolderAdapter;
 import com.bupocket.base.BaseViewHolder;
 import com.bupocket.fragment.VersionLogFragment;
+import com.bupocket.model.LogListModel;
 import com.bupocket.model.VersionLogModel;
 import com.bupocket.utils.LocaleUtil;
 import com.bupocket.utils.TimeUtil;
 
-public class VersionLogAdapter extends AbsViewHolderAdapter<VersionLogModel.LogListBean> {
+public class VersionLogAdapter extends AbsViewHolderAdapter<LogListModel> {
 
 
     public VersionLogAdapter(@NonNull Context context) {
@@ -27,22 +28,22 @@ public class VersionLogAdapter extends AbsViewHolderAdapter<VersionLogModel.LogL
     }
 
     @Override
-    protected void convert(BaseViewHolder holder, VersionLogModel.LogListBean itemData) {
+    protected void convert(BaseViewHolder holder, LogListModel itemData) {
 
-//        TextView versionNumTv = (TextView) holder.getView(R.id.versionNumTV);
-//        TextView versionInfoTv = (TextView) holder.getView(R.id.versionInfoTV);
-//        if (!TextUtils.isEmpty(itemData.getVerContents())) {
-//            versionNumTv.setText(itemData.getVerNumber() + "   " + TimeUtil.timeStamp2Date(itemData.getCreateTime(), TimeUtil.TIME_TYPE_ONE));
-//        }
-//
-//        switch (LocaleUtil.getLanguageStatus()) {
-//            case 0:
-//                versionInfoTv.setText(itemData.getVerContents());
-//                break;
-//            case 1:
-//                versionInfoTv.setText(itemData.getEnglishVerContents());
-//                break;
-//        }
+        TextView versionNumTv = (TextView) holder.getView(R.id.versionNumTV);
+        TextView versionInfoTv = (TextView) holder.getView(R.id.versionInfoTV);
+        if (!TextUtils.isEmpty(itemData.getVerContents())) {
+            versionNumTv.setText(itemData.getVerNumber() + "   " + TimeUtil.timeStamp2Date(itemData.getCreateTime(), TimeUtil.TIME_TYPE_ONE));
+        }
+
+        switch (LocaleUtil.getLanguageStatus()) {
+            case 0:
+                versionInfoTv.setText(itemData.getVerContents());
+                break;
+            case 1:
+                versionInfoTv.setText(itemData.getEnglishVerContents());
+                break;
+        }
 
 
     }
