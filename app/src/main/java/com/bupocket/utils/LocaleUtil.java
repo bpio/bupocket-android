@@ -17,7 +17,6 @@ import java.util.Locale;
 
 public class LocaleUtil {
     /**
-     * 获取用户设置的Locale
      *
      * @return Locale
      */
@@ -39,7 +38,6 @@ public class LocaleUtil {
     }
 
     /**
-     * 设置语言：如果之前有设置就遵循设置如果没设置过就跟随系统语言
      */
     public static void changeAppLanguage(Context context) {
         Resources resources = context.getResources();
@@ -83,7 +81,6 @@ public class LocaleUtil {
 
 
     /**
-     * 保存设置的语言
      *
      * @param currentLanguage index
      */
@@ -111,7 +108,6 @@ public class LocaleUtil {
     }
 
     /**
-     * 重启app生效
      *
      * @param context
      */
@@ -124,7 +120,6 @@ public class LocaleUtil {
     }
 
     /**
-     * 获取当前的Locale
      *
      * @param context Context
      * @return Locale
@@ -140,7 +135,6 @@ public class LocaleUtil {
     }
 
     /**
-     * 更新Locale
      *
      * @param context Context
      * @param locale  New User Locale
@@ -159,8 +153,6 @@ public class LocaleUtil {
     }
 
     /**
-     * 判断需不需要更新
-     *
      * @param context Context
      * @param locale  New User Locale
      * @return true / false
@@ -170,8 +162,6 @@ public class LocaleUtil {
     }
 
     /**
-     * 当系统语言发生改变的时候还是继续遵循用户设置的语言
-     *
      * @param context
      * @param newConfig
      */

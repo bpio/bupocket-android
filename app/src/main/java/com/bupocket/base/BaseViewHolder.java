@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 
 /**
- * edited by yanyi on 16/1/14.
+ *
  */
 public class BaseViewHolder {
     private SparseArray<View> viewMap;

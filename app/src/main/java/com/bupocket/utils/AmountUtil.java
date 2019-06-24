@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 public class AmountUtil {
 	
 	/**
-	 * 除以10的8次方
+	 *
 	 * @param amount
 	 * @return
 	 */
@@ -13,7 +13,7 @@ public class AmountUtil {
 		return (new BigDecimal(amount).divide(new BigDecimal(100000000)).setScale(8, BigDecimal.ROUND_HALF_UP)).toString();
 	}
 	/**
-	 * c乘以100
+	 *
 	 * @param amount
 	 * @return
 	 */
@@ -26,7 +26,7 @@ public class AmountUtil {
 	}
 	
 	/**
-	 * 获取10的8次方的值
+	 *
 	 * @param amount
 	 * @return
 	 */

@@ -44,7 +44,7 @@ import static com.bupocket.common.Constants.WeChat_APPID;
 import static com.bupocket.common.Constants.XB_YOUPING_USERNAME;
 
 /**
- * 通用工具类.
+ * common util class
  */
 public class CommonUtil {
     private static SecureRandom random = new SecureRandom();
