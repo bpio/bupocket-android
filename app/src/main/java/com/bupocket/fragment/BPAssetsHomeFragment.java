@@ -364,7 +364,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
         call.enqueue(new Callback<ApiResult<GetTokensRespDto>>() {
             @Override
             public void onResponse(Call<ApiResult<GetTokensRespDto>> call, Response<ApiResult<GetTokensRespDto>> response) {
-                mAssetsHomeEmptyView.show(null, null);
                 ApiResult<GetTokensRespDto> respDtoApiResult = response.body();
 
                 if (respDtoApiResult != null) {
@@ -373,7 +372,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
                         handleTokens(respDtoApiResult.getData());
                     }
                 } else {
-                    mAssetsHomeEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
+                    if (mAssetsHomeEmptyView != null) {
+                        mAssetsHomeEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), "");
+                    }
                 }
             }
 

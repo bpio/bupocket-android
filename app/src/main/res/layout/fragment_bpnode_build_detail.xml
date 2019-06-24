@@ -25,15 +25,6 @@
         layout="@layout/view_common_lv_layout"/>
 
 
-    <!--<ListView-->
-        <!--android:id="@+id/lvBuildDetail"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="0dp"-->
-        <!--android:divider="@null"-->
-        <!--android:layout_weight="1"-->
-        <!--android:scrollbars="none"-->
-        <!--&gt;</ListView>-->
-
     <LinearLayout
         android:id="@+id/llBtnBuild"
         android:layout_width="match_parent"
