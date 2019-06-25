@@ -63,7 +63,7 @@ public class BPProfileHomeFragment extends BaseFragment {
     RelativeLayout mVersionRl;
     @BindView(R.id.manageWalletRl)
     RelativeLayout mManageWalletRl;
-    @BindView(R.id.addressBookRL)
+    @BindView(R.id.versionUpdate)
     LinearLayout mAddressBookRl;
     @BindView(R.id.llProfileProtocol)
     LinearLayout llProfileProtocol;

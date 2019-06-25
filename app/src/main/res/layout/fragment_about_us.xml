@@ -83,7 +83,7 @@
                 android:background="@color/gray_line" />
 
             <LinearLayout
-                android:id="@+id/addressBookRL"
+                android:id="@+id/versionUpdate"
                 style="@style/BPLLDiscover">
 
 

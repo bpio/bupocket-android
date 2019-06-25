@@ -17,7 +17,6 @@ import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import butterknife.BindView;
-import butterknife.Unbinder;
 
 public class BPAboutUsFragment extends AbsBaseFragment {
     @BindView(R.id.topbar)
@@ -28,15 +27,14 @@ public class BPAboutUsFragment extends AbsBaseFragment {
     LinearLayout versionInfoListLL;
     @BindView(R.id.tvProfileLanguage)
     TextView tvProfileLanguage;
-    @BindView(R.id.addressBookRL)
-    LinearLayout addressBookRL;
+    @BindView(R.id.versionUpdate)
+    LinearLayout versionUpdate;
     @BindView(R.id.changeTestLL)
     LinearLayout changeTestLL;
     @BindView(R.id.changeTestNetTV)
     TextView changeTestNetTV;
     @BindView(R.id.customEnvironmentLL)
     LinearLayout customEnvironmentLL;
-    Unbinder unbinder;
     private boolean isSwitch;
 
     @Override
@@ -90,6 +88,28 @@ public class BPAboutUsFragment extends AbsBaseFragment {
                 startFragment(new VersionLogFragment());
             }
         });
+
+        versionUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //1、check version code
+
+                //
+                DialogUtils.showUpdateAppDialog(mContext, "V1.6.1更新", "更新内容",
+                        new DialogUtils.KnowListener() {
+                    @Override
+                    public void Know() {
+
+
+
+                    }
+                });
+
+
+            }
+        });
+
     }
 
 

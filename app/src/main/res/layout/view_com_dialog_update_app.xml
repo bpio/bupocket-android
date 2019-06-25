@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/shape_corner"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/updateTitleTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="37dp"
+            android:text="@string/change_wallet_name_title"
+            android:textColor="@color/send_confirm_title_color"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="@string/update_app_min_title"
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/send_confirm_title_color"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/updateInfoTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="30dp"
+            tools:text="@string/update_app_min_title"
+            android:layout_marginLeft="35dp"
+            android:textColor="@color/app_txt_color_gray_2"
+            android:textSize="14sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/app_txt_color_gray_3" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp">
+
+            <TextView
+                android:id="@+id/cancelTV"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/not_update_app"
+                android:textColor="@color/app_txt_color_gray"
+                android:textSize="18sp" />
+
+            <View
+                android:layout_width="1.5dp"
+                android:layout_height="18.5dp"
+                android:layout_gravity="center"
+                android:background="@color/app_txt_color_gray_3" />
+
+            <TextView
+                android:id="@+id/confirmTV"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/new_update_app"
+                android:textColor="@color/app_color_main"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

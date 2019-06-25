@@ -730,4 +730,10 @@
     <string name="change_test">切换测试网</string>
     <string name="custom_environment">自定义环境</string>
 
+
+    <!--update app-->
+    <string name="update_app_min_title">新版本内容更新</string>
+    <string name="not_update_app">稍后更新</string>
+    <string name="new_update_app">立即更新</string>
+
 </resources>

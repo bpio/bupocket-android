@@ -1,6 +1,5 @@
 package com.bupocket.utils;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
@@ -34,6 +33,30 @@ public class DialogUtils {
         });
         qmuiDialog.show();
     }
+
+
+
+    public static void showUpdateAppDialog(Context mContext, String title,String msg, final DialogUtils.KnowListener knowListener){
+        final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
+                setLayout(R.layout.view_com_dialog_update_app).create();
+        ((TextView) qmuiDialog.findViewById(R.id.updateTitleTV)).setText(title);
+        ((TextView) qmuiDialog.findViewById(R.id.updateInfoTV)).setText(msg);
+        qmuiDialog.findViewById(R.id.cancelTV).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+            }
+        });
+        qmuiDialog.findViewById(R.id.confirmTV).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+                knowListener.Know();
+            }
+        });
+        qmuiDialog.show();
+    }
+
 
 
 
