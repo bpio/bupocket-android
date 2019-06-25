@@ -52,7 +52,7 @@
 
 
                     <include
-                        android:id="@+id/addressRecordEmptyLL"
+                        android:id="@+id/recordEmptyLL"
                         layout="@layout/view_empty_record"/>
                 </LinearLayout>
 

@@ -20,12 +20,8 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.SlideModel;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
-import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
-import com.tencent.mm.opensdk.openapi.IWXAPI;
-import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.ArrayList;
 
@@ -61,7 +57,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
     private ArrayList<SlideModel.ImageInfo> banListData;
     private DisBannerAdapter disBannerAdapter;
-    private long PAGER_TIME = 3 * 1000;
+    private long PAGER_TIME = 5 * 1000;
     private boolean isStop;
     private boolean isDownStop;
     private Unbinder bind;
@@ -189,7 +185,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
         mNodePlanRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startFragment(new BPNodePlanFragment());
+                startFragment(new BPNodeCampaignFragment());
             }
         });
 

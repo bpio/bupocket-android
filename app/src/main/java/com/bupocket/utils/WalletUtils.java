@@ -6,11 +6,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-
 import com.bupocket.R;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
-
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 import static com.bupocket.BPApplication.getContext;
 

@@ -68,7 +68,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
-    @BindView(R.id.lvRefresh)
+    @BindView(R.id.refreshComLv)
     ListView lvBuildDetail;
     @BindView(R.id.btnBuildExit)
     Button btnBuildExit;
@@ -78,11 +78,11 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
     LinearLayout llBtnBuild;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-    @BindView(R.id.llLoadFailed)
+    @BindView(R.id.loadFailedLL)
     LinearLayout llLoadFailed;
-    @BindView(R.id.addressRecordEmptyLL)
+    @BindView(R.id.recordEmptyLL)
     LinearLayout addressRecordEmptyLL;
-    @BindView(R.id.copyCommandBtn)
+    @BindView(R.id.reloadBtn)
     QMUIRoundButton copyCommandBtn;
     @BindView(R.id.qmuiEmptyView)
     QMUIEmptyView qmuiEmptyView;
@@ -186,7 +186,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
         tvTotalAmount = ((TextView) headerView.findViewById(R.id.tvDetailTotalAmount));
         tvTotalAmount = ((TextView) headerView.findViewById(R.id.tvDetailTotalAmount));
         ivSheetHint = headerView.findViewById(R.id.ivSheetHint);
-        emptyLayout = headerView.findViewById(R.id.addressRecordEmptyLL);
+        emptyLayout = headerView.findViewById(R.id.recordEmptyLL);
         ivSheetHint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

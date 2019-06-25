@@ -43,7 +43,6 @@ public class CrashHandler  implements Thread.UncaughtExceptionHandler {
     }
 
     /**
-     * 初始化
      *
      * @param context
      */
@@ -53,7 +52,7 @@ public class CrashHandler  implements Thread.UncaughtExceptionHandler {
         Thread.setDefaultUncaughtExceptionHandler(this);// 设置该CrashHandler为程序的默认处理器
     }
     /**
-     * 当UncaughtException发生时会转入该重写的方法来处理
+     *
      */
     public void uncaughtException(Thread thread, Throwable ex) {
         if (!handleException(ex) && mDefaultHandler != null) {
@@ -72,11 +71,7 @@ public class CrashHandler  implements Thread.UncaughtExceptionHandler {
     }
 
     /**
-     * 自定义错误处理,收集错误信息 发送错误报告等操作均在此完成.
      *
-     * @param ex
-     *            异常信息
-     * @return true 如果处理了该异常信息;否则返回false.
      */
     public boolean handleException(Throwable ex) {
         if (ex == null)
@@ -99,7 +94,6 @@ public class CrashHandler  implements Thread.UncaughtExceptionHandler {
     }
 
     /**
-     * 收集设备参数信息
      *
      * @param context
      */

@@ -50,12 +50,9 @@ public class BPWebActivity extends AppCompatActivity {
 
     private void initView() {
         WebSettings webSettings = wvBanner.getSettings();
-        //设置WebView属性，能够执行Javascript脚本
         webSettings.setJavaScriptEnabled(true);
         webSettings.setPluginState(WebSettings.PluginState.ON);
-        //设置可以访问文件
         webSettings.setAllowFileAccess(true);
-        //设置支持缩放
         webSettings.setBuiltInZoomControls(true);
         webSettings.setAppCacheEnabled(true);
         webSettings.setDomStorageEnabled(true);
@@ -69,7 +66,6 @@ public class BPWebActivity extends AppCompatActivity {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setLoadsImagesAutomatically(true);
 
-        //去掉缩放按钮
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
             webSettings.setDisplayZoomControls(false);
         }

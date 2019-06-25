@@ -1,6 +1,5 @@
 package com.bupocket.fragment;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -27,7 +26,6 @@ import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TimeUtil;
-import com.bupocket.utils.ToastUtil;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -57,7 +55,7 @@ import retrofit2.Response;
 public class BPAssetsDetailFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
-    @BindView(R.id.assetIconIv)
+    @BindView(R.id.headIconIv)
     QMUIRadiusImageView mAssetIconIv;
     @BindView(R.id.amountTv)
     TextView mAmountTv;
@@ -77,9 +75,9 @@ public class BPAssetsDetailFragment extends BaseFragment {
     QMUIRoundButton mWalletSendBtn;
     @BindView(R.id.myTokenTxTitleTv)
     TextView mMyTokenTxTitleTv;
-    @BindView(R.id.copyCommandBtn)
+    @BindView(R.id.reloadBtn)
     QMUIRoundButton copyCommandBtn;
-    @BindView(R.id.llLoadFailed)
+    @BindView(R.id.loadFailedLL)
     LinearLayout llLoadFailed;
 
     protected SharedPreferencesHelper sharedPreferencesHelper;

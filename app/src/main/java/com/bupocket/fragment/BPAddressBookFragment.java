@@ -2,7 +2,6 @@ package com.bupocket.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,7 +18,6 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetAddressBookRespDto;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
-import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -38,8 +36,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
-
 public class BPAddressBookFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
@@ -49,7 +45,7 @@ public class BPAddressBookFragment extends BaseFragment {
     RefreshLayout refreshLayout;
     @BindView(R.id.addressBookLv)
     ListView mAddressBookLv;
-    @BindView(R.id.addressRecordEmptyLL)
+    @BindView(R.id.recordEmptyLL)
     LinearLayout mAddressRecordEmptyLL;
 
     private String flag;
@@ -109,7 +105,7 @@ public class BPAddressBookFragment extends BaseFragment {
         initTopBar();
 
         faildLayout = LayoutInflater.from(mContext).inflate(R.layout.view_load_failed, null);
-        faildLayout.findViewById(R.id.copyCommandBtn).setOnClickListener(new View.OnClickListener() {
+        faildLayout.findViewById(R.id.reloadBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                refreshLayout.autoRefreshAnimationOnly();

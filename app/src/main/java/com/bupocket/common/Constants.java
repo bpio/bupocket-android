@@ -43,8 +43,6 @@ public class Constants {
     public static final String QR_NODE_PLAN_PREFIX = "/xDnAs_dpos/";
     public static final CharSequence INFO_UDCBU = "###UDCBU###";
 
-//    public static final String WeChat_APPID = "wxaecf7ac4085fd34a";
-//    public static final String XB_YOUPING_USERNAME = "gh_463781563a74";
 
     public static final String WeChat_APPID = "wxaecf7ac4085fd34a";
     public static final String XB_YOUPING_USERNAME = "gh_545e659b7dcd";
@@ -52,6 +50,11 @@ public class Constants {
 
     public static final String UM_APPID = "5cc7a5e90cafb257820006d9";
     public static final String NORMAL_WALLET_NAME = "Wallet_1";
+
+    public static final String SHARE_URL = "https://bumo.io/technology";
+
+    public static final String VALIDATE_PATH = "supernodes/detail/validate/";
+    public static final String KOL_PATH = "supernodes/detail/kol/";
 
 
     public static enum MainNetConfig {

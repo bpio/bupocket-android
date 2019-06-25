@@ -18,56 +18,56 @@ import java.util.List;
 public class CustomViewfinderView extends ViewfinderView {
 
     /**
-     * 重绘时间间隔
+     *
      */
     public static final long CUSTOME_ANIMATION_DELAY = 16;
 
     /* ******************************************    边角线相关属性    ************************************************/
 
     /**
-     * "边角线长度/扫描边框长度"的占比 (比例越大，线越长)
+     *
      */
     public float mLineRate = 0.1F;
 
     /**
-     * 边角线厚度 (建议使用dp)
+     *
      */
     public float mLineDepth =  TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
 
     /**
-     * 边角线颜色
+     *
      */
     public int mLineColor = Color.WHITE;
 
     /* *******************************************    扫描线相关属性    ************************************************/
 
     /**
-     * 扫描线起始位置
+     *
      */
     public int mScanLinePosition = 0;
 
     /**
-     * 扫描线厚度
+     *
      */
     public float mScanLineDepth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4, getResources().getDisplayMetrics());
 
     /**
-     * 扫描线每次重绘的移动距离
+     *
      */
     public float mScanLineDy = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3, getResources().getDisplayMetrics());
 
     /**
-     * 线性梯度
+     *
      */
     public LinearGradient mLinearGradient;
 
     /**
-     * 线性梯度位置
+     *
      */
     public float[] mPositions = new float[]{0f, 0.5f, 1f};
 
     /**
-     * 线性梯度各个位置对应的颜色值
+     *
      */
     public int[] mScanLineColor = new int[]{0x00FFFFFF, Color.WHITE, 0x00FFFFFF};
 

@@ -4,14 +4,6 @@ import com.google.gson.Gson;
 
 public class RegisterTokenInfo {
 
-    /**
-     * type : 发行方式
-     * name : token名称
-     * code : token code
-     * amount : token数量
-     * decimals : token精度
-     * desc : 描述信息
-     */
 
     private String type;
     private String name;

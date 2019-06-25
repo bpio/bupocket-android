@@ -13,16 +13,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
-import com.bupocket.adaptor.SuperNodeAdapter;
+import com.bupocket.adaptor.NodeCampaignAdapter;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.interfaces.SignatureListener;
@@ -39,12 +39,8 @@ import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.wallet.Wallet;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.github.ksoichiro.android.observablescrollview.ScrollUtils;
-import com.nineoldandroids.view.ViewHelper;
-import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
+import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
@@ -68,57 +64,55 @@ import retrofit2.Response;
 import static android.content.Context.INPUT_METHOD_SERVICE;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-public class BPNodePlanFragment extends AbsBaseFragment {
+public class BPNodeCampaignFragment extends AbsBaseFragment {
 
 
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
-    @BindView(R.id.lvRefresh)
-    ObservableListView lvPlan;
+    @BindView(R.id.refreshComLv)
+    ListView lvPlan;
     @BindView(R.id.myNodeCB)
     CheckBox myNodeCB;
     @BindView(R.id.myNodeTv)
     TextView myNodeTv;
-    @BindView(R.id.etNodeSearch)
-    EditText etNodeSearch;
-    @BindView(R.id.addressRecordEmptyLL)
-    LinearLayout addressRecordEmptyLL;
+    @BindView(R.id.nodeSearchET)
+    EditText nodeSearchET;
+    @BindView(R.id.recordEmptyLL)
+    LinearLayout recordEmptyLL;
     @BindView(R.id.myNodeTipsIv)
     ImageView mMyNodeTipsIv;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-    @BindView(R.id.copyCommandBtn)
-    QMUIRoundButton copyCommandBtn;
-    @BindView(R.id.llLoadFailed)
-    LinearLayout llLoadFailed;
-    @BindView(R.id.tvTitle)
-    TextView tvTitle;
-    @BindView(R.id.llNodeSearch)
-    RelativeLayout llNodeSearch;
-    @BindView(R.id.llHeadView)
-    LinearLayout llHeadView;
+    @BindView(R.id.reloadBtn)
+    QMUIRoundButton reloadBtn;
+    @BindView(R.id.loadFailedLL)
+    LinearLayout loadFailedLL;
+    @BindView(R.id.titleTv)
+    TextView titleTv;
+    @BindView(R.id.nodeSearchRL)
+    RelativeLayout nodeSearchRL;
+    @BindView(R.id.qmuiEmptyView)
+    QMUIEmptyView qmuiEmptyView;
 
 
     private String currentWalletAddress;
-    private SuperNodeAdapter superNodeAdapter;
+    private NodeCampaignAdapter superNodeAdapter;
     private QMUIPopup myNodeExplainPopup;
     private ArrayList<SuperNodeModel> myVoteInfoList;
     private ArrayList<SuperNodeModel> nodeList;
-    private int mBaseTranslationY;
     private String metaData;
     private Call<ApiResult<SuperNodeDto>> serviceSuperNode;
 
 
     @Override
     protected int getLayoutView() {
-        return R.layout.fragment_node_plan;
+        return R.layout.fragment_node_campaign;
     }
 
     @Override
     protected void initView() {
         initTopBar();
         initListView();
-        setEmpty(true);
     }
 
     @Override
@@ -131,12 +125,7 @@ public class BPNodePlanFragment extends AbsBaseFragment {
         }
 
         currentWalletAddress = getWalletAddress();
-        lvPlan.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                reqAllNodeData();
-            }
-        }, 200);
+        reqAllNodeData();
     }
 
 
@@ -149,7 +138,7 @@ public class BPNodePlanFragment extends AbsBaseFragment {
             }
         });
 
-        etNodeSearch.addTextChangedListener(new TextWatcher() {
+        nodeSearchET.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -166,13 +155,13 @@ public class BPNodePlanFragment extends AbsBaseFragment {
             }
         });
 
-        etNodeSearch.setOnKeyListener(new View.OnKeyListener() {
+        nodeSearchET.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN) {
                     InputMethodManager manager = (InputMethodManager) getContext().getSystemService(INPUT_METHOD_SERVICE);
                     if (manager.isActive()) {
-                        manager.hideSoftInputFromWindow(etNodeSearch.getApplicationWindowToken(), 0);
+                        manager.hideSoftInputFromWindow(nodeSearchET.getApplicationWindowToken(), 0);
                     }
 
                 }
@@ -180,7 +169,7 @@ public class BPNodePlanFragment extends AbsBaseFragment {
             }
         });
 
-        superNodeAdapter.setOnItemBtnListener(new SuperNodeAdapter.OnItemBtnListener() {
+        superNodeAdapter.setOnItemBtnListener(new NodeCampaignAdapter.OnItemBtnListener() {
             @Override
             public void onClick(int position, int btn) {
                 SuperNodeModel superNodeModel = superNodeAdapter.getItem(position);
@@ -218,7 +207,7 @@ public class BPNodePlanFragment extends AbsBaseFragment {
             }
         });
 
-        copyCommandBtn.setOnClickListener(new View.OnClickListener() {
+        reloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 refreshLayout.autoRefresh(0, 200, 1, false);
@@ -226,62 +215,15 @@ public class BPNodePlanFragment extends AbsBaseFragment {
         });
 
 
-        lvPlan.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
-            @Override
-            public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-//                LogUtils.e("scrollY:" + scrollY + "\tfirstScroll:" + firstScroll + "\tdragging:" + dragging);
-
-                if (dragging) {
-                    int toolbarHeight = tvTitle.getHeight();
-                    if (firstScroll) {
-                        float currentHeaderTranslationY = ViewHelper.getTranslationY(llHeadView);
-                        if (-toolbarHeight < currentHeaderTranslationY) {
-                            mBaseTranslationY = scrollY;
-                        }
-                    }
-                    float headerTranslationY = ScrollUtils.getFloat(-(scrollY - mBaseTranslationY), -toolbarHeight, 0);
-                    ViewPropertyAnimator.animate(llHeadView).cancel();
-                    ViewHelper.setTranslationY(llHeadView, headerTranslationY);
-//                    setMargin((int) (llHeadView.getHeight()-headerTranslationY));
-                }
-
-            }
-
-            @Override
-            public void onDownMotionEvent() {
-
-            }
-
-            @Override
-            public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-                mBaseTranslationY = 0;
-
-                if (scrollState == ScrollState.DOWN) {
-                    showToolbar();
-                } else if (scrollState == ScrollState.UP) {
-                    int toolbarHeight = tvTitle.getHeight();
-                    int scrollY = lvPlan.getCurrentScrollY();
-                    if (toolbarHeight <= scrollY) {
-                        hideToolbar();
-                    } else {
-                        showToolbar();
-                    }
-                } else {
-                    if (!toolbarIsShown() && !toolbarIsHidden()) {
-                        showToolbar();
-                    }
-                }
-            }
-        });
     }
 
     private void notifyData() {
         ArrayList<SuperNodeModel> notifyNodeList = new ArrayList<>();
-        if (myNodeCB.isChecked() && !etNodeSearch.getText().toString().isEmpty()) {
+        if (myNodeCB.isChecked() && !nodeSearchET.getText().toString().isEmpty()) {
             notifyNodeList = searchData(myVoteInfoList);
         } else if (myNodeCB.isChecked()) {
             notifyNodeList = myVoteInfoList;
-        } else if (!etNodeSearch.getText().toString().isEmpty()) {
+        } else if (!nodeSearchET.getText().toString().isEmpty()) {
             notifyNodeList = searchData(nodeList);
         } else {
             notifyNodeList = nodeList;
@@ -292,7 +234,7 @@ public class BPNodePlanFragment extends AbsBaseFragment {
 
     private ArrayList<SuperNodeModel> searchData(ArrayList<SuperNodeModel> sourceData) {
         ArrayList<SuperNodeModel> superNodeModels = new ArrayList<>();
-        String inputSearch = etNodeSearch.getText().toString();
+        String inputSearch = nodeSearchET.getText().toString();
         Pattern pattern = Pattern.compile(inputSearch);
         for (int i = 0; i < sourceData.size(); i++) {
             Matcher matcher = pattern.matcher(sourceData.get(i).getNodeName());
@@ -304,7 +246,7 @@ public class BPNodePlanFragment extends AbsBaseFragment {
     }
 
     private void GoVoteRecord(SuperNodeModel superNodeModel) {
-        BPMeNodeVoteRecordFragment fragment = new BPMeNodeVoteRecordFragment();
+        BPMyNodeVoteRecordFragment fragment = new BPMyNodeVoteRecordFragment();
         Bundle args1 = new Bundle();
         args1.putParcelable("itemNodeInfo", superNodeModel);
         fragment.setArguments(args1);
@@ -334,44 +276,6 @@ public class BPNodePlanFragment extends AbsBaseFragment {
         }
     }
 
-
-    private boolean toolbarIsShown() {
-        return ViewHelper.getTranslationY(llHeadView) == 0;
-    }
-
-    private boolean toolbarIsHidden() {
-        return ViewHelper.getTranslationY(llHeadView) == -tvTitle.getHeight();
-    }
-
-    private void showToolbar() {
-        float headerTranslationY = ViewHelper.getTranslationY(llHeadView);
-        if (headerTranslationY != 0) {
-            ViewPropertyAnimator.animate(llHeadView).cancel();
-            ViewPropertyAnimator.animate(llHeadView).translationY(0).setDuration(200).start();
-        }
-        setMargin(llHeadView.getHeight());
-        mTopBar.setTitle("");
-
-    }
-
-    private void hideToolbar() {
-        float headerTranslationY = ViewHelper.getTranslationY(llHeadView);
-        int toolbarHeight = tvTitle.getHeight();
-        if (headerTranslationY != -toolbarHeight) {
-            ViewPropertyAnimator.animate(llHeadView).cancel();
-            ViewPropertyAnimator.animate(llHeadView).translationY(-toolbarHeight).setDuration(200).start();
-        }
-        setMargin(llHeadView.getHeight() - tvTitle.getHeight());
-        mTopBar.setTitle(R.string.run_for_node_txt);
-
-    }
-
-
-    private void setMargin(int margin) {
-        FrameLayout.LayoutParams lp = (FrameLayout.LayoutParams) refreshLayout.getLayoutParams();
-        lp.setMargins(0, margin, 0, 0);
-        refreshLayout.getLayout().setLayoutParams(lp);
-    }
 
     private void initPopup() {
         if (myNodeExplainPopup == null) {
@@ -500,9 +404,9 @@ public class BPNodePlanFragment extends AbsBaseFragment {
 
     private void setEmpty(boolean isVisible) {
         if (isVisible) {
-            addressRecordEmptyLL.setVisibility(View.VISIBLE);
+            recordEmptyLL.setVisibility(View.VISIBLE);
         } else {
-            addressRecordEmptyLL.setVisibility(View.GONE);
+            recordEmptyLL.setVisibility(View.GONE);
         }
     }
 
@@ -528,9 +432,9 @@ public class BPNodePlanFragment extends AbsBaseFragment {
                 myVoteInfoList = myVoteInfoList(nodeList);
 
                 notifyData();
-                showToolbar();
-                llLoadFailed.setVisibility(View.GONE);
+                loadFailedLL.setVisibility(View.GONE);
                 refreshLayout.finishRefresh();
+                qmuiEmptyView.show("","");
             }
 
             @Override
@@ -540,14 +444,13 @@ public class BPNodePlanFragment extends AbsBaseFragment {
                 }
                 myVoteInfoList.clear();
                 nodeList.clear();
-                llLoadFailed.setVisibility(View.VISIBLE);
+                loadFailedLL.setVisibility(View.VISIBLE);
                 refreshLayout.finishRefresh();
                 setEmpty(false);
                 superNodeAdapter.setNewData(new ArrayList<SuperNodeModel>());
-
+                qmuiEmptyView.show("","");
             }
         });
-        setMargin(llHeadView.getHeight());
 
     }
 
@@ -574,9 +477,10 @@ public class BPNodePlanFragment extends AbsBaseFragment {
 
 
     private void initListView() {
-        superNodeAdapter = new SuperNodeAdapter(this.getContext());
+        superNodeAdapter = new NodeCampaignAdapter(this.getContext());
         lvPlan.setAdapter(superNodeAdapter);
         refreshLayout.setEnableLoadMore(false);
+        qmuiEmptyView.show(true);
     }
 
     private void initTopBar() {

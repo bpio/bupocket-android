@@ -284,7 +284,7 @@ public abstract class BaseFragment extends QMUIFragment {
             }
         };
         timer.schedule(timerTask,
-                1 * 1000,//延迟1秒执行
+                1 * 1000,
                 1000);
     }
 

@@ -12,7 +12,7 @@
         android:padding="10dp">
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-            android:id="@+id/assetIconIv"
+            android:id="@+id/headIconIv"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:clickable="false"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/llHeadLayout"
+    android:id="@+id/headLL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/icon_token_bg_list"
@@ -11,7 +11,7 @@
 
 
     <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-        android:id="@+id/assetIconIv"
+        android:id="@+id/headIconIv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

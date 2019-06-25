@@ -4,10 +4,6 @@ import com.google.gson.Gson;
 
 public class IssueTokenInfo {
 
-    /**
-     * code : token code
-     * amount : token数量
-     */
 
     private String code;
     private String amount;
