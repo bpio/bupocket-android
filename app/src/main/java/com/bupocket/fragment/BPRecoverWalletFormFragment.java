@@ -15,15 +15,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.DialogUitls;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
@@ -163,7 +161,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
         String regex = "[a-zA-Z\\s]+";
         if (!mneonic.matches(regex)) {
 
-            DialogUitls.showTitleDialog(mContext, R.string.recover_mneonic_input_error, R.string.error_hint);
+            DialogUtils.showTitleDialog(mContext, R.string.recover_mneonic_input_error, R.string.error_hint);
             return false;
         }
         return true;
@@ -172,7 +170,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
     private boolean walletNameFlag() {
         String walletName = mWalletNameEt.getText().toString().trim();
         if (!CommonUtil.validateNickname(walletName)) {
-            DialogUitls.showTitleDialog(mContext, R.string.wallet_create_form_error4, R.string.error_hint);
+            DialogUtils.showTitleDialog(mContext, R.string.wallet_create_form_error4, R.string.error_hint);
             return false;
         }
         return true;
@@ -181,7 +179,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
     private boolean pwdFlag() {
         String password = mPwdEt.getText().toString().trim();
         if (!CommonUtil.validatePassword(password)) {
-            DialogUitls.showTitleDialog(mContext, R.string.wallet_create_form_error2, R.string.error_hint);
+            DialogUtils.showTitleDialog(mContext, R.string.wallet_create_form_error2, R.string.error_hint);
             return false;
         }
         return true;
@@ -191,7 +189,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
         String pwd = mPwdEt.getText().toString().trim();
         String confirmPwd = mConfirmPwdEt.getText().toString().trim();
         if (!confirmPwd.equals(pwd)) {
-            DialogUitls.showTitleDialog(mContext, R.string.wallet_create_form_error1, R.string.error_hint);
+            DialogUtils.showTitleDialog(mContext, R.string.wallet_create_form_error1, R.string.error_hint);
             return false;
         }
         return true;
@@ -292,7 +290,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
                                         } catch (Exception e) {
                                             e.printStackTrace();
                                             Looper.prepare();
-                                            DialogUitls.showTitleDialog(mContext, R.string.recover_mneonic_input_error, R.string.error_hint);
+                                            DialogUtils.showTitleDialog(mContext, R.string.recover_mneonic_input_error, R.string.error_hint);
                                             tipDialog.dismiss();
                                             Looper.loop();
                                             return;

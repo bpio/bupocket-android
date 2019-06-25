@@ -14,15 +14,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.CreateWalletMatch;
-import com.bupocket.utils.DialogUitls;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
@@ -134,21 +132,21 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
         String indntityName = mSetIdentityNameEt.getText().toString().trim();
 
         if (!CommonUtil.validateNickname(indntityName)) {
-            DialogUitls.showTitleDialog(mContext, getString(R.string.wallet_create_form_error4), getString(R.string.error_hint));
+            DialogUtils.showTitleDialog(mContext, getString(R.string.wallet_create_form_error4), getString(R.string.error_hint));
             return false;
         }
 
         String password = mSetPwdEt.getText().toString().trim();
 
         if (!CommonUtil.validatePassword(password)) {
-            DialogUitls.showTitleDialog(mContext, R.string.wallet_create_form_error2, R.string.error_hint);
+            DialogUtils.showTitleDialog(mContext, R.string.wallet_create_form_error2, R.string.error_hint);
             return false;
         }
 
         String repeatPassword = mRepeatPwdEt.getText().toString().trim();
 
         if (!repeatPassword.equals(password)) {
-            DialogUitls.showTitleDialog(mContext, R.string.wallet_create_form_error1, R.string.error_hint);
+            DialogUtils.showTitleDialog(mContext, R.string.wallet_create_form_error1, R.string.error_hint);
             return false;
         }
 

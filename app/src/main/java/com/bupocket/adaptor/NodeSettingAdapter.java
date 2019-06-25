@@ -14,7 +14,7 @@ import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.model.NodeSettingModel;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.DialogUitls;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.google.gson.Gson;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
@@ -82,7 +82,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
             public void onClick(View v) {
                 walletBottom.dismiss();
                 String url = getData().get(position).getUrl();
-                DialogUitls.showEditMessageDialog(
+                DialogUtils.showEditMessageDialog(
                         context,
                         context.getString(R.string.add_node_address_title),
                         context.getString(R.string.add_node_address_title),
@@ -106,7 +106,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
             public void onClick(View v) {
                 walletBottom.dismiss();
 
-                DialogUitls.showConfirmDialog(context, context.getString(R.string.confirm_delete_node), new CommonUtil.KnowListener() {
+                DialogUtils.showConfirmDialog(context, context.getString(R.string.confirm_delete_node), new CommonUtil.KnowListener() {
                     @Override
                     public void Know() {
                         getData().remove(position);

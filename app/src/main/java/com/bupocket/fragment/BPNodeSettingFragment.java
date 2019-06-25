@@ -1,44 +1,29 @@
 package com.bupocket.fragment;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
-import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeSettingAdapter;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
-import com.bupocket.common.ConstantsType;
-import com.bupocket.enums.BumoNodeEnum;
-import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.model.NodeSettingModel;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.DialogUitls;
-import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.DialogUtils;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-import butterknife.Unbinder;
 
 public class BPNodeSettingFragment extends AbsBaseFragment {
 
@@ -101,7 +86,7 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
         llAddMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogUitls.showEditMessageDialog(mContext,
+                DialogUtils.showEditMessageDialog(mContext,
                         getString(R.string.add_node_address_title),
                         getString(R.string.add_node_address_title),
                         new CommonUtil.ConfirmListener() {

@@ -20,7 +20,7 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.SlideModel;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.DialogUitls;
+import com.bupocket.utils.DialogUtils;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 
@@ -217,7 +217,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                     CommonUtil.goWeChat(mContext,WeChat_APPID,XB_YOUPING_USERNAME);
                 }else{
 
-                    DialogUitls.showMessageDialog(mContext, getString(R.string.open_youpin),getString(R.string.open_youpin_title), new CommonUtil.KnowListener() {
+                    DialogUtils.showMessageDialog(mContext, getString(R.string.open_youpin),getString(R.string.open_youpin_title), new CommonUtil.KnowListener() {
                         @Override
                         public void Know() {
                             spHelper.put("youpin","1");

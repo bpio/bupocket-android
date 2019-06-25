@@ -12,13 +12,9 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import com.bupocket.R;
 import com.bupocket.enums.CurrencyTypeEnum;
-import com.bupocket.enums.ExceptionEnum;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -702,7 +698,7 @@ public class CommonUtil {
         req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
         boolean isSend = api.sendReq(req);
         if (!isSend) {
-            DialogUitls.showMessageNoTitleDialog(context, R.string.wechat_down_load_info);
+            DialogUtils.showMessageNoTitleDialog(context, R.string.wechat_down_load_info);
         }
         return isSend;
     }
@@ -740,10 +736,10 @@ public class CommonUtil {
             String[] strings = TimeUtil.time_mmss(Long.parseLong(expiryTime) - System.currentTimeMillis());
             if (strings[0].isEmpty()) {
                 @SuppressLint("StringFormatMatches") String format = String.format(context.getString(R.string.error_1011_s, strings[1] + ""));
-                DialogUitls.showMessageNoTitleDialog(context, format);
+                DialogUtils.showMessageNoTitleDialog(context, format);
             } else {
                 @SuppressLint("StringFormatMatches") String format = String.format(context.getString(R.string.error_1011_m, strings[0] + "", strings[1] + ""));
-                DialogUitls.showMessageNoTitleDialog(context, format);
+                DialogUtils.showMessageNoTitleDialog(context, format);
             }
         }
     }

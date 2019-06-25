@@ -34,8 +34,7 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.SuperNodeDto;
 import com.bupocket.model.SuperNodeModel;
-import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.DialogUitls;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.wallet.Wallet;
@@ -256,9 +255,9 @@ public class BPNodeCampaignFragment extends AbsBaseFragment {
     private void GoShareVote(SuperNodeModel superNodeModel) {
         String status = superNodeModel.getStatus();
         if (SuperNodeStatusEnum.RUNNING.getCode().equals(status)) {
-            DialogUitls.showMessageNoTitleDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
+            DialogUtils.showMessageNoTitleDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
         } else if (SuperNodeStatusEnum.FAILED.getCode().equals(status)) {
-            DialogUitls.showMessageNoTitleDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.FAILED.getNameRes())));
+            DialogUtils.showMessageNoTitleDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.FAILED.getNameRes())));
         } else {
             Bundle args = new Bundle();
             args.putParcelable("itemInfo", superNodeModel);
@@ -270,7 +269,7 @@ public class BPNodeCampaignFragment extends AbsBaseFragment {
 
     private void GoRevokeVote(SuperNodeModel superNodeModel) {
         if ("0".equals(superNodeModel.getMyVoteCount())) {
-            DialogUitls.showMessageNoTitleDialog(getContext(), getString(R.string.revoke_no_vote_error_message_txt));
+            DialogUtils.showMessageNoTitleDialog(getContext(), getString(R.string.revoke_no_vote_error_message_txt));
         } else {
             showRevokeVoteDialog(superNodeModel);
         }
@@ -372,12 +371,12 @@ public class BPNodeCampaignFragment extends AbsBaseFragment {
                                     if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
                                         submitTransactionBase(privateKey, buildBlobResponse);
                                     } else {
-                                        String msg = DialogUitls.byCodeToMsg(mContext, respDto.getErrCode());
+                                        String msg = DialogUtils.byCodeToMsg(mContext, respDto.getErrCode());
                                         if (!msg.isEmpty()) {
-                                            DialogUitls.showMessageNoTitleDialog(getContext(), msg);
+                                            DialogUtils.showMessageNoTitleDialog(getContext(), msg);
                                             return;
                                         }
-                                        DialogUitls.showMessageNoTitleDialog(getContext(), respDto.getMsg());
+                                        DialogUtils.showMessageNoTitleDialog(getContext(), respDto.getMsg());
 
                                     }
                                 }

@@ -12,7 +12,7 @@ import com.bupocket.common.Constants;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.DialogUitls;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
@@ -95,7 +95,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
 
     private void showSwitchMainNetDialog() {
 
-        DialogUitls.showMessageDialog(mContext, getString(R.string.switch_main_net_message_txt), "", new CommonUtil.KnowListener() {
+        DialogUtils.showMessageDialog(mContext, getString(R.string.switch_main_net_message_txt), "", new CommonUtil.KnowListener() {
             @Override
             public void Know() {
                 spHelper.put("tokensInfoCache","");
@@ -110,7 +110,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
 
     private void ShowSwitchTestNetConfirmDialog() {
 
-        DialogUitls.showMessageDialog(mContext, getString(R.string.switch_to_test_net_message_txt), "", new CommonUtil.KnowListener() {
+        DialogUtils.showMessageDialog(mContext, getString(R.string.switch_to_test_net_message_txt), "", new CommonUtil.KnowListener() {
             @Override
             public void Know() {
                 SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());

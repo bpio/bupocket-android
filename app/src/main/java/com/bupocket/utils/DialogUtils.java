@@ -10,7 +10,7 @@ import com.bupocket.R;
 import com.bupocket.enums.ExceptionEnum;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 
-public class DialogUitls {
+public class DialogUtils {
 
 
 
