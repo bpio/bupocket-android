@@ -35,10 +35,10 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.SuperNodeDto;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUitls;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.wallet.Wallet;
-import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -256,9 +256,9 @@ public class BPNodeCampaignFragment extends AbsBaseFragment {
     private void GoShareVote(SuperNodeModel superNodeModel) {
         String status = superNodeModel.getStatus();
         if (SuperNodeStatusEnum.RUNNING.getCode().equals(status)) {
-            CommonUtil.showMessageDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
+            DialogUitls.showMessageNoTitleDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
         } else if (SuperNodeStatusEnum.FAILED.getCode().equals(status)) {
-            CommonUtil.showMessageDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.FAILED.getNameRes())));
+            DialogUitls.showMessageNoTitleDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.FAILED.getNameRes())));
         } else {
             Bundle args = new Bundle();
             args.putParcelable("itemInfo", superNodeModel);
@@ -270,7 +270,7 @@ public class BPNodeCampaignFragment extends AbsBaseFragment {
 
     private void GoRevokeVote(SuperNodeModel superNodeModel) {
         if ("0".equals(superNodeModel.getMyVoteCount())) {
-            CommonUtil.showMessageDialog(getContext(), getString(R.string.revoke_no_vote_error_message_txt));
+            DialogUitls.showMessageNoTitleDialog(getContext(), getString(R.string.revoke_no_vote_error_message_txt));
         } else {
             showRevokeVoteDialog(superNodeModel);
         }
@@ -372,12 +372,12 @@ public class BPNodeCampaignFragment extends AbsBaseFragment {
                                     if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
                                         submitTransactionBase(privateKey, buildBlobResponse);
                                     } else {
-                                        String msg = CommonUtil.byCodeToMsg(mContext, respDto.getErrCode());
+                                        String msg = DialogUitls.byCodeToMsg(mContext, respDto.getErrCode());
                                         if (!msg.isEmpty()) {
-                                            CommonUtil.showMessageDialog(getContext(), msg);
+                                            DialogUitls.showMessageNoTitleDialog(getContext(), msg);
                                             return;
                                         }
-                                        CommonUtil.showMessageDialog(getContext(), respDto.getMsg());
+                                        DialogUitls.showMessageNoTitleDialog(getContext(), respDto.getMsg());
 
                                     }
                                 }

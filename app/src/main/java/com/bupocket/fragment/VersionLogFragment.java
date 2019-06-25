@@ -1,11 +1,9 @@
 package com.bupocket.fragment;
 
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 import com.bupocket.R;
 import com.bupocket.adaptor.VersionLogAdapter;
@@ -17,7 +15,6 @@ import com.bupocket.http.api.VersionService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.LogListModel;
 import com.bupocket.model.VersionLogModel;
-import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -30,7 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -40,14 +36,14 @@ public class VersionLogFragment extends AbsBaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBarLayout topbar;
-    @BindView(R.id.lvRefresh)
-    ObservableListView lvRefresh;
-    @BindView(R.id.copyCommandBtn)
-    QMUIRoundButton copyCommandBtn;
-    @BindView(R.id.llLoadFailed)
-    LinearLayout llLoadFailed;
-    @BindView(R.id.addressRecordEmptyLL)
-    LinearLayout addressRecordEmptyLL;
+    @BindView(R.id.refreshComLv)
+    ListView refreshComLv;
+    @BindView(R.id.reloadBtn)
+    QMUIRoundButton reloadBtn;
+    @BindView(R.id.loadFailedLL)
+    LinearLayout loadFailedLL;
+    @BindView(R.id.recordEmptyLL)
+    LinearLayout recordEmptyLL;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.qmuiEmptyView)
@@ -71,7 +67,7 @@ public class VersionLogFragment extends AbsBaseFragment {
 
     private void initListView() {
         adapter = new VersionLogAdapter(mContext);
-        lvRefresh.setAdapter(adapter);
+        refreshComLv.setAdapter(adapter);
 
     }
 
@@ -114,10 +110,10 @@ public class VersionLogFragment extends AbsBaseFragment {
                         adapter.addMoreDataList(logList);
                     }
 
-                    addressRecordEmptyLL.setVisibility(View.GONE);
-                    llLoadFailed.setVisibility(View.GONE);
+                    recordEmptyLL.setVisibility(View.GONE);
+                    loadFailedLL.setVisibility(View.GONE);
                 } else {
-                    addressRecordEmptyLL.setVisibility(View.VISIBLE);
+                    recordEmptyLL.setVisibility(View.VISIBLE);
                 }
 
 
@@ -128,7 +124,7 @@ public class VersionLogFragment extends AbsBaseFragment {
                 if (call.isCanceled()) {
                     return;
                 }
-                llLoadFailed.setVisibility(View.VISIBLE);
+                loadFailedLL.setVisibility(View.VISIBLE);
 
             }
         });
@@ -157,7 +153,7 @@ public class VersionLogFragment extends AbsBaseFragment {
             }
         });
 
-        copyCommandBtn.setOnClickListener(new View.OnClickListener() {
+        reloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 //                refreshLayout.refresh

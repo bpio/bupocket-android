@@ -33,6 +33,7 @@ import com.bupocket.model.NodeBuildDetailModel;
 import com.bupocket.model.NodeBuildSupportModel;
 import com.bupocket.model.TransConfirmModel;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUitls;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
@@ -443,7 +444,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
                             @Override
                             public void run() {
 
-                                CommonUtil.showMessageDialog(mContext, transBlob.getErrorDesc());
+                                DialogUitls.showMessageNoTitleDialog(mContext, transBlob.getErrorDesc());
                             }
                         });
                         return;
@@ -479,7 +480,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
                                             CommonUtil.setExpiryTime(expiryTime, mContext);
 
                                         } else {
-                                            CommonUtil.showMessageDialog(mContext, body.getMsg(), body.getErrCode());
+                                            DialogUitls.showMessageNoTitleDialog(mContext, body.getMsg(), body.getErrCode());
                                         }
 
                                     }
@@ -632,7 +633,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                CommonUtil.showMessageDialog(mContext, transBlob.getErrorDesc());
+                                DialogUitls.showMessageNoTitleDialog(mContext, transBlob.getErrorDesc());
                             }
                         });
                         return;
@@ -672,7 +673,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
                                             CommonUtil.setExpiryTime(expiryTime, mContext);
 
                                         } else {
-                                            CommonUtil.showMessageDialog(mContext, body.getMsg(), body.getErrCode());
+                                            DialogUitls.showMessageNoTitleDialog(mContext, body.getMsg(), body.getErrCode());
                                         }
                                     }
                                 }

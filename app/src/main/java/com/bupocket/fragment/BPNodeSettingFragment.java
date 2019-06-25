@@ -23,6 +23,7 @@ import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.model.NodeSettingModel;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUitls;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -100,7 +101,7 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
         llAddMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CommonUtil.showEditMessageDialog(mContext,
+                DialogUitls.showEditMessageDialog(mContext,
                         getString(R.string.add_node_address_title),
                         getString(R.string.add_node_address_title),
                         new CommonUtil.ConfirmListener() {

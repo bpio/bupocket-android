@@ -29,6 +29,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.ShareUrlModel;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUitls;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.TimeUtil;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
@@ -372,7 +373,7 @@ public class BPNodeShareFragment extends AbsBaseFragment {
                     return;
                 }
                 if (TimeUtil.judgeTime(Long.parseLong(shareStartTime))) {
-                    CommonUtil.showMessageDialog(getContext(), R.string.share_close);
+                    DialogUitls.showMessageNoTitleDialog(getContext(), R.string.share_close);
                 } else {
                     showShareDialog();
                 }

@@ -22,6 +22,7 @@ import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.CreateWalletMatch;
+import com.bupocket.utils.DialogUitls;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
@@ -133,21 +134,21 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
         String indntityName = mSetIdentityNameEt.getText().toString().trim();
 
         if (!CommonUtil.validateNickname(indntityName)) {
-            CommonUtil.showTitleDialog(mContext, getString(R.string.wallet_create_form_error4), getString(R.string.error_hint));
+            DialogUitls.showTitleDialog(mContext, getString(R.string.wallet_create_form_error4), getString(R.string.error_hint));
             return false;
         }
 
         String password = mSetPwdEt.getText().toString().trim();
 
         if (!CommonUtil.validatePassword(password)) {
-            CommonUtil.showTitleDialog(mContext, R.string.wallet_create_form_error2, R.string.error_hint);
+            DialogUitls.showTitleDialog(mContext, R.string.wallet_create_form_error2, R.string.error_hint);
             return false;
         }
 
         String repeatPassword = mRepeatPwdEt.getText().toString().trim();
 
         if (!repeatPassword.equals(password)) {
-            CommonUtil.showTitleDialog(mContext, R.string.wallet_create_form_error1, R.string.error_hint);
+            DialogUitls.showTitleDialog(mContext, R.string.wallet_create_form_error1, R.string.error_hint);
             return false;
         }
 

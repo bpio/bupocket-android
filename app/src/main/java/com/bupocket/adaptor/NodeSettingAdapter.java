@@ -2,12 +2,9 @@ package com.bupocket.adaptor;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bupocket.R;
@@ -16,15 +13,13 @@ import com.bupocket.base.BaseViewHolder;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.model.NodeSettingModel;
-import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUitls;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.google.gson.Gson;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 
 import java.util.List;
-
-import butterknife.BindView;
 
 public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
 
@@ -87,7 +82,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
             public void onClick(View v) {
                 walletBottom.dismiss();
                 String url = getData().get(position).getUrl();
-                CommonUtil.showEditMessageDialog(
+                DialogUitls.showEditMessageDialog(
                         context,
                         context.getString(R.string.add_node_address_title),
                         context.getString(R.string.add_node_address_title),
@@ -111,7 +106,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
             public void onClick(View v) {
                 walletBottom.dismiss();
 
-                CommonUtil.showMsgDialog(context, context.getString(R.string.confirm_delete_node), new CommonUtil.KnowListener() {
+                DialogUitls.showConfirmDialog(context, context.getString(R.string.confirm_delete_node), new CommonUtil.KnowListener() {
                     @Override
                     public void Know() {
                         getData().remove(position);

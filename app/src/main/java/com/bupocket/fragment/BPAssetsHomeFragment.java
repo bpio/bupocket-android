@@ -50,6 +50,7 @@ import com.bupocket.http.api.dto.resp.UserScanQrLoginDto;
 import com.bupocket.model.TransConfirmModel;
 import com.bupocket.model.UDCBUModel;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUitls;
 import com.bupocket.utils.LocaleUtil;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
@@ -240,7 +241,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 //                WalletUtils.showWalletPopup(mContext,getString(R.string.wallet_bu_info),v);
-                CommonUtil.showMessageDialog(mContext, getString(R.string.wallet_bu_info));
+                DialogUitls.showMessageNoTitleDialog(mContext, getString(R.string.wallet_bu_info));
             }
         });
     }
@@ -607,7 +608,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                             CommonUtil.setExpiryTime(expiryTime, mContext);
 
                                         } else {
-                                            CommonUtil.showMessageDialog(getContext(), respDto.getMsg(), respDto.getErrCode());
+                                            DialogUitls.showMessageNoTitleDialog(getContext(), respDto.getMsg(), respDto.getErrCode());
                                         }
                                     }
                                 }
@@ -763,9 +764,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
                                         bpScanErrorFragment.setArguments(argz);
                                         startFragment(bpScanErrorFragment);
                                     } else {
-                                        String msg = CommonUtil.byCodeToMsg(mContext, respDto.getErrCode());
+                                        String msg = DialogUitls.byCodeToMsg(mContext, respDto.getErrCode());
                                         if (!msg.isEmpty()) {
-                                            CommonUtil.showMessageDialog(getContext(), msg);
+                                            DialogUitls.showMessageNoTitleDialog(getContext(), msg);
                                         } else {
                                             Bundle argz = new Bundle();
                                             argz.putString("errorCode", respDto.getErrCode());

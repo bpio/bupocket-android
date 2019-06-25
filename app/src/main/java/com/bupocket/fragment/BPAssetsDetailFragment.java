@@ -24,6 +24,7 @@ import com.bupocket.http.api.dto.resp.GetMyTxsRespDto;
 import com.bupocket.model.TokenTxInfo;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUitls;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TimeUtil;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -397,7 +398,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
                 Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
             } else if (!PublicKey.isAddressValid(result.getContents())) {
 
-                CommonUtil.showMessageDialog(mContext,R.string.error_qr_message_txt_2);
+                DialogUitls.showMessageNoTitleDialog(mContext,R.string.error_qr_message_txt_2);
 
             } else {
                 Bundle argz = new Bundle();
