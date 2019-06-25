@@ -113,7 +113,6 @@ public class BPNodeCampaignFragment extends AbsBaseFragment {
     protected void initView() {
         initTopBar();
         initListView();
-//        setEmpty(true);
     }
 
     @Override
@@ -126,12 +125,7 @@ public class BPNodeCampaignFragment extends AbsBaseFragment {
         }
 
         currentWalletAddress = getWalletAddress();
-        lvPlan.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                reqAllNodeData();
-            }
-        }, 200);
+        reqAllNodeData();
     }
 
 

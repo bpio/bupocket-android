@@ -85,14 +85,7 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
 
     @Override
     protected void initData() {
-
-        lvNodeBuild.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                getBuildData();
-            }
-        }, 200);
-
+        getBuildData();
     }
 
     @Override
@@ -131,8 +124,6 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
 
 
     private void getBuildData() {
-
-
         HashMap<String, Object> map = new HashMap<>();
 
         final NodeBuildService nodeBuildService = RetrofitFactory.getInstance().getRetrofit().create(NodeBuildService.class);
