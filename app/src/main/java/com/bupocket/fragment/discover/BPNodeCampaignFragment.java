@@ -40,6 +40,7 @@ import com.bupocket.utils.TransferUtils;
 import com.bupocket.wallet.Wallet;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
+import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
@@ -90,6 +91,8 @@ public class BPNodeCampaignFragment extends AbsBaseFragment {
     TextView titleTv;
     @BindView(R.id.nodeSearchRL)
     RelativeLayout nodeSearchRL;
+    @BindView(R.id.qmuiEmptyView)
+    QMUIEmptyView qmuiEmptyView;
 
 
     private String currentWalletAddress;
@@ -110,7 +113,7 @@ public class BPNodeCampaignFragment extends AbsBaseFragment {
     protected void initView() {
         initTopBar();
         initListView();
-        setEmpty(true);
+//        setEmpty(true);
     }
 
     @Override
@@ -437,6 +440,7 @@ public class BPNodeCampaignFragment extends AbsBaseFragment {
                 notifyData();
                 loadFailedLL.setVisibility(View.GONE);
                 refreshLayout.finishRefresh();
+                qmuiEmptyView.show("","");
             }
 
             @Override
@@ -450,7 +454,7 @@ public class BPNodeCampaignFragment extends AbsBaseFragment {
                 refreshLayout.finishRefresh();
                 setEmpty(false);
                 superNodeAdapter.setNewData(new ArrayList<SuperNodeModel>());
-
+                qmuiEmptyView.show("","");
             }
         });
 
@@ -482,6 +486,7 @@ public class BPNodeCampaignFragment extends AbsBaseFragment {
         superNodeAdapter = new NodeCampaignAdapter(this.getContext());
         lvPlan.setAdapter(superNodeAdapter);
         refreshLayout.setEnableLoadMore(false);
+        qmuiEmptyView.show(true);
     }
 
     private void initTopBar() {
