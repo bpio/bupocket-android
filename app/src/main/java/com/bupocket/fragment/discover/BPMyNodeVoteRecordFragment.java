@@ -140,7 +140,9 @@ public class BPMyNodeVoteRecordFragment extends AbsBaseFragment {
                     voteRecordAdapter.setNewData(data.getList());
                     voteRecordAdapter.notifyDataSetChanged();
                 }
-                refreshLayout.finishRefresh();
+                if (refreshLayout!=null) {
+                    refreshLayout.finishRefresh();
+                }
                 qmuiEmptyView.show(null, null);
             }
 

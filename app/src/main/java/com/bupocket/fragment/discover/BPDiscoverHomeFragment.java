@@ -57,7 +57,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
     private ArrayList<SlideModel.ImageInfo> banListData;
     private DisBannerAdapter disBannerAdapter;
-    private long PAGER_TIME = 3 * 1000;
+    private long PAGER_TIME = 5 * 1000;
     private boolean isStop;
     private boolean isDownStop;
     private Unbinder bind;
