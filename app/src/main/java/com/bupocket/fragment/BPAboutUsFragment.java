@@ -95,7 +95,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
 
     private void showSwitchMainNetDialog() {
 
-        DialogUtils.showMessageDialog(mContext, getString(R.string.switch_main_net_message_txt), "", new CommonUtil.KnowListener() {
+        DialogUtils.showMessageDialog(mContext, getString(R.string.switch_main_net_message_txt), "", new DialogUtils.KnowListener() {
             @Override
             public void Know() {
                 spHelper.put("tokensInfoCache","");
@@ -110,7 +110,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
 
     private void ShowSwitchTestNetConfirmDialog() {
 
-        DialogUtils.showMessageDialog(mContext, getString(R.string.switch_to_test_net_message_txt), "", new CommonUtil.KnowListener() {
+        DialogUtils.showMessageDialog(mContext, getString(R.string.switch_to_test_net_message_txt), "", new DialogUtils.KnowListener() {
             @Override
             public void Know() {
                 SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());

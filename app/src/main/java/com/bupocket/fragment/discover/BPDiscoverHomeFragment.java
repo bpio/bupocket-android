@@ -217,7 +217,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                     CommonUtil.goWeChat(mContext,WeChat_APPID,XB_YOUPING_USERNAME);
                 }else{
 
-                    DialogUtils.showMessageDialog(mContext, getString(R.string.open_youpin),getString(R.string.open_youpin_title), new CommonUtil.KnowListener() {
+                    DialogUtils.showMessageDialog(mContext, getString(R.string.open_youpin),getString(R.string.open_youpin_title), new DialogUtils.KnowListener() {
                         @Override
                         public void Know() {
                             spHelper.put("youpin","1");

@@ -1,5 +1,6 @@
 package com.bupocket.utils;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,7 +15,7 @@ public class DialogUtils {
 
 
 
-    public static void showConfirmDialog(Context mContext, String msg, final CommonUtil.KnowListener knowListener){
+    public static void showConfirmDialog(Context mContext, String msg, final DialogUtils.KnowListener knowListener){
         final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
                 setLayout(R.layout.view_com_dialog_no_title).create();
         ((TextView) qmuiDialog.findViewById(R.id.dialogMsgTV)).setText(msg);
@@ -37,14 +38,12 @@ public class DialogUtils {
 
 
 
-
-
-    public static void showEditMessageDialog(Context mContext, String title, String msg, final CommonUtil.ConfirmListener confirmListener) {
+    public static void showEditMessageDialog(Context mContext, String title, String msg, final DialogUtils.ConfirmListener confirmListener) {
         showEditMessageDialog(mContext, title, msg, "", confirmListener);
 
     }
 
-    public static void showEditMessageDialog(Context mContext, String title, String msgHint, String msg, final CommonUtil.ConfirmListener confirmListener) {
+    public static void showEditMessageDialog(Context mContext, String title, String msgHint, String msg, final DialogUtils.ConfirmListener confirmListener) {
         final QMUIDialog qmuiDialog = new QMUIDialog(mContext);
         qmuiDialog.setCanceledOnTouchOutside(false);
         qmuiDialog.setContentView(R.layout.view_change_wallet_name);
@@ -163,7 +162,7 @@ public class DialogUtils {
 
     }
 
-    public static void showMessageDialog(Context mContext, String msg, String title, final CommonUtil.KnowListener knowListener) {
+    public static void showMessageDialog(Context mContext, String msg, String title, final DialogUtils.KnowListener knowListener) {
         final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
                 setLayout(R.layout.qmui_com_dialog_green).create();
         qmuiDialog.findViewById(R.id.tvComKnow).setOnClickListener(new View.OnClickListener() {
@@ -184,4 +183,14 @@ public class DialogUtils {
 
     }
 
+
+    public interface KnowListener {
+
+        void Know();
+    }
+
+    public interface ConfirmListener {
+
+        void confirm(String url);
+    }
 }

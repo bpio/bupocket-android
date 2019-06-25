@@ -87,7 +87,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
                         context.getString(R.string.add_node_address_title),
                         context.getString(R.string.add_node_address_title),
                         url,
-                        new CommonUtil.ConfirmListener() {
+                        new DialogUtils.ConfirmListener() {
                             @Override
                             public void confirm(String url) {
                                 getData().get(position).setUrl(url);
@@ -106,7 +106,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
             public void onClick(View v) {
                 walletBottom.dismiss();
 
-                DialogUtils.showConfirmDialog(context, context.getString(R.string.confirm_delete_node), new CommonUtil.KnowListener() {
+                DialogUtils.showConfirmDialog(context, context.getString(R.string.confirm_delete_node), new DialogUtils.KnowListener() {
                     @Override
                     public void Know() {
                         getData().remove(position);

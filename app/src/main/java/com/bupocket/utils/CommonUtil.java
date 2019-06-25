@@ -753,15 +753,6 @@ public class CommonUtil {
     }
 
 
-    public interface KnowListener {
-
-        void Know();
-    }
-
-    public interface ConfirmListener {
-
-        void confirm(String url);
-    }
 
 
 }
