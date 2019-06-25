@@ -33,23 +33,23 @@ public class BPVoteRecordFragment extends AbsBaseFragment {
 
 
     @BindView(R.id.refreshComLv)
-    ListView lvVoteRecord;
+    ListView voteRecordLV;
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
     @BindView(R.id.recordEmptyLL)
-    LinearLayout addressRecordEmptyLL;
+    LinearLayout recordEmptyLL;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.loadFailedLL)
-    LinearLayout llLoadFailed;
+    LinearLayout loadFailedLL;
     @BindView(R.id.reloadBtn)
-    Button copyCommandBtn;
+    Button reloadBtn;
     @BindView(R.id.qmuiEmptyView)
     QMUIEmptyView qmuiEmptyView;
 
 
     private VoteRecordAdapter voteRecordAdapter;
-    private Call<ApiResult<MyVoteRecordModel>> serviceMyVoteList;
+    private Call<ApiResult<MyVoteRecordModel>> myVoteListService;
 
 
     @Override
@@ -60,8 +60,12 @@ public class BPVoteRecordFragment extends AbsBaseFragment {
     @Override
     protected void initView() {
         initTopBar();
+        initListView();
+    }
+
+    private void initListView() {
         voteRecordAdapter = new VoteRecordAdapter(getContext());
-        lvVoteRecord.setAdapter(voteRecordAdapter);
+        voteRecordLV.setAdapter(voteRecordAdapter);
         qmuiEmptyView.show();
         refreshLayout.setEnableLoadMore(false);
     }
@@ -78,10 +82,10 @@ public class BPVoteRecordFragment extends AbsBaseFragment {
             }
         });
 
-        copyCommandBtn.setOnClickListener(new View.OnClickListener() {
+        reloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refreshLayout.autoRefresh(0,200,1,false);
+                refreshLayout.autoRefresh(0, 200, 1, false);
             }
         });
 
@@ -101,29 +105,29 @@ public class BPVoteRecordFragment extends AbsBaseFragment {
 
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
 
-        serviceMyVoteList = nodePlanService.getMyVoteList(listReq);
-        serviceMyVoteList.enqueue(new Callback<ApiResult<MyVoteRecordModel>>() {
+        myVoteListService = nodePlanService.getMyVoteList(listReq);
+        myVoteListService.enqueue(new Callback<ApiResult<MyVoteRecordModel>>() {
 
             @Override
             public void onResponse(Call<ApiResult<MyVoteRecordModel>> call, Response<ApiResult<MyVoteRecordModel>> response) {
                 ApiResult<MyVoteRecordModel> body = response.body();
-                llLoadFailed.setVisibility(View.GONE);
-                if (body==null) {
+                loadFailedLL.setVisibility(View.GONE);
+                if (body == null) {
                     return;
                 }
                 if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())
                         && body.getData() != null
-                        && body.getData().getList() != null&&body.getData().getList().size()>0 ) {
+                        && body.getData().getList() != null && body.getData().getList().size() > 0) {
                     voteRecordAdapter.setNewData(body.getData().getList());
                     voteRecordAdapter.notifyDataSetChanged();
-                    addressRecordEmptyLL.setVisibility(View.GONE);
-                }else{
-                    addressRecordEmptyLL.setVisibility(View.VISIBLE);
+                    recordEmptyLL.setVisibility(View.GONE);
+                } else {
+                    recordEmptyLL.setVisibility(View.VISIBLE);
                 }
 
                 refreshLayout.finishRefresh();
                 refreshLayout.setNoMoreData(false);
-                qmuiEmptyView.show(null,null);
+                qmuiEmptyView.show(null, null);
             }
 
             @Override
@@ -132,16 +136,15 @@ public class BPVoteRecordFragment extends AbsBaseFragment {
                     return;
                 }
 
-                llLoadFailed.setVisibility(View.VISIBLE);
+                loadFailedLL.setVisibility(View.VISIBLE);
                 refreshLayout.finishRefresh();
                 refreshLayout.setNoMoreData(false);
-                qmuiEmptyView.show(null,null);
+                qmuiEmptyView.show(null, null);
             }
         });
 
 
     }
-
 
 
     private void initTopBar() {
@@ -152,12 +155,12 @@ public class BPVoteRecordFragment extends AbsBaseFragment {
                 popBackStack();
             }
         });
-        TextView title = mTopBar.setTitle(getResources().getString(R.string.vote_record_txt));
+        mTopBar.setTitle(getResources().getString(R.string.vote_record_txt));
     }
 
     @Override
     public void onDestroy() {
-        serviceMyVoteList.cancel();
+        myVoteListService.cancel();
         super.onDestroy();
     }
 }

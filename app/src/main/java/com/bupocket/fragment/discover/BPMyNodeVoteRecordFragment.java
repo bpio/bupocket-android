@@ -85,42 +85,36 @@ public class BPMyNodeVoteRecordFragment extends AbsBaseFragment {
 
     @Override
     protected void initData() {
-
         SuperNodeModel itemNodeInfo = getArguments().getParcelable("itemNodeInfo");
+        initHeadView(itemNodeInfo);
+        reqNodeVoteData(itemNodeInfo.getNodeId());
 
-        nodeNameTv.setText(itemNodeInfo.getNodeName());
-        if (CommonUtil.isSingle(itemNodeInfo.getNodeVote())) {
-            haveVotesNumTvHint.setText(getString(R.string.number_have_votes));
-        } else {
-            haveVotesNumTvHint.setText(getString(R.string.number_have_votes_s));
-        }
-        haveVotesNumTv.setText(itemNodeInfo.getNodeVote());
+    }
 
+    @Override
+    protected void setListeners() {
 
-        if (CommonUtil.isSingle(itemNodeInfo.getMyVoteCount())) {
-            myVotesNunTvHint.setText(mContext.getString(R.string.my_votes_number));
-        } else {
-            myVotesNunTvHint.setText(mContext.getString(R.string.my_votes_number_s));
-        }
-        myVotesNumTv.setText(itemNodeInfo.getMyVoteCount());
-
-        String identityType = itemNodeInfo.getIdentityType();
-        if (!TextUtils.isEmpty(identityType)) {
-            if (identityType.equals(SuperNodeTypeEnum.VALIDATOR.getCode())) {
-                nodeTypeTv.setText(getContext().getResources().getString(R.string.common_node));
-            } else if (identityType.equals(SuperNodeTypeEnum.ECOLOGICAL.getCode())) {
-                nodeTypeTv.setText(getContext().getResources().getString(R.string.ecological_node));
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                refreshData();
+                refreshLayout.setNoMoreData(false);
             }
-        }
-        String nodeLogo = itemNodeInfo.getNodeLogo();
-        Glide.with(getContext())
-                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
-                .into(nodeIconIv);
+        });
 
+        reloadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshLayout.autoRefresh(0, 200, 1, false);
+            }
+        });
 
+    }
+
+    private void reqNodeVoteData(String nodeId) {
         HashMap<String, Object> listReq = new HashMap<>();
         listReq.put(Constants.ADDRESS, getWalletAddress());
-        listReq.put(Constants.NODE_ID, itemNodeInfo.getNodeId());
+        listReq.put(Constants.NODE_ID, nodeId);
 
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
 
@@ -164,30 +158,43 @@ public class BPMyNodeVoteRecordFragment extends AbsBaseFragment {
 
             }
         });
+    }
 
+    private void initHeadView(SuperNodeModel itemNodeInfo) {
+
+        nodeNameTv.setText(itemNodeInfo.getNodeName());
+        if (CommonUtil.isSingle(itemNodeInfo.getNodeVote())) {
+            haveVotesNumTvHint.setText(getString(R.string.number_have_votes));
+        } else {
+            haveVotesNumTvHint.setText(getString(R.string.number_have_votes_s));
+        }
+        haveVotesNumTv.setText(itemNodeInfo.getNodeVote());
+
+
+        if (CommonUtil.isSingle(itemNodeInfo.getMyVoteCount())) {
+            myVotesNunTvHint.setText(mContext.getString(R.string.my_votes_number));
+        } else {
+            myVotesNunTvHint.setText(mContext.getString(R.string.my_votes_number_s));
+        }
+        myVotesNumTv.setText(itemNodeInfo.getMyVoteCount());
+
+        String identityType = itemNodeInfo.getIdentityType();
+        if (!TextUtils.isEmpty(identityType)) {
+            if (identityType.equals(SuperNodeTypeEnum.VALIDATOR.getCode())) {
+                nodeTypeTv.setText(getContext().getResources().getString(R.string.common_node));
+            } else if (identityType.equals(SuperNodeTypeEnum.ECOLOGICAL.getCode())) {
+                nodeTypeTv.setText(getContext().getResources().getString(R.string.ecological_node));
+            }
+        }
+        String nodeLogo = itemNodeInfo.getNodeLogo();
+        Glide.with(getContext())
+                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
+                .into(nodeIconIv);
 
     }
 
 
-    @Override
-    protected void setListeners() {
 
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                refreshData();
-                refreshLayout.setNoMoreData(false);
-            }
-        });
-
-        reloadBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refreshLayout.autoRefresh(0, 200, 1, false);
-            }
-        });
-
-    }
 
     private void refreshData() {
         initData();

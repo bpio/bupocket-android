@@ -75,17 +75,12 @@ public class BPNodeShareFragment extends AbsBaseFragment {
 
     private View mShareImageRl;
     private Uri sharePhotoUri = null;
-
-    private String shareUrl = "https://bumo.io/technology";
-
-    private static final String VALIDATE_PATH = "supernodes/detail/validate/";
-    private static final String KOL_PATH = "supernodes/detail/kol/";
-
     private SuperNodeModel itemInfo;
     private SuperNodeModel itemData;
     private Bitmap nodeLogoBitmap = null;
     private Call<ApiResult<SuperNodeModel>> callShareService;
     private Call<ApiResult<ShareUrlModel>> callShareUrl;
+    private String shareUrl;
 
 
     @Override
@@ -103,6 +98,15 @@ public class BPNodeShareFragment extends AbsBaseFragment {
     protected void initData() {
         itemData = getArguments().getParcelable("itemInfo");
         mNodeNameTv.setText(itemData.getNodeName());
+
+        shareUrl = Constants.SHARE_URL;
+
+        initHeadView();
+        getShareData();
+        getUrlData();
+    }
+
+    private void initHeadView() {
         // set node type
         if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(itemData.getIdentityType())) {
             mNodeTypeTv.setText(getContext().getResources().getString(R.string.common_node));
@@ -131,9 +135,6 @@ public class BPNodeShareFragment extends AbsBaseFragment {
         Glide.with(getContext())
                 .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(itemData.getNodeLogo()))
                 .into(mNodeIconIv);
-
-        getShareData();
-        getUrlData();
     }
 
     @Override
@@ -170,9 +171,9 @@ public class BPNodeShareFragment extends AbsBaseFragment {
     private void getUrlData() {
         String path = null;
         if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(itemData.getIdentityType())) {
-            path = VALIDATE_PATH + itemData.getNodeId();
+            path = Constants.VALIDATE_PATH + itemData.getNodeId();
         } else if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(itemData.getIdentityType())) {
-            path = KOL_PATH + itemData.getNodeId();
+            path = Constants.KOL_PATH + itemData.getNodeId();
         }
 
         HashMap<String, Object> map = new HashMap<>();
@@ -203,9 +204,6 @@ public class BPNodeShareFragment extends AbsBaseFragment {
 
     private void initNodeInfoUI() {
 
-
-
-
         final String nodeLogo = itemData.getNodeLogo();
         String source = itemInfo.getIntroduce().trim().toString();
         webView.loadDataWithBaseURL(null, source, "text/html", "utf-8", null);
@@ -232,13 +230,6 @@ public class BPNodeShareFragment extends AbsBaseFragment {
     }
 
 
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
-
-
-
 
     @SuppressLint("ResourceType")
     private void showShareDialog() {
@@ -248,17 +239,11 @@ public class BPNodeShareFragment extends AbsBaseFragment {
         mNodeNameTv.setText(itemInfo.getNodeName());
         QMUIRadiusImageView nodeIconIv = mShareImageRl.findViewById(R.id.headIconIv);
         nodeIconIv.setImageBitmap(nodeLogoBitmap);
-//        nodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
         ImageView mQrIv = mShareImageRl.findViewById(R.id.qrIv);
         Bitmap QRBitmap = QRCodeUtil.createQRCodeBitmap(shareUrl, 356, 356);
         mQrIv.setImageBitmap(QRBitmap);
-//        String nodeLogo = itemInfo.getNodeLogo();
-//        Glide.with(getContext())
-//                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
-//                .into(nodeIconIv);
 
         Bitmap createFromViewBitmap = getViewBitmap(mShareImageRl);
-//        final Bitmap createFromViewBitmap = QMUIDrawableHelper.createBitmapFromView(mShareImageRl,1);
 
 
         String fileName = "TEMP_" + System.currentTimeMillis() + ".jpg";
@@ -307,7 +292,6 @@ public class BPNodeShareFragment extends AbsBaseFragment {
                 new Share2.Builder(getActivity())
                         .setContentType(ShareContentType.IMAGE)
                         .setShareFileUri(sharePhotoUri)
-//                                .setShareToComponent("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI")
                         .setShareToComponent("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity")
                         .setTitle("Share Image")
                         .build()
@@ -321,7 +305,6 @@ public class BPNodeShareFragment extends AbsBaseFragment {
                 new Share2.Builder(getActivity())
                         .setContentType(ShareContentType.IMAGE)
                         .setShareFileUri(sharePhotoUri)
-//                                .setShareToComponent("com.tencent.mm", "com.tencent.mm.ui.tools.ShareToTimeLineUI")
                         .setShareToComponent("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI")
                         .setTitle("Share Image")
                         .build()
