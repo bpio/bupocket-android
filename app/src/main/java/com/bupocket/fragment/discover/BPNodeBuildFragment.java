@@ -5,7 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.ListView;
 
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeBuildAdapter;
@@ -17,9 +17,6 @@ import com.bupocket.model.CoBuildListModel;
 import com.bupocket.model.NodeBuildModel;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
-import com.github.ksoichiro.android.observablescrollview.ObservableScrollViewCallbacks;
-import com.github.ksoichiro.android.observablescrollview.ScrollState;
-import com.nineoldandroids.view.ViewPropertyAnimator;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -41,11 +38,11 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
     @BindView(R.id.refreshComLv)
-    ObservableListView lvNodeBuild;
+    ListView lvNodeBuild;
     @BindView(R.id.reloadBtn)
     QMUIRoundButton copyCommandBtn;
     @BindView(R.id.loadFailedLL)
-    LinearLayout llLoadFailed;
+    LinearLayout loadFailedLL;
     @BindView(R.id.recordEmptyLL)
     LinearLayout addressRecordEmptyLL;
     @BindView(R.id.refreshLayout)
@@ -54,11 +51,9 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
     QMUIEmptyView qmuiEmptyView;
 
 
-
     private NodeBuildAdapter nodeBuildAdapter;
     private ArrayList<NodeBuildModel> nodeList;
-    private View headerView;
-    private TextView tvTitle;
+
     private Call<ApiResult<CoBuildListModel>> serviceCoBuild;
 
 
@@ -70,6 +65,11 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
     @Override
     protected void initView() {
         initTopBar();
+        initListView();
+
+    }
+
+    private void initListView() {
         if (nodeBuildAdapter == null) {
             nodeBuildAdapter = new NodeBuildAdapter(getContext());
         }
@@ -78,8 +78,6 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
             nodeList = new ArrayList<>();
         }
         lvNodeBuild.setAdapter(nodeBuildAdapter);
-        headerView = LayoutInflater.from(mContext).inflate(R.layout.view_com_title, null);
-        lvNodeBuild.addHeaderView(headerView);
 
         refreshLayout.setEnableLoadMore(false);
         qmuiEmptyView.show(true);
@@ -93,17 +91,17 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
             public void run() {
                 getBuildData();
             }
-        },200);
+        }, 200);
 
     }
 
     @Override
-    protected void setListeners(){
+    protected void setListeners() {
         lvNodeBuild.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                NodeBuildModel nodeBuildModel = nodeList.get(position - 1);
+                NodeBuildModel nodeBuildModel = nodeList.get(position);
                 if (nodeBuildModel == null) {
                     return;
                 }
@@ -117,7 +115,7 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
         copyCommandBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refreshLayout.autoRefresh(0,200,1,false);
+                refreshLayout.autoRefresh(0, 200, 1, false);
             }
         });
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
@@ -129,56 +127,7 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
         });
         refreshLayout.setEnableLoadMore(false);
 
-        lvNodeBuild.setScrollViewCallbacks(new ObservableScrollViewCallbacks() {
-            @Override
-            public void onScrollChanged(int scrollY, boolean firstScroll, boolean dragging) {
-//                LogUtils.e("scrollY:" + scrollY + "\tfirstScroll:" + firstScroll + "\tdragging:" + dragging);
-                if (!dragging) {
-
-                    int toolbarHeight = headerView.getHeight();
-                    if (scrollY < toolbarHeight * 0.8) {
-                        showToolbar();
-                    }
-                }
-            }
-
-            @Override
-            public void onDownMotionEvent() {
-
-            }
-
-            @Override
-            public void onUpOrCancelMotionEvent(ScrollState scrollState) {
-//                LogUtils.e("scrollState" + scrollState);
-                int toolbarHeight = headerView.getHeight();
-                int scrollY = lvNodeBuild.getCurrentScrollY();
-                if (scrollState == ScrollState.DOWN) {
-                    if (toolbarHeight > scrollY * 0.8) {
-                        showToolbar();
-                    }
-                } else if (scrollState == ScrollState.UP) {
-                    if (toolbarHeight <= scrollY * 0.8) {
-                        hideToolbar();
-                    } else {
-                        showToolbar();
-                    }
-                }
-            }
-        });
     }
-
-
-    private void showToolbar() {
-        ViewPropertyAnimator.animate(tvTitle).alpha(0).setDuration(200).start();
-    }
-
-    private void hideToolbar() {
-        tvTitle.setVisibility(View.VISIBLE);
-        ViewPropertyAnimator.animate(tvTitle).alpha(100).setDuration(200).start();
-    }
-
-
-
 
 
     private void getBuildData() {
@@ -193,7 +142,7 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
             public void onResponse(Call<ApiResult<CoBuildListModel>> call, Response<ApiResult<CoBuildListModel>> response) {
 
                 ApiResult<CoBuildListModel> body = response.body();
-                llLoadFailed.setVisibility(View.GONE);
+                loadFailedLL.setVisibility(View.GONE);
                 if (body != null && ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())
                         && body.getData() != null && body.getData().getNodeList() != null
                         && body.getData().getNodeList().size() > 0) {
@@ -207,7 +156,7 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
                     addressRecordEmptyLL.setVisibility(View.VISIBLE);
                 }
 
-                qmuiEmptyView.show(null,null);
+                qmuiEmptyView.show(null, null);
                 refreshLayout.finishRefresh();
             }
 
@@ -216,20 +165,18 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
                 if (call.isCanceled()) {
                     return;
                 }
-
-                if (llLoadFailed!=null) {
-                    llLoadFailed.setVisibility(View.VISIBLE);
+                if (loadFailedLL != null) {
+                    loadFailedLL.setVisibility(View.VISIBLE);
                 }
                 nodeBuildAdapter.setNewData(new ArrayList<NodeBuildModel>());
                 nodeBuildAdapter.notifyDataSetChanged();
 
-                qmuiEmptyView.show(null,null);
+                qmuiEmptyView.show(null, null);
                 refreshLayout.finishRefresh();
             }
 
 
         });
-
 
 
     }
@@ -241,12 +188,8 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
             @Override
             public void onClick(View v) {
                 popBackStack();
-//                getChildFragmentManager().beginTransaction().attach(BPNodeBuildFragment.this);
-
             }
         });
-        tvTitle = mTopBar.setTitle(getResources().getString(R.string.build_node_txt));
-        tvTitle.setVisibility(View.INVISIBLE);
 
     }
 

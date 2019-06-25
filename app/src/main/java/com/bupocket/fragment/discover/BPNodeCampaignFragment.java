@@ -15,6 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -68,7 +69,7 @@ public class BPNodeCampaignFragment extends AbsBaseFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
     @BindView(R.id.refreshComLv)
-    ObservableListView lvPlan;
+    ListView lvPlan;
     @BindView(R.id.myNodeCB)
     CheckBox myNodeCB;
     @BindView(R.id.myNodeTv)
