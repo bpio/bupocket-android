@@ -23,6 +23,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -48,7 +49,8 @@ public class VersionLogFragment extends AbsBaseFragment {
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.qmuiEmptyView)
     QMUIEmptyView qmuiEmptyView;
-    Unbinder unbinder;
+
+
     private int pageStart;
     private final int normalPageSize = 10;
     private VersionLogAdapter adapter;
@@ -114,6 +116,7 @@ public class VersionLogFragment extends AbsBaseFragment {
                     loadFailedLL.setVisibility(View.GONE);
                 } else {
                     recordEmptyLL.setVisibility(View.VISIBLE);
+                    adapter.clear();
                 }
 
 
@@ -125,7 +128,7 @@ public class VersionLogFragment extends AbsBaseFragment {
                     return;
                 }
                 loadFailedLL.setVisibility(View.VISIBLE);
-
+                adapter.clear();
             }
         });
     }
@@ -136,28 +139,21 @@ public class VersionLogFragment extends AbsBaseFragment {
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull final RefreshLayout refreshLayout) {
-
                 refreshData();
-
-
             }
         });
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
 
-
                 LoadMoreData();
-
-
             }
         });
 
         reloadBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                refreshLayout.refresh
-                refreshData();
+                refreshLayout.autoRefresh(0, 200, 1, false);
             }
         });
     }
@@ -168,7 +164,6 @@ public class VersionLogFragment extends AbsBaseFragment {
             public void run() {
                 reqVersionLogData(1);
                 refreshLayout.finishRefresh();
-                initData();
             }
         }, 500);
 
