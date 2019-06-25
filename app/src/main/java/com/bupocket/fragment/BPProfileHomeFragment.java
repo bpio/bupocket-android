@@ -69,7 +69,7 @@ public class BPProfileHomeFragment extends BaseFragment {
     LinearLayout llProfileProtocol;
     @BindView(R.id.tvProfileCurrency)
     TextView tvProfileCurrency;
-    @BindView(R.id.tvProfileLanguage)
+    @BindView(R.id.newVersionCodeTV)
     TextView  tvProfileLanguage;
 
     private final static int CLICKCOUNTS = 5;

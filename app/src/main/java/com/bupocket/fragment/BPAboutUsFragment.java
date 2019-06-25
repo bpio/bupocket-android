@@ -2,6 +2,7 @@ package com.bupocket.fragment;
 
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -10,13 +11,21 @@ import com.bupocket.R;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.BumoNodeEnum;
+import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.fragment.home.HomeFragment;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.VersionService;
+import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.http.api.dto.resp.GetCurrentVersionRespDto;
+import com.bupocket.manager.BPUpgradeManager;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import butterknife.BindView;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class BPAboutUsFragment extends AbsBaseFragment {
     @BindView(R.id.topbar)
@@ -25,8 +34,8 @@ public class BPAboutUsFragment extends AbsBaseFragment {
     TextView versionCodeTV;
     @BindView(R.id.versionInfoListLL)
     LinearLayout versionInfoListLL;
-    @BindView(R.id.tvProfileLanguage)
-    TextView tvProfileLanguage;
+    @BindView(R.id.newVersionCodeTV)
+    TextView newVersionCodeTV;
     @BindView(R.id.versionUpdate)
     LinearLayout versionUpdate;
     @BindView(R.id.changeTestLL)
@@ -35,7 +44,13 @@ public class BPAboutUsFragment extends AbsBaseFragment {
     TextView changeTestNetTV;
     @BindView(R.id.customEnvironmentLL)
     LinearLayout customEnvironmentLL;
+    @BindView(R.id.newVersionCodeIconIV)
+    ImageView newVersionCodeIconIV;
+
+
     private boolean isSwitch;
+    private ApiResult<GetCurrentVersionRespDto> respDto;
+    private boolean isUpdate;
 
     @Override
     protected int getLayoutView() {
@@ -66,7 +81,36 @@ public class BPAboutUsFragment extends AbsBaseFragment {
         } else {
             changeTestNetTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_normal));
         }
+
+        reqUpdateData();
     }
+
+    private void reqUpdateData() {
+        VersionService versionService = RetrofitFactory.getInstance().getRetrofit().create(VersionService.class);
+        Call<ApiResult<GetCurrentVersionRespDto>> call = versionService.getCurrentVersion(Constants.APP_TYPE_CODE);
+        call.enqueue(new retrofit2.Callback<ApiResult<GetCurrentVersionRespDto>>() {
+            @Override
+            public void onResponse(Call<ApiResult<GetCurrentVersionRespDto>> call, Response<ApiResult<GetCurrentVersionRespDto>> response) {
+                respDto = response.body();
+
+                if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
+                    int verNumber = Integer.parseInt(respDto.getData().getVerNumberCode());
+                    newVersionCodeTV.setText("V" + respDto.getData().getVerNumber());
+                    isUpdate = ((int) CommonUtil.packageCode(mContext)) < verNumber;
+                    if (isUpdate) {
+                        newVersionCodeIconIV.setVisibility(View.VISIBLE);
+                    }
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<GetCurrentVersionRespDto>> call, Throwable t) {
+
+            }
+        });
+    }
+
 
     @Override
     protected void setListeners() {
@@ -77,7 +121,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
                     SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.MAIN.getCode());
                     BPApplication.switchNetConfig(BumoNodeEnum.MAIN.getName());
                     showSwitchMainNetDialog();
-                }else {
+                } else {
                     ShowSwitchTestNetConfirmDialog();
                 }
             }
@@ -93,20 +137,9 @@ public class BPAboutUsFragment extends AbsBaseFragment {
             @Override
             public void onClick(View v) {
 
-                //1、check version code
-
-                //
-                DialogUtils.showUpdateAppDialog(mContext, "V1.6.1更新", "更新内容",
-                        new DialogUtils.KnowListener() {
-                    @Override
-                    public void Know() {
-
-
-
-                    }
-                });
-
-
+                if (isUpdate) {
+                    BPUpgradeManager.getInstance(getActivity()).init();
+                }
             }
         });
 
@@ -118,8 +151,8 @@ public class BPAboutUsFragment extends AbsBaseFragment {
         DialogUtils.showMessageNoTitleDialog(mContext, getString(R.string.switch_main_net_message_txt), new DialogUtils.KnowListener() {
             @Override
             public void Know() {
-                spHelper.put("tokensInfoCache","");
-                spHelper.put("tokenBalance","");
+                spHelper.put("tokensInfoCache", "");
+                spHelper.put("tokenBalance", "");
                 changeTestNetTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_normal));
                 startFragment(new HomeFragment());
             }
@@ -135,8 +168,8 @@ public class BPAboutUsFragment extends AbsBaseFragment {
             public void Know() {
                 SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
                 BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
-                spHelper.put("tokensInfoCache","");
-                spHelper.put("tokenBalance","");
+                spHelper.put("tokensInfoCache", "");
+                spHelper.put("tokenBalance", "");
                 changeTestNetTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_checked));
                 startFragment(new HomeFragment());
             }

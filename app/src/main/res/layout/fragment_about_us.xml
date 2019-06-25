@@ -92,13 +92,15 @@
                     android:text="@string/version_refresh" />
 
                 <ImageView
+                    android:id="@+id/newVersionCodeIconIV"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
                     android:padding="10dp"
+                    android:visibility="invisible"
                     android:src="@drawable/version_refresh" />
 
                 <TextView
-                    android:id="@+id/tvProfileLanguage"
+                    android:id="@+id/newVersionCodeTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
