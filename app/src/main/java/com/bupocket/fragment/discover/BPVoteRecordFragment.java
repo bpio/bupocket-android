@@ -1,7 +1,6 @@
 package com.bupocket.fragment.discover;
 
 import android.support.annotation.NonNull;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -11,7 +10,6 @@ import android.widget.TextView;
 import com.bupocket.R;
 import com.bupocket.adaptor.VoteRecordAdapter;
 import com.bupocket.base.AbsBaseFragment;
-import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.NodePlanService;
@@ -34,17 +32,17 @@ import retrofit2.Response;
 public class BPVoteRecordFragment extends AbsBaseFragment {
 
 
-    @BindView(R.id.lvRefresh)
+    @BindView(R.id.refreshComLv)
     ListView lvVoteRecord;
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
-    @BindView(R.id.addressRecordEmptyLL)
+    @BindView(R.id.recordEmptyLL)
     LinearLayout addressRecordEmptyLL;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-    @BindView(R.id.llLoadFailed)
+    @BindView(R.id.loadFailedLL)
     LinearLayout llLoadFailed;
-    @BindView(R.id.copyCommandBtn)
+    @BindView(R.id.reloadBtn)
     Button copyCommandBtn;
     @BindView(R.id.qmuiEmptyView)
     QMUIEmptyView qmuiEmptyView;

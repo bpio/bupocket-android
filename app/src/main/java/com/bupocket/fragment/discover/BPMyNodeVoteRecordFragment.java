@@ -33,16 +33,16 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BPMeNodeVoteRecordFragment extends AbsBaseFragment {
+public class BPMyNodeVoteRecordFragment extends AbsBaseFragment {
 
 
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
-    @BindView(R.id.addressRecordEmptyLL)
-    LinearLayout addressRecordEmptyLL;
-    @BindView(R.id.lvRefresh)
+    @BindView(R.id.recordEmptyLL)
+    LinearLayout recordEmptyLL;
+    @BindView(R.id.refreshComLv)
     ListView lvVoteRecord;
-    @BindView(R.id.assetIconIv)
+    @BindView(R.id.headIconIv)
     QMUIRadiusImageView nodeIconIv;
     @BindView(R.id.nodeNameTv)
     TextView nodeNameTv;
@@ -56,10 +56,10 @@ public class BPMeNodeVoteRecordFragment extends AbsBaseFragment {
     TextView myVotesNumTv;
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
-    @BindView(R.id.copyCommandBtn)
-    QMUIRoundButton copyCommandBtn;
-    @BindView(R.id.llLoadFailed)
-    LinearLayout llLoadFailed;
+    @BindView(R.id.reloadBtn)
+    QMUIRoundButton reloadBtn;
+    @BindView(R.id.loadFailedLL)
+    LinearLayout loadFailedLL;
     @BindView(R.id.haveVotesNumTvHint)
     TextView haveVotesNumTvHint;
     @BindView(R.id.qmuiEmptyView)
@@ -67,7 +67,7 @@ public class BPMeNodeVoteRecordFragment extends AbsBaseFragment {
 
 
     private VoteRecordAdapter voteRecordAdapter;
-    private Call<ApiResult<MyVoteRecordModel>> serviceMyVoteList;
+    private Call<ApiResult<MyVoteRecordModel>> myVoteRecordService;
 
 
     @Override
@@ -78,37 +78,9 @@ public class BPMeNodeVoteRecordFragment extends AbsBaseFragment {
     @Override
     protected void initView() {
         initTopBar();
-        voteRecordAdapter = new VoteRecordAdapter(getContext());
-        voteRecordAdapter.setAdapterType(VoteRecordAdapter.SOME_RECORD);
-        lvVoteRecord.setAdapter(voteRecordAdapter);
-        qmuiEmptyView.show();
-        refreshLayout.setEnableLoadMore(false);
+        initListView();
     }
 
-    @Override
-    protected void setListeners() {
-
-        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                refreshData();
-//                refreshLayout.finishRefresh();
-                refreshLayout.setNoMoreData(false);
-            }
-        });
-
-        copyCommandBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                refreshLayout.autoRefresh(0, 200, 1, false);
-            }
-        });
-
-    }
-
-    private void refreshData() {
-        initData();
-    }
 
 
     @Override
@@ -152,17 +124,17 @@ public class BPMeNodeVoteRecordFragment extends AbsBaseFragment {
 
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
 
-        serviceMyVoteList = nodePlanService.getMyVoteList(listReq);
-        serviceMyVoteList.enqueue(new Callback<ApiResult<MyVoteRecordModel>>() {
+        myVoteRecordService = nodePlanService.getMyVoteList(listReq);
+        myVoteRecordService.enqueue(new Callback<ApiResult<MyVoteRecordModel>>() {
 
             @Override
             public void onResponse(Call<ApiResult<MyVoteRecordModel>> call, Response<ApiResult<MyVoteRecordModel>> response) {
                 ApiResult<MyVoteRecordModel> body = response.body();
-                llLoadFailed.setVisibility(View.GONE);
+                loadFailedLL.setVisibility(View.GONE);
 
                 if (body == null | body.getData() == null |
                         body.getData().getList() == null | body.getData().getList().size() == 0) {
-                    addressRecordEmptyLL.setVisibility(View.VISIBLE);
+                    recordEmptyLL.setVisibility(View.VISIBLE);
                 } else {
                     MyVoteRecordModel data = body.getData();
                     voteRecordAdapter.setNewData(data.getList());
@@ -178,11 +150,14 @@ public class BPMeNodeVoteRecordFragment extends AbsBaseFragment {
                     return;
                 }
 
-                if (llLoadFailed != null) {
-                    llLoadFailed.setVisibility(View.VISIBLE);
+                if (loadFailedLL != null) {
+                    loadFailedLL.setVisibility(View.VISIBLE);
                 }
 
-                refreshLayout.finishRefresh();
+                if (refreshLayout!=null) {
+                    refreshLayout.finishRefresh();
+                }
+
                 qmuiEmptyView.show(null, null);
 
             }
@@ -191,6 +166,39 @@ public class BPMeNodeVoteRecordFragment extends AbsBaseFragment {
 
     }
 
+
+    @Override
+    protected void setListeners() {
+
+        refreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                refreshData();
+                refreshLayout.setNoMoreData(false);
+            }
+        });
+
+        reloadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                refreshLayout.autoRefresh(0, 200, 1, false);
+            }
+        });
+
+    }
+
+    private void refreshData() {
+        initData();
+    }
+
+
+    private void initListView() {
+        voteRecordAdapter = new VoteRecordAdapter(getContext());
+        voteRecordAdapter.setAdapterType(VoteRecordAdapter.SOME_RECORD);
+        lvVoteRecord.setAdapter(voteRecordAdapter);
+        qmuiEmptyView.show();
+        refreshLayout.setEnableLoadMore(false);
+    }
 
     private void initTopBar() {
         mTopBar.setBackgroundDividerEnabled(false);
@@ -206,7 +214,7 @@ public class BPMeNodeVoteRecordFragment extends AbsBaseFragment {
 
     @Override
     public void onDestroy() {
-       serviceMyVoteList.cancel();
+       myVoteRecordService.cancel();
         super.onDestroy();
     }
 }

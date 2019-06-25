@@ -14,14 +14,12 @@ import com.bupocket.common.Constants;
 import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.LogUtils;
-import com.qmuiteam.qmui.widget.popup.QMUIListPopup;
 
 
-public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
+public class NodeCampaignAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
 
 
-    public SuperNodeAdapter(@NonNull Context context) {
+    public NodeCampaignAdapter(@NonNull Context context) {
         super(context);
     }
 
@@ -38,7 +36,7 @@ public class SuperNodeAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         }
 
         String nodeLogo = itemData.getNodeLogo();
-        ImageView nodeIconIv = holder.getView(R.id.assetIconIv);
+        ImageView nodeIconIv = holder.getView(R.id.headIconIv);
         Glide.with(context)
                 .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
                 .into(nodeIconIv);

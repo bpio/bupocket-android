@@ -168,7 +168,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
     private void initView() {
         faildlayout = LayoutInflater.from(mContext).inflate(R.layout.view_load_failed, null);
-        faildlayout.findViewById(R.id.copyCommandBtn).setOnClickListener(new View.OnClickListener() {
+        faildlayout.findViewById(R.id.reloadBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 refreshLayout.autoRefreshAnimationOnly();

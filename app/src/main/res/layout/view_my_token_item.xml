@@ -27,7 +27,7 @@
 
             <com.qmuiteam.qmui.widget.QMUIRadiusImageView
                 android:layout_centerInParent="true"
-                android:id="@+id/assetIconIv"
+                android:id="@+id/headIconIv"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 app:qmui_border_width="0dp"

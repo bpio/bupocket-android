@@ -82,7 +82,7 @@ public class SearchTokenAdapter extends BaseAdapter {
 
         holder = new SearchTokenAdapter.ViewHolder();
         convertView = LayoutInflater.from(mContext).inflate(R.layout.view_search_token_result_item, null);
-        holder.assetIconIv = convertView.findViewById(R.id.assetIconIv);
+        holder.assetIconIv = convertView.findViewById(R.id.headIconIv);
         holder.assetCodeTv = convertView.findViewById(R.id.assetCodeTv);
         holder.assetNameTv = convertView.findViewById(R.id.assetNameTv);
         holder.assetIssuerTv = convertView.findViewById(R.id.assetIssuerTv);

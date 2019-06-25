@@ -40,13 +40,13 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
-    @BindView(R.id.lvRefresh)
+    @BindView(R.id.refreshComLv)
     ObservableListView lvNodeBuild;
-    @BindView(R.id.copyCommandBtn)
+    @BindView(R.id.reloadBtn)
     QMUIRoundButton copyCommandBtn;
-    @BindView(R.id.llLoadFailed)
+    @BindView(R.id.loadFailedLL)
     LinearLayout llLoadFailed;
-    @BindView(R.id.addressRecordEmptyLL)
+    @BindView(R.id.recordEmptyLL)
     LinearLayout addressRecordEmptyLL;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;

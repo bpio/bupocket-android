@@ -14,15 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.bupocket.R;
 import com.bupocket.base.AbsBaseFragment;
-import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.SuperNodeTypeEnum;
@@ -34,7 +31,6 @@ import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.TimeUtil;
-import com.bupocket.utils.ToastUtil;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
@@ -49,7 +45,6 @@ import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import gdut.bsx.share2.Share2;
 import gdut.bsx.share2.ShareContentType;
 import retrofit2.Call;
@@ -67,7 +62,7 @@ public class BPNodeShareFragment extends AbsBaseFragment {
     TextView mHaveVotesNumTv;
     @BindView(R.id.supportPeopleTv)
     TextView mSupportPeopleTv;
-    @BindView(R.id.assetIconIv)
+    @BindView(R.id.headIconIv)
     QMUIRadiusImageView mNodeIconIv;
     @BindView(R.id.wbShare)
     WebView webView;
@@ -251,7 +246,7 @@ public class BPNodeShareFragment extends AbsBaseFragment {
         mShareImageRl = LayoutInflater.from(getActivity()).inflate(R.layout.view_share_image, null);
         TextView mNodeNameTv = mShareImageRl.findViewById(R.id.nodeNameTv);
         mNodeNameTv.setText(itemInfo.getNodeName());
-        QMUIRadiusImageView nodeIconIv = mShareImageRl.findViewById(R.id.assetIconIv);
+        QMUIRadiusImageView nodeIconIv = mShareImageRl.findViewById(R.id.headIconIv);
         nodeIconIv.setImageBitmap(nodeLogoBitmap);
 //        nodeIconIv.setBackgroundColor(getContext().getResources().getColor(R.color.app_color_white));
         ImageView mQrIv = mShareImageRl.findViewById(R.id.qrIv);
@@ -333,7 +328,7 @@ public class BPNodeShareFragment extends AbsBaseFragment {
                         .shareBySystem();
             }
         });
-        qmuiBottomSheet.findViewById(R.id.copyCommandBtn).setOnClickListener(new View.OnClickListener() {
+        qmuiBottomSheet.findViewById(R.id.reloadBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 qmuiBottomSheet.dismiss();
@@ -343,7 +338,7 @@ public class BPNodeShareFragment extends AbsBaseFragment {
                 final TextView mXiaobuCommandContentTv = xiaobuCommandDialog.findViewById(R.id.xiaobuCommandContentTv);
                 mXiaobuCommandContentTv.setText(Html.fromHtml(String.format(getString(R.string.xiaobu_command_content_txt), itemInfo.getNodeName(), shareUrl)));
 
-                QMUIRoundButton copyCommandBtn = xiaobuCommandDialog.findViewById(R.id.copyCommandBtn);
+                QMUIRoundButton copyCommandBtn = xiaobuCommandDialog.findViewById(R.id.reloadBtn);
                 copyCommandBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
