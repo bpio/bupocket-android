@@ -162,6 +162,21 @@ public class DialogUtils {
 
     }
 
+    public static void showMessageNoTitleDialog(Context mContext, String msg, final DialogUtils.KnowListener knowListener) {
+        final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
+                setLayout(R.layout.qmui_com_dialog_green_no_title).create();
+        qmuiDialog.findViewById(R.id.tvComKnow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+                knowListener.Know();
+            }
+        });
+        ((TextView) qmuiDialog.findViewById(R.id.tvComMassage)).setText(msg);
+        qmuiDialog.show();
+
+    }
+
     public static void showMessageDialog(Context mContext, String msg, String title, final DialogUtils.KnowListener knowListener) {
         final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
                 setLayout(R.layout.qmui_com_dialog_green).create();
