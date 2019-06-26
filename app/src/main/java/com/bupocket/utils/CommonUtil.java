@@ -59,6 +59,7 @@ public class CommonUtil {
 
     //    public static final Pattern PASSWORD_PATTERN = Pattern.compile(".{6,30}$");
     public static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{6,30}$");
+    public static final Pattern OLD_PASSWORD_PATTERN = Pattern.compile(".{6,30}$");
 
 
     public static final Pattern CODE_PATTERN = Pattern.compile("^0\\d{2,4}$");
@@ -85,7 +86,6 @@ public class CommonUtil {
             return true;
         }
     }
-
 
 
     public static String urlEncoder(String url) {
@@ -132,7 +132,6 @@ public class CommonUtil {
     }
 
 
-
     public static boolean validateName(String name) {
         if (isEmpty(name) || name.replaceAll("[^.·]", "").length() > 1) {
             return false;
@@ -168,6 +167,13 @@ public class CommonUtil {
         Matcher m = PASSWORD_PATTERN.matcher(password);
         return m.matches();
     }
+    public static boolean validateOldPassword(String password) {
+        if (isEmpty(password)) {
+            return false;
+        }
+        Matcher m = OLD_PASSWORD_PATTERN.matcher(password);
+        return m.matches();
+    }
 
 
     public static boolean validateCode(String code) {
@@ -197,7 +203,6 @@ public class CommonUtil {
     }
 
 
-
     public static Timestamp getTimestamp() {
         Timestamp d = new Timestamp(System.currentTimeMillis());
         return d;
@@ -208,7 +213,6 @@ public class CommonUtil {
         String uuid = UUID.randomUUID().toString().trim().replaceAll("-", "");
         return uuid.toUpperCase();
     }
-
 
 
     public static Integer getGenderByIdNumber(String idNumber) {
@@ -239,7 +243,6 @@ public class CommonUtil {
         return birthday;
 
     }
-
 
 
     public static Integer getAgeByIdNumber(String idNumber) {
@@ -273,7 +276,6 @@ public class CommonUtil {
     }
 
 
-
     public static Integer getAgeByBirthString(String birthString) {
 
         return getAgeByBirthString(birthString, "yyyy-MM-dd");
@@ -291,7 +293,6 @@ public class CommonUtil {
     public static Integer getAgeByBirthString(String birthString, String format) {
         return getAgeByBirthString(birthString, "yyyy-MM-dd", false);
     }
-
 
 
     public static Integer getAgeByBirthString(String birthString, String format, boolean isNominalAge) {
@@ -374,7 +375,6 @@ public class CommonUtil {
     }
 
 
-
     public static boolean validateDate(String date) {
         boolean convertSuccess = true;
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
@@ -439,7 +439,6 @@ public class CommonUtil {
         }
         return "";
     }
-
 
 
     public static String genRandomNum(int pwd_len) {
@@ -608,6 +607,7 @@ public class CommonUtil {
 
     /**
      * show input
+     *
      * @param context
      * @param view
      */
@@ -647,10 +647,6 @@ public class CommonUtil {
         }
         return accountBPData;
     }
-
-
-
-
 
 
     /**
@@ -730,7 +726,6 @@ public class CommonUtil {
     }
 
 
-
     public static void setExpiryTime(String expiryTime, Context context) {
         if (!TextUtils.isEmpty(expiryTime)) {
             String[] strings = TimeUtil.time_mmss(Long.parseLong(expiryTime) - System.currentTimeMillis());
@@ -751,8 +746,6 @@ public class CommonUtil {
 
         return false;
     }
-
-
 
 
 }

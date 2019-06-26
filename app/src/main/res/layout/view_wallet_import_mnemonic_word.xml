@@ -112,6 +112,7 @@
             android:layout_marginBottom="25dp"
             android:gravity="center"
             android:text="@string/start_import_wallet"
+            android:enabled="false"
             android:textColor="@color/app_color_font"
             android:textSize="@dimen/bp_btn_text_size"
             app:qmui_backgroundColor="@color/disabled_btn_color"

@@ -479,6 +479,13 @@ public class BPWalletManageFragment extends BaseFragment {
         } else {
             walletName = sharedPreferencesHelper.getSharedPreference(walletAddress + "-walletName", "").toString();
         }
+
+
+        String isMnemonicCodes = (String) spHelper.getSharedPreference(walletAddress + "-mnemonicCodes", "");
+        if (isMnemonicCodes.equals("yes")) {
+            mBackupMnemonicRl.setVisibility(View.VISIBLE);
+        }
+
     }
 
     private void initUI() {

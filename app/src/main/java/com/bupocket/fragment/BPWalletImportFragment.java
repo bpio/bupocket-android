@@ -3,14 +3,13 @@ package com.bupocket.fragment;
 import android.annotation.TargetApi;
 import android.graphics.Color;
 import android.os.Build;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -28,7 +27,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.TO;
+import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletBPData;
@@ -132,7 +133,7 @@ public class BPWalletImportFragment extends BaseFragment {
         mTabSegment.addTab(new QMUITabSegment.Tab(getString(R.string.private_key_txt)));
         mTabSegment.addTab(new QMUITabSegment.Tab(getString(R.string.keystore_txt)));
         mTabSegment.setDefaultSelectedColor(Color.parseColor("#02CA71"));
-        mTabSegment.setTabTextSize(TO.dip2px(mContext,16));
+        mTabSegment.setTabTextSize(TO.dip2px(mContext, 16));
         mTabSegment.setupWithViewPager(mContentViewPager, false);
         mTabSegment.setMode(QMUITabSegment.MODE_FIXED);
         mTabSegment.addOnTabSelectedListener(new QMUITabSegment.OnTabSelectedListener() {
@@ -290,9 +291,10 @@ public class BPWalletImportFragment extends BaseFragment {
         mStartImportKeystoreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!walletNameFlag()) {
+                if (!walletNameFlag(mWalletNameEt)) {
                     return;
-                } else if (!pwdFlag()) {
+                }
+                if (!pwdFlag()) {
                     return;
                 }
                 final String password = mPasswordEt.getText().toString().trim();
@@ -307,46 +309,18 @@ public class BPWalletImportFragment extends BaseFragment {
                         try {
                             String keystore = mKeystoreEt.getText().toString().trim();
                             WalletBPData walletBPData = Wallet.getInstance().importKeystore(password, keystore);
-                            String address = walletBPData.getAccounts().get(0).getAddress();
-                            String walletName = mWalletNameEt.getText().toString();
-                            String bpData = JSON.toJSONString(walletBPData.getAccounts());
-                            importedWallets = JSONObject.parseArray(spHelper.getSharedPreference("importedWallets", "[]").toString(), String.class);
-                            if (address.equals(spHelper.getSharedPreference("currentAccAddr", "")) || importedWallets.contains(address)) {
-                                Looper.prepare();
-                                Toast.makeText(getActivity(), R.string.error_already_import_meaaage_txt, Toast.LENGTH_SHORT).show();
-                                tipDialog.dismiss();
-                                Looper.loop();
-                            } else {
-                                spHelper.put(address + "-walletName", walletName);
-                                spHelper.put(address + "-BPdata", bpData);
-                                importedWallets.add(address);
-                                spHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));
-                                Looper.prepare();
-                                Toast.makeText(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT).show();
-                                tipDialog.dismiss();
-                                Handler handler = new Handler(Looper.getMainLooper());
-                                class PopBackStackThread implements Runnable {
-                                    public void run() {
-                                        popBackStack();
-                                    }
-                                }
-                                handler.post(new PopBackStackThread());
-                                Looper.loop();
-                            }
-
+                            saveWalletData(walletBPData, mWalletNameEt.getText().toString().trim());
+                            tipDialog.dismiss();
                         } catch (WalletException e) {
                             e.printStackTrace();
-                            Looper.prepare();
-                            Toast.makeText(getActivity(), R.string.error_import_keystore_message_txt, Toast.LENGTH_SHORT).show();
+                            ToastUtil.showToast(getActivity(), R.string.error_import_keystore_message_txt, Toast.LENGTH_SHORT);
                             tipDialog.dismiss();
-                            Looper.loop();
+
                             return;
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Looper.prepare();
-                            Toast.makeText(getActivity(), R.string.error_import_keystore_message_txt, Toast.LENGTH_SHORT).show();
+                            ToastUtil.showToast(getActivity(), R.string.error_import_keystore_message_txt, Toast.LENGTH_SHORT);
                             tipDialog.dismiss();
-                            Looper.loop();
                             return;
                         }
                     }
@@ -360,23 +334,39 @@ public class BPWalletImportFragment extends BaseFragment {
                     Toast.makeText(getActivity(), R.string.wallet_create_form_input_password_empty, Toast.LENGTH_SHORT).show();
                     return false;
                 }
-                return true;
-            }
 
-            private boolean walletNameFlag() {
-                String walletName = mWalletNameEt.getText().toString().trim();
-                if ("".equals(walletName)) {
-                    Toast.makeText(getActivity(), R.string.wallet_import_wallet_name_et_hint_txt, Toast.LENGTH_SHORT).show();
-                    return false;
-                } else if (!CommonUtil.validateNickname(walletName)) {
-                    Toast.makeText(getActivity(), R.string.error_import_wallet_name_message_txt, Toast.LENGTH_SHORT).show();
+                if (!CommonUtil.validateOldPassword(password)) {
+                    DialogUtils.showTitleDialog(mContext, R.string.wallet_create_form_error2, R.string.error_hint);
                     return false;
                 }
                 return true;
             }
+
         });
 
-        return  contentView;
+        return contentView;
+    }
+
+    private void saveWalletData(WalletBPData walletBPData, String walletName) {
+
+        String address = walletBPData.getAccounts().get(0).getAddress();
+        String bpData = JSON.toJSONString(walletBPData.getAccounts());
+        importedWallets = JSONObject.parseArray(spHelper.getSharedPreference("importedWallets", "[]").toString(), String.class);
+        if (address.equals(spHelper.getSharedPreference("currentAccAddr", "")) || importedWallets.contains(address)) {
+            ToastUtil.showToast(getActivity(), R.string.error_already_import_meaaage_txt, Toast.LENGTH_SHORT);
+        } else {
+            spHelper.put(address + "-walletName", walletName);
+            spHelper.put(address + "-BPdata", bpData);
+            importedWallets.add(address);
+            spHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));
+            ToastUtil.showToast(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT);
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    popBackStack();
+                }
+            });
+        }
     }
 
     private View initMnemonicView() {
@@ -470,15 +460,18 @@ public class BPWalletImportFragment extends BaseFragment {
         mStartImportMnemonicWordBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!mneonicFlag()) {
-                    return;
-                } else if (!walletNameFlag()) {
-                    return;
-                } else if (!pwdFlag()) {
-                    return;
-                } else if (!confirmPwdFlag()) {
+
+                if (!walletNameFlag(mWalletNameEt)) {
                     return;
                 }
+                if (!pwdConfirmFlag(mPasswordEt, mPasswordConfirmEt)) {
+                    return;
+                }
+
+                if (!mnemonicFlag(mMnemonicWordEt)) {
+                    return;
+                }
+
                 final String password = mPasswordEt.getText().toString().trim();
                 final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
@@ -491,38 +484,15 @@ public class BPWalletImportFragment extends BaseFragment {
                         try {
                             List<String> mnemonicCodes = getMnemonicCode();
                             WalletBPData walletBPData = Wallet.getInstance().importMnemonicCode(mnemonicCodes, password, getContext());
-                            String address = walletBPData.getAccounts().get(1).getAddress();
-                            String walletName = mWalletNameEt.getText().toString();
-                            String bpData = JSON.toJSONString(walletBPData.getAccounts());
-                            importedWallets = JSONObject.parseArray(spHelper.getSharedPreference("importedWallets", "[]").toString(), String.class);
-                            if (address.equals(spHelper.getSharedPreference("currentAccAddr", "")) || importedWallets.contains(address)) {
-                                Looper.prepare();
-                                Toast.makeText(getActivity(), R.string.error_already_import_meaaage_txt, Toast.LENGTH_SHORT).show();
-                                tipDialog.dismiss();
-                                Looper.loop();
-                            } else {
-                                spHelper.put(address + "-walletName", walletName);
-                                spHelper.put(address + "-BPdata", bpData);
-                                importedWallets.add(address);
-                                spHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));
-                                Looper.prepare();
-                                Toast.makeText(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT).show();
-                                tipDialog.dismiss();
-                                Handler handler = new Handler(Looper.getMainLooper());
-                                class PopBackStackThread implements Runnable {
-                                    public void run() {
-                                        popBackStack();
-                                    }
-                                }
-                                handler.post(new PopBackStackThread());
-                                Looper.loop();
-                            }
+                            spHelper.put(walletBPData.getAccounts().get(0).getAddress() + "-mnemonicCodes", "yes");
+                            saveWalletData(walletBPData, mWalletNameEt.getText().toString().trim());
+
+                            tipDialog.dismiss();
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Looper.prepare();
-                            Toast.makeText(getActivity(), R.string.error_import_message_txt, Toast.LENGTH_SHORT).show();
+                            ToastUtil.showToast(getActivity(), R.string.error_import_message_txt, Toast.LENGTH_SHORT);
                             tipDialog.dismiss();
-                            Looper.loop();
+
                             return;
                         }
                     }
@@ -536,60 +506,6 @@ public class BPWalletImportFragment extends BaseFragment {
                 return Arrays.asList(mneonicCodeArr);
             }
 
-            private boolean confirmPwdFlag() {
-                String pwd = mPasswordEt.getText().toString().trim();
-                String confirmPwd = mPasswordConfirmEt.getText().toString().trim();
-                String regex = ".{6,30}";
-                if ("".equals(confirmPwd)) {
-                    Toast.makeText(getActivity(), R.string.recover_confirm_pwd_hint, Toast.LENGTH_SHORT).show();
-                    return false;
-                } else if (!confirmPwd.matches(regex)) {
-                    Toast.makeText(getActivity(), R.string.recover_set_pwd_error, Toast.LENGTH_SHORT).show();
-                    return false;
-                } else if (!confirmPwd.equals(pwd)) {
-                    Toast.makeText(getActivity(), R.string.recover_confirm_pwd_error, Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-                return true;
-            }
-
-            private boolean pwdFlag() {
-                String password = mPasswordEt.getText().toString().trim();
-                if ("".equals(password)) {
-                    Toast.makeText(getActivity(), R.string.wallet_create_form_input_password_empty, Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-                if (!CommonUtil.validatePassword(password)) {
-                    Toast.makeText(getActivity(), R.string.wallet_create_form_error2, Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-                return true;
-            }
-
-            private boolean walletNameFlag() {
-                String walletName = mWalletNameEt.getText().toString().trim();
-                if ("".equals(walletName)) {
-                    Toast.makeText(getActivity(), R.string.wallet_import_wallet_name_et_hint_txt, Toast.LENGTH_SHORT).show();
-                    return false;
-                } else if (!CommonUtil.validateNickname(walletName)) {
-                    Toast.makeText(getActivity(), R.string.error_import_wallet_name_message_txt, Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-                return true;
-            }
-
-            private boolean mneonicFlag() {
-                String mneonic = mMnemonicWordEt.getText().toString().trim();
-                String regex = "[a-zA-Z\\s]+";
-                if ("".equals(mneonic)) {
-                    Toast.makeText(getActivity(), R.string.recover_edit_mneonic_code_hint, Toast.LENGTH_SHORT).show();
-                    return false;
-                } else if (!mneonic.matches(regex)) {
-                    Toast.makeText(getActivity(), R.string.error_import_mneonic_input_txt, Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-                return true;
-            }
         });
 
 
@@ -689,13 +605,15 @@ public class BPWalletImportFragment extends BaseFragment {
         mStartImportPrivateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (!walletNameFlag(mWalletNameEt)) {
+                    return;
+                }
+                if (!pwdConfirmFlag(mPasswordEt, mPasswordConfirmEt)) {
+                    return;
+                }
+
                 if (!privateKeyFlag()) {
-                    return;
-                } else if (!walletNameFlag()) {
-                    return;
-                } else if (!pwdFlag()) {
-                    return;
-                } else if (!confirmPwdFlag()) {
                     return;
                 }
                 final String password = mPasswordEt.getText().toString().trim();
@@ -710,90 +628,25 @@ public class BPWalletImportFragment extends BaseFragment {
                         try {
                             String privateKey = mPrivateKeyEt.getText().toString().trim();
                             WalletBPData walletBPData = Wallet.getInstance().importPrivateKey(password, privateKey);
-                            String address = walletBPData.getAccounts().get(0).getAddress();
-                            String walletName = mWalletNameEt.getText().toString();
-                            String bpData = JSON.toJSONString(walletBPData.getAccounts());
-                            importedWallets = JSONObject.parseArray(spHelper.getSharedPreference("importedWallets", "[]").toString(), String.class);
-                            if (address.equals(spHelper.getSharedPreference("currentAccAddr", "")) || importedWallets.contains(address)) {
-                                Looper.prepare();
-                                Toast.makeText(getActivity(), R.string.error_already_import_meaaage_txt, Toast.LENGTH_SHORT).show();
-                                tipDialog.dismiss();
-                                Looper.loop();
-                            } else {
-                                spHelper.put(address + "-walletName", walletName);
-                                spHelper.put(address + "-BPdata", bpData);
-                                importedWallets.add(address);
-                                spHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));
-                                Looper.prepare();
-                                Toast.makeText(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT).show();
-                                tipDialog.dismiss();
-                                Handler handler = new Handler(Looper.getMainLooper());
-                                class PopBackStackThread implements Runnable {
-                                    public void run() {
-                                        popBackStack();
-                                    }
-                                }
-                                handler.post(new PopBackStackThread());
-                                Looper.loop();
-                            }
+
+                            saveWalletData(walletBPData, mWalletNameEt.getText().toString());
+                            tipDialog.dismiss();
+
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Looper.prepare();
-                            Toast.makeText(getActivity(), R.string.error_import_message_txt, Toast.LENGTH_SHORT).show();
+                            ToastUtil.showToast(getActivity(), R.string.error_import_message_txt, Toast.LENGTH_SHORT);
                             tipDialog.dismiss();
-                            Looper.loop();
                             return;
                         }
                     }
                 }).start();
             }
 
-            private boolean confirmPwdFlag() {
-                String pwd = mPasswordEt.getText().toString().trim();
-                String confirmPwd = mPasswordConfirmEt.getText().toString().trim();
-                String regex = ".{6,30}";
-                if ("".equals(confirmPwd)) {
-                    Toast.makeText(getActivity(), R.string.recover_confirm_pwd_hint, Toast.LENGTH_SHORT).show();
-                    return false;
-                } else if (!confirmPwd.matches(regex)) {
-                    Toast.makeText(getActivity(), R.string.recover_set_pwd_error, Toast.LENGTH_SHORT).show();
-                    return false;
-                } else if (!confirmPwd.equals(pwd)) {
-                    Toast.makeText(getActivity(), R.string.recover_confirm_pwd_error, Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-                return true;
-            }
-
-            private boolean pwdFlag() {
-                String password = mPasswordEt.getText().toString().trim();
-                if ("".equals(password)) {
-                    Toast.makeText(getActivity(), R.string.wallet_create_form_input_password_empty, Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-                if (!CommonUtil.validatePassword(password)) {
-                    Toast.makeText(getActivity(), R.string.wallet_create_form_error2, Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-                return true;
-            }
-
-            private boolean walletNameFlag() {
-                String walletName = mWalletNameEt.getText().toString().trim();
-                if ("".equals(walletName)) {
-                    Toast.makeText(getActivity(), R.string.wallet_import_wallet_name_et_hint_txt, Toast.LENGTH_SHORT).show();
-                    return false;
-                } else if (!CommonUtil.validateNickname(walletName)) {
-                    Toast.makeText(getActivity(), R.string.error_import_wallet_name_message_txt, Toast.LENGTH_SHORT).show();
-                    return false;
-                }
-                return true;
-            }
 
             private boolean privateKeyFlag() {
                 String privateKey = mPrivateKeyEt.getText().toString().trim();
                 if (!PrivateKey.isPrivateKeyValid(privateKey)) {
-                    Toast.makeText(getActivity(), R.string.error_import_private_message_txt, Toast.LENGTH_SHORT).show();
+                    DialogUtils.showTitleDialog(mContext, getString(R.string.error_import_private_message_txt), getString(R.string.error_hint));
                     return false;
                 }
                 return true;
@@ -802,5 +655,51 @@ public class BPWalletImportFragment extends BaseFragment {
 
         return contentView;
 
+    }
+
+
+    private boolean walletNameFlag(EditText nameEt) {
+        String walletName = nameEt.getText().toString().trim();
+        if (!CommonUtil.validateNickname(walletName)) {
+            DialogUtils.showTitleDialog(mContext, getString(R.string.wallet_create_form_error4), getString(R.string.error_hint));
+            return false;
+        }
+        return true;
+    }
+
+
+    private boolean pwdFlag(EditText pwdEt) {
+        String password = pwdEt.getText().toString().trim();
+        if (!CommonUtil.validatePassword(password)) {
+            DialogUtils.showTitleDialog(mContext, R.string.wallet_create_form_error2, R.string.error_hint);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean pwdConfirmFlag(EditText pwdEt, EditText pwdConfirmEt) {
+        String password = pwdEt.getText().toString().trim();
+        if (!CommonUtil.validatePassword(password)) {
+            DialogUtils.showTitleDialog(mContext, R.string.wallet_create_form_error2, R.string.error_hint);
+            return false;
+        }
+
+        if (!password.equals(pwdConfirmEt.getText().toString().trim())) {
+            DialogUtils.showTitleDialog(mContext, R.string.wallet_create_form_error1, R.string.error_hint);
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private boolean mnemonicFlag(EditText mneonicEt) {
+        String mneonic = mneonicEt.getText().toString().trim();
+        String regex = "[a-zA-Z\\s]+";
+        if (TextUtils.isEmpty(mneonic) || !mneonic.matches(regex)) {
+            DialogUtils.showTitleDialog(mContext, R.string.wallet_create_form_error1, R.string.error_hint);
+            return false;
+        }
+        return true;
     }
 }

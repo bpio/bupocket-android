@@ -22,6 +22,7 @@
     <string name="wallet_create_form_error1">两次密码输入不一致</string>
     <string name="wallet_create_form_error2">密码必须是6-30个字符，大小写字母和数字任意两种的组合</string>
     <string name="wallet_create_form_error4">身份名只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
+    <string name="wallet_mneonic_error">助记词输入有误</string>
 
     <string name="wallet_create_creating_txt">创建中</string>
     <string name="wallet_create_created_txt">创建成功</string>
@@ -52,7 +53,6 @@
     <string name="create_wallet_pw_confirm_err_hint">两次密码不一致</string>
     <string name="view_change_wallet_pw">修改钱包密码</string>
 
-    <string name="create_wallet_name_error_info">身份名只允许输入字母/汉字/数字/下划线，并且长度不能超过20个字符</string>
 
     <string name="backup_wallet_txt1">没有妥善备份就无法保障资金安全，删除钱包或卸载程序后，您需要助记词来恢复钱包/身份</string>
 
