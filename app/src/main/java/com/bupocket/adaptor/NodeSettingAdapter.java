@@ -158,7 +158,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
             //check url
             OkHttpClient okHttpClient = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(url)
+                    .url(url+Constants.BUMO_NODE_URL_PATH)
                     .build();
             okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
@@ -206,6 +206,11 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
         String json = new Gson().toJson(data);
         SharedPreferencesHelper spHelper = new SharedPreferencesHelper(context, ConstantsType.BU_POCKET);
         spHelper.put(Constants.BUMO_NODE_URL, json);
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).isSelected()) {
+                spHelper.put(Constants.BUMO_NODE_URL+"nodeUrl",data.get(i).getUrl());
+            }
+        }
     }
 
 

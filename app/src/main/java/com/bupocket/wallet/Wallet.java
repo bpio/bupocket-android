@@ -53,7 +53,7 @@ public class Wallet {
     }
 
     private void init() {
-        sdk = SDK.getInstance(Constants.BUMO_NODE_URL);
+        sdk = SDK.getInstance(Constants.BUMO_NODE_URL_BASE);
     }
 
     public synchronized static Wallet getInstance() {

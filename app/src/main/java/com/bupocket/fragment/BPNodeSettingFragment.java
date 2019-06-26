@@ -8,10 +8,12 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeSettingAdapter;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.model.NodeSettingModel;
 import com.bupocket.utils.DialogUtils;
 import com.google.common.reflect.TypeToken;
@@ -50,7 +52,7 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
     }
 
     private void initListView() {
-        nodeSettingAdapter = new NodeSettingAdapter(mContext,getActivity());
+        nodeSettingAdapter = new NodeSettingAdapter(mContext, getActivity());
         lvNodeSet.setAdapter(nodeSettingAdapter);
         lvNodeSet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -76,11 +78,11 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
             Gson gson = new Gson();
             Type type = new TypeToken<List<NodeSettingModel>>() {
             }.getType();
-            nodeSettingModels= gson.fromJson(urlJson, type);
+            nodeSettingModels = gson.fromJson(urlJson, type);
         }
         for (int i = 0; i < nodeSettingModels.size(); i++) {
             if (nodeSettingModels.get(i).isSelected()) {
-               oldPosition=i;
+                oldPosition = i;
             }
         }
         nodeSettingAdapter.setNewData(nodeSettingModels);
@@ -137,10 +139,10 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
     private void saveNodeSetAddress() {
         List<NodeSettingModel> data = nodeSettingAdapter.getData();
 
-        for (int i =0; i < data.size(); i++) {
-            if (oldPosition==i) {
+        for (int i = 0; i < data.size(); i++) {
+            if (oldPosition == i) {
                 data.get(i).setSelected(true);
-            }else{
+            } else {
                 data.get(i).setSelected(false);
             }
         }
@@ -162,7 +164,8 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
             @Override
             public void onClick(View v) {
                 nodeSettingAdapter.saveNodeData(nodeSettingAdapter.getData());
-                isSaveBtn=true;
+                isSaveBtn = true;
+                BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
                 popBackStack();
 
             }

@@ -5,6 +5,7 @@ public class Constants {
 
     public static String WEB_SERVER_DOMAIN = MainNetConfig.WEB_SERVER_DOMAIN.getValue();
     public static String BUMO_NODE_URL = MainNetConfig.BUMO_NODE_URL.getValue();
+    public static String BUMO_NODE_URL_BASE=BUMO_NODE_URL;
     public static String PUSH_MESSAGE_SOCKET_URL = MainNetConfig.PUSH_MESSAGE_SOCKET_URL.getValue();
 
     public static String IMAGE_PATH = "img_dpos/";
@@ -55,6 +56,7 @@ public class Constants {
 
     public static final String VALIDATE_PATH = "supernodes/detail/validate/";
     public static final String KOL_PATH = "supernodes/detail/kol/";
+    public static final String BUMO_NODE_URL_PATH="/getLedger";
 
 
     public static enum MainNetConfig {
