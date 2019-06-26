@@ -43,6 +43,7 @@
 
 
                 <TextView
+                    android:id="@+id/create_wallet_name_title"
                     android:text="@string/hint_wallet_create_form_input_identity_name"
                     style="@style/BPTextViewCreateWallet" />
 

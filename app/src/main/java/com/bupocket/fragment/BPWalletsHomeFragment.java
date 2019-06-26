@@ -236,7 +236,11 @@ public class BPWalletsHomeFragment extends AbsBaseFragment {
                     @Override
                     public void onClick(View v) {
 
-
+                        BPCreateWalletFormFragment fragment = new BPCreateWalletFormFragment();
+                        Bundle args = new Bundle();
+                        args.putString("jumpPage",BPWalletsHomeFragment.class.getSimpleName());
+                        fragment.setArguments(args);
+                        startFragment(fragment);
                         walletBottom.dismiss();
                     }
                 });

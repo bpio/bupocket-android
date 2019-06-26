@@ -14,9 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.CommonUtil;
@@ -34,6 +36,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,11 +60,14 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
 
     @BindView(R.id.createWalletSubmitBtn)
     QMUIRoundButton mCreateWalletSubmitBtn;
+    @BindView(R.id.create_wallet_name_title)
+    TextView createWalletNameTitle;
+
 
     private boolean isPwdHideFirst = false;
     private boolean isConfirmPwdHideFirst = false;
     private SharedPreferencesHelper sharedPreferencesHelper;
-    private String argFragment;
+    private boolean isCreateWallet;
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -125,6 +131,12 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         initCreateWalletPromptView();
         initTopBar();
+        String jumpPage = getArguments().getString("jumpPage");
+        isCreateWallet = !TextUtils.isEmpty(jumpPage) && jumpPage.equals(BPWalletsHomeFragment.class.getSimpleName());
+        if (isCreateWallet) {
+            createWalletNameTitle.setText(R.string.create_wallet_name_title);
+            mSetIdentityNameEt.setHint(R.string.change_wallet_name_hint);
+        }
     }
 
 
@@ -177,26 +189,12 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
                         WalletBPData walletBPData = null;
                         try {
                             walletBPData = Wallet.getInstance().create(accountPwd, getContext());
-                            sharedPreferencesHelper.put("skey", walletBPData.getSkey());
-                            sharedPreferencesHelper.put("currentAccNick", mSetIdentityNameEt.getText().toString());
-                            sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
-                            sharedPreferencesHelper.put("identityId", walletBPData.getAccounts().get(0).getAddress());
-                            sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
-                            sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.CREATE_MNEONIC_CODE.getCode());
-                            sharedPreferencesHelper.put("currentWalletAddress", walletBPData.getAccounts().get(1).getAddress());
-//                            sharedPreferencesHelper.put("currentIdentityWalletName",mSetIdentityNameEt.getText().toString().trim());
-                            final WalletBPData finalWalletBPData = walletBPData;
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
 
-                                    BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();
-                                    Bundle argz = new Bundle();
-                                    argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) finalWalletBPData.getMnemonicCodes());
-                                    backupWalletFragment.setArguments(argz);
-                                    startFragment(backupWalletFragment);
-                                }
-                            });
+                            if (isCreateWallet) {
+                                createWallet(walletBPData,mSetIdentityNameEt.getText().toString().trim());
+                            } else {
+                                createIdentityWallet(walletBPData);
+                            }
 
                             tipDialog.dismiss();
                         } catch (WalletException e) {
@@ -210,6 +208,51 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
 
             }
         });
+    }
+
+    private void createWallet(WalletBPData walletBPData, String walletName) {
+        String address = walletBPData.getAccounts().get(0).getAddress();
+        String bpData = JSON.toJSONString(walletBPData.getAccounts());
+        List<String> importedWallets = JSONObject.parseArray(spHelper.getSharedPreference("importedWallets", "[]").toString(), String.class);
+        if (address.equals(spHelper.getSharedPreference("currentAccAddr", "")) || importedWallets.contains(address)) {
+            ToastUtil.showToast(getActivity(), R.string.error_already_import_meaaage_txt, Toast.LENGTH_SHORT);
+        } else {
+            spHelper.put(address + "-walletName", walletName);
+            spHelper.put(address + "-BPdata", bpData);
+            importedWallets.add(address);
+            spHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    popBackStack();
+                }
+            });
+        }
+
+    }
+
+    private void createIdentityWallet(WalletBPData walletBPData) {
+        sharedPreferencesHelper.put("skey", walletBPData.getSkey());
+        sharedPreferencesHelper.put("currentAccNick", mSetIdentityNameEt.getText().toString());
+        sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
+        sharedPreferencesHelper.put("identityId", walletBPData.getAccounts().get(0).getAddress());
+        sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
+        sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.CREATE_MNEONIC_CODE.getCode());
+        sharedPreferencesHelper.put("currentWalletAddress", walletBPData.getAccounts().get(1).getAddress());
+//                            sharedPreferencesHelper.put("currentIdentityWalletName",mSetIdentityNameEt.getText().toString().trim());
+        final WalletBPData finalWalletBPData = walletBPData;
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();
+                Bundle argz = new Bundle();
+                argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) finalWalletBPData.getMnemonicCodes());
+                backupWalletFragment.setArguments(argz);
+                startFragment(backupWalletFragment);
+            }
+        });
+
     }
 
 
@@ -277,4 +320,5 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
     public void onFocusChange(View v, boolean hasFocus) {
 
     }
+
 }
