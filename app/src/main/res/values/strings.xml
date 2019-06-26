@@ -391,12 +391,11 @@
     <string name="start_import_wallet">开始导入</string>
     <string name="understand_mnemonic_txt">了解助记词</string>
     <string name="wallet_import_keystore_tips_txt">复制粘贴BUMO官方钱包Keystore文件内容至输入框</string>
-    <string name="wallet_import_keystore_et_hint_txt">Keystore文件内容</string>
-    <string name="password_for_keystore_txt">Keystore密码</string>
-    <string name="password_for_keystore_et_hint_txt">请输入原Keystore文件内容的密码</string>
+
+
     <string name="understand_keystore_txt">了解Keystore</string>
     <string name="wallet_import_private_tips_txt">粘贴私钥（Private Key）至输入框内</string>
-    <string name="wallet_import_private_et_hint_txt">私钥（Private Key）</string>
+
     <string name="understand_private_txt">了解私钥</string>
     <string name="import_success_message_txt">钱包导入成功</string>
     <string name="error_already_import_meaaage_txt">该钱包已导入，无需重复导入</string>
@@ -665,10 +664,9 @@
     <!--create wallet-->
 
     <string name="import_mnemonic_wallet_name">请设置钱包名称</string>
-    <string name="import_mnemonic_wallet_name_hint">请设置钱包名称，用于区分其他钱包</string>
     <string name="hint_wallet_create_form_input_password">请设置安全密码</string>
     <string name="hint_wallet_create_form_input_rePassword">请再次确认安全密码</string>
-    <!-- 恢复身份 -->
+    <!-- recover identity -->
     <string name="recover_edit_mneonic_code">请填写您的助记词</string>
     <string name="recover_edit_mneonic_code_hint">12个英文单词，请按空格分隔单词</string>
     <string name="hint_wallet_create_password">6-30个字符，大小写字母和数字任意两种组合</string>
@@ -708,8 +706,6 @@
     <string name="change_confirm_change">确认修改</string>
 
 
-    <!--wallet info-->
-    <string name="change_wallet_name_hint">用于区分其他钱包，不能超过20个字符</string>
 
     <!--setting user info-->
     <string name="change_wallet_head_title">选择头像</string>
@@ -735,5 +731,19 @@
     <string name="update_app_min_title">新版本内容更新</string>
     <string name="not_update_app">稍后更新</string>
     <string name="new_update_app">立即更新</string>
+
+
+    <!--import wallet-->
+    <string name="keystore_hint_title">请填写Keystore文件内容</string>
+    <string name="private_key_hint_title">请填写您的私钥</string>
+
+    <string name="wallet_import_keystore_et_hint_txt">请填写由BUMO官方钱包生成的Keystore文件</string>
+    <string name="password_for_keystore_et_hint_txt">请输入导出Keystore时使用的安全密码</string>
+    <string name="password_for_keystore_txt">请输入安全密码</string>
+    <string name="wallet_import_private_et_hint_txt">请填写您的私钥</string>
+    <string name="change_wallet_name_hint">用于区分其他钱包，不能超过20个字符</string>
+
+
+
 
 </resources>

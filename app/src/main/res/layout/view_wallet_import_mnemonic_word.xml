@@ -28,28 +28,26 @@
             android:textSize="15sp" />
 
         <TextView
+            style="@style/BPTextViewCreateWallet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="17.5dp"
-            android:text="@string/import_mnemonic_wallet_name"
-            android:textColor="@color/app_txt_color_gray_2"
-            android:textSize="16sp" />
+            android:layout_marginTop="20dp"
+            android:text="@string/import_mnemonic_wallet_name" />
 
         <EditText
             android:id="@+id/walletNameEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/import_mnemonic_wallet_name_hint"
+            android:hint="@string/change_wallet_name_hint"
             android:textSize="14sp"
             android:theme="@style/BPEditText" />
 
         <TextView
+            style="@style/BPTextViewCreateWallet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="17.5dp"
-            android:text="@string/hint_wallet_create_form_input_password"
-            android:textColor="@color/app_txt_color_gray_2"
-            android:textSize="16sp" />
+            android:text="@string/hint_wallet_create_form_input_password" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -59,7 +57,7 @@
                 android:id="@+id/passwordEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_wallet_create_form_input_password"
+                android:hint="@string/hint_wallet_create_password"
                 android:inputType="textPassword"
                 android:textSize="14sp"
                 android:theme="@style/BPEditText" />
@@ -69,18 +67,18 @@
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:paddingTop="20dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="10dp"
                 android:src="@mipmap/icon_close_eye" />
 
         </RelativeLayout>
 
         <TextView
+            style="@style/BPTextViewCreateWallet"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="17.5dp"
-            android:text="@string/hint_wallet_create_form_input_rePassword"
-            android:textColor="@color/app_txt_color_gray_2"
-            android:textSize="16sp" />
+            android:text="@string/hint_wallet_create_form_input_rePassword" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -100,7 +98,8 @@
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:paddingTop="20dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="10dp"
                 android:src="@mipmap/icon_close_eye" />
 
         </RelativeLayout>
@@ -109,7 +108,7 @@
             android:id="@+id/startImportMnemonicWordBtn"
             android:layout_width="match_parent"
             android:layout_height="43.5dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="45dp"
             android:layout_marginBottom="25dp"
             android:gravity="center"
             android:text="@string/start_import_wallet"

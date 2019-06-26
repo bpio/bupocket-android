@@ -57,7 +57,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
     EditText mConfirmPwdEt;
     @BindView(R.id.recoverWalletSubmitBtn)
     QMUIRoundButton recoverSubmit;
-    @BindView(R.id.understandMnemonicWordLl)
+    @BindView(R.id.importInfoHintLl)
     LinearLayout mnemonicWordLl;
 
 

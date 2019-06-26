@@ -12,13 +12,9 @@
         android:paddingLeft="12.5dp"
         android:paddingRight="12.5dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="@string/wallet_import_private_tips_txt"
-            android:textColor="@color/app_txt_color_gray"
-            android:textSize="14sp" />
+
+        <include
+            layout="@layout/view_mnemonic_hint"/>
 
         <EditText
             android:id="@+id/privateKeyEt"
@@ -35,16 +31,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="17.5dp"
-            android:text="@string/wallet_import_wallet_name_txt"
-            android:textColor="@color/app_txt_color_gray_2"
-            android:textSize="16sp" />
+            android:layout_marginTop="20dp"
+            android:text="@string/import_mnemonic_wallet_name"
+            style="@style/BPTextViewCreateWallet" />
 
         <EditText
             android:id="@+id/walletNameEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/wallet_import_wallet_name_et_hint_txt"
+            android:hint="@string/change_wallet_name_hint"
             android:textSize="14sp"
             android:theme="@style/BPEditText"/>
 
@@ -52,9 +47,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="17.5dp"
-            android:text="@string/wallet_import_set_password_txt"
-            android:textColor="@color/app_txt_color_gray_2"
-            android:textSize="16sp" />
+            android:text="@string/hint_wallet_create_form_input_password"
+            style="@style/BPTextViewCreateWallet" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -64,7 +58,7 @@
                 android:id="@+id/passwordEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/recover_set_pwd_hint"
+                android:hint="@string/hint_wallet_create_password"
                 android:inputType="textPassword"
                 android:textSize="14sp"
                 android:theme="@style/BPEditText" />
@@ -73,7 +67,8 @@
                 android:id="@+id/passwordIv"
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="10dp"
                 android:layout_alignParentRight="true"
                 android:src="@mipmap/icon_close_eye" />
 
@@ -84,9 +79,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="17.5dp"
-            android:text="@string/wallet_import_confirm_password_txt"
-            android:textColor="@color/app_txt_color_gray_2"
-            android:textSize="16sp" />
+            android:text="@string/hint_wallet_create_form_input_rePassword"
+            style="@style/BPTextViewCreateWallet" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -96,7 +90,7 @@
                 android:id="@+id/passwordConfirmEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/recover_confirm_pwd_hint"
+                android:hint="@string/hint_wallet_create_form_input_rePassword"
                 android:inputType="textPassword"
                 android:textSize="14sp"
                 android:theme="@style/BPEditText" />
@@ -105,7 +99,8 @@
                 android:id="@+id/passwordConfirmIv"
                 android:layout_width="20dp"
                 android:layout_height="wrap_content"
-                android:paddingTop="20dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="10dp"
                 android:layout_alignParentRight="true"
                 android:src="@mipmap/icon_close_eye" />
 
@@ -116,7 +111,7 @@
             android:id="@+id/startImportPrivateBtn"
             android:layout_width="match_parent"
             android:layout_height="43.5dp"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="45dp"
             android:gravity="center"
             android:text="@string/start_import_wallet"
             android:textColor="@color/app_color_font"
@@ -125,25 +120,5 @@
             app:qmui_borderColor="@color/disabled_btn_color"
             app:qmui_radius="5dp" />
 
-        <LinearLayout
-            android:id="@+id/understandPrivateLl"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:gravity="right|center_vertical"
-            android:layout_marginBottom="20dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/understand_private_txt" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:src="@mipmap/icon_help_tips" />
-        </LinearLayout>
     </LinearLayout>
 </ScrollView>

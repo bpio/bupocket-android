@@ -350,12 +350,12 @@
     <string name="start_import_wallet">Start Importing</string>
     <string name="understand_mnemonic_txt">About Mnemonics</string>
     <string name="wallet_import_keystore_tips_txt">Copy the content of the Keystore file of BUMO official wallet and paste it to the input box</string>
-    <string name="wallet_import_keystore_et_hint_txt">The content of the Keystore file</string>
-    <string name="password_for_keystore_txt">Keystore Password</string>
-    <string name="password_for_keystore_et_hint_txt">Please input the password of the original Keystore file</string>
+    <!--<string name="wallet_import_keystore_et_hint_txt">The content of the Keystore file</string>-->
+    <!--<string name="password_for_keystore_txt">Keystore Password</string>-->
+    <!--<string name="password_for_keystore_et_hint_txt">Please input the password of the original Keystore file</string>-->
     <string name="understand_keystore_txt">About Keystore</string>
     <string name="wallet_import_private_tips_txt">Paste the private key to the input box</string>
-    <string name="wallet_import_private_et_hint_txt">Private key</string>
+    <!--<string name="wallet_import_private_et_hint_txt">Private key</string>-->
     <string name="understand_private_txt">About Private Key</string>
     <string name="import_success_message_txt">The wallet is imported successfully</string>
     <string name="error_already_import_meaaage_txt">The wallet has already been imported</string>

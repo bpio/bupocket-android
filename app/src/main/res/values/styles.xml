@@ -197,9 +197,6 @@
     </style>
 
     <style name="BPCheckboxTheme">
-        <!--波纹的颜色-->
-        <!--<item name="android:colorControlHighlight">@color/colorPrimary</item>-->
-        <!--选中的颜色-->
         <item name="colorAccent">@color/app_color_main</item>
     </style>
 

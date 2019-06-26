@@ -20,6 +20,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -27,7 +28,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.TO;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletBPData;
@@ -112,11 +113,11 @@ public class BPWalletImportFragment extends BaseFragment {
     }
 
     private void init() {
+        initView();
         initData();
-        initUI();
     }
 
-    private void initUI() {
+    private void initView() {
         initTopBar();
         initTabAndPager();
     }
@@ -131,6 +132,7 @@ public class BPWalletImportFragment extends BaseFragment {
         mTabSegment.addTab(new QMUITabSegment.Tab(getString(R.string.private_key_txt)));
         mTabSegment.addTab(new QMUITabSegment.Tab(getString(R.string.keystore_txt)));
         mTabSegment.setDefaultSelectedColor(Color.parseColor("#02CA71"));
+        mTabSegment.setTabTextSize(TO.dip2px(mContext,16));
         mTabSegment.setupWithViewPager(mContentViewPager, false);
         mTabSegment.setMode(QMUITabSegment.MODE_FIXED);
         mTabSegment.addOnTabSelectedListener(new QMUITabSegment.OnTabSelectedListener() {
@@ -223,8 +225,10 @@ public class BPWalletImportFragment extends BaseFragment {
         final EditText mWalletNameEt = contentView.findViewById(R.id.walletNameEt);
         final EditText mPasswordEt = contentView.findViewById(R.id.passwordEt);
         final ImageView mPasswordIv = contentView.findViewById(R.id.passwordIv);
+        ((TextView) contentView.findViewById(R.id.hintTitleTv)).setText(R.string.keystore_hint_title);
+        ((TextView) contentView.findViewById(R.id.hintInfoTv)).setText(R.string.understand_keystore_txt);
         final QMUIRoundButton mStartImportKeystoreBtn = contentView.findViewById(R.id.startImportKeystoreBtn);
-        final LinearLayout mUnderstandKeystoreLl = contentView.findViewById(R.id.understandKeystoreLl);
+        final LinearLayout mUnderstandKeystoreLl = contentView.findViewById(R.id.importInfoHintLl);
 
         mUnderstandKeystoreLl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -384,7 +388,7 @@ public class BPWalletImportFragment extends BaseFragment {
         final ImageView mPasswordIv = contentView.findViewById(R.id.passwordIv);
         final ImageView mPasswordConfirmIv = contentView.findViewById(R.id.passwordConfirmIv);
         final QMUIRoundButton mStartImportMnemonicWordBtn = contentView.findViewById(R.id.startImportMnemonicWordBtn);
-        final LinearLayout mUnderstandMnemonicWordLl = contentView.findViewById(R.id.understandMnemonicWordLl);
+        final LinearLayout mUnderstandMnemonicWordLl = contentView.findViewById(R.id.importInfoHintLl);
 
         mUnderstandMnemonicWordLl.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -602,8 +606,9 @@ public class BPWalletImportFragment extends BaseFragment {
         final ImageView mPasswordIv = contentView.findViewById(R.id.passwordIv);
         final ImageView mPasswordConfirmIv = contentView.findViewById(R.id.passwordConfirmIv);
         final QMUIRoundButton mStartImportPrivateBtn = contentView.findViewById(R.id.startImportPrivateBtn);
-        final LinearLayout mUnderstandPrivateLl = contentView.findViewById(R.id.understandPrivateLl);
-
+        final LinearLayout mUnderstandPrivateLl = contentView.findViewById(R.id.importInfoHintLl);
+        ((TextView) contentView.findViewById(R.id.hintTitleTv)).setText(R.string.private_key_hint_title);
+        ((TextView) contentView.findViewById(R.id.hintInfoTv)).setText(R.string.understand_private_txt);
         mUnderstandPrivateLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
