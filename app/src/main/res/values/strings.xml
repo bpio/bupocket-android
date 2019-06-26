@@ -718,7 +718,8 @@
     <string name="edit_node_info">编辑</string>
     <string name="edit_node_address_title">编辑节点地址</string>
     <string name="confirm_delete_node">确定删除该节点吗？</string>
-
+    <string name="invalid_node_address">无效的节点地址</string>
+    <string name="invalid_node_address_hint">请输入有效的节点地址</string>
 
     <!--about us-->
     <string name="about_us_version_code">当前版本:</string>
@@ -745,6 +746,7 @@
     <string name="change_wallet_name_hint">用于区分其他钱包，不能超过20个字符</string>
     <!--create wallet-->
     <string name="create_wallet_name_title">请设置钱包名称</string>
+
 
 
 </resources>

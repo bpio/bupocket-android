@@ -50,7 +50,7 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
     }
 
     private void initListView() {
-        nodeSettingAdapter = new NodeSettingAdapter(mContext);
+        nodeSettingAdapter = new NodeSettingAdapter(mContext,getActivity());
         lvNodeSet.setAdapter(nodeSettingAdapter);
         lvNodeSet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -99,7 +99,14 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
                             @Override
                             public void confirm(String url) {
 
-                                addNodeAddress(url);
+                                nodeSettingAdapter.invalidNodeAddress(url, 0, new NodeSettingAdapter.NodeAddressListener() {
+                                    @Override
+                                    public void success(String url) {
+                                        addNodeAddress(url);
+                                    }
+                                });
+
+
                             }
                         });
             }

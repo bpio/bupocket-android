@@ -1,33 +1,45 @@
 package com.bupocket.adaptor;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.base.AbsViewHolderAdapter;
 import com.bupocket.base.BaseViewHolder;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
+import com.bupocket.model.NodeAddressModel;
 import com.bupocket.model.NodeSettingModel;
-import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ToastUtil;
 import com.google.gson.Gson;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 
+import java.io.IOException;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
 
 
+    private final Activity mActivity;
     private int currentPosition;
 
-    public NodeSettingAdapter(@NonNull Context context) {
+    public NodeSettingAdapter(Context context, @NonNull Activity mActivity) {
         super(context);
+        this.mActivity = mActivity;
     }
 
     @Override
@@ -89,13 +101,16 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
                         url,
                         new DialogUtils.ConfirmListener() {
                             @Override
-                            public void confirm(String url) {
-                                getData().get(position).setUrl(url);
+                            public void confirm(final String url) {
+                                invalidNodeAddress(url, position, new NodeAddressListener() {
+                                    @Override
+                                    public void success(String url) {
 
-//                                saveNodeData();
-                                notifyDataSetChanged();
+                                    }
+                                });
                             }
                         });
+
 
 
             }
@@ -126,12 +141,65 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
         walletBottom.show();
     }
 
+    public void invalidNodeAddress(final String url, final int position, final NodeAddressListener nodeListener) {
+        if (TextUtils.isEmpty(url)) {
+            ToastUtil.showToast(mActivity, R.string.invalid_node_address_hint, Toast.LENGTH_SHORT);
+            return;
+        }
 
-    public void saveNodeData( List<NodeSettingModel> data) {
+        try {
+            //check url
+            OkHttpClient okHttpClient = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+            okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+
+                    String json = response.body().string();
+                    NodeAddressModel nodeAddressModel = new Gson().fromJson(json, NodeAddressModel.class);
+                    if (nodeAddressModel.getError_code() == 0) {
+                        mActivity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                nodeListener.success(url);
+                                if (!(position ==0)) {
+                                    getData().get(position).setUrl(url);
+                                    notifyDataSetChanged();
+                                }
+                            }
+                        });
+                    } else {
+                        ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+                    }
+
+
+                }
+            });
+
+        }catch (Exception e){
+            ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+        }
+
+    }
+
+
+    public void saveNodeData(List<NodeSettingModel> data) {
         String json = new Gson().toJson(data);
         SharedPreferencesHelper spHelper = new SharedPreferencesHelper(context, ConstantsType.BU_POCKET);
         spHelper.put(Constants.BUMO_NODE_URL, json);
     }
 
+
+    public interface NodeAddressListener {
+
+       void success(String url);
+    }
 
 }
