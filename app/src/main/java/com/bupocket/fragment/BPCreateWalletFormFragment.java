@@ -131,12 +131,16 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         initCreateWalletPromptView();
         initTopBar();
-        String jumpPage = getArguments().getString("jumpPage");
-        isCreateWallet = !TextUtils.isEmpty(jumpPage) && jumpPage.equals(BPWalletsHomeFragment.class.getSimpleName());
-        if (isCreateWallet) {
-            createWalletNameTitle.setText(R.string.create_wallet_name_title);
-            mSetIdentityNameEt.setHint(R.string.change_wallet_name_hint);
+        Bundle arguments = getArguments();
+        if (arguments!=null) {
+            String jumpPage = arguments.getString("jumpPage");
+            isCreateWallet = !TextUtils.isEmpty(jumpPage) && jumpPage.equals(BPWalletsHomeFragment.class.getSimpleName());
+            if (isCreateWallet) {
+                createWalletNameTitle.setText(R.string.create_wallet_name_title);
+                mSetIdentityNameEt.setHint(R.string.change_wallet_name_hint);
+            }
         }
+
     }
 
 
