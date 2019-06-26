@@ -127,8 +127,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
     }
 
 
-    public void saveNodeData() {
-        List<NodeSettingModel> data = getData();
+    public void saveNodeData( List<NodeSettingModel> data) {
         String json = new Gson().toJson(data);
         SharedPreferencesHelper spHelper = new SharedPreferencesHelper(context, ConstantsType.BU_POCKET);
         spHelper.put(Constants.BUMO_NODE_URL, json);

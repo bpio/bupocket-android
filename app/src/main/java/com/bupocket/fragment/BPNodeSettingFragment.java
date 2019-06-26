@@ -13,7 +13,6 @@ import com.bupocket.adaptor.NodeSettingAdapter;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.model.NodeSettingModel;
-import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -34,7 +33,10 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
     @BindView(R.id.llAddMore)
     LinearLayout llAddMore;
     private NodeSettingAdapter nodeSettingAdapter;
+    ArrayList<NodeSettingModel> oldNodeData = new ArrayList<>();
 
+    private boolean isSaveBtn;
+    private int oldPosition;
 
     @Override
     protected int getLayoutView() {
@@ -62,22 +64,26 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
     protected void initData() {
 
         String urlJson = (String) spHelper.getSharedPreference(Constants.BUMO_NODE_URL, "");
+
+        ArrayList<NodeSettingModel> nodeSettingModels = new ArrayList<>();
         if (urlJson.isEmpty()) {
-            ArrayList<NodeSettingModel> nodeSettingModels = new ArrayList<>();
             NodeSettingModel mainNode = new NodeSettingModel();
             mainNode.setMore(false);
             mainNode.setSelected(true);
             mainNode.setUrl(Constants.BUMO_NODE_URL);
             nodeSettingModels.add(mainNode);
-            nodeSettingAdapter.setNewData(nodeSettingModels);
         } else {
             Gson gson = new Gson();
             Type type = new TypeToken<List<NodeSettingModel>>() {
             }.getType();
-            List<NodeSettingModel> data = gson.fromJson(urlJson, type);
-            nodeSettingAdapter.setNewData(data);
+            nodeSettingModels= gson.fromJson(urlJson, type);
         }
-
+        for (int i = 0; i < nodeSettingModels.size(); i++) {
+            if (nodeSettingModels.get(i).isSelected()) {
+               oldPosition=i;
+            }
+        }
+        nodeSettingAdapter.setNewData(nodeSettingModels);
 
     }
 
@@ -109,14 +115,29 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
         data.add(addNode);
         nodeSettingAdapter.setNewData(data);
 
-//        nodeSettingAdapter.saveNodeData();
 
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        nodeSettingAdapter.saveNodeData();
+
+        if (!isSaveBtn) {
+            saveNodeSetAddress();
+        }
+    }
+
+    private void saveNodeSetAddress() {
+        List<NodeSettingModel> data = nodeSettingAdapter.getData();
+
+        for (int i =0; i < data.size(); i++) {
+            if (oldPosition==i) {
+                data.get(i).setSelected(true);
+            }else{
+                data.get(i).setSelected(false);
+            }
+        }
+        nodeSettingAdapter.saveNodeData(data);
     }
 
     @SuppressLint("ResourceAsColor")
@@ -133,6 +154,9 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                nodeSettingAdapter.saveNodeData(nodeSettingAdapter.getData());
+                isSaveBtn=true;
+                popBackStack();
 
             }
         });
@@ -148,8 +172,8 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
             data.get(i).setSelected(false);
         }
         data.get(position).setSelected(true);
-
         nodeSettingAdapter.setNewData(data);
+
     }
 
 }
