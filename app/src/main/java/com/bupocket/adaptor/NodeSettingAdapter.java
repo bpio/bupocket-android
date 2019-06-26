@@ -147,6 +147,13 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
             return;
         }
 
+        for (int i = 0; i < getData().size(); i++) {
+            if (getData().get(i).getUrl().equals(url.trim())) {
+                ToastUtil.showToast(mActivity, R.string.node_address_repeat, Toast.LENGTH_SHORT);
+                return;
+            }
+        }
+
         try {
             //check url
             OkHttpClient okHttpClient = new OkHttpClient();
@@ -162,22 +169,27 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
 
-                    String json = response.body().string();
-                    NodeAddressModel nodeAddressModel = new Gson().fromJson(json, NodeAddressModel.class);
-                    if (nodeAddressModel.getError_code() == 0) {
-                        mActivity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                nodeListener.success(url);
-                                if (!(position ==0)) {
-                                    getData().get(position).setUrl(url);
-                                    notifyDataSetChanged();
+                    try {
+                        String json = response.body().string();
+                        NodeAddressModel nodeAddressModel = new Gson().fromJson(json, NodeAddressModel.class);
+                        if (nodeAddressModel.getError_code() == 0) {
+                            mActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    nodeListener.success(url);
+                                    if (!(position ==0)) {
+                                        getData().get(position).setUrl(url);
+                                        notifyDataSetChanged();
+                                    }
                                 }
-                            }
-                        });
-                    } else {
+                            });
+                        } else {
+                            ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+                        }
+                    }catch (Exception e){
                         ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
                     }
+
 
 
                 }

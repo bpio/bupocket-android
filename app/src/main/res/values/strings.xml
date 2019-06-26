@@ -720,6 +720,7 @@
     <string name="confirm_delete_node">确定删除该节点吗？</string>
     <string name="invalid_node_address">无效的节点地址</string>
     <string name="invalid_node_address_hint">请输入有效的节点地址</string>
+    <string name="node_address_repeat">节点重复，请重新设置</string>
 
     <!--about us-->
     <string name="about_us_version_code">当前版本:</string>
