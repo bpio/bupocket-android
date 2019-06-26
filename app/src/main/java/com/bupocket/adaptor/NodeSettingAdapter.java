@@ -84,7 +84,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
                 String url = getData().get(position).getUrl();
                 DialogUtils.showEditMessageDialog(
                         context,
-                        context.getString(R.string.add_node_address_title),
+                        context.getString(R.string.edit_node_address_title),
                         context.getString(R.string.add_node_address_title),
                         url,
                         new DialogUtils.ConfirmListener() {

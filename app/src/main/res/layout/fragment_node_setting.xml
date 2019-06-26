@@ -7,10 +7,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:layout_marginBottom="60dp"
         android:fitsSystemWindows="true"
+        android:background="@color/app_bg_color_gray"
         android:orientation="vertical">
 
         <TextView
@@ -24,8 +25,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:background="@drawable/shape_corner_white"
             android:divider="@null" />
 
