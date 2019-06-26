@@ -97,7 +97,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="15dp"
-                    android:paddingRight="15dp"
                     android:src="@mipmap/icon_right_arrow" />
 
             </LinearLayout>

@@ -31,7 +31,7 @@
                 android:layout_height="50dp"
                 android:background="@drawable/shape_corner"
                 android:orientation="horizontal"
-                android:paddingHorizontal="10dp">
+                android:paddingLeft="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -39,7 +39,9 @@
                     android:layout_marginRight="20dp"
                     android:gravity="center"
                     android:text="@string/user_info_wallet_name"
-                    android:textColor="@color/app_txt_color_gray">
+
+                    android:textColor="@color/app_txt_color_gray"
+                    android:textSize="15sp">
 
                 </TextView>
 
@@ -48,22 +50,34 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:gravity="right|center_vertical" />
+                    android:gravity="right|center_vertical"
+                    android:textColor="@color/app_txt_color_gray_2"
+                    android:paddingRight="10dp"
+                    android:textSize="15sp"
+                    tools:text="identityName" />
             </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="15dp"
+                android:background="@color/gray_line" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:background="@drawable/shape_corner"
                 android:orientation="horizontal"
-                android:paddingHorizontal="10dp">
+                android:paddingLeft="10dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
                     android:text="@string/user_info_wallet_id"
-                    android:textColor="@color/app_txt_color_gray"></TextView>
+                    android:textColor="@color/app_txt_color_gray"
+                    android:textSize="15sp"></TextView>
 
                 <ImageView
                     android:id="@+id/tipsIv"
@@ -82,6 +96,9 @@
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
                     android:textAlignment="textEnd"
+                    android:textColor="@color/app_txt_color_gray_2"
+                    android:paddingRight="10dp"
+                    android:textSize="15sp"
                     tools:ignore="RtlCompat"
                     tools:text="test-idtest-idtest-idtest-idtest-idtest-idtest-idtest-idtest-idtest-idtest-id" />
             </LinearLayout>
@@ -92,12 +109,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
+            android:layout_marginTop="90dp"
             android:padding="@dimen/view_padding">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
+
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                 android:id="@+id/userInfoBackupWalletTv"
@@ -109,6 +124,7 @@
                 app:qmui_backgroundColor="@color/app_color_main"
                 app:qmui_borderColor="@color/app_color_main"
                 app:qmui_borderWidth="0dp"
+                android:textSize="18sp"
                 app:qmui_radius="5dp" />
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
@@ -119,6 +135,7 @@
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
                 android:text="@string/user_info_logout"
+                android:textSize="18sp"
                 android:textColor="@color/app_txt_color_red_3"
                 app:qmui_backgroundColor="@color/app_color_white"
                 app:qmui_borderColor="@color/disabled_btn_color"
