@@ -120,10 +120,5 @@
             app:qmui_radius="5dp" />
 
 
-        <include
-            layout="@layout/view_create_wallet_hint"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="27dp" />
     </LinearLayout>
 </ScrollView>
