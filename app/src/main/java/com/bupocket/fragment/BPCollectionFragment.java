@@ -3,8 +3,11 @@ package com.bupocket.fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +51,7 @@ public class BPCollectionFragment extends AbsBaseFragment {
 
 
     Unbinder unbinder;
+    private Bitmap mBitmap;
 
     @Override
     protected int getLayoutView() {
@@ -64,7 +68,7 @@ public class BPCollectionFragment extends AbsBaseFragment {
     protected void initData() {
         String currentWalletAddress = getWalletAddress();
         walletAddressTv.setText(currentWalletAddress);
-        Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap(currentWalletAddress, TO.dip2px(mContext, 170), TO.dip2px(mContext, 170));
+        mBitmap = QRCodeUtil.createQRCodeBitmap(currentWalletAddress, TO.dip2px(mContext, 170), TO.dip2px(mContext, 170));
         addressQrCodeIv.setImageBitmap(mBitmap);
 
         String walletName = (String) spHelper.getSharedPreference(currentWalletAddress + "-walletName", "");
@@ -116,8 +120,32 @@ public class BPCollectionFragment extends AbsBaseFragment {
     }
 
     private void shareQrCode() {
-
+        Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), mBitmap, null,null));
+        shareImg("收款码","收款码","收款码",uri);
     }
 
+
+    private void shareImg(String dlgTitle, String subject, String content,
+                          Uri uri) {
+        if (uri == null) {
+            return;
+        }
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_STREAM, uri);
+        if (subject != null && !"".equals(subject)) {
+            intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        }
+        if (content != null && !"".equals(content)) {
+            intent.putExtra(Intent.EXTRA_TEXT, content);
+        }
+
+        // 设置弹出框标题
+        if (dlgTitle != null && !"".equals(dlgTitle)) { // 自定义标题
+            startActivity(Intent.createChooser(intent, dlgTitle));
+        } else { // 系统默认标题
+            startActivity(intent);
+        }
+    }
 
 }

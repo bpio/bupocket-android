@@ -16,7 +16,7 @@
         android:fitsSystemWindows="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingTop="10dp"
+        android:layout_marginTop="10dp"
         android:paddingBottom="5dp">
 
         <ImageView
@@ -25,7 +25,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:paddingLeft="13dp"
-            android:src="@mipmap/icon_tobar_left_arrow"
+            android:paddingRight="20dp"
+            android:src="@mipmap/ic_left_back_white"
             android:textSize="15sp" />
 
         <TextView
@@ -95,7 +96,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
-                    android:background="@mipmap/icon_transaction_timeout_copy" />
+                    android:background="@mipmap/ic_copy_gray" />
             </LinearLayout>
 
             <View
