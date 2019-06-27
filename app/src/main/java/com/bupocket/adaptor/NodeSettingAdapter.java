@@ -107,6 +107,11 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
                                     public void success(String url) {
 
                                     }
+
+                                    @Override
+                                    public void failed() {
+
+                                    }
                                 });
                             }
                         });
@@ -164,6 +169,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+                    nodeListener.failed();
                 }
 
                 @Override
@@ -185,9 +191,11 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
                             });
                         } else {
                             ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+                            nodeListener.failed();
                         }
                     }catch (Exception e){
                         ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+                        nodeListener.failed();
                     }
 
 
@@ -197,6 +205,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
 
         }catch (Exception e){
             ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+            nodeListener.failed();
         }
 
     }
@@ -217,6 +226,8 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
     public interface NodeAddressListener {
 
        void success(String url);
+
+       void failed();
     }
 
 }

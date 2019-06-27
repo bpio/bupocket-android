@@ -7,4 +7,8 @@ public class ConstantsType {
     public static final String PAGE_START = "pageStart";
     public static final String PAGE_SIZE = "pageSize";
 
+    public static final String CUSTOM_WALLET_SERVICE = "customWalletService";
+    public static final String CUSTOM_NODE_SERVICE = "customNodeService";
+    public static final String IS_START_CUSTOM_SERVICE = "startService";
+
 }

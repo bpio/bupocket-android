@@ -1,6 +1,7 @@
 package com.bupocket.utils;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -12,13 +13,19 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.bupocket.R;
+import com.bupocket.adaptor.NodeSettingAdapter;
+import com.bupocket.common.Constants;
 import com.bupocket.enums.CurrencyTypeEnum;
+import com.bupocket.model.NodeAddressModel;
+import com.google.gson.Gson;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
@@ -36,6 +43,11 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import static com.bupocket.common.Constants.WeChat_APPID;
 import static com.bupocket.common.Constants.XB_YOUPING_USERNAME;
@@ -200,6 +212,57 @@ public class CommonUtil {
         }
         Matcher m = BANK_CARD_PATTERN.matcher(bankCardNumber);
         return m.matches();
+    }
+
+
+    public static void invalidService(final String url, final Activity mActivity, final NodeSettingAdapter.NodeAddressListener nodeListener) {
+        if (TextUtils.isEmpty(url)) {
+            ToastUtil.showToast(mActivity, R.string.invalid_node_address_hint, Toast.LENGTH_SHORT);
+            return;
+        }
+
+
+        try {
+            //check url
+            OkHttpClient okHttpClient = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url+ Constants.BUMO_NODE_URL_PATH)
+                    .build();
+            okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+
+                    try {
+                        String json = response.body().string();
+                        NodeAddressModel nodeAddressModel = new Gson().fromJson(json, NodeAddressModel.class);
+                        if (nodeAddressModel.getError_code() == 0) {
+                            mActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    nodeListener.success(url);
+                                }
+                            });
+                        } else {
+                            ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+                        }
+                    }catch (Exception e){
+                        ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+                    }
+
+
+
+                }
+            });
+
+        }catch (Exception e){
+            ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+        }
+
     }
 
 

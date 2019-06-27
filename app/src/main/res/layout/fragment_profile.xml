@@ -68,7 +68,7 @@
                         tools:text="name" />
 
                     <TextView
-                        android:id="@+id/tvProfileAddress"
+                        android:id="@+id/profileAddressTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/app_txt_color_gray_2"

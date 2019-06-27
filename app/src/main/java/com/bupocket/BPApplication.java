@@ -7,8 +7,10 @@ import android.content.res.Configuration;
 import android.text.TextUtils;
 
 import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.BackupTipsStateEnum;
 import com.bupocket.enums.BumoNodeEnum;
+import com.bupocket.enums.CustomNodeTypeEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.CrashHandler;
@@ -111,12 +113,23 @@ public class BPApplication extends Application {
             Constants.WEB_SERVER_DOMAIN = Constants.TestNetConfig.WEB_SERVER_DOMAIN.getValue();
         }
 
-        String nodeUrl = (String) sharedPreferencesHelper.getSharedPreference(Constants.BUMO_NODE_URL + "nodeUrl", "");
-        if (!TextUtils.isEmpty(nodeUrl)) {
-            Constants.BUMO_NODE_URL_BASE = nodeUrl;
+
+        int isStartCustomService = (int) sharedPreferencesHelper.getSharedPreference(ConstantsType.IS_START_CUSTOM_SERVICE, 0);
+        if ((isStartCustomService == CustomNodeTypeEnum.START.getServiceType())) {
+            String customWalletService = (String) sharedPreferencesHelper.getSharedPreference(ConstantsType.CUSTOM_WALLET_SERVICE, "");
+            String customNodeService = (String) sharedPreferencesHelper.getSharedPreference(ConstantsType.CUSTOM_NODE_SERVICE, "");
+            Constants.BUMO_NODE_URL_BASE = customNodeService;
+            Constants.WEB_SERVER_DOMAIN = customWalletService;
+
         } else {
-            Constants.BUMO_NODE_URL_BASE = Constants.BUMO_NODE_URL;
+            String nodeUrl = (String) sharedPreferencesHelper.getSharedPreference(Constants.BUMO_NODE_URL + "nodeUrl", "");
+            if (!TextUtils.isEmpty(nodeUrl)) {
+                Constants.BUMO_NODE_URL_BASE = nodeUrl;
+            } else {
+                Constants.BUMO_NODE_URL_BASE = Constants.BUMO_NODE_URL;
+            }
         }
+
     }
 
     private void initCrash() {

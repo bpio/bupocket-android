@@ -750,4 +750,17 @@
 
 
 
+    <!--custom net-->
+    <string name="wallet_service_title">钱包服务</string>
+    <string name="wallet_service_hint">请输入钱包服务地址</string>
+    <string name="node_service_title">节点服务</string>
+    <string name="node_service_hint">请输入节点服务地址</string>
+    <string name="custom_net_title">自定义环境</string>
+    <string name="start_custom_service">启用</string>
+    <string name="stop_custom_service">禁用</string>
+    <string name="start_custom_service_hint">此处启用为最高等级，启用后将适用于小布口袋APP全部应用操作，请确认后再启用，且启用后不可编辑。</string>
+    <string name="stop_custom_service_hint">禁用后，小布口袋APP恢复启用前状态，请确认后再操作。</string>
+    <string name="note">注意：</string>
+
+
 </resources>

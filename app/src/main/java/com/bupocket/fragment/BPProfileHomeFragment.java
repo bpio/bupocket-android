@@ -30,8 +30,8 @@ import butterknife.ButterKnife;
 public class BPProfileHomeFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBar topbar;
-    @BindView(R.id.tvProfileAddress)
-    TextView tvProfileAddress;
+    @BindView(R.id.profileAddressTv)
+    TextView profileAddressTv;
     @BindView(R.id.llProfileIdentity)
     LinearLayout llProfileIdentity;
     @BindView(R.id.ivProfileAddressManage)
@@ -256,7 +256,7 @@ public class BPProfileHomeFragment extends BaseFragment {
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
         userNickTx.setText(currentAccNick);
         String identityId = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
-        tvProfileAddress.setText(AddressUtil.anonymous(identityId));
+        profileAddressTv.setText(AddressUtil.anonymous(identityId));
     }
 
 

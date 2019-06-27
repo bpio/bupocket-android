@@ -142,6 +142,12 @@ public class BPAboutUsFragment extends AbsBaseFragment {
                 }
             }
         });
+        customEnvironmentLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new BPCustomNetFragment());
+            }
+        });
 
     }
 

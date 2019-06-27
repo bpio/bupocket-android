@@ -106,6 +106,11 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
                                     public void success(String url) {
                                         addNodeAddress(url);
                                     }
+
+                                    @Override
+                                    public void failed() {
+
+                                    }
                                 });
 
 
