@@ -29,6 +29,8 @@ import com.bupocket.activity.CaptureActivity;
 import com.bupocket.adaptor.TokensAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
+import com.bupocket.enums.CustomNodeTypeEnum;
 import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.enums.BackupTipsStateEnum;
 import com.bupocket.enums.BumoNodeEnum;
@@ -462,7 +464,15 @@ public class BPAssetsHomeFragment extends BaseFragment {
     }
 
     private void initBackground() {
-        if (SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()) {
+
+
+        int isStart = (int) spHelper.getSharedPreference(ConstantsType.IS_START_CUSTOM_SERVICE, 0);
+
+        if (isStart == CustomNodeTypeEnum.START.getServiceType()) {
+            mCurrentTestNetTipsTv.setText(getString(R.string.custom_environment));
+            mAssetLinearLayout.setBackgroundResource(R.mipmap.ic_asset_home_bg_test_net);
+
+        } else if (SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()) {
             mCurrentTestNetTipsTv.setText(getString(R.string.current_test_message_txt));
             mAssetLinearLayout.setBackgroundResource(R.mipmap.ic_asset_home_bg_test_net);
         }
