@@ -234,8 +234,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         mManageWalletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                startFragment(new BPWalletsHomeFragment());
-                startFragment(new BPCollectionFragment());
+                startFragment(new BPWalletsHomeFragment());
             }
         });
 

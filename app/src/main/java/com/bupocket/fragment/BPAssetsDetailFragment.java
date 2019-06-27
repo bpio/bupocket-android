@@ -116,7 +116,8 @@ public class BPAssetsDetailFragment extends BaseFragment {
         mWalletScanBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startScan();
+
+                startFragment(new BPCollectionFragment());
             }
         });
 
@@ -380,15 +381,6 @@ public class BPAssetsDetailFragment extends BaseFragment {
         mTopBar.setTitle(assetCode);
     }
 
-    private void startScan() {
-        IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(this);
-        intentIntegrator.setBeepEnabled(true);
-        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-        intentIntegrator.setPrompt(getResources().getString(R.string.wallet_scan_notice));
-        intentIntegrator.setCaptureActivity(CaptureActivity.class);
-        // 开始扫描
-        intentIntegrator.initiateScan();
-    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
