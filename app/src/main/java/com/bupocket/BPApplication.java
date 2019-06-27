@@ -113,7 +113,9 @@ public class BPApplication extends Application {
 
         String nodeUrl = (String) sharedPreferencesHelper.getSharedPreference(Constants.BUMO_NODE_URL + "nodeUrl", "");
         if (!TextUtils.isEmpty(nodeUrl)) {
-          Constants.BUMO_NODE_URL_BASE=nodeUrl;
+            Constants.BUMO_NODE_URL_BASE = nodeUrl;
+        } else {
+            Constants.BUMO_NODE_URL_BASE = Constants.BUMO_NODE_URL;
         }
     }
 

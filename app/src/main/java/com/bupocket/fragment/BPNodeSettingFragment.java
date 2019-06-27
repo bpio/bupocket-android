@@ -165,7 +165,7 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
             public void onClick(View v) {
                 nodeSettingAdapter.saveNodeData(nodeSettingAdapter.getData());
                 isSaveBtn = true;
-                BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
+//                BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
                 popBackStack();
 
             }

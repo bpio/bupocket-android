@@ -14,6 +14,7 @@ import com.bupocket.R;
 import com.bupocket.activity.BumoNewsActivity;
 import com.bupocket.adaptor.DisBannerAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.Constants;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.DiscoverService;
 import com.bupocket.http.api.RetrofitFactory;
@@ -21,6 +22,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.SlideModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
+import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 
@@ -97,6 +99,9 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
     }
 
+
+
+
     private void requestData() {
         DiscoverService discoverService = RetrofitFactory.getInstance().getRetrofit().create(DiscoverService.class);
         discoverService.slideShow().enqueue(new Callback<ApiResult<SlideModel>>() {
@@ -136,6 +141,8 @@ public class BPDiscoverHomeFragment extends BaseFragment {
         if (slideshow==null||slideshow.size()==0) {
             requestData();
         }
+
+        LogUtils.e("底层交易"+ Constants.BUMO_NODE_URL_BASE);
 
     }
 
