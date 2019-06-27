@@ -14,13 +14,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeSettingAdapter;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
+import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.CustomNodeTypeEnum;
+import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
@@ -58,7 +62,19 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
     @Override
     protected void initData() {
 
+//        walletServiceEt.setText("http://api-bp.bumotest.io/");
+//        nodeServiceEt.setText("http://wallet-node.bumotest.io");
 
+        initServiceData();
+
+        changeBtnStatus();
+    }
+
+    private void initServiceData() {
+        String walletService = (String) spHelper.getSharedPreference(ConstantsType.CUSTOM_WALLET_SERVICE, "");
+        String nodeService = (String) spHelper.getSharedPreference(ConstantsType.CUSTOM_NODE_SERVICE, "");
+        walletServiceEt.setText(walletService);
+        nodeServiceEt.setText(nodeService);
     }
 
     @Override
@@ -172,6 +188,26 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
 
         if (isStart==CustomNodeTypeEnum.STOP.getServiceType()) {
             spHelper.put(ConstantsType.IS_START_CUSTOM_SERVICE, CustomNodeTypeEnum.START.getServiceType());
+        }else if (isStart==CustomNodeTypeEnum.START.getServiceType()){
+            spHelper.put(ConstantsType.IS_START_CUSTOM_SERVICE, CustomNodeTypeEnum.STOP.getServiceType());
+        }
+
+        changeBtnStatus();
+
+       boolean isSwitch = SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode();
+        if (isSwitch) {
+            BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
+        } else {
+            BPApplication.switchNetConfig(BumoNodeEnum.MAIN.getName());
+        }
+
+        startFragment(new HomeFragment());
+    }
+
+    private void changeBtnStatus() {
+        int isStart = (int) spHelper.getSharedPreference(ConstantsType.IS_START_CUSTOM_SERVICE, 0);
+
+        if (isStart==CustomNodeTypeEnum.STOP.getServiceType()) {
 
             setNodeBtn.setBackgroundResource(R.drawable.shape_corner_green);
             setNodeBtn.setTextColor(getResources().getColor(R.color.app_color_white));
@@ -179,17 +215,12 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
             nodeHintTv.setText(R.string.start_custom_service_hint);
 
         }else if (isStart==CustomNodeTypeEnum.START.getServiceType()){
-            spHelper.put(ConstantsType.IS_START_CUSTOM_SERVICE, CustomNodeTypeEnum.STOP.getServiceType());
-
             setNodeBtn.setBackgroundResource(R.drawable.shape_corner_white);
             setNodeBtn.setTextColor(getResources().getColor(R.color.app_txt_color_red));
             setNodeBtn.setText(R.string.stop_custom_service);
             nodeHintTv.setText(R.string.stop_custom_service_hint);
         }
-
-
     }
-
 
 
 }

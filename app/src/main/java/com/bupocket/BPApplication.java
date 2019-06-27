@@ -115,7 +115,7 @@ public class BPApplication extends Application {
 
 
         int isStartCustomService = (int) sharedPreferencesHelper.getSharedPreference(ConstantsType.IS_START_CUSTOM_SERVICE, 0);
-        if ((isStartCustomService == CustomNodeTypeEnum.START.getServiceType())) {
+        if (isStartCustomService == CustomNodeTypeEnum.START.getServiceType()) {
             String customWalletService = (String) sharedPreferencesHelper.getSharedPreference(ConstantsType.CUSTOM_WALLET_SERVICE, "");
             String customNodeService = (String) sharedPreferencesHelper.getSharedPreference(ConstantsType.CUSTOM_NODE_SERVICE, "");
             Constants.BUMO_NODE_URL_BASE = customNodeService;

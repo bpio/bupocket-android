@@ -10,7 +10,9 @@ import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.BumoNodeEnum;
+import com.bupocket.enums.CustomNodeTypeEnum;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.RetrofitFactory;
@@ -75,6 +77,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
 
     @Override
     protected void initData() {
+
         isSwitch = SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode();
         if (isSwitch) {
             changeTestNetTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_checked));
@@ -83,6 +86,19 @@ public class BPAboutUsFragment extends AbsBaseFragment {
         }
 
         reqUpdateData();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        int isStart = (int) spHelper.getSharedPreference(ConstantsType.IS_START_CUSTOM_SERVICE, 0);
+
+        if (isStart == CustomNodeTypeEnum.STOP.getServiceType()) {
+            changeTestNetTV.setEnabled(true);
+        } else if (isStart == CustomNodeTypeEnum.START.getServiceType()) {
+            changeTestNetTV.setEnabled(false);
+        }
+
     }
 
     private void reqUpdateData() {
