@@ -4,15 +4,12 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +27,6 @@ import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
-import com.squareup.okhttp.internal.framed.Variant;
 
 import org.bitcoinj.crypto.MnemonicCode;
 
@@ -95,7 +91,7 @@ public class BPWalletManageFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-                SettingUserInfoFragment fragment = new SettingUserInfoFragment();
+                SettingWalletInfoFragment fragment = new SettingWalletInfoFragment();
                 Bundle args = new Bundle();
                 args.putString("address", walletAddress);
                 args.putString("walletName", walletName);

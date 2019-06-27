@@ -7,19 +7,19 @@
 
 
     <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/headSelectedRIV"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_margin="10dp"
+        android:id="@+id/headIconIV"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_margin="5dp"
         android:src="@mipmap/ic_normal_head"
         app:riv_corner_radius="4dp" />
 
     <ImageView
-        android:id="@+id/headIconIV"
+        android:id="@+id/headSelectedRIV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="58dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginLeft="37dp"
+        android:layout_marginTop="2dp"
         android:background="@mipmap/selected_head" />
 
 

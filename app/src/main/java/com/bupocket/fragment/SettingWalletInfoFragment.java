@@ -2,6 +2,7 @@ package com.bupocket.fragment;
 
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -26,18 +27,18 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class SettingUserInfoFragment extends AbsBaseFragment {
+public class SettingWalletInfoFragment extends AbsBaseFragment {
 
 
     @BindView(R.id.topbar)
     QMUITopBar topbar;
     @BindView(R.id.ivSettingUserIcon)
     ImageView ivSettingUserIcon;
-    @BindView(R.id.llSettingUserHead)
+    @BindView(R.id.settingWalletHeadLL)
     LinearLayout llSettingUserHead;
-    @BindView(R.id.tvSettingUserName)
+    @BindView(R.id.settingWalletNameTv)
     TextView tvSettingUserName;
-    @BindView(R.id.llSettingUserName)
+    @BindView(R.id.settingWalletNameLL)
     LinearLayout llSettingUserName;
     private String walletAddress;
     private String walletName;
@@ -108,7 +109,8 @@ public class SettingUserInfoFragment extends AbsBaseFragment {
         }
 
         headIconRv.setAdapter(new HeadIconAdapter(mContext,data));
-        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+        GridLayoutManager layoutManager = new GridLayoutManager(mContext,2);
+
         //设置布局管理器
         headIconRv.setLayoutManager(layoutManager);
         //设置为垂直布局，这也是默认的
@@ -134,8 +136,8 @@ public class SettingUserInfoFragment extends AbsBaseFragment {
         qmuiDialog.setContentView(R.layout.view_change_wallet_name);
         qmuiDialog.show();
 
-        TextView cancelTv = qmuiDialog.findViewById(R.id.changeNameCancel);
-        final TextView confirmTv = qmuiDialog.findViewById(R.id.changeNameConfirm);
+        TextView cancelTv = qmuiDialog.findViewById(R.id.cancelTV);
+        final TextView confirmTv = qmuiDialog.findViewById(R.id.cancelTV);
         final EditText walletNewNameEt = qmuiDialog.findViewById(R.id.walletNewNameEt);
         walletNewNameEt.setHint(walletName);
 

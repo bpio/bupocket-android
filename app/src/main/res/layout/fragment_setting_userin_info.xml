@@ -24,10 +24,9 @@
         android:orientation="vertical">
 
         <LinearLayout
-            android:id="@+id/llSettingUserHead"
+            android:id="@+id/settingWalletHeadLL"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -66,7 +65,7 @@
             android:background="@color/gray_line" />
 
         <LinearLayout
-            android:id="@+id/llSettingUserName"
+            android:id="@+id/settingWalletNameLL"
             android:layout_width="match_parent"
             android:layout_height="55dp"
             android:gravity="center_vertical"
@@ -82,7 +81,7 @@
                 android:textSize="15sp" />
 
             <TextView
-                android:id="@+id/tvSettingUserName"
+                android:id="@+id/settingWalletNameTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"

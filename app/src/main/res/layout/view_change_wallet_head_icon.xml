@@ -16,11 +16,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="22.5dp"
-            android:layout_marginLeft="22.5dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginBottom="20dp"
             android:orientation="vertical">
 
             <TextView
@@ -36,8 +31,16 @@
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/headIconRV"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:scrollbars="none"
+                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                app:spanCount="5"
+                />
 
             <View
                 android:layout_width="match_parent"
@@ -47,13 +50,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:layout_marginTop="15dp">
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="10dp">
 
                 <TextView
-                    android:id="@+id/changeNameCancel"
+                    android:id="@+id/cancelTv"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/common_dialog_cancel"
@@ -67,9 +71,9 @@
                     android:background="@color/app_txt_color_gray_3" />
 
                 <TextView
-                    android:id="@+id/changeNameConfirm"
+                    android:id="@+id/confirmTv"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:clickable="false"
                     android:enabled="false"

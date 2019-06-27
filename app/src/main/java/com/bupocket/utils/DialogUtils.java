@@ -71,8 +71,8 @@ public class DialogUtils {
         qmuiDialog.setCanceledOnTouchOutside(false);
         qmuiDialog.setContentView(R.layout.view_change_wallet_name);
         TextView titleTV = qmuiDialog.findViewById(R.id.dialogEditTitle);
-        TextView cancelTv = qmuiDialog.findViewById(R.id.changeNameCancel);
-        TextView confirmTv = qmuiDialog.findViewById(R.id.changeNameConfirm);
+        TextView cancelTv = qmuiDialog.findViewById(R.id.cancelTv);
+        TextView confirmTv = qmuiDialog.findViewById(R.id.confirmTv);
         final EditText infoET = qmuiDialog.findViewById(R.id.walletNewNameEt);
         titleTV.setText(title);
 
