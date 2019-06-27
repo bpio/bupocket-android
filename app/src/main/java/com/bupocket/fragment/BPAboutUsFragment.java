@@ -1,6 +1,7 @@
 package com.bupocket.fragment;
 
 
+import android.os.SystemClock;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +16,7 @@ import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.CustomNodeTypeEnum;
 import com.bupocket.enums.ExceptionEnum;
+import com.bupocket.enums.HiddenFunctionStatusEnum;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.VersionService;
@@ -25,6 +27,8 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
 import butterknife.BindView;
 import retrofit2.Call;
@@ -49,6 +53,8 @@ public class BPAboutUsFragment extends AbsBaseFragment {
     LinearLayout customEnvironmentLL;
     @BindView(R.id.newVersionCodeIconIV)
     ImageView newVersionCodeIconIV;
+    @BindView(R.id.openTestNetIv)
+    ImageView openTestNetIv;
 
 
     private boolean isSwitch;
@@ -169,6 +175,20 @@ public class BPAboutUsFragment extends AbsBaseFragment {
             }
         });
 
+        int hiddenFunctionStatus = spHelper.getInt("hiddenFunctionStatus", HiddenFunctionStatusEnum.DISABLE.getCode());
+        if(HiddenFunctionStatusEnum.DISABLE.getCode() == hiddenFunctionStatus){
+            openTestNetIv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                }
+            });
+        }
+
+
+
+
     }
 
 
@@ -201,5 +221,38 @@ public class BPAboutUsFragment extends AbsBaseFragment {
             }
         });
     }
+
+
+
+    long[] mHits = new long[CLICKCOUNTS];
+    public void straightClick(){
+        // Listening to the straight click 5 times
+        System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
+        mHits[mHits.length - 1] = SystemClock.uptimeMillis();
+        if(mHits[0] > SystemClock.uptimeMillis() - DURATION){
+
+            new QMUIDialog.MessageDialogBuilder(getActivity())
+                    .setMessage(getString(R.string.switch_test_net_message_txt))
+                    .addAction(getString(R.string.no_txt), new QMUIDialogAction.ActionListener() {
+                        @Override
+                        public void onClick(QMUIDialog dialog, int index) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .addAction(getString(R.string.yes_txt), new QMUIDialogAction.ActionListener() {
+                        @Override
+                        public void onClick(QMUIDialog dialog, int index) {
+                            SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus",HiddenFunctionStatusEnum.ENABLE.getCode());
+                            SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
+                            BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
+                            dialog.dismiss();
+                            startFragment(new BPSettingFragment());
+                        }
+                    })
+                    .setCanceledOnTouchOutside(false)
+                    .create().show();
+        }
+    }
+
 
 }
