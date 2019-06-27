@@ -811,4 +811,23 @@ public class CommonUtil {
     }
 
 
+    public static int getWalletHeadRes(int position){
+
+
+        int[] walletHeadResList= new int[]{
+                R.mipmap.ic_wallet_head_0,
+                R.mipmap.ic_wallet_head_1,
+                R.mipmap.ic_wallet_head_2,
+                R.mipmap.ic_wallet_head_3,
+                R.mipmap.ic_wallet_head_4,
+                R.mipmap.ic_wallet_head_5,
+                R.mipmap.ic_wallet_head_6,
+                R.mipmap.ic_wallet_head_7,
+                R.mipmap.ic_wallet_head_8,
+                R.mipmap.ic_wallet_head_9
+        };
+
+        return walletHeadResList[position];
+    };
+
 }

@@ -11,4 +11,5 @@ public class ConstantsType {
     public static final String CUSTOM_NODE_SERVICE = "customNodeService";
     public static final String IS_START_CUSTOM_SERVICE = "startService";
 
+    public static final String WALLET_HEAD_ICON = "walletHead";
 }

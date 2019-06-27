@@ -13,16 +13,24 @@ import com.bupocket.R;
 import com.bupocket.model.HeadIconModel;
 
 import java.util.List;
+import java.util.Set;
 
 public class HeadIconAdapter extends RecyclerView.Adapter<HeadIconAdapter.VH> {
 
 
-    private final List<HeadIconModel> data;
+    private List<HeadIconModel> data;
     private final Context mContext;
+    private OnItemClickListener onItemClickListener;
 
     public HeadIconAdapter(Context mContext, List<HeadIconModel> data) {
         this.mContext = mContext;
         this.data = data;
+    }
+
+
+    public void setData( List<HeadIconModel> data){
+        this.data=data;
+        this.notifyDataSetChanged();
     }
 
     @NonNull
@@ -34,7 +42,8 @@ public class HeadIconAdapter extends RecyclerView.Adapter<HeadIconAdapter.VH> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VH holder, int position) {
+    public void onBindViewHolder(@NonNull final VH holder, int position) {
+
 
         if (position == data.get(position).getSelectedPosition()) {
             holder.headSelectRIV.setVisibility(View.VISIBLE);
@@ -43,6 +52,14 @@ public class HeadIconAdapter extends RecyclerView.Adapter<HeadIconAdapter.VH> {
         }
         holder.headIconRV.setImageResource(data.get(position).getIconRes());
 
+     holder.parentView.setOnClickListener(new View.OnClickListener() {
+    @Override
+      public void onClick(View v) {
+
+        onItemClickListener.onItemClick(holder.itemView,holder.getLayoutPosition());
+
+    }
+});
     }
 
     @Override
@@ -54,11 +71,24 @@ public class HeadIconAdapter extends RecyclerView.Adapter<HeadIconAdapter.VH> {
     public static class VH extends RecyclerView.ViewHolder {
         public final ImageView headSelectRIV;
         public final ImageView headIconRV;
-
+        public final View parentView;
         public VH(View v) {
             super(v);
+            parentView=v;
             headSelectRIV = (ImageView) v.findViewById(R.id.headSelectedRIV);
             headIconRV = (ImageView) v.findViewById(R.id.headIconIV);
         }
     }
+
+
+
+    public interface OnItemClickListener {
+        void onItemClick(View v,int position);
+    }
+
+
+    public void setOnItemClickListener(OnItemClickListener listener){
+        onItemClickListener= listener;
+    }
+
 }
