@@ -57,6 +57,9 @@ public class BPAboutUsFragment extends AbsBaseFragment {
     ImageView openTestNetIv;
 
 
+    private final static int CLICKCOUNTS = 5;
+    private final static long DURATION = 2 * 1000;
+
     private boolean isSwitch;
     private ApiResult<GetCurrentVersionRespDto> respDto;
     private boolean isUpdate;
@@ -177,16 +180,18 @@ public class BPAboutUsFragment extends AbsBaseFragment {
 
         int hiddenFunctionStatus = spHelper.getInt("hiddenFunctionStatus", HiddenFunctionStatusEnum.DISABLE.getCode());
         if(HiddenFunctionStatusEnum.DISABLE.getCode() == hiddenFunctionStatus){
+            changeTestLL.setVisibility(View.GONE);
+            customEnvironmentLL.setVisibility(View.GONE);
             openTestNetIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-
+                    straightClick();
                 }
             });
+        }else {
+            changeTestLL.setVisibility(View.VISIBLE);
+            customEnvironmentLL.setVisibility(View.VISIBLE);
         }
-
-
 
 
     }
@@ -243,10 +248,9 @@ public class BPAboutUsFragment extends AbsBaseFragment {
                         @Override
                         public void onClick(QMUIDialog dialog, int index) {
                             SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus",HiddenFunctionStatusEnum.ENABLE.getCode());
-                            SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
-                            BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
-                            dialog.dismiss();
-                            startFragment(new BPSettingFragment());
+
+                            changeTestLL.setVisibility(View.VISIBLE);
+                            customEnvironmentLL.setVisibility(View.VISIBLE);
                         }
                     })
                     .setCanceledOnTouchOutside(false)
