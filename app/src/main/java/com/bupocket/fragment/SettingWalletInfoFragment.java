@@ -43,6 +43,18 @@ public class SettingWalletInfoFragment extends AbsBaseFragment {
     private String walletAddress;
     private String walletName;
 
+    int[] walletHeadResList= new int[]{
+            R.mipmap.ic_wallet_head_0,
+            R.mipmap.ic_wallet_head_1,
+            R.mipmap.ic_wallet_head_2,
+            R.mipmap.ic_wallet_head_3,
+            R.mipmap.ic_wallet_head_4,
+            R.mipmap.ic_wallet_head_5,
+            R.mipmap.ic_wallet_head_6,
+            R.mipmap.ic_wallet_head_7,
+            R.mipmap.ic_wallet_head_8,
+            R.mipmap.ic_wallet_head_9
+    };
 
     @Override
     protected int getLayoutView() {
@@ -75,6 +87,10 @@ public class SettingWalletInfoFragment extends AbsBaseFragment {
         walletName = arguments.getString("walletName", "");
 
         tvSettingUserName.setText(walletName);
+
+
+
+
     }
 
     @Override
@@ -93,6 +109,7 @@ public class SettingWalletInfoFragment extends AbsBaseFragment {
                 settingName();
             }
         });
+
     }
 
     private void settingHeadIcon() {
@@ -103,27 +120,36 @@ public class SettingWalletInfoFragment extends AbsBaseFragment {
         ArrayList<HeadIconModel> data = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             HeadIconModel headIconModel = new HeadIconModel();
-            headIconModel.setIconRes(R.mipmap.ic_normal_head);
-            headIconModel.setSelectedPosition(6);
+            headIconModel.setIconRes(walletHeadResList[i]);
+            headIconModel.setSelectedPosition(0);
             data.add(headIconModel);
         }
-
         headIconRv.setAdapter(new HeadIconAdapter(mContext,data));
         GridLayoutManager layoutManager = new GridLayoutManager(mContext,2);
-
-        //设置布局管理器
         headIconRv.setLayoutManager(layoutManager);
-        //设置为垂直布局，这也是默认的
         layoutManager.setOrientation(OrientationHelper.HORIZONTAL);
-        //设置Adapter
-//        headIconRv.setAdapter();
-        //设置分隔线
-//        headIconRv.addItemDecoration(new DividerGridItemDecoration(this));
-        //设置增加或删除条目的动画
+
         headIconRv.setItemAnimator(new DefaultItemAnimator());
-
-
         qmuiDialog.show();
+        qmuiDialog.findViewById(R.id.cancelTv).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+            }
+        });
+        qmuiDialog.findViewById(R.id.confirmTv).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+
+                //save data
+
+
+                qmuiDialog.dismiss();
+            }
+        });
+
 
 
     }

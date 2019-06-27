@@ -28,7 +28,6 @@ public class HeadIconAdapter extends RecyclerView.Adapter<HeadIconAdapter.VH> {
     @NonNull
     @Override
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //LayoutInflater.from指定写法
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.view_head_icon_item, parent, false);
         return new VH(v);
 
@@ -42,8 +41,6 @@ public class HeadIconAdapter extends RecyclerView.Adapter<HeadIconAdapter.VH> {
         } else {
             holder.headSelectRIV.setVisibility(View.INVISIBLE);
         }
-
-//        holder.headIconRV.setImageDrawable(mContext.getResources().getDrawable(data.get(position).getIconRes()));
         holder.headIconRV.setImageResource(data.get(position).getIconRes());
 
     }
