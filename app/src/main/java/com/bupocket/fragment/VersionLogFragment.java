@@ -55,6 +55,7 @@ public class VersionLogFragment extends AbsBaseFragment {
     private final int normalPageSize = 10;
     private VersionLogAdapter adapter;
     private VersionLogModel.PageBean page;
+    private Call<ApiResult<VersionLogModel>> versionLogService;
 
     @Override
     protected int getLayoutView() {
@@ -97,8 +98,8 @@ public class VersionLogFragment extends AbsBaseFragment {
         reqMap.put(ConstantsType.PAGE_START, curPageStart);
         reqMap.put(ConstantsType.PAGE_SIZE, normalPageSize);
         VersionService versionService = RetrofitFactory.getInstance().getRetrofit().create(VersionService.class);
-        Call<ApiResult<VersionLogModel>> versionLog = versionService.getVersionLog(reqMap);
-        versionLog.enqueue(new Callback<ApiResult<VersionLogModel>>() {
+        versionLogService = versionService.getVersionLog(reqMap);
+        versionLogService.enqueue(new Callback<ApiResult<VersionLogModel>>() {
             @Override
             public void onResponse(Call<ApiResult<VersionLogModel>> call, Response<ApiResult<VersionLogModel>> response) {
 
@@ -112,8 +113,14 @@ public class VersionLogFragment extends AbsBaseFragment {
                         adapter.addMoreDataList(logList);
                     }
 
-                    recordEmptyLL.setVisibility(View.GONE);
-                    loadFailedLL.setVisibility(View.GONE);
+                    if (recordEmptyLL!=null) {
+                        recordEmptyLL.setVisibility(View.GONE);
+                    }
+
+                    if (loadFailedLL!=null) {
+                        loadFailedLL.setVisibility(View.GONE);
+                    }
+
                 } else {
                     recordEmptyLL.setVisibility(View.VISIBLE);
                     adapter.clear();
@@ -190,5 +197,9 @@ public class VersionLogFragment extends AbsBaseFragment {
 
     }
 
-
+    @Override
+    public void onPause() {
+        super.onPause();
+        versionLogService.cancel();
+    }
 }

@@ -1,6 +1,7 @@
 package com.bupocket.fragment;
 
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -110,9 +111,12 @@ public class BPAboutUsFragment extends AbsBaseFragment {
                 respDto = response.body();
 
                 if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
-                    int verNumber = Integer.parseInt(respDto.getData().getVerNumberCode());
-                    newVersionCodeTV.setText("V" + respDto.getData().getVerNumber());
-                    isUpdate = ((int) CommonUtil.packageCode(mContext)) < verNumber;
+                    int verNumberCode = Integer.parseInt(respDto.getData().getVerNumberCode());
+                    String verNumber = respDto.getData().getVerNumber();
+                    if (TextUtils.isEmpty(verNumber)) {
+                        newVersionCodeTV.setText("V" + verNumber);
+                    }
+                    isUpdate = ((int) CommonUtil.packageCode(mContext)) < verNumberCode;
                     if (isUpdate) {
                         newVersionCodeIconIV.setVisibility(View.VISIBLE);
                     }

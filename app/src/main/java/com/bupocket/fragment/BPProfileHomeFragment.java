@@ -14,7 +14,9 @@ import android.widget.TextView;
 import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.BumoNodeEnum;
+import com.bupocket.enums.CustomNodeTypeEnum;
 import com.bupocket.enums.HiddenFunctionStatusEnum;
 import com.bupocket.enums.LanguageEnum;
 import com.bupocket.utils.AddressUtil;
@@ -61,8 +63,8 @@ public class BPProfileHomeFragment extends BaseFragment {
     ImageView mProfileAvatarIv;
     @BindView(R.id.versionRL)
     RelativeLayout mVersionRl;
-    @BindView(R.id.manageWalletRl)
-    RelativeLayout mManageWalletRl;
+    @BindView(R.id.nodeSettingRl)
+    RelativeLayout nodeSettingRl;
     @BindView(R.id.versionUpdate)
     LinearLayout mAddressBookRl;
     @BindView(R.id.llProfileProtocol)
@@ -70,7 +72,7 @@ public class BPProfileHomeFragment extends BaseFragment {
     @BindView(R.id.tvProfileCurrency)
     TextView tvProfileCurrency;
     @BindView(R.id.newVersionCodeTV)
-    TextView  tvProfileLanguage;
+    TextView tvProfileLanguage;
 
     private final static int CLICKCOUNTS = 5;
     private final static long DURATION = 2 * 1000;
@@ -96,13 +98,13 @@ public class BPProfileHomeFragment extends BaseFragment {
 
     private void initView() {
         topbar.setTitle(R.string.tabbar_profile_txt);
-        String currencyType = spHelper.getSharedPreference("currencyType","CNY").toString();
+        String currencyType = spHelper.getSharedPreference("currencyType", "CNY").toString();
         tvProfileCurrency.setText(currencyType);
 
         int language = SharedPreferencesHelper.getInstance().getInt("currentLanguage", LanguageEnum.UNDEFINED.getId());
-        if(LanguageEnum.UNDEFINED.getId() == language){
+        if (LanguageEnum.UNDEFINED.getId() == language) {
             String myLocaleStr = getContext().getResources().getConfiguration().locale.getLanguage();
-            switch (myLocaleStr){
+            switch (myLocaleStr) {
                 case "zh": {
                     language = LanguageEnum.CHINESE.getId();
                     break;
@@ -111,15 +113,15 @@ public class BPProfileHomeFragment extends BaseFragment {
                     language = LanguageEnum.ENGLISH.getId();
                     break;
                 }
-                default : {
+                default: {
                     language = LanguageEnum.ENGLISH.getId();
                 }
             }
         }
-        if(LanguageEnum.CHINESE.getId() == language){
+        if (LanguageEnum.CHINESE.getId() == language) {
 
             tvProfileLanguage.setText(getString(R.string.language_cn));
-        }else{
+        } else {
             tvProfileLanguage.setText(getString(R.string.language_en));
         }
 
@@ -146,7 +148,7 @@ public class BPProfileHomeFragment extends BaseFragment {
                 gotoChangePwdFragment();
             }
         });
-        mManageWalletRl.setOnClickListener(new View.OnClickListener() {
+        nodeSettingRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gotoManageWalletFragment();
@@ -207,7 +209,7 @@ public class BPProfileHomeFragment extends BaseFragment {
         ivProfileWalletManage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            startFragment(new BPWalletsHomeFragment());
+                startFragment(new BPWalletsHomeFragment());
             }
         });
 
@@ -257,6 +259,14 @@ public class BPProfileHomeFragment extends BaseFragment {
         userNickTx.setText(currentAccNick);
         String identityId = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
         profileAddressTv.setText(AddressUtil.anonymous(identityId));
+
+
+        int isStart = (int) spHelper.getSharedPreference(ConstantsType.IS_START_CUSTOM_SERVICE, 0);
+        if (isStart == CustomNodeTypeEnum.STOP.getServiceType()) {
+            nodeSettingRl.setVisibility(View.VISIBLE);
+        } else if (isStart == CustomNodeTypeEnum.START.getServiceType()) {
+            nodeSettingRl.setVisibility(View.GONE);
+        }
     }
 
 

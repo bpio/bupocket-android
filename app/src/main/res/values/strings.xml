@@ -761,6 +761,7 @@
     <string name="start_custom_service_hint">此处启用为最高等级，启用后将适用于小布口袋APP全部应用操作，请确认后再启用，且启用后不可编辑。</string>
     <string name="stop_custom_service_hint">禁用后，小布口袋APP恢复启用前状态，请确认后再操作。</string>
     <string name="note">注意：</string>
+    <string name="edit_btn">编辑</string>
 
 
 </resources>

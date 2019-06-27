@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,8 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
     Button setNodeBtn;
     @BindView(R.id.nodeHintTv)
     TextView nodeHintTv;
+    @BindView(R.id.visibleStartBtnLL)
+    LinearLayout visibleStartBtnLL;
     Unbinder unbinder;
     private Button saveBtn;
 
@@ -75,6 +78,8 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
         String nodeService = (String) spHelper.getSharedPreference(ConstantsType.CUSTOM_NODE_SERVICE, "");
         walletServiceEt.setText(walletService);
         nodeServiceEt.setText(nodeService);
+
+
     }
 
     @Override
@@ -85,16 +90,14 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
 
             @Override
             public void onClick(View v) {
-
-                saveBtn.setEnabled(true);
                 //save
                 changeService();
 
 
             }
         });
-    }
 
+    }
 
 
     @SuppressLint("ResourceAsColor")
@@ -108,32 +111,59 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
             }
         });
         topbar.setTitle(R.string.custom_net_title);
-        Button rightButton = topbar.addRightTextButton(getString(R.string.save), R.id.skipBackupBtn);
-        rightButton.setOnClickListener(new View.OnClickListener() {
+        saveBtn = topbar.addRightTextButton(getString(R.string.save), R.id.skipBackupBtn);
+        saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (checkWalletService()) {
-                    CommonUtil.invalidService(nodeServiceEt.getText().toString().trim(), getActivity(), new NodeSettingAdapter.NodeAddressListener() {
-                        @Override
-                        public void success(String url) {
-                            saveServiceInfo();
-                            popBackStack();
-                        }
 
-                        @Override
-                        public void failed() {
-                            popBackStack();
-                        }
-                    });
+                if (!walletServiceEt.isEnabled()) {
+                    walletServiceEt.setEnabled(true);
+                    nodeServiceEt.setEnabled(true);
+                    visibleStartBtnLL.setVisibility(View.GONE);
+                    saveBtn.setText(R.string.save);
+                    saveBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.app_color_green));
+                } else {
+
+                    if (checkWalletService()) {
+                        CommonUtil.invalidService(nodeServiceEt.getText().toString().trim(), getActivity(), new NodeSettingAdapter.NodeAddressListener() {
+                            @Override
+                            public void success(String url) {
+
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        saveBtn.setText(R.string.edit_btn);
+                                        saveBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.app_txt_color_gray_2));
+                                        walletServiceEt.setEnabled(false);
+                                        nodeServiceEt.setEnabled(false);
+                                        visibleStartBtnLL.setVisibility(View.VISIBLE);
+                                        saveServiceInfo();
+                                    }
+                                });
+
+
+                            }
+
+                            @Override
+                            public void failed() {
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                    }
+                                });
+
+                            }
+                        });
+                    }
                 }
+
+
 
 
             }
         });
-        saveBtn = topbar.findViewById(R.id.skipBackupBtn);
         saveBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.app_txt_color_gray_2));
-        saveBtn.setEnabled(false);
     }
 
     private void saveServiceInfo() {
@@ -186,15 +216,15 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
 
         int isStart = (int) spHelper.getSharedPreference(ConstantsType.IS_START_CUSTOM_SERVICE, 0);
 
-        if (isStart==CustomNodeTypeEnum.STOP.getServiceType()) {
+        if (isStart == CustomNodeTypeEnum.STOP.getServiceType()) {
             spHelper.put(ConstantsType.IS_START_CUSTOM_SERVICE, CustomNodeTypeEnum.START.getServiceType());
-        }else if (isStart==CustomNodeTypeEnum.START.getServiceType()){
+        } else if (isStart == CustomNodeTypeEnum.START.getServiceType()) {
             spHelper.put(ConstantsType.IS_START_CUSTOM_SERVICE, CustomNodeTypeEnum.STOP.getServiceType());
         }
 
         changeBtnStatus();
 
-       boolean isSwitch = SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode();
+        boolean isSwitch = SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode();
         if (isSwitch) {
             BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
         } else {
@@ -205,21 +235,35 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
     }
 
     private void changeBtnStatus() {
-        int isStart = (int) spHelper.getSharedPreference(ConstantsType.IS_START_CUSTOM_SERVICE, 0);
+        int isStart = (int) spHelper.getSharedPreference(ConstantsType.IS_START_CUSTOM_SERVICE, -1);
 
-        if (isStart==CustomNodeTypeEnum.STOP.getServiceType()) {
+        if (isStart == -1) {
+            visibleStartBtnLL.setVisibility(View.GONE);
+            saveBtn.setEnabled(false);
+        } else {
+            visibleStartBtnLL.setVisibility(View.VISIBLE);
 
-            setNodeBtn.setBackgroundResource(R.drawable.shape_corner_green);
-            setNodeBtn.setTextColor(getResources().getColor(R.color.app_color_white));
-            setNodeBtn.setText(R.string.start_custom_service);
-            nodeHintTv.setText(R.string.start_custom_service_hint);
+            walletServiceEt.setEnabled(false);
+            nodeServiceEt.setEnabled(false);
 
-        }else if (isStart==CustomNodeTypeEnum.START.getServiceType()){
-            setNodeBtn.setBackgroundResource(R.drawable.shape_corner_white);
-            setNodeBtn.setTextColor(getResources().getColor(R.color.app_txt_color_red));
-            setNodeBtn.setText(R.string.stop_custom_service);
-            nodeHintTv.setText(R.string.stop_custom_service_hint);
+            if (isStart == CustomNodeTypeEnum.STOP.getServiceType()) {
+                saveBtn.setText(R.string.edit_btn);
+
+                setNodeBtn.setBackgroundResource(R.drawable.shape_corner_green);
+                setNodeBtn.setTextColor(getResources().getColor(R.color.app_color_white));
+                setNodeBtn.setText(R.string.start_custom_service);
+                nodeHintTv.setText(R.string.start_custom_service_hint);
+
+            } else if (isStart == CustomNodeTypeEnum.START.getServiceType()) {
+                saveBtn.setVisibility(View.INVISIBLE);
+                setNodeBtn.setBackgroundResource(R.drawable.shape_corner_white);
+                setNodeBtn.setTextColor(getResources().getColor(R.color.app_txt_color_red));
+                setNodeBtn.setText(R.string.stop_custom_service);
+                nodeHintTv.setText(R.string.stop_custom_service_hint);
+            }
         }
+
+
     }
 
 

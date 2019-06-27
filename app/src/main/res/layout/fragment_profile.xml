@@ -263,7 +263,7 @@
                     android:background="@color/gray_line" />
 
                 <RelativeLayout
-                    android:id="@+id/manageWalletRl"
+                    android:id="@+id/nodeSettingRl"
                     android:layout_width="match_parent"
                     android:layout_height="55dp">
 
