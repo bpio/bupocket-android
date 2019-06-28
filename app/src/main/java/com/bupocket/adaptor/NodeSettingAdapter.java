@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.AbsViewHolderAdapter;
 import com.bupocket.base.BaseViewHolder;
@@ -22,6 +23,7 @@ import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.google.gson.Gson;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import java.io.IOException;
 import java.util.List;
@@ -126,13 +128,29 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
             public void onClick(View v) {
                 walletBottom.dismiss();
 
-                DialogUtils.showConfirmDialog(context, context.getString(R.string.confirm_delete_node), new DialogUtils.KnowListener() {
-                    @Override
-                    public void Know() {
-                        getData().remove(position);
-                        notifyDataSetChanged();
-                    }
-                });
+                if (getData().get(position).isSelected()){
+                    DialogUtils.showConfirmDialog(context, context.getString(R.string.confirm_delete_node),  context.getString(R.string.delete_node_info),new DialogUtils.KnowListener() {
+                        @Override
+                        public void Know() {
+                            getData().remove(position);
+                            saveNodeData(0);
+                            BPApplication.switchNetConfig(null);
+                            notifyDataSetChanged();
+
+                        }
+                    });
+
+                }else{
+                    DialogUtils.showConfirmDialog(context, context.getString(R.string.confirm_delete_node),"", new DialogUtils.KnowListener() {
+                        @Override
+                        public void Know() {
+                            getData().remove(position);
+                            notifyDataSetChanged();
+                        }
+                    });
+                }
+
+
 
             }
         });
@@ -149,15 +167,25 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
     public void invalidNodeAddress(final String url, final int position, final NodeAddressListener nodeListener) {
         if (TextUtils.isEmpty(url)) {
             ToastUtil.showToast(mActivity, R.string.add_node_address_title, Toast.LENGTH_SHORT);
+            nodeListener.failed();
             return;
         }
 
         for (int i = 0; i < getData().size(); i++) {
             if (getData().get(i).getUrl().equals(url.trim())) {
                 ToastUtil.showToast(mActivity, R.string.node_address_repeat, Toast.LENGTH_SHORT);
+                nodeListener.failed();
                 return;
             }
         }
+
+
+        final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(context)
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord(context.getResources().getString(R.string.user_info_backup_loading))
+                .create();
+        txSendingTipDialog.show();
+
 
         try {
             //check url
@@ -170,6 +198,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
                 public void onFailure(Call call, IOException e) {
                     ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
                     nodeListener.failed();
+                    txSendingTipDialog.dismiss();
                 }
 
                 @Override
@@ -182,6 +211,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
                             mActivity.runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
+                                    txSendingTipDialog.dismiss();
                                     nodeListener.success(url);
                                     if (!(position ==0)) {
                                         getData().get(position).setUrl(url);
@@ -191,10 +221,12 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
                             });
                         } else {
                             ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+                            txSendingTipDialog.dismiss();
                             nodeListener.failed();
                         }
                     }catch (Exception e){
                         ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+                        txSendingTipDialog.dismiss();
                         nodeListener.failed();
                     }
 
@@ -205,9 +237,26 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
 
         }catch (Exception e){
             ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+            txSendingTipDialog.dismiss();
             nodeListener.failed();
         }
 
+    }
+
+    /**
+     * save node  data
+     * @param oldPosition selection node
+     */
+    public void saveNodeData(int oldPosition) {
+        List<NodeSettingModel> data = getData();
+        for (int i = 0; i < data.size(); i++) {
+            if (oldPosition == i) {
+                data.get(i).setSelected(true);
+            } else {
+                data.get(i).setSelected(false);
+            }
+        }
+        saveNodeData(data);
     }
 
 

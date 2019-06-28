@@ -122,7 +122,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
                 if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
                     int verNumberCode = Integer.parseInt(respDto.getData().getVerNumberCode());
                     String verNumber = respDto.getData().getVerNumber();
-                    if (TextUtils.isEmpty(verNumber)) {
+                    if (!TextUtils.isEmpty(verNumber)) {
                         newVersionCodeTV.setText("V" + verNumber);
                     }
                     isUpdate = ((int) CommonUtil.packageCode(mContext)) < verNumberCode;
@@ -251,6 +251,8 @@ public class BPAboutUsFragment extends AbsBaseFragment {
 
                             changeTestLL.setVisibility(View.VISIBLE);
                             customEnvironmentLL.setVisibility(View.VISIBLE);
+                            ShowSwitchTestNetConfirmDialog();
+                            dialog.dismiss();
                         }
                     })
                     .setCanceledOnTouchOutside(false)

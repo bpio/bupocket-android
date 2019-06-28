@@ -1,6 +1,7 @@
 package com.bupocket.fragment;
 
 import android.annotation.SuppressLint;
+import android.app.Application;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,7 +14,6 @@ import com.bupocket.R;
 import com.bupocket.adaptor.NodeSettingAdapter;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
-import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.model.NodeSettingModel;
 import com.bupocket.utils.DialogUtils;
 import com.google.common.reflect.TypeToken;
@@ -30,12 +30,11 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBarLayout topbar;
-    @BindView(R.id.lvNodeSet)
-    ListView lvNodeSet;
-    @BindView(R.id.llAddMore)
-    LinearLayout llAddMore;
+    @BindView(R.id.nodeSetLv)
+    ListView nodeSetLv;
+    @BindView(R.id.addMoreLL)
+    LinearLayout addMoreLL;
     private NodeSettingAdapter nodeSettingAdapter;
-    ArrayList<NodeSettingModel> oldNodeData = new ArrayList<>();
 
     private boolean isSaveBtn;
     private int oldPosition;
@@ -53,8 +52,8 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
 
     private void initListView() {
         nodeSettingAdapter = new NodeSettingAdapter(mContext, getActivity());
-        lvNodeSet.setAdapter(nodeSettingAdapter);
-        lvNodeSet.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        nodeSetLv.setAdapter(nodeSettingAdapter);
+        nodeSetLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 setSelectedPosition(position);
@@ -91,7 +90,7 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
 
     @Override
     protected void setListeners() {
-        llAddMore.setOnClickListener(new View.OnClickListener() {
+        addMoreLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogUtils.showEditMessageDialog(mContext,
@@ -142,16 +141,7 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
     }
 
     private void saveNodeSetAddress() {
-        List<NodeSettingModel> data = nodeSettingAdapter.getData();
-
-        for (int i = 0; i < data.size(); i++) {
-            if (oldPosition == i) {
-                data.get(i).setSelected(true);
-            } else {
-                data.get(i).setSelected(false);
-            }
-        }
-        nodeSettingAdapter.saveNodeData(data);
+        nodeSettingAdapter.saveNodeData(oldPosition);
     }
 
     @SuppressLint("ResourceAsColor")
@@ -169,8 +159,8 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
             @Override
             public void onClick(View v) {
                 nodeSettingAdapter.saveNodeData(nodeSettingAdapter.getData());
+                BPApplication.switchNetConfig(null);
                 isSaveBtn = true;
-//                BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
                 popBackStack();
 
             }

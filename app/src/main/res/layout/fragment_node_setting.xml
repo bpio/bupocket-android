@@ -21,7 +21,7 @@
             android:text="@string/node_setting_title" />
 
         <ListView
-            android:id="@+id/lvNodeSet"
+            android:id="@+id/nodeSetLv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -40,7 +40,7 @@
         android:fitsSystemWindows="true" />
 
     <LinearLayout
-        android:id="@+id/llAddMore"
+        android:id="@+id/addMoreLL"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="bottom"

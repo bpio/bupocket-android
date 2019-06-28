@@ -87,6 +87,7 @@ public class VersionLogFragment extends AbsBaseFragment {
     @Override
     protected void initData() {
 
+        refreshLayout.setEnableLoadMore(false);
         reqVersionLogData(1);
 
     }
@@ -109,6 +110,7 @@ public class VersionLogFragment extends AbsBaseFragment {
                     page = response.body().getData().getPage();
                     if (curPageStart == 1) {
                         adapter.setNewData(logList);
+                        refreshLayout.setEnableLoadMore(true);
                     } else {
                         adapter.addMoreDataList(logList);
                     }
@@ -135,6 +137,7 @@ public class VersionLogFragment extends AbsBaseFragment {
                     return;
                 }
                 loadFailedLL.setVisibility(View.VISIBLE);
+                refreshLayout.setEnableLoadMore(false);
                 adapter.clear();
             }
         });

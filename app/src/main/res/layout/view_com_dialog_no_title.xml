@@ -2,33 +2,46 @@
 <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
 
         android:background="@drawable/shape_corner"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/dialogMsgTV"
+            android:id="@+id/dialogTitleTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="37dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:text="@string/change_wallet_name_title"
             android:textColor="@color/send_confirm_title_color"
             android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/dialogMessageTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            tools:text="messagemessagemessagemessagemessagemessagemessage"
+            android:textColor="@color/search_token_item_txt_color"
+            android:textSize="17sp" />
 
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_marginTop="15dp"
             android:background="@color/app_txt_color_gray_3" />
 
         <LinearLayout

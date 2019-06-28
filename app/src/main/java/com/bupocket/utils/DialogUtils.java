@@ -14,10 +14,17 @@ public class DialogUtils {
 
 
 
-    public static void showConfirmDialog(Context mContext, String msg, final DialogUtils.KnowListener knowListener){
+    public static void showConfirmDialog(Context mContext, String title,String msg, final DialogUtils.KnowListener knowListener){
         final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
                 setLayout(R.layout.view_com_dialog_no_title).create();
-        ((TextView) qmuiDialog.findViewById(R.id.dialogMsgTV)).setText(msg);
+        ((TextView) qmuiDialog.findViewById(R.id.dialogTitleTv)).setText(title);
+
+        if (TextUtils.isEmpty(msg)) {
+            qmuiDialog.findViewById(R.id.dialogMessageTv).setVisibility(View.GONE);
+        }else{
+            ((TextView)qmuiDialog.findViewById(R.id.dialogMessageTv)).setText(msg);
+        }
+
         qmuiDialog.findViewById(R.id.dialogCancelTV).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,8 +78,8 @@ public class DialogUtils {
         qmuiDialog.setCanceledOnTouchOutside(false);
         qmuiDialog.setContentView(R.layout.view_change_wallet_name);
         TextView titleTV = qmuiDialog.findViewById(R.id.dialogEditTitle);
-        TextView cancelTv = qmuiDialog.findViewById(R.id.cancelTv);
-        TextView confirmTv = qmuiDialog.findViewById(R.id.confirmTv);
+        TextView cancelTv = qmuiDialog.findViewById(R.id.cancelNameTv);
+        TextView confirmTv = qmuiDialog.findViewById(R.id.confirmNameTv);
         final EditText infoET = qmuiDialog.findViewById(R.id.walletNewNameEt);
         titleTV.setText(title);
 

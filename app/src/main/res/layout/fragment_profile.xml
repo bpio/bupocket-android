@@ -1,27 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="@color/app_color_gray"
     android:orientation="vertical">
-
-    <com.qmuiteam.qmui.widget.QMUITopBar
-        android:id="@+id/topbar"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:fitsSystemWindows="true" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/gray_line" />
 
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/app_color_white"
         android:scrollbars="none">
 
@@ -30,6 +20,17 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <com.qmuiteam.qmui.widget.QMUITopBar
+                android:id="@+id/topbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/qmui_topbar_height"
+                android:fitsSystemWindows="true" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/gray_line" />
 
             <LinearLayout
                 android:id="@+id/llProfileIdentity"
@@ -37,8 +38,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="25dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginBottom="25dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
@@ -496,4 +497,4 @@
     </ScrollView>
 
 
-</LinearLayout>
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
