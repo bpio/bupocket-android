@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.bupocket"
     android:debuggable="false"
-    android:versionCode="162"
+    android:versionCode="170"
     android:versionName="V1.7.0"
     tools:ignore="HardcodedDebugMode">
 
