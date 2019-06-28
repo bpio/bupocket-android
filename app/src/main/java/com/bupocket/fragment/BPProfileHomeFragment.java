@@ -45,8 +45,7 @@ public class BPProfileHomeFragment extends BaseFragment {
 
     @BindView(R.id.userNick)
     TextView userNickTx;
-    @BindView(R.id.changePwdRL)
-    RelativeLayout mChangePwdRL;
+
     @BindView(R.id.helpFeedbackRL)
     RelativeLayout mHelpRL;
     @BindView(R.id.settingRL)
@@ -143,12 +142,6 @@ public class BPProfileHomeFragment extends BaseFragment {
     }
 
     private void setListener() {
-        mChangePwdRL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoChangePwdFragment();
-            }
-        });
         nodeSettingRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -178,22 +178,39 @@ public class BPAboutUsFragment extends AbsBaseFragment {
             }
         });
 
+        initCustomService();
+
+
+
+    }
+
+    private void initCustomService() {
         int hiddenFunctionStatus = spHelper.getInt("hiddenFunctionStatus", HiddenFunctionStatusEnum.DISABLE.getCode());
-        if(HiddenFunctionStatusEnum.DISABLE.getCode() == hiddenFunctionStatus){
+        int hiddenFunctionCustomStatus = spHelper.getInt(ConstantsType.HIDDEN_CUSTOM_SERVICE, HiddenFunctionStatusEnum.DISABLE.getCode());
+        if (HiddenFunctionStatusEnum.DISABLE.getCode() == hiddenFunctionStatus) {
             changeTestLL.setVisibility(View.GONE);
-            customEnvironmentLL.setVisibility(View.GONE);
+
             openTestNetIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     straightClick();
                 }
             });
-        }else {
+        } else {
             changeTestLL.setVisibility(View.VISIBLE);
-            customEnvironmentLL.setVisibility(View.VISIBLE);
         }
 
-
+        if (HiddenFunctionStatusEnum.DISABLE.getCode() == hiddenFunctionCustomStatus) {
+            customEnvironmentLL.setVisibility(View.GONE);
+            versionCodeTV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    straightCustomClick();
+                }
+            });
+        } else {
+            changeTestLL.setVisibility(View.VISIBLE);
+        }
     }
 
 
@@ -228,13 +245,13 @@ public class BPAboutUsFragment extends AbsBaseFragment {
     }
 
 
-
     long[] mHits = new long[CLICKCOUNTS];
-    public void straightClick(){
+
+    public void straightClick() {
         // Listening to the straight click 5 times
         System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
         mHits[mHits.length - 1] = SystemClock.uptimeMillis();
-        if(mHits[0] > SystemClock.uptimeMillis() - DURATION){
+        if (mHits[0] > SystemClock.uptimeMillis() - DURATION) {
 
             new QMUIDialog.MessageDialogBuilder(getActivity())
                     .setMessage(getString(R.string.switch_test_net_message_txt))
@@ -247,10 +264,10 @@ public class BPAboutUsFragment extends AbsBaseFragment {
                     .addAction(getString(R.string.yes_txt), new QMUIDialogAction.ActionListener() {
                         @Override
                         public void onClick(QMUIDialog dialog, int index) {
-                            SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus",HiddenFunctionStatusEnum.ENABLE.getCode());
+                            SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus", HiddenFunctionStatusEnum.ENABLE.getCode());
 
                             changeTestLL.setVisibility(View.VISIBLE);
-                            customEnvironmentLL.setVisibility(View.VISIBLE);
+//                            customEnvironmentLL.setVisibility(View.VISIBLE);
                             ShowSwitchTestNetConfirmDialog();
                             dialog.dismiss();
                         }
@@ -260,5 +277,19 @@ public class BPAboutUsFragment extends AbsBaseFragment {
         }
     }
 
+    long[] mHitsCustom = new long[CLICKCOUNTS];
 
+    public void straightCustomClick() {
+        // Listening to the straight click 5 times
+        System.arraycopy(mHitsCustom, 1, mHitsCustom, 0, mHitsCustom.length - 1);
+        mHitsCustom[mHitsCustom.length - 1] = SystemClock.uptimeMillis();
+        if (mHitsCustom[0] > SystemClock.uptimeMillis() - DURATION) {
+
+
+            SharedPreferencesHelper.getInstance().save(ConstantsType.HIDDEN_CUSTOM_SERVICE, HiddenFunctionStatusEnum.ENABLE.getCode());
+
+            customEnvironmentLL.setVisibility(View.VISIBLE);
+
+        }
+    }
 }
