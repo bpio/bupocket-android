@@ -116,6 +116,7 @@
             android:text="@string/start_import_wallet"
             android:enabled="false"
             android:textColor="@color/app_color_font"
+            android:layout_marginBottom="20dp"
             android:textSize="@dimen/bp_btn_text_size"
             app:qmui_backgroundColor="@color/disabled_btn_color"
             app:qmui_borderColor="@color/disabled_btn_color"
