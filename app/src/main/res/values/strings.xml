@@ -649,14 +649,8 @@
     <string name="create_wallet_pw_err_hint">6-30个字符，大小写字母和数字任意两种组合</string>
     <string name="view_change_wallet_pw">修改钱包密码</string>
 
-
-    <string name="backup_wallet_txt1">没有妥善备份就无法保障资金安全，删除钱包或卸载程序后，您需要助记词来恢复钱包/身份</string>
-
-
-
     <string name="wallet_mneonic_error">助记词输入有误</string>
     <string name="wallet_create_form_error2">密码必须是6-30个字符，大小写字母和数字任意两种的组合</string>
-    <string name="settting_change_name_limit1">• 不能超过20个字符\n• 允许输入字母、汉字、数字、下划线</string>
     <string name="change_the_password_txt">修改安全密码</string>
     <string name="import_mnemonic_wallet_name">请设置钱包名称</string>
     <string name="hint_wallet_create_form_input_password">请设置安全密码</string>
@@ -721,7 +715,6 @@
     <string name="about_us_version_code">当前版本:</string>
     <string name="version_info">版本日志</string>
     <string name="version_refresh">版本更新</string>
-    <string name="change_test">切换测试网</string>
     <string name="custom_environment">自定义环境</string>
 
 
