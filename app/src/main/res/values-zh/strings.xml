@@ -205,7 +205,7 @@
     <string name="user_info_logout">退出当前身份</string>
     <string name="user_info_logout_loading">退出中</string>
     <string name="user_info_backup_loading">加载中</string>
-    <string name="user_info_logout_notice">即将移除身份，请确保身份已备份</string>
+    <string name="user_info_logout_notice">即将退出当前身份，请确保身份已备份</string>
     <string name="user_info_logout_warning">警告：若未妥善备份，退出后将无法找回身份，请慎重处理该操作</string>
 
     <string name="common_dialog_cancel">取消</string>
@@ -629,7 +629,6 @@
 
 
     <!--collection-->
-    <string name="collection_title">收款</string>
     <string name="collection_address">收款地址</string>
 
 
@@ -662,7 +661,6 @@
     <string name="recover_edit_mneonic_code_hint">12个英文单词，请按空格分隔单词</string>
     <string name="recover_wallet_title">恢复身份</string>
     <string name="recover_mneonic_input_error">助记词输入有误</string>
-    <string name="recover_edit_new_wallet_name_hint">请设置新的身份名</string>
     <string name="recover_input_wallet_name_error">只允许输入字母、汉字、数字、下划线。长度为20个字符</string>
     <string name="recover_set_pwd_hint">请设置密码</string>
     <string name="recover_set_pwd_error">6~30个字符，建议混合大小写字母加数字</string>
