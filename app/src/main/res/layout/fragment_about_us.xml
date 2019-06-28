@@ -128,9 +128,11 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
+            android:visibility="gone"
             android:background="@drawable/shape_corner_white">
 
             <TextView
+                android:id="@+id/customTv"
                 style="@style/BPTextViewDiscover"
                 android:text="@string/switch_node_title_txt" />
 
@@ -150,6 +152,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
+            android:visibility="gone"
             android:background="@drawable/shape_corner_white">
 
             <TextView

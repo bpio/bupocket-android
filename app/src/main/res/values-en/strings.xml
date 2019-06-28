@@ -64,7 +64,7 @@
     <string name="password_comfirm_dialog_sub_txt">Please fill in the wallet password to confirm the transfer</string>
     <string name="password_comfirm_dialog_to_backup">Please enter the identity password to confirm the backup</string>
     <!-- 恢复身份 -->
-    <string name="recover_wallet_title">Recover Identity</string>
+    <string name="recover_wallet_title">Restore Identity</string>
     <string name="recover_input_wallet_name_error">Only letters, numerals, and underscores are allowed and it cannot exceed 20 characters</string>
     <string name="recover_set_pwd_hint">Please set a password</string>
     <string name="recover_set_pwd_error">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>

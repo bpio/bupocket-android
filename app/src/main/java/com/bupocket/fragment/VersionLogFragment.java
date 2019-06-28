@@ -115,11 +115,11 @@ public class VersionLogFragment extends AbsBaseFragment {
                         adapter.addMoreDataList(logList);
                     }
 
-                    if (recordEmptyLL!=null) {
+                    if (recordEmptyLL != null) {
                         recordEmptyLL.setVisibility(View.GONE);
                     }
 
-                    if (loadFailedLL!=null) {
+                    if (loadFailedLL != null) {
                         loadFailedLL.setVisibility(View.GONE);
                     }
 
@@ -136,9 +136,12 @@ public class VersionLogFragment extends AbsBaseFragment {
                 if (call.isCanceled()) {
                     return;
                 }
-                loadFailedLL.setVisibility(View.VISIBLE);
-                refreshLayout.setEnableLoadMore(false);
-                adapter.clear();
+                if (loadFailedLL != null) {
+                    loadFailedLL.setVisibility(View.VISIBLE);
+                    refreshLayout.setEnableLoadMore(false);
+                    adapter.clear();
+                }
+
             }
         });
     }

@@ -55,7 +55,8 @@ public class BPAboutUsFragment extends AbsBaseFragment {
     ImageView newVersionCodeIconIV;
     @BindView(R.id.openTestNetIv)
     ImageView openTestNetIv;
-
+    @BindView(R.id.customTv)
+    TextView customTv;
 
     private final static int CLICKCOUNTS = 5;
     private final static long DURATION = 2 * 1000;
@@ -198,19 +199,20 @@ public class BPAboutUsFragment extends AbsBaseFragment {
             });
         } else {
             changeTestLL.setVisibility(View.VISIBLE);
+            if (HiddenFunctionStatusEnum.DISABLE.getCode() == hiddenFunctionCustomStatus) {
+                customEnvironmentLL.setVisibility(View.GONE);
+                customTv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        straightCustomClick();
+                    }
+                });
+            } else {
+                changeTestLL.setVisibility(View.VISIBLE);
+            }
         }
 
-        if (HiddenFunctionStatusEnum.DISABLE.getCode() == hiddenFunctionCustomStatus) {
-            customEnvironmentLL.setVisibility(View.GONE);
-            versionCodeTV.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    straightCustomClick();
-                }
-            });
-        } else {
-            changeTestLL.setVisibility(View.VISIBLE);
-        }
+
     }
 
 
