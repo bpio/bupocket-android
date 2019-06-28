@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingLeft="15dp"
-                android:text="@string/create_wallet_pw_err_hint"
+                android:text="@string/change_wallet_name_title"
                 android:textColor="@color/app_txt_color_gray_2"
                 android:textSize="15sp" />
 

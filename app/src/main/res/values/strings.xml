@@ -684,7 +684,7 @@
     <!--recover wallet-->
     <string name="tv_recover_wallet_name">请创建身份名</string>
     <string name="wallet_manage">钱包管理</string>
-    <string name="setting_new_identity_name">请设置新的身份名</string>
+
 
 
     <!--change pwd-->
@@ -741,7 +741,6 @@
     <string name="wallet_service_hint">请输入钱包服务地址</string>
     <string name="node_service_title">节点服务</string>
     <string name="node_service_hint">请输入节点服务地址</string>
-    <string name="custom_net_title">自定义环境</string>
     <string name="start_custom_service">启用</string>
     <string name="stop_custom_service">禁用</string>
     <string name="start_custom_service_hint">此处启用为最高等级，启用后将适用于小布口袋APP全部应用操作，请确认后再启用，且启用后不可编辑。</string>

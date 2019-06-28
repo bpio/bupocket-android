@@ -123,7 +123,7 @@
     <string name="export_keystore_txt">Export Keystore</string>
     <string name="help_txt">Feedback</string>
     <string name="version_txt">Version</string>
-    <string name="language_txt">Languages</string>
+    <string name="language_txt">Language</string>
     <string name="pocket_version">V2.0.1</string>
     <!-- 确认转账 -->
     <string name="send_confirm_title">Confirm</string>
@@ -297,8 +297,8 @@
     <string name="error_issue_overflow_message_txt">Your total tokens to be issued exceed the upper limit</string>
 
     <string name="profile_setting_txt">Setting</string>
-    <string name="switch_node_title_txt">Switch to the test network</string>
-    <string name="monetary_title_txt">Currency unit</string>
+    <string name="switch_node_title_txt">Switch to Test Network</string>
+    <string name="monetary_title_txt">Currency Unit</string>
     <string name="currency_cny_txt">CNY</string>
     <string name="currency_usd_txt">USD</string>
     <string name="currency_jpy_txt">JPY</string>
@@ -319,7 +319,7 @@
     <string name="issue_token_password_confirm_txt">Please fill in the wallet password to confirm the issuance</string>
     <string name="recover_identity_confirm_message_txt">Are you sure to update your password and import your identity</string>
     <!--<string name="wallet_management_txt">Wallet Management</string>-->
-    <string name="current_identity_wallet_title_txt">Wallet in the Current Identity</string>
+    <string name="current_identity_wallet_title_txt">Wallet in the current identity</string>
     <!--<string name="imported_wallet_title_txt">Imported Wallets</string>-->
     <string name="manage_txt">Manage</string>
     <string name="export_private_txt">Export Private Key</string>
@@ -373,9 +373,9 @@
     <string name="delete_wallet_success_message_txt">The wallet is deleted successfully</string>
     <string name="error_import_wallet_name_message_txt">The wallet names is only allowed to enter letters, characters, numbers, underscores, and it cannot exceed 20 characters in length.</string>
 
-    <string name="address_book_txt">Address book</string>
-    <string name="add_address_title">New contact</string>
-    <string name="edit_address_title">Edit contact</string>
+    <string name="address_book_txt">Address List</string>
+    <string name="add_address_title">New Contact</string>
+    <string name="edit_address_title">Edit Contact</string>
     <string name="add_address_name">Name</string>
     <string name="add_address_name_hint">Enter a name that corresponds to the account address</string>
     <string name="add_address_describe">Description</string>
@@ -659,7 +659,7 @@
     <string name="wallet_create_form_error2">The password must be composed of numbers and uppercase or lowercase letters and the combination must be between 6-30 characters</string>
     <string name="change_the_password_txt">Modify security password</string>
     <string name="import_mnemonic_wallet_name">Please set the wallet name</string>
-    <string name="hint_wallet_create_form_input_password">Please set a security password between 6-30 characters</string>
+    <string name="hint_wallet_create_form_input_password">Please set the security password between 6-30 characters</string>
     <string name="hint_wallet_create_form_input_rePassword">Please confirm the security password again</string>
     <string name="hint_wallet_create_form_input_rePassword_hint">Please enter your security password again</string>
     <string name="imported_wallet_title_txt">Create/import wallet</string>
@@ -670,8 +670,7 @@
     <string name="recover_edit_mneonic_code">Please fill in your mnemonics</string>
     <string name="recover_edit_mneonic_code_hint">12 English words separated by space</string>
     <string name="wallet_mneonic_error">Mnemonic is incorrect</string>
-    <string name="recover_mneonic_input_error">Please set a new identity name</string>
-    <string name="recover_edit_new_wallet_name_hint">Please set a new identity name</string>
+    <string name="recover_mneonic_input_error">Please set the new identity name</string>
     <string name="recover_confirm_pwd_error">Passwords input do not match</string>
     <string name="error_hint">Error message</string>
 
@@ -687,8 +686,7 @@
 
 
     <!--recover wallet-->
-    <string name="wallet_manage">wallet_manage</string>
-    <string name="setting_new_identity_name">Please set a new identity name</string>
+    <string name="wallet_manage">Wallet Manage</string>
 
     <!--change pwd-->
     <string name="wallet_info">Wallet information</string>
@@ -715,9 +713,9 @@
 
     <!--about us-->
     <string name="about_us_version_code">Current version:</string>
-    <string name="version_info">Version logs</string>
-    <string name="version_refresh">Version updates</string>
-    <string name="custom_environment">Custom environment</string>
+    <string name="version_info">Version Logs</string>
+    <string name="version_refresh">Version Updates</string>
+    <string name="custom_environment">Custom Environment</string>
 
 
     <!--update app-->
@@ -743,7 +741,6 @@
     <string name="wallet_service_hint">Please enter the address for wallet service</string>
     <string name="node_service_title">Node service</string>
     <string name="node_service_hint">Please enter the address for node service</string>
-    <string name="custom_net_title">自定义环境</string>
     <string name="start_custom_service">Enable</string>
     <string name="stop_custom_service">Disable</string>
     <string name="start_custom_service_hint">It is enabled as the highest level here. When it is enabled, it will be applied to all application operations for BU Pocket. Please confirm and then enable it, and it cannot be edited after it is enabled.</string>
