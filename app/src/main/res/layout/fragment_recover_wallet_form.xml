@@ -87,7 +87,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="start"
                         android:hint="@string/create_wallet_pw_err_hint"
-                        android:inputType="textPassword"
+                        android:inputType="textPassword|textMultiLine"
                         android:paddingEnd="20dp"
                         android:paddingRight="20dp"
                         android:theme="@style/BPEditText" />

@@ -37,15 +37,15 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
                 android:layout_marginTop="32dp"
+                android:orientation="vertical"
                 android:padding="@dimen/view_padding">
 
 
                 <TextView
                     android:id="@+id/create_wallet_name_title"
-                    android:text="@string/hint_wallet_create_form_input_identity_name"
-                    style="@style/BPTextViewCreateWallet" />
+                    style="@style/BPTextViewCreateWallet"
+                    android:text="@string/hint_wallet_create_form_input_identity_name" />
 
 
                 <EditText
@@ -58,40 +58,38 @@
 
 
                 <TextView
-                    android:text="@string/hint_wallet_create_form_input_password"
-                    style="@style/BPTextViewCreateWallet" />
+                    style="@style/BPTextViewCreateWallet"
+                    android:text="@string/hint_wallet_create_form_input_password" />
 
 
-                <RelativeLayout
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="55dp">
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
                     <EditText
                         android:id="@+id/create_wallet_set_pwd_et"
-                        android:layout_width="match_parent"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:gravity="left"
+                        android:layout_weight="1"
                         android:hint="@string/create_wallet_pw_err_hint"
-                        android:inputType="textPassword"
-                        android:paddingEnd="20dp"
-                        android:paddingRight="20dp"
+                        android:inputType="textPassword|textMultiLine"
+                        android:maxLines="2"
                         android:theme="@style/BPEditText" />
 
                     <ImageView
                         android:id="@+id/recoverShowPwdIv"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:layout_marginBottom="22dp"
-                        android:contentDescription="TODO"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="10dp"
                         android:src="@mipmap/icon_close_eye" />
-                </RelativeLayout>
+                </LinearLayout>
 
                 <TextView
-                    android:text="@string/hint_wallet_create_form_input_rePassword"
-                    style="@style/BPTextViewCreateWallet" />
+                    style="@style/BPTextViewCreateWallet"
+                    android:text="@string/hint_wallet_create_form_input_rePassword" />
 
 
                 <RelativeLayout

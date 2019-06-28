@@ -56,12 +56,6 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
     private void initTopBar() {
 
         mTopBar.setBackgroundDividerEnabled(false);
-//        mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                popBackStack();
-//            }
-//        });
         mTopBar.setTitle(R.string.backup_wallet_btn_txt);
         mTopBar.addRightTextButton(R.string.skip_backup_mneonic_btn_code, R.id.skipBackupBtn).setOnClickListener(new View.OnClickListener() {
             @Override

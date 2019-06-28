@@ -576,7 +576,7 @@ public class BPWalletImportFragment extends BaseFragment {
                     isPwdHideFirst = true;
                 } else {
                     mPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
-                    mPasswordEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    mPasswordEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
                     mPasswordEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     mPasswordEt.setSelection(mPasswordEt.getText().length());
                     isPwdHideFirst = false;
