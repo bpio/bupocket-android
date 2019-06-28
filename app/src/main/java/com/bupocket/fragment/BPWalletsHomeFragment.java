@@ -53,6 +53,8 @@ public class BPWalletsHomeFragment extends AbsBaseFragment {
     QMUIRoundButton mImportBigWalletBtn;
     @BindView(R.id.importWalletsLv)
     ListView mImportWalletsLv;
+    @BindView(R.id.walletHeadRiv)
+    ImageView walletHeadRiv;
 
 
     private SharedPreferencesHelper sharedPreferencesHelper;
@@ -100,6 +102,8 @@ public class BPWalletsHomeFragment extends AbsBaseFragment {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initCurrentIdentityView();
         initImportedWalletView();
+
+        CommonUtil.setHeadIvRes(currentWalletAddress,walletHeadRiv,spHelper);
     }
 
     @Override

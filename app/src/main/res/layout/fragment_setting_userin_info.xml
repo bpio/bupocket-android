@@ -40,7 +40,7 @@
                 android:textSize="15sp" />
 
             <com.makeramen.roundedimageview.RoundedImageView
-                android:id="@+id/ivSettingUserIcon"
+                android:id="@+id/walletHeadRiv"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="8dp"

@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
@@ -31,6 +32,7 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import org.bitcoinj.crypto.MnemonicCode;
 
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -57,6 +59,8 @@ public class BPWalletManageFragment extends BaseFragment {
     LinearLayout mBackupMnemonicRl;
     @BindView(R.id.changePwRl)
     LinearLayout mChangePwRl;
+    @BindView(R.id.walletHeadRiv)
+    ImageView walletHeadRiv;
 
 
     private String walletAddress;
@@ -507,9 +511,11 @@ public class BPWalletManageFragment extends BaseFragment {
         } else {
             walletName = sharedPreferencesHelper.getSharedPreference(walletAddress + "-walletName", "").toString();
         }
-
-
         mWalletNameTv.setText(walletName);
+
+
+        CommonUtil.setHeadIvRes(walletAddress,walletHeadRiv,spHelper);
+
     }
 
     private void refreshIdentityWalletName() {

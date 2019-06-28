@@ -9,11 +9,12 @@
     android:orientation="horizontal">
 
     <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/walletHeadRiv"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="20dp"
-        android:src="@mipmap/ic_normal_head"
+        android:src="@mipmap/ic_wallet_head_normal"
         app:riv_corner_radius="4dp" />
 
     <LinearLayout

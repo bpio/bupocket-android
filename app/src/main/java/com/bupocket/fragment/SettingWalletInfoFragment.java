@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.bupocket.R;
 import com.bupocket.adaptor.HeadIconAdapter;
 import com.bupocket.base.AbsBaseFragment;
+import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.model.HeadIconModel;
 import com.bupocket.utils.CommonUtil;
@@ -32,8 +33,8 @@ public class SettingWalletInfoFragment extends AbsBaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBar topbar;
-    @BindView(R.id.ivSettingUserIcon)
-    ImageView ivSettingUserIcon;
+    @BindView(R.id.walletHeadRiv)
+    ImageView walletHeadRiv;
     @BindView(R.id.settingWalletHeadLL)
     LinearLayout llSettingUserHead;
     @BindView(R.id.settingWalletNameTv)
@@ -43,18 +44,6 @@ public class SettingWalletInfoFragment extends AbsBaseFragment {
     private String walletAddress;
     private String walletName;
 
-//    int[] walletHeadResList= new int[]{
-//            R.mipmap.ic_wallet_head_0,
-//            R.mipmap.ic_wallet_head_1,
-//            R.mipmap.ic_wallet_head_2,
-//            R.mipmap.ic_wallet_head_3,
-//            R.mipmap.ic_wallet_head_4,
-//            R.mipmap.ic_wallet_head_5,
-//            R.mipmap.ic_wallet_head_6,
-//            R.mipmap.ic_wallet_head_7,
-//            R.mipmap.ic_wallet_head_8,
-//            R.mipmap.ic_wallet_head_9
-//    };
     private ArrayList<HeadIconModel> headData;
 
     @Override
@@ -95,6 +84,12 @@ public class SettingWalletInfoFragment extends AbsBaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        CommonUtil.setHeadIvRes(walletAddress,walletHeadRiv,spHelper);
+    }
+
+    @Override
     protected void setListeners() {
 
         llSettingUserHead.setOnClickListener(new View.OnClickListener() {
@@ -118,11 +113,12 @@ public class SettingWalletInfoFragment extends AbsBaseFragment {
         qmuiDialog.setCanceledOnTouchOutside(false);
         qmuiDialog.setContentView(R.layout.view_change_wallet_head_icon);
         RecyclerView headIconRv = (RecyclerView) qmuiDialog.findViewById(R.id.headIconRV);
+        int oldPosition = (int) spHelper.getSharedPreference(walletAddress + ConstantsType.WALLET_HEAD_ICON, 0);
         headData = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             HeadIconModel headIconModel = new HeadIconModel();
             headIconModel.setIconRes(CommonUtil.getWalletHeadRes(i));
-            headIconModel.setSelectedPosition(0);
+            headIconModel.setSelectedPosition(oldPosition);
             headData.add(headIconModel);
         }
         final HeadIconAdapter adapter = new HeadIconAdapter(mContext, headData);
@@ -152,9 +148,7 @@ public class SettingWalletInfoFragment extends AbsBaseFragment {
             @Override
             public void onClick(View v) {
                 //save data
-
                 qmuiDialog.dismiss();
-
                 saveHeadData();
             }
         });
@@ -169,6 +163,7 @@ public class SettingWalletInfoFragment extends AbsBaseFragment {
 
         int selectedPosition = headData.get(0).getSelectedPosition();
         spHelper.put(walletAddress+ ConstantsType.WALLET_HEAD_ICON,selectedPosition);
+        walletHeadRiv.setImageResource(CommonUtil.getWalletHeadRes(selectedPosition));
     }
 
     private void settingName() {

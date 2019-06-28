@@ -131,7 +131,7 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_centerHorizontal="true"
-            android:background="@mipmap/wallet_head_normal"
+            android:background="@mipmap/identity_head_normal"
             app:riv_oval="true" />
 
     </RelativeLayout>

@@ -13,11 +13,13 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeSettingAdapter;
 import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.CurrencyTypeEnum;
 import com.bupocket.model.NodeAddressModel;
 import com.google.gson.Gson;
@@ -179,6 +181,7 @@ public class CommonUtil {
         Matcher m = PASSWORD_PATTERN.matcher(password);
         return m.matches();
     }
+
     public static boolean validateOldPassword(String password) {
         if (isEmpty(password)) {
             return false;
@@ -226,7 +229,7 @@ public class CommonUtil {
             //check url
             OkHttpClient okHttpClient = new OkHttpClient();
             Request request = new Request.Builder()
-                    .url(url+ Constants.BUMO_NODE_URL_PATH)
+                    .url(url + Constants.BUMO_NODE_URL_PATH)
                     .build();
             okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
                 @Override
@@ -250,16 +253,15 @@ public class CommonUtil {
                         } else {
                             ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
                     }
-
 
 
                 }
             });
 
-        }catch (Exception e){
+        } catch (Exception e) {
             ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
         }
 
@@ -811,10 +813,10 @@ public class CommonUtil {
     }
 
 
-    public static int getWalletHeadRes(int position){
+    public static int getWalletHeadRes(int position) {
 
 
-        int[] walletHeadResList= new int[]{
+        int[] walletHeadResList = new int[]{
                 R.mipmap.ic_wallet_head_0,
                 R.mipmap.ic_wallet_head_1,
                 R.mipmap.ic_wallet_head_2,
@@ -828,6 +830,16 @@ public class CommonUtil {
         };
 
         return walletHeadResList[position];
-    };
+    }
+
+    ;
+
+
+    public static void setHeadIvRes(String walletAddress, ImageView walletHeadRiv, SharedPreferencesHelper spHelper) {
+        int imageRes = (int) spHelper.getSharedPreference(walletAddress + ConstantsType.WALLET_HEAD_ICON, -1);
+        if (imageRes != -1) {
+            walletHeadRiv.setImageResource(CommonUtil.getWalletHeadRes(imageRes));
+        }
+    }
 
 }
