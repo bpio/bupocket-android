@@ -24,7 +24,6 @@
     <string name="wallet_create_form_input_rePassword_empty">Please confirm your password</string>
     <string name="wallet_create_form_error1">Passwords do not match</string>
     <!--<string name="wallet_create_form_error2">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>-->
-    <string name="wallet_create_form_error4">The identity name is only allowed to enter letters, characters, numbers, underscores, and it cannot  exceed 20 characters in length</string>
 
     <string name="wallet_create_creating_txt">Creating</string>
     <string name="wallet_create_created_txt">Created successfully</string>
@@ -621,6 +620,141 @@
 
     <string name="open_youpin">Service provided and liability covered by third party (YoPin) .For any questions,contact the company.</string>
     <string name="open_youpin_title">Disclaimer</string>
+
+
+    <!--setting user info-->
+    <string name="setting_user_head_hint">Change wallet avatar</string>
+    <string name="settting_user_title">Wallet details</string>
+    <string name="change_wallet_head_title">Choose avatar</string>
+
+
+
+    <!--profile -->
+
+    <string name="profile_currency">Currency</string>
+    <string name="profile_language">Language</string>
+    <string name="profile_node_setting">Node Setting</string>
+    <string name="profile_user_protocol">User Agreement</string>
+    <string name="profile_user_help">Feedback</string>
+    <string name="profile_about_us">About Us</string>
+    <string name="user_agreement">BU Pocket User Services Agreement</string>
+
+    <!--collection-->
+    <string name="collection_address">Receiving Address</string>
+
+
+    <!--create wallet-->
+    <string name="view_title_create_wallet">Create Wallet</string>
+    <string name="start_create_wallet">Create Now</string>
+    <string name="create_wallet_prompt_txt1">1.Security passwords are used to encrypt private keys, confirm transfers and contract calls for transactions. The strength of the security password is very important. Please keep in mind\n
+        2.BU Pocket will not store your password\n
+        3.Security password can only be modified, but cannot be retrieved or reset, so please keep in mind</string>
+    <string name="create_wallet_prompt_txt3">
+        • Security passwords are used to encrypt private keys, confirm transfers and contract calls for transactions. The strength of the security password is very important. Please keep in mind\n
+        • BU Pocket will not store your password\n
+        • Security password can only be modified, but cannot be retrieved or reset, so please keep in mind。</string>
+    <string name="create_wallet_name_err_hint">Letters, Chinese characters, numbers and underscores are allowed to input, but the length cannot exceed 20 characters</string>
+    <string name="create_wallet_pw_err_hint">The security password must be composed of numbers and uppercase or lowercase letters and the combination must be </string>
+    <string name="view_change_wallet_pw">Modify wallet password</string>
+    <string name="wallet_create_form_error2">The password must be composed of numbers and uppercase or lowercase letters and the combination must be between 6-30 characters</string>
+    <string name="change_the_password_txt">Modify security password</string>
+    <string name="import_mnemonic_wallet_name">Please set the wallet name</string>
+    <string name="hint_wallet_create_form_input_password">Please set a security password between 6-30 characters</string>
+    <string name="hint_wallet_create_form_input_rePassword">Please confirm the security password again</string>
+    <string name="hint_wallet_create_form_input_rePassword_hint">Please enter your security password again</string>
+    <string name="imported_wallet_title_txt">Create/import wallet</string>
+    <string name="wallet_create_form_error4">The identity name only allows letters, Chinese characters, numbers and underscores, and the length cannot exceed 20 characters</string>
+    <string name="wallet_create_form_error5">钱包名称只允许输入字母/汉字/数字/下划线，并且长度不能超过20个字符</string>
+
+    <!-- recover identity -->
+    <string name="recover_edit_mneonic_code">Please fill in your mnemonics</string>
+    <string name="recover_edit_mneonic_code_hint">12 English words separated by space</string>
+    <string name="wallet_mneonic_error">Mnemonic is incorrect</string>
+    <string name="recover_mneonic_input_error">Please set a new identity name</string>
+    <string name="recover_edit_new_wallet_name_hint">Please set a new identity name</string>
+    <string name="recover_confirm_pwd_error">Passwords input do not match</string>
+    <string name="error_hint">Error message</string>
+
+
+    <!--backup-->
+    <string name="tv_backup_hint">If you have mnemonics, it means that you have the ownership of the assets in the wallet</string>
+    <string name="backup_wallet_care_three">Attention</string>
+    <string name="backup_wallet_care_three_info">• It is forbidden to take screenshots. Please make sure to back up in a safe environment with no one at presence and no camera around\n
+        • Please copy the mnemonic correctly with paper and pen, and keep it in a safe place where the network is isolated\n
+        • It is forbidden to reveal or disclose mnemonics in any form or method, such as mail, photo albums, etc\n
+        • Asset security cannot be guaranteed without proper backup. After deleting the wallet or uninstalling the program, you can restore your identity/wallet with mnemonics</string>
+    <string name="backup_title">Backup Mnemonics</string>
+
+
+    <!--recover wallet-->
+    <string name="wallet_manage">wallet_manage</string>
+    <string name="setting_new_identity_name">Please set a new identity name</string>
+
+    <!--change pwd-->
+    <string name="wallet_info">Wallet information</string>
+    <string name="change_old_pwd">Please enter the original security password</string>
+    <string name="change_old_pwd_hint">Please enter the security password of the current wallet</string>
+    <string name="change_new_pwd">Please set the new security password</string>
+    <string name="change_new_pwd_confirm">Confirm the new security password again</string>
+    <string name="change_confirm_change">Confirm to modify</string>
+
+
+
+
+
+
+    <!--node setting -->
+    <string name="add_node">Add a custom node</string>
+    <string name="node_setting_title">Node Setting</string>
+    <string name="add_node_address_title">Please enter a valid node address</string>
+    <string name="edit_node_info">Edit</string>
+    <string name="edit_node_address_title">Edit node address</string>
+    <string name="confirm_delete_node">Are you sure you want to delete this node?</string>
+    <string name="invalid_node_address">Invalid node address</string>
+    <string name="node_address_repeat">Repeated node, please reset</string>
+
+    <!--about us-->
+    <string name="about_us_version_code">Current version:</string>
+    <string name="version_info">Version logs</string>
+    <string name="version_refresh">Version updates</string>
+    <string name="change_test">切换测试网</string>
+    <string name="custom_environment">Custom environment</string>
+
+
+    <!--update app-->
+    <string name="update_app_min_title">new version content update:</string>
+    <string name="not_update_app">Update later</string>
+    <string name="new_update_app">Update now</string>
+
+
+    <!--import wallet-->
+    <string name="keystore_hint_title">Please fill in the content of the keystore file</string>
+    <string name="wallet_import_keystore_et_hint_txt">Please fill in the keystore file generated by the official BUMO wallet</string>
+    <string name="password_for_keystore_et_hint_txt">Please enter the security password used when you export the keystore</string>
+    <string name="password_for_keystore_txt">Please enter the security password</string>
+    <string name="wallet_import_private_et_hint_txt">Please fill in your private key</string>
+    <string name="change_wallet_name_hint">It is used to distinguish other wallets, which cannot exceed 20 characters</string>
+    <!--create wallet-->
+    <string name="create_wallet_name_title">Please set the wallet name</string>
+
+
+
+    <!--custom net-->
+    <string name="wallet_service_title">Wallet service</string>
+    <string name="wallet_service_hint">Please enter the address for wallet service</string>
+    <string name="node_service_title">Node service</string>
+    <string name="node_service_hint">Please enter the address for node service</string>
+    <string name="custom_net_title">自定义环境</string>
+    <string name="start_custom_service">Enable</string>
+    <string name="stop_custom_service">Disable</string>
+    <string name="start_custom_service_hint">It is enabled as the highest level here. When it is enabled, it will be applied to all application operations for BU Pocket. Please confirm and then enable it, and it cannot be edited after it is enabled.</string>
+    <string name="stop_custom_service_hint">After being disabled, BU Pocket APP resumes the state before it is enabled. Please confirm and then operate.</string>
+    <string name="note">Attention:</string>
+
+    <string name="wallet_create_error">Creation failure</string>
+    <string name="delete_node_info">The to-be-deleted node is selected, and the default node in the system will be selected after deletion.</string>
+    <string name="not_use_wallet_service">Invalid wallet service address</string>
+
 
 
 </resources>

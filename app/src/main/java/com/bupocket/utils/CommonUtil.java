@@ -220,7 +220,7 @@ public class CommonUtil {
 
     public static void invalidService(final String url, final Activity mActivity, final NodeSettingAdapter.NodeAddressListener nodeListener) {
         if (TextUtils.isEmpty(url)) {
-            ToastUtil.showToast(mActivity, R.string.invalid_node_address_hint, Toast.LENGTH_SHORT);
+            ToastUtil.showToast(mActivity, R.string.add_node_address_title, Toast.LENGTH_SHORT);
             return;
         }
 

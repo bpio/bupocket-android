@@ -148,7 +148,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
 
     public void invalidNodeAddress(final String url, final int position, final NodeAddressListener nodeListener) {
         if (TextUtils.isEmpty(url)) {
-            ToastUtil.showToast(mActivity, R.string.invalid_node_address_hint, Toast.LENGTH_SHORT);
+            ToastUtil.showToast(mActivity, R.string.add_node_address_title, Toast.LENGTH_SHORT);
             return;
         }
 

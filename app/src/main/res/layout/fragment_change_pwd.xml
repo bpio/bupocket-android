@@ -107,7 +107,7 @@
                         android:id="@+id/newPasswordET"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/hint_wallet_create_password"
+                        android:hint="@string/create_wallet_pw_err_hint"
                         android:inputType="textPassword"
                         android:paddingRight="20dp"
                         android:theme="@style/BPEditText" />

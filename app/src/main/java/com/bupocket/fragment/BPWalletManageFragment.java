@@ -543,6 +543,6 @@ public class BPWalletManageFragment extends BaseFragment {
                 popBackStack();
             }
         });
-        mTopBar.setTitle(getString(R.string.manage_wallet_title));
+        mTopBar.setTitle(getString(R.string.manage_txt));
     }
 }

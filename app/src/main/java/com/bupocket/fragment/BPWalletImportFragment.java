@@ -523,7 +523,7 @@ public class BPWalletImportFragment extends BaseFragment {
         final ImageView mPasswordConfirmIv = contentView.findViewById(R.id.passwordConfirmIv);
         final QMUIRoundButton mStartImportPrivateBtn = contentView.findViewById(R.id.startImportPrivateBtn);
         final LinearLayout mUnderstandPrivateLl = contentView.findViewById(R.id.importInfoHintLl);
-        ((TextView) contentView.findViewById(R.id.hintTitleTv)).setText(R.string.private_key_hint_title);
+        ((TextView) contentView.findViewById(R.id.hintTitleTv)).setText(R.string.wallet_import_private_et_hint_txt);
         ((TextView) contentView.findViewById(R.id.hintInfoTv)).setText(R.string.understand_private_txt);
         mUnderstandPrivateLl.setOnClickListener(new View.OnClickListener() {
             @Override

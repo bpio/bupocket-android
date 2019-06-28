@@ -44,7 +44,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginRight="8dp"
-                android:src="@mipmap/ic_normal_head"
+                android:src="@mipmap/ic_wallet_head_normal"
                 app:riv_corner_radius="4dp" />
 
             <ImageView
@@ -76,7 +76,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:paddingLeft="15dp"
-                android:text="@string/setting_user_head_hint"
+                android:text="@string/create_wallet_pw_err_hint"
                 android:textColor="@color/app_txt_color_gray_2"
                 android:textSize="15sp" />
 

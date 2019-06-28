@@ -13,7 +13,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/use_terms_title"
+            android:text="@string/user_agreement"
             android:textSize="32sp"
             android:paddingBottom="17dp"
             android:theme="@style/BPViewTitle" />

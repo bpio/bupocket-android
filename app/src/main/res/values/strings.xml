@@ -20,10 +20,8 @@
     <string name="wallet_create_form_input_password_empty">请输入密码</string>
     <string name="wallet_create_form_input_rePassword_empty">请再次确认密码</string>
     <string name="wallet_create_form_error1">两次密码输入不一致</string>
-    <string name="wallet_create_form_error2">密码必须是6-30个字符，大小写字母和数字任意两种的组合</string>
-    <string name="wallet_create_form_error4">身份名只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
-    <string name="wallet_mneonic_error">助记词输入有误</string>
-
+    <string name="wallet_create_form_error4">身份名只允许输入字母/汉字/数字/下划线，并且长度不能超过20个字符</string>
+    <string name="wallet_create_form_error5">钱包名称只允许输入字母/汉字/数字/下划线，并且长度不能超过20个字符</string>
     <string name="wallet_create_creating_txt">创建中</string>
     <string name="wallet_create_created_txt">创建成功</string>
     <string name="wallet_create_ok_btn">确认</string>
@@ -35,26 +33,6 @@
     <string name="view_title_create_wallet_identity">创建身份</string>
 
 
-    <!--create wallet-->
-    <string name="wallet_management_txt">钱包</string>
-    <string name="view_title_create_wallet">创建钱包</string>
-    <string name="start_create_wallet">开始创建</string>
-    <string name="create_wallet_prompt_dialog_title">温馨提示</string>
-    <string name="create_wallet_prompt_txt1">1.安全密码用于加密保护私钥、确认交易转账和调用合约等，强度非常重要，请您务必牢记\n
-        2.小布口袋不会存储您的密码\n
-        3.安全密码只能修改，无法找回或重置，请务必牢记</string>
-    <string name="create_wallet_prompt_txt3">
-        • 安全密码用于加密保护私钥、确认交易转账和调用合约等，强度非常重要，请您务必牢记；\n
-        • 小布口袋不会存储您的密码；\n
-        • 安全密码只能修改，无法找回或重置，请务必牢记。</string>
-    <string name="create_wallet_prompt_txt2">6~30个字符，建议混合大小写字母加数字</string>
-    <string name="create_wallet_name_err_hint">允许输入字母/汉字/数字/下划线，且不能超过20个字符</string>
-    <string name="create_wallet_pw_err_hint">6-30个字符，大小写字母和数字任意两种组合</string>
-    <string name="create_wallet_pw_confirm_err_hint">两次密码不一致</string>
-    <string name="view_change_wallet_pw">修改钱包密码</string>
-
-
-    <string name="backup_wallet_txt1">没有妥善备份就无法保障资金安全，删除钱包或卸载程序后，您需要助记词来恢复钱包/身份</string>
 
     <string name="backup_wallet_txt2">请确保在四周无人，没有摄像头的安全环境下备份</string>
     <string name="backup_wallet_btn_txt">备份助记词</string>
@@ -159,7 +137,7 @@
     <string name="qr_pic_name_text">钱包地址二维码</string>
     <string name="qr_copy_success_message">已复制到剪切板</string>
     <!-- 我的 -->
-    <string name="change_the_password_txt">修改安全密码</string>
+
     <string name="help_txt">帮助与反馈</string>
     <string name="version_txt">版本号</string>
     <string name="language_txt">多语言</string>
@@ -361,7 +339,6 @@
 
 
     <string name="current_identity_wallet_title_txt">当前身份下的钱包</string>
-    <string name="imported_wallet_title_txt">创建/导入的钱包</string>
     <string name="manage_txt">管理</string>
     <string name="export_keystore_txt">导出Keystore</string>
     <string name="export_private_txt">导出私钥</string>
@@ -636,24 +613,19 @@
 
     <!--setting user info-->
     <string name="setting_user_head_hint">更改钱包头像</string>
-    <string name="setting_user_name_hint">更改钱包名称</string>
-
     <string name="settting_user_title">钱包详情</string>
 
-    <string name="settting_change_name_limit1">
-        • 不能超过20个字符\n• 允许输入字母、汉字、数字、下划线</string>
 
 
-    <!--profile-->
-    <string name="user_setting">使用设置</string>
-    <string name="others">其他</string>
 
+    <!--profile -->
     <string name="profile_currency">计价货币</string>
     <string name="profile_language">显示语言</string>
     <string name="profile_node_setting">节点设置</string>
     <string name="profile_user_protocol">用户协议</string>
     <string name="profile_user_help">意见反馈</string>
     <string name="profile_about_us">关于我们</string>
+    <string name="user_agreement">小布口袋用户服务协议</string>
 
 
     <!--collection-->
@@ -662,14 +634,38 @@
 
 
     <!--create wallet-->
+    <string name="view_title_create_wallet">创建钱包</string>
+    <string name="start_create_wallet">开始创建</string>
+    <string name="create_wallet_prompt_dialog_title">温馨提示</string>
+    <string name="create_wallet_prompt_txt1">1.安全密码用于加密保护私钥、确认交易转账和调用合约等，强度非常重要，请您务必牢记\n
+        2.小布口袋不会存储您的密码\n
+        3.安全密码只能修改，无法找回或重置，请务必牢记</string>
+    <string name="create_wallet_prompt_txt3">
+        • 安全密码用于加密保护私钥、确认交易转账和调用合约等，强度非常重要，请您务必牢记；\n
+        • 小布口袋不会存储您的密码；\n
+        • 安全密码只能修改，无法找回或重置，请务必牢记。</string>
+    <string name="create_wallet_prompt_txt2">6~30个字符，建议混合大小写字母加数字</string>
+    <string name="create_wallet_name_err_hint">允许输入字母/汉字/数字/下划线，且不能超过20个字符</string>
+    <string name="create_wallet_pw_err_hint">6-30个字符，大小写字母和数字任意两种组合</string>
+    <string name="view_change_wallet_pw">修改钱包密码</string>
 
+
+    <string name="backup_wallet_txt1">没有妥善备份就无法保障资金安全，删除钱包或卸载程序后，您需要助记词来恢复钱包/身份</string>
+
+
+
+    <string name="wallet_mneonic_error">助记词输入有误</string>
+    <string name="wallet_create_form_error2">密码必须是6-30个字符，大小写字母和数字任意两种的组合</string>
+    <string name="settting_change_name_limit1">• 不能超过20个字符\n• 允许输入字母、汉字、数字、下划线</string>
+    <string name="change_the_password_txt">修改安全密码</string>
     <string name="import_mnemonic_wallet_name">请设置钱包名称</string>
     <string name="hint_wallet_create_form_input_password">请设置安全密码</string>
     <string name="hint_wallet_create_form_input_rePassword">请再次确认安全密码</string>
+    <string name="hint_wallet_create_form_input_rePassword_hint">请再次输入安全密码</string>
+    <string name="imported_wallet_title_txt">创建/导入的钱包</string>
     <!-- recover identity -->
     <string name="recover_edit_mneonic_code">请填写您的助记词</string>
     <string name="recover_edit_mneonic_code_hint">12个英文单词，请按空格分隔单词</string>
-    <string name="hint_wallet_create_password">6-30个字符，大小写字母和数字任意两种组合</string>
     <string name="recover_wallet_title">恢复身份</string>
     <string name="recover_mneonic_input_error">助记词输入有误</string>
     <string name="recover_edit_new_wallet_name_hint">请设置新的身份名</string>
@@ -694,7 +690,7 @@
     <!--recover wallet-->
     <string name="tv_recover_wallet_name">请创建身份名</string>
     <string name="wallet_manage">钱包管理</string>
-    <string name="manage_wallet_title">管理钱包</string>
+    <string name="setting_new_identity_name">请设置新的身份名</string>
 
 
     <!--change pwd-->
@@ -719,7 +715,6 @@
     <string name="edit_node_address_title">编辑节点地址</string>
     <string name="confirm_delete_node">确定删除该节点吗？</string>
     <string name="invalid_node_address">无效的节点地址</string>
-    <string name="invalid_node_address_hint">请输入有效的节点地址</string>
     <string name="node_address_repeat">节点重复，请重新设置</string>
 
     <!--about us-->
@@ -738,8 +733,6 @@
 
     <!--import wallet-->
     <string name="keystore_hint_title">请填写Keystore文件内容</string>
-    <string name="private_key_hint_title">请填写您的私钥</string>
-
     <string name="wallet_import_keystore_et_hint_txt">请填写由BUMO官方钱包生成的Keystore文件</string>
     <string name="password_for_keystore_et_hint_txt">请输入导出Keystore时使用的安全密码</string>
     <string name="password_for_keystore_txt">请输入安全密码</string>
@@ -761,7 +754,11 @@
     <string name="start_custom_service_hint">此处启用为最高等级，启用后将适用于小布口袋APP全部应用操作，请确认后再启用，且启用后不可编辑。</string>
     <string name="stop_custom_service_hint">禁用后，小布口袋APP恢复启用前状态，请确认后再操作。</string>
     <string name="note">注意：</string>
-    <string name="edit_btn">编辑</string>
 
+
+
+    <string name="wallet_create_error">钱包创建失败</string>
+    <string name="delete_node_info">当前删除节点为选中状态，删除后将选中系统默认设置节点。</string>
+    <string name="not_use_wallet_service">无效的钱包服务地址</string>
 
 </resources>

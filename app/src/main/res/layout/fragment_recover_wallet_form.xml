@@ -62,7 +62,7 @@
 
                 <TextView
                     style="@style/BPTextViewCreateWallet"
-                    android:text="@string/tv_recover_wallet_name" />
+                    android:text="@string/setting_new_identity_name" />
 
                 <EditText
                     android:id="@+id/recoverWalletNameEt"

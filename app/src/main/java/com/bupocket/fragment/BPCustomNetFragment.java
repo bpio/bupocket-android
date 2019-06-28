@@ -133,7 +133,7 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        saveBtn.setText(R.string.edit_btn);
+                                        saveBtn.setText(R.string.edit_node_info);
                                         saveBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.app_txt_color_gray_2));
                                         walletServiceEt.setEnabled(false);
                                         nodeServiceEt.setEnabled(false);
@@ -177,7 +177,7 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
 
         String walletService = walletServiceEt.getText().toString().trim();
         if (TextUtils.isEmpty(walletService)) {
-            ToastUtil.showToast(getActivity(), R.string.invalid_node_address_hint, Toast.LENGTH_SHORT);
+            ToastUtil.showToast(getActivity(), R.string.add_node_address_title, Toast.LENGTH_SHORT);
             return false;
         }
 
@@ -247,7 +247,7 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
             nodeServiceEt.setEnabled(false);
 
             if (isStart == CustomNodeTypeEnum.STOP.getServiceType()) {
-                saveBtn.setText(R.string.edit_btn);
+                saveBtn.setText(R.string.edit_node_info);
 
                 setNodeBtn.setBackgroundResource(R.drawable.shape_corner_green);
                 setNodeBtn.setTextColor(getResources().getColor(R.color.app_color_white));
