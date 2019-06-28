@@ -134,7 +134,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
-                android:text="@string/user_info_logout"
+                android:text="@string/user_info_logout_title"
                 android:textSize="18sp"
                 android:textColor="@color/app_txt_color_red_3"
                 app:qmui_backgroundColor="@color/app_color_white"

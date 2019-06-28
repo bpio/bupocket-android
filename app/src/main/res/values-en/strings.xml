@@ -6,7 +6,7 @@
     <string name="tabbar_discover_txt">Explore</string>
     <string name="tabbar_profile_txt">Profile</string>
 
-    <string name="fragment_title_tx_detail_txt">Transaction detail</string>
+    <string name="fragment_title_tx_detail_txt">Transaction Detail</string>
     <string name="create_wallet_info_txt_1">Please carefully copy the mnemonic words below and store them in a safe place</string>
     <string name="create_wallet_txt">Create a wallet</string>
 
@@ -14,7 +14,7 @@
     <string name="tabbr_wallet_txt">Wallet</string>
     <string name="wallet_create_txt">Create a digital identity</string>
     <string name="wallet_create_create_btn_txt">Create now</string>
-    <string name="wallet_create_recover_btn_txt">Restore identity</string>
+    <string name="wallet_create_recover_btn_txt">Restore Identity</string>
     <string name="hint_wallet_create_form_input_identity_name">Please create your identity name</string>
 
     <string name="wallet_create_form_input_identity_name_empty">Please enter your identity name</string>
@@ -30,17 +30,17 @@
     <string name="otc_top_bar_buy_txt">Purchase</string>
     <string name="otc_top_bar_sell_txt">Sell</string>
     <string name="view_title_backup_wallet">Backup wallet</string>
-    <string name="view_title_create_wallet_identity">Create an identity</string>
+    <string name="view_title_create_wallet_identity">Create an Identity</string>
     <string name="create_wallet_prompt_dialog_title">Tips</string>
     <string name="create_wallet_prompt_txt2">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>
     <string name="backup_wallet_txt2">Make sure to back up in a safe environment with no people around and no cameras</string>
     <string name="backup_wallet_btn_txt">Back Up Mnemonic Words</string>
     <string name="skip_backup_mneonic_btn_code">Skip</string>
-    <string name="view_title_backup_mneonic_code">Back Up Mnemonics</string>
+    <string name="view_title_backup_mneonic_code">Backup Mnemonics</string>
     <string name="backup_mneonic_code_txt1">Do not take a screenshot</string>
     <string name="backup_mneonic_code_txt2">Leaking mnemonics will result in the loss of tokens. Please write down mnemonics and  store them in a safe place</string>
     <string name="backup_mneonic_code_txt3">Please record each word in order and keep it safe</string>
-    <string name="backup_mneonic_code_btn_txt">I have copied</string>
+    <string name="backup_mneonic_code_btn_txt">I Have Copied</string>
     <string name="view_title_confirm_mneonic_code">Confirm Mnemonics</string>
     <string name="confirm_mneonic_code_txt">Please click the mnemonic words in order to confirm that you backed up correctly.</string>
     <string name="confirm_mneonic_code_btn_txt">Done</string>
@@ -108,7 +108,7 @@
     <!-- 二维码页面 -->
     <string name="qr_pocket_address_title">Wallet address</string>
     <string name="qr_cancel_btn_des">Cancel</string>
-    <string name="qr_copy_btn_text">Copy the wallet address</string>
+    <string name="qr_copy_btn_text">Copy the Wallet Address</string>
     <string name="qr_pic_name_text">QR code of the wallet address </string>
     <string name="qr_copy_success_message">It has been copied to the clipboard</string>
     <!-- 我的 -->
@@ -175,8 +175,9 @@
     <string name="user_info_title">My Identity</string>
     <string name="user_info_wallet_name">Identity name</string>
     <string name="user_info_wallet_id">Identity ID</string>
-    <string name="user_info_backup_current_wallet">Backup identity</string>
+    <string name="user_info_backup_current_wallet">Backup Identity</string>
     <string name="user_info_logout">Exit the current identity</string>
+    <string name="user_info_logout_title">Exit the Current Identity</string>
     <string name="user_info_logout_loading">Logging out</string>
     <string name="user_info_backup_loading">Loading</string>
     <string name="user_info_logout_notice">The identity is removed soon. Please ensure that your identity has been backed up</string>
@@ -197,7 +198,7 @@
     <string name="language_en">English</string>
     <string name="set_success">Set successfully</string>
     <string name="handling">Processing...</string>
-    <string name="i_knew_btn_txt">Got it</string>
+    <string name="i_knew_btn_txt">Got It</string>
     <string name="network_error_msg">Your network is interrupted. Please try again later.</string>
     <string name="capture_activity_title">Scan</string>
     <string name="time_day_ago">day ago</string>
@@ -232,23 +233,23 @@
     <string name="srl_header_update">\'Last Update\' M-d HH:mm</string>
     <string name="capture_activity_label">Customize scan interface</string>
     <string name="no_backup_tips_btn">Please backup</string>
-    <string name="no_backup_mneonic_btn_code">Back up later</string>
+    <string name="no_backup_mneonic_btn_code">Backup Later</string>
 
     <string name="total_assets_title_txt">Estimated Assets</string>
-    <string name="assets_add_txt">Add tokens</string>
+    <string name="assets_add_txt">Add Tokens</string>
     <string name="my_assets_title_txt">My tokens</string>
     <string name="add_token_search_hint">Please enter the complete token code</string>
     <string name="add_token_btn_txt">Add</string>
     <string name="delete_token_btn_txt">Delete</string>
     <string name="tx_fee_too_big">The transaction fee cannot exceed 10 BU</string>
-    <string name="register_token_page_title">Confirm token registration</string>
+    <string name="register_token_page_title">Confirm Token Registration</string>
     <string name="please_confirm_register_token_info_txt">Please confirm the following token registration information</string>
     <string name="token_info_name_txt">Token name</string>
     <string name="token_info_code_txt">Token code</string>
     <string name="token_info_amount_txt">Total tokens</string>
     <string name="issue_token_fee_txt">Estimated transaction fee</string>
     <string name="register_token_fee_txt">Estimated transaction fee</string>
-    <string name="confirm_register_token_btn_txt">Confirm registration</string>
+    <string name="confirm_register_token_btn_txt">Confirm Registration</string>
     <string name="register_token_password_confirm_txt">Please fill in the wallet password to confirm the registration</string>
     <string name="register_token_success_txt">Registration is successful</string>
     <string name="register_token_failure_txt">Registration failed</string>
@@ -256,9 +257,9 @@
     <string name="token_info_decimals_txt">Decimal places of tokens</string>
     <string name="token_info_atp_version_txt">ATP version </string>
     <string name="token_info_description_txt">Token description</string>
-    <string name="issue_token_page_title">Confirm token issuance</string>
+    <string name="issue_token_page_title">Confirm Token Issuance</string>
     <string name="please_confirm_issue_token_info_txt">Please confirm the following token issuance information</string>
-    <string name="confirm_issue_token_btn_txt">Confirm to issue</string>
+    <string name="confirm_issue_token_btn_txt">Confirm to Issue</string>
     <string name="issue_token_success_txt">Issuing of tokens is successful</string>
     <string name="issue_token_failure_txt">Failed to issue tokens</string>
     <string name="issue_token_timeout_txt">Issuing of tokens is overtime</string>
@@ -306,7 +307,7 @@
     <string name="receive_qr_txt">Receive</string>
     <string name="safety_tips_title">Safety tips</string>
     <string name="safety_tips_content_txt">Your wallet mnemonics have not been backed up. To prevent loss of assets due to forgetting passwords, deleting apps, or losing your phone, be sure to back up your mnemonics.</string>
-    <string name="backup_immediately_txt">Back up now</string>
+    <string name="backup_immediately_txt">Backup Now</string>
     <string name="search_result_not_found">No search results found</string>
     <string name="switch_to_test_net_message_txt">You have started the test network</string>
     <string name="issue_token_password_confirm_txt">Please fill in the wallet password to confirm the issuance</string>
@@ -459,8 +460,8 @@
     <string name="tx_status_runing">Processing</string>
     <string name="build_finish">Completed</string>
     <string name="build_origin_purchase_amount">Margin of Co-funding</string>
-    <string name="build_rist_info_record">Risk Statement</string>
-    <string name="build_support_record">Record of Node Co-funding</string>
+    <string name="build_rist_info_record">Risk statement</string>
+    <string name="build_support_record">Record of node co-funding</string>
 
     <string name="build_exit">Withdraw</string>
     <string name="build_support">Sponsor</string>
@@ -480,7 +481,7 @@
 
 
     <string name="transaction_timeout">The request has timed out; please do it again</string>
-    <string name="transaction_success_title">Transaction success</string>
+    <string name="transaction_success_title">Transaction Success</string>
     <string name="transaction_success_title_info">The transaction on the chain is successful</string>
     <string name="transaction_process_title">Processing business data</string>
     <string name="transaction_process_title_info"> Business data is analyzed and processed according to the transaction metadata of the chain, and the processing is expected to be completed within 20 seconds.</string>
@@ -520,7 +521,7 @@
     <string name="vote_record_txt">Record of Votes</string>
     <string name="bu_share">BU/ share</string>
 
-    <string name="transaction_timeout_title">Transaction status</string>
+    <string name="transaction_timeout_title">Transaction Status</string>
     <string name="transaction_timeout_hint">Transaction is broadcast successfully</string>
     <string name="transaction_timeout_info">Transaction is broadcast successfully; please copy the transaction summary to&lt;font color=\'#02CA71\'>https://explorer.bumo.io&lt;/font> to query the final transaction status;</string>
     <string name="build_bu">&#160;BU</string>
@@ -572,7 +573,7 @@
     <string name="node_plan_management_system_txt">Operation and management system of node initiative</string>
     <string name="scan_qr_login_management_system_note_txt">Log in to the %1$s soon; please confirm it is conducted by yourself.</string>
     <string name="address_be_made_public_note_txt"> Your account address will be made public</string>
-    <string name="confirm_login_txt">Confirm login</string>
+    <string name="confirm_login_txt">Confirm Login</string>
 
 
     <!-- transfer confirm-->
@@ -589,7 +590,7 @@
     <string name="reload_txt">Reload</string>
 
 
-    <string name="building">In progress</string>
+    <string name="building">In Progress</string>
     <string name="build_success">Success</string>
     <string name="build_failure">Failure</string>
 
@@ -617,7 +618,7 @@
 
     <!--setting user info-->
     <string name="setting_user_head_hint">Change wallet avatar</string>
-    <string name="settting_user_title">Wallet details</string>
+    <string name="settting_user_title">Wallet Details</string>
     <string name="change_wallet_head_title">Choose Avatar</string>
 
 

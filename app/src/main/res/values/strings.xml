@@ -203,6 +203,7 @@
     <string name="user_info_wallet_id">身份 ID</string>
     <string name="user_info_backup_current_wallet">备份身份</string>
     <string name="user_info_logout">退出当前身份</string>
+    <string name="user_info_logout_title">退出当前身份</string>
     <string name="user_info_logout_loading">退出中</string>
     <string name="user_info_backup_loading">加载中</string>
     <string name="user_info_logout_notice">即将移除身份，请确保身份已备份</string>

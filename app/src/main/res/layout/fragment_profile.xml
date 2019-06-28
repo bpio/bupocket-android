@@ -315,46 +315,6 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <RelativeLayout
-                    android:id="@+id/changePwdRL"
-                    android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginTop="16dp"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:id="@+id/pwdicon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginLeft="15dp"
-                        android:background="@mipmap/icon_profile_item_pwd" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="13dp"
-                        android:layout_marginLeft="13dp"
-                        android:layout_toEndOf="@id/pwdicon"
-                        android:layout_toRightOf="@id/pwdicon"
-                        android:text="@string/change_the_password_txt"
-                        android:textSize="15sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="17.5dp"
-                        android:layout_marginRight="17.5dp"
-                        android:background="@mipmap/icon_right_arrow" />
-                </RelativeLayout>
-
 
                 <LinearLayout
                     android:id="@+id/llProfileProtocol"
