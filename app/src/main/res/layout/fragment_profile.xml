@@ -44,10 +44,10 @@
 
 
                 <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/profileAvatarIv"
+                    android:id="@+id/identityHeadRiv"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    android:src="@mipmap/ic_normal_head"
+                    android:src="@mipmap/identity_head_normal"
                     app:riv_oval="true" />
 
                 <LinearLayout

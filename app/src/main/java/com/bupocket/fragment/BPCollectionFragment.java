@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.bupocket.R;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.TO;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -70,10 +71,9 @@ public class BPCollectionFragment extends AbsBaseFragment {
         walletAddressTv.setText(currentWalletAddress);
         mBitmap = QRCodeUtil.createQRCodeBitmap(currentWalletAddress, TO.dip2px(mContext, 170), TO.dip2px(mContext, 170));
         addressQrCodeIv.setImageBitmap(mBitmap);
-
         String walletName = (String) spHelper.getSharedPreference(currentWalletAddress + "-walletName", "");
         walletNameTv.setText(walletName);
-
+        CommonUtil.setHeadIvRes(currentWalletAddress, walletIconRIV, spHelper);
     }
 
     @Override
@@ -120,8 +120,8 @@ public class BPCollectionFragment extends AbsBaseFragment {
     }
 
     private void shareQrCode() {
-        Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), mBitmap, null,null));
-        shareImg("收款码","收款码","收款码",uri);
+        Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), mBitmap, null, null));
+        shareImg("收款码", "收款码", "收款码", uri);
     }
 
 

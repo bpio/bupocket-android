@@ -1,7 +1,6 @@
 package com.bupocket.fragment;
 
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,20 +10,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.ConstantsType;
-import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.CustomNodeTypeEnum;
-import com.bupocket.enums.HiddenFunctionStatusEnum;
 import com.bupocket.enums.LanguageEnum;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -59,8 +53,8 @@ public class BPProfileHomeFragment extends BaseFragment {
     LinearLayout mSettingRL;
     @BindView(R.id.versionNameTv)
     TextView mVersionNameTv;
-    @BindView(R.id.profileAvatarIv)
-    ImageView mProfileAvatarIv;
+    @BindView(R.id.identityHeadRiv)
+    ImageView identityHeadRiv;
     @BindView(R.id.versionRL)
     RelativeLayout mVersionRl;
     @BindView(R.id.nodeSettingRl)
@@ -74,8 +68,8 @@ public class BPProfileHomeFragment extends BaseFragment {
     @BindView(R.id.newVersionCodeTV)
     TextView tvProfileLanguage;
 
-    private final static int CLICKCOUNTS = 5;
-    private final static long DURATION = 2 * 1000;
+    private String identityId;
+    private String identityAddress;
 
     @Override
     protected View onCreateView() {
@@ -133,6 +127,13 @@ public class BPProfileHomeFragment extends BaseFragment {
         initUI();
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        CommonUtil.setHeadIvRes(identityAddress, identityHeadRiv, spHelper);
+    }
+
     private void initUI() {
 
         mVersionNameTv.setText(CommonUtil.packageName(getContext()));
@@ -174,18 +175,11 @@ public class BPProfileHomeFragment extends BaseFragment {
         });
 
 
-//        int hiddenFunctionStatus = sharedPreferencesHelper.getInt("hiddenFunctionStatus", HiddenFunctionStatusEnum.DISABLE.getCode());
-//        if (HiddenFunctionStatusEnum.DISABLE.getCode() == hiddenFunctionStatus) {
-
 //        }
         mVersionRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 startFragment(new BPAboutUsFragment());
-
-//                    straightClick();
             }
         });
 
@@ -222,42 +216,13 @@ public class BPProfileHomeFragment extends BaseFragment {
 
     }
 
-    long[] mHits = new long[CLICKCOUNTS];
-
-    public void straightClick() {
-        // Listening to the straight click 5 times
-        System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
-        mHits[mHits.length - 1] = SystemClock.uptimeMillis();
-        if (mHits[0] > SystemClock.uptimeMillis() - DURATION) {
-
-            new QMUIDialog.MessageDialogBuilder(getActivity())
-                    .setMessage(getString(R.string.switch_test_net_message_txt))
-                    .addAction(getString(R.string.no_txt), new QMUIDialogAction.ActionListener() {
-                        @Override
-                        public void onClick(QMUIDialog dialog, int index) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .addAction(getString(R.string.yes_txt), new QMUIDialogAction.ActionListener() {
-                        @Override
-                        public void onClick(QMUIDialog dialog, int index) {
-                            SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus", HiddenFunctionStatusEnum.ENABLE.getCode());
-                            SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
-                            BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
-                            dialog.dismiss();
-                            startFragment(new BPSettingFragment());
-                        }
-                    })
-                    .setCanceledOnTouchOutside(false)
-                    .create().show();
-        }
-    }
 
     private void initData() {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
         userNickTx.setText(currentAccNick);
-        String identityId = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
+        identityId = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
+        identityAddress = spHelper.getSharedPreference("currentAccAddr", "").toString();
         profileAddressTv.setText(AddressUtil.anonymous(identityId));
 
 
