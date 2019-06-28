@@ -239,7 +239,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="12dp"
                     android:layout_weight="1"
-                    android:text="@string/view_change_wallet_pw" />
+                    android:text="@string/change_the_password_txt" />
 
                 <ImageView
                     android:layout_width="wrap_content"

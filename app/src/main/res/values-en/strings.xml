@@ -16,14 +16,11 @@
     <string name="wallet_create_create_btn_txt">Create now</string>
     <string name="wallet_create_recover_btn_txt">Restore identity</string>
     <string name="hint_wallet_create_form_input_identity_name">Please create your identity name</string>
-    <!--<string name="hint_wallet_create_form_input_password">Please set your password</string>-->
-    <!--<string name="hint_wallet_create_form_input_rePassword">Please confirm your password</string>-->
 
     <string name="wallet_create_form_input_identity_name_empty">Please enter your identity name</string>
     <string name="wallet_create_form_input_password_empty">Please enter your password</string>
     <string name="wallet_create_form_input_rePassword_empty">Please confirm your password</string>
     <string name="wallet_create_form_error1">Passwords do not match</string>
-    <!--<string name="wallet_create_form_error2">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>-->
 
     <string name="wallet_create_creating_txt">Creating</string>
     <string name="wallet_create_created_txt">Created successfully</string>
@@ -39,7 +36,7 @@
     <string name="backup_wallet_txt2">Make sure to back up in a safe environment with no people around and no cameras</string>
     <string name="backup_wallet_btn_txt">Back up mnemonic words</string>
     <string name="skip_backup_mneonic_btn_code">Skip</string>
-    <string name="view_title_backup_mneonic_code">Back up mnemonics</string>
+    <string name="view_title_backup_mneonic_code">Back Up Mnemonics</string>
     <string name="backup_mneonic_code_txt1">Do not take a screenshot</string>
     <string name="backup_mneonic_code_txt2">Leaking mnemonics will result in the loss of tokens. Please write down mnemonics and  store them in a safe place</string>
     <string name="backup_mneonic_code_txt3">Please record each word in order and keep it safe</string>
@@ -68,14 +65,10 @@
     <string name="password_comfirm_dialog_to_backup">Please enter the identity password to confirm the backup</string>
     <!-- 恢复身份 -->
     <string name="recover_wallet_title">Recover identity</string>
-    <!--<string name="recover_edit_mneonic_code_hint">Enter mnemonics, separated by spaces</string>-->
-    <!--<string name="recover_mneonic_input_error">The mnemonics input are incorrect. Please enter again</string>-->
-    <!--<string name="recover_edit_new_wallet_name_hint">Please enter a new identity name</string>-->
     <string name="recover_input_wallet_name_error">Only letters, numerals, and underscores are allowed and it cannot exceed 20 characters</string>
     <string name="recover_set_pwd_hint">Please set a password</string>
     <string name="recover_set_pwd_error">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>
     <string name="recover_confirm_pwd_hint">Confirm password</string>
-    <!--<string name="recover_confirm_pwd_error">Passwords do not match</string>-->
     <string name="recover_wallet_next_btn">Restore</string>
     <string name="recover_wallet_reloading">Recovering</string>
     <string name="recover_wallet_error_tip">The mnemonic words entered are incorrect, please enter again</string>
@@ -625,7 +618,7 @@
     <!--setting user info-->
     <string name="setting_user_head_hint">Change wallet avatar</string>
     <string name="settting_user_title">Wallet details</string>
-    <string name="change_wallet_head_title">Choose avatar</string>
+    <string name="change_wallet_head_title">Choose Avatar</string>
 
 
 
@@ -655,9 +648,9 @@
         • Security password can only be modified, but cannot be retrieved or reset, so please keep in mind。</string>
     <string name="create_wallet_name_err_hint">Letters, Chinese characters, numbers and underscores are allowed to input, but the length cannot exceed 20 characters</string>
     <string name="create_wallet_pw_err_hint">The security password must be composed of numbers and uppercase or lowercase letters and the combination must be </string>
-    <string name="view_change_wallet_pw">Modify wallet password</string>
+    <string name="view_change_wallet_pw">Modify Wallet Password</string>
     <string name="wallet_create_form_error2">The password must be composed of numbers and uppercase or lowercase letters and the combination must be between 6-30 characters</string>
-    <string name="change_the_password_txt">Modify security password</string>
+    <string name="change_the_password_txt">Modify Security Password</string>
     <string name="import_mnemonic_wallet_name">Please set the wallet name</string>
     <string name="hint_wallet_create_form_input_password">Please set the security password between 6-30 characters</string>
     <string name="hint_wallet_create_form_input_rePassword">Please confirm the security password again</string>

@@ -17,7 +17,6 @@ import android.widget.Toast;
 import com.bupocket.R;
 import com.bupocket.adaptor.HeadIconAdapter;
 import com.bupocket.base.AbsBaseFragment;
-import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.model.HeadIconModel;
 import com.bupocket.utils.CommonUtil;
@@ -28,7 +27,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 
-public class SettingWalletInfoFragment extends AbsBaseFragment {
+public class WalletDetailsFragment extends AbsBaseFragment {
 
 
     @BindView(R.id.topbar)
@@ -36,19 +35,19 @@ public class SettingWalletInfoFragment extends AbsBaseFragment {
     @BindView(R.id.walletHeadRiv)
     ImageView walletHeadRiv;
     @BindView(R.id.settingWalletHeadLL)
-    LinearLayout llSettingUserHead;
+    LinearLayout settingWalletHeadLL;
     @BindView(R.id.settingWalletNameTv)
-    TextView tvSettingUserName;
+    TextView settingWalletNameTv;
     @BindView(R.id.settingWalletNameLL)
-    LinearLayout llSettingUserName;
+    LinearLayout settingWalletNameLL;
     private String walletAddress;
     private String walletName;
 
-    private ArrayList<HeadIconModel> headData;
+    private ArrayList<HeadIconModel> headResData;
 
     @Override
     protected int getLayoutView() {
-        return R.layout.fragment_setting_userin_info;
+        return R.layout.fragment_wallet_details;
     }
 
     @Override
@@ -72,7 +71,7 @@ public class SettingWalletInfoFragment extends AbsBaseFragment {
         Bundle arguments = getArguments();
         walletAddress = arguments.getString("address", "");
         walletName = arguments.getString("walletName", "");
-        tvSettingUserName.setText(walletName);
+        settingWalletNameTv.setText(walletName);
 
 
 
@@ -88,14 +87,14 @@ public class SettingWalletInfoFragment extends AbsBaseFragment {
     @Override
     protected void setListeners() {
 
-        llSettingUserHead.setOnClickListener(new View.OnClickListener() {
+        settingWalletHeadLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 settingHeadIcon();
             }
         });
 
-        llSettingUserName.setOnClickListener(new View.OnClickListener() {
+        settingWalletNameLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 settingName();
@@ -110,21 +109,21 @@ public class SettingWalletInfoFragment extends AbsBaseFragment {
         qmuiDialog.setContentView(R.layout.view_change_wallet_head_icon);
         RecyclerView headIconRv = (RecyclerView) qmuiDialog.findViewById(R.id.headIconRV);
         int oldPosition = (int) spHelper.getSharedPreference(walletAddress + ConstantsType.WALLET_HEAD_ICON, 0);
-        headData = new ArrayList<>();
+        headResData = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             HeadIconModel headIconModel = new HeadIconModel();
             headIconModel.setIconRes(CommonUtil.getWalletHeadRes(i));
             headIconModel.setSelectedPosition(oldPosition);
-            headData.add(headIconModel);
+            headResData.add(headIconModel);
         }
-        final HeadIconAdapter adapter = new HeadIconAdapter(mContext, headData);
+        final HeadIconAdapter adapter = new HeadIconAdapter(mContext, headResData);
         adapter.setOnItemClickListener(new HeadIconAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-                for (int i = 0; i < headData.size(); i++) {
-                    headData.get(i).setSelectedPosition(position);
+                for (int i = 0; i < headResData.size(); i++) {
+                    headResData.get(i).setSelectedPosition(position);
                 }
-                adapter.setData(headData);
+                adapter.setData(headResData);
             }
         });
         headIconRv.setAdapter(adapter);
@@ -157,7 +156,7 @@ public class SettingWalletInfoFragment extends AbsBaseFragment {
 
     private void saveHeadData() {
 
-        int selectedPosition = headData.get(0).getSelectedPosition();
+        int selectedPosition = headResData.get(0).getSelectedPosition();
         spHelper.put(walletAddress+ ConstantsType.WALLET_HEAD_ICON,selectedPosition);
         walletHeadRiv.setImageResource(CommonUtil.getWalletHeadRes(selectedPosition));
     }
@@ -221,7 +220,7 @@ public class SettingWalletInfoFragment extends AbsBaseFragment {
                     spHelper.put(walletAddress + "-walletName", walletNewName);
                 }
 
-                tvSettingUserName.setText(walletNewName);
+                settingWalletNameTv.setText(walletNewName);
 
                 qmuiDialog.dismiss();
             }

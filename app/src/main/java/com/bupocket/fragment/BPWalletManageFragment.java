@@ -17,7 +17,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
-import com.bupocket.common.ConstantsType;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
@@ -32,7 +31,6 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import org.bitcoinj.crypto.MnemonicCode;
 
 import java.util.ArrayList;
-import java.util.IdentityHashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -95,7 +93,7 @@ public class BPWalletManageFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-                SettingWalletInfoFragment fragment = new SettingWalletInfoFragment();
+                WalletDetailsFragment fragment = new WalletDetailsFragment();
                 Bundle args = new Bundle();
                 args.putString("address", walletAddress);
                 args.putString("walletName", walletName);
