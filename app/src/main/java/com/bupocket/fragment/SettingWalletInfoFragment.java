@@ -70,12 +70,8 @@ public class SettingWalletInfoFragment extends AbsBaseFragment {
     protected void initData() {
 
         Bundle arguments = getArguments();
-//        args.putString("address",walletAddress);
-//        args.putString("walletName",walletName);
-//        args.putString("walletIon","walletIon");
         walletAddress = arguments.getString("address", "");
         walletName = arguments.getString("walletName", "");
-
         tvSettingUserName.setText(walletName);
 
 
@@ -174,8 +170,8 @@ public class SettingWalletInfoFragment extends AbsBaseFragment {
         qmuiDialog.setContentView(R.layout.view_change_wallet_name);
         qmuiDialog.show();
 
-        TextView cancelTv = qmuiDialog.findViewById(R.id.cancelTV);
-        final TextView confirmTv = qmuiDialog.findViewById(R.id.cancelTV);
+        TextView cancelTv = qmuiDialog.findViewById(R.id.cancelNameTv);
+        final TextView confirmTv = qmuiDialog.findViewById(R.id.confirmNameTv);
         final EditText walletNewNameEt = qmuiDialog.findViewById(R.id.walletNewNameEt);
         walletNewNameEt.setHint(walletName);
 

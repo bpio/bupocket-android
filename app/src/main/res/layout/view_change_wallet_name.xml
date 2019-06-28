@@ -62,7 +62,7 @@
                 android:layout_marginTop="15dp">
 
                 <TextView
-                    android:id="@+id/cancelTv"
+                    android:id="@+id/cancelNameTv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -78,7 +78,7 @@
                     android:background="@color/app_txt_color_gray_3" />
 
                 <TextView
-                    android:id="@+id/confirmTv"
+                    android:id="@+id/confirmNameTv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
