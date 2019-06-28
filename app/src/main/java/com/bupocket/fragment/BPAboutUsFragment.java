@@ -208,7 +208,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
                     }
                 });
             } else {
-                changeTestLL.setVisibility(View.VISIBLE);
+                customEnvironmentLL.setVisibility(View.VISIBLE);
             }
         }
 

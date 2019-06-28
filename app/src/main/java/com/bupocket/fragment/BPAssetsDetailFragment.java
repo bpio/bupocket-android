@@ -267,13 +267,16 @@ public class BPAssetsDetailFragment extends BaseFragment {
 
             for (GetMyTxsRespDto.TxRecordBean obj : getMyTxsRespDto.getTxRecord()) {
 
-                String txAccountAddress = AddressUtil.anonymous((obj.getOutinType().equals(OutinTypeEnum.OUT.getCode())) ? obj.getToAddress() : obj.getFromAddress());
+                if (obj==null) {
+                    return;
+                }
+                String txAccountAddress = AddressUtil.anonymous((OutinTypeEnum.OUT.getCode().equals(obj.getOutinType())) ? obj.getToAddress() : obj.getFromAddress());
                 String amountStr = null;
                 String txStartStr = null;
                 if (obj.getAmount().equals("0")) {
                     amountStr = obj.getAmount();
                 } else {
-                    if (obj.getOutinType().equals(OutinTypeEnum.OUT.getCode())) {
+                    if (OutinTypeEnum.OUT.getCode().equals(obj.getOutinType())) {
                         amountStr =getString(R.string.comm_out) + obj.getAmount();
                     } else {
                         amountStr = getString(R.string.comm_in) + obj.getAmount();

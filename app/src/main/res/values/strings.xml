@@ -206,7 +206,7 @@
     <string name="user_info_logout_title">退出当前身份</string>
     <string name="user_info_logout_loading">退出中</string>
     <string name="user_info_backup_loading">加载中</string>
-    <string name="user_info_logout_notice">即将移除身份，请确保身份已备份</string>
+    <string name="user_info_logout_notice">即将退出当前身份，请确保身份已备份</string>
     <string name="user_info_logout_warning">警告：若未妥善备份，退出后将无法找回身份，请慎重处理该操作</string>
 
     <string name="common_dialog_cancel">取消</string>

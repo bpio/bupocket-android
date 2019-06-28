@@ -180,7 +180,7 @@
     <string name="user_info_logout_title">Exit the Current Identity</string>
     <string name="user_info_logout_loading">Logging out</string>
     <string name="user_info_backup_loading">Loading</string>
-    <string name="user_info_logout_notice">The identity is removed soon. Please ensure that your identity has been backed up</string>
+    <string name="user_info_logout_notice">The current identity will be exited soon. Please ensure that your identity has been backed up</string>
     <string name="user_info_logout_warning">Warning: If you do not back up properly, you will not be able to retrieve your identity after you log out. Please handle this operation carefully.</string>
 
     <string name="common_dialog_cancel">Cancel</string>
@@ -696,7 +696,7 @@
 
 
     <!--node setting -->
-    <string name="add_node">Add a custom node</string>
+    <string name="add_node">Add a Custom Node</string>
     <string name="node_setting_title">Node Setting</string>
     <string name="add_node_address_title">Please enter a valid node address</string>
     <string name="edit_node_info">Edit</string>

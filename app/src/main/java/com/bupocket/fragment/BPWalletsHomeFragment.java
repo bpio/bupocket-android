@@ -103,7 +103,7 @@ public class BPWalletsHomeFragment extends AbsBaseFragment {
         initCurrentIdentityView();
         initImportedWalletView();
 
-        CommonUtil.setHeadIvRes(currentWalletAddress,walletHeadRiv,spHelper);
+        CommonUtil.setHeadIvRes(currentIdentityWalletAddress,walletHeadRiv,spHelper);
     }
 
     @Override
