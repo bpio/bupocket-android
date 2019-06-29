@@ -13,4 +13,5 @@ public class ConstantsType {
 
     public static final String WALLET_HEAD_ICON = "walletHead";
     public static final String HIDDEN_CUSTOM_SERVICE = "hiddenFunctionCustomStatus";
+
 }
