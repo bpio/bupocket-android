@@ -47,16 +47,22 @@ public class HomeFragment extends BaseFragment {
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_asset_selected),
                 getResources().getString(R.string.tabbar_assets_txt), false
         );
-        QMUITabSegment.Tab profile = new QMUITabSegment.Tab(
-                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_profile),
-                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_profile_selected),
-                getResources().getString(R.string.tabbar_profile_txt), false
+        QMUITabSegment.Tab voucher = new QMUITabSegment.Tab(
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabber_voucher_selected),
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_voucher),
+                getResources().getString(R.string.tabbar_assets_txt), false
         );
         QMUITabSegment.Tab discover = new QMUITabSegment.Tab(
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_discover),
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_discover_selected),
                 getResources().getString(R.string.tabbar_discover_txt), false
         );
+        QMUITabSegment.Tab profile = new QMUITabSegment.Tab(
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_profile),
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_profile_selected),
+                getResources().getString(R.string.tabbar_profile_txt), false
+        );
+
         mTabSegment.addTab(assets);
         mTabSegment.addTab(discover);
         mTabSegment.addTab(profile);

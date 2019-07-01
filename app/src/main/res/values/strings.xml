@@ -752,4 +752,7 @@
     <string name="not_use_wallet_service">无效的钱包服务地址</string>
     <string name="change_pwd_success_hint"> 的安全密码已修改成功！</string>
 
+
+    <!---->
+
 </resources>
