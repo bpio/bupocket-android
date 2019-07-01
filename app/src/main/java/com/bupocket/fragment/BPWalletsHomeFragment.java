@@ -212,7 +212,8 @@ public class BPWalletsHomeFragment extends AbsBaseFragment {
 
                     if (getArguments() != null) {
                         if (BPVoucherHomeFragment.class.getSimpleName().equals(getArguments().getString(ConstantsType.FRAGMENT_TAG))) {
-                            startFragment(new BPVoucherHomeFragment());
+                            HomeFragment fragment = new HomeFragment();
+                            startFragment(fragment);
                         }
                     } else {
                         startFragment(new HomeFragment());

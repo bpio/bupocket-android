@@ -13,12 +13,12 @@
         android:fitsSystemWindows="true" />
 
 
-    <ListView
-        android:id="@+id/voucher_list_Lv"
+    <include
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/qmui_topbar_height"
-        android:fitsSystemWindows="true" />
+        android:fitsSystemWindows="true"
+        layout="@layout/view_voucher_lv_layout"/>
 
 
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

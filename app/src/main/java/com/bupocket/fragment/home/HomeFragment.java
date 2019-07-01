@@ -32,7 +32,7 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.pager)
     ViewPager mViewPager;
     @BindView(R.id.tabs)
-    QMUITabSegment mTabSegment;
+    public QMUITabSegment mTabSegment;
 
     @Override
     protected View onCreateView() {

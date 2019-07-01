@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="15dp"
+    android:layout_marginRight="15dp"
+    android:background="@mipmap/icon_voucher_package_bg"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/acceptanceIconRiv"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="12dp"
+        android:src="@mipmap/icon_goods_empty"
+        app:riv_oval="true" />
+
+
+    <TextView
+        android:id="@+id/acceptanceNameTv"
+        style="@style/BPTextViewCommon13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="14dp"
+        android:layout_toRightOf="@id/acceptanceRiv"
+        tools:text="name" />
+
+    <ImageView
+        android:id="@+id/voucherGoodsIv"
+        android:layout_width="62dp"
+        android:layout_height="62dp"
+        android:layout_below="@+id/acceptanceRiv"
+        android:layout_marginTop="12dp"
+        android:background="@mipmap/icon_goods_empty" />
+
+    <TextView
+        android:id="@+id/goodsNameTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/voucherGoodsIv"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toRightOf="@id/voucherGoodsIv"
+        android:textColor="@color/app_color_black"
+        android:textSize="13sp"
+        tools:text="goods name" />
+
+    <TextView
+        android:id="@+id/goodsPriceTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/goodsNameTv"
+        android:layout_alignLeft="@id/goodsNameTv"
+        android:layout_alignBottom="@id/voucherGoodsIv"
+        android:layout_marginBottom="5dp"
+        android:layout_toRightOf="@+id/voucherGoodsIv"
+        android:gravity="bottom"
+        android:text="@string/goods_price"
+        android:textColor="#3F3F3F"
+        android:textSize="12sp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/goodsNumTv"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="2dp"
+        android:layout_toLeftOf="@+id/goodsNumTv"
+        android:text="x"
+        android:textColor="@color/app_color_black"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/goodsNumTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/voucherGoodsIv"
+        android:layout_alignParentRight="true"
+        android:textColor="@color/app_color_black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:text="30" />
+
+
+    <TextView
+        android:id="@+id/goodsDateTv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/goods_validity_date" />
+
+
+</RelativeLayout>

@@ -33,7 +33,6 @@
     <string name="view_title_create_wallet_identity">创建身份</string>
 
 
-
     <string name="backup_wallet_txt2">请确保在四周无人，没有摄像头的安全环境下备份</string>
     <string name="backup_wallet_btn_txt">备份助记词</string>
 
@@ -617,8 +616,6 @@
     <string name="settting_user_title">钱包详情</string>
 
 
-
-
     <!--profile -->
     <string name="profile_currency">计价货币</string>
     <string name="profile_language">显示语言</string>
@@ -684,7 +681,6 @@
     <string name="wallet_manage">钱包管理</string>
 
 
-
     <!--change pwd-->
     <string name="wallet_info">钱包信息</string>
     <string name="change_old_pwd">请输入原安全密码</string>
@@ -692,7 +688,6 @@
     <string name="change_new_pwd">请设置新安全密码</string>
     <string name="change_new_pwd_confirm">再次确认新安全密码</string>
     <string name="change_confirm_change">确认修改</string>
-
 
 
     <!--setting user info-->
@@ -733,7 +728,6 @@
     <string name="create_wallet_name_title">请设置钱包名称</string>
 
 
-
     <!--custom net-->
     <string name="wallet_service_title">钱包服务</string>
     <string name="wallet_service_hint">请输入钱包服务地址</string>
@@ -746,7 +740,6 @@
     <string name="note">注意：</string>
 
 
-
     <string name="wallet_create_error">钱包创建失败</string>
     <string name="delete_node_info">当前删除节点为选中状态，删除后将选中系统默认设置节点。</string>
     <string name="not_use_wallet_service">无效的钱包服务地址</string>
@@ -754,6 +747,9 @@
 
 
     <!--voucher package-->
-
     <string name="tabbar_toucher_txt">券包</string>
+    <string name="voucher_empty">这里一张券都没有</string>
+    <string name="voucher_empty_btn">分享收款码转入券</string>
+    <string name="goods_price">面值：¥</string>
+    <string name="goods_validity_date">有效期：%1$s至%2$s</string>
 </resources>

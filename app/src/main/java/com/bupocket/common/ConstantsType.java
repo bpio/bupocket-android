@@ -15,4 +15,5 @@ public class ConstantsType {
     public static final String HIDDEN_CUSTOM_SERVICE = "hiddenFunctionCustomStatus";
 
     public static final String FRAGMENT_TAG = "fragmentTag";
+    public static final String ADDRESS = "address";
 }

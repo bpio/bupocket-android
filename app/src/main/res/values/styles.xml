@@ -319,4 +319,25 @@
         <item name="android:layout_marginLeft">13dp</item>
     </style>
 
+
+    <style name="BPTextViewCommon15">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/app_txt_color_gray</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+    <style name="BPTextViewCommon13">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/app_txt_color_gray</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="BPTextViewCommonGreen16">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/app_color_green</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
 </resources>

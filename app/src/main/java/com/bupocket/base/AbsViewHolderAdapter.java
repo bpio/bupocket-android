@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 public abstract class AbsViewHolderAdapter<ItemDataType> extends AbsBaseAdapter<ItemDataType> {
     protected abstract int getLayoutId();
 
-    protected AbsViewHolderAdapter(@NonNull Context context) {
+    public AbsViewHolderAdapter(@NonNull Context context) {
         super(context);
     }
 
