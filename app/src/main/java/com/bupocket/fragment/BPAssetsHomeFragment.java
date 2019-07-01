@@ -469,7 +469,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
         if (isStart == CustomNodeTypeEnum.START.getServiceType()) {
             mCurrentTestNetTipsTv.setText(getString(R.string.custom_environment));
-            mAssetLinearLayout.setBackgroundResource(R.mipmap.ic_asset_home_bg_test_net);
+            mAssetLinearLayout.setBackgroundResource(R.mipmap.ic_custom_service_bg);
 
         } else if (SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()) {
             mCurrentTestNetTipsTv.setText(getString(R.string.current_test_message_txt));
