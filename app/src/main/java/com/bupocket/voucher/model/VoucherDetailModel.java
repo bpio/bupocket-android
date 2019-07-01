@@ -1,8 +1,9 @@
 package com.bupocket.voucher.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class VoucherDetailModel {
+public class VoucherDetailModel implements Serializable {
 
         private String balance;
         private String contractAddress;

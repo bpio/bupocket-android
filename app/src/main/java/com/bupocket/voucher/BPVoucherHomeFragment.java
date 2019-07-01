@@ -3,6 +3,7 @@ package com.bupocket.voucher;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -18,6 +19,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.utils.WalletLocalInfoUtil;
 import com.bupocket.voucher.adapter.VoucherAdapter;
 import com.bupocket.voucher.http.VoucherService;
+import com.bupocket.voucher.model.VoucherDetailModel;
 import com.bupocket.voucher.model.VoucherListModel;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -134,6 +136,15 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
             @Override
             public void onClick(View v) {
                 refreshLayout.autoRefresh(0, 200, 1, false);
+            }
+        });
+
+        voucherListLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                VoucherDetailModel voucherDetailModel = adapter.getData().get(position);
+
+
             }
         });
 
