@@ -203,6 +203,7 @@
     <string name="user_info_wallet_id">身份 ID</string>
     <string name="user_info_backup_current_wallet">备份身份</string>
     <string name="user_info_logout">退出当前身份</string>
+    <string name="user_info_logout_title">退出当前身份</string>
     <string name="user_info_logout_loading">退出中</string>
     <string name="user_info_backup_loading">加载中</string>
     <string name="user_info_logout_notice">即将退出当前身份，请确保身份已备份</string>
@@ -749,5 +750,6 @@
     <string name="wallet_create_error">钱包创建失败</string>
     <string name="delete_node_info">当前删除节点为选中状态，删除后将选中系统默认设置节点。</string>
     <string name="not_use_wallet_service">无效的钱包服务地址</string>
+    <string name="change_pwd_success_hint"> 的安全密码已修改成功！</string>
 
 </resources>

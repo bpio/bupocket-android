@@ -24,6 +24,7 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.WalletCurrentUtils;
@@ -120,6 +121,8 @@ public class BPChangePwdFragment extends BaseFragment {
                                     @Override
                                     public void run() {
                                         popBackStack();
+
+                                        DialogUtils.showMessageNoTitleDialog(mContext,walletNameTv.getText()+getResources().getString(R.string.change_pwd_success_hint));
                                     }
                                 });
 
