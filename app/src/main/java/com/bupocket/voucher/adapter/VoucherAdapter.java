@@ -3,6 +3,7 @@ package com.bupocket.voucher.adapter;
 import android.content.Context;
 import android.content.MutableContextWrapper;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TimeUtils;
 import android.widget.ImageView;
@@ -39,19 +40,23 @@ public class VoucherAdapter extends AbsViewHolderAdapter<VoucherDetailModel> {
                 .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(itemData.getVoucherAcceptance().getIcon()))
                 .into(acceptanceIconRiv);
 
-        Glide.with(context)
-                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(itemData.getVoucherIcon()))
-                .into(voucherGoodsIv);
-
+        String voucherIcon = itemData.getVoucherIcon();
+        if (TextUtils.isEmpty(voucherIcon)) {
+            Glide.with(context)
+                    .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(voucherIcon))
+                    .into(voucherGoodsIv);
+        }
 
         holder.setText(R.id.acceptanceNameTv, itemData.getVoucherAcceptance().getName());
         holder.setText(R.id.goodsNameTv, itemData.getVoucherName());
+        holder.setText(R.id.goodsNumTv, itemData.getBalance());
         holder.setText(R.id.goodsPriceTv, context.getString(R.string.goods_price) + itemData.getFaceValue());
 
         holder.setText(R.id.goodsDateTv,
                 String.format(context.getString(R.string.goods_validity_date),
                         TimeUtil.timeStamp2Date(itemData.getStartTime()),
                         TimeUtil.timeStamp2Date(itemData.getEndTime())));
+
 
 
     }

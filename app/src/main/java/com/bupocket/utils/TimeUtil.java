@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.IntentSender;
 import android.content.res.Resources;
 import android.icu.text.TimeZoneFormat;
+import android.text.TextUtils;
+import android.view.TextureView;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -23,6 +25,7 @@ public class TimeUtil {
     private static long month = day * 30;
     public static final String TIME_TYPE = "yyyy-MM-dd HH:mm:ss";
     public static final String TIME_TYPE_ONE = "yyyy.MM.dd";
+    public static final String TIME_TYPE_YYYYY_MM_DD = "yyyy-MM-dd";
 
     // string类型转换为long类型
     // strTime要转换的String类型的时间
@@ -103,13 +106,24 @@ public class TimeUtil {
     }
 
     public static String timeStamp2Date(String seconds, String format) {
-        if (seconds == null || seconds.isEmpty() || seconds.equals("null")) {
+
+        if (TextUtils.isEmpty(seconds)) {
             return "";
         }
-        seconds = seconds.substring(0, 10) + "000";
-        if (format == null || format.isEmpty()) format = TIME_TYPE;
-        SimpleDateFormat sdf = new SimpleDateFormat(format);
-        Long date = Long.valueOf(seconds);
+        SimpleDateFormat sdf = null;
+        Long date = null;
+        try {
+            if (seconds == null || seconds.isEmpty() || seconds.equals("null")) {
+                return "";
+            }
+            seconds = seconds.substring(0, 10) + "000";
+            if (format == null || format.isEmpty()) format = TIME_TYPE;
+            sdf = new SimpleDateFormat(format);
+            date = Long.valueOf(seconds);
+        } catch (Exception e) {
+            return "";
+        }
+
         return sdf.format(new Date(date));
     }
 

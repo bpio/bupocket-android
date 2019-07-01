@@ -110,11 +110,14 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
         reqVoucherAllData(1);
 
 
+
+
     }
 
     private void reqVoucherAllData(int index) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put(ConstantsType.ADDRESS, WalletLocalInfoUtil.getInstance(spHelper).getWalletAddress());
+//        map.put(ConstantsType.ADDRESS, WalletLocalInfoUtil.getInstance(spHelper).getWalletAddress());
+        map.put(ConstantsType.ADDRESS, "buQrp3BCVdfbb5mJjNHZQwHvecqe7CCcounY");
         map.put(ConstantsType.PAGE_START, index);
         map.put(ConstantsType.PAGE_SIZE, pageSize);
 
