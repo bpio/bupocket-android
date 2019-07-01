@@ -753,6 +753,7 @@
     <string name="change_pwd_success_hint"> 的安全密码已修改成功！</string>
 
 
-    <!---->
+    <!--voucher package-->
 
+    <string name="tabbar_toucher_txt">券包</string>
 </resources>

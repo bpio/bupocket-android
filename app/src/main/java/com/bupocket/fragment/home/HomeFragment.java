@@ -16,6 +16,7 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.BPAssetsHomeFragment;
 import com.bupocket.fragment.BPProfileHomeFragment;
 import com.bupocket.fragment.discover.BPDiscoverHomeFragment;
+import com.bupocket.fragment.voucher.BPVoucherHomeFragment;
 import com.qmuiteam.qmui.widget.QMUIPagerAdapter;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 
@@ -32,6 +33,7 @@ public class HomeFragment extends BaseFragment {
     ViewPager mViewPager;
     @BindView(R.id.tabs)
     QMUITabSegment mTabSegment;
+
     @Override
     protected View onCreateView() {
         FrameLayout layout = (FrameLayout) LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null);
@@ -50,7 +52,7 @@ public class HomeFragment extends BaseFragment {
         QMUITabSegment.Tab voucher = new QMUITabSegment.Tab(
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabber_voucher_selected),
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_voucher),
-                getResources().getString(R.string.tabbar_assets_txt), false
+                getResources().getString(R.string.tabbar_toucher_txt), false
         );
         QMUITabSegment.Tab discover = new QMUITabSegment.Tab(
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_discover),
@@ -64,6 +66,7 @@ public class HomeFragment extends BaseFragment {
         );
 
         mTabSegment.addTab(assets);
+        mTabSegment.addTab(voucher);
         mTabSegment.addTab(discover);
         mTabSegment.addTab(profile);
         mTabSegment.setDefaultSelectedColor(getContext().getResources().getColor(R.color.app_color_green));
@@ -71,10 +74,10 @@ public class HomeFragment extends BaseFragment {
         mTabSegment.addOnTabSelectedListener(new QMUITabSegment.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int index) {
-                if (index==1){
-                    isDisFragment=true;
-                }else{
-                    isDisFragment=false;
+                if (index == 1) {
+                    isDisFragment = true;
+                } else {
+                    isDisFragment = false;
                 }
             }
 
@@ -107,7 +110,7 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public int getCount() {
-                return 3;
+                return 4;
             }
 
             @Override
@@ -116,6 +119,8 @@ public class HomeFragment extends BaseFragment {
                     case 0:
                         return getResources().getString(R.string.tabbar_assets_txt);
                     case 1:
+                        return getResources().getString(R.string.tabbar_toucher_txt);
+                    case 2:
                         return getResources().getString(R.string.tabbar_discover_txt);
                     case 3:
                     default:
@@ -132,15 +137,17 @@ public class HomeFragment extends BaseFragment {
                             .beginTransaction();
                 }
                 Fragment fragment = getChildFragmentManager().findFragmentByTag(name);
-                if(fragment != null){
+                if (fragment != null) {
                     return fragment;
                 }
                 switch (position) {
                     case 0:
                         return new BPAssetsHomeFragment();
                     case 1:
-                        return new BPDiscoverHomeFragment();
+                        return new BPVoucherHomeFragment();
                     case 2:
+                        return new BPDiscoverHomeFragment();
+                    case 3:
                     default:
                         return new BPProfileHomeFragment();
                 }
@@ -157,7 +164,7 @@ public class HomeFragment extends BaseFragment {
                 Fragment fragment = getChildFragmentManager().findFragmentByTag(name);
                 if (fragment != null) {
                     mCurrentTransaction.attach(fragment);
-                    if(fragment.getView() != null && fragment.getView().getWidth() == 0){
+                    if (fragment.getView() != null && fragment.getView().getWidth() == 0) {
                         fragment.getView().requestLayout();
                     }
                 } else {
@@ -218,7 +225,7 @@ public class HomeFragment extends BaseFragment {
             }
         };
         mViewPager.setAdapter(pagerAdapter);
-        mTabSegment.setupWithViewPager(mViewPager,false, true);
+        mTabSegment.setupWithViewPager(mViewPager, false, true);
     }
 
     @Override
@@ -227,6 +234,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private long exitTime = 0;
+
     public void onBackPressed() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {
             Toast.makeText(getContext(), getResources().getText(R.string.next_key_down_err), Toast.LENGTH_SHORT).show();
