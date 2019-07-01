@@ -357,6 +357,13 @@ public class BPWalletImportFragment extends BaseFragment {
         } else {
             spHelper.put(address + "-walletName", walletName);
             spHelper.put(address + "-BPdata", bpData);
+            if (walletBPData.getSkey()!=null) {
+                spHelper.put(address+"-skey", walletBPData.getSkey());
+            }
+//            else {
+//                spHelper.put(address+"-skey", walletBPData.getAccounts().get(0).getSecret());
+//            }
+
             importedWallets.add(address);
             spHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));
             ToastUtil.showToast(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT);

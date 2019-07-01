@@ -141,6 +141,8 @@ public class Wallet {
         getSkey(password, ciphertextSkeyData);
     }
 
+
+
     public byte[] getSkey(String password, String ciphertextSkeyData) throws Exception {
         BaseKeyStoreEntity baseKeyStoreEntity = JSON.parseObject(ciphertextSkeyData, BaseKeyStoreEntity.class);
         String skeyHex = KeyStore.decodeMsg(password, baseKeyStoreEntity);

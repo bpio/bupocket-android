@@ -228,9 +228,6 @@ public class BPProfileHomeFragment extends BaseFragment {
     }
 
 
-    private void gotoChangePwdFragment() {
-        startFragment(new BPChangePwdFragment());
-    }
 
     private void gotoHelpFeedbackFragment() {
         startFragment(new BPHelpFeedbackFragment());

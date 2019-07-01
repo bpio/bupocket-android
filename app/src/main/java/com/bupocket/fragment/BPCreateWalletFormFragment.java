@@ -223,6 +223,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
         } else {
             spHelper.put(address + "-walletName", walletName);
             spHelper.put(address + "-BPdata", bpData);
+            spHelper.put(address+"-skey", walletBPData.getSkey());
             importedWallets.add(address);
             spHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));
             getActivity().runOnUiThread(new Runnable() {
