@@ -14,11 +14,11 @@
 
 
     <include
+        layout="@layout/view_voucher_lv_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/qmui_topbar_height"
         android:fitsSystemWindows="true"
-        layout="@layout/view_voucher_lv_layout"/>
+        android:layout_marginTop="?attr/qmui_topbar_height" />
 
 
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

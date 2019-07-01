@@ -52,6 +52,9 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     SmartRefreshLayout refreshLayout;
     @BindView(R.id.qmuiEmptyView)
     QMUIEmptyView qmuiEmptyView;
+    @BindView(R.id.voucherEmptyLL)
+    LinearLayout voucherEmptyLL;
+
 
 
     private VoucherService voucherService;
@@ -120,14 +123,31 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
         voucherService.getVoucherPackage(map).enqueue(new Callback<ApiResult<VoucherListModel>>() {
             @Override
             public void onResponse(Call<ApiResult<VoucherListModel>> call, Response<ApiResult<VoucherListModel>> response) {
+                ApiResult<VoucherListModel> body = response.body();
 
+                if (body!=null&&ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())&&body.getData().getVoucherList().size()>0) {
+                    adapter.setNewData(body.getData().getVoucherList());
+                    if (voucherEmptyLL!=null) {
+                        voucherEmptyLL.setVisibility(View.GONE);
+                    }
+                    if (loadFailedLL!=null) {
+                        loadFailedLL.setVisibility(View.GONE);
+                    }
 
-//                ExceptionEnum.SUCCESS.getCode().equals(response.);
+                }else{
+                    if (voucherEmptyLL!=null) {
+                        voucherEmptyLL.setVisibility(View.VISIBLE);
+                    }
+
+                }
 
             }
 
             @Override
             public void onFailure(Call<ApiResult<VoucherListModel>> call, Throwable t) {
+                if (loadFailedLL!=null) {
+                    loadFailedLL.setVisibility(View.VISIBLE);
+                }
 
             }
         });
