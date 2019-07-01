@@ -65,6 +65,7 @@ public class HomeFragment extends BaseFragment {
                 getResources().getString(R.string.tabbar_profile_txt), false
         );
 
+
         mTabSegment.addTab(assets);
         mTabSegment.addTab(voucher);
         mTabSegment.addTab(discover);

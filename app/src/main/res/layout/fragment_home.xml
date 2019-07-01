@@ -19,4 +19,5 @@
         android:background="?attr/qmui_list_item_bg_with_border_top"
         android:textSize="12sp"
         app:qmui_tab_icon_position="top" />
+
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
