@@ -745,6 +745,6 @@
     <string name="delete_node_info">The to-be-deleted node is selected, and the default node in the system will be selected after deletion.</string>
     <string name="not_use_wallet_service">Invalid wallet service address</string>
 
-
+    <string name="change_pwd_success_hint"> security password has been changed！</string>
 
 </resources>
