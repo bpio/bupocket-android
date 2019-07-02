@@ -98,7 +98,7 @@
                 android:layout_below="@+id/goodsNameTv"
                 android:layout_alignBottom="@id/voucherGoodsIv"
                 android:layout_alignParentRight="true"
-                android:layout_marginBottom="5dp"
+                android:layout_marginRight="7dp"
                 android:gravity="bottom"
                 android:text="@string/goods_price"
                 android:textColor="@color/app_txt_color_gray"
@@ -213,31 +213,31 @@
 
 
             <LinearLayout
-                android:id="@+id/settingRL"
+                android:id="@+id/dPartyLL"
                 style="@style/BPLLDiscover">
 
 
                 <TextView
                     style="@style/BPTextViewDiscover"
+                    android:layout_marginLeft="0dp"
                     android:text="@string/d_party"
                     android:textColor="@color/app_txt_color_gray"
                     android:textSize="14sp" />
 
                 <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/settingIcon"
+                    android:id="@+id/dPartyRiv"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:layout_marginRight="5dp"
                     android:layout_marginLeft="10dp"
-                    android:background="@mipmap/currency_price"
+                    android:layout_marginRight="5dp"
                     android:src="@mipmap/icon_goods_empty"
                     app:riv_oval="true" />
 
                 <TextView
-                    android:id="@+id/tvProfileCurrency"
+                    android:id="@+id/dPartyTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="8dp"
                     android:text="CNY"
                     android:textColor="@color/app_txt_color_gray_2"
                     android:textSize="15sp" />
@@ -248,8 +248,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="17.5dp"
-                    android:layout_marginRight="17.5dp"
                     android:background="@mipmap/icon_right_arrow" />
             </LinearLayout>
 
@@ -260,32 +258,32 @@
                 android:background="@color/gray_line" />
 
             <LinearLayout
-                android:id="@+id/versionUpdate"
+                android:id="@+id/assetIssuerLL"
                 style="@style/BPLLDiscover">
 
 
                 <TextView
                     style="@style/BPTextViewDiscover"
+                    android:layout_marginLeft="0dp"
                     android:text="@string/asset_issuer"
                     android:textColor="@color/app_txt_color_gray"
                     android:textSize="14sp" />
 
 
                 <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/addressBookIcon"
+                    android:id="@+id/assetIssuerRiv"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:background="@mipmap/currency_price"
-                    android:src="@mipmap/icon_goods_empty"
-                    android:layout_marginRight="5dp"
                     android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:src="@mipmap/icon_goods_empty"
                     app:riv_oval="true" />
 
                 <TextView
-                    android:id="@+id/newVersionCodeTV"
+                    android:id="@+id/assetIssuerTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginRight="8dp"
                     android:text="语言"
                     android:textColor="@color/app_txt_color_gray_2"
                     android:textSize="15sp" />
@@ -296,8 +294,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="17.5dp"
-                    android:layout_marginRight="17.5dp"
                     android:background="@mipmap/icon_right_arrow" />
             </LinearLayout>
 

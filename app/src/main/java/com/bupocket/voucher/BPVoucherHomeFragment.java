@@ -109,11 +109,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
 
     @Override
     protected void initData() {
-
-
         reqVoucherAllData(1);
-
-
     }
 
     @Override
