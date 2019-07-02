@@ -13,9 +13,11 @@ import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.fragment.BPAssetsHomeFragment;
 import com.bupocket.fragment.BPProfileHomeFragment;
 import com.bupocket.fragment.discover.BPDiscoverHomeFragment;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.voucher.BPVoucherHomeFragment;
 import com.qmuiteam.qmui.widget.QMUIPagerAdapter;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
@@ -79,6 +81,22 @@ public class HomeFragment extends BaseFragment {
                     isDisFragment = true;
                 } else {
                     isDisFragment = false;
+                }
+
+
+                if (index==1) {
+                    if (spHelper.getSharedPreference(ConstantsType.FIRST_OPEN_VOUCHER,"yes").equals("yes")){
+                        spHelper.put(ConstantsType.FIRST_OPEN_VOUCHER,"no");
+                        DialogUtils.showMessageDialog(mContext,
+                                getString(R.string.number_voucher_package_info),
+                                getString(R.string.number_voucher_package_title),new DialogUtils.KnowListener() {
+                                    @Override
+                                    public void Know() {
+
+                                    }
+                                });
+                    }
+
                 }
             }
 
@@ -176,6 +194,9 @@ public class HomeFragment extends BaseFragment {
                     fragment.setMenuVisibility(false);
                     fragment.setUserVisibleHint(false);
                 }
+
+
+
             }
 
             @SuppressLint("CommitTransaction")
@@ -221,7 +242,6 @@ public class HomeFragment extends BaseFragment {
             }
 
             private String makeFragmentName(int viewId, long id) {
-
                 return "HomeFragment:" + viewId + ":" + id;
             }
         };

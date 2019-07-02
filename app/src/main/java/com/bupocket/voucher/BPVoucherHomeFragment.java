@@ -82,6 +82,8 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     private void initListView() {
         adapter = new VoucherAdapter(mContext);
         voucherListLv.setAdapter(adapter);
+
+
     }
 
     private void initTopbar() {
@@ -234,17 +236,6 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
         super.onResume();
         mTopBar.setTitle(WalletLocalInfoUtil.getInstance(spHelper).getWalletName());
 
-        if (spHelper.getSharedPreference(ConstantsType.FIRST_OPEN_VOUCHER,"yes").equals("yes")){
-            spHelper.put(ConstantsType.FIRST_OPEN_VOUCHER,"no");
-            DialogUtils.showMessageDialog(mContext,
-                    getString(R.string.number_voucher_package_info),
-                    getString(R.string.number_voucher_package_title),new DialogUtils.KnowListener() {
-                        @Override
-                        public void Know() {
-
-                        }
-                    });
-        }
 
     }
 
