@@ -7,13 +7,24 @@ public class VoucherPackageDetailModel {
     private String contractAddress;
     private String endTime;
     private String faceValue;
+    private String spuId;
     private String startTime;
     private String trancheId;
+    private VoucherAcceptanceBean voucherAcceptance;
     private String voucherIcon;
     private String voucherId;
+    private VoucherIssuerBean voucherIssuer;
     private String voucherName;
     private String voucherSpec;
     private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
     public String getContractAddress() {
         return contractAddress;
@@ -39,6 +50,14 @@ public class VoucherPackageDetailModel {
         this.faceValue = faceValue;
     }
 
+    public String getSpuId() {
+        return spuId;
+    }
+
+    public void setSpuId(String spuId) {
+        this.spuId = spuId;
+    }
+
     public String getStartTime() {
         return startTime;
     }
@@ -53,6 +72,14 @@ public class VoucherPackageDetailModel {
 
     public void setTrancheId(String trancheId) {
         this.trancheId = trancheId;
+    }
+
+    public VoucherAcceptanceBean getVoucherAcceptance() {
+        return voucherAcceptance;
+    }
+
+    public void setVoucherAcceptance(VoucherAcceptanceBean voucherAcceptance) {
+        this.voucherAcceptance = voucherAcceptance;
     }
 
     public String getVoucherIcon() {
@@ -71,6 +98,14 @@ public class VoucherPackageDetailModel {
         this.voucherId = voucherId;
     }
 
+    public VoucherIssuerBean getVoucherIssuer() {
+        return voucherIssuer;
+    }
+
+    public void setVoucherIssuer(VoucherIssuerBean voucherIssuer) {
+        this.voucherIssuer = voucherIssuer;
+    }
+
     public String getVoucherName() {
         return voucherName;
     }
@@ -87,11 +122,75 @@ public class VoucherPackageDetailModel {
         this.voucherSpec = voucherSpec;
     }
 
-    public String getDescription() {
-        return description;
+    public static class VoucherAcceptanceBean {
+        /**
+         * address : buQY78z9rKn1kZWjJZt6Y5Ak9CyVaqQjTxYy
+         * icon :
+         * name : 青云网络技术有限公司
+         */
+
+        private String address;
+        private String icon;
+        private String name;
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getIcon() {
+            return icon;
+        }
+
+        public void setIcon(String icon) {
+            this.icon = icon;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public static class VoucherIssuerBean {
+        /**
+         * address : buQrp3BCVdfbb5mJjNHZQwHvecqe7CCcounY
+         * icon :
+         * name : 青云网络技术有限公司
+         */
+
+        private String address;
+        private String icon;
+        private String name;
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        public String getIcon() {
+            return icon;
+        }
+
+        public void setIcon(String icon) {
+            this.icon = icon;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
     }
 }

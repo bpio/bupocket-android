@@ -3,6 +3,7 @@
     <!--common -->
     <color name="app_color_main">#02CA71</color>
     <color name="app_color_blue">#5745C3</color>
+    <color name="app_color_blue1">#3C3B6D</color>
     <color name="app_btn_color_blue">#36B3FF</color>
     <color name="app_btn_color_white">#FFFFFF</color>
     <color name="app_btn_color_purple">#A4A8CE</color>

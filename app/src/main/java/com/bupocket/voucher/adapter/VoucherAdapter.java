@@ -52,11 +52,10 @@ public class VoucherAdapter extends AbsViewHolderAdapter<VoucherDetailModel> {
         holder.setText(R.id.goodsNumTv, itemData.getBalance());
         holder.setText(R.id.goodsPriceTv, context.getString(R.string.goods_price) + itemData.getFaceValue());
 
-        holder.setText(R.id.goodsDateTv,
+        holder.setText(R.id.goodsDateTv, context.getString(R.string.validity_date) + ":" +
                 String.format(context.getString(R.string.goods_validity_date),
-                        TimeUtil.timeStamp2Date(itemData.getStartTime()),
-                        TimeUtil.timeStamp2Date(itemData.getEndTime())));
-
+                        TimeUtil.timeStamp2Date(itemData.getStartTime(),TimeUtil.TIME_TYPE_YYYYY_MM_DD),
+                        TimeUtil.timeStamp2Date(itemData.getEndTime(),TimeUtil.TIME_TYPE_YYYYY_MM_DD)));
 
 
     }

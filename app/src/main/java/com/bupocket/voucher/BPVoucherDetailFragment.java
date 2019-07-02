@@ -1,5 +1,6 @@
 package com.bupocket.voucher;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +24,7 @@ import com.bupocket.voucher.model.VoucherDetailModel;
 import com.bupocket.voucher.model.VoucherPackageDetailModel;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import java.util.HashMap;
 
@@ -30,6 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import io.bumo.common.ToBaseUnit;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,7 +40,7 @@ import retrofit2.Response;
 public class BPVoucherDetailFragment extends AbsBaseFragment {
 
     @BindView(R.id.topbar)
-    QMUITopBar topbar;
+    QMUITopBarLayout topbar;
     @BindView(R.id.acceptanceIconRiv)
     RoundedImageView acceptanceIconRiv;
     @BindView(R.id.topLineV)
@@ -98,6 +101,20 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
     @Override
     protected void initView() {
 
+        initTopBar();
+    }
+
+    @SuppressLint("ResourceAsColor")
+    private void initTopBar() {
+        topbar.setTitle(R.string.voucher_detail_title);
+        topbar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popBackStack();
+            }
+        });
+        topbar.setBackgroundColor(R.color.app_color_blue1);
+
     }
 
     @Override
@@ -133,20 +150,42 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
 
                     VoucherPackageDetailModel detailModel = body.getData();
 
-                    Glide.with(mContext)
-                            .load(detailModel.getVoucherIcon())
-                            .into(acceptanceIconRiv);
-                    acceptanceNameTv.setText(detailModel.getVoucherName());
 
+
+                    VoucherPackageDetailModel.VoucherAcceptanceBean voucherAcceptance = detailModel.getVoucherAcceptance();
+                    if (voucherAcceptance!=null) {
+                        Glide.with(mContext)
+                                .load(voucherAcceptance.getIcon())
+                                .into(acceptanceIconRiv);
+                        acceptanceNameTv.setText(voucherAcceptance.getName());
+                    }
                     Glide.with(mContext)
-                            .load(detailModel.getVoucherIcon())
+                            .load(voucherAcceptance)
                             .into(voucherGoodsIv);
                     goodsNameTv.setText(detailModel.getVoucherName());
                     goodsPriceTv.setText(getString(R.string.goods_price)+detailModel.getFaceValue());
 
-                    validityDateTv.setText(String.format(mContext.getString(R.string.goods_validity_date),
+                    validityDateInfoTv.setText(String.format(mContext.getString(R.string.goods_validity_date),
                             TimeUtil.timeStamp2Date(detailModel.getStartTime(),TimeUtil.TIME_TYPE_YYYYY_MM_DD),
                             TimeUtil.timeStamp2Date(detailModel.getEndTime(),TimeUtil.TIME_TYPE_YYYYY_MM_DD)));
+
+                    voucherCodeInfoTv.setText(detailModel.getVoucherId());
+                    voucherSizeInfoTv.setText(detailModel.getVoucherSpec());
+                    voucherDescribeInfoTv.setText(detailModel.getDescription());
+                    voucherNumInfoTv.setText(voucherDetailModel.getBalance());
+
+                    Glide.with(mContext)
+                            .load(detailModel.getVoucherAcceptance().getIcon())
+                            .into(dPartyRiv);
+
+                    dPartyTv.setText(detailModel.getVoucherAcceptance().getName());
+
+
+                    Glide.with(mContext)
+                            .load(detailModel.getVoucherIssuer().getIcon())
+                            .into(assetIssuerRiv);
+
+                    assetIssuerTv.setText(detailModel.getVoucherIssuer().getName());
 
 
 
