@@ -340,4 +340,33 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="BPTextViewVoucherHint14">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/app_txt_color_gray</item>
+        <item name="android:layout_width">100dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <style name="BPTextViewVoucher14">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/app_txt_color_gray_2</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:gravity">right</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="BPGreenBgWhiteText">
+
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/shape_corner_green</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/app_color_white</item>
+
+    </style>
+
 </resources>

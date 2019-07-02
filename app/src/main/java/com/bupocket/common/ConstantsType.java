@@ -17,4 +17,5 @@ public class ConstantsType {
     public static final String FRAGMENT_TAG = "fragmentTag";
     public static final String ADDRESS = "address";
     public static final String FIRST_OPEN_VOUCHER = "firstOpenVoucher";
+    public static final String VOUCHER_DETAIL = "voucherDetail";
 }

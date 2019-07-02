@@ -146,6 +146,12 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 VoucherDetailModel voucherDetailModel = adapter.getData().get(position);
 
+                BPVoucherDetailFragment fragment = new BPVoucherDetailFragment();
+                Bundle args = new Bundle();
+                args.putSerializable(ConstantsType.VOUCHER_DETAIL,voucherDetailModel);
+                fragment.setArguments(args);
+                startFragment(fragment);
+
 
             }
         });
