@@ -93,6 +93,11 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
         addMoreLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (nodeSettingAdapter.getData().size()==11) {
+                    return;
+                }
+
                 DialogUtils.showEditMessageDialog(mContext,
                         getString(R.string.add_node_address_title),
                         getString(R.string.add_node_address_title),
@@ -127,8 +132,6 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
         addNode.setMore(true);
         data.add(addNode);
         nodeSettingAdapter.setNewData(data);
-
-
     }
 
     @Override

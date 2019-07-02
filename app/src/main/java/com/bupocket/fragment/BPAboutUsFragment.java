@@ -255,27 +255,18 @@ public class BPAboutUsFragment extends AbsBaseFragment {
         mHits[mHits.length - 1] = SystemClock.uptimeMillis();
         if (mHits[0] > SystemClock.uptimeMillis() - DURATION) {
 
-            new QMUIDialog.MessageDialogBuilder(getActivity())
-                    .setMessage(getString(R.string.switch_test_net_message_txt))
-                    .addAction(getString(R.string.no_txt), new QMUIDialogAction.ActionListener() {
-                        @Override
-                        public void onClick(QMUIDialog dialog, int index) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .addAction(getString(R.string.yes_txt), new QMUIDialogAction.ActionListener() {
-                        @Override
-                        public void onClick(QMUIDialog dialog, int index) {
-                            SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus", HiddenFunctionStatusEnum.ENABLE.getCode());
 
+            DialogUtils.showConfirmDialog(mContext,"",
+                    getString(R.string.switch_test_net_message_txt),
+                    new DialogUtils.KnowListener() {
+                        @Override
+                        public void Know() {
+                            SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus", HiddenFunctionStatusEnum.ENABLE.getCode());
                             changeTestLL.setVisibility(View.VISIBLE);
-//                            customEnvironmentLL.setVisibility(View.VISIBLE);
                             ShowSwitchTestNetConfirmDialog();
-                            dialog.dismiss();
                         }
-                    })
-                    .setCanceledOnTouchOutside(false)
-                    .create().show();
+                    });
+
         }
     }
 

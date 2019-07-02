@@ -17,7 +17,12 @@ public class DialogUtils {
     public static void showConfirmDialog(Context mContext, String title,String msg, final DialogUtils.KnowListener knowListener){
         final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
                 setLayout(R.layout.view_com_dialog_no_title).create();
-        ((TextView) qmuiDialog.findViewById(R.id.dialogTitleTv)).setText(title);
+        
+        if (TextUtils.isEmpty(title)) {
+            qmuiDialog.findViewById(R.id.dialogTitleTv).setVisibility(View.GONE);
+        }else{
+            ((TextView) qmuiDialog.findViewById(R.id.dialogTitleTv)).setText(title);
+        }
 
         if (TextUtils.isEmpty(msg)) {
             qmuiDialog.findViewById(R.id.dialogMessageTv).setVisibility(View.GONE);

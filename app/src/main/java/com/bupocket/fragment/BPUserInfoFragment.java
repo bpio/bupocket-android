@@ -19,6 +19,7 @@ import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.HiddenFunctionStatusEnum;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
@@ -224,23 +225,17 @@ public class BPUserInfoFragment extends BaseFragment {
     }
 
     private void showMessagePositiveDialog() {
-        new QMUIDialog.MessageDialogBuilder(getActivity())
-                .setTitle(R.string.user_info_logout)
-                .setMessage(user_info_logout_notice)
-                .addAction(R.string.common_dialog_cancel, new QMUIDialogAction.ActionListener() {
-                    @Override
-                    public void onClick(QMUIDialog dialog, int index) {
-                        dialog.dismiss();
-                    }
-                })
-                .addAction(R.string.common_dialog_confirm, new QMUIDialogAction.ActionListener() {
-                    @Override
-                    public void onClick(QMUIDialog dialog, int index) {
-                        dialog.dismiss();
-                        showPasswordConfirmDialog();
-                    }
-                })
-                .create(mCurrentDialogStyle).show();
+
+        DialogUtils.showConfirmDialog(mContext,
+                getString(R.string.user_info_logout),
+                getString(R.string.user_info_logout_notice),
+                new DialogUtils.KnowListener() {
+            @Override
+            public void Know() {
+                showPasswordConfirmDialog();
+            }
+        });
+
     }
 
     private void showPasswordConfirmDialog() {

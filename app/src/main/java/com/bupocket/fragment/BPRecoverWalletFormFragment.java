@@ -236,72 +236,55 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
         recoverSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new QMUIDialog.MessageDialogBuilder(getActivity())
-                        .setMessage(getString(R.string.recover_identity_confirm_message_txt))
-                        .addAction(getString(R.string.common_dialog_cancel), new QMUIDialogAction.ActionListener() {
-                            @Override
-                            public void onClick(QMUIDialog dialog, int index) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .addAction(getString(R.string.common_dialog_confirm), new QMUIDialogAction.ActionListener() {
-                            @Override
-                            public void onClick(QMUIDialog dialog, int index) {
-                                dialog.dismiss();
-                                if (!walletNameFlag()) {
-                                    return;
-                                } else if (!pwdFlag()) {
-                                    return;
-                                } else if (!confirmPwdFlag()) {
-                                    return;
-                                } else if (!mneonicFlag()) {
-                                    return;
+                if (!walletNameFlag()) {
+                    return;
+                } else if (!pwdFlag()) {
+                    return;
+                } else if (!confirmPwdFlag()) {
+                    return;
+                } else if (!mneonicFlag()) {
+                    return;
+                }
+                final String password = mPwdEt.getText().toString().trim();
+                final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                        .setTipWord(getResources().getString(R.string.recover_wallet_reloading))
+                        .create();
+                tipDialog.show();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            List<String> mnemonicCodes = getMnemonicCode();
+                            WalletBPData walletBPData = Wallet.getInstance().importMnemonicCode(mnemonicCodes, password, getContext());
+                            sharedPreferencesHelper.put("skey", walletBPData.getSkey());
+                            sharedPreferencesHelper.put("currentAccNick", mWalletNameEt.getText().toString());
+                            sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
+                            sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
+                            sharedPreferencesHelper.put("identityId", walletBPData.getAccounts().get(0).getAddress());
+                            sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.BACKUPED_MNEONIC_CODE.getCode());
+                            sharedPreferencesHelper.put("currentWalletAddress", walletBPData.getAccounts().get(1).getAddress());
+                            sharedPreferencesHelper.put("mnemonicWordBackupState", "0");
+                            tipDialog.dismiss();
+
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    startFragmentAndDestroyCurrent(new HomeFragment(), false);
                                 }
-                                final String password = mPwdEt.getText().toString().trim();
-                                final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
-                                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                                        .setTipWord(getResources().getString(R.string.recover_wallet_reloading))
-                                        .create();
-                                tipDialog.show();
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        try {
-                                            List<String> mnemonicCodes = getMnemonicCode();
-                                            WalletBPData walletBPData = Wallet.getInstance().importMnemonicCode(mnemonicCodes, password, getContext());
-                                            sharedPreferencesHelper.put("skey", walletBPData.getSkey());
-                                            sharedPreferencesHelper.put("currentAccNick", mWalletNameEt.getText().toString());
-                                            sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
-                                            sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
-                                            sharedPreferencesHelper.put("identityId", walletBPData.getAccounts().get(0).getAddress());
-                                            sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.BACKUPED_MNEONIC_CODE.getCode());
-                                            sharedPreferencesHelper.put("currentWalletAddress", walletBPData.getAccounts().get(1).getAddress());
-                                            sharedPreferencesHelper.put("mnemonicWordBackupState", "0");
-                                            tipDialog.dismiss();
-
-                                            getActivity().runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    startFragmentAndDestroyCurrent(new HomeFragment(), false);
-                                                }
-                                            });
+                            });
 
 
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                            Looper.prepare();
-                                            DialogUtils.showTitleDialog(mContext, R.string.recover_mneonic_input_error, R.string.error_hint);
-                                            tipDialog.dismiss();
-                                            Looper.loop();
-                                            return;
-                                        }
-                                    }
-                                }).start();
-
-                            }
-                        })
-                        .setCanceledOnTouchOutside(false)
-                        .create().show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Looper.prepare();
+                            DialogUtils.showTitleDialog(mContext, R.string.recover_mneonic_input_error, R.string.error_hint);
+                            tipDialog.dismiss();
+                            Looper.loop();
+                            return;
+                        }
+                    }
+                }).start();
             }
         });
 
