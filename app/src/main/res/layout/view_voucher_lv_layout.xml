@@ -34,6 +34,7 @@
                 android:layout_height="wrap_content"
                 android:divider="@null"
                 android:fadeScrollbars="false"
+                android:dividerHeight="15dp"
                 android:scrollbars="none" />
 
             <include

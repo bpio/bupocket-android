@@ -60,9 +60,10 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
 
 
     private VoucherService voucherService;
-    private int pageStart;
 
+    private int pageStart;
     private final static int pageSize = 10;
+
     private VoucherAdapter adapter;
     private VoucherListModel voucherListModel;
 
@@ -82,8 +83,6 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     private void initListView() {
         adapter = new VoucherAdapter(mContext);
         voucherListLv.setAdapter(adapter);
-
-
     }
 
     private void initTopbar() {
