@@ -10,13 +10,6 @@
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/user_agreement"
-            android:textSize="32sp"
-            android:paddingBottom="17dp"
-            android:theme="@style/BPViewTitle" />
 
         <ScrollView
             android:layout_width="match_parent"
