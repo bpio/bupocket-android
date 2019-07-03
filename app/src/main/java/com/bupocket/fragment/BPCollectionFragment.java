@@ -75,7 +75,7 @@ public class BPCollectionFragment extends AbsBaseFragment {
     protected void initData() {
         String currentWalletAddress = getWalletAddress();
         walletAddressTv.setText(currentWalletAddress);
-        mBitmap = QRCodeUtil.createQRCodeBitmap(currentWalletAddress, TO.dip2px(mContext, 170), TO.dip2px(mContext, 170));
+        mBitmap = QRCodeUtil.createQRCodeBitmap(currentWalletAddress, TO.dip2px(mContext, 200), TO.dip2px(mContext, 200));
         addressQrCodeIv.setImageBitmap(mBitmap);
 
         String walletName = WalletCurrentUtils.getWalletName(currentWalletAddress, spHelper);
