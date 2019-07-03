@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
@@ -405,16 +406,14 @@ public class BPWalletManageFragment extends BaseFragment {
                             public void run() {
                                 String ciphertextSkeyData = getSkeyStr();
                                 try {
-//                                    LogUtils.e("skeyByte"+password+"\n"+ciphertextSkeyData);
                                     byte[] skeyByte = Wallet.getInstance().getSkey(password, ciphertextSkeyData);
-//                                    LogUtils.e("skeyByte"+skeyByte);
                                     mnemonicCodeList = new MnemonicCode().toMnemonic(skeyByte);
                                     tipDialog.dismiss();
 
                                     getActivity().runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            go2BPCreateWalletShowMneonicCodeFragment();
+                                            go2BPCreateWalletShowMnemonicCodeFragment();
                                         }
                                     });
 
@@ -512,7 +511,7 @@ public class BPWalletManageFragment extends BaseFragment {
         mWalletNameTv.setText(walletName);
 
 
-        CommonUtil.setHeadIvRes(walletAddress,walletHeadRiv,spHelper);
+        CommonUtil.setHeadIvRes(walletAddress, walletHeadRiv, spHelper);
 
     }
 
@@ -522,15 +521,20 @@ public class BPWalletManageFragment extends BaseFragment {
     }
 
     private String getSkeyStr() {
-        return sharedPreferencesHelper.getSharedPreference("skey", "").toString();
+        return sharedPreferencesHelper.getSharedPreference(walletAddress + ConstantsType.WALLET_SKEY, "").toString();
     }
 
-    private void go2BPCreateWalletShowMneonicCodeFragment() {
-        BPCreateWalletShowMneonicCodeFragment createWalletShowMneonicCodeFragment = new BPCreateWalletShowMneonicCodeFragment();
+    private void go2BPCreateWalletShowMnemonicCodeFragment() {
+
+
+        getFragmentManager().findFragmentByTag(BPWalletManageFragment.class.getSimpleName());
+        BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();
         Bundle argz = new Bundle();
         argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) mnemonicCodeList);
-        createWalletShowMneonicCodeFragment.setArguments(argz);
-        startFragment(createWalletShowMneonicCodeFragment);
+        argz.putString(ConstantsType.WALLET_ADDRESS, walletAddress);
+        BPCreateWalletFormFragment.isCreateWallet = true;
+        backupWalletFragment.setArguments(argz);
+        startFragment(backupWalletFragment);
 
     }
 

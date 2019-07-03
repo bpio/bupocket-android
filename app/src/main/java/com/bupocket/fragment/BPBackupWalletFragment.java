@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.base.AbsBaseFragment;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
@@ -40,6 +41,7 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
     private SharedPreferencesHelper sharedPreferencesHelper;
 
     private long exitTime = 0;
+    private String wallet_address;
 
 
     @Override
@@ -73,6 +75,7 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
         });
         Button skipBackuoBtn = mTopBar.findViewById(R.id.skipBackupBtn);
         skipBackuoBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.app_color_main));
+
     }
 
 
@@ -154,6 +157,10 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
     }
 
     private void go2BPCreateWalletShowMneonicCodeFragment() {
+
+//        if (BPCreateWalletFormFragment.isCreateWallet) {
+//            getFragmentManager().findFragmentByTag(BPBackupWalletFragment.class.getSimpleName());
+//        }
         BPCreateWalletShowMneonicCodeFragment createWalletShowMneonicCodeFragment = new BPCreateWalletShowMneonicCodeFragment();
         Bundle argz = new Bundle();
         argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) mnemonicCodeList);

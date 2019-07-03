@@ -33,7 +33,7 @@ import java.util.UUID;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
+public class BPCreateWalletConfirmMnemonicCodeFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
     @BindView(R.id.confirmMneonicCodeGL)
@@ -76,7 +76,13 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
                 sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.BACKUPED_MNEONIC_CODE.getCode());
                 sharedPreferencesHelper.put("isFirstCreateWallet", "0");
                 sharedPreferencesHelper.put("mnemonicWordBackupState", "0");
-                startFragment(new HomeFragment());
+
+
+                if (BPCreateWalletFormFragment.isCreateWallet) {
+                    getFragmentManager().popBackStack(BPWalletManageFragment.class.getSimpleName(),0);
+                }else{
+                    startFragment(new HomeFragment());
+                }
             }
         });
 
@@ -193,9 +199,15 @@ public class BPCreateWalletConfirmMneonicCodeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-
+                if (BPCreateWalletFormFragment.isCreateWallet) {
+                    getFragmentManager().popBackStack(BPWalletManageFragment.class.getSimpleName(),0);
+                    getFragmentManager().popBackStack(BPCreateWalletFormFragment.class.getSimpleName(),1);
+                }else{
                     sharedPreferencesHelper.put("isFirstCreateWallet", "0");
                     startFragment(new HomeFragment());
+                }
+
+
 
             }
         });

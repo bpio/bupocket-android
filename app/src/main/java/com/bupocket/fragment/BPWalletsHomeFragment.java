@@ -245,7 +245,7 @@ public class BPWalletsHomeFragment extends AbsBaseFragment {
         walletBottom.findViewById(R.id.tvCreateWallet).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                getFragmentManager().findFragmentByTag(BPWalletManageFragment.class.getSimpleName());
                 BPCreateWalletFormFragment fragment = new BPCreateWalletFormFragment();
                 Bundle args = new Bundle();
                 args.putString("jumpPage",BPWalletsHomeFragment.class.getSimpleName());

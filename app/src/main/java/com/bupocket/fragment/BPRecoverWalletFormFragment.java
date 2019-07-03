@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
@@ -257,14 +258,16 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
                         try {
                             List<String> mnemonicCodes = getMnemonicCode();
                             WalletBPData walletBPData = Wallet.getInstance().importMnemonicCode(mnemonicCodes, password, getContext());
+                            String address = walletBPData.getAccounts().get(1).getAddress();
                             sharedPreferencesHelper.put("skey", walletBPData.getSkey());
                             sharedPreferencesHelper.put("currentAccNick", mWalletNameEt.getText().toString());
                             sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
-                            sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
+                            sharedPreferencesHelper.put("currentAccAddr", address);
                             sharedPreferencesHelper.put("identityId", walletBPData.getAccounts().get(0).getAddress());
                             sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.BACKUPED_MNEONIC_CODE.getCode());
-                            sharedPreferencesHelper.put("currentWalletAddress", walletBPData.getAccounts().get(1).getAddress());
+                            sharedPreferencesHelper.put("currentWalletAddress", address);
                             sharedPreferencesHelper.put("mnemonicWordBackupState", "0");
+                            sharedPreferencesHelper.put(address+ConstantsType.WALLET_SKEY, walletBPData.getSkey());
                             tipDialog.dismiss();
 
                             getActivity().runOnUiThread(new Runnable() {
