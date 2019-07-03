@@ -754,4 +754,9 @@
     <string name="not_use_wallet_service">无效的钱包服务地址</string>
     <string name="change_pwd_success_hint"> 的安全密码已修改成功！</string>
 
+
+    <string name="old_pwd_error">原安全密码输入不正确</string>
+    <string name="pwd_repeat">密码重复，请重新设置</string>
+    <string name="new_safe_pwd_error">新安全密码两次输入不一致</string>
+
 </resources>

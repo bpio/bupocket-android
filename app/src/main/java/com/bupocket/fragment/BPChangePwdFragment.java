@@ -121,8 +121,7 @@ public class BPChangePwdFragment extends BaseFragment {
                                     @Override
                                     public void run() {
                                         popBackStack();
-
-                                        DialogUtils.showMessageNoTitleDialog(mContext,walletNameTv.getText()+getResources().getString(R.string.change_pwd_success_hint));
+                                        DialogUtils.showMessageNoTitleDialog(mContext, walletNameTv.getText() + getResources().getString(R.string.change_pwd_success_hint));
                                     }
                                 });
 
@@ -130,7 +129,7 @@ public class BPChangePwdFragment extends BaseFragment {
                             } catch (WalletException e) {
                                 e.printStackTrace();
                                 Looper.prepare();
-                                Toast.makeText(getActivity(), R.string.change_pwd_form_error6, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), R.string.old_pwd_error, Toast.LENGTH_SHORT).show();
                                 tipDialog.dismiss();
                                 Looper.loop();
                             } finally {
@@ -249,80 +248,26 @@ public class BPChangePwdFragment extends BaseFragment {
     }
 
     private boolean validateData() {
-        final QMUITipDialog tipDialog;
 
         String oldPwd = mOldPasswordET.getText().toString().trim();
         String newPwd = mNewPasswordET.getText().toString().trim();
         String newPasswordConfirm = mNewPasswordConfirmET.getText().toString().trim();
 
 
-        if (CommonUtil.isNull(oldPwd)) {
-            tipDialog = new QMUITipDialog.Builder(getContext())
-                    .setTipWord(getResources().getString(R.string.change_pwd_err1))
-                    .create();
-            tipDialog.show();
-            mOldPasswordET.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    tipDialog.dismiss();
-                }
-            }, 1500);
-            return false;
-        }
-
-        if (CommonUtil.isNull(newPwd)) {
-            tipDialog = new QMUITipDialog.Builder(getContext())
-                    .setTipWord(getResources().getString(R.string.change_pwd_err2))
-                    .create();
-            tipDialog.show();
-            mNewPasswordET.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    tipDialog.dismiss();
-                }
-            }, 1500);
-            return false;
-        }
-
         if (!CommonUtil.validatePassword(newPwd)) {
-            tipDialog = new QMUITipDialog.Builder(getContext())
-                    .setTipWord(getResources().getString(R.string.change_pwd_form_error5))
-                    .create();
-            tipDialog.show();
-            mNewPasswordET.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    tipDialog.dismiss();
-                }
-            }, 1500);
+            DialogUtils.showTitleDialog(mContext, R.string.create_wallet_pw_err_hint, R.string.error_hint);
             return false;
         }
 
 
-        if (CommonUtil.isNull(newPasswordConfirm)) {
-            tipDialog = new QMUITipDialog.Builder(getContext())
-                    .setTipWord(getResources().getString(R.string.change_pwd_err3))
-                    .create();
-            tipDialog.show();
-            mNewPasswordConfirmET.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    tipDialog.dismiss();
-                }
-            }, 1500);
+        if (oldPwd.equals(newPwd)) {
+            DialogUtils.showTitleDialog(mContext, R.string.pwd_repeat, R.string.error_hint);
             return false;
         }
+
+
         if (!newPasswordConfirm.equals(newPwd)) {
-            tipDialog = new QMUITipDialog.Builder(getContext())
-                    .setTipWord(getResources().getString(R.string.change_pwd_form_error1))
-                    .create();
-            tipDialog.show();
-            mNewPasswordConfirmET.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    tipDialog.dismiss();
-                }
-            }, 1500);
+            DialogUtils.showTitleDialog(mContext, R.string.new_safe_pwd_error, R.string.error_hint);
             return false;
         }
         return true;
