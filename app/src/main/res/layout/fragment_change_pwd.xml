@@ -115,10 +115,12 @@
 
                     <ImageView
                         android:id="@+id/newPasswordIv"
-                        android:layout_width="20dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:paddingTop="15dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="20dp"
+                        android:layout_centerVertical="true"
                         android:src="@mipmap/icon_close_eye" />
 
                 </RelativeLayout>
