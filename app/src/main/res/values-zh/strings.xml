@@ -641,9 +641,9 @@
         2.小布口袋不会存储您的密码\n
         3.安全密码只能修改，无法找回或重置，请务必牢记</string>
     <string name="create_wallet_prompt_txt3">
-        • 安全密码用于加密保护私钥、确认交易转账和调用合约等，强度非常重要，请您务必牢记；\n
-        • 小布口袋不会存储您的密码；\n
-        • 安全密码只能修改，无法找回或重置，请务必牢记。</string>
+        • 安全密码用于加密保护私钥、确认交易转账和调用合约等，强度非常重要，请您务必牢记\n
+        • 小布口袋不会存储您的密码\n
+        • 安全密码只能修改，无法找回或重置，请务必牢记</string>
     <string name="create_wallet_prompt_txt2">6~30个字符，建议混合大小写字母加数字</string>
     <string name="create_wallet_name_err_hint">允许输入字母/汉字/数字/下划线，且不能超过20个字符</string>
     <string name="create_wallet_pw_err_hint">6-30个字符，大小写字母和数字任意两种组合</string>
@@ -753,5 +753,10 @@
     <string name="delete_node_info">当前删除节点为选中状态，删除后将选中系统默认设置节点。</string>
     <string name="not_use_wallet_service">无效的钱包服务地址</string>
     <string name="change_pwd_success_hint"> 的安全密码已修改成功！</string>
+
+
+    <string name="old_pwd_error">原安全密码输入不正确</string>
+    <string name="pwd_repeat">密码重复，请重新设置</string>
+    <string name="new_safe_pwd_error">新安全密码两次输入不一致</string>
 
 </resources>

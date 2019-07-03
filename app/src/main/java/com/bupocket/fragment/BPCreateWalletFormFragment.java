@@ -142,6 +142,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
             if (isCreateWallet) {
                 createWalletNameTitle.setText(R.string.create_wallet_name_title);
                 mSetIdentityNameEt.setHint(R.string.change_wallet_name_hint);
+                mTopBar.setTitle(R.string.view_title_create_wallet);
             }
         }
 

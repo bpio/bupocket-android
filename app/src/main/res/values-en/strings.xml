@@ -646,7 +646,7 @@
     <string name="create_wallet_prompt_txt3">
         • Security passwords are used to encrypt private keys, confirm transfers and contract calls for transactions. The strength of the security password is very important. Please keep in mind\n
         • BU Pocket will not store your password\n
-        • Security password can only be modified, but cannot be retrieved or reset, so please keep in mind。</string>
+        • Security password can only be modified, but cannot be retrieved or reset, so please keep in mind</string>
     <string name="create_wallet_name_err_hint">Letters, Chinese characters, numbers and underscores are allowed to input, but the length cannot exceed 20 characters</string>
     <string name="create_wallet_pw_err_hint">The security password must be composed of numbers and uppercase or lowercase letters and the combination must be </string>
     <string name="view_change_wallet_pw">Modify Wallet Password</string>
