@@ -21,6 +21,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
@@ -67,7 +68,8 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
     private boolean isPwdHideFirst = false;
     private boolean isConfirmPwdHideFirst = false;
     private SharedPreferencesHelper sharedPreferencesHelper;
-    private boolean isCreateWallet;
+    public static boolean isCreateWallet;
+
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
@@ -224,13 +226,21 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
             spHelper.put(address + "-walletName", walletName);
             spHelper.put(address + "-BPdata", bpData);
             importedWallets.add(address);
+            spHelper.put(address + "-mnemonicCodes", "yes");
             spHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));
+            final WalletBPData finalWalletBPData = walletBPData;
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    popBackStack();
+
+                    BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();
+                    Bundle argz = new Bundle();
+                    argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) finalWalletBPData.getMnemonicCodes());
+                    backupWalletFragment.setArguments(argz);
+                    startFragmentAndDestroyCurrent(backupWalletFragment);
                 }
             });
+
         }
 
     }

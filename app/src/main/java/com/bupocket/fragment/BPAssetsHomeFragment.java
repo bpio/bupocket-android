@@ -205,7 +205,10 @@ public class BPAssetsHomeFragment extends BaseFragment {
         mReceiveLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAccountAddressView();
+
+                startFragment(new BPCollectionFragment());
+
+//                showAccountAddressView();
             }
         });
         mAddTokenLl.setOnClickListener(new View.OnClickListener() {

@@ -60,18 +60,25 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
         mTopBar.addRightTextButton(R.string.skip_backup_mneonic_btn_code, R.id.skipBackupBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sharedPreferencesHelper.put("isFirstCreateWallet", "0");
-                startFragment(new HomeFragment());
+
+                if (BPCreateWalletFormFragment.isCreateWallet) {
+                    popBackStack();
+                } else {
+                    sharedPreferencesHelper.put("isFirstCreateWallet", "0");
+                    startFragment(new HomeFragment());
+                }
+
+
             }
         });
         Button skipBackuoBtn = mTopBar.findViewById(R.id.skipBackupBtn);
-        skipBackuoBtn.setTextColor(ContextCompat.getColor(getContext(),R.color.app_color_main));
+        skipBackuoBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.app_color_main));
     }
 
 
-    public void initData(){
+    public void initData() {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        if(getArguments() != null){
+        if (getArguments() != null) {
             mnemonicCodeList = getArguments().getStringArrayList("mneonicCodeList");
         }
     }
@@ -81,7 +88,7 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
         mBackupWalletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mnemonicCodeList == null){
+                if (mnemonicCodeList == null) {
 
                     final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
                     qmuiDialog.setCanceledOnTouchOutside(false);
@@ -116,7 +123,7 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
                                 public void run() {
                                     String ciphertextSkeyData = getSkeyStr();
                                     try {
-                                        byte[] skeyByte = Wallet.getInstance().getSkey(password,ciphertextSkeyData);
+                                        byte[] skeyByte = Wallet.getInstance().getSkey(password, ciphertextSkeyData);
                                         mnemonicCodeList = new MnemonicCode().toMnemonic(skeyByte);
                                         tipDialog.dismiss();
 
@@ -135,18 +142,18 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
 
                         }
                     });
-                }else{
+                } else {
                     go2BPCreateWalletShowMneonicCodeFragment();
                 }
             }
         });
     }
 
-    private String getSkeyStr(){
-        return sharedPreferencesHelper.getSharedPreference("skey","").toString();
+    private String getSkeyStr() {
+        return sharedPreferencesHelper.getSharedPreference("skey", "").toString();
     }
 
-    private void go2BPCreateWalletShowMneonicCodeFragment(){
+    private void go2BPCreateWalletShowMneonicCodeFragment() {
         BPCreateWalletShowMneonicCodeFragment createWalletShowMneonicCodeFragment = new BPCreateWalletShowMneonicCodeFragment();
         Bundle argz = new Bundle();
         argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) mnemonicCodeList);

@@ -5,6 +5,7 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,10 +18,13 @@ import android.widget.TextView;
 import com.bupocket.R;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.enums.CurrencyTypeEnum;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.TO;
+import com.bupocket.utils.WalletCurrentUtils;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.qmuiteam.qmui.widget.QMUIWindowInsetLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 import butterknife.BindString;
@@ -31,6 +35,8 @@ import butterknife.Unbinder;
 public class BPCollectionFragment extends AbsBaseFragment {
 
 
+    @BindView(R.id.collectionLL)
+    QMUIWindowInsetLayout collectionLL;
     @BindView(R.id.backIv)
     ImageView backIv;
     @BindView(R.id.currentWalletNameTv)
@@ -71,7 +77,8 @@ public class BPCollectionFragment extends AbsBaseFragment {
         walletAddressTv.setText(currentWalletAddress);
         mBitmap = QRCodeUtil.createQRCodeBitmap(currentWalletAddress, TO.dip2px(mContext, 170), TO.dip2px(mContext, 170));
         addressQrCodeIv.setImageBitmap(mBitmap);
-        String walletName = (String) spHelper.getSharedPreference(currentWalletAddress + "-walletName", "");
+
+        String walletName = WalletCurrentUtils.getWalletName(currentWalletAddress, spHelper);
         walletNameTv.setText(walletName);
         CommonUtil.setHeadIvRes(currentWalletAddress, walletIconRIV, spHelper);
     }
@@ -120,7 +127,13 @@ public class BPCollectionFragment extends AbsBaseFragment {
     }
 
     private void shareQrCode() {
-        Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), mBitmap, null, null));
+
+        Bitmap bitmap = Bitmap.createBitmap(collectionLL.getWidth(), collectionLL.getHeight(),
+                Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        collectionLL.draw(canvas);
+
+        Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bitmap, null, null));
         shareImg("收款码", "收款码", "收款码", uri);
     }
 

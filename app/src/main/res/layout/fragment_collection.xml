@@ -2,6 +2,7 @@
 <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/collectionLL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@mipmap/collection_background"
@@ -13,10 +14,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:fitsSystemWindows="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:layout_marginTop="10dp"
         android:paddingBottom="5dp">
 
         <ImageView
@@ -88,7 +89,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:textColor="@color/app_txt_color_gray_2"
+                    tools:text="1111111111111"
                     android:textSize="12sp" />
 
                 <ImageView
