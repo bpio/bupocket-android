@@ -203,6 +203,7 @@
     <string name="user_info_wallet_id">身份 ID</string>
     <string name="user_info_backup_current_wallet">备份身份</string>
     <string name="user_info_logout">退出当前身份</string>
+    <string name="user_info_logout_title">退出当前身份</string>
     <string name="user_info_logout_loading">退出中</string>
     <string name="user_info_backup_loading">加载中</string>
     <string name="user_info_logout_notice">即将退出当前身份，请确保身份已备份</string>
@@ -344,7 +345,7 @@
     <string name="export_private_txt">导出私钥</string>
     <string name="delete_wallet_txt">删除钱包</string>
     <string name="change_wallet_name_title">更改钱包名称</string>
-    <string name="export_keystore_tips_txt">请复制keystone文件到安全的地方保存</string>
+    <string name="export_keystore_tips_txt">请复制keystore文件到安全的地方保存</string>
     <string name="copy_keystore_txt">复制Keystore</string>
     <string name="copy_private_txt">复制私钥</string>
     <string name="export_private_tips_txt">为了保证您的账户资产安全，请注意周围是否有他人在浏览您的隐私信息！</string>
@@ -730,6 +731,8 @@
     <string name="change_wallet_name_hint">用于区分其他钱包，不能超过20个字符</string>
     <!--create wallet-->
     <string name="create_wallet_name_title">请设置钱包名称</string>
+    <string name="recover_wallet_name_title">请设置新的身份名</string>
+
 
 
 
@@ -749,5 +752,6 @@
     <string name="wallet_create_error">钱包创建失败</string>
     <string name="delete_node_info">当前删除节点为选中状态，删除后将选中系统默认设置节点。</string>
     <string name="not_use_wallet_service">无效的钱包服务地址</string>
+    <string name="change_pwd_success_hint"> 的安全密码已修改成功！</string>
 
 </resources>

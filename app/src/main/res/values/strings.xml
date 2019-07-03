@@ -731,6 +731,8 @@
     <string name="change_wallet_name_hint">用于区分其他钱包，不能超过20个字符</string>
     <!--create wallet-->
     <string name="create_wallet_name_title">请设置钱包名称</string>
+    <string name="recover_wallet_name_title">请设置新的身份名</string>
+
 
 
 

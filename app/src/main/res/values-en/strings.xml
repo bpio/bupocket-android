@@ -727,7 +727,7 @@
     <string name="change_wallet_name_hint">It is used to distinguish other wallets, which cannot exceed 20 characters</string>
     <!--create wallet-->
     <string name="create_wallet_name_title">Please set the wallet name</string>
-
+    <string name="recover_wallet_name_title">Please set a new identity name</string>
 
 
     <!--custom net-->
