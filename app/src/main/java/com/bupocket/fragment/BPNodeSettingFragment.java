@@ -38,6 +38,7 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
 
     private boolean isSaveBtn;
     private int oldPosition;
+    private ArrayList<NodeSettingModel> oldNodeSettingModels;
 
     @Override
     protected int getLayoutView() {
@@ -66,25 +67,25 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
 
         String urlJson = (String) spHelper.getSharedPreference(Constants.BUMO_NODE_URL, "");
 
-        ArrayList<NodeSettingModel> nodeSettingModels = new ArrayList<>();
+        oldNodeSettingModels = new ArrayList<>();
         if (urlJson.isEmpty()) {
             NodeSettingModel mainNode = new NodeSettingModel();
             mainNode.setMore(false);
             mainNode.setSelected(true);
             mainNode.setUrl(Constants.BUMO_NODE_URL);
-            nodeSettingModels.add(mainNode);
+            oldNodeSettingModels.add(mainNode);
         } else {
             Gson gson = new Gson();
             Type type = new TypeToken<List<NodeSettingModel>>() {
             }.getType();
-            nodeSettingModels = gson.fromJson(urlJson, type);
+            oldNodeSettingModels = gson.fromJson(urlJson, type);
         }
-        for (int i = 0; i < nodeSettingModels.size(); i++) {
-            if (nodeSettingModels.get(i).isSelected()) {
+        for (int i = 0; i < oldNodeSettingModels.size(); i++) {
+            if (oldNodeSettingModels.get(i).isSelected()) {
                 oldPosition = i;
             }
         }
-        nodeSettingAdapter.setNewData(nodeSettingModels);
+        nodeSettingAdapter.setNewData(oldNodeSettingModels);
 
     }
 
@@ -161,6 +162,20 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                for (int i = 0; i < oldNodeSettingModels.size(); i++) {
+                    if (oldNodeSettingModels.get(i).isSelected()) {
+                        String oldUrl = oldNodeSettingModels.get(i).getUrl();
+                        for (int j = 0; j < nodeSettingAdapter.getData().size(); j++) {
+                            if (nodeSettingAdapter.getData().get(i).isSelected()) {
+                                if (oldUrl.equals(nodeSettingAdapter.getData().get(i).getUrl())) {
+
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+
                 nodeSettingAdapter.saveNodeData(nodeSettingAdapter.getData());
                 BPApplication.switchNetConfig(null);
                 isSaveBtn = true;

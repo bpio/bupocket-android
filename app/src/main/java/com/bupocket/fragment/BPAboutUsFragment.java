@@ -123,12 +123,17 @@ public class BPAboutUsFragment extends AbsBaseFragment {
                 if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
                     int verNumberCode = Integer.parseInt(respDto.getData().getVerNumberCode());
                     String verNumber = respDto.getData().getVerNumber();
-                    if (!TextUtils.isEmpty(verNumber)) {
-                        newVersionCodeTV.setText("V" + verNumber);
-                    }
+
                     isUpdate = ((int) CommonUtil.packageCode(mContext)) < verNumberCode;
                     if (isUpdate) {
                         newVersionCodeIconIV.setVisibility(View.VISIBLE);
+                        if (!TextUtils.isEmpty(verNumber)) {
+                            newVersionCodeTV.setText("V" + verNumber);
+                        }
+                    }else{
+                        if (!TextUtils.isEmpty(verNumber)) {
+                            newVersionCodeTV.setText(CommonUtil.packageName(mContext));
+                        }
                     }
                 }
 
