@@ -68,22 +68,28 @@
         <LinearLayout
             android:id="@+id/settingWalletNameLL"
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+
                 android:paddingLeft="15dp"
+                android:layout_marginTop="17dp"
+                android:layout_marginBottom="17dp"
                 android:text="@string/change_wallet_name_title"
                 android:textColor="@color/app_txt_color_gray_2"
                 android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/settingWalletNameTv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="8dp"
                 android:textColor="@color/app_txt_color_gray"

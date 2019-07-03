@@ -322,7 +322,7 @@
     <string name="currency_usd_txt">USD</string>
     <string name="currency_jpy_txt">JPY</string>
     <string name="currency_krw_txt">KRW</string>
-    <string name="switch_test_net_message_txt">是否切换为测试网</string>
+    <string name="switch_test_net_message_txt">确认切换为测试网吗？</string>
     <string name="switch_main_net_message_txt">您已关闭测试网</string>
     <string name="yes_txt">是</string>
     <string name="no_txt">否</string>
