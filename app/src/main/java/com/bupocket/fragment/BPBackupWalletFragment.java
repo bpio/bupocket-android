@@ -15,6 +15,7 @@ import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -130,13 +131,14 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
                                         mnemonicCodeList = new MnemonicCode().toMnemonic(skeyByte);
                                         tipDialog.dismiss();
 
-                                        go2BPCreateWalletShowMneonicCodeFragment();
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                go2BPCreateWalletShowMnemonicCodeFragment();
+                                            }
+                                        });
                                     } catch (Exception e) {
-                                        e.printStackTrace();
-                                        Looper.prepare();
-                                        Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
-                                        tipDialog.dismiss();
-                                        Looper.loop();
+                                        ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
                                         return;
                                     }
                                 }
@@ -146,21 +148,21 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
                         }
                     });
                 } else {
-                    go2BPCreateWalletShowMneonicCodeFragment();
+                    go2BPCreateWalletShowMnemonicCodeFragment();
                 }
             }
         });
     }
 
     private String getSkeyStr() {
-        return sharedPreferencesHelper.getSharedPreference("skey", "").toString();
+        String walletAddress = "";
+        if (getArguments() != null) {
+            walletAddress = getArguments().getString(ConstantsType.WALLET_ADDRESS, "");
+        }
+        return sharedPreferencesHelper.getSharedPreference(walletAddress + ConstantsType.WALLET_SKEY, "").toString();
     }
 
-    private void go2BPCreateWalletShowMneonicCodeFragment() {
-
-//        if (BPCreateWalletFormFragment.isCreateWallet) {
-//            getFragmentManager().findFragmentByTag(BPBackupWalletFragment.class.getSimpleName());
-//        }
+    private void go2BPCreateWalletShowMnemonicCodeFragment() {
         BPCreateWalletShowMneonicCodeFragment createWalletShowMneonicCodeFragment = new BPCreateWalletShowMneonicCodeFragment();
         Bundle argz = new Bundle();
         argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) mnemonicCodeList);

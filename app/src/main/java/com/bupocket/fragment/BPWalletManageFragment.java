@@ -360,78 +360,33 @@ public class BPWalletManageFragment extends BaseFragment {
         mBackupMnemonicRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
-                qmuiDialog.setCanceledOnTouchOutside(false);
-                qmuiDialog.setContentView(R.layout.view_password_comfirm);
-                qmuiDialog.show();
-                QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
-
-                ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
-                TextView mPasswordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
-                mPasswordConfirmNotice.setText(R.string.wallet_password_confirm_txt1);
-
-                mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        qmuiDialog.dismiss();
-                    }
-                });
-
-                mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // 检查合法性
-                        EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
-                        final String password = mPasswordConfirmEt.getText().toString().trim();
-                        if (CommonUtil.isNull(password)) {
-                            final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
-                                    .setTipWord(getResources().getString(R.string.common_dialog_input_pwd))
-                                    .create();
-                            tipDialog.show();
-                            mPasswordConfirmEt.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    tipDialog.dismiss();
-                                }
-                            }, 1500);
-                            return;
-                        }
-                        final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
-                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                                .setTipWord(getResources().getString(R.string.user_info_backup_loading))
-                                .create();
-                        tipDialog.show();
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                String ciphertextSkeyData = getSkeyStr();
-                                try {
-                                    byte[] skeyByte = Wallet.getInstance().getSkey(password, ciphertextSkeyData);
-                                    mnemonicCodeList = new MnemonicCode().toMnemonic(skeyByte);
-                                    tipDialog.dismiss();
-
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            go2BPCreateWalletShowMnemonicCodeFragment();
-                                        }
-                                    });
 
 
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    Looper.prepare();
-                                    Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
-                                    tipDialog.dismiss();
-                                    Looper.loop();
-                                    return;
-                                }
-                            }
-                        }).start();
-                        qmuiDialog.dismiss();
-
-                    }
-                });
+                go2BPCreateWalletShowMnemonicCodeFragment();
+//                final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
+//                qmuiDialog.setCanceledOnTouchOutside(false);
+//                qmuiDialog.setContentView(R.layout.view_password_comfirm);
+//                qmuiDialog.show();
+//                QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
+//
+//                ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
+//                TextView mPasswordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
+//                mPasswordConfirmNotice.setText(R.string.wallet_password_confirm_txt1);
+//
+//                mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        qmuiDialog.dismiss();
+//                    }
+//                });
+//
+//                mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        go2BPCreateWalletShowMnemonicCodeFragment();
+//
+//                    }
+//                });
             }
         });
 
@@ -530,7 +485,7 @@ public class BPWalletManageFragment extends BaseFragment {
         getFragmentManager().findFragmentByTag(BPWalletManageFragment.class.getSimpleName());
         BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();
         Bundle argz = new Bundle();
-        argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) mnemonicCodeList);
+//        argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) mnemonicCodeList);
         argz.putString(ConstantsType.WALLET_ADDRESS, walletAddress);
         BPCreateWalletFormFragment.isCreateWallet = true;
         backupWalletFragment.setArguments(argz);

@@ -20,7 +20,7 @@ public class WalletCurrentUtils {
         }
     }
 
-    public String getWalletAddress(SharedPreferencesHelper spHelper) {
+    public static String getWalletAddress(SharedPreferencesHelper spHelper) {
         String currentIdentityWalletAddress = spHelper.getSharedPreference("currentWalletAddress", "").toString();
         if (TextUtils.isEmpty(currentIdentityWalletAddress)) {
             return spHelper.getSharedPreference("currentAccAddr", "").toString();
@@ -28,7 +28,12 @@ public class WalletCurrentUtils {
         return currentIdentityWalletAddress;
     }
 
-    public boolean checkIdentity(String address, SharedPreferencesHelper spHelper) {
+
+    public static String getIdentityAddress(SharedPreferencesHelper spHelper) {
+        return spHelper.getSharedPreference("currentAccAddr", "").toString();
+    }
+
+    public static boolean checkIdentity(String address, SharedPreferencesHelper spHelper) {
         if (TextUtils.isEmpty(address)) {
             return false;
         }

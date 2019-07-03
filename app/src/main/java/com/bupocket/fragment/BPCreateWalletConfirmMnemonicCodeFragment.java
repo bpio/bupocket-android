@@ -10,18 +10,15 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TO;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
-import com.qmuiteam.qmui.util.QMUIViewHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -79,8 +76,11 @@ public class BPCreateWalletConfirmMnemonicCodeFragment extends BaseFragment {
 
 
                 if (BPCreateWalletFormFragment.isCreateWallet) {
-                    getFragmentManager().popBackStack(BPWalletManageFragment.class.getSimpleName(),0);
-                }else{
+
+
+                    popBackStackFragment();
+
+                } else {
                     startFragment(new HomeFragment());
                 }
             }
@@ -89,7 +89,13 @@ public class BPCreateWalletConfirmMnemonicCodeFragment extends BaseFragment {
         return root;
     }
 
-    private void getMneonicCode() {
+    private void popBackStackFragment() {
+        getFragmentManager().popBackStack(BPWalletManageFragment.class.getSimpleName(), 0);
+        getFragmentManager().popBackStack(BPCreateWalletFormFragment.class.getSimpleName(), 1);
+        getFragmentManager().popBackStack(BPUserInfoFragment.class.getSimpleName(), 0);
+    }
+
+    private void getMnemonicCode() {
         srcMnemonicCodeList = getArguments().getStringArrayList("mneonicCodeList");
         assert srcMnemonicCodeList != null;
         for (String code : srcMnemonicCodeList) {
@@ -103,7 +109,7 @@ public class BPCreateWalletConfirmMnemonicCodeFragment extends BaseFragment {
 
     private void initData() {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        getMneonicCode();
+        getMnemonicCode();
     }
 
     private void printMnemonicCode() {
@@ -200,13 +206,11 @@ public class BPCreateWalletConfirmMnemonicCodeFragment extends BaseFragment {
             public void onClick(View v) {
 
                 if (BPCreateWalletFormFragment.isCreateWallet) {
-                    getFragmentManager().popBackStack(BPWalletManageFragment.class.getSimpleName(),0);
-                    getFragmentManager().popBackStack(BPCreateWalletFormFragment.class.getSimpleName(),1);
-                }else{
+                    popBackStackFragment();
+                } else {
                     sharedPreferencesHelper.put("isFirstCreateWallet", "0");
                     startFragment(new HomeFragment());
                 }
-
 
 
             }
