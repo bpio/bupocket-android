@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.content.ContextCompat;
@@ -14,6 +15,7 @@ import com.bupocket.R;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.fragment.home.HomeFragment;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
@@ -90,33 +92,13 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
     @Override
     protected void setListeners() {
         mBackupWalletBtn.setOnClickListener(new View.OnClickListener() {
+            @SuppressLint("StringFormatInvalid")
             @Override
             public void onClick(View v) {
                 if (mnemonicCodeList == null) {
-
-                    final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
-                    qmuiDialog.setCanceledOnTouchOutside(false);
-                    qmuiDialog.setContentView(R.layout.view_password_comfirm);
-                    qmuiDialog.show();
-                    QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
-
-                    ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
-                    TextView mPasswordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
-                    mPasswordConfirmNotice.setText(R.string.password_comfirm_dialog_to_backup);
-
-                    mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
+                    DialogUtils.showPassWordInputDialog(getActivity(), "", "", new DialogUtils.ConfirmListener() {
                         @Override
-                        public void onClick(View v) {
-                            qmuiDialog.dismiss();
-                        }
-                    });
-
-                    mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            // 检查合法性
-                            EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
-                            final String password = mPasswordConfirmEt.getText().toString().trim();
+                        public void confirm(final String password) {
                             final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                                     .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                                     .setTipWord(getResources().getString(R.string.wallet_create_creating_txt))
@@ -139,14 +121,14 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
                                         });
                                     } catch (Exception e) {
                                         ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
+                                        tipDialog.dismiss();
                                         return;
                                     }
                                 }
                             }).start();
-                            qmuiDialog.dismiss();
-
                         }
                     });
+
                 } else {
                     go2BPCreateWalletShowMnemonicCodeFragment();
                 }

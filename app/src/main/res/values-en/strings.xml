@@ -34,7 +34,7 @@
     <string name="create_wallet_prompt_dialog_title">Tips</string>
     <string name="create_wallet_prompt_txt2">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>
     <string name="backup_wallet_txt2">Make sure to back up in a safe environment with no people around and no cameras</string>
-    <string name="backup_wallet_btn_txt">BackUp Mnemonic Words</string>
+    <string name="backup_wallet_btn_txt">Backup Mnemonic</string>
     <string name="skip_backup_mneonic_btn_code">Skip</string>
     <string name="view_title_backup_mneonic_code">Backup Mnemonics</string>
     <string name="backup_mneonic_code_txt1">Do not take a screenshot</string>
@@ -619,7 +619,7 @@
     <!--setting user info-->
     <string name="setting_user_head_hint">Change wallet avatar</string>
     <string name="settting_user_title">Wallet Details</string>
-    <string name="change_wallet_head_title">Choose Avatar</string>
+    <string name="change_wallet_head_title">Choose avatar</string>
 
 
 
@@ -680,7 +680,7 @@
 
 
     <!--recover wallet-->
-    <string name="wallet_manage">Wallet Manage</string>
+    <string name="wallet_manage">Wallet Manager</string>
 
     <!--change pwd-->
     <string name="wallet_info">Wallet information</string>

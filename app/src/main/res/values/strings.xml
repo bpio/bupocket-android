@@ -656,7 +656,7 @@
     <string name="hint_wallet_create_form_input_password">请设置安全密码</string>
     <string name="hint_wallet_create_form_input_rePassword">请再次确认安全密码</string>
     <string name="hint_wallet_create_form_input_rePassword_hint">请再次输入安全密码</string>
-    <string name="imported_wallet_title_txt">创建/导入的钱包</string>
+    <string name="imported_wallet_title_txt">创建/导入钱包</string>
     <!-- recover identity -->
     <string name="recover_edit_mneonic_code">请填写您的助记词</string>
     <string name="recover_edit_mneonic_code_hint">12个英文单词，请按空格分隔单词</string>

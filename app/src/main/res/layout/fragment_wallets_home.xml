@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tabbr_wallet_txt"
+            android:text="@string/wallet_manage"
             android:layout_marginLeft="2dp"
             android:theme="@style/BPViewTitle" />
 
