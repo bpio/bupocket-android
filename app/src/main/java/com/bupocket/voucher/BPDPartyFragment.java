@@ -3,11 +3,15 @@ package com.bupocket.voucher;
 import android.view.View;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.interfaces.InitViewListener;
+import com.bupocket.voucher.model.VoucherAcceptanceBean;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+
+import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.Unbinder;
@@ -28,6 +32,7 @@ public class BPDPartyFragment extends AbsBaseFragment implements InitViewListene
     @BindView(R.id.deliveryInstructionsTv)
     TextView deliveryInstructionsTv;
     Unbinder unbinder;
+    private VoucherAcceptanceBean voucherAcceptance;
 
     @Override
     protected int getLayoutView() {
@@ -41,7 +46,19 @@ public class BPDPartyFragment extends AbsBaseFragment implements InitViewListene
 
     @Override
     protected void initData() {
+        if (getArguments() != null) {
+            voucherAcceptance = (VoucherAcceptanceBean) getArguments().getSerializable("voucherAcceptance");
+            if (voucherAcceptance != null) {
 
+                Glide.with(mContext)
+                        .load(voucherAcceptance.getIcon())
+                        .into(dPartyIconRiv);
+
+                dPartyNameRiv.setText(voucherAcceptance.getName());
+
+
+            }
+        }
     }
 
     @Override

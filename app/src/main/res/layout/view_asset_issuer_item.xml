@@ -8,6 +8,7 @@
 
 
     <TextView
+        android:id="@+id/assetIssuerDataTitleTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
@@ -18,6 +19,7 @@
         tools:text="@string/delete_num" />
 
     <TextView
+        android:id="@+id/assetIssuerDataTimeTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
@@ -29,6 +31,7 @@
         android:textSize="13sp" />
 
     <TextView
+        android:id="@+id/assetIssuerDataNumTv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"

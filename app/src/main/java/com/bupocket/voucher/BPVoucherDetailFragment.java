@@ -20,7 +20,9 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.utils.TimeUtil;
 import com.bupocket.voucher.http.VoucherService;
+import com.bupocket.voucher.model.VoucherAcceptanceBean;
 import com.bupocket.voucher.model.VoucherDetailModel;
+import com.bupocket.voucher.model.VoucherIssuerBean;
 import com.bupocket.voucher.model.VoucherPackageDetailModel;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -92,6 +94,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
 
 
     private VoucherDetailModel voucherDetailModel;
+    private VoucherPackageDetailModel detailModel;
 
     @Override
     protected int getLayoutView() {
@@ -148,10 +151,10 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
                 ApiResult<VoucherPackageDetailModel> body = response.body();
                 if (body != null && ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
 
-                    VoucherPackageDetailModel detailModel = body.getData();
+                    detailModel = body.getData();
 
 
-                    VoucherPackageDetailModel.VoucherAcceptanceBean voucherAcceptance = detailModel.getVoucherAcceptance();
+                    VoucherAcceptanceBean voucherAcceptance = detailModel.getVoucherAcceptance();
                     if (voucherAcceptance != null) {
                         Glide.with(mContext)
                                 .load(voucherAcceptance.getIcon())
@@ -213,11 +216,38 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
 
                 break;
             case R.id.dPartyLL:
-                startFragment(new BPDPartyFragment());
+
+                goDPartyFragment();
+
                 break;
             case R.id.assetIssuerLL:
-                startFragment(new BPAssetIssuerFragment());
+
+                goAssetIssuer();
+
                 break;
         }
+    }
+
+    private void goAssetIssuer() {
+        BPAssetIssuerFragment fragment = new BPAssetIssuerFragment();
+        VoucherIssuerBean voucherIssuer = detailModel.getVoucherIssuer();
+        Bundle args = new Bundle();
+        if (voucherIssuer != null) {
+            args.putSerializable("voucherIssuer", voucherIssuer);
+        }
+        fragment.setArguments(args);
+        startFragment(fragment);
+    }
+
+    private void goDPartyFragment() {
+
+        VoucherAcceptanceBean voucherAcceptance = detailModel.getVoucherAcceptance();
+        BPDPartyFragment fragment = new BPDPartyFragment();
+        Bundle args = new Bundle();
+        if (voucherAcceptance != null) {
+            args.putSerializable("voucherAcceptance", voucherAcceptance);
+        }
+        fragment.setArguments(args);
+        startFragment(fragment);
     }
 }
