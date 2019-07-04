@@ -130,7 +130,10 @@ public class BPAboutUsFragment extends AbsBaseFragment {
                             newVersionCodeTV.setText("V" + verNumber);
                         }
                     } else {
-                        newVersionCodeTV.setText(CommonUtil.packageName(mContext));
+                        if (newVersionCodeTV!=null) {
+                            newVersionCodeTV.setText(CommonUtil.packageName(mContext));
+                        }
+
                     }
                 }
 

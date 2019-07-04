@@ -25,6 +25,7 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -277,9 +278,10 @@ public class BPWalletManageFragment extends BaseFragment {
             public void onClick(View v) {
 
 
-//                if (walletAddress.equals(WalletCurrentUtils.getWalletAddress(spHelper))) {
-////                    DialogUtils.showMessageDialog();
-//                }
+                final boolean isCurrentWallet = walletAddress.equals(WalletCurrentUtils.getWalletAddress(spHelper));
+                if (isCurrentWallet) {
+//                    DialogUtils.showMessageDialog();
+                }
 
 
 
@@ -328,28 +330,29 @@ public class BPWalletManageFragment extends BaseFragment {
                                     sharedPreferencesHelper.put(walletAddress + "-walletName", "");
                                     sharedPreferencesHelper.put(walletAddress + "-BPdata", "");
                                     sharedPreferencesHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));
-                                    Looper.prepare();
+                                    sharedPreferencesHelper.put(walletAddress + "-mnemonicCodes","");
                                     if (walletAddress.equals(currentWalletAddress)) {
                                         sharedPreferencesHelper.put("currentWalletAddress", sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString());
                                     }
-                                    Toast.makeText(getActivity(), R.string.delete_wallet_success_message_txt, Toast.LENGTH_SHORT).show();
-                                    exportingTipDialog.dismiss();
 
-                                    Handler handler = new Handler(Looper.getMainLooper());
-                                    class PopBackStackThread implements Runnable {
+
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
                                         public void run() {
-//                                            popBackStack();
-                                            startFragment(new HomeFragment());
+                                            ToastUtil.showToast(getActivity(), R.string.delete_wallet_success_message_txt, Toast.LENGTH_SHORT);
+
+                                            exportingTipDialog.dismiss();
+                                            if (isCurrentWallet) {
+                                                startFragment(new HomeFragment());
+                                            }else{
+                                                popBackStack();
+                                            }
                                         }
-                                    }
-                                    handler.post(new PopBackStackThread());
-                                    Looper.loop();
+                                    });
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                    Looper.prepare();
-                                    Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+                                    ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
                                     exportingTipDialog.dismiss();
-                                    Looper.loop();
                                 }
                             }
                         }).start();
@@ -371,33 +374,7 @@ public class BPWalletManageFragment extends BaseFragment {
         mBackupMnemonicRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 go2BPCreateWalletShowMnemonicCodeFragment();
-//                final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
-//                qmuiDialog.setCanceledOnTouchOutside(false);
-//                qmuiDialog.setContentView(R.layout.view_password_comfirm);
-//                qmuiDialog.show();
-//                QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
-//
-//                ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
-//                TextView mPasswordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
-//                mPasswordConfirmNotice.setText(R.string.wallet_password_confirm_txt1);
-//
-//                mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        qmuiDialog.dismiss();
-//                    }
-//                });
-//
-//                mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        go2BPCreateWalletShowMnemonicCodeFragment();
-//
-//                    }
-//                });
             }
         });
 

@@ -541,7 +541,7 @@ public class CommonUtil {
 
     public static String packageName(Context context) {
         PackageManager manager = context.getPackageManager();
-        String name = null;
+        String name = "";
         try {
             PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
             name = info.versionName;
