@@ -277,9 +277,9 @@ public class BPWalletManageFragment extends BaseFragment {
             public void onClick(View v) {
 
 
-                if (walletAddress.equals(WalletCurrentUtils.getWalletAddress(spHelper))) {
-//                    DialogUtils.showMessageDialog();
-                }
+//                if (walletAddress.equals(WalletCurrentUtils.getWalletAddress(spHelper))) {
+////                    DialogUtils.showMessageDialog();
+//                }
 
 
 
