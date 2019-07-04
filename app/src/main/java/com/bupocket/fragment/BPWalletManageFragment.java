@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.widget.DialogTitle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +22,10 @@ import com.bupocket.common.ConstantsType;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
@@ -272,6 +275,14 @@ public class BPWalletManageFragment extends BaseFragment {
         mDeleteWalletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                if (walletAddress.equals(WalletCurrentUtils.getWalletAddress(spHelper))) {
+//                    DialogUtils.showMessageDialog();
+                }
+
+
+
                 final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
                 qmuiDialog.setCanceledOnTouchOutside(false);
                 qmuiDialog.setContentView(R.layout.view_password_comfirm);
