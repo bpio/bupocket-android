@@ -729,7 +729,6 @@
     <string name="recover_wallet_name_title">请设置新的身份名</string>
 
 
-
     <!--custom net-->
     <string name="wallet_service_title">钱包服务</string>
     <string name="wallet_service_hint">请输入钱包服务地址</string>
@@ -775,7 +774,18 @@
     <string name="voucher_detail_title">券详情</string>
 
 
+    <!--d party-->
+    <string name="d_party_introduce">承兑方介绍</string>
+    <string name="delivery_instructions">提货说明</string>
 
+    <string name="asset_issuer_title">数字资产发行方</string>
+    <string name="asset_issuer_introduce">数字资产发行方介绍</string>
+    <string name="data_public">数据公示</string>
+
+    <string name="delete_time">销毁时间：</string>
+    <string name="delete_num">销毁数量：</string>
+    <string name="issue_time">发行时间：</string>
+    <string name="issue_num">发行数量：</string>
 
 
 </resources>

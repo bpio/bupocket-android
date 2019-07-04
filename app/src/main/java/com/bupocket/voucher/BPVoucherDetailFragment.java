@@ -134,11 +134,11 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
         VoucherService voucherService = RetrofitFactory.getInstance().getRetrofit().create(VoucherService.class);
         HashMap<String, Object> map = new HashMap<>();
 //        map.put(ConstantsType.ADDRESS,getWalletAddress());
-        map.put(ConstantsType.ADDRESS,"buQrp3BCVdfbb5mJjNHZQwHvecqe7CCcounY");
-        map.put(ConstantsType.VOUCHER_ID,voucherDetailModel.getVoucherId());
-        map.put(ConstantsType.TRANCHE_ID,voucherDetailModel.getTrancheId());
-        map.put(ConstantsType.SPU_ID,voucherDetailModel.getSpuId());
-        map.put(ConstantsType.CONTRACT_ADDRESS,voucherDetailModel.getContractAddress());
+        map.put(ConstantsType.ADDRESS, "buQrp3BCVdfbb5mJjNHZQwHvecqe7CCcounY");
+        map.put(ConstantsType.VOUCHER_ID, voucherDetailModel.getVoucherId());
+        map.put(ConstantsType.TRANCHE_ID, voucherDetailModel.getTrancheId());
+        map.put(ConstantsType.SPU_ID, voucherDetailModel.getSpuId());
+        map.put(ConstantsType.CONTRACT_ADDRESS, voucherDetailModel.getContractAddress());
 
 
         voucherService.getVoucherPackageDeatil(map).enqueue(new Callback<ApiResult<VoucherPackageDetailModel>>() {
@@ -151,9 +151,8 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
                     VoucherPackageDetailModel detailModel = body.getData();
 
 
-
                     VoucherPackageDetailModel.VoucherAcceptanceBean voucherAcceptance = detailModel.getVoucherAcceptance();
-                    if (voucherAcceptance!=null) {
+                    if (voucherAcceptance != null) {
                         Glide.with(mContext)
                                 .load(voucherAcceptance.getIcon())
                                 .into(acceptanceIconRiv);
@@ -163,11 +162,11 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
                             .load(voucherAcceptance)
                             .into(voucherGoodsIv);
                     goodsNameTv.setText(detailModel.getVoucherName());
-                    goodsPriceTv.setText(getString(R.string.goods_price)+detailModel.getFaceValue());
+                    goodsPriceTv.setText(getString(R.string.goods_price) + detailModel.getFaceValue());
 
                     validityDateInfoTv.setText(String.format(mContext.getString(R.string.goods_validity_date),
-                            TimeUtil.timeStamp2Date(detailModel.getStartTime(),TimeUtil.TIME_TYPE_YYYYY_MM_DD),
-                            TimeUtil.timeStamp2Date(detailModel.getEndTime(),TimeUtil.TIME_TYPE_YYYYY_MM_DD)));
+                            TimeUtil.timeStamp2Date(detailModel.getStartTime(), TimeUtil.TIME_TYPE_YYYYY_MM_DD),
+                            TimeUtil.timeStamp2Date(detailModel.getEndTime(), TimeUtil.TIME_TYPE_YYYYY_MM_DD)));
 
                     voucherCodeInfoTv.setText(detailModel.getVoucherId());
                     voucherSizeInfoTv.setText(detailModel.getVoucherSpec());
@@ -186,7 +185,6 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
                             .into(assetIssuerRiv);
 
                     assetIssuerTv.setText(detailModel.getVoucherIssuer().getName());
-
 
 
                 }
@@ -215,8 +213,10 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
 
                 break;
             case R.id.dPartyLL:
+                startFragment(new BPDPartyFragment());
                 break;
             case R.id.assetIssuerLL:
+                startFragment(new BPAssetIssuerFragment());
                 break;
         }
     }
