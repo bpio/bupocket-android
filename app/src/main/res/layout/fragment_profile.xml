@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@color/app_color_gray"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
 
@@ -102,21 +102,19 @@
                 android:orientation="horizontal">
 
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ivProfileAddressManage"
                     android:layout_width="0dp"
                     android:layout_height="80dp"
                     android:layout_marginRight="10dp"
                     android:layout_weight="1"
-                    android:background="@drawable/shape_corner_blue"
-                    android:orientation="horizontal">
+                    android:background="@drawable/shape_corner_blue">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="23dp"
-                        android:layout_weight="1"
                         android:text="@string/address_book_txt"
                         android:textColor="@color/app_color_white"
                         android:textSize="18sp"
@@ -126,26 +124,25 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
                         android:background="@mipmap/ic_discover_address" />
 
-                </LinearLayout>
+                </RelativeLayout>
 
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ivProfileWalletManage"
                     android:layout_width="0dp"
                     android:layout_height="80dp"
                     android:layout_weight="1"
-                    android:background="@drawable/shape_corner_green"
-                    android:orientation="horizontal">
+                    android:background="@drawable/shape_corner_green">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="15dp"
                         android:layout_marginTop="23dp"
-                        android:layout_weight="1"
                         android:text="@string/wallet_manage"
                         android:textColor="@color/app_color_white"
                         android:textSize="18sp"
@@ -153,12 +150,13 @@
 
 
                     <ImageView
-
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentBottom="true"
                         android:layout_gravity="bottom"
                         android:background="@mipmap/ic_discover_wallet_manage" />
-                </LinearLayout>
+                </RelativeLayout>
 
 
             </LinearLayout>

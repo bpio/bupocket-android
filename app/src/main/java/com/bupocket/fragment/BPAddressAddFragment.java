@@ -1,6 +1,7 @@
 package com.bupocket.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -24,6 +25,7 @@ import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -118,6 +120,11 @@ public class BPAddressAddFragment extends BaseFragment {
         }else if(!addressFlag()){
             return;
         }
+        if (!addressRepeat()){
+            return;
+        }
+        
+        
         final String addressName = mAddressNameEt.getText().toString().trim();
         final String describe = mAddressDescribeEt.getText().toString().trim();
         final String linkmanAddress = mNewAddressEt.getText().toString().trim();
@@ -154,6 +161,22 @@ public class BPAddressAddFragment extends BaseFragment {
                 Toast.makeText(getContext(),getString(R.string.save_address_failure_message_txt),Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private boolean addressRepeat() {
+
+        Bundle arguments = getArguments();
+        if (arguments!=null) {
+            ArrayList<String> bookData = arguments.getStringArrayList("bookData");
+            for (int i = 0; i < bookData.size(); i++) {
+                String book = bookData.get(i);
+                if (mAddressNameEt.getText().toString().trim().equals(book)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     private boolean addressNameFlag() {

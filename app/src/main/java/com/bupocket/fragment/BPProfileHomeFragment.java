@@ -31,9 +31,9 @@ public class BPProfileHomeFragment extends BaseFragment {
     @BindView(R.id.llProfileIdentity)
     LinearLayout llProfileIdentity;
     @BindView(R.id.ivProfileAddressManage)
-    LinearLayout ivProfileAddressManage;
+    RelativeLayout ivProfileAddressManage;
     @BindView(R.id.ivProfileWalletManage)
-    LinearLayout ivProfileWalletManage;
+    RelativeLayout ivProfileWalletManage;
     @BindView(R.id.settingIcon)
     ImageView settingIcon;
     @BindView(R.id.addressBookIcon)

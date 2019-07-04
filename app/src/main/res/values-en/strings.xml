@@ -34,7 +34,7 @@
     <string name="create_wallet_prompt_dialog_title">Tips</string>
     <string name="create_wallet_prompt_txt2">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>
     <string name="backup_wallet_txt2">Make sure to back up in a safe environment with no people around and no cameras</string>
-    <string name="backup_wallet_btn_txt">Back Up Mnemonic Words</string>
+    <string name="backup_wallet_btn_txt">BackUp Mnemonic Words</string>
     <string name="skip_backup_mneonic_btn_code">Skip</string>
     <string name="view_title_backup_mneonic_code">Backup Mnemonics</string>
     <string name="backup_mneonic_code_txt1">Do not take a screenshot</string>
@@ -194,7 +194,7 @@
     <string name="contact_empty_msg">Please input your contact</string>
     <string name="contact_too_long_msg">Your contact information cannot exceed 20 words</string>
 
-    <string name="language_cn">Simplified Chinese</string>
+    <string name="language_cn">简体中文</string>
     <string name="language_en">English</string>
     <string name="set_success">Set successfully</string>
     <string name="handling">Processing...</string>
@@ -646,7 +646,7 @@
     <string name="create_wallet_prompt_txt3">
         • Security passwords are used to encrypt private keys, confirm transfers and contract calls for transactions. The strength of the security password is very important. Please keep in mind\n
         • BU Pocket will not store your password\n
-        • Security password can only be modified, but cannot be retrieved or reset, so please keep in mind。</string>
+        • Security password can only be modified, but cannot be retrieved or reset, so please keep in mind</string>
     <string name="create_wallet_name_err_hint">Letters, Chinese characters, numbers and underscores are allowed to input, but the length cannot exceed 20 characters</string>
     <string name="create_wallet_pw_err_hint">The security password must be composed of numbers and uppercase or lowercase letters and the combination must be </string>
     <string name="view_change_wallet_pw">Modify Wallet Password</string>
@@ -727,7 +727,7 @@
     <string name="change_wallet_name_hint">It is used to distinguish other wallets, which cannot exceed 20 characters</string>
     <!--create wallet-->
     <string name="create_wallet_name_title">Please set the wallet name</string>
-
+    <string name="recover_wallet_name_title">Please set a new identity name</string>
 
 
     <!--custom net-->
@@ -745,6 +745,6 @@
     <string name="delete_node_info">The to-be-deleted node is selected, and the default node in the system will be selected after deletion.</string>
     <string name="not_use_wallet_service">Invalid wallet service address</string>
 
-
+    <string name="change_pwd_success_hint"> security password has been changed！</string>
 
 </resources>

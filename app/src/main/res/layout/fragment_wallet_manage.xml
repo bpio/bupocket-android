@@ -32,11 +32,11 @@
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/walletHeadRiv"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="20dp"
-                    android:background="@mipmap/ic_wallet_head_normal"
+                    android:src="@mipmap/ic_wallet_head_normal"
                     app:riv_corner_radius="4dp" />
 
                 <LinearLayout
@@ -96,7 +96,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="34dp"
                     android:layout_marginRight="15dp"
                     android:src="@mipmap/icon_right_arrow" />
 

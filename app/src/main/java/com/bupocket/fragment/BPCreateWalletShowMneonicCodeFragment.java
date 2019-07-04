@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
-import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TO;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -56,7 +55,7 @@ public class BPCreateWalletShowMneonicCodeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-                BPCreateWalletConfirmMneonicCodeFragment createWalletConfirmMneonicCodeFragment = new BPCreateWalletConfirmMneonicCodeFragment();
+                BPCreateWalletConfirmMnemonicCodeFragment createWalletConfirmMneonicCodeFragment = new BPCreateWalletConfirmMnemonicCodeFragment();
                 Bundle argz = new Bundle();
                 getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
                 List<String> mneonicCodeList = getArguments().getStringArrayList("mneonicCodeList");

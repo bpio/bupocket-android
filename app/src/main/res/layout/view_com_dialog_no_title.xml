@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="wrap_content">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:background="@drawable/shape_corner"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingTop="20dp">
 
         <TextView
             android:id="@+id/dialogTitleTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="10dp"
             android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
+            android:layout_marginBottom="10dp"
             android:text="@string/change_wallet_name_title"
             android:textColor="@color/send_confirm_title_color"
             android:textSize="18sp" />
@@ -33,9 +33,9 @@
             android:layout_gravity="center"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            tools:text="messagemessagemessagemessagemessagemessagemessage"
             android:textColor="@color/search_token_item_txt_color"
-            android:textSize="17sp" />
+            android:textSize="17sp"
+            tools:text="messagemessagemessagemessagemessagemessagemessage" />
 
 
         <View

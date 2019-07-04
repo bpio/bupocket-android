@@ -17,6 +17,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
@@ -359,80 +360,33 @@ public class BPWalletManageFragment extends BaseFragment {
         mBackupMnemonicRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
-                qmuiDialog.setCanceledOnTouchOutside(false);
-                qmuiDialog.setContentView(R.layout.view_password_comfirm);
-                qmuiDialog.show();
-                QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
-
-                ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
-                TextView mPasswordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
-                mPasswordConfirmNotice.setText(R.string.wallet_password_confirm_txt1);
-
-                mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        qmuiDialog.dismiss();
-                    }
-                });
-
-                mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        // 检查合法性
-                        EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
-                        final String password = mPasswordConfirmEt.getText().toString().trim();
-                        if (CommonUtil.isNull(password)) {
-                            final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
-                                    .setTipWord(getResources().getString(R.string.common_dialog_input_pwd))
-                                    .create();
-                            tipDialog.show();
-                            mPasswordConfirmEt.postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
-                                    tipDialog.dismiss();
-                                }
-                            }, 1500);
-                            return;
-                        }
-                        final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
-                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                                .setTipWord(getResources().getString(R.string.user_info_backup_loading))
-                                .create();
-                        tipDialog.show();
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                String ciphertextSkeyData = getSkeyStr();
-                                try {
-//                                    LogUtils.e("skeyByte"+password+"\n"+ciphertextSkeyData);
-                                    byte[] skeyByte = Wallet.getInstance().getSkey(password, ciphertextSkeyData);
-//                                    LogUtils.e("skeyByte"+skeyByte);
-                                    mnemonicCodeList = new MnemonicCode().toMnemonic(skeyByte);
-                                    tipDialog.dismiss();
-
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            go2BPCreateWalletShowMneonicCodeFragment();
-                                        }
-                                    });
 
 
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    Looper.prepare();
-                                    Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
-                                    tipDialog.dismiss();
-                                    Looper.loop();
-                                    return;
-                                }
-                            }
-                        }).start();
-                        qmuiDialog.dismiss();
-
-                    }
-                });
+                go2BPCreateWalletShowMnemonicCodeFragment();
+//                final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
+//                qmuiDialog.setCanceledOnTouchOutside(false);
+//                qmuiDialog.setContentView(R.layout.view_password_comfirm);
+//                qmuiDialog.show();
+//                QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
+//
+//                ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
+//                TextView mPasswordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
+//                mPasswordConfirmNotice.setText(R.string.wallet_password_confirm_txt1);
+//
+//                mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        qmuiDialog.dismiss();
+//                    }
+//                });
+//
+//                mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        go2BPCreateWalletShowMnemonicCodeFragment();
+//
+//                    }
+//                });
             }
         });
 
@@ -512,7 +466,7 @@ public class BPWalletManageFragment extends BaseFragment {
         mWalletNameTv.setText(walletName);
 
 
-        CommonUtil.setHeadIvRes(walletAddress,walletHeadRiv,spHelper);
+        CommonUtil.setHeadIvRes(walletAddress, walletHeadRiv, spHelper);
 
     }
 
@@ -522,15 +476,20 @@ public class BPWalletManageFragment extends BaseFragment {
     }
 
     private String getSkeyStr() {
-        return sharedPreferencesHelper.getSharedPreference("skey", "").toString();
+        return sharedPreferencesHelper.getSharedPreference(walletAddress + ConstantsType.WALLET_SKEY, "").toString();
     }
 
-    private void go2BPCreateWalletShowMneonicCodeFragment() {
-        BPCreateWalletShowMneonicCodeFragment createWalletShowMneonicCodeFragment = new BPCreateWalletShowMneonicCodeFragment();
+    private void go2BPCreateWalletShowMnemonicCodeFragment() {
+
+
+        getFragmentManager().findFragmentByTag(BPWalletManageFragment.class.getSimpleName());
+        BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();
         Bundle argz = new Bundle();
-        argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) mnemonicCodeList);
-        createWalletShowMneonicCodeFragment.setArguments(argz);
-        startFragment(createWalletShowMneonicCodeFragment);
+//        argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) mnemonicCodeList);
+        argz.putString(ConstantsType.WALLET_ADDRESS, walletAddress);
+        BPCreateWalletFormFragment.isCreateWallet = true;
+        backupWalletFragment.setArguments(argz);
+        startFragment(backupWalletFragment);
 
     }
 

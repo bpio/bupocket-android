@@ -172,7 +172,7 @@ public class WalletDetailsFragment extends AbsBaseFragment {
         TextView cancelTv = qmuiDialog.findViewById(R.id.cancelNameTv);
         final TextView confirmTv = qmuiDialog.findViewById(R.id.confirmNameTv);
         final EditText walletNewNameEt = qmuiDialog.findViewById(R.id.walletNewNameEt);
-        walletNewNameEt.setHint(walletName);
+        walletNewNameEt.setText(walletName);
 
         cancelTv.setOnClickListener(new View.OnClickListener() {
             @Override

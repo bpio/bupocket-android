@@ -147,11 +147,6 @@ public class GetAddressBookRespDto {
     }
 
     public static class AddressBookListBean {
-        /**
-         * nickName : 张三
-         * linkmanAddress : buQtL9dwfFj4BWGRsMri7GX9nGv4GdjpvAeN
-         * remark : 备注
-         */
 
         private String nickName;
         private String linkmanAddress;

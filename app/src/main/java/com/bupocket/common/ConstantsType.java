@@ -31,5 +31,7 @@ public class ConstantsType {
 
 
 
+    public static final String WALLET_SKEY = "-skey";
+    public static final String WALLET_ADDRESS = "wallet_address";
 
 }

@@ -61,31 +61,29 @@
                     style="@style/BPTextViewCreateWallet"
                     android:text="@string/hint_wallet_create_form_input_password" />
 
-
-                <LinearLayout
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/create_wallet_set_pwd_et"
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:hint="@string/create_wallet_pw_err_hint"
                         android:inputType="textPassword|textMultiLine"
-                        android:maxLines="2"
+                        android:paddingRight="20dp"
                         android:theme="@style/BPEditText" />
 
                     <ImageView
                         android:id="@+id/recoverShowPwdIv"
-                        android:layout_width="wrap_content"
+                        android:layout_width="20dp"
                         android:layout_height="wrap_content"
-                        android:paddingTop="10dp"
-                        android:paddingBottom="10dp"
+                        android:layout_alignParentRight="true"
+                        android:paddingTop="15dp"
                         android:src="@mipmap/icon_close_eye" />
-                </LinearLayout>
+
+                </RelativeLayout>
+
 
                 <TextView
                     style="@style/BPTextViewCreateWallet"

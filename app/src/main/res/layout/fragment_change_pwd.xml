@@ -77,7 +77,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/change_old_pwd_hint"
-                        android:inputType="textPassword"
+                        android:inputType="textPassword|textMultiLine"
                         android:paddingRight="20dp"
                         android:theme="@style/BPEditText" />
 
@@ -109,16 +109,18 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/create_wallet_pw_err_hint"
-                        android:inputType="textPassword"
+                        android:inputType="textPassword|textMultiLine"
                         android:paddingRight="20dp"
                         android:theme="@style/BPEditText" />
 
                     <ImageView
                         android:id="@+id/newPasswordIv"
-                        android:layout_width="20dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:paddingTop="15dp"
+                        android:paddingTop="10dp"
+                        android:paddingBottom="20dp"
+                        android:layout_centerVertical="true"
                         android:src="@mipmap/icon_close_eye" />
 
                 </RelativeLayout>
@@ -140,7 +142,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/change_new_pwd_confirm"
-                        android:inputType="textPassword"
+                        android:inputType="textPassword|textMultiLine"
                         android:paddingRight="20dp"
                         android:theme="@style/BPEditText" />
 
