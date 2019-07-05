@@ -8,14 +8,19 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeSettingAdapter;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
+import com.bupocket.enums.BumoNodeEnum;
+import com.bupocket.enums.CustomNodeTypeEnum;
 import com.bupocket.model.NodeSettingModel;
 import com.bupocket.utils.DialogUtils;
+import com.bupocket.utils.SharedPreferencesHelper;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -34,11 +39,16 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
     ListView nodeSetLv;
     @BindView(R.id.addMoreLL)
     LinearLayout addMoreLL;
+    @BindView(R.id.nodeTitleTv)
+    TextView nodeTitleTv;
+
+
     private NodeSettingAdapter nodeSettingAdapter;
 
     private boolean isSaveBtn;
     private int oldPosition;
     private ArrayList<NodeSettingModel> oldNodeSettingModels;
+    private String testTitle="";
 
     @Override
     protected int getLayoutView() {
@@ -65,8 +75,23 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
     @Override
     protected void initData() {
 
-        String urlJson = (String) spHelper.getSharedPreference(Constants.BUMO_NODE_URL, "");
 
+        setNodeData();
+
+        setTestStatus();
+    }
+
+    private void setTestStatus() {
+
+        if (SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()) {
+            testTitle = "(" + getString(R.string.current_test_message_txt) + ")";
+            nodeTitleTv.setText(getString(R.string.node_setting_title)+testTitle);
+        }
+
+    }
+
+    private void setNodeData() {
+        String urlJson = (String) spHelper.getSharedPreference(Constants.BUMO_NODE_URL, "");
         oldNodeSettingModels = new ArrayList<>();
         if (urlJson.isEmpty()) {
             NodeSettingModel mainNode = new NodeSettingModel();
@@ -86,7 +111,6 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
             }
         }
         nodeSettingAdapter.setNewData(oldNodeSettingModels);
-
     }
 
     @Override
@@ -101,7 +125,7 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
 
                 DialogUtils.showEditMessageDialog(mContext,
                         getString(R.string.add_node_address_title),
-                        getString(R.string.add_node_address_title),
+                        getString(R.string.add_node_address_title)+testTitle,
                         new DialogUtils.ConfirmListener() {
                             @Override
                             public void confirm(String url) {
@@ -162,6 +186,8 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 for (int i = 0; i < oldNodeSettingModels.size(); i++) {
                     if (oldNodeSettingModels.get(i).isSelected()) {
                         String oldUrl = oldNodeSettingModels.get(i).getUrl();
@@ -185,6 +211,7 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
         });
         Button skipBackuoBtn = topbar.findViewById(R.id.skipBackupBtn);
         skipBackuoBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.app_color_main));
+
 
     }
 

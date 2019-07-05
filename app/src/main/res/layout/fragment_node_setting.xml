@@ -16,6 +16,7 @@
 
 
         <TextView
+            android:id="@+id/nodeTitleTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/node_setting_title"

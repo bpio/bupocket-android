@@ -209,6 +209,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
                         } catch (WalletException e) {
                             e.printStackTrace();
                             ToastUtil.showToast(getActivity(), R.string.create_wallet_fail, Toast.LENGTH_SHORT);
+                            tipDialog.dismiss();
                             return;
                         }
                     }

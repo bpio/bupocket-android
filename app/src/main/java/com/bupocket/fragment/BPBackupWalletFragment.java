@@ -101,7 +101,7 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
                         public void confirm(final String password) {
                             final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                                     .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                                    .setTipWord(getResources().getString(R.string.wallet_create_creating_txt))
+                                    .setTipWord(getResources().getString(R.string.tx_status_runing))
                                     .create();
                             tipDialog.show();
                             new Thread(new Runnable() {
