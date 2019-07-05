@@ -256,6 +256,18 @@ public class DialogUtils {
     /**
      * @param mContext
      * @param input
+     * @param confirmListener
+     */
+    public static void showPassWordInputDialog(final Activity mContext,
+                                               String input,
+                                               final ConfirmListener confirmListener) {
+        showPassWordInputDialog(mContext, "", input, "", 0,confirmListener);
+    }
+
+
+    /**
+     * @param mContext
+     * @param input
      * @param etInput
      * @param confirmListener
      */
@@ -364,6 +376,6 @@ public class DialogUtils {
 
     public interface ConfirmListener {
 
-        void confirm(String url);
+        void confirm(String msg);
     }
 }

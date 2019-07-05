@@ -747,4 +747,8 @@
 
     <string name="change_pwd_success_hint"> security password has been changed！</string>
 
+
+    <string name="delete_current_wallet_title">Are you sure to delete this wallet? </string>
+    <string name="delete_current_wallet_info"> The to-be-deleted wallet is in use currently. After this wallet is deleted, the wallet in this identity will be selected by default.</string>
+
 </resources>

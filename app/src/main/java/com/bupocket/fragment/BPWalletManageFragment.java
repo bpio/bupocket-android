@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
@@ -280,93 +281,21 @@ public class BPWalletManageFragment extends BaseFragment {
 
                 final boolean isCurrentWallet = walletAddress.equals(WalletCurrentUtils.getWalletAddress(spHelper));
                 if (isCurrentWallet) {
-//                    DialogUtils.showMessageDialog();
+                    DialogUtils.showConfirmDialog(mContext,
+                            getString(R.string.delete_current_wallet_title),
+                            getString(R.string.delete_current_wallet_info),
+                            new DialogUtils.KnowListener() {
+                        @Override
+                        public void Know() {
+                            deleteWallet(isCurrentWallet);
+                        }
+                    });
+
+                    return;
                 }
 
+                deleteWallet(isCurrentWallet);
 
-
-                final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
-                qmuiDialog.setCanceledOnTouchOutside(false);
-                qmuiDialog.setContentView(R.layout.view_password_comfirm);
-                qmuiDialog.show();
-                QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
-                ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
-                TextView mPasswordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
-                TextView mPasswordConfirmTitle = qmuiDialog.findViewById(R.id.passwordConfirmTitle);
-
-                mPasswordConfirmNotice.setText(getString(R.string.delete_wallet_password_confirm_txt));
-                mPasswordConfirmTitle.setText(getString(R.string.password_comfirm_dialog_title));
-
-                mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
-                        final String password = mPasswordConfirmEt.getText().toString().trim();
-
-                        exportingTipDialog = new QMUITipDialog.Builder(getContext())
-                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                                .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
-                                .create();
-                        exportingTipDialog.show();
-                        exportingTipDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-                            @Override
-                            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-
-                                if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-                                    return true;
-                                }
-                                return false;
-                            }
-                        });
-
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                String bpData = getAccountBPData();
-                                try {
-                                    privateKeyStr = Wallet.getInstance().exportPrivateKey(password, bpData, walletAddress);
-                                    importedWallets = JSONObject.parseArray(sharedPreferencesHelper.getSharedPreference("importedWallets", "[]").toString(), String.class);
-                                    importedWallets.remove(walletAddress);
-                                    sharedPreferencesHelper.put(walletAddress + "-walletName", "");
-                                    sharedPreferencesHelper.put(walletAddress + "-BPdata", "");
-                                    sharedPreferencesHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));
-                                    sharedPreferencesHelper.put(walletAddress + "-mnemonicCodes","");
-                                    if (walletAddress.equals(currentWalletAddress)) {
-                                        sharedPreferencesHelper.put("currentWalletAddress", sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString());
-                                    }
-
-
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            ToastUtil.showToast(getActivity(), R.string.delete_wallet_success_message_txt, Toast.LENGTH_SHORT);
-
-                                            exportingTipDialog.dismiss();
-                                            if (isCurrentWallet) {
-                                                startFragment(new HomeFragment());
-                                            }else{
-                                                popBackStack();
-                                            }
-                                        }
-                                    });
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                    ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
-                                    exportingTipDialog.dismiss();
-                                }
-                            }
-                        }).start();
-
-                        qmuiDialog.dismiss();
-                    }
-                });
-
-                mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        qmuiDialog.dismiss();
-                    }
-                });
 
             }
         });
@@ -388,6 +317,70 @@ public class BPWalletManageFragment extends BaseFragment {
                 startFragment(fragment);
             }
         });
+    }
+
+    private void deleteWallet(final boolean isCurrentWallet) {
+
+        DialogUtils.showPassWordInputDialog(getActivity(), getString(R.string.delete_wallet_password_confirm_txt), new DialogUtils.ConfirmListener() {
+            @Override
+            public void confirm(final String msg) {
+                exportingTipDialog = new QMUITipDialog.Builder(getContext())
+                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                        .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
+                        .create();
+                exportingTipDialog.show();
+                exportingTipDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                    @Override
+                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+
+                        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String bpData = getAccountBPData();
+                        try {
+                            privateKeyStr = Wallet.getInstance().exportPrivateKey(msg, bpData, walletAddress);
+                            importedWallets = JSONObject.parseArray(sharedPreferencesHelper.getSharedPreference("importedWallets", "[]").toString(), String.class);
+                            importedWallets.remove(walletAddress);
+                            sharedPreferencesHelper.put(walletAddress + "-walletName", "");
+                            sharedPreferencesHelper.put(walletAddress + "-BPdata", "");
+                            sharedPreferencesHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));
+                            sharedPreferencesHelper.put(walletAddress + "-mnemonicCodes", "");
+                            if (walletAddress.equals(currentWalletAddress)) {
+                                sharedPreferencesHelper.put("currentWalletAddress", sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString());
+                            }
+
+
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ToastUtil.showToast(getActivity(), R.string.delete_wallet_success_message_txt, Toast.LENGTH_SHORT);
+
+                                    exportingTipDialog.dismiss();
+                                    if (isCurrentWallet) {
+                                        startFragment(new HomeFragment());
+                                    } else {
+                                        popBackStack();
+                                    }
+                                }
+                            });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
+                            exportingTipDialog.dismiss();
+                        }
+                    }
+                }).start();
+            }
+        });
+
+
     }
 
     private void refreshWalletName() {
