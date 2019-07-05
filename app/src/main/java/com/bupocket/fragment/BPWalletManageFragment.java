@@ -285,18 +285,16 @@ public class BPWalletManageFragment extends BaseFragment {
                             getString(R.string.delete_current_wallet_title),
                             getString(R.string.delete_current_wallet_info),
                             new DialogUtils.KnowListener() {
-                        @Override
-                        public void Know() {
-                            deleteWallet(isCurrentWallet);
-                        }
-                    });
+                                @Override
+                                public void Know() {
+                                    deleteWallet(isCurrentWallet);
+                                }
+                            });
 
                     return;
                 }
 
                 deleteWallet(isCurrentWallet);
-
-
             }
         });
 
@@ -361,13 +359,8 @@ public class BPWalletManageFragment extends BaseFragment {
                                 @Override
                                 public void run() {
                                     ToastUtil.showToast(getActivity(), R.string.delete_wallet_success_message_txt, Toast.LENGTH_SHORT);
-
                                     exportingTipDialog.dismiss();
-                                    if (isCurrentWallet) {
-                                        startFragment(new HomeFragment());
-                                    } else {
-                                        popBackStack();
-                                    }
+                                    popBackStack();
                                 }
                             });
                         } catch (Exception e) {

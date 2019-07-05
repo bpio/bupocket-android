@@ -88,28 +88,33 @@ public class BPAboutUsFragment extends AbsBaseFragment {
 
     @Override
     protected void initData() {
-
-        isSwitch = SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode();
-        if (isSwitch) {
-            changeTestNetTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_checked));
-        } else {
-            changeTestNetTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_normal));
-        }
-
         reqUpdateData();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        int isStart = (int) spHelper.getSharedPreference(ConstantsType.IS_START_CUSTOM_SERVICE, 0);
+        setSwitchStatus();
+    }
 
+    private void setSwitchStatus() {
+        int isStart = (int) spHelper.getSharedPreference(ConstantsType.IS_START_CUSTOM_SERVICE, 0);
         if (isStart == CustomNodeTypeEnum.STOP.getServiceType()) {
             changeTestNetTV.setEnabled(true);
         } else if (isStart == CustomNodeTypeEnum.START.getServiceType()) {
             changeTestNetTV.setEnabled(false);
         }
 
+        isSwitch = SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode();
+        if (isSwitch) {
+            if (changeTestNetTV.isEnabled()) {
+                changeTestNetTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_checked));
+            } else {
+                changeTestNetTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_enable));
+            }
+        } else {
+            changeTestNetTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_normal));
+        }
     }
 
     private void reqUpdateData() {
@@ -120,7 +125,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
             public void onResponse(Call<ApiResult<GetCurrentVersionRespDto>> call, Response<ApiResult<GetCurrentVersionRespDto>> response) {
                 respDto = response.body();
 
-                if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
+                if (respDto!=null&&ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
                     int verNumberCode = Integer.parseInt(respDto.getData().getVerNumberCode());
                     String verNumber = respDto.getData().getVerNumber();
                     isUpdate = ((int) CommonUtil.packageCode(mContext)) < verNumberCode;
@@ -130,7 +135,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
                             newVersionCodeTV.setText("V" + verNumber);
                         }
                     } else {
-                        if (newVersionCodeTV!=null) {
+                        if (newVersionCodeTV != null) {
                             newVersionCodeTV.setText(CommonUtil.packageName(mContext));
                         }
 
