@@ -124,8 +124,8 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
                 }
 
                 DialogUtils.showEditMessageDialog(mContext,
-                        getString(R.string.add_node_address_title),
                         getString(R.string.add_node_address_title)+testTitle,
+                        getString(R.string.add_node_address_title),
                         new DialogUtils.ConfirmListener() {
                             @Override
                             public void confirm(String url) {
