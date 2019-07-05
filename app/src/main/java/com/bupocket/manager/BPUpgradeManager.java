@@ -7,6 +7,7 @@ import com.bupocket.common.Constants;
 import com.bupocket.enums.LanguageEnum;
 import com.bupocket.http.api.dto.resp.GetCurrentVersionRespDto;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.UpdateAppHttpUtil;
 import com.vector.update_app.UpdateAppBean;
@@ -43,6 +44,7 @@ public class BPUpgradeManager {
                 .checkNewApp(new UpdateCallback(){
                     @Override
                     protected UpdateAppBean parseJson(String json) {
+                        LogUtils.e("downData"+json);
                         int language = SharedPreferencesHelper.getInstance().getInt("currentLanguage", LanguageEnum.UNDEFINED.getId());
                         if(language == LanguageEnum.UNDEFINED.getId()){
                             String myLocaleStr = Locale.getDefault().getLanguage();
