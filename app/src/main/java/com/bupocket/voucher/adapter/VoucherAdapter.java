@@ -41,14 +41,14 @@ public class VoucherAdapter extends AbsViewHolderAdapter<VoucherDetailModel> {
         String icon = itemData.getVoucherAcceptance().getIcon();
         if (!TextUtils.isEmpty(icon)) {
             Glide.with(context)
-                    .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(icon))
+                    .load(icon)
                     .into(acceptanceIconRiv);
         }
 
         String voucherIcon = itemData.getVoucherIcon();
         if (!TextUtils.isEmpty(voucherIcon)) {
             Glide.with(context)
-                    .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(voucherIcon))
+                    .load(voucherIcon)
                     .into(voucherGoodsIv);
         }
         String name = itemData.getVoucherAcceptance().getName();
@@ -72,7 +72,7 @@ public class VoucherAdapter extends AbsViewHolderAdapter<VoucherDetailModel> {
         String endTime = itemData.getEndTime();
         String date = context.getString(R.string.validity_date);
         if (!TextUtils.isEmpty(startTime)) {
-             date = date + ":" +
+             date = date + ": " +
                     String.format(context.getString(R.string.goods_validity_date),
                             TimeUtil.timeStamp2Date(startTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD),
                             TimeUtil.timeStamp2Date(endTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD));

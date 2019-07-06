@@ -157,9 +157,14 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
                         }
                         acceptanceNameTv.setText(voucherAcceptance.getName());
                     }
-                    Glide.with(mContext)
-                            .load(voucherAcceptance)
-                            .into(voucherGoodsIv);
+                    String voucherIcon = detailModel.getVoucherIcon();
+                    if (!TextUtils.isEmpty(voucherIcon)) {
+                        Glide.with(mContext)
+                                .load(voucherIcon)
+                                .into(voucherGoodsIv);
+                    }
+
+
                     goodsNameTv.setText(detailModel.getVoucherName());
                     goodsPriceTv.setText(getString(R.string.goods_price) + detailModel.getFaceValue());
 
@@ -167,7 +172,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
                     String endTime = detailModel.getEndTime();
                     String date = mContext.getString(R.string.validity_date);
                     if (!TextUtils.isEmpty(startTime)) {
-                        date = date + ":" +
+                        date = date + ": " +
                                 String.format(mContext.getString(R.string.goods_validity_date),
                                         TimeUtil.timeStamp2Date(startTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD),
                                         TimeUtil.timeStamp2Date(endTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD));
