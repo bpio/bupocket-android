@@ -26,6 +26,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.TO;
@@ -309,7 +310,7 @@ public class BPWalletImportFragment extends BaseFragment {
                         try {
                             String keystore = mKeystoreEt.getText().toString().trim();
                             WalletBPData walletBPData = Wallet.getInstance().importKeystore(password, keystore);
-                            saveWalletData(walletBPData, mWalletNameEt.getText().toString().trim());
+                            saveWalletData(walletBPData, mWalletNameEt.getText().toString().trim(), false);
                             tipDialog.dismiss();
                         } catch (WalletException e) {
                             e.printStackTrace();
@@ -347,7 +348,7 @@ public class BPWalletImportFragment extends BaseFragment {
         return contentView;
     }
 
-    private void saveWalletData(WalletBPData walletBPData, String walletName) {
+    private void saveWalletData(WalletBPData walletBPData, String walletName, boolean isPrivate) {
 
         String address = walletBPData.getAccounts().get(0).getAddress();
         String bpData = JSON.toJSONString(walletBPData.getAccounts());
@@ -359,6 +360,12 @@ public class BPWalletImportFragment extends BaseFragment {
             spHelper.put(address + "-BPdata", bpData);
             importedWallets.add(address);
             spHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));
+            if (isPrivate) {
+                spHelper.put(address + ConstantsType.WALLET_SKEY, walletBPData.getSkey());
+            } else {
+                spHelper.put(address + ConstantsType.WALLET_SKEY_PRIV, walletBPData.getSkey());
+            }
+
             ToastUtil.showToast(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT);
             getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -485,7 +492,7 @@ public class BPWalletImportFragment extends BaseFragment {
                             List<String> mnemonicCodes = getMnemonicCode();
                             WalletBPData walletBPData = Wallet.getInstance().importMnemonicCode(mnemonicCodes, password, getContext());
                             spHelper.put(walletBPData.getAccounts().get(0).getAddress() + "-mnemonicCodes", "yes");
-                            saveWalletData(walletBPData, mWalletNameEt.getText().toString().trim());
+                            saveWalletData(walletBPData, mWalletNameEt.getText().toString().trim(), false);
 
                             tipDialog.dismiss();
                         } catch (Exception e) {
@@ -576,7 +583,7 @@ public class BPWalletImportFragment extends BaseFragment {
                     isPwdHideFirst = true;
                 } else {
                     mPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
-                    mPasswordEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+                    mPasswordEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
                     mPasswordEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     mPasswordEt.setSelection(mPasswordEt.getText().length());
                     isPwdHideFirst = false;
@@ -628,8 +635,7 @@ public class BPWalletImportFragment extends BaseFragment {
                         try {
                             String privateKey = mPrivateKeyEt.getText().toString().trim();
                             WalletBPData walletBPData = Wallet.getInstance().importPrivateKey(password, privateKey);
-
-                            saveWalletData(walletBPData, mWalletNameEt.getText().toString());
+                            saveWalletData(walletBPData, mWalletNameEt.getText().toString(), true);
                             tipDialog.dismiss();
 
                         } catch (Exception e) {

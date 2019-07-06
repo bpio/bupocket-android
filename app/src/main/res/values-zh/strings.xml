@@ -322,7 +322,7 @@
     <string name="currency_usd_txt">USD</string>
     <string name="currency_jpy_txt">JPY</string>
     <string name="currency_krw_txt">KRW</string>
-    <string name="switch_test_net_message_txt">是否切换为测试网</string>
+    <string name="switch_test_net_message_txt">确认切换为测试网吗？</string>
     <string name="switch_main_net_message_txt">您已关闭测试网</string>
     <string name="yes_txt">是</string>
     <string name="no_txt">否</string>
@@ -633,7 +633,7 @@
     <string name="collection_address">收款地址</string>
 
 
-    <!--create wallet-->
+    <!--createIdentity wallet-->
     <string name="view_title_create_wallet">创建钱包</string>
     <string name="start_create_wallet">开始创建</string>
     <string name="create_wallet_prompt_dialog_title">温馨提示</string>
@@ -656,7 +656,7 @@
     <string name="hint_wallet_create_form_input_password">请设置安全密码</string>
     <string name="hint_wallet_create_form_input_rePassword">请再次确认安全密码</string>
     <string name="hint_wallet_create_form_input_rePassword_hint">请再次输入安全密码</string>
-    <string name="imported_wallet_title_txt">创建/导入的钱包</string>
+    <string name="imported_wallet_title_txt">创建/导入钱包</string>
     <!-- recover identity -->
     <string name="recover_edit_mneonic_code">请填写您的助记词</string>
     <string name="recover_edit_mneonic_code_hint">12个英文单词，请按空格分隔单词</string>
@@ -729,7 +729,7 @@
     <string name="password_for_keystore_txt">请输入安全密码</string>
     <string name="wallet_import_private_et_hint_txt">请填写您的私钥</string>
     <string name="change_wallet_name_hint">用于区分其他钱包，不能超过20个字符</string>
-    <!--create wallet-->
+    <!--createIdentity wallet-->
     <string name="create_wallet_name_title">请设置钱包名称</string>
     <string name="recover_wallet_name_title">请设置新的身份名</string>
 

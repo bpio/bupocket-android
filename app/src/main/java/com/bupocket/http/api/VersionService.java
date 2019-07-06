@@ -14,6 +14,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface VersionService {
+
+
     @GET("wallet/version")
     Call<ApiResult<GetCurrentVersionRespDto>> getCurrentVersion(@Query("appType") int appTypeCode);
 

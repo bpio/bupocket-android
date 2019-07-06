@@ -175,75 +175,56 @@ public class BPUserInfoFragment extends BaseFragment {
     }
 
     private void showPasswordConfirmDialog() {
-        final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
-        qmuiDialog.setCanceledOnTouchOutside(false);
-        qmuiDialog.setContentView(R.layout.view_password_comfirm);
-        qmuiDialog.show();
-        QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
-        ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
-        TextView mPasswordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
-        mPasswordConfirmNotice.setText(R.string.user_info_logout_warning);
-        mPasswordConfirmNotice.setTextColor(getResources().getColor(R.color.qmui_config_color_red));
 
-        mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiDialog.dismiss();
-            }
-        });
-        mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
-                final String password = mPasswordConfirmEt.getText().toString().trim();
-                if (CommonUtil.isNull(password)) {
-                    final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
-                            .setTipWord(getResources().getString(R.string.common_dialog_input_pwd))
-                            .create();
-                    tipDialog.show();
-                    mPasswordConfirmEt.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            tipDialog.dismiss();
-                        }
-                    }, 1500);
-                    return;
-                }
-                final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
-                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                        .setTipWord(getResources().getString(R.string.user_info_logout_loading))
-                        .create();
-                tipDialog.show();
-
-                new Thread(new Runnable() {
+        DialogUtils.showPassWordInputDialog(getActivity(), "",
+                getString(R.string.user_info_logout_warning),
+                "",getResources().getColor(R.color.qmui_config_color_red) , new DialogUtils.ConfirmListener() {
                     @Override
-                    public void run() {
-                        String ciphertextSkeyData = getSkeyStr();
-                        try {
-                            Wallet.getInstance().checkPwd(password, ciphertextSkeyData);
-                            sharedPreferencesHelper.clear();
-                            SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus", HiddenFunctionStatusEnum.DISABLE.getCode());
-                            SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.MAIN.getCode());
-                            BPApplication.switchNetConfig(BumoNodeEnum.MAIN.getName());
-                            tipDialog.dismiss();
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    startFragment(new BPCreateWalletFragment());
-                                }
-                            });
+                    public void confirm(final String password) {
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
-                            tipDialog.dismiss();
+                        if (CommonUtil.isNull(password)) {
+                            final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+                                    .setTipWord(getResources().getString(R.string.common_dialog_input_pwd))
+                                    .create();
+                            tipDialog.show();
                             return;
                         }
+                        final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
+                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                                .setTipWord(getResources().getString(R.string.user_info_logout_loading))
+                                .create();
+                        tipDialog.show();
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                String ciphertextSkeyData = getSkeyStr();
+                                try {
+                                    Wallet.getInstance().checkPwd(password, ciphertextSkeyData);
+                                    sharedPreferencesHelper.clear();
+                                    SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus", HiddenFunctionStatusEnum.DISABLE.getCode());
+                                    SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.MAIN.getCode());
+                                    BPApplication.switchNetConfig(BumoNodeEnum.MAIN.getName());
+                                    tipDialog.dismiss();
+                                    getActivity().runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            startFragment(new BPCreateWalletFragment());
+                                        }
+                                    });
+
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
+                                    tipDialog.dismiss();
+                                    return;
+                                }
+                            }
+                        }).start();
+
                     }
-                }).start();
-                qmuiDialog.dismiss();
-            }
-        });
+                });
+
 
     }
 }

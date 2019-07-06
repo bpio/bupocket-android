@@ -8,10 +8,12 @@ import android.support.annotation.VisibleForTesting;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
+import android.view.TextureView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
@@ -103,10 +106,17 @@ public class BPChangePwdFragment extends BaseFragment {
                                 if (walletAddress.equals(identityWalletAddress)) {
                                     skey = sharedPreferencesHelper.getSharedPreference("skey", "").toString();
                                 } else {
-                                    skey = sharedPreferencesHelper.getSharedPreference(BPChangePwdFragment.this.walletAddress + "-skey", "").toString();
+                                    skey = sharedPreferencesHelper.getSharedPreference(BPChangePwdFragment.this.walletAddress + ConstantsType.WALLET_SKEY, "").toString();
                                 }
 
-                                WalletBPData walletBPData = Wallet.getInstance().updateAccountPassword(oldPwd, newPwd, skey, getContext());
+                                WalletBPData walletBPData;
+                                if (TextUtils.isEmpty(skey)) {
+                                    skey = sharedPreferencesHelper.getSharedPreference(BPChangePwdFragment.this.walletAddress + ConstantsType.WALLET_SKEY_PRIV, "").toString();
+                                    walletBPData = Wallet.getInstance().updateAccountWalletPassword(oldPwd, newPwd, skey, getContext());
+                                } else {
+                                    walletBPData = Wallet.getInstance().updateAccountPassword(oldPwd, newPwd, skey, getContext());
+                                }
+
 
                                 if (walletAddress.equals(identityWalletAddress)) {
                                     sharedPreferencesHelper.put("skey", walletBPData.getSkey());

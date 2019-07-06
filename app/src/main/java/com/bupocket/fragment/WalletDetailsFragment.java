@@ -108,7 +108,7 @@ public class WalletDetailsFragment extends AbsBaseFragment {
         qmuiDialog.setCanceledOnTouchOutside(false);
         qmuiDialog.setContentView(R.layout.view_change_wallet_head_icon);
         RecyclerView headIconRv = (RecyclerView) qmuiDialog.findViewById(R.id.headIconRV);
-        int oldPosition = (int) spHelper.getSharedPreference(walletAddress + ConstantsType.WALLET_HEAD_ICON, 0);
+        int oldPosition = (int) spHelper.getSharedPreference(walletAddress + ConstantsType.WALLET_HEAD_ICON, -1);
         headResData = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             HeadIconModel headIconModel = new HeadIconModel();
@@ -172,7 +172,7 @@ public class WalletDetailsFragment extends AbsBaseFragment {
         TextView cancelTv = qmuiDialog.findViewById(R.id.cancelNameTv);
         final TextView confirmTv = qmuiDialog.findViewById(R.id.confirmNameTv);
         final EditText walletNewNameEt = qmuiDialog.findViewById(R.id.walletNewNameEt);
-        walletNewNameEt.setText(walletName);
+//        walletNewNameEt.setText(walletName);
 
         cancelTv.setOnClickListener(new View.OnClickListener() {
             @Override

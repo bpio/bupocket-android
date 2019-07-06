@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tabbr_wallet_txt"
+            android:text="@string/wallet_manage"
             android:layout_marginLeft="2dp"
             android:theme="@style/BPViewTitle" />
 
@@ -55,7 +55,7 @@
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                 android:id="@+id/importBigWalletBtn"
-                android:layout_width="238dp"
+                android:layout_width="wrap_content"
                 android:layout_height="43.5dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="37dp"

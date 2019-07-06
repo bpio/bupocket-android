@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.bumptech.glide.util.ExceptionCatchingInputStream;
 import com.bupocket.common.Constants;
 import com.bupocket.http.api.AccountService;
 import com.bupocket.http.api.RetrofitFactory;
@@ -67,7 +66,7 @@ public class Wallet {
         wallet = null;
     }
 
-    private WalletBPData create(String password, String sKey, Context context) throws WalletException {
+    private WalletBPData createIdentity(String password, String sKey, Context context) throws WalletException {
         try {
             WalletBPData walletBPData;
             List<String> mnemonicCodes;
@@ -111,19 +110,84 @@ public class Wallet {
         }
     }
 
-    public WalletBPData create(String password, Context context) throws WalletException {
+    private WalletBPData createWallet(String password, String sKey, Context context) throws WalletException {
+        try {
+            WalletBPData walletBPData;
+            List<String> mnemonicCodes;
+            BaseKeyStoreEntity baseKeyStoreEntity = KeyStore.encryptMsg(password, sKey, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 1);
+            List<String> hdPaths = new ArrayList<>();
+            hdPaths.add("M/44H/526H/1H/0/0");
+            mnemonicCodes = new MnemonicCode().toMnemonic(HexFormat.hexStringToBytes(sKey));
+            List<String> privateKeys = Mnemonic.generatePrivateKeys(mnemonicCodes, hdPaths);
+
+
+            walletBPData = new WalletBPData();
+            walletBPData.setSkey(JSON.toJSONString(baseKeyStoreEntity));
+            List<WalletBPData.AccountsBean> accountsBeans = new ArrayList<>();
+
+            KeyStoreEntity keyStoreEntity = null;
+            WalletBPData.AccountsBean accountsBean;
+            for (String pk : privateKeys) {
+                keyStoreEntity = KeyStore.generateKeyStore(password, pk, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 1);
+                accountsBean = new WalletBPData.AccountsBean();
+                accountsBean.setAddress(new PrivateKey(pk).getEncAddress());
+                accountsBean.setSecret(JSON.toJSONString(keyStoreEntity));
+                accountsBeans.add(accountsBean);
+            }
+            walletBPData.setAccounts(accountsBeans);
+            walletBPData.setMnemonicCodes(mnemonicCodes);
+            WalletBPData.AccountsBean identityAccountBean = accountsBeans.get(0);
+            WalletBPData.AccountsBean walletAccountBean = accountsBeans.get(0);
+
+            String walletAccountPk = getPk(privateKeys.get(0));
+
+            String walletAccountSignData = signData(privateKeys.get(0), walletAccountBean.getAddress());
+
+            deviceBind(walletAccountBean.getAddress(), identityAccountBean.getAddress(), walletAccountPk, walletAccountSignData, context);
+
+            return walletBPData;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new WalletException(ExceptionEnum.SYS_ERR.getCode(), ExceptionEnum.SYS_ERR.getMessage());
+        }
+    }
+
+    public WalletBPData createIdentity(String password, Context context) throws WalletException {
         byte[] aesIv = new byte[16];
         SecureRandom randomIv = new SecureRandom();
         randomIv.nextBytes(aesIv);
         String skey = HexFormat.byteToHex(aesIv);
-        return create(password, skey, context);
+        return createIdentity(password, skey, context);
     }
+
+    public WalletBPData createWallet(String password, Context context) throws WalletException {
+        byte[] aesIv = new byte[16];
+        SecureRandom randomIv = new SecureRandom();
+        randomIv.nextBytes(aesIv);
+        String skey = HexFormat.byteToHex(aesIv);
+        return createWallet(password, skey, context);
+    }
+
 
     public WalletBPData updateAccountPassword(String oblPwd, String newPwd, String ciphertextSkeyData, Context context) throws WalletException {
         try {
             // 校验密码是否匹配
             String sKey = HexFormat.byteToHex(getSkey(oblPwd, ciphertextSkeyData));
-            return create(newPwd, sKey, context);
+            return createIdentity(newPwd, sKey, context);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new WalletException(ExceptionEnum.SYS_ERR.getCode(), ExceptionEnum.SYS_ERR.getMessage());
+        }
+    }
+
+
+    public WalletBPData updateAccountWalletPassword(String oblPwd, String newPwd, String privData, Context context) throws WalletException {
+        try {
+
+            BaseKeyStoreEntity baseKeyStoreEntity = JSON.parseObject(privData, BaseKeyStoreEntity.class);
+            String decodePrivData = KeyStore.decodeMsg(oblPwd, baseKeyStoreEntity);
+            return importPrivateKey(newPwd, decodePrivData);
         } catch (Exception e) {
             e.printStackTrace();
             throw new WalletException(ExceptionEnum.SYS_ERR.getCode(), ExceptionEnum.SYS_ERR.getMessage());
@@ -134,18 +198,19 @@ public class Wallet {
     public WalletBPData importMnemonicCode(List<String> mnemonicCodes, String password, Context context) throws Exception {
         byte[] sKeyByte = new MnemonicCode().toEntropy(mnemonicCodes);
         String sKey = HexFormat.byteToHex(sKeyByte);
-        return create(password, sKey, context);
+        return createIdentity(password, sKey, context);
     }
 
     public void checkPwd(String password, String ciphertextSkeyData) throws Exception {
         getSkey(password, ciphertextSkeyData);
     }
 
-    public byte[] getSkey(String password, String ciphertextSkeyData) throws Exception {
+    public static byte[] getSkey(String password, String ciphertextSkeyData) throws Exception {
         BaseKeyStoreEntity baseKeyStoreEntity = JSON.parseObject(ciphertextSkeyData, BaseKeyStoreEntity.class);
         String skeyHex = KeyStore.decodeMsg(password, baseKeyStoreEntity);
         return HexFormat.hexToByte(skeyHex);
     }
+
 
     public String getAccountBUBalance(String accountAddress) {
         System.out.print(Constants.BUMO_NODE_URL);
@@ -154,7 +219,7 @@ public class Wallet {
         AccountGetBalanceResponse response = sdk.getAccountService().getBalance(request);
 
         System.out.println(JSON.toJSONString(response, true));
-        LogUtils.e("getAccountBUBalance:" + response.getErrorCode()+"\t"+response.getErrorDesc());
+        LogUtils.e("getAccountBUBalance:" + response.getErrorCode() + "\t" + response.getErrorDesc());
         if (0 == response.getErrorCode()) {
             return ToBaseUnit.MO2BU(response.getResult().getBalance().toString());
         }
@@ -526,7 +591,7 @@ public class Wallet {
             throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
         } else if (20000 == response.getErrorCode()) {
             throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
-        }else if (4==response.getErrorCode()){
+        } else if (4 == response.getErrorCode()) {
             throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
         }
         return null;
@@ -715,6 +780,7 @@ public class Wallet {
         accountsBean.setSecret(JSON.toJSONString(keyStoreEntity));
         accountsBeans.add(accountsBean);
         walletBPData.setAccounts(accountsBeans);
+        walletBPData.setSkey(JSON.toJSONString(keyStoreEntity));
         return walletBPData;
     }
 
@@ -728,28 +794,9 @@ public class Wallet {
         accountsBean.setSecret(JSON.toJSONString(keyStoreEntity));
         accountsBeans.add(accountsBean);
         walletBPData.setAccounts(accountsBeans);
+        walletBPData.setSkey(JSON.toJSONString(keyStoreEntity));
         return walletBPData;
     }
-
-//    /**
-//     * withdraw the vote
-//     */
-//    public TransactionBuildBlobResponse unVoteBuildBlob(String fromAccAddr, String role, String address, String fee, String contractAddress) throws Exception {
-//        Long nonce = getAccountNonce(fromAccAddr) + 1;
-//        Long gasPrice = 1000L;
-//        Long feeLimit = ToBaseUnit.BU2MO(fee);
-//        Long buAmount = 0L;
-//
-//        // init input
-//        JSONObject input = new JSONObject();
-//        input.put("method", "unVote");
-//        JSONObject params = new JSONObject();
-//        params.put("role", role);
-//        params.put("address", address);
-//        input.put("params", params);
-//
-//        return buildBlob(buAmount, input, fromAccAddr, nonce, feeLimit, gasPrice, contractAddress);
-//    }
 
     /**
      * build blob
@@ -936,3 +983,6 @@ public class Wallet {
         return txHash;
     }
 }
+
+
+

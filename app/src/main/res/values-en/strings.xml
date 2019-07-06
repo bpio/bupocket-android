@@ -8,12 +8,12 @@
 
     <string name="fragment_title_tx_detail_txt">Transaction Detail</string>
     <string name="create_wallet_info_txt_1">Please carefully copy the mnemonic words below and store them in a safe place</string>
-    <string name="create_wallet_txt">Create a wallet</string>
+    <string name="create_wallet_txt">Create a Wallet</string>
 
     <string name="function_opening">This function will be available soon</string>
     <string name="tabbr_wallet_txt">Wallet</string>
     <string name="wallet_create_txt">Create a digital identity</string>
-    <string name="wallet_create_create_btn_txt">Create now</string>
+    <string name="wallet_create_create_btn_txt">Create Now</string>
     <string name="wallet_create_recover_btn_txt">Restore Identity</string>
     <string name="hint_wallet_create_form_input_identity_name">Please create your identity name</string>
 
@@ -34,7 +34,7 @@
     <string name="create_wallet_prompt_dialog_title">Tips</string>
     <string name="create_wallet_prompt_txt2">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>
     <string name="backup_wallet_txt2">Make sure to back up in a safe environment with no people around and no cameras</string>
-    <string name="backup_wallet_btn_txt">BackUp Mnemonic Words</string>
+    <string name="backup_wallet_btn_txt">Backup Mnemonic</string>
     <string name="skip_backup_mneonic_btn_code">Skip</string>
     <string name="view_title_backup_mneonic_code">Backup Mnemonics</string>
     <string name="backup_mneonic_code_txt1">Do not take a screenshot</string>
@@ -101,7 +101,7 @@
 
     <!-- 异常 -->
     <string name="create_wallet_fail">Failed to create</string>
-    <string name="checking_password_error">Password error</string>
+    <!--<string name="checking_password_error">Password error</string>-->
     <string name="geting_account_bu_balance">Retrieving</string>
     <string name="check_mneonic_code_err1">The order of the mnemonic words is incorrect. Please check and correct it.</string>
     <string name="next_key_down_err">Press again to exit the program</string>
@@ -619,7 +619,7 @@
     <!--setting user info-->
     <string name="setting_user_head_hint">Change wallet avatar</string>
     <string name="settting_user_title">Wallet Details</string>
-    <string name="change_wallet_head_title">Choose Avatar</string>
+    <string name="change_wallet_head_title">Choose avatar</string>
 
 
 
@@ -637,7 +637,7 @@
     <string name="collection_address">Receiving Address</string>
 
 
-    <!--create wallet-->
+    <!--createIdentity wallet-->
     <string name="view_title_create_wallet">Create Wallet</string>
     <string name="start_create_wallet">Create Now</string>
     <string name="create_wallet_prompt_txt1">1.Security passwords are used to encrypt private keys, confirm transfers and contract calls for transactions. The strength of the security password is very important. Please keep in mind\n
@@ -648,7 +648,7 @@
         • BU Pocket will not store your password\n
         • Security password can only be modified, but cannot be retrieved or reset, so please keep in mind</string>
     <string name="create_wallet_name_err_hint">Letters, Chinese characters, numbers and underscores are allowed to input, but the length cannot exceed 20 characters</string>
-    <string name="create_wallet_pw_err_hint">The security password must be composed of numbers and uppercase or lowercase letters and the combination must be </string>
+    <string name="create_wallet_pw_err_hint">6-30 characters in uppercase or lowercase letters and numbers </string>
     <string name="view_change_wallet_pw">Modify Wallet Password</string>
     <string name="wallet_create_form_error2">The password must be composed of numbers and uppercase or lowercase letters and the combination must be between 6-30 characters</string>
     <string name="change_the_password_txt">Modify Security Password</string>
@@ -680,7 +680,7 @@
 
 
     <!--recover wallet-->
-    <string name="wallet_manage">Wallet Manage</string>
+    <string name="wallet_manage">Wallet Manager</string>
 
     <!--change pwd-->
     <string name="wallet_info">Wallet information</string>
@@ -724,8 +724,8 @@
     <string name="password_for_keystore_et_hint_txt">Please enter the security password used when you export the keystore</string>
     <string name="password_for_keystore_txt">Please enter the security password</string>
     <string name="wallet_import_private_et_hint_txt">Please fill in your private key</string>
-    <string name="change_wallet_name_hint">It is used to distinguish other wallets, which cannot exceed 20 characters</string>
-    <!--create wallet-->
+    <string name="change_wallet_name_hint">20 characters at most</string>
+    <!--createIdentity wallet-->
     <string name="create_wallet_name_title">Please set the wallet name</string>
     <string name="recover_wallet_name_title">Please set a new identity name</string>
 
@@ -746,5 +746,9 @@
     <string name="not_use_wallet_service">Invalid wallet service address</string>
 
     <string name="change_pwd_success_hint"> security password has been changed！</string>
+
+
+    <string name="delete_current_wallet_title">Are you sure to delete this wallet? </string>
+    <string name="delete_current_wallet_info"> The to-be-deleted wallet is in use currently. After this wallet is deleted, the wallet in this identity will be selected by default.</string>
 
 </resources>

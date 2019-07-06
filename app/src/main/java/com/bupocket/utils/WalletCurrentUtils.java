@@ -33,15 +33,8 @@ public class WalletCurrentUtils {
         return spHelper.getSharedPreference("currentAccAddr", "").toString();
     }
 
-    public static boolean checkIdentity(String address, SharedPreferencesHelper spHelper) {
-        if (TextUtils.isEmpty(address)) {
-            return false;
-        }
-        String currentAccAddr = spHelper.getSharedPreference("currentAccAddr", "").toString();
-        if (address.equals(currentAccAddr))
-            return true;
-        else
-            return false;
+    public static boolean isIdentityWallet(SharedPreferencesHelper spHelper) {
+        return getIdentityAddress(spHelper).equals(getWalletAddress(spHelper));
     }
 
 }
