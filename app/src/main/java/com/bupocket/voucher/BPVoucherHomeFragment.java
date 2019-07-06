@@ -16,7 +16,6 @@ import com.bupocket.fragment.BPCollectionFragment;
 import com.bupocket.fragment.BPWalletsHomeFragment;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
-import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.WalletLocalInfoUtil;
 import com.bupocket.voucher.adapter.VoucherAdapter;
 import com.bupocket.voucher.http.VoucherService;
@@ -30,6 +29,7 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -135,7 +135,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
             @Override
             public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
 
-                LoadMoreData();
+                loadMoreData();
             }
         });
 
@@ -169,7 +169,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
         reqVoucherAllData(1);
     }
 
-    private void LoadMoreData() {
+    private void loadMoreData() {
         refreshLayout.getLayout().postDelayed(new Runnable() {
 
 
@@ -194,8 +194,8 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     private void reqVoucherAllData(final int index) {
         pageStart = index;
         HashMap<String, Object> map = new HashMap<>();
-        map.put(ConstantsType.ADDRESS, WalletLocalInfoUtil.getInstance(spHelper).getWalletAddress());
-//        map.put(ConstantsType.ADDRESS, "buQrp3BCVdfbb5mJjNHZQwHvecqe7CCcounY");
+//        map.put(ConstantsType.ADDRESS, WalletLocalInfoUtil.getInstance(spHelper).getWalletAddress());
+        map.put(ConstantsType.ADDRESS, "buQrp3BCVdfbb5mJjNHZQwHvecqe7CCcounY");
         map.put(ConstantsType.PAGE_START, index);
         map.put(ConstantsType.PAGE_SIZE, pageSize);
 
@@ -235,6 +235,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
             public void onFailure(Call<ApiResult<VoucherListModel>> call, Throwable t) {
                 if (loadFailedLL != null) {
                     loadFailedLL.setVisibility(View.VISIBLE);
+                    adapter.setNewData(new ArrayList<VoucherDetailModel>());
                 }
 
             }
