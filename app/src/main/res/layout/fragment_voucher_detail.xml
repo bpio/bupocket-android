@@ -7,14 +7,12 @@
     android:background="@color/app_color_blue1">
 
 
-    <com.qmuiteam.qmui.widget.QMUITopBarLayout
-        android:id="@+id/topbar"
+
+    <include
+        layout="@layout/view_topbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:qmui_topbar_title_color="@color/app_color_white"
-        android:fitsSystemWindows="true" />
 
-
+        android:layout_height="?attr/qmui_topbar_height" />
 
 
     <ScrollView
@@ -223,8 +221,8 @@
 
                 <LinearLayout
                     android:id="@+id/dPartyLL"
-                    android:layout_marginTop="5dp"
-                    style="@style/BPLLDiscover">
+                    style="@style/BPLLDiscover"
+                    android:layout_marginTop="5dp">
 
 
                     <TextView
@@ -248,6 +246,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
+                        android:ellipsize="end"
                         android:text="CNY"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
@@ -295,6 +294,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
                         android:text="语言"
+                        android:ellipsize="end"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
 

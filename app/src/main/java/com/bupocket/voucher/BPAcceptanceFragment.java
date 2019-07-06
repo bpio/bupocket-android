@@ -1,5 +1,6 @@
 package com.bupocket.voucher;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -11,12 +12,10 @@ import com.bupocket.voucher.model.VoucherAcceptanceBean;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
-import java.io.Serializable;
-
 import butterknife.BindView;
 import butterknife.Unbinder;
 
-public class BPDPartyFragment extends AbsBaseFragment implements InitViewListener {
+public class BPAcceptanceFragment extends AbsBaseFragment implements InitViewListener {
 
 
     @BindView(R.id.topbar)
@@ -36,7 +35,7 @@ public class BPDPartyFragment extends AbsBaseFragment implements InitViewListene
 
     @Override
     protected int getLayoutView() {
-        return R.layout.fragment_d_party;
+        return R.layout.fragment_voucher_acceptance;
     }
 
     @Override
@@ -50,12 +49,18 @@ public class BPDPartyFragment extends AbsBaseFragment implements InitViewListene
             voucherAcceptance = (VoucherAcceptanceBean) getArguments().getSerializable("voucherAcceptance");
             if (voucherAcceptance != null) {
 
-                Glide.with(mContext)
-                        .load(voucherAcceptance.getIcon())
-                        .into(dPartyIconRiv);
+                String icon = voucherAcceptance.getIcon();
+                if (!TextUtils.isEmpty(icon)) {
+                    Glide.with(mContext)
+                            .load(icon)
+                            .into(dPartyIconRiv);
+                }
 
                 dPartyNameRiv.setText(voucherAcceptance.getName());
-
+                String shortName = voucherAcceptance.getShortName();
+                if (!TextUtils.isEmpty(shortName)) {
+                    dPartyIntroduceTv.setText(shortName);
+                }
 
             }
         }

@@ -7,6 +7,15 @@ public class VoucherAcceptanceBean implements Serializable {
     private String address;
     private String icon;
     private String name;
+    private String shortName;
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
+    }
 
     public String getAddress() {
         return address;

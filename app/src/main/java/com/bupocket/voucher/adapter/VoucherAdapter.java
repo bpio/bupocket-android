@@ -70,15 +70,15 @@ public class VoucherAdapter extends AbsViewHolderAdapter<VoucherDetailModel> {
 
         String startTime = itemData.getStartTime();
         String endTime = itemData.getEndTime();
-
+        String date = context.getString(R.string.validity_date);
         if (!TextUtils.isEmpty(startTime)) {
-            String date = context.getString(R.string.validity_date) + ":" +
+             date = date + ":" +
                     String.format(context.getString(R.string.goods_validity_date),
                             TimeUtil.timeStamp2Date(startTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD),
                             TimeUtil.timeStamp2Date(endTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD));
-            holder.setText(R.id.goodsDateTv, date);
-        }
 
+        }
+        holder.setText(R.id.goodsDateTv, date);
 
     }
 

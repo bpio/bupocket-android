@@ -2,9 +2,8 @@ package com.bupocket.voucher;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.base.AbsBaseFragment;
-import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.RetrofitFactory;
@@ -25,24 +23,23 @@ import com.bupocket.voucher.model.VoucherDetailModel;
 import com.bupocket.voucher.model.VoucherIssuerBean;
 import com.bupocket.voucher.model.VoucherPackageDetailModel;
 import com.makeramen.roundedimageview.RoundedImageView;
-import com.qmuiteam.qmui.widget.QMUITopBar;
-import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import java.util.HashMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
-import io.bumo.common.ToBaseUnit;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BPVoucherDetailFragment extends AbsBaseFragment {
 
-    @BindView(R.id.topbar)
-    QMUITopBarLayout topbar;
+//    @BindView(R.id.topbar)
+//    QMUITopBarLayout topbar;
+    @BindView(R.id.leftTopbarIv)
+    ImageView leftTopbarIv;
+    @BindView(R.id.titleTopbarTv)
+    TextView titleTopbarTv;
     @BindView(R.id.acceptanceIconRiv)
     RoundedImageView acceptanceIconRiv;
     @BindView(R.id.topLineV)
@@ -109,15 +106,13 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
 
     @SuppressLint("ResourceAsColor")
     private void initTopBar() {
-        topbar.setTitle(R.string.voucher_detail_title);
-        topbar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
+        leftTopbarIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popBackStack();
             }
         });
-        topbar.setBackgroundColor(R.color.app_color_blue1);
-
+        titleTopbarTv.setText(R.string.voucher_detail_title);
     }
 
     @Override
@@ -152,13 +147,14 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
                 if (body != null && ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
 
                     detailModel = body.getData();
-
-
                     VoucherAcceptanceBean voucherAcceptance = detailModel.getVoucherAcceptance();
                     if (voucherAcceptance != null) {
-                        Glide.with(mContext)
-                                .load(voucherAcceptance.getIcon())
-                                .into(acceptanceIconRiv);
+                        String icon = voucherAcceptance.getIcon();
+                        if (!TextUtils.isEmpty(icon)) {
+                            Glide.with(mContext)
+                                    .load(icon)
+                                    .into(acceptanceIconRiv);
+                        }
                         acceptanceNameTv.setText(voucherAcceptance.getName());
                     }
                     Glide.with(mContext)
@@ -167,28 +163,38 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
                     goodsNameTv.setText(detailModel.getVoucherName());
                     goodsPriceTv.setText(getString(R.string.goods_price) + detailModel.getFaceValue());
 
-                    validityDateInfoTv.setText(String.format(mContext.getString(R.string.goods_validity_date),
-                            TimeUtil.timeStamp2Date(detailModel.getStartTime(), TimeUtil.TIME_TYPE_YYYYY_MM_DD),
-                            TimeUtil.timeStamp2Date(detailModel.getEndTime(), TimeUtil.TIME_TYPE_YYYYY_MM_DD)));
+                    String startTime = detailModel.getStartTime();
+                    String endTime = detailModel.getEndTime();
+                    String date = mContext.getString(R.string.validity_date);
+                    if (!TextUtils.isEmpty(startTime)) {
+                        date = date + ":" +
+                                String.format(mContext.getString(R.string.goods_validity_date),
+                                        TimeUtil.timeStamp2Date(startTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD),
+                                        TimeUtil.timeStamp2Date(endTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD));
+
+                    }
+                    validityDateInfoTv.setText(date);
 
                     voucherCodeInfoTv.setText(detailModel.getVoucherId());
                     voucherSizeInfoTv.setText(detailModel.getVoucherSpec());
                     voucherDescribeInfoTv.setText(detailModel.getDescription());
                     voucherNumInfoTv.setText(voucherDetailModel.getBalance());
 
-                    Glide.with(mContext)
-                            .load(detailModel.getVoucherAcceptance().getIcon())
-                            .into(dPartyRiv);
-
+                    String acceptanceIcon = detailModel.getVoucherAcceptance().getIcon();
+                    if (!TextUtils.isEmpty(acceptanceIcon)) {
+                        Glide.with(mContext)
+                                .load(acceptanceIcon)
+                                .into(dPartyRiv);
+                    }
                     dPartyTv.setText(detailModel.getVoucherAcceptance().getName());
 
-
-                    Glide.with(mContext)
-                            .load(detailModel.getVoucherIssuer().getIcon())
-                            .into(assetIssuerRiv);
-
+                    String icon = detailModel.getVoucherIssuer().getIcon();
+                    if (!TextUtils.isEmpty(icon)) {
+                        Glide.with(mContext)
+                                .load(icon)
+                                .into(assetIssuerRiv);
+                    }
                     assetIssuerTv.setText(detailModel.getVoucherIssuer().getName());
-
 
                 }
 
@@ -213,17 +219,12 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
         switch (view.getId()) {
             case R.id.transferVoucherBtn:
 
-
                 break;
             case R.id.dPartyLL:
-
                 goDPartyFragment();
-
                 break;
             case R.id.assetIssuerLL:
-
                 goAssetIssuer();
-
                 break;
         }
     }
@@ -242,7 +243,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
     private void goDPartyFragment() {
 
         VoucherAcceptanceBean voucherAcceptance = detailModel.getVoucherAcceptance();
-        BPDPartyFragment fragment = new BPDPartyFragment();
+        BPAcceptanceFragment fragment = new BPAcceptanceFragment();
         Bundle args = new Bundle();
         if (voucherAcceptance != null) {
             args.putSerializable("voucherAcceptance", voucherAcceptance);
