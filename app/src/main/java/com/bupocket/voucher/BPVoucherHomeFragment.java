@@ -77,6 +77,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
 
         initTopbar();
         initListView();
+        refreshLayout.setEnableLoadMore(false);
 
     }
 
@@ -144,7 +145,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
 
                 BPVoucherDetailFragment fragment = new BPVoucherDetailFragment();
                 Bundle args = new Bundle();
-                args.putSerializable(ConstantsType.VOUCHER_DETAIL,voucherDetailModel);
+                args.putSerializable(ConstantsType.VOUCHER_DETAIL, voucherDetailModel);
                 fragment.setArguments(args);
                 startFragment(fragment);
 
@@ -200,10 +201,10 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
                     voucherListModel = body.getData();
                     if (index == 1) {
                         adapter.setNewData(body.getData().getVoucherList());
+                        refreshLayout.setEnableLoadMore(true);
                     } else {
                         adapter.addMoreDataList(body.getData().getVoucherList());
                     }
-
 
                     if (voucherEmptyLL != null) {
                         voucherEmptyLL.setVisibility(View.GONE);
@@ -211,7 +212,6 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
                     if (loadFailedLL != null) {
                         loadFailedLL.setVisibility(View.GONE);
                     }
-
                 } else {
                     if (voucherEmptyLL != null) {
                         voucherEmptyLL.setVisibility(View.VISIBLE);
