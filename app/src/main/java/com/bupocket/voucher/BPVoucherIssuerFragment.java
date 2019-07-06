@@ -1,6 +1,7 @@
 package com.bupocket.voucher;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class BPAssetIssuerFragment extends AbsBaseFragment implements InitViewListener {
+public class BPVoucherIssuerFragment extends AbsBaseFragment implements InitViewListener {
 
 
     @BindView(R.id.topbar)
@@ -37,7 +38,6 @@ public class BPAssetIssuerFragment extends AbsBaseFragment implements InitViewLi
     ListView assetIssuerLv;
 
 
-    Unbinder unbinder;
     private VoucherIssuerBean voucherIssuer;
 
     @Override
@@ -56,11 +56,27 @@ public class BPAssetIssuerFragment extends AbsBaseFragment implements InitViewLi
         if (getArguments()!=null) {
             voucherIssuer = ((VoucherIssuerBean) getArguments().getSerializable("voucherIssuer"));
 
-            Glide.with(mContext)
-                    .load(voucherIssuer.getIcon())
-                    .into(dPartyIconRiv);
+            String icon = voucherIssuer.getIcon();
+            if (!TextUtils.isEmpty(icon)) {
+                Glide.with(mContext)
+                        .load(icon)
+                        .into(dPartyIconRiv);
+            }
 
-            dPartyNameRiv.setText(voucherIssuer.getName());
+            String name = voucherIssuer.getName();
+            if (!TextUtils.isEmpty(name)) {
+                dPartyNameRiv.setText(name);
+            }
+            String shortName = voucherIssuer.getShortName();
+            if (!TextUtils.isEmpty(shortName)) {
+                dPartyNickRiv.setText(shortName);
+            }
+
+            String intro = voucherIssuer.getIntro();
+            if (!TextUtils.isEmpty(intro)) {
+                dPartyIntroduceTv.setText(intro);
+            }
+
         }
     }
 

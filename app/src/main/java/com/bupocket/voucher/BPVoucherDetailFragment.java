@@ -230,7 +230,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
     }
 
     private void goAssetIssuer() {
-        BPAssetIssuerFragment fragment = new BPAssetIssuerFragment();
+        BPVoucherIssuerFragment fragment = new BPVoucherIssuerFragment();
         VoucherIssuerBean voucherIssuer = detailModel.getVoucherIssuer();
         Bundle args = new Bundle();
         if (voucherIssuer != null) {

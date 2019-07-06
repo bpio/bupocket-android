@@ -8,6 +8,7 @@ public class VoucherAcceptanceBean implements Serializable {
     private String icon;
     private String name;
     private String shortName;
+    private String intro;
 
     public String getShortName() {
         return shortName;
@@ -15,6 +16,14 @@ public class VoucherAcceptanceBean implements Serializable {
 
     public void setShortName(String shortName) {
         this.shortName = shortName;
+    }
+
+    public String getIntro() {
+        return intro;
+    }
+
+    public void setIntro(String intro) {
+        this.intro = intro;
     }
 
     public String getAddress() {
