@@ -8,12 +8,12 @@
 
     <string name="fragment_title_tx_detail_txt">Transaction Detail</string>
     <string name="create_wallet_info_txt_1">Please carefully copy the mnemonic words below and store them in a safe place</string>
-    <string name="create_wallet_txt">Create a wallet</string>
+    <string name="create_wallet_txt">Create a Wallet</string>
 
     <string name="function_opening">This function will be available soon</string>
     <string name="tabbr_wallet_txt">Wallet</string>
     <string name="wallet_create_txt">Create a digital identity</string>
-    <string name="wallet_create_create_btn_txt">Create now</string>
+    <string name="wallet_create_create_btn_txt">Create Now</string>
     <string name="wallet_create_recover_btn_txt">Restore Identity</string>
     <string name="hint_wallet_create_form_input_identity_name">Please create your identity name</string>
 

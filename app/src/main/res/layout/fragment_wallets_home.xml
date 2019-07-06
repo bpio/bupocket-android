@@ -55,7 +55,7 @@
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                 android:id="@+id/importBigWalletBtn"
-                android:layout_width="238dp"
+                android:layout_width="wrap_content"
                 android:layout_height="43.5dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="37dp"

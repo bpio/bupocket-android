@@ -18,6 +18,7 @@ import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
+import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -44,7 +45,7 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
     private SharedPreferencesHelper sharedPreferencesHelper;
 
     private long exitTime = 0;
-    private String wallet_address;
+    private String wallet_address="";
 
 
     @Override
@@ -86,6 +87,7 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         if (getArguments() != null) {
             mnemonicCodeList = getArguments().getStringArrayList("mneonicCodeList");
+            wallet_address=getArguments().getString(ConstantsType.WALLET_ADDRESS);
         }
     }
 
@@ -96,7 +98,14 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
             @Override
             public void onClick(View v) {
                 if (mnemonicCodeList == null) {
-                    DialogUtils.showPassWordInputDialog(getActivity(), "", "", new DialogUtils.ConfirmListener() {
+                    String input="";
+                    if (wallet_address.equals(WalletCurrentUtils.getIdentityAddress(spHelper))) {
+                        input=getString(R.string.wallet_password_confirm_txt1);
+                    }else{
+                        input=getString(R.string.export_keystore_password_confirm_txt);
+                    }
+
+                    DialogUtils.showPassWordInputDialog(getActivity(), input, "", new DialogUtils.ConfirmListener() {
                         @Override
                         public void confirm(final String password) {
                             final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
