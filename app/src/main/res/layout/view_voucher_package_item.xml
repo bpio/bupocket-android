@@ -100,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:text="@string/goods_validity_date"
+        android:text="@string/validity_date"
         android:textColor="@color/app_txt_color_gray"
         android:textSize="11sp" />
 

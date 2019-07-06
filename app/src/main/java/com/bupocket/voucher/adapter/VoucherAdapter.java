@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TimeUtils;
+import android.view.TextureView;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -36,26 +37,47 @@ public class VoucherAdapter extends AbsViewHolderAdapter<VoucherDetailModel> {
 
         ImageView acceptanceIconRiv = (ImageView) holder.getView(R.id.acceptanceIconRiv);
         ImageView voucherGoodsIv = (ImageView) holder.getView(R.id.voucherGoodsIv);
-        Glide.with(context)
-                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(itemData.getVoucherAcceptance().getIcon()))
-                .into(acceptanceIconRiv);
+
+        String icon = itemData.getVoucherAcceptance().getIcon();
+        if (!TextUtils.isEmpty(icon)) {
+            Glide.with(context)
+                    .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(icon))
+                    .into(acceptanceIconRiv);
+        }
 
         String voucherIcon = itemData.getVoucherIcon();
-        if (TextUtils.isEmpty(voucherIcon)) {
+        if (!TextUtils.isEmpty(voucherIcon)) {
             Glide.with(context)
                     .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(voucherIcon))
                     .into(voucherGoodsIv);
         }
+        String name = itemData.getVoucherAcceptance().getName();
+        if (!TextUtils.isEmpty(name)) {
+            holder.setText(R.id.acceptanceNameTv, name);
+        }
+        String voucherName = itemData.getVoucherName();
+        if (!TextUtils.isEmpty(voucherName)) {
+            holder.setText(R.id.goodsNameTv, voucherName);
+        }
+        String balance = itemData.getBalance();
+        if (!TextUtils.isEmpty(balance)) {
+            holder.setText(R.id.goodsNumTv, balance);
+        }
+        String faceValue = itemData.getFaceValue();
+        if (!TextUtils.isEmpty(faceValue)) {
+            holder.setText(R.id.goodsPriceTv, context.getString(R.string.goods_price) + faceValue);
+        }
 
-        holder.setText(R.id.acceptanceNameTv, itemData.getVoucherAcceptance().getName());
-        holder.setText(R.id.goodsNameTv, itemData.getVoucherName());
-        holder.setText(R.id.goodsNumTv, itemData.getBalance());
-        holder.setText(R.id.goodsPriceTv, context.getString(R.string.goods_price) + itemData.getFaceValue());
+        String startTime = itemData.getStartTime();
+        String endTime = itemData.getEndTime();
 
-        holder.setText(R.id.goodsDateTv, context.getString(R.string.validity_date) + ":" +
-                String.format(context.getString(R.string.goods_validity_date),
-                        TimeUtil.timeStamp2Date(itemData.getStartTime(),TimeUtil.TIME_TYPE_YYYYY_MM_DD),
-                        TimeUtil.timeStamp2Date(itemData.getEndTime(),TimeUtil.TIME_TYPE_YYYYY_MM_DD)));
+        if (!TextUtils.isEmpty(startTime)) {
+            String date = context.getString(R.string.validity_date) + ":" +
+                    String.format(context.getString(R.string.goods_validity_date),
+                            TimeUtil.timeStamp2Date(startTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD),
+                            TimeUtil.timeStamp2Date(endTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD));
+            holder.setText(R.id.goodsDateTv, date);
+        }
 
 
     }
