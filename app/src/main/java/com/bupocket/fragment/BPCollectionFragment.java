@@ -18,14 +18,18 @@ import android.widget.TextView;
 import com.bupocket.R;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.CurrencyTypeEnum;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.TO;
 import com.bupocket.utils.WalletCurrentUtils;
+import com.bupocket.voucher.BPVoucherHomeFragment;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qmuiteam.qmui.widget.QMUIWindowInsetLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+
+import java.util.ArrayList;
 
 import butterknife.BindString;
 import butterknife.BindView;
@@ -57,8 +61,10 @@ public class BPCollectionFragment extends AbsBaseFragment {
     String copySuccessMessage;
 
 
+
     Unbinder unbinder;
     private Bitmap mBitmap;
+
 
     @Override
     protected int getLayoutView() {
@@ -75,12 +81,23 @@ public class BPCollectionFragment extends AbsBaseFragment {
     protected void initData() {
         String currentWalletAddress = getWalletAddress();
         walletAddressTv.setText(currentWalletAddress);
-        mBitmap = QRCodeUtil.createQRCodeBitmap(currentWalletAddress, TO.dip2px(mContext, 200), TO.dip2px(mContext, 200));
+        boolean isVoucher=false;
+        if (getArguments() != null) {
+            isVoucher = BPVoucherHomeFragment.class.getSimpleName().equals(getArguments().getString(ConstantsType.FRAGMENT_TAG));
+        }
+        String qrCodeInfo = "";
+        if (isVoucher) {
+            qrCodeInfo=Constants.VOUCHER_QRCODE+currentWalletAddress;
+        }else {
+            qrCodeInfo=currentWalletAddress;
+        }
+        mBitmap = QRCodeUtil.createQRCodeBitmap(qrCodeInfo, TO.dip2px(mContext, 200), TO.dip2px(mContext, 200));
         addressQrCodeIv.setImageBitmap(mBitmap);
 
         String walletName = WalletCurrentUtils.getWalletName(currentWalletAddress, spHelper);
         walletNameTv.setText(walletName);
         CommonUtil.setHeadIvRes(currentWalletAddress, walletIconRIV, spHelper);
+
     }
 
     @Override

@@ -90,7 +90,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
         mTopBar.addLeftImageButton(R.mipmap.icon_voucher_qrcode, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startFragment(new BPCollectionFragment());
+              goCollectionFragment();
             }
         });
         mTopBar.setTitle(getResources().getString(R.string.invite_share_txt));
@@ -106,6 +106,14 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
                 startFragment(fragment);
             }
         });
+    }
+
+    private void goCollectionFragment() {
+        BPCollectionFragment fragment = new BPCollectionFragment();
+        Bundle args = new Bundle();
+        args.putString(ConstantsType.FRAGMENT_TAG,BPVoucherHomeFragment.class.getSimpleName());
+        fragment.setArguments(args);
+        startFragment(fragment);
     }
 
     @Override
@@ -135,6 +143,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
             @Override
             public void onClick(View v) {
                 refreshLayout.autoRefresh(0, 200, 1, false);
+                reqVoucherAllData(1);
             }
         });
 
@@ -185,8 +194,8 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     private void reqVoucherAllData(final int index) {
         pageStart = index;
         HashMap<String, Object> map = new HashMap<>();
-//        map.put(ConstantsType.ADDRESS, WalletLocalInfoUtil.getInstance(spHelper).getWalletAddress());
-        map.put(ConstantsType.ADDRESS, "buQrp3BCVdfbb5mJjNHZQwHvecqe7CCcounY");
+        map.put(ConstantsType.ADDRESS, WalletLocalInfoUtil.getInstance(spHelper).getWalletAddress());
+//        map.put(ConstantsType.ADDRESS, "buQrp3BCVdfbb5mJjNHZQwHvecqe7CCcounY");
         map.put(ConstantsType.PAGE_START, index);
         map.put(ConstantsType.PAGE_SIZE, pageSize);
 
@@ -196,12 +205,15 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
             @Override
             public void onResponse(Call<ApiResult<VoucherListModel>> call, Response<ApiResult<VoucherListModel>> response) {
                 ApiResult<VoucherListModel> body = response.body();
-
+                if (loadFailedLL != null) {
+                    loadFailedLL.setVisibility(View.GONE);
+                }
                 if (body != null && ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode()) && body.getData().getVoucherList().size() > 0) {
                     voucherListModel = body.getData();
                     if (index == 1) {
                         adapter.setNewData(body.getData().getVoucherList());
                         refreshLayout.setEnableLoadMore(true);
+
                     } else {
                         adapter.addMoreDataList(body.getData().getVoucherList());
                     }
@@ -209,9 +221,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
                     if (voucherEmptyLL != null) {
                         voucherEmptyLL.setVisibility(View.GONE);
                     }
-                    if (loadFailedLL != null) {
-                        loadFailedLL.setVisibility(View.GONE);
-                    }
+
                 } else {
                     if (voucherEmptyLL != null) {
                         voucherEmptyLL.setVisibility(View.VISIBLE);
@@ -243,5 +253,6 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
 
     @OnClick(R.id.shareVoucherQrCodeBtn)
     public void onViewClicked() {
+        goCollectionFragment();
     }
 }

@@ -30,16 +30,14 @@
             <ListView
                 android:id="@+id/refreshComLv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginBottom="10dp"
                 android:divider="@null"
                 android:dividerHeight="15dp"
-                android:layout_marginTop="10dp"
                 android:fadeScrollbars="false"
-                android:scrollbars="none"
-                android:visibility="gone" />
+                android:scrollbars="none" />
 
             <include
                 layout="@layout/view_load_failed"

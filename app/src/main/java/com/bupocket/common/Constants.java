@@ -43,6 +43,7 @@ public class Constants {
     public static final String QR_LOGIN_PREFIX = "/xDnAs_login/";
     public static final String QR_NODE_PLAN_PREFIX = "/xDnAs_dpos/";
     public static final CharSequence INFO_UDCBU = "###UDCBU###";
+    public static final String VOUCHER_QRCODE = "/xDnAs_rv/";
 
 
     public static final String WeChat_APPID = "wxaecf7ac4085fd34a";
