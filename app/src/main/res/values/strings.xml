@@ -793,4 +793,9 @@
     <string name="delete_current_wallet_info">当前删除钱包为当前使用钱包，删除后将默认设置当前身份下的钱包为当前使用钱包。</string>
 
 
+    <string name="send_voucher_title">转赠券</string>
+    <string name="send_voucher_num">转赠数量</string>
+    <string name="send_voucher_num_hint">请输入转赠数量</string>
+    <string name="send_voucher_info_hint">不能超过20个字符</string>
+
 </resources>
