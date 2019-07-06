@@ -16,6 +16,7 @@ import com.bupocket.fragment.BPCollectionFragment;
 import com.bupocket.fragment.BPWalletsHomeFragment;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.utils.WalletLocalInfoUtil;
 import com.bupocket.voucher.adapter.VoucherAdapter;
 import com.bupocket.voucher.http.VoucherService;
@@ -23,6 +24,7 @@ import com.bupocket.voucher.model.VoucherDetailModel;
 import com.bupocket.voucher.model.VoucherListModel;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -42,7 +44,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
 
 
     @BindView(R.id.topbar)
-    QMUITopBar mTopBar;
+    QMUITopBarLayout mTopBar;
     @BindView(R.id.refreshComLv)
     ListView voucherListLv;
     @BindView(R.id.reloadBtn)
@@ -93,7 +95,6 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
               goCollectionFragment();
             }
         });
-        mTopBar.setTitle(getResources().getString(R.string.invite_share_txt));
         mTopBar.addRightImageButton(R.mipmap.icon_voucher_green, R.id.topbar_right_button).setOnClickListener(new View.OnClickListener() {
 
 
@@ -246,7 +247,8 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mTopBar.setTitle(WalletLocalInfoUtil.getInstance(spHelper).getWalletName());
+        String walletName = WalletCurrentUtils.getWalletName(WalletCurrentUtils.getWalletAddress(spHelper),spHelper);
+        mTopBar.setTitle(walletName);
 
 
     }
