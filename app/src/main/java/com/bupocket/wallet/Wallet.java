@@ -18,6 +18,7 @@ import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletBPData;
 import com.bupocket.wallet.utils.KeyStore;
 import com.bupocket.wallet.utils.keystore.BaseKeyStoreEntity;
+import com.bupocket.wallet.utils.keystore.BaseKeyStoreWalletEntity;
 import com.bupocket.wallet.utils.keystore.KeyStoreEntity;
 
 import io.bumo.SDK;
@@ -130,6 +131,18 @@ public class Wallet {
         }
     }
 
+    public WalletBPData updateAccountWalletPassword(String oblPwd, String newPwd, String ciphertextSkeyData, Context context) throws WalletException {
+        try {
+
+            BaseKeyStoreEntity baseKeyStoreEntity = JSON.parseObject(ciphertextSkeyData, BaseKeyStoreEntity.class);
+            String privData = KeyStore.decodeMsg(oblPwd, baseKeyStoreEntity);
+            return importPrivateKey(newPwd, privData);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new WalletException(ExceptionEnum.SYS_ERR.getCode(), ExceptionEnum.SYS_ERR.getMessage());
+        }
+    }
+
 
     public WalletBPData importMnemonicCode(List<String> mnemonicCodes, String password, Context context) throws Exception {
         byte[] sKeyByte = new MnemonicCode().toEntropy(mnemonicCodes);
@@ -141,11 +154,12 @@ public class Wallet {
         getSkey(password, ciphertextSkeyData);
     }
 
-    public byte[] getSkey(String password, String ciphertextSkeyData) throws Exception {
+    public static byte[] getSkey(String password, String ciphertextSkeyData) throws Exception {
         BaseKeyStoreEntity baseKeyStoreEntity = JSON.parseObject(ciphertextSkeyData, BaseKeyStoreEntity.class);
         String skeyHex = KeyStore.decodeMsg(password, baseKeyStoreEntity);
         return HexFormat.hexToByte(skeyHex);
     }
+
 
     public String getAccountBUBalance(String accountAddress) {
         System.out.print(Constants.BUMO_NODE_URL);
@@ -154,7 +168,7 @@ public class Wallet {
         AccountGetBalanceResponse response = sdk.getAccountService().getBalance(request);
 
         System.out.println(JSON.toJSONString(response, true));
-        LogUtils.e("getAccountBUBalance:" + response.getErrorCode()+"\t"+response.getErrorDesc());
+        LogUtils.e("getAccountBUBalance:" + response.getErrorCode() + "\t" + response.getErrorDesc());
         if (0 == response.getErrorCode()) {
             return ToBaseUnit.MO2BU(response.getResult().getBalance().toString());
         }
@@ -526,7 +540,7 @@ public class Wallet {
             throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
         } else if (20000 == response.getErrorCode()) {
             throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
-        }else if (4==response.getErrorCode()){
+        } else if (4 == response.getErrorCode()) {
             throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
         }
         return null;
@@ -715,6 +729,7 @@ public class Wallet {
         accountsBean.setSecret(JSON.toJSONString(keyStoreEntity));
         accountsBeans.add(accountsBean);
         walletBPData.setAccounts(accountsBeans);
+        walletBPData.setSkey(JSON.toJSONString(keyStoreEntity));
         return walletBPData;
     }
 
@@ -728,28 +743,9 @@ public class Wallet {
         accountsBean.setSecret(JSON.toJSONString(keyStoreEntity));
         accountsBeans.add(accountsBean);
         walletBPData.setAccounts(accountsBeans);
+        walletBPData.setSkey(JSON.toJSONString(keyStoreEntity));
         return walletBPData;
     }
-
-//    /**
-//     * withdraw the vote
-//     */
-//    public TransactionBuildBlobResponse unVoteBuildBlob(String fromAccAddr, String role, String address, String fee, String contractAddress) throws Exception {
-//        Long nonce = getAccountNonce(fromAccAddr) + 1;
-//        Long gasPrice = 1000L;
-//        Long feeLimit = ToBaseUnit.BU2MO(fee);
-//        Long buAmount = 0L;
-//
-//        // init input
-//        JSONObject input = new JSONObject();
-//        input.put("method", "unVote");
-//        JSONObject params = new JSONObject();
-//        params.put("role", role);
-//        params.put("address", address);
-//        input.put("params", params);
-//
-//        return buildBlob(buAmount, input, fromAccAddr, nonce, feeLimit, gasPrice, contractAddress);
-//    }
 
     /**
      * build blob
@@ -936,3 +932,6 @@ public class Wallet {
         return txHash;
     }
 }
+
+
+

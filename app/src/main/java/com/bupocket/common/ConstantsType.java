@@ -15,5 +15,6 @@ public class ConstantsType {
     public static final String HIDDEN_CUSTOM_SERVICE = "hiddenFunctionCustomStatus";
     public static final String FRAGMENT_TAG = "fragmentTag";
     public static final String WALLET_SKEY = "-skey";
+    public static final String WALLET_SKEY_PRIV = "-skeyPrivate";
     public static final String WALLET_ADDRESS = "wallet_address";
 }
