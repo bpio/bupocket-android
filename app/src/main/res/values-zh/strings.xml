@@ -633,7 +633,7 @@
     <string name="collection_address">收款地址</string>
 
 
-    <!--create wallet-->
+    <!--createIdentity wallet-->
     <string name="view_title_create_wallet">创建钱包</string>
     <string name="start_create_wallet">开始创建</string>
     <string name="create_wallet_prompt_dialog_title">温馨提示</string>
@@ -729,7 +729,7 @@
     <string name="password_for_keystore_txt">请输入安全密码</string>
     <string name="wallet_import_private_et_hint_txt">请填写您的私钥</string>
     <string name="change_wallet_name_hint">用于区分其他钱包，不能超过20个字符</string>
-    <!--create wallet-->
+    <!--createIdentity wallet-->
     <string name="create_wallet_name_title">请设置钱包名称</string>
     <string name="recover_wallet_name_title">请设置新的身份名</string>
 

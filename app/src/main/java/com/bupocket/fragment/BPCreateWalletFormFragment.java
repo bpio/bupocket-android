@@ -35,7 +35,6 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
-import com.tencent.mm.opensdk.channel.MMessageActV2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -197,11 +196,13 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
 
                         WalletBPData walletBPData = null;
                         try {
-                            walletBPData = Wallet.getInstance().create(accountPwd, getContext());
+
 
                             if (isCreateWallet) {
-                                createWallet(walletBPData,mSetIdentityNameEt.getText().toString().trim());
+                                walletBPData = Wallet.getInstance().createWallet(accountPwd, getContext());
+                                createWallet(walletBPData);
                             } else {
+                                walletBPData = Wallet.getInstance().createIdentity(accountPwd, getContext());
                                 createIdentityWallet(walletBPData);
                             }
 
@@ -220,7 +221,8 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
         });
     }
 
-    private void createWallet(WalletBPData walletBPData, String walletName) {
+    private void createWallet(WalletBPData walletBPData) {
+        String walletName=mSetIdentityNameEt.getText().toString().trim();
         final String address = walletBPData.getAccounts().get(0).getAddress();
         String bpData = JSON.toJSONString(walletBPData.getAccounts());
         List<String> importedWallets = JSONObject.parseArray(spHelper.getSharedPreference("importedWallets", "[]").toString(), String.class);

@@ -23,7 +23,7 @@ import java.util.Hashtable;
 public class QRCodeUtil {
 
     /**
-     * create QRCode Util
+     * createIdentity QRCode Util
      *
      * @param content
      * @param width

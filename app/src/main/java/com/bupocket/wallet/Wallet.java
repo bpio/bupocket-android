@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.bumptech.glide.util.ExceptionCatchingInputStream;
 import com.bupocket.common.Constants;
 import com.bupocket.http.api.AccountService;
 import com.bupocket.http.api.RetrofitFactory;
@@ -18,7 +17,6 @@ import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletBPData;
 import com.bupocket.wallet.utils.KeyStore;
 import com.bupocket.wallet.utils.keystore.BaseKeyStoreEntity;
-import com.bupocket.wallet.utils.keystore.BaseKeyStoreWalletEntity;
 import com.bupocket.wallet.utils.keystore.KeyStoreEntity;
 
 import io.bumo.SDK;
@@ -68,7 +66,7 @@ public class Wallet {
         wallet = null;
     }
 
-    private WalletBPData create(String password, String sKey, Context context) throws WalletException {
+    private WalletBPData createIdentity(String password, String sKey, Context context) throws WalletException {
         try {
             WalletBPData walletBPData;
             List<String> mnemonicCodes;
@@ -112,31 +110,84 @@ public class Wallet {
         }
     }
 
-    public WalletBPData create(String password, Context context) throws WalletException {
-        byte[] aesIv = new byte[16];
-        SecureRandom randomIv = new SecureRandom();
-        randomIv.nextBytes(aesIv);
-        String skey = HexFormat.byteToHex(aesIv);
-        return create(password, skey, context);
-    }
-
-    public WalletBPData updateAccountPassword(String oblPwd, String newPwd, String ciphertextSkeyData, Context context) throws WalletException {
+    private WalletBPData createWallet(String password, String sKey, Context context) throws WalletException {
         try {
-            // 校验密码是否匹配
-            String sKey = HexFormat.byteToHex(getSkey(oblPwd, ciphertextSkeyData));
-            return create(newPwd, sKey, context);
+            WalletBPData walletBPData;
+            List<String> mnemonicCodes;
+            BaseKeyStoreEntity baseKeyStoreEntity = KeyStore.encryptMsg(password, sKey, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 1);
+            List<String> hdPaths = new ArrayList<>();
+            hdPaths.add("M/44H/526H/1H/0/0");
+            mnemonicCodes = new MnemonicCode().toMnemonic(HexFormat.hexStringToBytes(sKey));
+            List<String> privateKeys = Mnemonic.generatePrivateKeys(mnemonicCodes, hdPaths);
+
+
+            walletBPData = new WalletBPData();
+            walletBPData.setSkey(JSON.toJSONString(baseKeyStoreEntity));
+            List<WalletBPData.AccountsBean> accountsBeans = new ArrayList<>();
+
+            KeyStoreEntity keyStoreEntity = null;
+            WalletBPData.AccountsBean accountsBean;
+            for (String pk : privateKeys) {
+                keyStoreEntity = KeyStore.generateKeyStore(password, pk, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 1);
+                accountsBean = new WalletBPData.AccountsBean();
+                accountsBean.setAddress(new PrivateKey(pk).getEncAddress());
+                accountsBean.setSecret(JSON.toJSONString(keyStoreEntity));
+                accountsBeans.add(accountsBean);
+            }
+            walletBPData.setAccounts(accountsBeans);
+            walletBPData.setMnemonicCodes(mnemonicCodes);
+            WalletBPData.AccountsBean identityAccountBean = accountsBeans.get(0);
+            WalletBPData.AccountsBean walletAccountBean = accountsBeans.get(0);
+
+            String walletAccountPk = getPk(privateKeys.get(0));
+
+            String walletAccountSignData = signData(privateKeys.get(0), walletAccountBean.getAddress());
+
+            deviceBind(walletAccountBean.getAddress(), identityAccountBean.getAddress(), walletAccountPk, walletAccountSignData, context);
+
+            return walletBPData;
+
         } catch (Exception e) {
             e.printStackTrace();
             throw new WalletException(ExceptionEnum.SYS_ERR.getCode(), ExceptionEnum.SYS_ERR.getMessage());
         }
     }
 
-    public WalletBPData updateAccountWalletPassword(String oblPwd, String newPwd, String ciphertextSkeyData, Context context) throws WalletException {
+    public WalletBPData createIdentity(String password, Context context) throws WalletException {
+        byte[] aesIv = new byte[16];
+        SecureRandom randomIv = new SecureRandom();
+        randomIv.nextBytes(aesIv);
+        String skey = HexFormat.byteToHex(aesIv);
+        return createIdentity(password, skey, context);
+    }
+
+    public WalletBPData createWallet(String password, Context context) throws WalletException {
+        byte[] aesIv = new byte[16];
+        SecureRandom randomIv = new SecureRandom();
+        randomIv.nextBytes(aesIv);
+        String skey = HexFormat.byteToHex(aesIv);
+        return createWallet(password, skey, context);
+    }
+
+
+    public WalletBPData updateAccountPassword(String oblPwd, String newPwd, String ciphertextSkeyData, Context context) throws WalletException {
+        try {
+            // 校验密码是否匹配
+            String sKey = HexFormat.byteToHex(getSkey(oblPwd, ciphertextSkeyData));
+            return createIdentity(newPwd, sKey, context);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new WalletException(ExceptionEnum.SYS_ERR.getCode(), ExceptionEnum.SYS_ERR.getMessage());
+        }
+    }
+
+
+    public WalletBPData updateAccountWalletPassword(String oblPwd, String newPwd, String privData, Context context) throws WalletException {
         try {
 
-            BaseKeyStoreEntity baseKeyStoreEntity = JSON.parseObject(ciphertextSkeyData, BaseKeyStoreEntity.class);
-            String privData = KeyStore.decodeMsg(oblPwd, baseKeyStoreEntity);
-            return importPrivateKey(newPwd, privData);
+            BaseKeyStoreEntity baseKeyStoreEntity = JSON.parseObject(privData, BaseKeyStoreEntity.class);
+            String decodePrivData = KeyStore.decodeMsg(oblPwd, baseKeyStoreEntity);
+            return importPrivateKey(newPwd, decodePrivData);
         } catch (Exception e) {
             e.printStackTrace();
             throw new WalletException(ExceptionEnum.SYS_ERR.getCode(), ExceptionEnum.SYS_ERR.getMessage());
@@ -147,7 +198,7 @@ public class Wallet {
     public WalletBPData importMnemonicCode(List<String> mnemonicCodes, String password, Context context) throws Exception {
         byte[] sKeyByte = new MnemonicCode().toEntropy(mnemonicCodes);
         String sKey = HexFormat.byteToHex(sKeyByte);
-        return create(password, sKey, context);
+        return createIdentity(password, sKey, context);
     }
 
     public void checkPwd(String password, String ciphertextSkeyData) throws Exception {
