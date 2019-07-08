@@ -49,6 +49,7 @@
                     android:textColor="@color/app_txt_color_red_2" />
             </LinearLayout>
             <include
+
                 layout="@layout/view_voucher_package_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

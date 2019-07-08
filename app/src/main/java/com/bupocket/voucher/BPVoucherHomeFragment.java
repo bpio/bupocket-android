@@ -2,11 +2,13 @@ package com.bupocket.voucher;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.text.Html;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.bupocket.R;
 import com.bupocket.base.AbsBaseFragment;
@@ -23,7 +25,6 @@ import com.bupocket.voucher.http.VoucherService;
 import com.bupocket.voucher.model.VoucherDetailModel;
 import com.bupocket.voucher.model.VoucherListModel;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
-import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -59,6 +60,8 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     QMUIEmptyView qmuiEmptyView;
     @BindView(R.id.voucherEmptyLL)
     LinearLayout voucherEmptyLL;
+    @BindView(R.id.sendNameTv)
+    TextView sendNameTv;
 
 
     private VoucherService voucherService;
@@ -68,6 +71,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
 
     private VoucherAdapter adapter;
     private VoucherListModel voucherListModel;
+    private boolean isSendVoucher;
 
     @Override
     protected int getLayoutView() {
@@ -77,6 +81,9 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     @Override
     protected void initView() {
 
+        if (getArguments() != null) {
+            isSendVoucher = getArguments().getString(ConstantsType.FRAGMENT_TAG, "").equals(BPSendTokenVoucherFragment.class.getSimpleName());
+        }
         initTopbar();
         initListView();
         refreshLayout.setEnableLoadMore(false);
@@ -89,30 +96,44 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     }
 
     private void initTopbar() {
-        mTopBar.addLeftImageButton(R.mipmap.icon_voucher_qrcode, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-              goCollectionFragment();
-            }
-        });
-        mTopBar.addRightImageButton(R.mipmap.icon_voucher_green, R.id.topbar_right_button).setOnClickListener(new View.OnClickListener() {
+
+        if (isSendVoucher) {
+            mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    popBackStack();
+                }
+            });
+
+            sendNameTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.send_name_hint), getWalletAddress())));
+        } else {
+            mTopBar.addLeftImageButton(R.mipmap.icon_voucher_qrcode, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    goCollectionFragment();
+                }
+            });
+            mTopBar.addRightImageButton(R.mipmap.icon_voucher_green, R.id.topbar_right_button).setOnClickListener(new View.OnClickListener() {
 
 
-            @Override
-            public void onClick(View v) {
-                BPWalletsHomeFragment fragment = new BPWalletsHomeFragment();
-                Bundle args = new Bundle();
-                args.putString(ConstantsType.FRAGMENT_TAG, BPVoucherHomeFragment.class.getSimpleName());
-                fragment.setArguments(args);
-                startFragment(fragment);
-            }
-        });
+                @Override
+                public void onClick(View v) {
+                    BPWalletsHomeFragment fragment = new BPWalletsHomeFragment();
+                    Bundle args = new Bundle();
+                    args.putString(ConstantsType.FRAGMENT_TAG, BPVoucherHomeFragment.class.getSimpleName());
+                    fragment.setArguments(args);
+                    startFragment(fragment);
+                }
+            });
+        }
+
+
     }
 
     private void goCollectionFragment() {
         BPCollectionFragment fragment = new BPCollectionFragment();
         Bundle args = new Bundle();
-        args.putString(ConstantsType.FRAGMENT_TAG,BPVoucherHomeFragment.class.getSimpleName());
+        args.putString(ConstantsType.FRAGMENT_TAG, BPVoucherHomeFragment.class.getSimpleName());
         fragment.setArguments(args);
         startFragment(fragment);
     }
@@ -247,10 +268,12 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        String walletName = WalletCurrentUtils.getWalletName(WalletCurrentUtils.getWalletAddress(spHelper),spHelper);
-        mTopBar.setTitle(walletName);
-
-
+        if (isSendVoucher) {
+            mTopBar.setTitle(R.string.send_voucher_title2);
+        }else{
+            String walletName = WalletCurrentUtils.getWalletName(WalletCurrentUtils.getWalletAddress(spHelper), spHelper);
+            mTopBar.setTitle(walletName);
+        }
     }
 
 

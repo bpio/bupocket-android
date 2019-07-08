@@ -16,13 +16,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
+import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.AddressClickEventEnum;
 import com.bupocket.enums.TokenTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
@@ -59,7 +62,7 @@ import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Response;
 
-public class BPSendTokenVoucherFragment extends BaseFragment {
+public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
     @BindView(R.id.accountAvailableBalanceTv)
@@ -81,6 +84,9 @@ public class BPSendTokenVoucherFragment extends BaseFragment {
 
     @BindView(R.id.sendTokenAmountLable)
     TextView mSendTokenAmountLable;
+    @BindView(R.id.voucherItemLL)
+    LinearLayout voucherItemLL;
+
 
     public final static String SEND_TOKEN_STATUS = "sendTokenStatus";
     ;
@@ -101,9 +107,12 @@ public class BPSendTokenVoucherFragment extends BaseFragment {
     private long nonce;
 
     @Override
-    protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_send_voucher, null);
-        ButterKnife.bind(this, root);
+    protected int getLayoutView() {
+        return R.layout.fragment_send_voucher;
+    }
+
+    @Override
+    protected void initView() {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
 
         initData();
@@ -111,23 +120,7 @@ public class BPSendTokenVoucherFragment extends BaseFragment {
         initTopBar();
         setDestAddress();
 
-        mOpenAddressBookBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle argz = new Bundle();
-                argz.putString("flag", AddressClickEventEnum.CHOOSE.getCode());
-                argz.putString("tokenType", tokenType);
-                argz.putString("tokenCode", tokenCode);
-                argz.putString("tokenDecimals", tokenDecimals);
-                argz.putString("tokenIssuer", tokenIssuer);
-                BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
-                bpAddressBookFragment.setArguments(argz);
-                startFragmentForResult(bpAddressBookFragment, CHOOSE_ADDRESS_CODE);
-            }
-        });
         buildWatcher();
-        return root;
-
     }
 
     private void buildWatcher() {
@@ -216,7 +209,7 @@ public class BPSendTokenVoucherFragment extends BaseFragment {
         destAccountAddressEt.addTextChangedListener(addressEtWatcher);
     }
 
-    private void initData() {
+    public void initData() {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress", "").toString();
         if (CommonUtil.isNull(currentWalletAddress) || sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString().equals(currentWalletAddress)) {
@@ -233,6 +226,35 @@ public class BPSendTokenVoucherFragment extends BaseFragment {
         mSendTokenAmountLable.setText(getResources().getText(R.string.send_amount_title) + "(" + tokenCode + ")");
         getAccountAvailableTokenBalance(tokenType, tokenBalance);
 
+    }
+
+    @Override
+    protected void setListeners() {
+        mOpenAddressBookBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle argz = new Bundle();
+                argz.putString("flag", AddressClickEventEnum.CHOOSE.getCode());
+                argz.putString("tokenType", tokenType);
+                argz.putString("tokenCode", tokenCode);
+                argz.putString("tokenDecimals", tokenDecimals);
+                argz.putString("tokenIssuer", tokenIssuer);
+                BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
+                bpAddressBookFragment.setArguments(argz);
+                startFragmentForResult(bpAddressBookFragment, CHOOSE_ADDRESS_CODE);
+            }
+        });
+
+        voucherItemLL.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                BPVoucherHomeFragment fragment = new BPVoucherHomeFragment();
+                Bundle args = new Bundle();
+                args.putString(ConstantsType.FRAGMENT_TAG,BPSendTokenVoucherFragment.class.getSimpleName());
+                fragment.setArguments(args);
+                startFragment(fragment);
+            }
+        });
     }
 
     private void initTopBar() {

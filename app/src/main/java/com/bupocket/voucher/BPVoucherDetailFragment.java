@@ -34,8 +34,7 @@ import retrofit2.Response;
 
 public class BPVoucherDetailFragment extends AbsBaseFragment {
 
-//    @BindView(R.id.topbar)
-//    QMUITopBarLayout topbar;
+
     @BindView(R.id.leftTopbarIv)
     ImageView leftTopbarIv;
     @BindView(R.id.titleTopbarTv)
@@ -155,7 +154,11 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
                                     .load(icon)
                                     .into(acceptanceIconRiv);
                         }
-                        acceptanceNameTv.setText(voucherAcceptance.getName());
+                        String name = voucherAcceptance.getName();
+                        if (!TextUtils.isEmpty(name)) {
+                            acceptanceNameTv.setText(name);
+                        }
+
                     }
                     String voucherIcon = detailModel.getVoucherIcon();
                     if (!TextUtils.isEmpty(voucherIcon)) {
@@ -164,9 +167,16 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
                                 .into(voucherGoodsIv);
                     }
 
+                    String voucherName = detailModel.getVoucherName();
+                    if (!TextUtils.isEmpty(voucherName)) {
+                        goodsNameTv.setText(voucherName);
+                    }
 
-                    goodsNameTv.setText(detailModel.getVoucherName());
-                    goodsPriceTv.setText(getString(R.string.goods_price) + detailModel.getFaceValue());
+                    String faceValue = detailModel.getFaceValue();
+                    if (!TextUtils.isEmpty(faceValue)) {
+                        goodsPriceTv.setText(getString(R.string.goods_price) + faceValue);
+                    }
+
 
                     String startTime = detailModel.getStartTime();
                     String endTime = detailModel.getEndTime();

@@ -107,7 +107,6 @@
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="7dp"
                     android:gravity="bottom"
-                    android:text="@string/goods_price"
                     android:textColor="@color/app_txt_color_gray"
                     android:textSize="12sp" />
 
@@ -247,7 +246,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
                         android:ellipsize="end"
-                        android:text="CNY"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
 
@@ -293,7 +291,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="8dp"
-                        android:text="语言"
                         android:ellipsize="end"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
