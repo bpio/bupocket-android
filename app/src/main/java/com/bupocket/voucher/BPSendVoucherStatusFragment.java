@@ -42,41 +42,26 @@ public class BPSendVoucherStatusFragment extends BaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
-
     @BindView(R.id.targetAddr)
     TextView targetAddrTv;
-
     @BindView(R.id.sendAmount)
     TextView sendAmountTv;
-
     @BindView(R.id.sendFee)
     TextView sendFeeTv;
-
     @BindView(R.id.sendNote)
     TextView sendNoteTv;
-
     @BindView(R.id.sendTimeTv)
     TextView mSendTimeTv;
-
     @BindView(R.id.sendTokenStatusIcon)
     QMUIRadiusImageView mSendTokenStatusIcon;
-
     @BindView(R.id.sendTokenStatusTv)
     TextView mSendTokenStatusTv;
-
-
     @BindView(R.id.llStatusFailed)
     LinearLayout llStatusFailed;
-
-
     @BindView(R.id.sendTransHash)
     TextView  tvTransHash;
-
     @BindView(R.id.tvFromAddress)
     TextView tvFormAddress;
-
-    private AdModel ad;
-    private String fragmentTag;
 
 
     protected View onCreateView() {
@@ -98,16 +83,13 @@ public class BPSendVoucherStatusFragment extends BaseFragment {
         Drawable txStatusIconDrawable;
         String destAccAddr = getArguments().getString("destAccAddr");
         String tokenCode = getArguments().getString("tokenCode");
-        String sendAmount = getArguments().getString("sendAmount") + " " + tokenCode;
-        String txFee = getArguments().getString("txFee") + " BU";
+        String sendAmount = getArguments().getString("sendAmount") ;
+        String txFee = getArguments().getString("txFee");
         String note = getArguments().getString("note");
         String sendTime = getArguments().getString("sendTime");
         Integer txStatus = Integer.parseInt(getArguments().getString("state"));
         String sendTokenStatus = getArguments().getString("sendTokenStatusKey");
         String txHash = getArguments().getString("txHash");
-
-        fragmentTag = getArguments().getString("fragmentTag");
-
         String txStatusStr;
 
         llStatusFailed.setVisibility(View.GONE);
@@ -146,24 +128,11 @@ public class BPSendVoucherStatusFragment extends BaseFragment {
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    popBackStack();
+                   popBackStack();
             }
         });
     }
 
-    @Override
-    public void popBackStack() {
-        if (!TextUtils.isEmpty(fragmentTag)&&fragmentTag.equals(HomeFragment.class.getSimpleName())) {
-            startFragmentAndDestroyCurrent(new HomeFragment());
-        }else {
-            super.popBackStack();
 
-        }
-
-    }
-
-    public void onBackPressed() {
-        startFragmentAndDestroyCurrent(new HomeFragment());
-    }
 
 }
