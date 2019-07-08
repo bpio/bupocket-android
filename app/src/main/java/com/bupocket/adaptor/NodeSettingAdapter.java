@@ -238,7 +238,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
                                     if (nodeAddressModel.getError_code() == 0) {
                                         int oldSeq = nodeAddressModel.getResult().getHeader().getSeq();
                                         int resultSeq = oldSeq - newSeq;
-                                        if (resultSeq > 0 && resultSeq < 10) {
+                                        if (resultSeq >=0 && resultSeq < 10) {
 
                                             mActivity.runOnUiThread(new Runnable() {
                                                 @Override
