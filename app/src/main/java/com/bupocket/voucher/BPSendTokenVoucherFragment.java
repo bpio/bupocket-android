@@ -43,6 +43,7 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DecimalCalculate;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TimeUtil;
+import com.bupocket.utils.TransferUtils;
 import com.bupocket.voucher.model.VoucherDetailModel;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
@@ -206,7 +207,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
             destAccountAddressEt.setText(toAddress);
         }
 
-        mTokenCodeTv.setText(Html.fromHtml(String.format(getString(R.string.voucher_avail_balance),0+"")));
+        mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance),0+"")));
     }
 
     @Override
@@ -291,6 +292,8 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
         }
 
         goodsDateTv.setText(date);
+
+        mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance),detailModel.getBalance()+"")));
     }
 
     private void initTopBar() {
@@ -383,150 +386,22 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                     return;
                 }
 
+                showConfirmDialog();
 
 
-                final QMUIBottomSheet sheet = new QMUIBottomSheet(getContext());
-
-                sheet.setContentView(R.layout.view_send_token_confirm);
-
-                final TextView addressTxt = sheet.findViewById(R.id.sendTargetAddress);
-                addressTxt.setText(address);
-
-                TextView amountTxt = sheet.findViewById(R.id.sendAmount);
-//                amountTxt.setText(sendAmount + " " + tokenCode);
-
-                TextView estimateCostTxt = sheet.findViewById(R.id.sendEstimateCost);
-                estimateCostTxt.setText(txFee + " BU");
-
-                TextView remarkTxt = sheet.findViewById(R.id.sendRemark);
-                remarkTxt.setText(note);
-
-                sheet.findViewById(R.id.sendConfirmCloseBtn).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        sheet.dismiss();
-                    }
-                });
-
-                sheet.show();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            nonce = Wallet.getInstance().getAccountNonce(getWalletAddress()) + 1;
-                        } catch (WalletException e) {
-                            e.printStackTrace();
-                        }
-
-                    }
-                }).start();
-                sheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        sheet.dismiss();
-
-                        final long finalNonce = nonce;
-                        final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
-                        qmuiDialog.setCanceledOnTouchOutside(false);
-                        qmuiDialog.setContentView(R.layout.view_password_comfirm);
-                        final EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
-                        qmuiDialog.show();
-                        mPasswordConfirmEt.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                showSoftInputFromWindow(mPasswordConfirmEt);
-                            }
-                        }, 10);
-
-                        QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
-
-                        ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
-
-                        mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                qmuiDialog.dismiss();
-                            }
-                        });
-
-
-                        mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View v) {
-
-                                final String password = mPasswordConfirmEt.getText().toString().trim();
-                                txSendingTipDialog = new QMUITipDialog.Builder(getContext())
-                                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                                        .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
-                                        .create();
-                                txSendingTipDialog.show();
-                                txSendingTipDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-                                    @Override
-                                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-
-                                        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-                                            return true;
-                                        }
-                                        return false;
-                                    }
-                                });
-
-
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-//                                        String accountBPData = getAccountBPData();
-//                                        String destAddess = getDestAccAddr();
-//                                        try {
-//
-////                                            if(TokenTypeEnum.BU.getCode().equals(tokenType)){
-////                                                hash = Wallet.getInstance().sendBu(password,accountBPData, currentWalletAddress, destAddess, sendAmount, note,txFee);
-////                                            }else if(TokenTypeEnum.ATP10.getCode().equals(tokenType)){
-////                                                hash = Wallet.getInstance().sendToken(password,accountBPData,currentWalletAddress,destAddess,tokenCode,tokenIssuer, sendAmount,tokenDecimals,note, txFee);
-////                                            }
-//                                            if (TokenTypeEnum.BU.getCode().equals(tokenType)) {
-//                                                hash = Wallet.getInstance().sendBuNoNonce(password, accountBPData, currentWalletAddress, destAddess, sendAmount, note, txFee, nonce);
-//                                            } else if (TokenTypeEnum.ATP10.getCode().equals(tokenType)) {
-//                                                hash = Wallet.getInstance().sendTokenNoNonce(password, accountBPData, currentWalletAddress, destAddess, tokenCode, tokenIssuer, sendAmount, tokenDecimals, note, txFee, nonce);
-//                                            }
-//
-//
-//                                        } catch (WalletException e) {
-//                                            e.printStackTrace();
-//                                            Looper.prepare();
-//                                            if (ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
-//                                                Toast.makeText(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT).show();
-//                                            } else if (ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
-//                                                Toast.makeText(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT).show();
-//                                            } else {
-//                                                Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
-//                                            }
-//                                            txSendingTipDialog.dismiss();
-//                                            Looper.loop();
-//                                        } catch (Exception e) {
-//                                            e.printStackTrace();
-//                                            Looper.prepare();
-//                                            Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
-//                                            txSendingTipDialog.dismiss();
-//                                            Looper.loop();
-//                                        } finally {
-//                                            timer.schedule(timerTask,
-//                                                    1 * 1000,//延迟1秒执行
-//                                                    1000);
-//                                        }
-                                    }
-                                }).start();
-                                qmuiDialog.dismiss();
-
-                            }
-                        });
-
-                    }
-                });
             }
         });
+    }
+
+    private void showConfirmDialog() {
+        TransferUtils.confirmSendVoucherDailog(mContext, getWalletAddress(), selectedVoucherDetail.getContractAddress(),
+                "", 10+"", Constants.MIN_FEE,
+                getString(R.string.send_voucher), "", new TransferUtils.TransferListener() {
+                    @Override
+                    public void confirm() {
+
+                    }
+                });
     }
 
     private void setDestAddress() {

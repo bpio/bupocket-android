@@ -31,7 +31,7 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp"
-                    android:text="@string/confirm_transfer_title_txt"
+                    android:text="@string/voucher_send_confirm_title"
                     android:textColor="@color/app_txt_color_gray_2"
                     android:textSize="16sp" />
 
@@ -78,6 +78,24 @@
 
             <TextView
                 android:id="@+id/destAddressTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="14sp"
+                tools:text="bujslk3i3kkdkladkl8dfkdfk3kl3kl3ldsjf" />
+
+            <TextView
+                android:id="@+id/sendNumTvHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14.5dp"
+                android:text="@string/send_voucher_num"
+                android:textColor="@color/app_txt_color_gray"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/sendNumTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
