@@ -28,6 +28,8 @@ import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
+import com.bupocket.voucher.BPSendTokenVoucherFragment;
+import com.bupocket.voucher.BPSendVoucherStatusFragment;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
@@ -57,6 +59,7 @@ public abstract class BaseFragment extends QMUIFragment {
     protected Context mContext;
     private QMUITipDialog submitDialog;
     private TransferHandler transferHandler;
+    private static boolean isSendVoucher;
 
 
     @Override
@@ -198,6 +201,11 @@ public abstract class BaseFragment extends QMUIFragment {
 
             }
         });
+    }
+
+    protected void submitTransactionBase(final String privateKey, final TransactionBuildBlobResponse transBlob, boolean isSendVoucher) {
+        this.isSendVoucher = isSendVoucher;
+        submitTransactionBase(privateKey,transBlob);
     }
 
     protected void submitTransactionBase(final String privateKey, final TransactionBuildBlobResponse transBlob) {
@@ -382,7 +390,18 @@ public abstract class BaseFragment extends QMUIFragment {
                                 argz.putString("state", txDetailRespBoBean.getStatus().toString());
                                 argz.putString("sendTime", txDetailRespBoBean.getApplyTimeDate());
                                 argz.putString("txHash", mFragment.txHash);
+
+
+
                                 BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
+
+
+                                if (isSendVoucher) {
+                                    BPSendVoucherStatusFragment bpSendTokenVoucherFragment = new BPSendVoucherStatusFragment();
+                                    bpSendTokenVoucherFragment.setArguments(argz);
+                                    mFragment.startFragment(bpSendTokenVoucherFragment);
+                                    return;
+                                }
 
 
                                 if (((BaseFragmentActivity) mFragment.getActivity()).getCurrentFragment().getTag().equals(HomeFragment.class.getSimpleName())) {

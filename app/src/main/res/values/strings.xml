@@ -802,6 +802,8 @@
     <string name="voucher_avail_balance" >可用&lt;font color=\'#00D175\'> %1$s &lt;/font>个</string>
 
     <string name="voucher_send_confirm_title">确认转赠</string>
-    <string name="send_voucher">转赠卡券</string>
+    <string name="send_voucher">转赠加密数字券</string>
+    <string name="voucher_pwd_confirm_hint" >请填写当前使用钱包的安全密码以确认转赠</string>
+    <string name="tx_voucher_status_success_txt">转赠成功</string>
 
 </resources>

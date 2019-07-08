@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.enums.ExceptionEnum;
+import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
@@ -378,4 +379,97 @@ public class DialogUtils {
 
         void confirm(String msg);
     }
+
+
+
+    public   static void getSignatureInfo(final Activity mActivity,final Context mContext,final String accountData,final String walletAddress, final SignatureListener listener) {
+
+        mActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                final QMUIDialog qmuiDialog = new QMUIDialog(mContext);
+                qmuiDialog.setCanceledOnTouchOutside(false);
+                qmuiDialog.setContentView(R.layout.view_password_comfirm_common);
+
+                Button mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
+                EditText passwordConfirmEt=qmuiDialog.findViewById(R.id.passwordConfirmEt);
+                passwordConfirmEt.setHint(mContext.getString(R.string.create_wallet_pw_err_hint));
+                TextView passwordConfirmNotice=qmuiDialog.findViewById(R.id.passwordConfirmNotice);
+                passwordConfirmNotice.setText(mContext.getString(R.string.voucher_pwd_confirm_hint));
+
+                ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
+                final EditText tvPw = qmuiDialog.findViewById(R.id.passwordConfirmEt);
+                qmuiDialog.show();
+                mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        qmuiDialog.dismiss();
+                    }
+                });
+
+                tvPw.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        showSoftInputFromWindow(tvPw);
+                    }
+                }, 10);
+
+                mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        qmuiDialog.dismiss();
+
+                        final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(mContext)
+                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                                .setTipWord(mContext.getResources().getString(R.string.send_tx_sign_txt))
+                                .create();
+                        txSendingTipDialog.show();
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                String pkbyAccountPassword = null;
+                                try {
+                                    pkbyAccountPassword = Wallet.getInstance().getPKBYAccountPassword(tvPw.getText().toString(), accountData, walletAddress);
+                                    txSendingTipDialog.dismiss();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    ToastUtil.showToast(mActivity, R.string.checking_password_error, Toast.LENGTH_LONG);
+                                    txSendingTipDialog.dismiss();
+                                }
+
+                                if (pkbyAccountPassword == null || pkbyAccountPassword.isEmpty()) {
+                                    return;
+                                }
+
+                                final String finalPkbyAccountPassword = pkbyAccountPassword;
+                                mActivity.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        listener.success(finalPkbyAccountPassword);
+                                    }
+                                });
+
+
+                            }
+                        }).start();
+
+                    }
+                });
+
+            }
+        });
+    }
+
+
+    public static void showSoftInputFromWindow(EditText editText) {
+        editText.setFocusable(true);
+        editText.setFocusableInTouchMode(true);
+        editText.requestFocus();
+        editText.findFocus();
+        InputMethodManager inputManager =
+                (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.showSoftInput(editText, InputMethodManager.SHOW_FORCED);
+    }
+
 }

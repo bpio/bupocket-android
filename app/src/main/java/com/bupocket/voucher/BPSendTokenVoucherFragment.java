@@ -124,7 +124,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     private long nonce;
     private VoucherDetailModel selectedVoucherDetail;
     private String toAddress;
-
+    final double minFee = Constants.MAX_FEE;
     @Override
     protected int getLayoutView() {
         return R.layout.fragment_send_voucher;
@@ -141,6 +141,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
 
         buildWatcher();
         voucherNumHint.setVisibility(View.GONE);
+        sendFormTxFeeEt.setText(minFee+"");
     }
 
     private void buildWatcher() {
@@ -393,10 +394,9 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
 
         String toAddress = destAccountAddressEt.getText().toString().trim();
 
-        final double minFee = Constants.MAX_FEE;
+
         final String contractAddress = selectedVoucherDetail.getContractAddress();
         final String amount = sendAmountET.getText().toString();
-
 
         final String input = "{\"method\":\"transfer\",\"params\":{\"skuId\":\""+ selectedVoucherDetail.getVoucherId()+"\",\"trancheId\":\""+selectedVoucherDetail.getTrancheId()+"\",\"to\":\""+toAddress+"\",\"value\":\""+amount+"\"}}";
         TransferUtils.confirmSendVoucherDialog(mContext, getWalletAddress(), toAddress,
@@ -416,20 +416,13 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                                             input, WalletCurrentUtils.getWalletAddress(spHelper),
                                             String.valueOf(minFee), contractAddress, transferDetail);
 
-                                    final String txHash = buildBlobResponse.getResult().getHash();
+                                   DialogUtils.getSignatureInfo(getActivity(), mContext,getBPAccountData(), getWalletAddress(), new SignatureListener() {
+                                       @Override
+                                       public void success(String privateKey) {
+                                           submitTransactionBase(privateKey, buildBlobResponse,true);
+                                       }
+                                   });
 
-
-//                                    if (TextUtils.isEmpty(tokenBalance) || (Double.valueOf(tokenBalance) <= Double.valueOf(amount))) {
-//                                        ToastUtil.showToast(getActivity(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT);
-//                                        return;
-//                                    }
-
-                                    getSignatureInfo(new SignatureListener() {
-                                        @Override
-                                        public void success(final String privateKey) {
-                                            submitTransactionBase(privateKey, buildBlobResponse);
-                                        }
-                                    });
 
 
                                 } catch (WalletException e) {
@@ -453,39 +446,6 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
         if (bundle != null) {
             final String destAddress = getArguments().getString("destAddress");
             destAccountAddressEt.setText(destAddress);
-
-//            if (!TokenTypeEnum.BU.getCode().equals(tokenType)) {
-//                @SuppressLint("HandlerLeak") final Handler handler = new Handler() {
-//                    @Override
-//                    public void handleMessage(Message msg) {
-//                        super.handleMessage(msg);
-//                        Bundle data = msg.getData();
-//                        String fee = data.getString("fee");
-//                        sendFormTxFeeEt.setText(fee);
-//                    }
-//                };
-//                Runnable runnable = new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        String fee;
-//                        if (Wallet.getInstance().checkAccAddress(destAddress)) {
-//                            if (!Wallet.getInstance().checkAccountActivated(destAddress)) {
-//                                fee = Constants.ACCOUNT_NOT_ACTIVATED_SEND_FEE;
-//                            } else {
-//                                fee = Constants.ACCOUNT_ACTIVATED_SEND_FEE;
-//                            }
-//                        } else {
-//                            fee = Constants.ACCOUNT_ACTIVATED_SEND_FEE;
-//                        }
-//                        Message message = new Message();
-//                        Bundle data = new Bundle();
-//                        data.putString("fee", fee);
-//                        message.setData(data);
-//                        handler.sendMessage(message);
-//                    }
-//                };
-//                new Thread(runnable).start();
-//            }
 
         }
     }
@@ -529,88 +489,6 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
             }
         }
     }
-
-    private int timerTimes = 0;
-    private final Timer timer = new Timer();
-
-    @SuppressLint("HandlerLeak")
-    private Handler mHanlder = new Handler() {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case 1:
-                    if (timerTimes > Constants.TX_REQUEST_TIMEOUT_TIMES) {
-                        timerTask.cancel();
-                        txSendingTipDialog.dismiss();
-
-                        BPTransactionTimeoutFragment fragment = new BPTransactionTimeoutFragment();
-                        Bundle args = new Bundle();
-                        args.putString("txHash", hash);
-                        fragment.setArguments(args);
-                        startFragment(fragment);
-                        return;
-                    }
-                    timerTimes++;
-                    System.out.println("timerTimes:" + timerTimes);
-                    TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
-                    Map<String, Object> paramsMap = new HashMap<>();
-                    paramsMap.put("hash", hash);
-                    Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetailByHash(paramsMap);
-                    call.enqueue(new retrofit2.Callback<ApiResult<TxDetailRespDto>>() {
-
-                        @Override
-                        public void onResponse(Call<ApiResult<TxDetailRespDto>> call, Response<ApiResult<TxDetailRespDto>> response) {
-                            ApiResult<TxDetailRespDto> resp = response.body();
-
-                            if (resp == null || resp.getErrCode() == null ||
-                                    resp.getData() == null || resp.getData().getTxDeatilRespBo() == null ||
-                                    !TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())
-
-                            ) {
-                                return;
-                            } else {
-                                txDeatilRespBoBean = resp.getData().getTxDeatilRespBo();
-                                timerTask.cancel();
-                                txSendingTipDialog.dismiss();
-                                if (ExceptionEnum.BU_NOT_ENOUGH_FOR_PAYMENT.getCode().equals(txDeatilRespBoBean.getErrorCode())) {
-                                    Toast.makeText(getActivity(), R.string.balance_not_enough, Toast.LENGTH_SHORT).show();
-                                }
-                                Bundle argz = new Bundle();
-                                argz.putString("destAccAddr", txDeatilRespBoBean.getDestAddress());
-                                argz.putString("sendAmount", txDeatilRespBoBean.getAmount());
-                                argz.putString("txFee", txDeatilRespBoBean.getFee());
-                                argz.putString("note", txDeatilRespBoBean.getOriginalMetadata());
-                                argz.putString("state", txDeatilRespBoBean.getStatus().toString());
-                                argz.putString("sendTime", txDeatilRespBoBean.getApplyTimeDate());
-                                argz.putString("sendTokenStatusKey", SEND_TOKEN_STATUS);
-                                argz.putString("txHash", hash);
-                                BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
-                                bpSendStatusFragment.setArguments(argz);
-                                startFragmentAndDestroyCurrent(bpSendStatusFragment);
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
-
-                        }
-                    });
-                    break;
-                default:
-                    break;
-            }
-            super.handleMessage(msg);
-        }
-    };
-
-    private TimerTask timerTask = new TimerTask() {
-        @Override
-        public void run() {
-            if (hash != null && !hash.equals("")) {
-                mHanlder.sendEmptyMessage(1);
-            }
-        }
-    };
 
 
 }
