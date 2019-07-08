@@ -1,7 +1,6 @@
 package com.bupocket.fragment;
 
 import android.annotation.SuppressLint;
-import android.app.Application;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,9 +14,7 @@ import com.bupocket.R;
 import com.bupocket.adaptor.NodeSettingAdapter;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
-import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.BumoNodeEnum;
-import com.bupocket.enums.CustomNodeTypeEnum;
 import com.bupocket.model.NodeSettingModel;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
@@ -47,8 +44,9 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
 
     private boolean isSaveBtn;
     private int oldPosition;
-    private ArrayList<NodeSettingModel> oldNodeSettingModels;
-    private String testTitle="";
+    private ArrayList<NodeSettingModel> nodeSettingModels;
+    private String testTitle = "";
+    private NodeSettingModel normalNodeSetting;
 
     @Override
     protected int getLayoutView() {
@@ -85,32 +83,34 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
 
         if (SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()) {
             testTitle = "(" + getString(R.string.current_test_message_txt) + ")";
-            nodeTitleTv.setText(getString(R.string.node_setting_title)+testTitle);
+            nodeTitleTv.setText(getString(R.string.node_setting_title) + testTitle);
         }
 
     }
 
     private void setNodeData() {
         String urlJson = (String) spHelper.getSharedPreference(Constants.BUMO_NODE_URL, "");
-        oldNodeSettingModels = new ArrayList<>();
+        nodeSettingModels = new ArrayList<>();
         if (urlJson.isEmpty()) {
             NodeSettingModel mainNode = new NodeSettingModel();
             mainNode.setMore(false);
             mainNode.setSelected(true);
             mainNode.setUrl(Constants.BUMO_NODE_URL);
-            oldNodeSettingModels.add(mainNode);
+            nodeSettingModels.add(mainNode);
         } else {
             Gson gson = new Gson();
             Type type = new TypeToken<List<NodeSettingModel>>() {
             }.getType();
-            oldNodeSettingModels = gson.fromJson(urlJson, type);
+            nodeSettingModels = gson.fromJson(urlJson, type);
         }
-        for (int i = 0; i < oldNodeSettingModels.size(); i++) {
-            if (oldNodeSettingModels.get(i).isSelected()) {
+        for (int i = 0; i < nodeSettingModels.size(); i++) {
+            if (nodeSettingModels.get(i).isSelected()) {
                 oldPosition = i;
+                normalNodeSetting = nodeSettingModels.get(i);
             }
         }
-        nodeSettingAdapter.setNewData(oldNodeSettingModels);
+
+        nodeSettingAdapter.setNewData(nodeSettingModels);
     }
 
     @Override
@@ -119,12 +119,12 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
             @Override
             public void onClick(View v) {
 
-                if (nodeSettingAdapter.getData().size()==11) {
+                if (nodeSettingAdapter.getData().size() == 11) {
                     return;
                 }
 
                 DialogUtils.showEditMessageDialog(mContext,
-                        getString(R.string.add_node_address_title)+testTitle,
+                        getString(R.string.add_node_address_title) + testTitle,
                         getString(R.string.add_node_address_title),
                         new DialogUtils.ConfirmListener() {
                             @Override
@@ -188,16 +188,10 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
             public void onClick(View v) {
 
 
-                for (int i = 0; i < oldNodeSettingModels.size(); i++) {
-                    if (oldNodeSettingModels.get(i).isSelected()) {
-                        String oldUrl = oldNodeSettingModels.get(i).getUrl();
-                        for (int j = 0; j < nodeSettingAdapter.getData().size(); j++) {
-                            if (nodeSettingAdapter.getData().get(i).isSelected()) {
-                                if (oldUrl.equals(nodeSettingAdapter.getData().get(i).getUrl())) {
-
-                                    return;
-                                }
-                            }
+                for (int j = 0; j < nodeSettingAdapter.getData().size(); j++) {
+                    if (nodeSettingAdapter.getData().get(j).isSelected()) {
+                        if (normalNodeSetting.getUrl().equals(nodeSettingAdapter.getData().get(j).getUrl())) {
+                            return;
                         }
                     }
                 }
