@@ -72,6 +72,8 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     private VoucherAdapter adapter;
     private VoucherListModel voucherListModel;
     private boolean isSendVoucher;
+    private SelectedVoucherListener mSeletedVoucherListener;
+    private VoucherDetailModel selectedVoucherDetail;
 
     @Override
     protected int getLayoutView() {
@@ -83,6 +85,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
 
         if (getArguments() != null) {
             isSendVoucher = getArguments().getString(ConstantsType.FRAGMENT_TAG, "").equals(BPSendTokenVoucherFragment.class.getSimpleName());
+            selectedVoucherDetail = ((VoucherDetailModel) getArguments().getSerializable("selectedVoucherDetail"));
         }
         initTopbar();
         initListView();
@@ -92,7 +95,9 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
 
     private void initListView() {
         adapter = new VoucherAdapter(mContext);
+        adapter.setSelectedVoucherDetailModel(selectedVoucherDetail);
         voucherListLv.setAdapter(adapter);
+
     }
 
     private void initTopbar() {
@@ -105,7 +110,8 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
                 }
             });
 
-            sendNameTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.send_name_hint), getWalletAddress())));
+            sendNameTv.setVisibility(View.VISIBLE);
+            sendNameTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.send_name_hint), WalletCurrentUtils.getWalletName(getWalletAddress(),spHelper))));
         } else {
             mTopBar.addLeftImageButton(R.mipmap.icon_voucher_qrcode, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -172,19 +178,30 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
         voucherListLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                VoucherDetailModel voucherDetailModel = adapter.getData().get(position);
 
-                BPVoucherDetailFragment fragment = new BPVoucherDetailFragment();
-                Bundle args = new Bundle();
-                args.putSerializable(ConstantsType.VOUCHER_DETAIL, voucherDetailModel);
-                fragment.setArguments(args);
-                startFragment(fragment);
+                if (isSendVoucher) {
+                    mSeletedVoucherListener.getSelectedDetail(adapter.getData().get(position));
+                    popBackStack();
+
+                } else {
+                    goDetailFragment(position);
+
+                }
 
 
             }
         });
 
 
+    }
+
+    private void goDetailFragment(int position) {
+        VoucherDetailModel voucherDetailModel = adapter.getData().get(position);
+        BPVoucherDetailFragment fragment = new BPVoucherDetailFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(ConstantsType.VOUCHER_DETAIL, voucherDetailModel);
+        fragment.setArguments(args);
+        startFragment(fragment);
     }
 
     private void refreshData() {
@@ -197,16 +214,16 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
 
             @Override
             public void run() {
-                int curPageStart = pageStart + 1;
+
                 if (voucherListModel.getPage().getPageStart() == voucherListModel.getPage().getPageTotal()) {
                     refreshLayout.finishLoadMore();
                     refreshLayout.finishLoadMoreWithNoMoreData();
                     return;
                 }
+                int curPageStart = pageStart + 1;
                 reqVoucherAllData(curPageStart);
                 refreshLayout.finishLoadMore();
 
-                initData();
             }
         }, 500);
 
@@ -214,7 +231,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
 
 
     private void reqVoucherAllData(final int index) {
-        pageStart = index;
+
         HashMap<String, Object> map = new HashMap<>();
         map.put(ConstantsType.ADDRESS, WalletLocalInfoUtil.getInstance(spHelper).getWalletAddress());
 //        map.put(ConstantsType.ADDRESS, "buQrp3BCVdfbb5mJjNHZQwHvecqe7CCcounY");
@@ -235,9 +252,10 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
                     if (index == 1) {
                         adapter.setNewData(body.getData().getVoucherList());
                         refreshLayout.setEnableLoadMore(true);
-
+                        pageStart = index;
                     } else {
                         adapter.addMoreDataList(body.getData().getVoucherList());
+                        pageStart = index;
                     }
 
                     if (voucherEmptyLL != null) {
@@ -245,9 +263,12 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
                     }
 
                 } else {
-                    if (voucherEmptyLL != null) {
-                        voucherEmptyLL.setVisibility(View.VISIBLE);
+                    if (index==1) {
+                        if (voucherEmptyLL != null) {
+                            voucherEmptyLL.setVisibility(View.VISIBLE);
+                        }
                     }
+
 
                 }
 
@@ -270,7 +291,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
         super.onResume();
         if (isSendVoucher) {
             mTopBar.setTitle(R.string.send_voucher_title2);
-        }else{
+        } else {
             String walletName = WalletCurrentUtils.getWalletName(WalletCurrentUtils.getWalletAddress(spHelper), spHelper);
             mTopBar.setTitle(walletName);
         }
@@ -280,5 +301,15 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     @OnClick(R.id.shareVoucherQrCodeBtn)
     public void onViewClicked() {
         goCollectionFragment();
+    }
+
+
+    public interface SelectedVoucherListener {
+
+        void getSelectedDetail(VoucherDetailModel voucherDetailModel);
+    }
+
+    public void setSelectedVoucherListener(SelectedVoucherListener mSeletedVoucherListener) {
+        this.mSeletedVoucherListener = mSeletedVoucherListener;
     }
 }

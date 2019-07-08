@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.TimeUtils;
 import android.view.TextureView;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -20,6 +21,16 @@ import com.bupocket.voucher.model.VoucherListModel;
 
 public class VoucherAdapter extends AbsViewHolderAdapter<VoucherDetailModel> {
 
+
+    public VoucherDetailModel selectedVoucherDetailModel;
+
+    public VoucherDetailModel getSelectedVoucherDetailModel() {
+        return selectedVoucherDetailModel;
+    }
+
+    public void setSelectedVoucherDetailModel(VoucherDetailModel selectedVoucherDetailModel) {
+        this.selectedVoucherDetailModel = selectedVoucherDetailModel;
+    }
 
     public VoucherAdapter(@NonNull Context context) {
         super(context);
@@ -72,13 +83,21 @@ public class VoucherAdapter extends AbsViewHolderAdapter<VoucherDetailModel> {
         String endTime = itemData.getEndTime();
         String date = context.getString(R.string.validity_date);
         if (!TextUtils.isEmpty(startTime)) {
-             date = date + ": " +
+            date = date + ": " +
                     String.format(context.getString(R.string.goods_validity_date),
                             TimeUtil.timeStamp2Date(startTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD),
                             TimeUtil.timeStamp2Date(endTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD));
 
         }
         holder.setText(R.id.goodsDateTv, date);
+
+        if (selectedVoucherDetailModel!=null) {
+            if (selectedVoucherDetailModel.getSpuId().equals(itemData.getSpuId())) {
+                holder.getView(R.id.selectedStatusIv).setVisibility(View.VISIBLE);
+            }else{
+                holder.getView(R.id.selectedStatusIv).setVisibility(View.INVISIBLE);
+            }
+        }
 
     }
 
