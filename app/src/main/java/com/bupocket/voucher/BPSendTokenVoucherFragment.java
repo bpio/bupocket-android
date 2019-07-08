@@ -1,49 +1,48 @@
 package com.bupocket.voucher;
 
 import android.annotation.SuppressLint;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
 import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
-import com.bupocket.enums.AddressClickEventEnum;
-import com.bupocket.enums.TokenTypeEnum;
+import com.bupocket.enums.ScanTransactionTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
-import com.bupocket.fragment.BPAddressBookFragment;
 import com.bupocket.fragment.BPSendStatusFragment;
 import com.bupocket.fragment.BPTransactionTimeoutFragment;
+import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
+import com.bupocket.interfaces.SignatureListener;
+import com.bupocket.model.TransConfirmModel;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.DecimalCalculate;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TimeUtil;
+import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
+import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.voucher.model.VoucherDetailModel;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
@@ -53,20 +52,16 @@ import com.google.zxing.integration.android.IntentResult;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
+import io.bumo.model.response.TransactionBuildBlobResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -115,7 +110,8 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     TextView voucherNumHint;
 
 
-    public final static String SEND_TOKEN_STATUS = "sendTokenStatus";;
+    public final static String SEND_TOKEN_STATUS = "sendTokenStatus";
+    ;
     private static final int CHOOSE_ADDRESS_CODE = 1;
 
     private String hash;
@@ -202,12 +198,12 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
 
     public void initData() {
 
-        if (getArguments()!=null) {
+        if (getArguments() != null) {
             toAddress = getArguments().getString(ConstantsType.ADDRESS);
             destAccountAddressEt.setText(toAddress);
         }
 
-        mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance),0+"")));
+        mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), 0 + "")));
     }
 
     @Override
@@ -293,7 +289,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
 
         goodsDateTv.setText(date);
 
-        mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance),detailModel.getBalance()+"")));
+        mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), detailModel.getBalance() + "")));
     }
 
     private void initTopBar() {
@@ -305,8 +301,6 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
             }
         });
     }
-
-
 
 
     private String getDestAccAddr() {
@@ -394,15 +388,65 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     }
 
     private void showConfirmDialog() {
-        TransferUtils.confirmSendVoucherDailog(mContext, getWalletAddress(), selectedVoucherDetail.getContractAddress(),
-                "", 10+"", Constants.MIN_FEE,
-                getString(R.string.send_voucher), "", new TransferUtils.TransferListener() {
+
+        final String transferDetail = getString(R.string.send_voucher);
+
+        String toAddress = destAccountAddressEt.getText().toString().trim();
+
+        final double minFee = Constants.MAX_FEE;
+        final String contractAddress = selectedVoucherDetail.getContractAddress();
+        final String amount = sendAmountET.getText().toString();
+
+
+        final String input = "{\"method\":\"transfer\",\"params\":{\"skuId\":\""+ selectedVoucherDetail.getVoucherId()+"\",\"trancheId\":\""+selectedVoucherDetail.getTrancheId()+"\",\"to\":\""+toAddress+"\",\"value\":\""+amount+"\"}}";
+        TransferUtils.confirmSendVoucherDialog(mContext, getWalletAddress(), toAddress,
+                "", amount, minFee,
+                transferDetail, input, sendFormNoteEt.getText().toString(), new TransferUtils.TransferListener() {
                     @Override
                     public void confirm() {
+
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+
+                                    final TransactionBuildBlobResponse buildBlobResponse;
+
+                                    buildBlobResponse = Wallet.getInstance().buildBlob(amount,
+                                            input, WalletCurrentUtils.getWalletAddress(spHelper),
+                                            String.valueOf(minFee), contractAddress, transferDetail);
+
+                                    final String txHash = buildBlobResponse.getResult().getHash();
+
+
+//                                    if (TextUtils.isEmpty(tokenBalance) || (Double.valueOf(tokenBalance) <= Double.valueOf(amount))) {
+//                                        ToastUtil.showToast(getActivity(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT);
+//                                        return;
+//                                    }
+
+                                    getSignatureInfo(new SignatureListener() {
+                                        @Override
+                                        public void success(final String privateKey) {
+                                            submitTransactionBase(privateKey, buildBlobResponse);
+                                        }
+                                    });
+
+
+                                } catch (WalletException e) {
+                                    if (e.getErrCode().equals(com.bupocket.wallet.enums.ExceptionEnum.ADDRESS_NOT_EXIST.getCode())) {
+                                        ToastUtil.showToast(getActivity(), getString(R.string.address_not_exist), Toast.LENGTH_SHORT);
+                                    }
+                                } catch (Exception e) {
+
+
+                                }
+                            }
+                        }).start();
 
                     }
                 });
     }
+
 
     private void setDestAddress() {
         Bundle bundle = getArguments();

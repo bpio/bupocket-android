@@ -101,13 +101,13 @@
                 android:layout_marginTop="4dp"
                 android:textColor="@color/app_txt_color_gray_2"
                 android:textSize="14sp"
-                tools:text="bujslk3i3kkdkladkl8dfkdfk3kl3kl3ldsjf" />
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="14.5dp"
-                android:text="@string/send_fee_title"
+                android:text="@string/tx_fee_bu"
                 android:textColor="@color/app_txt_color_gray"
                 android:textSize="13sp" />
 
@@ -119,6 +119,26 @@
                 android:textColor="@color/app_txt_color_gray_2"
                 android:textSize="14sp"
                 tools:text="0.001675" />
+
+            <TextView
+                android:id="@+id/remarkHintTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14.5dp"
+                android:text="@string/send_note_title"
+                android:textColor="@color/app_txt_color_gray"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/remarkTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="14sp"
+                android:layout_marginRight="10dp"
+                tools:text="bujslk3i3kkdk" />
+
 
             <TextView
                 android:id="@+id/detailBtn"

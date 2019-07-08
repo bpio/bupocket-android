@@ -108,13 +108,14 @@ public class TransferUtils {
 
     }
 
-    public static void confirmSendVoucherDailog(Context context,
+    public static void confirmSendVoucherDialog(Context context,
                                                 String fromAddress,
                                                 String destAddress,
                                                 String destTag,
                                                 String amount,
-                                                Double fee, String metaData,
-                                                String input,
+                                                Double fee,
+                                                String metaData,
+                                                String input,String remark,
                                                 final TransferListener transferListener) {
 
         String tx_fee = String.valueOf(fee);
@@ -137,8 +138,12 @@ public class TransferUtils {
         TextView mTransactionParamsTv = qmuiBottomSheet.findViewById(R.id.transactionParamsTv);
         TextView mDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.destAddressTvHint);
         TextView mDetailsDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTvHint);
+        TextView sendNumTv=qmuiBottomSheet.findViewById(R.id.sendNumTv);
+        TextView remarkTv=qmuiBottomSheet.findViewById(R.id.remarkTv);
 
+        remarkTv.setText(remark);
 
+        sendNumTv.setText(amount);
         mTransactionDetailTv.setText(metaData);
         mDestAddressTv.setText(destAddressTag);
         mSourceAddressTv.setText(fromAddress);
