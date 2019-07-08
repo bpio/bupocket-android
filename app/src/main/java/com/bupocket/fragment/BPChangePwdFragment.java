@@ -101,30 +101,33 @@ public class BPChangePwdFragment extends BaseFragment {
                             String newPwd = mNewPasswordET.getText().toString().trim();
 
                             try {
+                                WalletBPData walletBPData = null;
                                 String identityWalletAddress = spHelper.getSharedPreference("currentAccAddr", "").toString();
                                 String skey;
-                                if (walletAddress.equals(identityWalletAddress)) {
-                                    skey = sharedPreferencesHelper.getSharedPreference("skey", "").toString();
-                                } else {
-                                    skey = sharedPreferencesHelper.getSharedPreference(BPChangePwdFragment.this.walletAddress + ConstantsType.WALLET_SKEY, "").toString();
-                                }
 
-                                WalletBPData walletBPData;
-                                if (TextUtils.isEmpty(skey)) {
-                                    skey = sharedPreferencesHelper.getSharedPreference(BPChangePwdFragment.this.walletAddress + ConstantsType.WALLET_SKEY_PRIV, "").toString();
+                                skey = sharedPreferencesHelper.getSharedPreference(BPChangePwdFragment.this.walletAddress + ConstantsType.WALLET_SKEY_PRIV, "").toString();
+                                if (!TextUtils.isEmpty(skey)) {
                                     walletBPData = Wallet.getInstance().updateAccountWalletPassword(oldPwd, newPwd, skey, getContext());
-                                } else {
-                                    walletBPData = Wallet.getInstance().updateAccountPassword(oldPwd, newPwd, skey, getContext());
-                                }
-
-
-                                if (walletAddress.equals(identityWalletAddress)) {
-                                    sharedPreferencesHelper.put("skey", walletBPData.getSkey());
-                                    sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
-                                } else {
-                                    sharedPreferencesHelper.put(walletAddress + "-skey", walletBPData.getSkey());
+                                    sharedPreferencesHelper.put(walletAddress +ConstantsType.WALLET_SKEY_PRIV, walletBPData.getSkey());
                                     sharedPreferencesHelper.put(walletAddress + "-BPdata", JSON.toJSONString(walletBPData.getAccounts()));
+                                } else {
+                                    if (walletAddress.equals(identityWalletAddress)) {
+                                        skey = sharedPreferencesHelper.getSharedPreference("skey", "").toString();
+                                    } else {
+                                        skey = sharedPreferencesHelper.getSharedPreference(BPChangePwdFragment.this.walletAddress + ConstantsType.WALLET_SKEY, "").toString();
+                                    }
+                                    walletBPData = Wallet.getInstance().updateAccountPassword(oldPwd, newPwd, skey, getContext());
+                                    if (walletAddress.equals(identityWalletAddress)) {
+                                        sharedPreferencesHelper.put("skey", walletBPData.getSkey());
+                                        sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
+                                    } else {
+                                        sharedPreferencesHelper.put(walletAddress + "-skey", walletBPData.getSkey());
+                                        sharedPreferencesHelper.put(walletAddress + "-BPdata", JSON.toJSONString(walletBPData.getAccounts()));
+                                    }
                                 }
+
+
+
                                 tipDialog.dismiss();
 
                                 getActivity().runOnUiThread(new Runnable() {
