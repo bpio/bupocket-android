@@ -6,8 +6,7 @@
     android:layout_height="wrap_content"
     android:background="@mipmap/icon_voucher_package_bg"
     android:orientation="vertical"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp">
+    android:paddingLeft="15dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,6 +30,7 @@
             android:layout_marginLeft="8dp"
             android:layout_marginTop="14dp"
             android:layout_toRightOf="@id/acceptanceIconRiv"
+            android:paddingRight="15dp"
             tools:text="name" />
 
         <ImageView
@@ -49,6 +49,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:layout_toRightOf="@id/voucherGoodsIv"
+            android:paddingRight="15dp"
             android:textColor="@color/app_color_black"
             android:textSize="13sp"
             tools:text="goods name" />
@@ -85,10 +86,20 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/voucherGoodsIv"
             android:layout_alignParentRight="true"
+            android:paddingRight="15dp"
             android:textColor="@color/app_color_black"
             android:textSize="20sp"
             android:textStyle="bold"
             tools:text="30" />
+
+
+        <ImageView
+            android:id="@+id/selectedStatusIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:background="@mipmap/view_voucher_selected"
+            android:visibility="gone" />
 
 
     </RelativeLayout>
@@ -100,6 +111,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
+        android:paddingRight="15dp"
         android:text="@string/validity_date"
         android:textColor="@color/app_txt_color_gray"
         android:textSize="11sp" />
