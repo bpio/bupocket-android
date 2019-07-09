@@ -695,6 +695,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
     }
 
     private void goSendVoucher(String resultContent) {
+        getFragmentManager().findFragmentByTag(BPAssetsHomeFragment.class.getSimpleName());
         String address = resultContent.replace(Constants.VOUCHER_QRCODE, "");
         BPSendTokenVoucherFragment fragment = new BPSendTokenVoucherFragment();
         Bundle args = new Bundle();

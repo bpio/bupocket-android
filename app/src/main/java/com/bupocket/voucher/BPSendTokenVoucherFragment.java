@@ -204,7 +204,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     }
 
     public void initData() {
-
+        mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), 0 + "")));
         if (getArguments() != null) {
 
             isVoucherDetailFragment = getArguments().getString(ConstantsType.FRAGMENT_TAG).equals(BPVoucherDetailFragment.class.getSimpleName());
@@ -219,7 +219,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
 
         }
 
-        mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), 0 + "")));
+
     }
 
     @Override

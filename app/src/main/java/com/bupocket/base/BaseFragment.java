@@ -329,7 +329,7 @@ public abstract class BaseFragment extends QMUIFragment {
     /**
      *
      */
-    private static class TransferHandler extends Handler {
+    private class TransferHandler extends Handler {
 
         private final WeakReference<BaseFragment> mFragment;
 
@@ -408,6 +408,7 @@ public abstract class BaseFragment extends QMUIFragment {
                                     argz.putString("fragmentTag", HomeFragment.class.getSimpleName());
                                     bpSendStatusFragment.setArguments(argz);
                                     mFragment.startFragmentForResult(bpSendStatusFragment, TRANSFER_CODE);
+                                    popBackStack();
                                 } else {
                                     bpSendStatusFragment.setArguments(argz);
                                     mFragment.startFragment(bpSendStatusFragment);

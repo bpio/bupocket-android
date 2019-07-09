@@ -17,6 +17,7 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.AdvertisingEnum;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.TxStatusEnum;
+import com.bupocket.fragment.BPAssetsHomeFragment;
 import com.bupocket.fragment.BPWalletManageFragment;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.AdvertisingService;
@@ -131,10 +132,15 @@ public class BPSendVoucherStatusFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 popBackStack();
-                getFragmentManager().popBackStack(BPVoucherDetailFragment.class.getSimpleName(), 1);
+
             }
         });
     }
 
-
+    @Override
+    public void popBackStack() {
+        super.popBackStack();
+        getFragmentManager().popBackStack(BPVoucherDetailFragment.class.getSimpleName(), 1);
+        getFragmentManager().popBackStack(BPAssetsHomeFragment.class.getSimpleName(),1);
+    }
 }
