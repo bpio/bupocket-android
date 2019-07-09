@@ -27,6 +27,7 @@ import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.model.request.*;
 import io.bumo.model.request.operation.*;
 import io.bumo.model.response.*;
+import io.bumo.model.response.result.ContractCallResult;
 import io.bumo.model.response.result.TransactionBuildBlobResult;
 
 import org.bitcoinj.crypto.MnemonicCode;
@@ -981,6 +982,32 @@ public class Wallet {
             System.out.println(JSON.toJSONString(transactionSubmitResponse, true));
         }
         return txHash;
+    }
+
+
+    public ContractCallResult callContract(String contractAddress,String input,double fee){
+
+        // Amount
+        Long feeLimit = ToBaseUnit.BU2MO(fee + "");
+
+
+        // Init request
+        ContractCallRequest request = new ContractCallRequest();
+        request.setContractAddress(contractAddress);
+        request.setFeeLimit(feeLimit);
+        request.setOptType(2);
+        request.setInput(input);
+
+        // Call call
+        ContractCallResponse response = sdk.getContractService().call(request);
+        if (response.getErrorCode() == 0) {
+            ContractCallResult result = response.getResult();
+            return result;
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+
+        return null;
     }
 }
 

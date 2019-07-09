@@ -842,4 +842,58 @@ public class CommonUtil {
         }
     }
 
+
+    public static String toJsonString(String theString) {
+        theString = theString.replace(">", "&gt;");
+        theString = theString.replace("<", "&lt;");
+        theString = theString.replace(" ", "&nbsp;");
+        theString = theString.replace("\"", "&quot;");
+        theString = theString.replace("\'", "&#39;");
+        theString = theString.replace("\\", "\\\\");//对斜线的转义
+        theString = theString.replace("\n", "\\n");
+        theString = theString.replace("\r", "\\r");
+
+        return theString;
+
+    }
+
+
+    public static String string2Json(String s) {
+        StringBuffer sb = new StringBuffer();
+        for (int i=0; i<s.length(); i++) {
+            char c = s.charAt(i);
+            switch (c){
+                case '\"':
+                    sb.append("");
+                    break;
+                case '\\':
+                    sb.append("");
+                    break;
+                case '/':
+                    sb.append("/");
+                    break;
+                case '\b':
+                    sb.append("");
+                    break;
+                case '\f':
+                    sb.append("");
+                    break;
+                case '\n':
+                    sb.append("");
+                    break;
+                case '\r':
+                    sb.append("");
+                    break;
+                case '\t':
+                    sb.append("");
+                    break;
+                default:
+                    sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+
+
+
 }

@@ -814,4 +814,8 @@
     <string name="send_voucher_timeout">Donation Timeout</string>
 
     <string name="send_address">Please input the receiving account address</string>
+    <string name="send_voucher_num_limit">Insufficient Vouchers</string>
+    <string name="not_my_self_send_voucher">Voucher donation to yourself is not allowed</string>
+
+
 </resources>

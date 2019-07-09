@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
@@ -39,9 +41,11 @@ import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.interfaces.SignatureListener;
+import com.bupocket.model.CallVoucherBalanceModel;
 import com.bupocket.model.TransConfirmModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TimeUtil;
 import com.bupocket.utils.ToastUtil;
@@ -51,6 +55,8 @@ import com.bupocket.voucher.model.VoucherDetailModel;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -67,6 +73,7 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import io.bumo.model.response.TransactionBuildBlobResponse;
+import io.bumo.model.response.result.ContractCallResult;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -132,6 +139,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     final double minFee = Constants.MAX_FEE;
     private boolean isVoucherDetailFragment;
     private String fragmentTag;
+    private String available="";
 
     @Override
     protected int getLayoutView() {
@@ -325,10 +333,45 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                             TimeUtil.timeStamp2Date(endTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD));
 
         }
-
         goodsDateTv.setText(date);
-
         mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), detailModel.getBalance() + "")));
+
+        callVoucherBalance();
+
+    }
+
+    private void callVoucherBalance() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                JSONObject input = new JSONObject();
+                input.put("method", "balanceOf");
+                JSONObject params = new JSONObject();
+                params.put("skuId", selectedVoucherDetail.getVoucherId());
+                params.put("address", WalletCurrentUtils.getWalletAddress(spHelper));
+                input.put("params", params);
+                ContractCallResult contractCallResult = Wallet.getInstance().
+                        callContract(selectedVoucherDetail.getContractAddress(), input.toJSONString(), Constants.MAX_FEE);
+                if (contractCallResult!=null) {
+
+                    try {
+                        JSONArray queryRets = contractCallResult.getQueryRets();
+                        JSONObject resultOne = (JSONObject) queryRets.get(0);
+                        LogUtils.e("Call"+resultOne.toJSONString());
+                        String json = resultOne.toJSONString();
+                        json=CommonUtil.string2Json(json);
+
+                        CallVoucherBalanceModel callVoucherBalanceMode = new Gson().fromJson(json, CallVoucherBalanceModel.class);
+                        available = callVoucherBalanceMode.getResult().getValue().getAvailable();
+                        mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), available)));
+
+                    }catch (Exception e){
+
+                    }
+
+                }
+            }
+        }).start();
     }
 
     private void initTopBar() {
@@ -416,6 +459,19 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                             tipDialog.dismiss();
                         }
                     }, 1500);
+                    return;
+                }
+
+                if (!TextUtils.isEmpty(available)) {
+                    int available = Integer.parseInt(BPSendTokenVoucherFragment.this.available);
+                    if (available==0) {
+                        ToastUtil.showToast(getActivity(),R.string.send_voucher_num_limit,Toast.LENGTH_LONG);
+                        return;
+                    }
+                }
+
+                if (destAccountAddressEt.getText().toString().trim().equals(WalletCurrentUtils.getWalletAddress(spHelper))){
+                    ToastUtil.showToast(getActivity(),R.string.not_my_self_send_voucher,Toast.LENGTH_LONG);
                     return;
                 }
 
