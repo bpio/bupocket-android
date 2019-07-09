@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bupocket.R;
@@ -143,4 +144,13 @@ public class BPSendVoucherStatusFragment extends BaseFragment {
         getFragmentManager().popBackStack(BPVoucherDetailFragment.class.getSimpleName(), 1);
         getFragmentManager().popBackStack(BPAssetsHomeFragment.class.getSimpleName(),1);
     }
+
+
+    @Override
+    protected boolean canDragBack() {
+        return false;
+    }
+
+
+
 }
