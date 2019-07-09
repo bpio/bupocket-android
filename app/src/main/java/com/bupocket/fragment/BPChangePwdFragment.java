@@ -63,6 +63,8 @@ public class BPChangePwdFragment extends BaseFragment {
     TextView walletNameTv;
     @BindView(R.id.walletAddressTv)
     TextView walletAddressTv;
+    @BindView(R.id.headIconPwdRiv)
+    ImageView headIconPwdRiv;
 
     private SharedPreferencesHelper sharedPreferencesHelper;
     private boolean isNewPwdHideFirst = false;
@@ -257,6 +259,8 @@ public class BPChangePwdFragment extends BaseFragment {
         String walletName = WalletCurrentUtils.getWalletName(walletAddress, spHelper);
         walletNameTv.setText(walletName);
         walletAddressTv.setText(AddressUtil.anonymous(walletAddress));
+
+        CommonUtil.setHeadIvRes(walletAddress,headIconPwdRiv,spHelper);
 
     }
 

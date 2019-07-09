@@ -9,6 +9,7 @@
     android:orientation="horizontal">
 
     <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/headIconPwdRiv"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginLeft="15dp"
@@ -34,8 +35,6 @@
                 android:id="@+id/walletNameTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:singleLine="true"
                 android:textColor="@color/app_color_black"
                 android:textSize="16sp"
                 tools:text="Wallet-1" />

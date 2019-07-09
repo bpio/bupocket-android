@@ -64,7 +64,7 @@ public class BPWalletManageFragment extends BaseFragment {
     LinearLayout mBackupMnemonicRl;
     @BindView(R.id.changePwRl)
     LinearLayout mChangePwRl;
-    @BindView(R.id.walletHeadRiv)
+    @BindView(R.id.headIconPwdRiv)
     ImageView walletHeadRiv;
 
 
