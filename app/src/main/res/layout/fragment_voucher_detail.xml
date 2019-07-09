@@ -7,7 +7,6 @@
     android:background="@color/app_color_blue1">
 
 
-
     <include
         layout="@layout/view_topbar_layout"
         android:layout_width="match_parent"
@@ -17,298 +16,309 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_vertical"
-        android:layout_marginBottom="20dp"
         android:layout_marginTop="?attr/qmui_topbar_height">
 
-        <LinearLayout
+
+        <com.qmuiteam.qmui.widget.QMUIEmptyView
+            android:id="@+id/detailEmptyView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
-            android:background="@mipmap/icon_voucher_detail_bg"
-            android:orientation="vertical"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp">
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="143"
-                android:gravity="center_vertical"
-                tools:ignore="Suspicious0dp">
-
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/acceptanceIconRiv"
-                    android:layout_width="22dp"
-                    android:layout_height="22dp"
-                    android:layout_marginTop="12dp"
-                    android:src="@mipmap/icon_goods_empty"
-                    app:riv_oval="true" />
-
-                <View
-                    android:id="@+id/topLineV"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_below="@+id/acceptanceIconRiv"
-                    android:layout_marginTop="13dp"
-                    android:background="@drawable/bg_dash_line" />
-
-                <TextView
-                    android:id="@+id/acceptanceNameTv"
-                    style="@style/BPTextViewCommon13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_toRightOf="@id/acceptanceIconRiv"
-                    tools:text="name" />
-
-                <TextView
-                    style="@style/BPTextViewCommon13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="14dp"
-                    android:layout_toRightOf="@id/acceptanceNameTv"
-                    android:text="@string/provide_acceptance"
-                    android:textSize="12dp" />
-
-
-                <ImageView
-                    android:id="@+id/voucherGoodsIv"
-                    android:layout_width="62dp"
-                    android:layout_height="62dp"
-                    android:layout_below="@+id/acceptanceIconRiv"
-                    android:layout_alignParentStart="true"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="30dp"
-                    android:background="@mipmap/icon_goods_empty" />
-
-                <TextView
-                    android:id="@+id/goodsNameTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignTop="@+id/voucherGoodsIv"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_toRightOf="@id/voucherGoodsIv"
-                    android:textColor="@color/app_color_black"
-                    android:textSize="13sp"
-                    tools:text="goods name" />
-
-                <TextView
-                    android:id="@+id/goodsPriceTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/goodsNameTv"
-                    android:layout_alignBottom="@id/voucherGoodsIv"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="7dp"
-                    android:gravity="bottom"
-                    android:textColor="@color/app_txt_color_gray"
-                    android:textSize="12sp" />
-
-
-            </RelativeLayout>
-
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="310"
-                android:paddingTop="10dp"
-                android:paddingBottom="20dp"
-                tools:ignore="Suspicious0dp">
-
-
-                <TextView
-                    android:id="@+id/validityDateTv"
-                    style="@style/BPTextViewVoucherHint14"
-                    android:text="@string/validity_date" />
-
-
-                <TextView
-                    android:id="@+id/validityDateInfoTv"
-                    style="@style/BPTextViewVoucher14"
-                    android:layout_alignTop="@id/validityDateTv"
-                    android:layout_toRightOf="@id/validityDateTv"
-                    tools:text="2019-01-01:00:00:00" />
-
-
-                <TextView
-                    android:id="@+id/voucherCodeTv"
-                    style="@style/BPTextViewVoucherHint14"
-                    android:layout_below="@id/validityDateTv"
-                    android:text="@string/voucher_code" />
-
-                <TextView
-                    android:id="@+id/voucherCodeInfoTv"
-                    style="@style/BPTextViewVoucher14"
-                    android:layout_alignTop="@id/voucherCodeTv"
-                    android:layout_toRightOf="@id/voucherCodeTv"
-                    tools:text="Q1000000001" />
-
-                <TextView
-                    android:id="@+id/voucherSizeTv"
-                    style="@style/BPTextViewVoucherHint14"
-                    android:layout_below="@id/voucherCodeTv"
-                    android:text="@string/voucher_size" />
-
-                <TextView
-                    android:id="@+id/voucherSizeInfoTv"
-                    style="@style/BPTextViewVoucher14"
-                    android:layout_alignTop="@id/voucherSizeTv"
-                    android:layout_toRightOf="@id/voucherSizeTv"
-                    tools:text="Q1000000001" />
-
-                <TextView
-                    android:id="@+id/voucherDescribeTv"
-                    style="@style/BPTextViewVoucherHint14"
-                    android:layout_below="@id/voucherSizeTv"
-                    android:text="@string/add_address_describe" />
-
-                <TextView
-                    android:id="@+id/voucherDescribeInfoTv"
-                    style="@style/BPTextViewVoucher14"
-                    android:layout_alignTop="@id/voucherDescribeTv"
-                    android:layout_toRightOf="@id/voucherDescribeTv"
-                    tools:text="Q1000000001" />
-
-                <View
-                    android:id="@+id/numLineTv"
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:layout_below="@+id/voucherDescribeTv"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_dash_line" />
-
-                <TextView
-                    android:id="@+id/voucherNumTv"
-                    style="@style/BPTextViewVoucherHint14"
-                    android:layout_below="@id/numLineTv"
-                    android:text="@string/voucher_hold_num" />
-
-                <TextView
-                    android:id="@+id/voucherNumInfoTv"
-                    style="@style/BPTextViewVoucher14"
-                    android:layout_alignTop="@id/voucherNumTv"
-                    android:layout_toRightOf="@id/voucherNumTv"
-                    tools:text="999990" />
-
-
-                <Button
-                    android:id="@+id/transferVoucherBtn"
-                    style="@style/BPGreenBgWhiteText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/voucherNumInfoTv"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/transfer_voucher" />
-
-            </RelativeLayout>
+            android:layout_marginTop="20dp"
+            android:background="@mipmap/view_voucher_empty">
 
             <LinearLayout
+                android:id="@+id/voucherDetailLl"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="120"
-                android:gravity="center_vertical"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@mipmap/icon_voucher_detail_bg"
                 android:orientation="vertical"
-                tools:ignore="Suspicious0dp">
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:visibility="gone">
 
 
-                <LinearLayout
-                    android:id="@+id/dPartyLL"
-                    style="@style/BPLLDiscover"
-                    android:layout_marginTop="5dp">
-
-
-                    <TextView
-                        style="@style/BPTextViewDiscover"
-                        android:layout_marginLeft="0dp"
-                        android:text="@string/d_party"
-                        android:textColor="@color/app_txt_color_gray"
-                        android:textSize="14sp" />
-
-                    <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/dPartyRiv"
-                        android:layout_width="22dp"
-                        android:layout_height="22dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="5dp"
-                        android:src="@mipmap/icon_goods_empty"
-                        app:riv_oval="true" />
-
-                    <TextView
-                        android:id="@+id/dPartyTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
-                        android:ellipsize="end"
-                        android:textColor="@color/app_txt_color_gray_2"
-                        android:textSize="15sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@mipmap/icon_right_arrow" />
-                </LinearLayout>
-
-                <View
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginLeft="40dp"
-                    android:background="@color/gray_line" />
-
-                <LinearLayout
-                    android:id="@+id/assetIssuerLL"
-                    style="@style/BPLLDiscover">
-
-
-                    <TextView
-                        style="@style/BPTextViewDiscover"
-                        android:layout_marginLeft="0dp"
-                        android:text="@string/asset_issuer"
-                        android:textColor="@color/app_txt_color_gray"
-                        android:textSize="14sp" />
-
+                    android:layout_height="0dp"
+                    android:layout_weight="143"
+                    android:gravity="center_vertical"
+                    tools:ignore="Suspicious0dp">
 
                     <com.makeramen.roundedimageview.RoundedImageView
-                        android:id="@+id/assetIssuerRiv"
+                        android:id="@+id/acceptanceIconRiv"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="12dp"
                         android:src="@mipmap/icon_goods_empty"
                         app:riv_oval="true" />
 
+                    <View
+                        android:id="@+id/topLineV"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@+id/acceptanceIconRiv"
+                        android:layout_marginTop="13dp"
+                        android:background="@drawable/bg_dash_line" />
+
                     <TextView
-                        android:id="@+id/assetIssuerTv"
+                        android:id="@+id/acceptanceNameTv"
+                        style="@style/BPTextViewCommon13"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
-                        android:ellipsize="end"
-                        android:textColor="@color/app_txt_color_gray_2"
-                        android:textSize="15sp" />
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_toRightOf="@id/acceptanceIconRiv"
+                        tools:text="name" />
+
+                    <TextView
+                        style="@style/BPTextViewCommon13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_toRightOf="@id/acceptanceNameTv"
+                        android:text="@string/provide_acceptance"
+                        android:textSize="12dp" />
+
 
                     <ImageView
+                        android:id="@+id/voucherGoodsIv"
+                        android:layout_width="62dp"
+                        android:layout_height="62dp"
+                        android:layout_below="@+id/acceptanceIconRiv"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginStart="0dp"
+                        android:layout_marginTop="30dp"
+                        android:background="@mipmap/icon_goods_empty" />
+
+                    <TextView
+                        android:id="@+id/goodsNameTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
+                        android:layout_alignTop="@+id/voucherGoodsIv"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_toRightOf="@id/voucherGoodsIv"
+                        android:textColor="@color/app_color_black"
+                        android:textSize="13sp"
+                        tools:text="goods name" />
+
+                    <TextView
+                        android:id="@+id/goodsPriceTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/goodsNameTv"
+                        android:layout_alignBottom="@id/voucherGoodsIv"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:background="@mipmap/icon_right_arrow" />
+                        android:layout_marginRight="7dp"
+                        android:gravity="bottom"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="12sp" />
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="310"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="20dp"
+                    tools:ignore="Suspicious0dp">
+
+
+                    <TextView
+                        android:id="@+id/validityDateTv"
+                        style="@style/BPTextViewVoucherHint14"
+                        android:text="@string/validity_date" />
+
+
+                    <TextView
+                        android:id="@+id/validityDateInfoTv"
+                        style="@style/BPTextViewVoucher14"
+                        android:layout_alignTop="@id/validityDateTv"
+                        android:layout_toRightOf="@id/validityDateTv"
+                        tools:text="2019-01-01:00:00:00" />
+
+
+                    <TextView
+                        android:id="@+id/voucherCodeTv"
+                        style="@style/BPTextViewVoucherHint14"
+                        android:layout_below="@id/validityDateTv"
+                        android:text="@string/voucher_code" />
+
+                    <TextView
+                        android:id="@+id/voucherCodeInfoTv"
+                        style="@style/BPTextViewVoucher14"
+                        android:layout_alignTop="@id/voucherCodeTv"
+                        android:layout_toRightOf="@id/voucherCodeTv"
+                        tools:text="Q1000000001" />
+
+                    <TextView
+                        android:id="@+id/voucherSizeTv"
+                        style="@style/BPTextViewVoucherHint14"
+                        android:layout_below="@id/voucherCodeTv"
+                        android:text="@string/voucher_size" />
+
+                    <TextView
+                        android:id="@+id/voucherSizeInfoTv"
+                        style="@style/BPTextViewVoucher14"
+                        android:layout_alignTop="@id/voucherSizeTv"
+                        android:layout_toRightOf="@id/voucherSizeTv"
+                        tools:text="Q1000000001" />
+
+                    <TextView
+                        android:id="@+id/voucherDescribeTv"
+                        style="@style/BPTextViewVoucherHint14"
+                        android:layout_below="@id/voucherSizeTv"
+                        android:text="@string/add_address_describe" />
+
+                    <TextView
+                        android:id="@+id/voucherDescribeInfoTv"
+                        style="@style/BPTextViewVoucher14"
+                        android:layout_alignTop="@id/voucherDescribeTv"
+                        android:layout_toRightOf="@id/voucherDescribeTv"
+                        tools:text="Q1000000001" />
+
+                    <View
+                        android:id="@+id/numLineTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@+id/voucherDescribeTv"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/bg_dash_line" />
+
+                    <TextView
+                        android:id="@+id/voucherNumTv"
+                        style="@style/BPTextViewVoucherHint14"
+                        android:layout_below="@id/numLineTv"
+                        android:text="@string/voucher_hold_num" />
+
+                    <TextView
+                        android:id="@+id/voucherNumInfoTv"
+                        style="@style/BPTextViewVoucher14"
+                        android:layout_alignTop="@id/voucherNumTv"
+                        android:layout_toRightOf="@id/voucherNumTv"
+                        tools:text="999990" />
+
+
+                    <Button
+                        android:id="@+id/transferVoucherBtn"
+                        style="@style/BPGreenBgWhiteText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/voucherNumInfoTv"
+                        android:layout_marginTop="15dp"
+                        android:text="@string/transfer_voucher" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="120"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    tools:ignore="Suspicious0dp">
+
+
+                    <LinearLayout
+                        android:id="@+id/dPartyLL"
+                        style="@style/BPLLDiscover"
+                        android:layout_marginTop="5dp">
+
+
+                        <TextView
+                            style="@style/BPTextViewDiscover"
+                            android:layout_marginLeft="0dp"
+                            android:text="@string/d_party"
+                            android:textColor="@color/app_txt_color_gray"
+                            android:textSize="14sp" />
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/dPartyRiv"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="5dp"
+                            android:src="@mipmap/icon_goods_empty"
+                            app:riv_oval="true" />
+
+                        <TextView
+                            android:id="@+id/dPartyTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="8dp"
+                            android:ellipsize="end"
+                            android:textColor="@color/app_txt_color_gray_2"
+                            android:textSize="15sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@mipmap/icon_right_arrow" />
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_marginLeft="40dp"
+                        android:background="@color/gray_line" />
+
+                    <LinearLayout
+                        android:id="@+id/assetIssuerLL"
+                        style="@style/BPLLDiscover">
+
+
+                        <TextView
+                            style="@style/BPTextViewDiscover"
+                            android:layout_marginLeft="0dp"
+                            android:text="@string/asset_issuer"
+                            android:textColor="@color/app_txt_color_gray"
+                            android:textSize="14sp" />
+
+
+                        <com.makeramen.roundedimageview.RoundedImageView
+                            android:id="@+id/assetIssuerRiv"
+                            android:layout_width="22dp"
+                            android:layout_height="22dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="5dp"
+                            android:src="@mipmap/icon_goods_empty"
+                            app:riv_oval="true" />
+
+                        <TextView
+                            android:id="@+id/assetIssuerTv"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="8dp"
+                            android:ellipsize="end"
+                            android:textColor="@color/app_txt_color_gray_2"
+                            android:textSize="15sp" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:background="@mipmap/icon_right_arrow" />
+                    </LinearLayout>
+
+
                 </LinearLayout>
 
 
             </LinearLayout>
 
+        </com.qmuiteam.qmui.widget.QMUIEmptyView>
 
-        </LinearLayout>
 
     </ScrollView>
 

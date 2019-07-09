@@ -753,9 +753,9 @@
 
 
     <!--create wallet -->
-    <string name="old_pwd_error">原安全密码输入不正确</string>
-    <string name="pwd_repeat">密码重复，请重新设置</string>
-    <string name="new_safe_pwd_error">新安全密码两次输入不一致</string>
+    <string name="old_pwd_error">Previous security password is not correct</string>
+    <string name="pwd_repeat">Repeated password, please reset</string>
+    <string name="new_safe_pwd_error">New security passwords do not match</string>
 
 
 
@@ -770,7 +770,7 @@
 
 
     <!--voucher detail-->
-    <string name="provide_acceptance">提供承兑</string>
+    <string name="provide_acceptance">Provides Acceptance</string>
     <string name="validity_date">Validity</string>
     <string name="voucher_code">Code of Voucher</string>
     <string name="voucher_size">Specification</string>
@@ -786,7 +786,7 @@
     <string name="delivery_instructions">Instruction for Delivery</string>
 
 
-    <string name="asset_issuer_introduce">数字资产发行方介绍</string>
+    <string name="asset_issuer_introduce">About the Issuer of Digital Asset</string>
     <!--<string name="data_public">数据公示</string>-->
 
     <!--<string name="delete_time">销毁时间：</string>-->

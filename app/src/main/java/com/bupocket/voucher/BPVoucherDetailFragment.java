@@ -23,6 +23,7 @@ import com.bupocket.voucher.model.VoucherDetailModel;
 import com.bupocket.voucher.model.VoucherIssuerBean;
 import com.bupocket.voucher.model.VoucherPackageDetailModel;
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.qmuiteam.qmui.widget.QMUIEmptyView;
 
 import java.util.HashMap;
 
@@ -87,6 +88,10 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
     TextView assetIssuerTv;
     @BindView(R.id.assetIssuerLL)
     LinearLayout assetIssuerLL;
+    @BindView(R.id.detailEmptyView)
+    QMUIEmptyView detailEmptyView;
+    @BindView(R.id.voucherDetailLl)
+    LinearLayout voucherDetailLl;
 
 
     private VoucherDetailModel voucherDetailModel;
@@ -130,26 +135,28 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
 
         VoucherService voucherService = RetrofitFactory.getInstance().getRetrofit().create(VoucherService.class);
         HashMap<String, Object> map = new HashMap<>();
-//        map.put(ConstantsType.ADDRESS,getWalletAddress());
-        map.put(ConstantsType.ADDRESS, "buQrp3BCVdfbb5mJjNHZQwHvecqe7CCcounY");
+        map.put(ConstantsType.ADDRESS, getWalletAddress());
         map.put(ConstantsType.VOUCHER_ID, voucherDetailModel.getVoucherId());
         map.put(ConstantsType.TRANCHE_ID, voucherDetailModel.getTrancheId());
         map.put(ConstantsType.SPU_ID, voucherDetailModel.getSpuId());
         map.put(ConstantsType.CONTRACT_ADDRESS, voucherDetailModel.getContractAddress());
 
-
+        detailEmptyView.show(true);
         voucherService.getVoucherPackageDeatil(map).enqueue(new Callback<ApiResult<VoucherPackageDetailModel>>() {
             @Override
             public void onResponse(Call<ApiResult<VoucherPackageDetailModel>> call,
                                    Response<ApiResult<VoucherPackageDetailModel>> response) {
+                detailEmptyView.show("", "");
                 ApiResult<VoucherPackageDetailModel> body = response.body();
                 if (body != null && ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
+
+                    voucherDetailLl.setVisibility(View.VISIBLE);
 
                     detailModel = body.getData();
                     VoucherAcceptanceBean voucherAcceptance = detailModel.getVoucherAcceptance();
                     if (voucherAcceptance != null) {
                         String icon = voucherAcceptance.getIcon();
-                        if (!TextUtils.isEmpty(icon)) {
+                        if (!TextUtils.isEmpty(icon) && acceptanceIconRiv != null) {
                             Glide.with(mContext)
                                     .load(icon)
                                     .into(acceptanceIconRiv);
@@ -161,7 +168,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
 
                     }
                     String voucherIcon = detailModel.getVoucherIcon();
-                    if (!TextUtils.isEmpty(voucherIcon)) {
+                    if (!TextUtils.isEmpty(voucherIcon) && voucherGoodsIv != null) {
                         Glide.with(mContext)
                                 .load(voucherIcon)
                                 .into(voucherGoodsIv);
@@ -218,7 +225,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<VoucherPackageDetailModel>> call, Throwable t) {
-
+                detailEmptyView.show("", "");
             }
         });
     }
