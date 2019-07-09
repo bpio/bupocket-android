@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -147,6 +148,9 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
             @Override
             public void onResponse(Call<ApiResult<VoucherPackageDetailModel>> call,
                                    Response<ApiResult<VoucherPackageDetailModel>> response) {
+                if (detailEmptyView==null) {
+                    return;
+                }
                 detailEmptyView.show("", "");
                 ApiResult<VoucherPackageDetailModel> body = response.body();
                 if (body != null && ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
@@ -188,9 +192,9 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
 
                     String startTime = detailModel.getStartTime();
                     String endTime = detailModel.getEndTime();
-                    String date = mContext.getString(R.string.validity_date);
+                    String date = "";
                     if (!TextUtils.isEmpty(startTime)) {
-                        date = date + ": " +
+                        date = date+
                                 String.format(mContext.getString(R.string.goods_validity_date),
                                         TimeUtil.timeStamp2Date(startTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD),
                                         TimeUtil.timeStamp2Date(endTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD));
@@ -226,6 +230,9 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<VoucherPackageDetailModel>> call, Throwable t) {
+                if (detailEmptyView==null) {
+                    return;
+                }
                 detailEmptyView.show("", "");
             }
         });

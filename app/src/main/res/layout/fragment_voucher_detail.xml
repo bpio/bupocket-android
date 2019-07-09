@@ -16,7 +16,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/qmui_topbar_height">
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        android:layout_marginRight="15dp">
 
 
         <com.qmuiteam.qmui.widget.QMUIEmptyView
@@ -30,13 +32,12 @@
                 android:id="@+id/voucherDetailLl"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
                 android:background="@mipmap/icon_voucher_detail_bg"
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp"
-                android:visibility="gone">
+
+                >
 
 
                 <RelativeLayout
@@ -50,17 +51,11 @@
                         android:id="@+id/acceptanceIconRiv"
                         android:layout_width="22dp"
                         android:layout_height="22dp"
-                        android:layout_marginTop="12dp"
+                        android:layout_marginTop="10dp"
                         android:src="@mipmap/icon_goods_empty"
                         app:riv_oval="true" />
 
-                    <View
-                        android:id="@+id/topLineV"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_below="@+id/acceptanceIconRiv"
-                        android:layout_marginTop="13dp"
-                        android:background="@drawable/bg_dash_line" />
+
 
                     <TextView
                         android:id="@+id/acceptanceNameTv"
@@ -68,7 +63,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:layout_marginTop="14dp"
+                        android:layout_marginTop="12dp"
                         android:layout_toRightOf="@id/acceptanceIconRiv"
                         tools:text="name" />
 
@@ -77,21 +72,29 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="8dp"
-                        android:layout_marginTop="14dp"
+                        android:layout_marginTop="12dp"
                         android:layout_toRightOf="@id/acceptanceNameTv"
                         android:text="@string/provide_acceptance"
+                        android:textColor="@color/multiline_edit_hint_color"
                         android:textSize="12dp" />
+                    <View
+                        android:id="@+id/topLineV"
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_below="@+id/acceptanceIconRiv"
+                        android:layout_marginTop="13dp"
+                        android:background="@drawable/bg_dash_line" />
 
-
-                    <ImageView
+                    <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/voucherGoodsIv"
                         android:layout_width="62dp"
                         android:layout_height="62dp"
                         android:layout_below="@+id/acceptanceIconRiv"
                         android:layout_alignParentStart="true"
                         android:layout_marginStart="0dp"
-                        android:layout_marginTop="30dp"
-                        android:background="@mipmap/icon_goods_empty" />
+                        android:layout_marginTop="25dp"
+                        app:riv_corner_radius="4dp"
+                        android:src="@mipmap/icon_goods_empty" />
 
                     <TextView
                         android:id="@+id/goodsNameTv"
@@ -102,7 +105,7 @@
                         android:layout_marginBottom="10dp"
                         android:layout_toRightOf="@id/voucherGoodsIv"
                         android:textColor="@color/app_color_black"
-                        android:textSize="13sp"
+                        android:textSize="14sp"
                         tools:text="goods name" />
 
                     <TextView
@@ -114,7 +117,8 @@
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="7dp"
                         android:gravity="bottom"
-                        android:textColor="@color/app_txt_color_gray"
+                        tools:text="@string/goods_price"
+                        android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="12sp" />
 
 
@@ -125,7 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="310"
-                    android:paddingTop="10dp"
+                    android:paddingTop="5dp"
                     android:paddingBottom="20dp"
                     tools:ignore="Suspicious0dp">
 
@@ -188,7 +192,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
                         android:layout_below="@+id/voucherDescribeTv"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="15dp"
                         android:background="@drawable/bg_dash_line" />
 
                     <TextView

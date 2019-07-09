@@ -37,6 +37,6 @@ public abstract class AbsBaseFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        bind.unbind();
+//        bind.unbind();
     }
 }
