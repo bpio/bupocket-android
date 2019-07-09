@@ -320,7 +320,7 @@ public abstract class BaseFragment extends QMUIFragment {
     /**
      *
      */
-    private  class TransferHandler extends Handler {
+    private static class TransferHandler extends Handler {
 
         private final WeakReference<BaseFragment> mFragment;
 

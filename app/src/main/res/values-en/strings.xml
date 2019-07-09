@@ -806,7 +806,7 @@
 
     <string name="voucher_send_confirm_title">Confirm to Donate</string>
     <string name="send_voucher">Donate encrypted digital vouchers</string>
-    <string name="voucher_pwd_confirm_hint" >请填写当前使用钱包的安全密码以确认转赠</string>
+    <string name="voucher_pwd_confirm_hint" >Please input the security password for current wallet to confirm donation</string>
 
 
     <string name="tx_voucher_status_success_txt">Donation Success</string>

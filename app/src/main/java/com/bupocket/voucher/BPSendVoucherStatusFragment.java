@@ -145,11 +145,12 @@ public class BPSendVoucherStatusFragment extends BaseFragment {
 
     @Override
     public void popBackStack() {
-        super.popBackStack();
+
         if (fragmentTag.equals(VoucherStatusEnum.ASSETS_HOME_FRAGMENT.getCode())) {
-            getFragmentManager().popBackStack(BPVoucherDetailFragment.class.getSimpleName(), 1);
-        }else if (fragmentTag.equals(VoucherStatusEnum.VOUCHER_HOME_FRAGMENT.getCode())){
             startFragment(new HomeFragment());
+        }else if (fragmentTag.equals(VoucherStatusEnum.VOUCHER_HOME_FRAGMENT.getCode())){
+            super.popBackStack();
+            getFragmentManager().popBackStack(BPVoucherDetailFragment.class.getSimpleName(), 1);
         }
     }
 
