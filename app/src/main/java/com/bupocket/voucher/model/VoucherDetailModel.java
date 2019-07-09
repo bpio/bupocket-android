@@ -123,7 +123,7 @@ public class VoucherDetailModel implements Serializable {
             this.voucherProperties = voucherProperties;
         }
 
-        public static class VoucherAcceptanceBean {
+        public static class VoucherAcceptanceBean implements Serializable {
 
             private String address;
             private String icon;
@@ -154,7 +154,7 @@ public class VoucherDetailModel implements Serializable {
             }
         }
 
-        public static class VoucherIssuerBean {
+        public static class VoucherIssuerBean implements Serializable {
 
 
             private String address;
@@ -186,7 +186,7 @@ public class VoucherDetailModel implements Serializable {
             }
         }
 
-        public static class VoucherPropertiesBean {
+        public static class VoucherPropertiesBean implements Serializable {
 
 
             private String key;

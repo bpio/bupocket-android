@@ -233,7 +233,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.transferVoucherBtn:
-
+                goSendVoucherFragment();
                 break;
             case R.id.dPartyLL:
                 goDPartyFragment();
@@ -242,6 +242,17 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
                 goAssetIssuer();
                 break;
         }
+    }
+
+    private void goSendVoucherFragment() {
+
+        getFragmentManager().findFragmentByTag(BPVoucherDetailFragment.class.getSimpleName());
+        BPSendTokenVoucherFragment fragment = new BPSendTokenVoucherFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("voucherDetailModel", voucherDetailModel);
+        args.putString(ConstantsType.FRAGMENT_TAG, BPVoucherDetailFragment.class.getSimpleName());
+        fragment.setArguments(args);
+        startFragment(fragment);
     }
 
     private void goAssetIssuer() {

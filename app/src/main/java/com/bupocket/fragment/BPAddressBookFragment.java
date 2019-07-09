@@ -228,21 +228,19 @@ public class BPAddressBookFragment extends BaseFragment {
         } else {
             addressAdapter.loadMore(getAddressBookRespDto.getAddressBookList());
         }
-        if (AddressClickEventEnum.CHOOSE.getCode().equals(flag)) {
-            mAddressBookLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        mAddressBookLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if (AddressClickEventEnum.CHOOSE.getCode().equals(flag)) {
+
                     GetAddressBookRespDto.AddressBookListBean currentItem = (GetAddressBookRespDto.AddressBookListBean) addressAdapter.getItem(position);
                     Intent intent = new Intent();
                     intent.putExtra("destAddress", currentItem.getLinkmanAddress());
                     setFragmentResult(RESULT_OK, intent);
                     popBackStack();
-                }
-            });
-        } else if (AddressClickEventEnum.EDIT.getCode().equals(flag)) {
-            mAddressBookLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                } else if (AddressClickEventEnum.EDIT.getCode().equals(flag)) {
                     GetAddressBookRespDto.AddressBookListBean currentItem = (GetAddressBookRespDto.AddressBookListBean) addressAdapter.getItem(position);
                     Bundle argz = new Bundle();
                     argz.putString("oldAddressName", currentItem.getNickName());
@@ -252,9 +250,19 @@ public class BPAddressBookFragment extends BaseFragment {
                     BPAddressEditFragment bpAddressEditFragment = new BPAddressEditFragment();
                     bpAddressEditFragment.setArguments(argz);
                     startFragment(bpAddressEditFragment);
+
+                }else if (AddressClickEventEnum.VOUCHER.getCode().equals(flag)){
+
+                    GetAddressBookRespDto.AddressBookListBean currentItem = (GetAddressBookRespDto.AddressBookListBean) addressAdapter.getItem(position);
+                    Intent intent = new Intent();
+                    intent.putExtra("destAddress", currentItem.getLinkmanAddress());
+                    setFragmentResult(RESULT_OK, intent);
+                    popBackStack();
+
                 }
-            });
-        }
+            }
+        });
+
     }
 
     private void initTopBar() {
@@ -270,7 +278,6 @@ public class BPAddressBookFragment extends BaseFragment {
             public void onClick(View v) {
                 Bundle argz = new Bundle();
                 argz.putString("flag", flag);
-
                 argz.putStringArrayList("bookData", getBookData());
                 BPAddressAddFragment bpAddressAddFragment = new BPAddressAddFragment();
                 bpAddressAddFragment.setArguments(argz);

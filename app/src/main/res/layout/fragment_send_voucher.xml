@@ -24,14 +24,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
                 android:padding="10dp"
-                android:text="@string/send_voucher_title"
+                android:text="@string/send_voucher_title1"
                 android:theme="@style/BPViewTitle" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="12dp"
+                android:layout_marginBottom="10dp"
                 android:orientation="horizontal">
 
 
@@ -48,6 +48,7 @@
                     android:text="*"
                     android:textColor="@color/app_txt_color_red_2" />
             </LinearLayout>
+
             <include
 
                 layout="@layout/view_voucher_package_item"
@@ -182,8 +183,7 @@
                             <TextView
                                 android:id="@+id/tokenCodeTv"
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                               />
+                                android:layout_height="wrap_content" />
 
 
                         </LinearLayout>

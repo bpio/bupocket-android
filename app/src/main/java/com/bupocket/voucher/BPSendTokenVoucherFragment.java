@@ -25,8 +25,11 @@ import com.bupocket.activity.CaptureActivity;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
+import com.bupocket.enums.AddressClickEventEnum;
 import com.bupocket.enums.ScanTransactionTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
+import com.bupocket.fragment.BPAddressAddFragment;
+import com.bupocket.fragment.BPAddressBookFragment;
 import com.bupocket.fragment.BPSendStatusFragment;
 import com.bupocket.fragment.BPTransactionTimeoutFragment;
 import com.bupocket.http.api.NodePlanService;
@@ -55,6 +58,7 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -125,6 +129,8 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     private VoucherDetailModel selectedVoucherDetail;
     private String toAddress;
     final double minFee = Constants.MAX_FEE;
+    private boolean isVoucherDetailFragment;
+
     @Override
     protected int getLayoutView() {
         return R.layout.fragment_send_voucher;
@@ -141,7 +147,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
 
         buildWatcher();
         voucherNumHint.setVisibility(View.GONE);
-        sendFormTxFeeEt.setText(minFee+"");
+        sendFormTxFeeEt.setText(minFee + "");
     }
 
     private void buildWatcher() {
@@ -200,8 +206,17 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     public void initData() {
 
         if (getArguments() != null) {
-            toAddress = getArguments().getString(ConstantsType.ADDRESS);
-            destAccountAddressEt.setText(toAddress);
+
+            isVoucherDetailFragment = getArguments().getString(ConstantsType.FRAGMENT_TAG).equals(BPVoucherDetailFragment.class.getSimpleName());
+            if (isVoucherDetailFragment) {
+                selectedVoucherDetail = (VoucherDetailModel) getArguments().getSerializable("voucherDetailModel");
+                initItemVoucherView(selectedVoucherDetail);
+            } else {
+                toAddress = getArguments().getString(ConstantsType.ADDRESS);
+                destAccountAddressEt.setText(toAddress);
+            }
+
+
         }
 
         mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), 0 + "")));
@@ -212,6 +227,10 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
         voucherItemLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (isVoucherDetailFragment) {
+                    return;
+                }
 
                 goVoucherFragment();
 
@@ -225,7 +244,23 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
             }
         });
 
+        mOpenAddressBookBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                goAddressFragment();
+
+            }
+        });
+
+    }
+
+    private void goAddressFragment() {
+        BPAddressBookFragment fragment = new BPAddressBookFragment();
+        Bundle args = new Bundle();
+        args.putString("flag", AddressClickEventEnum.VOUCHER.getCode());
+        fragment.setArguments(args);
+        startFragmentForResult(fragment, CHOOSE_ADDRESS_CODE);
     }
 
     private void goVoucherFragment() {
@@ -398,7 +433,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
         final String contractAddress = selectedVoucherDetail.getContractAddress();
         final String amount = sendAmountET.getText().toString();
 
-        final String input = "{\"method\":\"transfer\",\"params\":{\"skuId\":\""+ selectedVoucherDetail.getVoucherId()+"\",\"trancheId\":\""+selectedVoucherDetail.getTrancheId()+"\",\"to\":\""+toAddress+"\",\"value\":\""+amount+"\"}}";
+        final String input = "{\"method\":\"transfer\",\"params\":{\"skuId\":\"" + selectedVoucherDetail.getVoucherId() + "\",\"trancheId\":\"" + selectedVoucherDetail.getTrancheId() + "\",\"to\":\"" + toAddress + "\",\"value\":\"" + amount + "\"}}";
         TransferUtils.confirmSendVoucherDialog(mContext, getWalletAddress(), toAddress,
                 "", amount, minFee,
                 transferDetail, input, sendFormNoteEt.getText().toString(), new TransferUtils.TransferListener() {
@@ -416,13 +451,12 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                                             input, WalletCurrentUtils.getWalletAddress(spHelper),
                                             String.valueOf(minFee), contractAddress, transferDetail);
 
-                                   DialogUtils.getSignatureInfo(getActivity(), mContext,getBPAccountData(), getWalletAddress(), new SignatureListener() {
-                                       @Override
-                                       public void success(String privateKey) {
-                                           submitTransactionBase(privateKey, buildBlobResponse,true);
-                                       }
-                                   });
-
+                                    DialogUtils.getSignatureInfo(getActivity(), mContext, getBPAccountData(), getWalletAddress(), new SignatureListener() {
+                                        @Override
+                                        public void success(String privateKey) {
+                                            submitTransactionBase(privateKey, buildBlobResponse, true);
+                                        }
+                                    });
 
 
                                 } catch (WalletException e) {
@@ -467,6 +501,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                 Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
             } else {
                 String destAddress = result.getContents();
+                destAddress = destAddress.replace(Constants.VOUCHER_QRCODE, "");
                 destAccountAddressEt.setText(destAddress);
             }
         } else {
@@ -482,6 +517,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                 if (resultCode == RESULT_OK) {
                     if (null != data) {
                         String destAddress = data.getStringExtra("destAddress");
+                        destAddress = destAddress.replace(Constants.VOUCHER_QRCODE, "");
                         destAccountAddressEt.setText(destAddress);
                     }
                 }
