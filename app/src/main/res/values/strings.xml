@@ -779,7 +779,7 @@
     <string name="d_party_introduce">承兑方介绍</string>
     <string name="delivery_instructions">提货说明</string>
 
-    <string name="asset_issuer_title">数字资产发行方</string>
+
     <string name="asset_issuer_introduce">数字资产发行方介绍</string>
     <string name="data_public">数据公示</string>
 
@@ -799,12 +799,16 @@
     <string name="send_voucher_num">转赠数量</string>
     <string name="send_voucher_num_hint">请输入转赠数量</string>
     <string name="send_voucher_info_hint">不能超过20个字符</string>
-    <string name="send_name_hint">&lt;font color=\'#00D175\'> %1$s &lt;/font>钱包下可使用的券</string>
-    <string name="voucher_avail_balance" >可用&lt;font color=\'#00D175\'> %1$s &lt;/font>个</string>
+    <string name="send_name_hint">&lt;font color=\'#00D175\'> %1$s &lt;/font>下可使用的券</string>
+    <string name="voucher_avail_balance" >可转&lt;font color=\'#00D175\'> %1$s &lt;/font>个</string>
 
     <string name="voucher_send_confirm_title">确认转赠</string>
     <string name="send_voucher">转赠加密数字券</string>
     <string name="voucher_pwd_confirm_hint" >请填写当前使用钱包的安全密码以确认转赠</string>
     <string name="tx_voucher_status_success_txt">转赠成功</string>
+    <string name="send_voucher_failure">转赠失败</string>
+    <string name="send_voucher_timeout">转赠超时</string>
+
+    <string name="send_address">请输入接收账户地址</string>
 
 </resources>

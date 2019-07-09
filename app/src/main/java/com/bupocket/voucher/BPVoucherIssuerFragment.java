@@ -87,7 +87,7 @@ public class BPVoucherIssuerFragment extends AbsBaseFragment implements InitView
 
     @Override
     public void initTopBar() {
-        topbar.setTitle(R.string.asset_issuer_title);
+        topbar.setTitle(R.string.asset_issuer);
         topbar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
