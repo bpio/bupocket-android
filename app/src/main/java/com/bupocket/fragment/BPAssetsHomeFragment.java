@@ -31,6 +31,7 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.CustomNodeTypeEnum;
+import com.bupocket.enums.VoucherStatusEnum;
 import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.enums.BackupTipsStateEnum;
 import com.bupocket.enums.BumoNodeEnum;
@@ -59,7 +60,6 @@ import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.voucher.BPSendTokenVoucherFragment;
-import com.bupocket.voucher.BPVoucherHomeFragment;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.google.gson.Gson;
@@ -81,7 +81,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -700,7 +699,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         BPSendTokenVoucherFragment fragment = new BPSendTokenVoucherFragment();
         Bundle args = new Bundle();
         args.putString(ConstantsType.ADDRESS,address);
-        args.putString(ConstantsType.FRAGMENT_TAG, BPAssetsHomeFragment.class.getSimpleName());
+        args.putString(ConstantsType.FRAGMENT_TAG, VoucherStatusEnum.ASSETS_HOME_FRAGMENT.getCode());
         fragment.setArguments(args);
         startFragment(fragment);
 

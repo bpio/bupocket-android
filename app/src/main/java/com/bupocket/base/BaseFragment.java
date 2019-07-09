@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.fragment.BPSendStatusFragment;
@@ -28,7 +29,6 @@ import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
-import com.bupocket.voucher.BPSendTokenVoucherFragment;
 import com.bupocket.voucher.BPSendVoucherStatusFragment;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
@@ -59,7 +59,7 @@ public abstract class BaseFragment extends QMUIFragment {
     protected Context mContext;
     private QMUITipDialog submitDialog;
     private TransferHandler transferHandler;
-    private static boolean isSendVoucher;
+    private static String fragmentTag;
 
 
     @Override
@@ -203,8 +203,8 @@ public abstract class BaseFragment extends QMUIFragment {
         });
     }
 
-    protected void submitTransactionBase(final String privateKey, final TransactionBuildBlobResponse transBlob, boolean isSendVoucher) {
-        this.isSendVoucher = isSendVoucher;
+    protected void submitTransactionBase(final String privateKey, final TransactionBuildBlobResponse transBlob, String fragmentTag) {
+        this.fragmentTag = fragmentTag;
         submitTransactionBase(privateKey,transBlob);
     }
 
@@ -235,15 +235,6 @@ public abstract class BaseFragment extends QMUIFragment {
     }
 
 
-    private String getPrivateKey(String password) {
-        try {
-            Wallet.getInstance().getPKBYAccountPassword(password, getBPAccountData(), getWalletAddress());
-        } catch (Exception e) {
-            e.printStackTrace();
-            ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
-        }
-        return "";
-    }
 
 
     private String submitTransaction(final String privateKey, final TransactionBuildBlobResponse buildBlobResponse) {
@@ -329,7 +320,7 @@ public abstract class BaseFragment extends QMUIFragment {
     /**
      *
      */
-    private class TransferHandler extends Handler {
+    private  class TransferHandler extends Handler {
 
         private final WeakReference<BaseFragment> mFragment;
 
@@ -396,7 +387,8 @@ public abstract class BaseFragment extends QMUIFragment {
                                 BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
 
 
-                                if (isSendVoucher) {
+                                if (!TextUtils.isEmpty(fragmentTag)) {
+                                    argz.putString(ConstantsType.FRAGMENT_TAG, fragmentTag);
                                     BPSendVoucherStatusFragment bpSendTokenVoucherFragment = new BPSendVoucherStatusFragment();
                                     bpSendTokenVoucherFragment.setArguments(argz);
                                     mFragment.startFragment(bpSendTokenVoucherFragment);
@@ -408,7 +400,6 @@ public abstract class BaseFragment extends QMUIFragment {
                                     argz.putString("fragmentTag", HomeFragment.class.getSimpleName());
                                     bpSendStatusFragment.setArguments(argz);
                                     mFragment.startFragmentForResult(bpSendStatusFragment, TRANSFER_CODE);
-                                    popBackStack();
                                 } else {
                                     bpSendStatusFragment.setArguments(argz);
                                     mFragment.startFragment(bpSendStatusFragment);

@@ -15,9 +15,12 @@ import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.activity.BPWebActivity;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.AdvertisingEnum;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.TxStatusEnum;
+import com.bupocket.enums.VoucherStatusEnum;
 import com.bupocket.fragment.BPAssetsHomeFragment;
 import com.bupocket.fragment.BPWalletManageFragment;
 import com.bupocket.fragment.home.HomeFragment;
@@ -65,6 +68,7 @@ public class BPSendVoucherStatusFragment extends BaseFragment {
     TextView tvTransHash;
     @BindView(R.id.tvFromAddress)
     TextView tvFormAddress;
+    private String fragmentTag;
 
 
     protected View onCreateView() {
@@ -93,6 +97,7 @@ public class BPSendVoucherStatusFragment extends BaseFragment {
         Integer txStatus = Integer.parseInt(getArguments().getString("state"));
         String sendTokenStatus = getArguments().getString("sendTokenStatusKey");
         String txHash = getArguments().getString("txHash");
+        fragmentTag = getArguments().getString(ConstantsType.FRAGMENT_TAG);
         String txStatusStr;
 
         llStatusFailed.setVisibility(View.GONE);
@@ -110,7 +115,7 @@ public class BPSendVoucherStatusFragment extends BaseFragment {
         } else {
             llStatusFailed.setVisibility(View.VISIBLE);
             txStatusIconDrawable = ContextCompat.getDrawable(getContext(), R.mipmap.icon_send_fail);
-            txStatusStr = getResources().getString(R.string.tx_status_fail_txt);
+            txStatusStr = getResources().getString(R.string.send_voucher_failure);
             mSendTokenStatusIcon.setImageDrawable(txStatusIconDrawable);
             mSendTokenStatusTv.setText(txStatusStr);
 
@@ -141,8 +146,11 @@ public class BPSendVoucherStatusFragment extends BaseFragment {
     @Override
     public void popBackStack() {
         super.popBackStack();
-        getFragmentManager().popBackStack(BPVoucherDetailFragment.class.getSimpleName(), 1);
-        getFragmentManager().popBackStack(BPAssetsHomeFragment.class.getSimpleName(),1);
+        if (fragmentTag.equals(VoucherStatusEnum.ASSETS_HOME_FRAGMENT.getCode())) {
+            getFragmentManager().popBackStack(BPVoucherDetailFragment.class.getSimpleName(), 1);
+        }else if (fragmentTag.equals(VoucherStatusEnum.VOUCHER_HOME_FRAGMENT.getCode())){
+            startFragment(new HomeFragment());
+        }
     }
 
 
@@ -150,7 +158,6 @@ public class BPSendVoucherStatusFragment extends BaseFragment {
     protected boolean canDragBack() {
         return false;
     }
-
 
 
 }

@@ -14,6 +14,7 @@ import com.bupocket.R;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.ExceptionEnum;
+import com.bupocket.enums.VoucherStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.utils.TimeUtil;
@@ -257,7 +258,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
         BPSendTokenVoucherFragment fragment = new BPSendTokenVoucherFragment();
         Bundle args = new Bundle();
         args.putSerializable("voucherDetailModel", voucherDetailModel);
-        args.putString(ConstantsType.FRAGMENT_TAG, BPVoucherDetailFragment.class.getSimpleName());
+        args.putString(ConstantsType.FRAGMENT_TAG, VoucherStatusEnum.VOUCHER_HOME_FRAGMENT.getCode());
         fragment.setArguments(args);
         startFragment(fragment);
     }

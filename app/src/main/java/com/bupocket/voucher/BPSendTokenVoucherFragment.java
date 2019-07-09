@@ -28,6 +28,7 @@ import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.AddressClickEventEnum;
 import com.bupocket.enums.ScanTransactionTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
+import com.bupocket.enums.VoucherStatusEnum;
 import com.bupocket.fragment.BPAddressAddFragment;
 import com.bupocket.fragment.BPAddressBookFragment;
 import com.bupocket.fragment.BPSendStatusFragment;
@@ -130,6 +131,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     private String toAddress;
     final double minFee = Constants.MAX_FEE;
     private boolean isVoucherDetailFragment;
+    private String fragmentTag;
 
     @Override
     protected int getLayoutView() {
@@ -140,7 +142,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     protected void initView() {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
 
-        initData();
+//        initData();
         confirmSendInfo();
         initTopBar();
         setDestAddress();
@@ -207,11 +209,12 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
         mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), 0 + "")));
         if (getArguments() != null) {
 
-            isVoucherDetailFragment = getArguments().getString(ConstantsType.FRAGMENT_TAG).equals(BPVoucherDetailFragment.class.getSimpleName());
+            fragmentTag = getArguments().getString(ConstantsType.FRAGMENT_TAG);
+            isVoucherDetailFragment = fragmentTag.equals(VoucherStatusEnum.VOUCHER_HOME_FRAGMENT.getCode());
             if (isVoucherDetailFragment) {
                 selectedVoucherDetail = (VoucherDetailModel) getArguments().getSerializable("voucherDetailModel");
                 initItemVoucherView(selectedVoucherDetail);
-            } else {
+            } else if (fragmentTag.equals(VoucherStatusEnum.ASSETS_HOME_FRAGMENT.getCode())){
                 toAddress = getArguments().getString(ConstantsType.ADDRESS);
                 destAccountAddressEt.setText(toAddress);
             }
@@ -454,7 +457,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                                     DialogUtils.getSignatureInfo(getActivity(), mContext, getBPAccountData(), getWalletAddress(), new SignatureListener() {
                                         @Override
                                         public void success(String privateKey) {
-                                            submitTransactionBase(privateKey, buildBlobResponse, true);
+                                            submitTransactionBase(privateKey, buildBlobResponse, fragmentTag);
                                         }
                                     });
 
