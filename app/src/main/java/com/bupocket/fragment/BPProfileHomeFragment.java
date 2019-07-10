@@ -19,13 +19,14 @@ import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BPProfileHomeFragment extends BaseFragment {
     @BindView(R.id.topbar)
-    QMUITopBar topbar;
+    QMUITopBarLayout topbar;
     @BindView(R.id.profileAddressTv)
     TextView profileAddressTv;
     @BindView(R.id.llProfileIdentity)

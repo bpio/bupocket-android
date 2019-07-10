@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="13dp"
+        android:layout_marginTop="9dp"
         android:layout_marginRight="10dp"
         android:layout_weight="1">
 
@@ -103,7 +103,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:background="@mipmap/view_voucher_selected"
-            android:visibility="gone" />
+            android:visibility="gone"
+           />
 
 
     </RelativeLayout>
