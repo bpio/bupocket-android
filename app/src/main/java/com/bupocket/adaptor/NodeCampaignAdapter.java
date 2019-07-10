@@ -14,6 +14,7 @@ import com.bupocket.common.Constants;
 import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.LogUtils;
 
 
 public class NodeCampaignAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
@@ -37,8 +38,10 @@ public class NodeCampaignAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
 
         String nodeLogo = itemData.getNodeLogo();
         ImageView nodeIconIv = holder.getView(R.id.headIconIv);
+        String iconUrl = Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo);
+        LogUtils.e("iconUrl"+iconUrl);
         Glide.with(context)
-                .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
+                .load(iconUrl)
                 .into(nodeIconIv);
 
         holder.setText(R.id.nodeNameTv, itemData.getNodeName());
