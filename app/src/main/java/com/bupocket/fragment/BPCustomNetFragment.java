@@ -122,7 +122,6 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
                     nodeServiceEt.setEnabled(true);
                     visibleStartBtnLL.setVisibility(View.GONE);
                     saveBtn.setText(R.string.save);
-                    saveBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.app_color_green));
                 } else {
 
                     if (checkWalletService()) {
@@ -134,7 +133,6 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
                                     @Override
                                     public void run() {
                                         saveBtn.setText(R.string.edit_node_info);
-                                        saveBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.app_txt_color_gray_2));
                                         walletServiceEt.setEnabled(false);
                                         nodeServiceEt.setEnabled(false);
                                         visibleStartBtnLL.setVisibility(View.VISIBLE);
@@ -163,7 +161,7 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
 
             }
         });
-        saveBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.app_txt_color_gray_2));
+        saveBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.app_color_green));
     }
 
     private void saveServiceInfo() {
@@ -202,11 +200,9 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
         String walletService = walletServiceEt.getText().toString().trim();
 
         if (!TextUtils.isEmpty(nodeService) && !TextUtils.isEmpty(walletService)) {
-            saveBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.app_color_green));
             saveBtn.setEnabled(true);
         } else {
             saveBtn.setEnabled(false);
-            saveBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.app_txt_color_gray_2));
         }
     }
 

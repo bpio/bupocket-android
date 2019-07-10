@@ -158,7 +158,7 @@
     </style>
 
     <style name="BPEditText">
-        <item name="colorControlNormal">@color/edit_text_color_control_normal</item>
+        <item name="colorControlNormal">@color/app_txt_color_gray_3</item>
         <item name="colorControlActivated">@color/edit_text_color_control_activated</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingTop">10dp</item>

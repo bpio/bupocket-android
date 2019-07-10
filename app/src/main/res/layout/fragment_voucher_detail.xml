@@ -35,8 +35,7 @@
                 android:background="@mipmap/icon_voucher_detail_bg"
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                android:visibility="gone">
+                android:paddingRight="15dp">
 
 
                 <RelativeLayout
@@ -112,10 +111,10 @@
                         android:id="@+id/goodsPriceTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/goodsNameTv"
-                        android:layout_alignBottom="@id/voucherGoodsIv"
+                        android:layout_alignBottom="@+id/voucherGoodsIv"
                         android:layout_alignParentRight="true"
                         android:layout_marginRight="7dp"
+                        android:layout_marginBottom="5dp"
                         android:gravity="bottom"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="12sp"
@@ -232,7 +231,9 @@
                     <LinearLayout
                         android:id="@+id/dPartyLL"
                         style="@style/BPLLDiscover"
-                        android:layout_marginTop="5dp">
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_marginTop="10dp">
 
 
                         <TextView
@@ -272,13 +273,15 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="0.5dp"
-                        android:layout_marginLeft="40dp"
-                        android:background="@color/gray_line" />
+                        android:layout_height="2dp"
+                        android:layout_below="@+id/acceptanceIconRiv"
+                        android:background="@drawable/bg_dash_line" />
 
                     <LinearLayout
                         android:id="@+id/assetIssuerLL"
-                        style="@style/BPLLDiscover">
+                        style="@style/BPLLDiscover"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
 
 
                         <TextView

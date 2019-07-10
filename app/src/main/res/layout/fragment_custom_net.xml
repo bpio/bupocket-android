@@ -52,47 +52,53 @@
 
         </LinearLayout>
 
-
         <LinearLayout
-            android:id="@+id/visibleStartBtnLL"
             android:layout_width="match_parent"
-           android:orientation="vertical"
-            android:layout_height="match_parent">
-            <Button
-                android:id="@+id/setNodeBtn"
+            android:layout_height="match_parent"
+            android:background="@color/app_color_white">
+
+            <LinearLayout
+                android:id="@+id/visibleStartBtnLL"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="45dp"
-                android:layout_marginRight="12dp"
-                android:background="@drawable/shape_corner_green"
-                android:textColor="@color/app_color_white"
-                android:textSize="18sp"
-                android:text="@string/start_custom_service" />
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <TextView
-                style="@style/BPTextViewCreateWallet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="14dp"
-                android:layout_marginTop="14dp"
-                android:text="@string/note" />
+                <Button
+                    android:id="@+id/setNodeBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="12dp"
+                    android:layout_marginTop="45dp"
+                    android:layout_marginRight="12dp"
+                    android:background="@drawable/shape_corner_green"
+                    android:text="@string/start_custom_service"
+                    android:textColor="@color/app_color_white"
+                    android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/nodeHintTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="14dp"
-                android:layout_marginTop="4dp"
-                android:layout_marginRight="14dp"
+                <TextView
+                    style="@style/BPTextViewCreateWallet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="14dp"
+                    android:text="@string/note" />
 
-                android:text="@string/start_custom_service_hint"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="14sp" />
+                <TextView
+                    android:id="@+id/nodeHintTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="14dp"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="14dp"
 
+                    android:text="@string/start_custom_service_hint"
+                    android:textColor="@color/app_txt_color_gray"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
 
         </LinearLayout>
-
 
 
     </LinearLayout>
