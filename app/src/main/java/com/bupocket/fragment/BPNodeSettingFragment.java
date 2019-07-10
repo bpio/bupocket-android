@@ -14,6 +14,7 @@ import com.bupocket.R;
 import com.bupocket.adaptor.NodeSettingAdapter;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.model.NodeSettingModel;
 import com.bupocket.utils.DialogUtils;
@@ -43,7 +44,7 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
     private NodeSettingAdapter nodeSettingAdapter;
 
     private boolean isSaveBtn;
-    private int oldPosition;
+    public static int oldPosition;
     private ArrayList<NodeSettingModel> nodeSettingModels;
     private String testTitle = "";
     private NodeSettingModel normalNodeSetting;
@@ -102,6 +103,9 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
             Type type = new TypeToken<List<NodeSettingModel>>() {
             }.getType();
             nodeSettingModels = gson.fromJson(urlJson, type);
+//            if (nodeSettingModels.size()==1) {
+//                nodeSettingModels.get(0).setSelected(true);
+//            }
         }
         for (int i = 0; i < nodeSettingModels.size(); i++) {
             if (nodeSettingModels.get(i).isSelected()) {
@@ -200,7 +204,6 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
                 BPApplication.switchNetConfig(null);
                 isSaveBtn = true;
                 popBackStack();
-
             }
         });
         Button skipBackuoBtn = topbar.findViewById(R.id.skipBackupBtn);
