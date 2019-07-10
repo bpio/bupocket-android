@@ -7,11 +7,7 @@
     android:background="@color/app_color_gray"
     android:orientation="vertical">
 
-    <com.qmuiteam.qmui.widget.QMUITopBarLayout
-        android:id="@+id/topbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true" />
+
 
 
     <ScrollView
@@ -19,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:background="@color/app_color_white"
+        android:fitsSystemWindows="true"
         android:scrollbars="none">
 
         <LinearLayout
@@ -455,5 +452,9 @@
         </LinearLayout>
     </ScrollView>
 
-
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true" />
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
