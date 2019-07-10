@@ -113,7 +113,7 @@ public class BPApplication extends Application {
             String customNodeService = (String) sharedPreferencesHelper.getSharedPreference(ConstantsType.CUSTOM_NODE_SERVICE, "");
             Constants.BUMO_NODE_URL_BASE = customNodeService;
             Constants.WEB_SERVER_DOMAIN = customWalletService;
-
+            LogUtils.mDebuggable = LogUtils.LEVEL_ERROR;
         } else {
             String nodeUrl = (String) sharedPreferencesHelper.getSharedPreference(Constants.BUMO_NODE_URL + "nodeUrl", "");
             if (!TextUtils.isEmpty(nodeUrl)) {

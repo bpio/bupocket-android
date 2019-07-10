@@ -1,107 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <ImageView
         android:id="@+id/closeIv"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="8.15dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/icon_cancel_big"/>
+        android:layout_marginLeft="8.15dp"
+        android:layout_marginTop="15dp"
+        android:src="@mipmap/icon_cancel_big" />
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/appPicIv"
-        android:layout_marginTop="91.5dp"
-        android:layout_gravity="center_horizontal"
         android:layout_width="90dp"
         android:layout_height="90dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="91.5dp"
         android:scaleType="fitXY"
-        app:riv_corner_radius="15dp"
-        android:src="@mipmap/icon_token_default_icon"/>
+        android:src="@mipmap/icon_token_default_icon"
+        app:riv_corner_radius="15dp" />
 
-    <!--<ImageView-->
-        <!--android:id="@+id/appPicIv"-->
-        <!--android:layout_marginTop="91.5dp"-->
-        <!--android:layout_gravity="center_horizontal"-->
-        <!--android:layout_width="90dp"-->
-        <!--android:layout_height="90dp"-->
-        <!--android:src="@mipmap/icon_token_default_icon" />-->
 
     <TextView
         android:id="@+id/appNameTv"
-        android:layout_marginTop="16.5dp"
-        android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:textColor="@color/app_color_black"/>
-    
-    <View
-        android:layout_marginTop="38.5dp"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16.5dp"
+        android:textColor="@color/app_color_black"
+        android:textSize="18sp" />
+
+    <View
         android:layout_width="300dp"
         android:layout_height="0.5dp"
-        android:background="@drawable/bg_solid_line"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="38.5dp"
+        android:background="@drawable/bg_solid_line" />
 
     <TextView
         android:id="@+id/tvSystemLoginInfo"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:text="@string/scan_qr_login_management_system_note_txt"
         android:textColor="@color/app_txt_color_gray_2"
-        android:text="@string/scan_qr_login_management_system_note_txt"/>
+        android:textSize="15sp" />
 
     <TextView
-        android:layout_marginTop="8.5dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="13sp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="8.5dp"
+        android:layout_marginRight="40dp"
+        android:text="@string/address_be_made_public_note_txt"
         android:textColor="@color/app_txt_color_gray"
-        android:text="@string/address_be_made_public_note_txt"/>
-
-
+        android:textSize="13sp" />
 
 
     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         android:id="@+id/loginConfirmBtn"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="42dp"
+        android:layout_marginRight="40dp"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
         android:padding="10dp"
         android:text="@string/confirm_login_txt"
-        android:textSize="18sp"
         android:textColor="@color/qmui_config_color_white"
+        android:textSize="18sp"
         app:qmui_backgroundColor="@color/app_color_main"
         app:qmui_borderColor="@color/app_color_main"
         app:qmui_radius="4dp" />
 
     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
         android:id="@+id/loginCancelBtn"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_marginLeft="40dp"
         android:layout_marginTop="30dp"
+        android:layout_marginRight="40dp"
         android:clickable="true"
         android:focusable="true"
         android:gravity="center"
         android:padding="10dp"
         android:text="@string/common_dialog_cancel"
-        android:textSize="18sp"
         android:textColor="@color/app_txt_color_gray_6"
+        android:textSize="18sp"
         app:qmui_backgroundColor="@color/app_bg_color_gray_6"
         app:qmui_borderColor="@color/app_bg_color_gray_6"
         app:qmui_radius="4dp" />
