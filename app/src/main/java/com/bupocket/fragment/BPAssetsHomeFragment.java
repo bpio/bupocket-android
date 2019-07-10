@@ -114,9 +114,8 @@ public class BPAssetsHomeFragment extends BaseFragment {
     @BindView(R.id.addTokenLl)
     LinearLayout mAddTokenLl;
     @BindView(R.id.immediatelyBackupBtn)
-    QMUIRoundButton mImmediatelyBackupBtn;
-    @BindView(R.id.notBackupBtn)
-    QMUIRoundButton mNotBackupBtn;
+    Button mImmediatelyBackupBtn;
+
     @BindView(R.id.safetyTipsLl)
     LinearLayout mSafetyTipsLl;
     @BindView(R.id.manageWalletBtn)
@@ -227,13 +226,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
                 startFragment(bpUserInfoFragment);
             }
         });
-        mNotBackupBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mSafetyTipsLl.setVisibility(View.GONE);
-                sharedPreferencesHelper.put("backupTipsState", BackupTipsStateEnum.HIDE.getCode());
-            }
-        });
+
         mManageWalletBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
