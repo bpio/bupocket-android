@@ -39,6 +39,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginBottom="12dp"
+                android:visibility="gone"
                 android:background="@drawable/shape_corner_white"
                 android:minLines="5"
                 android:paddingLeft="11dp"
@@ -49,6 +50,11 @@
                 android:textColor="@color/app_txt_color_gray_2"
                 android:textSize="13dp"
                 tools:text="@string/start_custom_service_hint" />
+
+
+            <include
+                android:visibility="gone"
+                layout="@layout/view_empty_record"/>
 
             <TextView
                 style="@style/BPTextViewCommon13"

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -251,7 +250,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
                 goSendVoucherFragment();
                 break;
             case R.id.dPartyLL:
-                goDPartyFragment();
+                goAcceptanceFragment();
                 break;
             case R.id.assetIssuerLL:
                 goAssetIssuer();
@@ -281,7 +280,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
         startFragment(fragment);
     }
 
-    private void goDPartyFragment() {
+    private void goAcceptanceFragment() {
 
         VoucherAcceptanceBean voucherAcceptance = detailModel.getVoucherAcceptance();
         BPAcceptanceFragment fragment = new BPAcceptanceFragment();

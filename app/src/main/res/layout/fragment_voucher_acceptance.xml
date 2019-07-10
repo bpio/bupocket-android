@@ -13,82 +13,82 @@
         android:fitsSystemWindows="true" />
 
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/qmui_topbar_height"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+
+        <include layout="@layout/view_d_party_item" />
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/app_bg_color_gray"
             android:orientation="vertical">
 
-
-            <include layout="@layout/view_d_party_item" />
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/app_bg_color_gray"
-                android:orientation="vertical">
-
-                <TextView
-                    style="@style/BPTextViewCommon13"
-                    android:layout_marginLeft="13dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="12dp"
-                    android:text="@string/d_party_introduce" />
+            <TextView
+                style="@style/BPTextViewCommon13"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="12dp"
+                android:text="@string/d_party_introduce" />
 
 
-                <TextView
-                    android:id="@+id/dPartyIntroduceTv"
-                    style="@style/BPTextViewCommon13"
-                    android:layout_marginLeft="13dp"
-                    android:layout_marginBottom="12dp"
-                    android:background="@drawable/shape_corner_white"
-                    android:minLines="5"
-                    android:paddingLeft="11dp"
-                    android:paddingTop="15dp"
-                    android:paddingRight="13dp"
-                    android:paddingBottom="15dp"
-                    android:layout_marginRight="12dp"
-                    android:textColor="@color/app_txt_color_gray_2"
-                    android:textSize="13dp"
-                    tools:text="@string/start_custom_service_hint" />
-
-                <TextView
-                    style="@style/BPTextViewCommon13"
-                    android:layout_marginLeft="13dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="12dp"
-                    android:text="@string/delivery_instructions"
-                    android:visibility="gone" />
+            <TextView
+                android:id="@+id/dPartyIntroduceTv"
+                style="@style/BPTextViewCommon13"
+                android:layout_marginLeft="13dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/shape_corner_white"
+                android:minLines="5"
+                android:paddingLeft="11dp"
+                android:paddingTop="15dp"
+                android:paddingRight="13dp"
+                android:paddingBottom="15dp"
+                android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="13dp"
+                android:visibility="gone"
+                tools:text="@string/start_custom_service_hint" />
 
 
-                <TextView
-                    android:id="@+id/deliveryInstructionsTv"
-                    style="@style/BPTextViewCommon13"
-                    android:layout_marginLeft="13dp"
-                    android:layout_marginBottom="30dp"
-                    android:background="@drawable/shape_corner_white"
-                    android:minLines="5"
-                    android:paddingLeft="11dp"
-                    android:paddingTop="15dp"
-                    android:paddingRight="13dp"
-                    android:paddingBottom="15dp"
-                    android:textColor="@color/app_txt_color_gray_2"
-                    android:textSize="13dp"
-                    android:visibility="gone"
-                    tools:text="@string/start_custom_service_hint" />
+            <include
+                android:visibility="gone"
+                layout="@layout/view_empty_record" />
 
-            </LinearLayout>
+
+            <TextView
+                style="@style/BPTextViewCommon13"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="12dp"
+                android:text="@string/delivery_instructions"
+                android:visibility="gone" />
+
+
+            <TextView
+                android:id="@+id/deliveryInstructionsTv"
+                style="@style/BPTextViewCommon13"
+                android:layout_marginLeft="13dp"
+                android:layout_marginBottom="30dp"
+                android:background="@drawable/shape_corner_white"
+                android:minLines="5"
+                android:paddingLeft="11dp"
+                android:paddingTop="15dp"
+                android:paddingRight="13dp"
+                android:paddingBottom="15dp"
+                android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="13dp"
+                android:visibility="gone"
+                tools:text="@string/start_custom_service_hint" />
 
         </LinearLayout>
 
-
-    </ScrollView>
+    </LinearLayout>
 
 
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

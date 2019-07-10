@@ -165,13 +165,13 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
                 mConfirmSendBtn.setEnabled(false);
-                mConfirmSendBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+                mConfirmSendBtn.setBackgroundColor(getResources().getColor(R.color.app_color_green_disabled));
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 mConfirmSendBtn.setEnabled(false);
-                mConfirmSendBtn.setBackgroundColor(getResources().getColor(R.color.disabled_btn_color));
+                mConfirmSendBtn.setBackgroundColor(getResources().getColor(R.color.app_color_green_disabled));
             }
 
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)

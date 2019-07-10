@@ -2,6 +2,7 @@ package com.bupocket.voucher;
 
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -30,6 +31,9 @@ public class BPAcceptanceFragment extends AbsBaseFragment implements InitViewLis
     TextView dPartyIntroduceTv;
     @BindView(R.id.deliveryInstructionsTv)
     TextView deliveryInstructionsTv;
+    @BindView(R.id.recordEmptyLL)
+    LinearLayout recordEmptyLL;
+
     Unbinder unbinder;
     private VoucherAcceptanceBean voucherAcceptance;
 
@@ -62,6 +66,11 @@ public class BPAcceptanceFragment extends AbsBaseFragment implements InitViewLis
                 dPartyNickRiv.setText(shortName);
                 if (!TextUtils.isEmpty(intro)) {
                     dPartyIntroduceTv.setText(intro);
+                    dPartyIntroduceTv.setVisibility(View.VISIBLE);
+
+                }else{
+                    dPartyIntroduceTv.setVisibility(View.GONE);
+                    recordEmptyLL.setVisibility(View.VISIBLE);
                 }
 
             }

@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,6 +37,8 @@ public class BPVoucherIssuerFragment extends AbsBaseFragment implements InitView
     TextView dPartyIntroduceTv;
     @BindView(R.id.assetIssuerLv)
     ListView assetIssuerLv;
+    @BindView(R.id.recordEmptyLL)
+    LinearLayout recordEmptyLL;
 
 
     private VoucherIssuerBean voucherIssuer;
@@ -75,6 +78,10 @@ public class BPVoucherIssuerFragment extends AbsBaseFragment implements InitView
             String intro = voucherIssuer.getIntro();
             if (!TextUtils.isEmpty(intro)) {
                 dPartyIntroduceTv.setText(intro);
+                dPartyIntroduceTv.setVisibility(View.VISIBLE);
+            }else{
+                dPartyIntroduceTv.setVisibility(View.GONE);
+                recordEmptyLL.setVisibility(View.VISIBLE);
             }
 
         }
