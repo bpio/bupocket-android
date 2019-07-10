@@ -95,19 +95,12 @@ public class BPApplication extends Application {
 
         if (isMainNetConfig) {
             Constants.BUMO_NODE_URL = Constants.MainNetConfig.BUMO_NODE_URL.getValue();
-            Constants.PUSH_MESSAGE_SOCKET_URL = Constants.MainNetConfig.PUSH_MESSAGE_SOCKET_URL.getValue();
-
-            Constants.NODE_PLAN_IMAGE_URL_PREFIX = Constants.MainNetConfig.WEB_SERVER_DOMAIN.getValue() + Constants.IMAGE_PATH;
             LogUtils.mDebuggable = LogUtils.LEVEL_NONE;
             CrashHandler.isWrite = false;
-
             Constants.WEB_SERVER_DOMAIN = Constants.MainNetConfig.WEB_SERVER_DOMAIN.getValue();
 
         } else {
             Constants.BUMO_NODE_URL = Constants.TestNetConfig.BUMO_NODE_URL.getValue();
-            Constants.PUSH_MESSAGE_SOCKET_URL = Constants.TestNetConfig.PUSH_MESSAGE_SOCKET_URL.getValue();
-
-            Constants.NODE_PLAN_IMAGE_URL_PREFIX = Constants.TestNetConfig.WEB_SERVER_DOMAIN.getValue() + Constants.IMAGE_PATH;
             LogUtils.mDebuggable = LogUtils.LEVEL_ERROR;
             CrashHandler.isWrite = true;
             Constants.WEB_SERVER_DOMAIN = Constants.TestNetConfig.WEB_SERVER_DOMAIN.getValue();
@@ -120,7 +113,7 @@ public class BPApplication extends Application {
             String customNodeService = (String) sharedPreferencesHelper.getSharedPreference(ConstantsType.CUSTOM_NODE_SERVICE, "");
             Constants.BUMO_NODE_URL_BASE = customNodeService;
             Constants.WEB_SERVER_DOMAIN = customWalletService;
-
+            LogUtils.mDebuggable = LogUtils.LEVEL_ERROR;
         } else {
             String nodeUrl = (String) sharedPreferencesHelper.getSharedPreference(Constants.BUMO_NODE_URL + "nodeUrl", "");
             if (!TextUtils.isEmpty(nodeUrl)) {
@@ -129,7 +122,8 @@ public class BPApplication extends Application {
                 Constants.BUMO_NODE_URL_BASE = Constants.BUMO_NODE_URL;
             }
         }
-
+        Constants.NODE_PLAN_IMAGE_URL_PREFIX = Constants.WEB_SERVER_DOMAIN + Constants.IMAGE_PATH;
+        Constants.PUSH_MESSAGE_SOCKET_URL=Constants.WEB_SERVER_DOMAIN;
     }
 
     private void initCrash() {

@@ -21,6 +21,8 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
+import org.w3c.dom.Text;
+
 public class DialogUtils {
 
 
@@ -85,18 +87,29 @@ public class DialogUtils {
     }
 
     public static void showEditMessageDialog(Context mContext, final String title, String msgHint, String msg, final DialogUtils.ConfirmListener confirmListener) {
+
         final QMUIDialog qmuiDialog = new QMUIDialog(mContext);
         qmuiDialog.setCanceledOnTouchOutside(false);
         qmuiDialog.setContentView(R.layout.view_change_wallet_name);
-        TextView titleTV = qmuiDialog.findViewById(R.id.dialogEditTitle);
-        TextView cancelTv = qmuiDialog.findViewById(R.id.cancelNameTv);
-        TextView confirmTv = qmuiDialog.findViewById(R.id.confirmNameTv);
-        final EditText infoET = qmuiDialog.findViewById(R.id.walletNewNameEt);
-        titleTV.setText(title);
+        qmuiDialog.show();
 
-        infoET.setHint(msgHint);
+        TextView cancelTv = qmuiDialog.findViewById(R.id.cancelNameTv);
+        final TextView confirmTv = qmuiDialog.findViewById(R.id.confirmNameTv);
+        final EditText walletNewNameEt = qmuiDialog.findViewById(R.id.walletNewNameEt);
+        TextView titleTV = qmuiDialog.findViewById(R.id.dialogEditTitle);
+
+
+        if (!TextUtils.isEmpty(title)) {
+            titleTV.setText(title);
+        }
+
+        if (!TextUtils.isEmpty(msgHint)) {
+            walletNewNameEt.setHint(msgHint);
+        }
+
+
         if (!msg.isEmpty()) {
-            infoET.setText(msg);
+            walletNewNameEt.setText(msg);
         }
 
         cancelTv.setOnClickListener(new View.OnClickListener() {
@@ -105,20 +118,38 @@ public class DialogUtils {
                 qmuiDialog.dismiss();
             }
         });
+
+        TextWatcher watcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                confirmTv.setClickable(false);
+                confirmTv.setEnabled(false);
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                confirmTv.setClickable(false);
+                confirmTv.setEnabled(false);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (walletNewNameEt.getText().toString().trim().length() > 0) {
+                    confirmTv.setClickable(true);
+                    confirmTv.setEnabled(true);
+                }
+            }
+        };
+        walletNewNameEt.addTextChangedListener(watcher);
+
         confirmTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                String trim = infoET.getText().toString().trim();
-                if (TextUtils.isEmpty(trim)) {
-                    return;
-                }
+                confirmListener.confirm(walletNewNameEt.getText().toString().trim());
                 qmuiDialog.dismiss();
-                confirmListener.confirm(infoET.getText().toString().trim());
             }
         });
 
-        qmuiDialog.show();
     }
 
 
@@ -245,12 +276,11 @@ public class DialogUtils {
 
     /**
      * @param mContext
-
      * @param confirmListener
      */
     public static void showPassWordInputDialog(final Activity mContext,
                                                final ConfirmListener confirmListener) {
-        showPassWordInputDialog(mContext, "", "", "",0, confirmListener);
+        showPassWordInputDialog(mContext, "", "", "", 0, confirmListener);
     }
 
 
@@ -262,7 +292,7 @@ public class DialogUtils {
     public static void showPassWordInputDialog(final Activity mContext,
                                                String input,
                                                final ConfirmListener confirmListener) {
-        showPassWordInputDialog(mContext, "", input, "", 0,confirmListener);
+        showPassWordInputDialog(mContext, "", input, "", 0, confirmListener);
     }
 
 
@@ -276,7 +306,7 @@ public class DialogUtils {
                                                String input,
                                                String etInput,
                                                final ConfirmListener confirmListener) {
-        showPassWordInputDialog(mContext, "", input, etInput, 0,confirmListener);
+        showPassWordInputDialog(mContext, "", input, etInput, 0, confirmListener);
     }
 
     /**
@@ -288,7 +318,7 @@ public class DialogUtils {
      */
     public static void showPassWordInputDialog(final Activity mContext,
                                                String title, String input,
-                                               String etInput, int inputColor,final ConfirmListener confirmListener) {
+                                               String etInput, int inputColor, final ConfirmListener confirmListener) {
 
         final QMUIDialog qmuiDialog = new QMUIDialog(mContext);
         qmuiDialog.setCanceledOnTouchOutside(false);
@@ -308,7 +338,7 @@ public class DialogUtils {
             passwordEt.setHint(etInput);
         }
 
-        if (!(inputColor==0)) {
+        if (!(inputColor == 0)) {
             inputTv.setTextColor(inputColor);
         }
 

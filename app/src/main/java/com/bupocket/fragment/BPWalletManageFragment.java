@@ -64,7 +64,7 @@ public class BPWalletManageFragment extends BaseFragment {
     LinearLayout mBackupMnemonicRl;
     @BindView(R.id.changePwRl)
     LinearLayout mChangePwRl;
-    @BindView(R.id.walletHeadRiv)
+    @BindView(R.id.headIconPwdRiv)
     ImageView walletHeadRiv;
 
 
@@ -351,6 +351,8 @@ public class BPWalletManageFragment extends BaseFragment {
                             sharedPreferencesHelper.put(walletAddress + "-BPdata", "");
                             sharedPreferencesHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));
                             sharedPreferencesHelper.put(walletAddress + "-mnemonicCodes", "");
+                            sharedPreferencesHelper.put(walletAddress+ConstantsType.WALLET_SKEY_PRIV,"");
+                            sharedPreferencesHelper.put(walletAddress+ConstantsType.WALLET_SKEY,"");
                             if (walletAddress.equals(currentWalletAddress)) {
                                 sharedPreferencesHelper.put("currentWalletAddress", sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString());
                             }

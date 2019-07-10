@@ -39,7 +39,7 @@
             android:layout_height="@dimen/bp_btn_hight"
             android:layout_marginTop="86dp"
             android:gravity="center"
-            android:text="@string/wallet_create_create_btn_txt"
+            android:text="@string/view_title_create_wallet_identity"
             android:textColor="@color/app_color_font"
             android:textSize="@dimen/bp_btn_text_size"
             app:qmui_backgroundColor="@color/app_color_main"

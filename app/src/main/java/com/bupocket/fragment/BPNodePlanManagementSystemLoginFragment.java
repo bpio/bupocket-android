@@ -8,12 +8,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.NodePlanManagementSystemService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.squareup.picasso.Picasso;
 
@@ -74,7 +76,11 @@ public class BPNodePlanManagementSystemLoginFragment extends BaseFragment {
 
     private void initUI() {
 
-        Picasso.get().load(appPic).into(mAppPicIv);
+        Glide.with(getContext())
+                .load(appPic)
+                .error(R.mipmap.icon_token_default_icon)
+                .into(mAppPicIv);
+
 
         if (!TextUtils.isEmpty(appName)) {
             mAppNameTv.setText(appName);

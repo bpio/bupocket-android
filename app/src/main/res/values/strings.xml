@@ -744,7 +744,7 @@
     <string name="wallet_create_error">钱包创建失败</string>
     <string name="delete_node_info">当前删除节点为选中状态，删除后将选中系统默认设置节点。</string>
     <string name="not_use_wallet_service">无效的钱包服务地址</string>
-    <string name="change_pwd_success_hint"> 的安全密码已修改成功！</string>
+    <string name="change_pwd_success_hint">&#8195;的安全密码已修改成功！</string>
 
     <!--create wallet -->
     <string name="old_pwd_error">原安全密码输入不正确</string>

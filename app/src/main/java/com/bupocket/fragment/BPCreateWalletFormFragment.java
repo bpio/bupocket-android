@@ -24,6 +24,7 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
@@ -38,6 +39,8 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -133,9 +136,9 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         initCreateWalletPromptView();
         initTopBar();
-        isCreateWallet=false;
+        isCreateWallet = false;
         Bundle arguments = getArguments();
-        if (arguments!=null) {
+        if (arguments != null) {
             String jumpPage = arguments.getString("jumpPage");
             isCreateWallet = !TextUtils.isEmpty(jumpPage) && jumpPage.equals(BPWalletsHomeFragment.class.getSimpleName());
             if (isCreateWallet) {
@@ -222,7 +225,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
     }
 
     private void createWallet(WalletBPData walletBPData) {
-        String walletName=mSetIdentityNameEt.getText().toString().trim();
+        String walletName = mSetIdentityNameEt.getText().toString().trim();
         final String address = walletBPData.getAccounts().get(0).getAddress();
         String bpData = JSON.toJSONString(walletBPData.getAccounts());
         List<String> importedWallets = JSONObject.parseArray(spHelper.getSharedPreference("importedWallets", "[]").toString(), String.class);
@@ -234,7 +237,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
             importedWallets.add(address);
             spHelper.put(address + "-mnemonicCodes", "yes");
             spHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));
-            sharedPreferencesHelper.put(address +ConstantsType.WALLET_SKEY, walletBPData.getSkey());
+            sharedPreferencesHelper.put(address + ConstantsType.WALLET_SKEY, walletBPData.getSkey());
             final WalletBPData finalWalletBPData = walletBPData;
             getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -245,7 +248,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
                     BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();
                     Bundle argz = new Bundle();
                     argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) finalWalletBPData.getMnemonicCodes());
-                    argz.putString(ConstantsType.WALLET_ADDRESS,address);
+                    argz.putString(ConstantsType.WALLET_ADDRESS, address);
                     backupWalletFragment.setArguments(argz);
                     startFragmentAndDestroyCurrent(backupWalletFragment);
                 }
@@ -264,7 +267,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
         sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
         sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.CREATE_MNEONIC_CODE.getCode());
         sharedPreferencesHelper.put("currentWalletAddress", address);
-        sharedPreferencesHelper.put(address+ConstantsType.WALLET_SKEY, walletBPData.getSkey());
+        sharedPreferencesHelper.put(address + ConstantsType.WALLET_SKEY, walletBPData.getSkey());
         final WalletBPData finalWalletBPData = walletBPData;
         getActivity().runOnUiThread(new Runnable() {
             @Override
@@ -273,7 +276,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
                 BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();
                 Bundle argz = new Bundle();
                 argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) finalWalletBPData.getMnemonicCodes());
-                argz.putString(ConstantsType.WALLET_ADDRESS,address);
+                argz.putString(ConstantsType.WALLET_ADDRESS, address);
                 backupWalletFragment.setArguments(argz);
                 startFragment(backupWalletFragment);
             }

@@ -17,6 +17,7 @@ import com.bupocket.base.BaseViewHolder;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.BumoNodeEnum;
+import com.bupocket.fragment.BPNodeSettingFragment;
 import com.bupocket.model.NodeAddressModel;
 import com.bupocket.model.NodeSettingModel;
 import com.bupocket.utils.DialogUtils;
@@ -238,7 +239,8 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
                                     if (nodeAddressModel.getError_code() == 0) {
                                         int oldSeq = nodeAddressModel.getResult().getHeader().getSeq();
                                         int resultSeq = oldSeq - newSeq;
-                                        if (resultSeq > 0 && resultSeq < 10) {
+                                        resultSeq = Math.abs(resultSeq);
+                                        if (resultSeq >=0 && resultSeq <= 10) {
 
                                             mActivity.runOnUiThread(new Runnable() {
                                                 @Override
@@ -297,6 +299,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
      * @param oldPosition selection node
      */
     public void saveNodeData(int oldPosition) {
+        BPNodeSettingFragment.oldPosition=oldPosition;
         List<NodeSettingModel> data = getData();
         for (int i = 0; i < data.size(); i++) {
             if (oldPosition == i) {

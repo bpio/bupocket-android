@@ -6,10 +6,10 @@ public class Constants {
     public static String WEB_SERVER_DOMAIN = MainNetConfig.WEB_SERVER_DOMAIN.getValue();
     public static String BUMO_NODE_URL = MainNetConfig.BUMO_NODE_URL.getValue();
     public static String BUMO_NODE_URL_BASE=BUMO_NODE_URL;
-    public static String PUSH_MESSAGE_SOCKET_URL = MainNetConfig.PUSH_MESSAGE_SOCKET_URL.getValue();
+    public static String PUSH_MESSAGE_SOCKET_URL = WEB_SERVER_DOMAIN;
 
     public static String IMAGE_PATH = "img_dpos/";
-    public static String NODE_PLAN_IMAGE_URL_PREFIX = MainNetConfig.WEB_SERVER_DOMAIN.getValue() + IMAGE_PATH;
+    public static String NODE_PLAN_IMAGE_URL_PREFIX = WEB_SERVER_DOMAIN + IMAGE_PATH;
 
     public static final Integer SEND_TOKEN_NOTE_MAX_LENGTH = 20;
     public static final Integer HELP_FEEDBACK_CONTENT_LENGTH = 100;
@@ -89,8 +89,8 @@ public class Constants {
 
 
         //test-main
-//        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
-//        BUMO_NODE_URL("http://wallet-node.bumotest.io"),
+        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
+        BUMO_NODE_URL("http://wallet-node.bumotest.io"),
 
 
         PUSH_MESSAGE_SOCKET_URL("https://ws-tools.bumotest.io");

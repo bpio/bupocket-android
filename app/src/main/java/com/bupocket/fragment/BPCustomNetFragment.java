@@ -169,7 +169,7 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
     private void saveServiceInfo() {
         spHelper.put(ConstantsType.CUSTOM_WALLET_SERVICE, walletServiceEt.getText().toString().trim());
         spHelper.put(ConstantsType.CUSTOM_NODE_SERVICE, nodeServiceEt.getText().toString().trim());
-
+        spHelper.put(ConstantsType.IS_START_CUSTOM_SERVICE, CustomNodeTypeEnum.STOP.getServiceType());
 
     }
 

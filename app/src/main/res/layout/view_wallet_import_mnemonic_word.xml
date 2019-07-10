@@ -115,8 +115,8 @@
             android:enabled="false"
             android:textColor="@color/app_color_font"
             android:textSize="@dimen/bp_btn_text_size"
-            app:qmui_backgroundColor="@color/disabled_btn_color"
-            app:qmui_borderColor="@color/disabled_btn_color"
+            app:qmui_backgroundColor="@color/app_color_green_disabled"
+            app:qmui_borderColor="@color/app_color_green_disabled"
             app:qmui_radius="5dp" />
 
 

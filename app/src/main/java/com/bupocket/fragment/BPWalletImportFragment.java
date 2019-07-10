@@ -310,7 +310,7 @@ public class BPWalletImportFragment extends BaseFragment {
                         try {
                             String keystore = mKeystoreEt.getText().toString().trim();
                             WalletBPData walletBPData = Wallet.getInstance().importKeystore(password, keystore);
-                            saveWalletData(walletBPData, mWalletNameEt.getText().toString().trim(), false);
+                            saveWalletData(walletBPData, mWalletNameEt.getText().toString().trim(), true);
                             tipDialog.dismiss();
                         } catch (WalletException e) {
                             e.printStackTrace();
@@ -361,9 +361,9 @@ public class BPWalletImportFragment extends BaseFragment {
             importedWallets.add(address);
             spHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));
             if (isPrivate) {
-                spHelper.put(address + ConstantsType.WALLET_SKEY, walletBPData.getSkey());
-            } else {
                 spHelper.put(address + ConstantsType.WALLET_SKEY_PRIV, walletBPData.getSkey());
+            } else {
+                spHelper.put(address + ConstantsType.WALLET_SKEY, walletBPData.getSkey());
             }
 
             ToastUtil.showToast(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT);

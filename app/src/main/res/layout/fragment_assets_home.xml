@@ -267,39 +267,20 @@
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="14sp" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:paddingTop="10dp">
 
-                        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                            android:id="@+id/notBackupBtn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="@string/no_backup_mneonic_btn_code"
-                            android:textColor="@color/app_txt_color_purple"
-                            android:textSize="@dimen/bp_btn_text_size"
-                            app:qmui_backgroundColor="@color/app_bg_color_purple"
-                            app:qmui_borderColor="@color/app_bg_color_purple"
-                            app:qmui_radius="5dp" />
-
-                        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                            android:id="@+id/immediatelyBackupBtn"
-                            android:layout_width="wrap_content"
-                            android:layout_height="40dp"
-                            android:layout_marginLeft="25dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:text="@string/backup_immediately_txt"
-                            android:textColor="@color/app_color_font"
-                            android:textSize="@dimen/bp_btn_text_size"
-                            app:qmui_backgroundColor="@color/app_color_green"
-                            app:qmui_borderColor="@color/app_color_green"
-                            app:qmui_radius="5dp" />
-                    </LinearLayout>
+                    <Button
+                        android:id="@+id/immediatelyBackupBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:layout_gravity="right"
+                        android:layout_weight="1"
+                        android:background="@color/app_color_white"
+                        android:drawableRight="@mipmap/ic_right_row_backup"
+                        android:gravity="center"
+                        android:paddingLeft="10dp"
+                        android:text="@string/backup_immediately_txt"
+                        android:textColor="@color/app_color_green"
+                        android:textSize="16sp" />
                 </LinearLayout>
 
                 <LinearLayout
