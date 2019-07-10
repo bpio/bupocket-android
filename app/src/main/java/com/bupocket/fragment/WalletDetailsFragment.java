@@ -164,75 +164,28 @@ public class WalletDetailsFragment extends AbsBaseFragment {
 
     private void settingName() {
 
-//
-//        DialogUtils.showEditMessageDialog(mContext, "", "", new DialogUtils.ConfirmListener() {
-//            @Override
-//            public void confirm(String msg) {
-//
-//                if (!CommonUtil.validateNickname(walletNewName)) {
-//                    Toast.makeText(getActivity(), R.string.error_import_wallet_name_message_txt, Toast.LENGTH_SHORT).show();
-//                    return;
-//                }
-//
-//                if (checkIdentity(walletAddress)) {
-//                    spHelper.put("currentIdentityWalletName", walletNewName);
-//                } else {
-//                    spHelper.put(walletAddress + "-walletName", walletNewName);
-//                }
-//
-//                settingWalletNameTv.setText(walletNewName);
-//
-//            }
-//        });
 
-
-        final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
-        qmuiDialog.setCanceledOnTouchOutside(false);
-        qmuiDialog.setContentView(R.layout.view_change_wallet_name);
-        qmuiDialog.show();
-
-        TextView cancelTv = qmuiDialog.findViewById(R.id.cancelNameTv);
-        final TextView confirmTv = qmuiDialog.findViewById(R.id.confirmNameTv);
-        final EditText walletNewNameEt = qmuiDialog.findViewById(R.id.walletNewNameEt);
-//        walletNewNameEt.setText(walletName);
-
-        cancelTv.setOnClickListener(new View.OnClickListener() {
+        DialogUtils.showEditMessageDialog(mContext, "", "", new DialogUtils.ConfirmListener() {
             @Override
-            public void onClick(View v) {
-                qmuiDialog.dismiss();
-            }
-        });
+            public void confirm(String walletNewName) {
 
-        TextWatcher watcher = new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                confirmTv.setClickable(false);
-                confirmTv.setEnabled(false);
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                confirmTv.setClickable(false);
-                confirmTv.setEnabled(false);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                if (walletNewNameEt.getText().toString().trim().length() > 0) {
-                    confirmTv.setClickable(true);
-                    confirmTv.setEnabled(true);
+                if (!CommonUtil.validateNickname(walletNewName)) {
+                    Toast.makeText(getActivity(), R.string.error_import_wallet_name_message_txt, Toast.LENGTH_SHORT).show();
+                    return;
                 }
-            }
-        };
-        walletNewNameEt.addTextChangedListener(watcher);
 
-        confirmTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                if (checkIdentity(walletAddress)) {
+                    spHelper.put("currentIdentityWalletName", walletNewName);
+                } else {
+                    spHelper.put(walletAddress + "-walletName", walletNewName);
+                }
 
-                qmuiDialog.dismiss();
+                settingWalletNameTv.setText(walletNewName);
+
             }
         });
+
+
     }
 
 }
