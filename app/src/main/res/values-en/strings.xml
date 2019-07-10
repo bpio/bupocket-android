@@ -762,7 +762,7 @@
     <!--voucher package-->
     <string name="tabbar_toucher_txt">Voucher</string>
     <string name="voucher_empty">None</string>
-    <string name="voucher_empty_btn">Share QR Code to Receive Vouchers</string>
+    <string name="voucher_empty_btn">Voucher Receiving QR Code</string>
     <string name="goods_price">Nominal Value:</string>
     <string name="goods_validity_date">%1$s To %2$s</string>
     <string name="number_voucher_package_title">Digital Asset Vouchers</string>
@@ -816,6 +816,6 @@
     <string name="send_address">Please input the receiving account address</string>
     <string name="send_voucher_num_limit">Insufficient Vouchers</string>
     <string name="not_my_self_send_voucher">Voucher donation to yourself is not allowed</string>
-
+    <string name="select_voucher">Select a Voucher</string>
 
 </resources>
