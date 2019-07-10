@@ -173,8 +173,8 @@
                 android:text="@string/change_confirm_change"
                 android:textColor="@color/app_color_font"
                 android:textSize="18sp"
-                app:qmui_backgroundColor="@color/disabled_btn_color"
-                app:qmui_borderColor="@color/disabled_btn_color"
+                app:qmui_backgroundColor="@color/app_color_green_disabled"
+                app:qmui_borderColor="@color/app_color_green_disabled"
                 app:qmui_radius="5dp" />
         </LinearLayout>
 

@@ -84,7 +84,8 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="@string/common_dialog_confirm"
-                    android:textColor="@color/app_color_main"
+                    android:enabled="false"
+                    android:textColor="@drawable/textview_green_selector"
                     android:textSize="18sp" />
             </LinearLayout>
 

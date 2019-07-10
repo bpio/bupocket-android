@@ -138,7 +138,7 @@
                 android:textSize="18sp"
                 android:textColor="@color/app_txt_color_red_3"
                 app:qmui_backgroundColor="@color/app_color_white"
-                app:qmui_borderColor="@color/disabled_btn_color"
+                app:qmui_borderColor="@color/app_color_green_disabled"
                 app:qmui_borderWidth="0dp"
                 app:qmui_radius="5dp" />
         </LinearLayout>

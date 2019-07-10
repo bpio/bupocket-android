@@ -116,6 +116,28 @@ public class DialogUtils {
                 confirmListener.confirm(infoET.getText().toString().trim());
             }
         });
+        infoET.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String str = infoET.getText().toString().trim();
+                if (TextUtils.isEmpty(str)) {
+                    infoET.setEnabled(false);
+
+                }else {
+                    infoET.setEnabled(true);
+                }
+            }
+        });
 
         qmuiDialog.show();
     }
