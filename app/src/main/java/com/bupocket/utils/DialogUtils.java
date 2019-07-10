@@ -20,6 +20,8 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
+import org.w3c.dom.Text;
+
 public class DialogUtils {
 
 
@@ -91,7 +93,11 @@ public class DialogUtils {
         TextView cancelTv = qmuiDialog.findViewById(R.id.cancelNameTv);
         TextView confirmTv = qmuiDialog.findViewById(R.id.confirmNameTv);
         final EditText infoET = qmuiDialog.findViewById(R.id.walletNewNameEt);
-        titleTV.setText(title);
+
+        if (!TextUtils.isEmpty(title)) {
+            titleTV.setText(title);
+        }
+
 
         infoET.setHint(msgHint);
         if (!msg.isEmpty()) {
@@ -132,9 +138,10 @@ public class DialogUtils {
                 String str = infoET.getText().toString().trim();
                 if (TextUtils.isEmpty(str)) {
                     infoET.setEnabled(false);
-
+                    infoET.setClickable(false);
                 }else {
                     infoET.setEnabled(true);
+                    infoET.setClickable(true);
                 }
             }
         });

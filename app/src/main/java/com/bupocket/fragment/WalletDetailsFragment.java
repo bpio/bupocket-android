@@ -20,6 +20,7 @@ import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.model.HeadIconModel;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUtils;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 
@@ -163,6 +164,27 @@ public class WalletDetailsFragment extends AbsBaseFragment {
 
     private void settingName() {
 
+//
+//        DialogUtils.showEditMessageDialog(mContext, "", "", new DialogUtils.ConfirmListener() {
+//            @Override
+//            public void confirm(String msg) {
+//
+//                if (!CommonUtil.validateNickname(walletNewName)) {
+//                    Toast.makeText(getActivity(), R.string.error_import_wallet_name_message_txt, Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
+//
+//                if (checkIdentity(walletAddress)) {
+//                    spHelper.put("currentIdentityWalletName", walletNewName);
+//                } else {
+//                    spHelper.put(walletAddress + "-walletName", walletNewName);
+//                }
+//
+//                settingWalletNameTv.setText(walletNewName);
+//
+//            }
+//        });
+
 
         final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
         qmuiDialog.setCanceledOnTouchOutside(false);
@@ -207,20 +229,6 @@ public class WalletDetailsFragment extends AbsBaseFragment {
         confirmTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText walletNewNameEt = qmuiDialog.findViewById(R.id.walletNewNameEt);
-                String walletNewName = walletNewNameEt.getText().toString().trim();
-                if (!CommonUtil.validateNickname(walletNewName)) {
-                    Toast.makeText(getActivity(), R.string.error_import_wallet_name_message_txt, Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                if (checkIdentity(walletAddress)) {
-                    spHelper.put("currentIdentityWalletName", walletNewName);
-                } else {
-                    spHelper.put(walletAddress + "-walletName", walletNewName);
-                }
-
-                settingWalletNameTv.setText(walletNewName);
 
                 qmuiDialog.dismiss();
             }

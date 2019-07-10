@@ -5,8 +5,8 @@
     <item android:color="@color/app_color_green" android:state_enabled="true" />
     <item android:color="@color/app_color_green" android:state_pressed="true" />
 
-    <item android:color="@color/app_color_green_disabled" android:state_pressed="false" />
+    <!--<item android:color="@color/app_color_green_disabled" android:state_pressed="false" />-->
     <item android:color="@color/app_color_green_disabled" android:state_enabled="false" />
-    <item android:color="@color/app_color_green_disabled" android:state_selected="false" />
+    <item android:color="@color/app_color_green_disabled" android:state_pressed="false" />
 
 </selector>
