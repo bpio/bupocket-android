@@ -35,7 +35,8 @@
                 android:background="@mipmap/icon_voucher_detail_bg"
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:paddingRight="15dp"
+                android:visibility="gone">
 
 
                 <RelativeLayout

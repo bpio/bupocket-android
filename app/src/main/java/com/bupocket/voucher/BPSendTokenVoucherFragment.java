@@ -304,10 +304,10 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                         .into(acceptanceIconRiv);
             }
             String name = voucherAcceptance.getName();
+
             if (!TextUtils.isEmpty(name)) {
                 acceptanceNameTv.setText(name);
             }
-
         }
         String voucherIcon = detailModel.getVoucherIcon();
         if (!TextUtils.isEmpty(voucherIcon)) {
@@ -320,6 +320,10 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
         String faceValue = detailModel.getFaceValue();
         if (!TextUtils.isEmpty(faceValue)) {
             goodsPriceTv.setText(getString(R.string.goods_price) + faceValue);
+        }
+        String voucherName = detailModel.getVoucherName();
+        if (!TextUtils.isEmpty(voucherName)) {
+            goodsNameTv.setText(voucherName);
         }
 
 
