@@ -72,7 +72,7 @@ public class CommonUtil {
     public static final Pattern ADDRESS_DESCRIBE_PATTERN = Pattern.compile(".{0,30}$");
 
     //    public static final Pattern PASSWORD_PATTERN = Pattern.compile(".{6,30}$");
-    public static final Pattern PASSWORD_PATTERN = Pattern.compile("^(?=.*[0-9])(?=.*[a-zA-Z])(?=\\S+$).{6,30}$");
+    public static final Pattern PASSWORD_PATTERN = Pattern.compile("(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z_]{6,30}");
     public static final Pattern OLD_PASSWORD_PATTERN = Pattern.compile(".{6,30}$");
 
 
