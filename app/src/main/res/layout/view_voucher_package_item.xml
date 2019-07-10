@@ -51,6 +51,7 @@
             android:layout_marginBottom="10dp"
             android:layout_toRightOf="@id/voucherGoodsIv"
             android:paddingRight="15dp"
+            android:textStyle="bold"
             android:textColor="@color/app_color_black"
             android:textSize="14sp"
             tools:text="goods name" />
@@ -91,7 +92,6 @@
             android:paddingRight="15dp"
             android:textColor="@color/app_color_black"
             android:textSize="18sp"
-            android:textStyle="bold"
             tools:text="30" />
 
 
