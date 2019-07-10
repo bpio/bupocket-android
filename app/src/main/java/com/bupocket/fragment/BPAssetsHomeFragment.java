@@ -59,6 +59,7 @@ import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
+import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.voucher.BPSendTokenVoucherFragment;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
@@ -69,7 +70,6 @@ import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
-import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -220,11 +220,13 @@ public class BPAssetsHomeFragment extends BaseFragment {
         mImmediatelyBackupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Bundle argz = new Bundle();
-                argz.putString("accName", currentAccNick);
-                BPUserInfoFragment bpUserInfoFragment = new BPUserInfoFragment();
-                bpUserInfoFragment.setArguments(argz);
-                startFragment(bpUserInfoFragment);
+//                Bundle argz = new Bundle();
+//                argz.putString("accName", currentAccNick);
+//                BPUserInfoFragment bpUserInfoFragment = new BPUserInfoFragment();
+//                bpUserInfoFragment.setArguments(argz);
+//                startFragment(bpUserInfoFragment);
+                go2BPCreateWalletShowMnemonicCodeFragment();
+
             }
         });
 
@@ -905,6 +907,16 @@ public class BPAssetsHomeFragment extends BaseFragment {
             e.printStackTrace();
             ToastUtil.showToast(getActivity(), R.string.error_qr_message_txt, Toast.LENGTH_SHORT);
         }
+    }
+
+    private void go2BPCreateWalletShowMnemonicCodeFragment() {
+        BPCreateWalletFormFragment.isCreateWallet = false;
+        BPBackupWalletFragment createWalletShowMneonicCodeFragment = new BPBackupWalletFragment();
+        Bundle argz = new Bundle();
+        argz.putString(ConstantsType.WALLET_ADDRESS, WalletCurrentUtils.getIdentityAddress(spHelper));
+        createWalletShowMneonicCodeFragment.setArguments(argz);
+        startFragment(createWalletShowMneonicCodeFragment);
+
     }
 
     @Override
