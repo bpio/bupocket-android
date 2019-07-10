@@ -49,8 +49,33 @@
                     android:textColor="@color/app_txt_color_red_2" />
             </LinearLayout>
 
-            <include
 
+            <FrameLayout
+                android:id="@+id/firstAddVoucherFl"
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp"
+                android:background="@drawable/bg_voucher_dash_line"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"
+                    android:drawableLeft="@mipmap/ic_select_voucher_add"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:text="@string/select_voucher"
+                    android:textColor="@color/app_txt_color_gray"
+                    android:textSize="13sp" />
+            </FrameLayout>
+
+
+            <include
+                android:visibility="gone"
                 layout="@layout/view_voucher_package_item"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

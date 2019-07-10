@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -120,6 +121,8 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     ImageView sendFormScanIv;
     @BindView(R.id.voucherNumHint)
     TextView voucherNumHint;
+    @BindView(R.id.firstAddVoucherFl)
+    FrameLayout firstAddVoucherFl;
 
 
     public final static String SEND_TOKEN_STATUS = "sendTokenStatus";
@@ -139,7 +142,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     final double minFee = Constants.MAX_FEE;
     private boolean isVoucherDetailFragment;
     private String fragmentTag;
-    private String available="";
+    private String available = "";
 
     @Override
     protected int getLayoutView() {
@@ -222,7 +225,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
             if (isVoucherDetailFragment) {
                 selectedVoucherDetail = (VoucherDetailModel) getArguments().getSerializable("voucherDetailModel");
                 initItemVoucherView(selectedVoucherDetail);
-            } else if (fragmentTag.equals(VoucherStatusEnum.ASSETS_HOME_FRAGMENT.getCode())){
+            } else if (fragmentTag.equals(VoucherStatusEnum.ASSETS_HOME_FRAGMENT.getCode())) {
                 toAddress = getArguments().getString(ConstantsType.ADDRESS);
                 destAccountAddressEt.setText(toAddress);
             }
@@ -239,12 +242,15 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
             @Override
             public void onClick(View v) {
 
-                if (isVoucherDetailFragment) {
-                    return;
-                }
-
                 goVoucherFragment();
 
+            }
+        });
+
+        firstAddVoucherFl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goVoucherFragment();
             }
         });
 
@@ -295,8 +301,15 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     }
 
     private void initItemVoucherView(VoucherDetailModel detailModel) {
+
+
+
         VoucherDetailModel.VoucherAcceptanceBean voucherAcceptance = detailModel.getVoucherAcceptance();
         if (voucherAcceptance != null) {
+
+            firstAddVoucherFl.setVisibility(View.GONE);
+            voucherItemLL.setVisibility(View.VISIBLE);
+
             String icon = voucherAcceptance.getIcon();
             if (!TextUtils.isEmpty(icon)) {
                 Glide.with(mContext)
@@ -356,20 +369,20 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                 input.put("params", params);
                 ContractCallResult contractCallResult = Wallet.getInstance().
                         callContract(selectedVoucherDetail.getContractAddress(), input.toJSONString(), Constants.MAX_FEE);
-                if (contractCallResult!=null) {
+                if (contractCallResult != null) {
 
                     try {
                         JSONArray queryRets = contractCallResult.getQueryRets();
                         JSONObject resultOne = (JSONObject) queryRets.get(0);
-                        LogUtils.e("Call"+resultOne.toJSONString());
+                        LogUtils.e("Call" + resultOne.toJSONString());
                         String json = resultOne.toJSONString();
-                        json=CommonUtil.string2Json(json);
+                        json = CommonUtil.string2Json(json);
 
                         CallVoucherBalanceModel callVoucherBalanceMode = new Gson().fromJson(json, CallVoucherBalanceModel.class);
                         available = callVoucherBalanceMode.getResult().getValue().getAvailable();
                         mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), available)));
 
-                    }catch (Exception e){
+                    } catch (Exception e) {
 
                     }
 
@@ -468,14 +481,14 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
 
                 if (!TextUtils.isEmpty(available)) {
                     int available = Integer.parseInt(BPSendTokenVoucherFragment.this.available);
-                    if (available==0) {
-                        ToastUtil.showToast(getActivity(),R.string.send_voucher_num_limit,Toast.LENGTH_LONG);
+                    if (available == 0) {
+                        ToastUtil.showToast(getActivity(), R.string.send_voucher_num_limit, Toast.LENGTH_LONG);
                         return;
                     }
                 }
 
-                if (destAccountAddressEt.getText().toString().trim().equals(WalletCurrentUtils.getWalletAddress(spHelper))){
-                    ToastUtil.showToast(getActivity(),R.string.not_my_self_send_voucher,Toast.LENGTH_LONG);
+                if (destAccountAddressEt.getText().toString().trim().equals(WalletCurrentUtils.getWalletAddress(spHelper))) {
+                    ToastUtil.showToast(getActivity(), R.string.not_my_self_send_voucher, Toast.LENGTH_LONG);
                     return;
                 }
 

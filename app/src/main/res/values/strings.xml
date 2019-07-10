@@ -814,5 +814,6 @@
     <string name="send_voucher_num_limit">可用券数量不足</string>
 
     <string name="not_my_self_send_voucher">不能给自己转赠券</string>
+    <string name="select_voucher">选择券</string>
 
 </resources>
