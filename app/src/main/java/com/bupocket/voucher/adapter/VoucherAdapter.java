@@ -92,7 +92,8 @@ public class VoucherAdapter extends AbsViewHolderAdapter<VoucherDetailModel> {
         holder.setText(R.id.goodsDateTv, date);
 
         if (selectedVoucherDetailModel!=null) {
-            if (selectedVoucherDetailModel.getSpuId().equals(itemData.getSpuId())) {
+            if (selectedVoucherDetailModel.getSpuId().equals(itemData.getSpuId())
+                    &&selectedVoucherDetailModel.getTrancheId().equals(itemData.getTrancheId())) {
                 holder.getView(R.id.selectedStatusIv).setVisibility(View.VISIBLE);
             }else{
                 holder.getView(R.id.selectedStatusIv).setVisibility(View.INVISIBLE);
