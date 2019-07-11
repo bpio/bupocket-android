@@ -201,6 +201,9 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                 destAccountAddressEt.setText(toAddress);
             }
 
+            if (isVoucherDetailFragment) {
+                initItemVoucherView(voucherDetailModel);
+            }
 
         }
 
@@ -270,11 +273,10 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     }
 
     private void initItemVoucherView(VoucherDetailModel detailModel) {
-
-        this.voucherDetailModel=detailModel;
         if (detailModel == null) {
             return;
         }
+        this.voucherDetailModel=detailModel;
         VoucherDetailModel.VoucherAcceptanceBean voucherAcceptance = detailModel.getVoucherAcceptance();
         if (voucherAcceptance != null) {
 
@@ -324,7 +326,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
         goodsDateTv.setText(date);
         mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), detailModel.getBalance() + "")));
 
-//        callVoucherBalance();
+        callVoucherBalance();
 
     }
 
@@ -354,9 +356,16 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                         String json = resultOne.toJSONString();
                         json = CommonUtil.string2Json(json);
 
-                        CallVoucherBalanceModel callVoucherBalanceMode = new Gson().fromJson(json, CallVoucherBalanceModel.class);
-                        available = callVoucherBalanceMode.getResult().getValue().getAvailable();
-                        mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), available)));
+                        final CallVoucherBalanceModel callVoucherBalanceMode = new Gson().fromJson(json, CallVoucherBalanceModel.class);
+
+                       getActivity().runOnUiThread(new Runnable() {
+                           @Override
+                           public void run() {
+                               available = callVoucherBalanceMode.getResult().getValue().getAvailable();
+                               mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), available)));
+
+                           }
+                       });
 
                     } catch (Exception e) {
 
