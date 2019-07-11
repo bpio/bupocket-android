@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="10dp"
-                android:text="@string/imported_wallet_title_txt"
+                android:text="@string/imported_wallet_home_title_txt"
                 android:textColor="@color/app_txt_color_gray"
                 android:textSize="14sp" />
 

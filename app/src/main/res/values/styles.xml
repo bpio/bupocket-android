@@ -273,7 +273,6 @@
     </style>
 
     <style name="BPTextNodePlan">
-        <item name="android:maxEms">8</item>
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>
     </style>
