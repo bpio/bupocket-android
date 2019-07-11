@@ -29,6 +29,7 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.TO;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.WalletCurrentUtils;
@@ -45,6 +46,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -495,7 +498,7 @@ public class BPWalletImportFragment extends BaseFragment {
                             tipDialog.dismiss();
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ToastUtil.showToast(getActivity(), R.string.error_import_message_txt, Toast.LENGTH_SHORT);
+                            ToastUtil.showToast(getActivity(), R.string.wallet_mneonic_error, Toast.LENGTH_SHORT);
                             tipDialog.dismiss();
 
                             return;
@@ -699,11 +702,13 @@ public class BPWalletImportFragment extends BaseFragment {
 
     private boolean mnemonicFlag(EditText mneonicEt) {
         String mneonic = mneonicEt.getText().toString().trim();
+        String[] split = mneonic.split(" {1,}");
         String regex = "[a-zA-Z\\s]+";
-        if (TextUtils.isEmpty(mneonic) || !mneonic.matches(regex)) {
-            DialogUtils.showTitleDialog(mContext, R.string.wallet_create_form_error1, R.string.error_hint);
+        if (TextUtils.isEmpty(mneonic) || !mneonic.matches(regex)||split.length!=12) {
+            DialogUtils.showTitleDialog(mContext, R.string.wallet_mneonic_error, R.string.error_hint);
             return false;
         }
         return true;
     }
+
 }

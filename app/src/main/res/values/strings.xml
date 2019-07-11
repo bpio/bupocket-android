@@ -331,7 +331,7 @@
 
     <string name="receive_qr_txt">收款码</string>
     <string name="safety_tips_title">安全提示</string>
-    <string name="safety_tips_content_txt">您的钱包助记词尚未备份，为防止忘记密码、删除App或丢失手机等情况导致资产损失，请务必备份助记词</string>
+    <string name="safety_tips_content_txt">您当前身份下的钱包助记词尚未备份，为防止忘记密码、删除/卸载APP或丢失手机等情况导致资产损失，请务必妥善备份助记词。</string>
     <string name="backup_immediately_txt">立即备份</string>
     <string name="search_result_not_found">未找到搜索结果</string>
     <string name="switch_to_test_net_message_txt">您已开启测试网</string>
@@ -650,6 +650,7 @@
     <string name="view_change_wallet_pw">修改钱包密码</string>
 
     <string name="wallet_mneonic_error">助记词输入有误</string>
+    <string name="wallet_keystore_error">Keystore无效或安全密码有误</string>
     <string name="wallet_create_form_error2">密码必须是6-30个字符，大小写字母和数字任意两种的组合</string>
     <string name="change_the_password_txt">修改安全密码</string>
     <string name="import_mnemonic_wallet_name">请设置钱包名称</string>

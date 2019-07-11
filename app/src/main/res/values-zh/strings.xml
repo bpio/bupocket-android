@@ -650,6 +650,7 @@
     <string name="view_change_wallet_pw">修改钱包密码</string>
 
     <string name="wallet_mneonic_error">助记词输入有误</string>
+    <string name="wallet_keystore_error">Keystore无效或安全密码有误</string>
     <string name="wallet_create_form_error2">密码必须是6-30个字符，大小写字母和数字任意两种的组合</string>
     <string name="change_the_password_txt">修改安全密码</string>
     <string name="import_mnemonic_wallet_name">请设置钱包名称</string>
@@ -759,6 +760,9 @@
     <string name="old_pwd_error">原安全密码输入不正确</string>
     <string name="pwd_repeat">密码重复，请重新设置</string>
     <string name="new_safe_pwd_error">新安全密码两次输入不一致</string>
+
+
+
 
     <string name="delete_current_wallet_title">确认删除该钱包吗？</string>
     <string name="delete_current_wallet_info">当前删除钱包为当前使用钱包，删除后将默认设置当前身份下的钱包为当前使用钱包。</string>

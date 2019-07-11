@@ -306,7 +306,7 @@
 
     <string name="receive_qr_txt">Receive</string>
     <string name="safety_tips_title">Safety tips</string>
-    <string name="safety_tips_content_txt">Your wallet mnemonics have not been backed up. To prevent loss of assets due to forgetting passwords, deleting apps, or losing your phone, be sure to back up your mnemonics.</string>
+    <string name="safety_tips_content_txt"> The wallet mnemonics in your current identity have not been backed up. To prevent loss of assets caused by forgetting the password, deleting/uninstalling the app, or losing the phone, please be sure to back up the mnemonics.</string>
     <string name="backup_immediately_txt">Backup Now</string>
     <string name="search_result_not_found">No search results found</string>
     <string name="switch_to_test_net_message_txt">You have started the test network</string>
@@ -743,6 +743,7 @@
     <string name="note">Attention:</string>
 
     <string name="wallet_create_error">Creation failure</string>
+    <string name="wallet_keystore_error">Invalid Keystore or incorrect security password</string>
     <string name="delete_node_info">The to-be-deleted node is selected, and the default node in the system will be selected after deletion.</string>
     <string name="not_use_wallet_service">Invalid wallet service address</string>
 

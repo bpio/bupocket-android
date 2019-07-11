@@ -66,12 +66,11 @@ public class CommonUtil {
 
     public static final Pattern NAME_PATTERN = Pattern.compile("^[\\u4E00-\\u9FBF][\\u4E00-\\u9FBF(.|·)]{0,13}[\\u4E00-\\u9FBF]$");
 
-    public static final Pattern NICKNAME_PATTERN = Pattern.compile("^((?!\\d{21})[\\u4E00-\\u9FBF(.|·)|0-9A-Za-z_]){1,20}$");
-//    public static final Pattern PASSWORD_PATTERN = Pattern.compile("[^ \\f\\n\\r\\t\\v]{6,30}$");
+    public static final Pattern NICKNAME_PATTERN = Pattern.compile("[a-zA-Z0-9_\\u4e00-\\u9fa5]{1,20}$");
+
 
     public static final Pattern ADDRESS_DESCRIBE_PATTERN = Pattern.compile(".{0,30}$");
 
-    //    public static final Pattern PASSWORD_PATTERN = Pattern.compile(".{6,30}$");
     public static final Pattern PASSWORD_PATTERN = Pattern.compile("(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z_]{6,30}");
     public static final Pattern OLD_PASSWORD_PATTERN = Pattern.compile(".{6,30}$");
 
@@ -162,7 +161,6 @@ public class CommonUtil {
             return false;
         }
         Matcher m = NICKNAME_PATTERN.matcher(nickname);
-        boolean flag = m.matches();
         return m.matches();
     }
 
