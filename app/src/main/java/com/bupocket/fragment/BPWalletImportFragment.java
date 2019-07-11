@@ -296,9 +296,6 @@ public class BPWalletImportFragment extends BaseFragment {
                 if (!walletNameFlag(mWalletNameEt)) {
                     return;
                 }
-                if (!pwdFlag()) {
-                    return;
-                }
                 final String password = mPasswordEt.getText().toString().trim();
                 final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
@@ -315,13 +312,13 @@ public class BPWalletImportFragment extends BaseFragment {
                             tipDialog.dismiss();
                         } catch (WalletException e) {
                             e.printStackTrace();
-                            ToastUtil.showToast(getActivity(), R.string.error_import_keystore_message_txt, Toast.LENGTH_SHORT);
+                            ToastUtil.showToast(getActivity(), R.string.wallet_mneonic_error, Toast.LENGTH_SHORT);
                             tipDialog.dismiss();
 
                             return;
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ToastUtil.showToast(getActivity(), R.string.error_import_keystore_message_txt, Toast.LENGTH_SHORT);
+                            ToastUtil.showToast(getActivity(), R.string.wallet_mneonic_error, Toast.LENGTH_SHORT);
                             tipDialog.dismiss();
                             return;
                         }

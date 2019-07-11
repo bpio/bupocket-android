@@ -156,7 +156,14 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
         String indntityName = mSetIdentityNameEt.getText().toString().trim();
 
         if (!CommonUtil.validateNickname(indntityName)) {
-            DialogUtils.showTitleDialog(mContext, getString(R.string.wallet_create_form_error4), getString(R.string.error_hint));
+
+            if (isCreateWallet) {
+                DialogUtils.showTitleDialog(mContext, getString(R.string.wallet_create_form_error5), getString(R.string.error_hint));
+            } else {
+                DialogUtils.showTitleDialog(mContext, getString(R.string.wallet_create_form_error4), getString(R.string.error_hint));
+            }
+
+
             return false;
         }
 
@@ -239,7 +246,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
             spHelper.put(address + "-mnemonicCodes", "yes");
             spHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));
             sharedPreferencesHelper.put(address + ConstantsType.WALLET_SKEY, walletBPData.getSkey());
-            WalletCurrentUtils.saveInitHeadIcon(spHelper,address);
+            WalletCurrentUtils.saveInitHeadIcon(spHelper, address);
             final WalletBPData finalWalletBPData = walletBPData;
             getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -270,7 +277,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
         sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.CREATE_MNEONIC_CODE.getCode());
         sharedPreferencesHelper.put("currentWalletAddress", address);
         sharedPreferencesHelper.put(address + ConstantsType.WALLET_SKEY, walletBPData.getSkey());
-        WalletCurrentUtils.saveInitHeadIcon(spHelper,address);
+        WalletCurrentUtils.saveInitHeadIcon(spHelper, address);
         final WalletBPData finalWalletBPData = walletBPData;
         getActivity().runOnUiThread(new Runnable() {
             @Override

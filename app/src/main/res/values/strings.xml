@@ -657,6 +657,7 @@
     <string name="hint_wallet_create_form_input_rePassword">请再次确认安全密码</string>
     <string name="hint_wallet_create_form_input_rePassword_hint">请再次输入安全密码</string>
     <string name="imported_wallet_title_txt">创建/导入钱包</string>
+    <string name="imported_wallet_home_title_txt">创建/导入的钱包</string>
     <!-- recover identity -->
     <string name="recover_edit_mneonic_code">请填写您的助记词</string>
     <string name="recover_edit_mneonic_code_hint">12个英文单词，请按空格分隔单词</string>
@@ -758,6 +759,9 @@
     <string name="old_pwd_error">原安全密码输入不正确</string>
     <string name="pwd_repeat">密码重复，请重新设置</string>
     <string name="new_safe_pwd_error">新安全密码两次输入不一致</string>
+
+
+
 
     <string name="delete_current_wallet_title">确认删除该钱包吗？</string>
     <string name="delete_current_wallet_info">当前删除钱包为当前使用钱包，删除后将默认设置当前身份下的钱包为当前使用钱包。</string>
