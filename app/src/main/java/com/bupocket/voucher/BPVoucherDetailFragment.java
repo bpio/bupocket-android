@@ -197,21 +197,28 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
 
                     String startTime = detailModel.getStartTime();
                     String endTime = detailModel.getEndTime();
-                    String date = "";
+                    String date = getString(R.string.long_date);
                     if (!TextUtils.isEmpty(startTime)) {
-                        date = date +
-                                String.format(mContext.getString(R.string.goods_validity_date),
-                                        TimeUtil.timeStamp2Date(startTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD),
-                                        TimeUtil.timeStamp2Date(endTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD));
+                        date = String.format(mContext.getString(R.string.goods_validity_date),
+                                TimeUtil.timeStamp2Date(startTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD),
+                                TimeUtil.timeStamp2Date(endTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD));
 
                     }
                     validityDateInfoTv.setText(date);
 
                     voucherCodeInfoTv.setText(detailModel.getVoucherId());
-                    voucherSizeInfoTv.setText(detailModel.getVoucherSpec());
-                    voucherDescribeInfoTv.setText(detailModel.getDescription());
-                    voucherNumInfoTv.setText(voucherDetailModel.getBalance());
+                    String voucherSpecNormal = getString(R.string.no_description);
 
+                    String voucherSpec = detailModel.getVoucherSpec();
+                    if (!TextUtils.isEmpty(voucherSpec)) {
+                        voucherSpecNormal=voucherSpec;
+                    }
+                    voucherSizeInfoTv.setText(voucherSpecNormal);
+                    String description = detailModel.getDescription();
+                    if (!TextUtils.isEmpty(description)) {
+                        voucherDescribeInfoTv.setText(description);
+                    }
+                    voucherNumInfoTv.setText(voucherDetailModel.getBalance());
                     String acceptanceIcon = detailModel.getVoucherAcceptance().getIcon();
                     if (!TextUtils.isEmpty(acceptanceIcon)) {
                         Glide.with(mContext)
