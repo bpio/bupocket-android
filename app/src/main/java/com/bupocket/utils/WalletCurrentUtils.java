@@ -3,6 +3,9 @@ package com.bupocket.utils;
 import android.text.TextUtils;
 
 import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
+
+import java.util.Random;
 
 public class WalletCurrentUtils {
 
@@ -35,6 +38,11 @@ public class WalletCurrentUtils {
 
     public static boolean isIdentityWallet(SharedPreferencesHelper spHelper) {
         return getIdentityAddress(spHelper).equals(getWalletAddress(spHelper));
+    }
+
+    public static void saveInitHeadIcon(SharedPreferencesHelper spHelper, String walletAddress) {
+        int selectedPosition = (int) (Math.random() * 10);
+        spHelper.put(walletAddress + ConstantsType.WALLET_HEAD_ICON, selectedPosition);
     }
 
 }

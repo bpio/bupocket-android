@@ -31,6 +31,7 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.TO;
 import com.bupocket.utils.ToastUtil;
+import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletBPData;
@@ -365,7 +366,7 @@ public class BPWalletImportFragment extends BaseFragment {
             } else {
                 spHelper.put(address + ConstantsType.WALLET_SKEY, walletBPData.getSkey());
             }
-
+            WalletCurrentUtils.saveInitHeadIcon(spHelper,address);
             ToastUtil.showToast(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT);
             getActivity().runOnUiThread(new Runnable() {
                 @Override

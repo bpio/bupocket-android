@@ -27,6 +27,7 @@ import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
+import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
 import com.bupocket.wallet.exception.WalletException;
@@ -238,6 +239,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
             spHelper.put(address + "-mnemonicCodes", "yes");
             spHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));
             sharedPreferencesHelper.put(address + ConstantsType.WALLET_SKEY, walletBPData.getSkey());
+            WalletCurrentUtils.saveInitHeadIcon(spHelper,address);
             final WalletBPData finalWalletBPData = walletBPData;
             getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -268,6 +270,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
         sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.CREATE_MNEONIC_CODE.getCode());
         sharedPreferencesHelper.put("currentWalletAddress", address);
         sharedPreferencesHelper.put(address + ConstantsType.WALLET_SKEY, walletBPData.getSkey());
+        WalletCurrentUtils.saveInitHeadIcon(spHelper,address);
         final WalletBPData finalWalletBPData = walletBPData;
         getActivity().runOnUiThread(new Runnable() {
             @Override
