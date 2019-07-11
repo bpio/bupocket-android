@@ -477,7 +477,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
 
     private void showConfirmDialog() {
 
-        final String transferDetail = sendFormNoteEt.getText().toString().trim();
+        final String transferDetail = getString(R.string.send_voucher);
 
         String toAddress = destAccountAddressEt.getText().toString().trim();
 

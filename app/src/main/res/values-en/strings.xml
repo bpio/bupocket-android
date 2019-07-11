@@ -672,9 +672,9 @@
     <!--backup-->
     <string name="tv_backup_hint">If you have mnemonics, it means that you have the ownership of the assets in the wallet</string>
     <string name="backup_wallet_care_three">Attention</string>
-    <string name="backup_wallet_care_three_info">• It is forbidden to take screenshots. Please make sure to back up in a safe environment with no one at presence and no camera around\n
-        • Please copy the mnemonic correctly with paper and pen, and keep it in a safe place where the network is isolated\n
-        • It is forbidden to reveal or disclose mnemonics in any form or method, such as mail, photo albums, etc\n
+    <string name="backup_wallet_care_three_info">• It is forbidden to take screenshots. Please make sure to back up in a safe environment with no one at presence and no camera around\n\n
+        • Please copy the mnemonic correctly with paper and pen, and keep it in a safe place where the network is isolated\n\n
+        • It is forbidden to reveal or disclose mnemonics in any form or method, such as mail, photo albums, etc\n\n
         • Asset security cannot be guaranteed without proper backup. After deleting the wallet or uninstalling the program, you can restore your identity/wallet with mnemonics</string>
     <string name="backup_title">Backup Mnemonics</string>
 

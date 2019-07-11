@@ -182,7 +182,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="15dp"
                         android:layout_marginLeft="15dp"
-                        android:background="@mipmap/currency_price" />
+                        android:background="@mipmap/fill_1" />
 
                     <TextView
                         style="@style/BPTextViewDiscover"

@@ -673,7 +673,11 @@
     <!--backup-->
     <string name="tv_backup_hint">拥有助记词等于拥有钱包资产的所有权</string>
     <string name="backup_wallet_care_three">注意事项</string>
-    <string name="backup_wallet_care_three_info">• 禁止截屏，请确保在四周无人、无摄像头的安全环境下进行备份\n• 请用纸和笔正确抄写助记词，并妥善保管至隔离网络的安全地方\n• 禁止以任何形式或方法将助记词透露或公开，比如邮件、相册等\n• 没有妥善备份就无法保障资产安全，删除钱包或卸载程序后，您可以通过助记词来恢复身份/钱包</string>
+    <string name="backup_wallet_care_three_info">
+        • 禁止截屏，请确保在四周无人、无摄像头的安全环境下进行备份\n\n
+        • 请用纸和笔正确抄写助记词，并妥善保管至隔离网络的安全地方\n\n
+        • 禁止以任何形式或方法将助记词透露或公开，比如邮件、相册等\n\n
+        • 没有妥善备份就无法保障资产安全，删除钱包或卸载程序后，您可以通过助记词来恢复身份/钱包</string>
     <string name="backup_title">备份助记词</string>
 
 
@@ -814,7 +818,6 @@
     <string name="send_voucher_num_limit">可用券数量不足</string>
 
     <string name="not_my_self_send_voucher">不能给自己转赠券</string>
-
     <string name="select_voucher">选择券</string>
 
 
