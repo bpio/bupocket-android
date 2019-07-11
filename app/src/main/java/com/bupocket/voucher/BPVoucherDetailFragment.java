@@ -2,6 +2,7 @@ package com.bupocket.voucher;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.VoucherStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.model.EventBus.SendVoucherMessage;
 import com.bupocket.utils.TimeUtil;
 import com.bupocket.voucher.http.VoucherService;
 import com.bupocket.voucher.model.VoucherAcceptanceBean;
@@ -25,6 +27,9 @@ import com.bupocket.voucher.model.VoucherIssuerBean;
 import com.bupocket.voucher.model.VoucherPackageDetailModel;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
 
@@ -98,6 +103,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
     private VoucherDetailModel voucherDetailModel;
     private VoucherPackageDetailModel detailModel;
 
+
     @Override
     protected int getLayoutView() {
         return R.layout.fragment_voucher_detail;
@@ -127,9 +133,9 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
         if (arguments != null) {
             voucherDetailModel = (VoucherDetailModel) arguments.getSerializable(ConstantsType.VOUCHER_DETAIL);
         }
-
-        reqDetailData();
-
+        if (voucherDetailModel != null) {
+            reqDetailData();
+        }
     }
 
     private void reqDetailData() {
@@ -147,7 +153,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
             @Override
             public void onResponse(Call<ApiResult<VoucherPackageDetailModel>> call,
                                    Response<ApiResult<VoucherPackageDetailModel>> response) {
-                if (detailEmptyView==null) {
+                if (detailEmptyView == null) {
                     return;
                 }
                 detailEmptyView.show("", "");
@@ -193,7 +199,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
                     String endTime = detailModel.getEndTime();
                     String date = "";
                     if (!TextUtils.isEmpty(startTime)) {
-                        date = date+
+                        date = date +
                                 String.format(mContext.getString(R.string.goods_validity_date),
                                         TimeUtil.timeStamp2Date(startTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD),
                                         TimeUtil.timeStamp2Date(endTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD));
@@ -229,7 +235,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<VoucherPackageDetailModel>> call, Throwable t) {
-                if (detailEmptyView==null) {
+                if (detailEmptyView == null) {
                     return;
                 }
                 detailEmptyView.show("", "");
@@ -259,14 +265,14 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
     }
 
     private void goSendVoucherFragment() {
-
         getFragmentManager().findFragmentByTag(BPVoucherDetailFragment.class.getSimpleName());
         BPSendTokenVoucherFragment fragment = new BPSendTokenVoucherFragment();
+        fragment.setDetailVoucher(voucherDetailModel);
         Bundle args = new Bundle();
-        args.putSerializable("voucherDetailModel", voucherDetailModel);
         args.putString(ConstantsType.FRAGMENT_TAG, VoucherStatusEnum.VOUCHER_HOME_FRAGMENT.getCode());
         fragment.setArguments(args);
         startFragment(fragment);
+
     }
 
     private void goAssetIssuer() {
@@ -291,4 +297,5 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
         fragment.setArguments(args);
         startFragment(fragment);
     }
+
 }

@@ -1,6 +1,8 @@
 package com.bupocket.voucher.model;
 
-public class VoucherPackageDetailModel {
+import java.io.Serializable;
+
+public class VoucherPackageDetailModel  implements Serializable {
 
 
 

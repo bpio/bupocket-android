@@ -6,6 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.Html;
@@ -18,8 +19,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
@@ -29,21 +28,13 @@ import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.AddressClickEventEnum;
-import com.bupocket.enums.ScanTransactionTypeEnum;
-import com.bupocket.enums.TxStatusEnum;
+
 import com.bupocket.enums.VoucherStatusEnum;
-import com.bupocket.fragment.BPAddressAddFragment;
 import com.bupocket.fragment.BPAddressBookFragment;
-import com.bupocket.fragment.BPSendStatusFragment;
-import com.bupocket.fragment.BPTransactionTimeoutFragment;
-import com.bupocket.http.api.NodePlanService;
-import com.bupocket.http.api.RetrofitFactory;
-import com.bupocket.http.api.TxService;
-import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.model.CallVoucherBalanceModel;
-import com.bupocket.model.TransConfirmModel;
+import com.bupocket.model.EventBus.SendVoucherMessage;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
@@ -53,11 +44,10 @@ import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.voucher.model.VoucherDetailModel;
+import com.bupocket.voucher.model.VoucherPackageDetailModel;
 import com.bupocket.wallet.Wallet;
-import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -66,18 +56,12 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 import butterknife.BindView;
 import io.bumo.model.response.TransactionBuildBlobResponse;
 import io.bumo.model.response.result.ContractCallResult;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     @BindView(R.id.topbar)
@@ -125,24 +109,14 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     FrameLayout firstAddVoucherFl;
 
 
-    public final static String SEND_TOKEN_STATUS = "sendTokenStatus";
-    ;
     private static final int CHOOSE_ADDRESS_CODE = 1;
 
-    private String hash;
-    private String availableTokenBalance;
-    private QMUITipDialog txSendingTipDialog;
-    private Boolean whetherIdentityWallet = false;
-    protected SharedPreferencesHelper sharedPreferencesHelper;
-
-    private TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean;
-    private long nonce;
-    private VoucherDetailModel selectedVoucherDetail;
     private String toAddress;
     final double minFee = Constants.MAX_FEE;
     private boolean isVoucherDetailFragment;
     private String fragmentTag;
     private String available = "";
+    private VoucherDetailModel voucherDetailModel;
 
     @Override
     protected int getLayoutView() {
@@ -153,7 +127,6 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     protected void initView() {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
 
-//        initData();
         confirmSendInfo();
         initTopBar();
         setDestAddress();
@@ -162,6 +135,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
         voucherNumHint.setVisibility(View.GONE);
         sendFormTxFeeEt.setText(minFee + "");
     }
+
 
     private void buildWatcher() {
         TextWatcher watcher = new TextWatcher() {
@@ -222,10 +196,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
 
             fragmentTag = getArguments().getString(ConstantsType.FRAGMENT_TAG);
             isVoucherDetailFragment = fragmentTag.equals(VoucherStatusEnum.VOUCHER_HOME_FRAGMENT.getCode());
-            if (isVoucherDetailFragment) {
-                selectedVoucherDetail = (VoucherDetailModel) getArguments().getSerializable("voucherDetailModel");
-                initItemVoucherView(selectedVoucherDetail);
-            } else if (fragmentTag.equals(VoucherStatusEnum.ASSETS_HOME_FRAGMENT.getCode())) {
+            if (fragmentTag.equals(VoucherStatusEnum.ASSETS_HOME_FRAGMENT.getCode())) {
                 toAddress = getArguments().getString(ConstantsType.ADDRESS);
                 destAccountAddressEt.setText(toAddress);
             }
@@ -284,8 +255,8 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
         BPVoucherHomeFragment fragment = new BPVoucherHomeFragment();
         Bundle args = new Bundle();
         args.putString(ConstantsType.FRAGMENT_TAG, BPSendTokenVoucherFragment.class.getSimpleName());
-        if (selectedVoucherDetail != null) {
-            args.putSerializable("selectedVoucherDetail", selectedVoucherDetail);
+        if (voucherDetailModel != null) {
+            args.putSerializable("selectedVoucherDetail", voucherDetailModel);
         }
         fragment.setArguments(args);
         startFragment(fragment);
@@ -293,17 +264,17 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
         fragment.setSelectedVoucherListener(new BPVoucherHomeFragment.SelectedVoucherListener() {
             @Override
             public void getSelectedDetail(VoucherDetailModel voucherDetailModel) {
-                selectedVoucherDetail = voucherDetailModel;
-
-                initItemVoucherView(selectedVoucherDetail);
+                initItemVoucherView(voucherDetailModel);
             }
         });
     }
 
     private void initItemVoucherView(VoucherDetailModel detailModel) {
 
-
-
+        this.voucherDetailModel=detailModel;
+        if (detailModel == null) {
+            return;
+        }
         VoucherDetailModel.VoucherAcceptanceBean voucherAcceptance = detailModel.getVoucherAcceptance();
         if (voucherAcceptance != null) {
 
@@ -353,22 +324,27 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
         goodsDateTv.setText(date);
         mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), detailModel.getBalance() + "")));
 
-        callVoucherBalance();
+//        callVoucherBalance();
 
     }
 
     private void callVoucherBalance() {
+
+        if (voucherDetailModel == null) {
+            return;
+        }
+
         new Thread(new Runnable() {
             @Override
             public void run() {
                 JSONObject input = new JSONObject();
                 input.put("method", "balanceOf");
                 JSONObject params = new JSONObject();
-                params.put("skuId", selectedVoucherDetail.getVoucherId());
+                params.put("skuId", voucherDetailModel.getVoucherId());
                 params.put("address", WalletCurrentUtils.getWalletAddress(spHelper));
                 input.put("params", params);
                 ContractCallResult contractCallResult = Wallet.getInstance().
-                        callContract(selectedVoucherDetail.getContractAddress(), input.toJSONString(), Constants.MAX_FEE);
+                        callContract(voucherDetailModel.getContractAddress(), input.toJSONString(), Constants.MAX_FEE);
                 if (contractCallResult != null) {
 
                     try {
@@ -401,11 +377,6 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
         });
     }
 
-
-    private String getDestAccAddr() {
-        return destAccountAddressEt.getText().toString().trim();
-    }
-
     private void confirmSendInfo() {
 
         mConfirmSendBtn.setOnClickListener(new View.OnClickListener() {
@@ -429,10 +400,6 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
 
                     return;
                 }
-
-
-                String sendAmountInput = sendAmountET.getText().toString().trim();
-                final String sendAmount = CommonUtil.rvZeroAndDot(sendAmountET.getText().toString().trim());
 
                 final String note = sendFormNoteEt.getText().toString();
 
@@ -506,10 +473,10 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
         String toAddress = destAccountAddressEt.getText().toString().trim();
 
 
-        final String contractAddress = selectedVoucherDetail.getContractAddress();
+        final String contractAddress = voucherDetailModel.getContractAddress();
         final String amount = sendAmountET.getText().toString();
 
-        final String input = "{\"method\":\"transfer\",\"params\":{\"skuId\":\"" + selectedVoucherDetail.getVoucherId() + "\",\"trancheId\":\"" + selectedVoucherDetail.getTrancheId() + "\",\"to\":\"" + toAddress + "\",\"value\":\"" + amount + "\"}}";
+        final String input = "{\"method\":\"transfer\",\"params\":{\"skuId\":\"" + voucherDetailModel.getVoucherId() + "\",\"trancheId\":\"" + voucherDetailModel.getTrancheId() + "\",\"to\":\"" + toAddress + "\",\"value\":\"" + amount + "\"}}";
         TransferUtils.confirmSendVoucherDialog(mContext, getWalletAddress(), toAddress,
                 "", amount, minFee,
                 transferDetail, input, sendFormNoteEt.getText().toString(), new TransferUtils.TransferListener() {
@@ -600,6 +567,11 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                 break;
             }
         }
+    }
+
+
+    public void setDetailVoucher(VoucherDetailModel voucherDetailModel) {
+        this.voucherDetailModel = voucherDetailModel;
     }
 
 

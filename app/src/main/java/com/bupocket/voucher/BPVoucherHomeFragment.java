@@ -2,8 +2,11 @@ package com.bupocket.voucher;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.Html;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -18,12 +21,14 @@ import com.bupocket.fragment.BPCollectionFragment;
 import com.bupocket.fragment.BPWalletsHomeFragment;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.utils.WalletLocalInfoUtil;
 import com.bupocket.voucher.adapter.VoucherAdapter;
 import com.bupocket.voucher.http.VoucherService;
 import com.bupocket.voucher.model.VoucherDetailModel;
 import com.bupocket.voucher.model.VoucherListModel;
+import com.google.gson.Gson;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -31,6 +36,9 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -75,17 +83,24 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     private SelectedVoucherListener mSeletedVoucherListener;
     private VoucherDetailModel selectedVoucherDetail;
 
+
+
+
     @Override
     protected int getLayoutView() {
+
         return R.layout.fragment_voucher_home_fragment;
     }
 
     @Override
     protected void initView() {
 
+
         if (getArguments() != null) {
             isSendVoucher = getArguments().getString(ConstantsType.FRAGMENT_TAG, "").equals(BPSendTokenVoucherFragment.class.getSimpleName());
-            selectedVoucherDetail = ((VoucherDetailModel) getArguments().getSerializable("selectedVoucherDetail"));
+            if (isSendVoucher) {
+                selectedVoucherDetail = ((VoucherDetailModel) getArguments().getSerializable("selectedVoucherDetail"));
+            }
         }
         initTopbar();
         initListView();
@@ -93,12 +108,15 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
 
     }
 
+
+
     private void initListView() {
         adapter = new VoucherAdapter(mContext);
         adapter.setSelectedVoucherDetailModel(selectedVoucherDetail);
         voucherListLv.setAdapter(adapter);
 
     }
+
 
     private void initTopbar() {
 
@@ -111,7 +129,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
             });
 
             sendNameTv.setVisibility(View.VISIBLE);
-            sendNameTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.send_name_hint), WalletCurrentUtils.getWalletName(getWalletAddress(),spHelper))));
+            sendNameTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.send_name_hint), WalletCurrentUtils.getWalletName(getWalletAddress(), spHelper))));
         } else {
             mTopBar.addLeftImageButton(R.mipmap.icon_voucher_qrcode, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -149,6 +167,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
         reqVoucherAllData(1);
     }
 
+
     @Override
     protected void setListeners() {
 
@@ -162,7 +181,6 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull final RefreshLayout refreshLayout) {
-
                 loadMoreData();
             }
         });
@@ -182,13 +200,9 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
                 if (isSendVoucher) {
                     mSeletedVoucherListener.getSelectedDetail(adapter.getData().get(position));
                     popBackStack();
-
                 } else {
                     goDetailFragment(position);
-
                 }
-
-
             }
         });
 
@@ -263,7 +277,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
                     }
 
                 } else {
-                    if (index==1) {
+                    if (index == 1) {
                         if (voucherEmptyLL != null) {
                             voucherEmptyLL.setVisibility(View.VISIBLE);
                         }
@@ -312,4 +326,5 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     public void setSelectedVoucherListener(SelectedVoucherListener mSeletedVoucherListener) {
         this.mSeletedVoucherListener = mSeletedVoucherListener;
     }
+
 }
