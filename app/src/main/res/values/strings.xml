@@ -655,8 +655,6 @@
     <string name="change_the_password_txt">修改安全密码</string>
     <string name="import_mnemonic_wallet_name">请设置钱包名称</string>
     <string name="hint_wallet_create_form_input_password">请设置安全密码</string>
-    <string name="hint_wallet_create_form_input_rePassword">请再次确认安全密码</string>
-    <string name="hint_wallet_create_form_input_rePassword_hint">请再次输入安全密码</string>
     <string name="imported_wallet_title_txt">创建/导入钱包</string>
     <string name="imported_wallet_home_title_txt">创建/导入的钱包</string>
     <!-- recover identity -->
