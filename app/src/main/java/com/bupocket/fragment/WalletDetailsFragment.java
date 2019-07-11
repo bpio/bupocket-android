@@ -74,9 +74,6 @@ public class WalletDetailsFragment extends AbsBaseFragment {
         walletName = arguments.getString("walletName", "");
         settingWalletNameTv.setText(walletName);
 
-
-
-
     }
 
     @Override

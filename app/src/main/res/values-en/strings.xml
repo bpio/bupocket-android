@@ -8,7 +8,7 @@
 
     <string name="fragment_title_tx_detail_txt">Transaction Detail</string>
     <string name="create_wallet_info_txt_1">Please carefully copy the mnemonic words below and store them in a safe place</string>
-    <string name="create_wallet_txt">Create a Wallet</string>
+    <string name="create_wallet_txt">Create Wallet</string>
 
     <string name="function_opening">This function will be available soon</string>
     <string name="tabbr_wallet_txt">Wallet</string>
@@ -20,7 +20,7 @@
     <string name="wallet_create_form_input_identity_name_empty">Please enter your identity name</string>
     <string name="wallet_create_form_input_password_empty">Please enter your password</string>
     <string name="wallet_create_form_input_rePassword_empty">Please confirm your password</string>
-    <string name="wallet_create_form_error1">Passwords do not match</string>
+    <string name="wallet_create_form_error1">Passwords input do not match</string>
 
     <string name="wallet_create_creating_txt">Creating</string>
     <string name="wallet_create_created_txt">Created successfully</string>
@@ -43,7 +43,7 @@
     <string name="backup_mneonic_code_btn_txt">I Have Copied</string>
     <string name="view_title_confirm_mneonic_code">Confirm Mnemonics</string>
     <string name="confirm_mneonic_code_txt">Please click the mnemonic words in order to confirm that you backed up correctly.</string>
-    <string name="confirm_mneonic_code_btn_txt">Done</string>
+    <string name="confirm_mneonic_code_btn_txt">Completed</string>
     <string name="wallet_password_confirm_title">Confirm password</string>
     <string name="wallet_password_confirm_txt1">Please fill in the identity password to confirm the backup</string>
     <string name="hint_wallet_password_confirm_txt1">The length is 6~30 characters. It is recommended to mix uppercase and lowercase letters plus numbers.</string>
@@ -73,12 +73,12 @@
     <string name="recover_wallet_reloading">Recovering</string>
     <string name="recover_wallet_error_tip">The mnemonic words entered are incorrect, please enter again</string>
 
-    <string name="view_title_wallet_sendBU">transfer</string>
-    <string name="send_note_title">Remark</string>
+    <string name="view_title_wallet_sendBU">Transfer</string>
+    <string name="send_note_title">Memo</string>
     <string name="send_fee_title">Maximum transaction fee (BU)</string>
     <string name="send_input_receiver_address_hint">Please enter the recipient address</string>
 
-    <string name="send_amount_title">Transfer amount</string>
+    <string name="send_amount_title">Amount to transfer</string>
     <string name="send_hint_txt1">Please enter the amount to be transferred</string>
     <string name="send_hint_txt2">Remarks cannot exceed 20 characters</string>
     <string name="send_hint_txt3">Please enter the transaction fee</string>
@@ -306,7 +306,7 @@
 
     <string name="receive_qr_txt">Receive</string>
     <string name="safety_tips_title">Safety tips</string>
-    <string name="safety_tips_content_txt">Your wallet mnemonics have not been backed up. To prevent loss of assets due to forgetting passwords, deleting apps, or losing your phone, be sure to back up your mnemonics.</string>
+    <string name="safety_tips_content_txt"> The wallet mnemonics in your current identity have not been backed up. To prevent loss of assets caused by forgetting the password, deleting/uninstalling the app, or losing the phone, please be sure to back up the mnemonics.</string>
     <string name="backup_immediately_txt">Backup Now</string>
     <string name="search_result_not_found">No search results found</string>
     <string name="switch_to_test_net_message_txt">You have started the test network</string>
@@ -414,7 +414,7 @@
     <string name="vote_record">Record of Votes</string>
     <string name="invite_vote_txt">Invite to Vote</string>
     <string name="revoke_no_vote_error_message_txt">No revocable votes</string>
-    <string name="invite_share_txt">Invite to vote</string>
+    <string name="invite_share_txt">Invite to Vote</string>
 
     <string name="details_txt">Details>></string>
     <string name="details">Details</string>
@@ -546,7 +546,7 @@
     <string name="tx_time">Timestamp</string>
     <string name="tx_value">Value</string>
     <string name="tx_value_bu">Value(BU)</string>
-    <string name="tx_to_bu">The receiving account(BU)</string>
+    <string name="tx_to_bu">Recipient account (BU address)</string>
     <string name="tx_fee_bu">Transaction fees(BU)</string>
 
     <string name="tx_from_en">From</string>
@@ -653,10 +653,12 @@
     <string name="wallet_create_form_error2">The password must be composed of numbers and uppercase or lowercase letters and the combination must be between 6-30 characters</string>
     <string name="change_the_password_txt">Modify Security Password</string>
     <string name="import_mnemonic_wallet_name">Please set the wallet name</string>
-    <string name="hint_wallet_create_form_input_password">Please set the security password</string>
+    <string name="hint_wallet_create_form_input_password">Please enter your security password again</string>
     <string name="hint_wallet_create_form_input_rePassword">Please confirm the security password again</string>
-    <string name="hint_wallet_create_form_input_rePassword_hint">Please enter your security password again</string>
+    <string name="wallet_create__input_rePassword">Please enter your security password again</string>
+
     <string name="imported_wallet_title_txt">Create/import wallet</string>
+    <string name="imported_wallet_home_title_txt">Create/import wallet</string>
     <string name="wallet_create_form_error4">The identity name only allows letters, Chinese characters, numbers and underscores, and the length cannot exceed 20 characters</string>
     <string name="wallet_create_form_error5">The wallet name only allows letters, Chinese characters, numbers and underscores, and the length cannot exceed 20 characters</string>
 
@@ -742,6 +744,7 @@
     <string name="note">Attention:</string>
 
     <string name="wallet_create_error">Creation failure</string>
+    <string name="wallet_keystore_error">Invalid Keystore or incorrect security password</string>
     <string name="delete_node_info">The to-be-deleted node is selected, and the default node in the system will be selected after deletion.</string>
     <string name="not_use_wallet_service">Invalid wallet service address</string>
 
@@ -753,6 +756,7 @@
 
 
     <!--create wallet -->
+
     <string name="old_pwd_error">Previous security password is not correct</string>
     <string name="pwd_repeat">Repeated password, please reset</string>
     <string name="new_safe_pwd_error">New security passwords do not match</string>
@@ -818,4 +822,6 @@
     <string name="not_my_self_send_voucher">Voucher donation to yourself is not allowed</string>
     <string name="select_voucher">Select a Voucher</string>
 
+=======
+>>>>>>> feature/create_wallet
 </resources>

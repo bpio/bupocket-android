@@ -88,7 +88,7 @@
                 android:id="@+id/passwordConfirmEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_wallet_create_form_input_rePassword"
+                android:hint="@string/wallet_create__input_rePassword"
                 android:inputType="textPassword"
                 android:textSize="14sp"
                 android:theme="@style/BPEditText" />

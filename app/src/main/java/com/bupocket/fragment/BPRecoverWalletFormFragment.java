@@ -24,6 +24,7 @@ import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
 import com.bupocket.wallet.model.WalletBPData;
@@ -268,6 +269,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
                             sharedPreferencesHelper.put("currentWalletAddress", address);
                             sharedPreferencesHelper.put("mnemonicWordBackupState", "0");
                             sharedPreferencesHelper.put(address+ConstantsType.WALLET_SKEY, walletBPData.getSkey());
+                            WalletCurrentUtils.saveInitHeadIcon(spHelper,address);
                             tipDialog.dismiss();
 
                             getActivity().runOnUiThread(new Runnable() {

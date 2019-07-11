@@ -29,8 +29,10 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.TO;
 import com.bupocket.utils.ToastUtil;
+import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletBPData;
@@ -44,6 +46,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -295,9 +299,6 @@ public class BPWalletImportFragment extends BaseFragment {
                 if (!walletNameFlag(mWalletNameEt)) {
                     return;
                 }
-                if (!pwdFlag()) {
-                    return;
-                }
                 final String password = mPasswordEt.getText().toString().trim();
                 final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
@@ -314,13 +315,13 @@ public class BPWalletImportFragment extends BaseFragment {
                             tipDialog.dismiss();
                         } catch (WalletException e) {
                             e.printStackTrace();
-                            ToastUtil.showToast(getActivity(), R.string.error_import_keystore_message_txt, Toast.LENGTH_SHORT);
+                            ToastUtil.showToast(getActivity(), R.string.wallet_mneonic_error, Toast.LENGTH_SHORT);
                             tipDialog.dismiss();
 
                             return;
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ToastUtil.showToast(getActivity(), R.string.error_import_keystore_message_txt, Toast.LENGTH_SHORT);
+                            ToastUtil.showToast(getActivity(), R.string.wallet_mneonic_error, Toast.LENGTH_SHORT);
                             tipDialog.dismiss();
                             return;
                         }
@@ -365,7 +366,7 @@ public class BPWalletImportFragment extends BaseFragment {
             } else {
                 spHelper.put(address + ConstantsType.WALLET_SKEY, walletBPData.getSkey());
             }
-
+            WalletCurrentUtils.saveInitHeadIcon(spHelper,address);
             ToastUtil.showToast(getActivity(), R.string.import_success_message_txt, Toast.LENGTH_SHORT);
             getActivity().runOnUiThread(new Runnable() {
                 @Override
@@ -497,7 +498,7 @@ public class BPWalletImportFragment extends BaseFragment {
                             tipDialog.dismiss();
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ToastUtil.showToast(getActivity(), R.string.error_import_message_txt, Toast.LENGTH_SHORT);
+                            ToastUtil.showToast(getActivity(), R.string.wallet_mneonic_error, Toast.LENGTH_SHORT);
                             tipDialog.dismiss();
 
                             return;
@@ -701,11 +702,13 @@ public class BPWalletImportFragment extends BaseFragment {
 
     private boolean mnemonicFlag(EditText mneonicEt) {
         String mneonic = mneonicEt.getText().toString().trim();
+        String[] split = mneonic.split(" {1,}");
         String regex = "[a-zA-Z\\s]+";
-        if (TextUtils.isEmpty(mneonic) || !mneonic.matches(regex)) {
-            DialogUtils.showTitleDialog(mContext, R.string.wallet_create_form_error1, R.string.error_hint);
+        if (TextUtils.isEmpty(mneonic) || !mneonic.matches(regex)||split.length!=12) {
+            DialogUtils.showTitleDialog(mContext, R.string.wallet_mneonic_error, R.string.error_hint);
             return false;
         }
         return true;
     }
+
 }
