@@ -241,6 +241,46 @@ public class Wallet {
     }
 
 
+    public AccountGetInfoResponse GetInfo(String address) throws WalletException {
+        Boolean flag = false;
+
+        AccountGetInfoRequest accountGetInfoRequest = new AccountGetInfoRequest();
+        accountGetInfoRequest.setAddress(address);
+        AccountGetInfoResponse info = sdk.getAccountService().getInfo(accountGetInfoRequest);
+        if (0 == info.getErrorCode()) {
+
+        } else {
+            throw new WalletException(ExceptionEnum.ADDRESS_NOT_EXIST.getCode(), ExceptionEnum.ADDRESS_NOT_EXIST.getMessage());
+        }
+//        } else if (ExceptionEnum.ADDRESS_NOT_EXIST.getCode().equals(info.getErrorCode() + "")) {
+//            throw new WalletException(ExceptionEnum.ADDRESS_NOT_EXIST.getCode(), ExceptionEnum.ADDRESS_NOT_EXIST.getMessage());
+//        } else {
+//            System.out.println(JSON.toJSONString(accountGetInfoRequest, true));
+//        }
+        return info;
+    }
+
+
+    public long checkToAddressValidateAndOpenAccount(String password, String bPData, String fromAddr, String toAddr, String amount, String fee) {
+        long nonce = 0;
+        try {
+            AccountGetInfoResponse accountGetInfoResponse = Wallet.getInstance().GetInfo(toAddr);
+        } catch (WalletException e) {
+            e.printStackTrace();
+            //address not exist
+            try {
+                nonce = Wallet.getInstance().getAccountNonce(fromAddr) + 1;
+                String hash = Wallet.getInstance().sendBuNoNonceVoucher(password, bPData, fromAddr, toAddr, amount, "", fee, nonce);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+        }
+
+        return nonce;
+    }
+
+
     public String sendBuNoNonce(String password, String bPData, String fromAccAddr, String toAccAddr, String amount, String note, String fee, long nonce) throws Exception {
         String hash = null;
         try {
@@ -266,6 +306,32 @@ public class Wallet {
         }
         return hash;
     }
+
+    public String sendBuNoNonceVoucher(String senderPrivateKey, String bPData, String fromAccAddr, String toAccAddr, String amount, String note, String fee, long nonce) throws Exception {
+        String hash = null;
+        try {
+            // Init variable
+            // The account address to receive bu
+            String destAddress = toAccAddr;
+            // The amount to be sent
+            Long sendAmount = ToBaseUnit.BU2MO(amount);
+            // The fixed write 1000L, the unit is MO
+            Long gasPrice = 1000L;
+            // Set up the maximum cost 0.01BU
+            Long feeLimit = ToBaseUnit.BU2MO(fee);
+            // Transaction initiation account's nonce + 1
+            String transMetadata = note;
+
+//            Long nonce = getAccountNonce(fromAccAddr) + 1;
+            hash = sendBu(senderPrivateKey, destAddress, sendAmount, nonce, gasPrice, feeLimit, transMetadata);
+        } catch (WalletException e) {
+            throw new WalletException(e.getErrCode(), e.getErrMsg());
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+        return hash;
+    }
+
 
     public String sendBu(String password, String bPData, String fromAccAddr, String toAccAddr, String amount, String note, String fee) throws Exception {
         String hash = null;
@@ -985,7 +1051,7 @@ public class Wallet {
     }
 
 
-    public ContractCallResult callContract(String contractAddress,String input,double fee){
+    public ContractCallResult callContract(String contractAddress, String input, double fee) {
 
         // Amount
         Long feeLimit = ToBaseUnit.BU2MO(fee + "");

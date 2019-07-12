@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
@@ -59,6 +60,7 @@ import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
 import butterknife.BindView;
 import io.bumo.model.response.TransactionBuildBlobResponse;
 import io.bumo.model.response.result.ContractCallResult;
@@ -117,6 +119,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     private String fragmentTag;
     private String available = "";
     private VoucherDetailModel voucherDetailModel;
+    private QMUITipDialog submitDialog;
 
     @Override
     protected int getLayoutView() {
@@ -276,7 +279,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
         if (detailModel == null) {
             return;
         }
-        this.voucherDetailModel=detailModel;
+        this.voucherDetailModel = detailModel;
         VoucherDetailModel.VoucherAcceptanceBean voucherAcceptance = detailModel.getVoucherAcceptance();
         if (voucherAcceptance != null) {
 
@@ -358,14 +361,14 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
 
                         final CallVoucherBalanceModel callVoucherBalanceMode = new Gson().fromJson(json, CallVoucherBalanceModel.class);
 
-                       getActivity().runOnUiThread(new Runnable() {
-                           @Override
-                           public void run() {
-                               available = callVoucherBalanceMode.getResult().getValue().getAvailable();
-                               mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), available)));
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                available = callVoucherBalanceMode.getResult().getValue().getAvailable();
+                                mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), available)));
 
-                           }
-                       });
+                            }
+                        });
 
                     } catch (Exception e) {
 
@@ -499,22 +502,75 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                         new Thread(new Runnable() {
                             @Override
                             public void run() {
+
+
                                 try {
-
-                                    final TransactionBuildBlobResponse buildBlobResponse;
-
-                                    buildBlobResponse = Wallet.getInstance().buildBlob(amount,
+//                                    final TransactionBuildBlobResponse[] buildBlobResponse = {transactionBuildBlobResponse};
+                                    final TransactionBuildBlobResponse transactionBuildBlobResponse = Wallet.getInstance().buildBlob(amount,
                                             input, WalletCurrentUtils.getWalletAddress(spHelper),
                                             String.valueOf(minFee), contractAddress, transferDetail);
 
+//
                                     DialogUtils.getSignatureInfo(getActivity(), mContext, getBPAccountData(), getWalletAddress(), new SignatureListener() {
                                         @Override
-                                        public void success(String privateKey) {
-                                            submitTransactionBase(privateKey, buildBlobResponse, fragmentTag,toAddress);
+                                        public void success(final String privateKey) {
+
+                                            new Thread(new Runnable() {
+                                                @Override
+                                                public void run() {
+
+                                                    getActivity().runOnUiThread(new Runnable() {
+                                                        @Override
+                                                        public void run() {
+                                                            submitDialog = new QMUITipDialog.Builder(getContext())
+                                                                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                                                                    .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
+                                                                    .create();
+                                                            submitDialog.show();
+                                                        }
+                                                    });
+                                                    long oldNonce = Wallet.getInstance().checkToAddressValidateAndOpenAccount(privateKey, getBPAccountData(), getWalletAddress(), toAddress, 0.02 + "", Constants.MIN_FEE + "");
+//                                                    submitDialog.dismiss();
+//
+                                                    if (oldNonce != 0) {
+
+                                                        try {
+                                                            final TransactionBuildBlobResponse transactionBuildBlobResponse1 = Wallet.getInstance().buildBlob(amount,
+                                                                    input, WalletCurrentUtils.getWalletAddress(spHelper),
+                                                                    String.valueOf(minFee), contractAddress, transferDetail);
+
+                                                            getActivity().runOnUiThread(new Runnable() {
+                                                                @Override
+                                                                public void run() {
+                                                                    submitDialog.dismiss();
+                                                                    submitTransactionBase(privateKey, transactionBuildBlobResponse1, fragmentTag, toAddress);
+                                                                }
+                                                            });
+
+
+                                                        } catch (Exception e) {
+                                                            e.printStackTrace();
+                                                        }
+//
+                                                    } else {
+                                                        getActivity().runOnUiThread(new Runnable() {
+                                                            @Override
+                                                            public void run() {
+                                                                submitDialog.dismiss();
+                                                            }
+                                                        });
+                                                        submitTransactionBase(privateKey, transactionBuildBlobResponse, fragmentTag, toAddress);
+                                                    }
+//
+//
+                                                }
+                                            }).start();
+
+
                                         }
                                     });
-
-
+//
+//
                                 } catch (WalletException e) {
                                     if (e.getErrCode().equals(com.bupocket.wallet.enums.ExceptionEnum.ADDRESS_NOT_EXIST.getCode())) {
                                         ToastUtil.showToast(getActivity(), getString(R.string.address_not_exist), Toast.LENGTH_SHORT);

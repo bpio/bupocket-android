@@ -411,8 +411,7 @@ public class DialogUtils {
     }
 
 
-
-    public   static void getSignatureInfo(final Activity mActivity,final Context mContext,final String accountData,final String walletAddress, final SignatureListener listener) {
+    public static void getSignatureInfo(final Activity mActivity, final Context mContext, final String accountData, final String walletAddress, final SignatureListener listener) {
 
         mActivity.runOnUiThread(new Runnable() {
             @Override
@@ -422,9 +421,9 @@ public class DialogUtils {
                 qmuiDialog.setContentView(R.layout.view_password_comfirm_common);
 
                 Button mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
-                EditText passwordConfirmEt=qmuiDialog.findViewById(R.id.passwordConfirmEt);
+                EditText passwordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
                 passwordConfirmEt.setHint(mContext.getString(R.string.create_wallet_pw_err_hint));
-                TextView passwordConfirmNotice=qmuiDialog.findViewById(R.id.passwordConfirmNotice);
+                TextView passwordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
                 passwordConfirmNotice.setText(mContext.getString(R.string.voucher_pwd_confirm_hint));
 
                 ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
@@ -490,6 +489,10 @@ public class DialogUtils {
             }
         });
     }
+
+
+
+
 
 
     public static void showSoftInputFromWindow(EditText editText) {
