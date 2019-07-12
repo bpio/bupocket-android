@@ -61,8 +61,7 @@
     <string name="tx_timeout_txt1">Request timeout</string>
 
     <string name="password_comfirm_dialog_title">Confirm password</string>
-    <string name="password_comfirm_dialog_sub_txt">Please fill in the wallet password to confirm the transfer</string>
-    <string name="password_comfirm_dialog_to_backup">Please enter the identity password to confirm the backup</string>
+    <string name="password_comfirm_dialog_sub_txt">Fill in the security code to confirm to transfer</string>
     <!-- 恢复身份 -->
     <string name="recover_wallet_title">Restore Identity</string>
     <string name="recover_input_wallet_name_error">Only letters, numerals, and underscores are allowed and it cannot exceed 20 characters</string>
@@ -810,7 +809,7 @@
 
     <string name="voucher_send_confirm_title">Confirm to Donate</string>
     <string name="send_voucher">Donate encrypted digital vouchers</string>
-    <string name="voucher_pwd_confirm_hint" >Please input the security password for current wallet to confirm donation</string>
+    <string name="voucher_pwd_confirm_hint" >Fill in the security code to confirm to donate</string>
 
 
     <string name="tx_voucher_status_success_txt">Donation Success</string>
@@ -822,6 +821,7 @@
     <string name="not_my_self_send_voucher">Voucher donation to yourself is not allowed</string>
     <string name="select_voucher">Select a Voucher</string>
 
-=======
->>>>>>> feature/create_wallet
+    <string name="long_date">Long Term</string>
+    <string name="no_description">None</string>
+    <string name="password_backup_hint">Fill in the security code to confirm to back up</string>
 </resources>

@@ -98,13 +98,7 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
             @Override
             public void onClick(View v) {
                 if (mnemonicCodeList == null) {
-                    String input="";
-                    if (wallet_address.equals(WalletCurrentUtils.getIdentityAddress(spHelper))) {
-                        input=getString(R.string.wallet_password_confirm_txt1);
-                    }else{
-                        input=getString(R.string.export_keystore_password_confirm_txt);
-                    }
-
+                    String input=getString(R.string.password_backup_hint);
                     DialogUtils.showPassWordInputDialog(getActivity(), input, "", new DialogUtils.ConfirmListener() {
                         @Override
                         public void confirm(final String password) {

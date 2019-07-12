@@ -71,8 +71,7 @@
     <string name="tx_timeout_txt1">请求超时</string>
 
     <string name="password_comfirm_dialog_title">密码确认</string>
-    <string name="password_comfirm_dialog_sub_txt">请填写钱包密码以确认转出</string>
-    <string name="password_comfirm_dialog_to_backup">请填写身份密码以确认备份</string>
+    <string name="password_comfirm_dialog_sub_txt">请填写安全密码以确认转出</string>
 
 
     <string name="view_title_wallet_sendBU">转账</string>
@@ -754,7 +753,8 @@
     <string name="old_pwd_error">原安全密码输入不正确</string>
     <string name="pwd_repeat">密码重复，请重新设置</string>
     <string name="new_safe_pwd_error">新安全密码两次输入不一致</string>
-
+    <string name="hint_wallet_create_form_input_rePassword">请再次确认安全密码</string>
+    <string name="wallet_create__input_rePassword">请再次输入安全密码</string>
 
 
 
@@ -810,7 +810,7 @@
 
     <string name="voucher_send_confirm_title">确认转赠</string>
     <string name="send_voucher">转赠加密数字券</string>
-    <string name="voucher_pwd_confirm_hint" >请填写当前使用钱包的安全密码以确认转赠</string>
+    <string name="voucher_pwd_confirm_hint" >请填写安全密码以确认转增</string>
     <string name="tx_voucher_status_success_txt">转赠成功</string>
     <string name="send_voucher_failure">转赠失败</string>
     <string name="send_voucher_timeout">转赠超时</string>
@@ -823,6 +823,7 @@
     <string name="select_voucher">选择券</string>
     <string name="long_date">长期</string>
     <string name="no_description">暂无</string>
+    <string name="password_backup_hint">请填写安全密码以确认备份</string>
 
 
 </resources>
