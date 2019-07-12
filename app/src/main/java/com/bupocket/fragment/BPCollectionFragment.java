@@ -148,10 +148,14 @@ public class BPCollectionFragment extends AbsBaseFragment {
         Bitmap bitmap = Bitmap.createBitmap(collectionLL.getWidth(), collectionLL.getHeight(),
                 Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
-        collectionLL.draw(canvas);
+        backIv.setVisibility(View.INVISIBLE);
+        shareQrCodeIv.setVisibility(View.INVISIBLE);
+        this.collectionLL.draw(canvas);
 
         Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bitmap, null, null));
         shareImg("收款码", "收款码", "收款码", uri);
+        backIv.setVisibility(View.VISIBLE);
+        shareQrCodeIv.setVisibility(View.VISIBLE);
     }
 
 

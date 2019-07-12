@@ -24,7 +24,7 @@ public class TimeUtil {
     private static long halfamonth = day * 15;
     private static long month = day * 30;
     public static final String TIME_TYPE = "yyyy-MM-dd HH:mm:ss";
-    public static final String TIME_TYPE_YYYYY_MM_DD = "yyyy-MM-dd HH:mm:ss";
+    public static final String TIME_TYPE_YYYYY_MM_DD = "yyyy-MM-dd";
     public static final String TIME_TYPE_ONE = "yyyy-MM-dd";
 
 
