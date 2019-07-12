@@ -81,6 +81,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -660,6 +661,14 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
                     goIssueTokenFragment(resultContent);
                 } else {
+
+                    try {
+                        java.net.URL url = new java.net.URL(resultContent);
+                        String path = url.getPath();
+                        resultContent = path;
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
 
                     if (resultContent.startsWith(Constants.QR_LOGIN_PREFIX)) {
                         goLogin(resultContent);
