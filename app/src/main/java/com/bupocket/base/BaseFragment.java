@@ -60,6 +60,7 @@ public abstract class BaseFragment extends QMUIFragment {
     private QMUITipDialog submitDialog;
     private TransferHandler transferHandler;
     private static String fragmentTag;
+    private static String toAddress;
 
 
     @Override
@@ -203,7 +204,8 @@ public abstract class BaseFragment extends QMUIFragment {
         });
     }
 
-    protected void submitTransactionBase(final String privateKey, final TransactionBuildBlobResponse transBlob, String fragmentTag) {
+    protected void submitTransactionBase(final String privateKey, final TransactionBuildBlobResponse transBlob, String fragmentTag,String toAddress) {
+        this.toAddress = toAddress;
         this.fragmentTag = fragmentTag;
         submitTransactionBase(privateKey,transBlob);
     }
@@ -366,9 +368,7 @@ public abstract class BaseFragment extends QMUIFragment {
                             } else {
                                 TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
                                 mFragment.timerTask.cancel();
-                                if (mFragment.submitDialog != null) {
-                                    mFragment.submitDialog.dismiss();
-                                }
+
                                 if (com.bupocket.wallet.enums.ExceptionEnum.BU_NOT_ENOUGH_FOR_PAYMENT.getCode().equals(txDetailRespBoBean.getErrorCode())) {
                                     Toast.makeText(mFragment.getActivity(), R.string.balance_not_enough, Toast.LENGTH_SHORT).show();
                                 }
@@ -382,13 +382,14 @@ public abstract class BaseFragment extends QMUIFragment {
                                 argz.putString("sendTime", txDetailRespBoBean.getApplyTimeDate());
                                 argz.putString("txHash", mFragment.txHash);
 
-
-
                                 BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
 
-
+                                if (mFragment.submitDialog != null) {
+                                    mFragment.submitDialog.dismiss();
+                                }
                                 if (!TextUtils.isEmpty(fragmentTag)) {
                                     argz.putString(ConstantsType.FRAGMENT_TAG, fragmentTag);
+                                    argz.putString("destAccAddr",toAddress);
                                     BPSendVoucherStatusFragment bpSendTokenVoucherFragment = new BPSendVoucherStatusFragment();
                                     bpSendTokenVoucherFragment.setArguments(argz);
                                     mFragment.startFragment(bpSendTokenVoucherFragment);

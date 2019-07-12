@@ -112,7 +112,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     private static final int CHOOSE_ADDRESS_CODE = 1;
 
     private String toAddress;
-    final double minFee = Constants.MAX_FEE;
+    final double minFee = Constants.VOUCHER_MIN_FEE;
     private boolean isVoucherDetailFragment;
     private String fragmentTag;
     private String available = "";
@@ -391,95 +391,99 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
         mConfirmSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final QMUITipDialog tipDialog;
 
-                String address = destAccountAddressEt.getText().toString().trim();
-                Boolean flag = Wallet.getInstance().checkAccAddress(address);
-                if (!flag || CommonUtil.isNull(address)) {
-                    tipDialog = new QMUITipDialog.Builder(getContext())
-                            .setTipWord(getResources().getString(R.string.invalid_address))
-                            .create();
-                    tipDialog.show();
-                    destAccountAddressEt.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            tipDialog.dismiss();
-                        }
-                    }, 1500);
-
-                    return;
-                }
-
-                final String note = sendFormNoteEt.getText().toString();
-
-                if (!CommonUtil.isNull(note) && note.length() > Constants.SEND_TOKEN_NOTE_MAX_LENGTH) {
-                    tipDialog = new QMUITipDialog.Builder(getContext())
-                            .setTipWord(getResources().getString(R.string.send_token_note_too_long))
-                            .create();
-                    tipDialog.show();
-                    sendFormNoteEt.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            tipDialog.dismiss();
-                        }
-                    }, 1500);
-                    return;
-                }
-
-                final String txFee = CommonUtil.rvZeroAndDot(sendFormTxFeeEt.getText().toString());
-
-                if (!CommonUtil.isBU(txFee) || CommonUtil.isNull(txFee) || CommonUtil.checkSendAmountDecimals(txFee, Constants.BU_DECIMAL.toString())) {
-                    tipDialog = new QMUITipDialog.Builder(getContext())
-                            .setTipWord(getResources().getString(R.string.invalid_tx_fee))
-                            .create();
-                    tipDialog.show();
-                    sendFormTxFeeEt.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            tipDialog.dismiss();
-                        }
-                    }, 1500);
-                    return;
-                }
-                if (Double.parseDouble(txFee) > Constants.MAX_FEE) {
-                    tipDialog = new QMUITipDialog.Builder(getContext())
-                            .setTipWord(getResources().getString(R.string.tx_fee_too_big))
-                            .create();
-                    tipDialog.show();
-                    sendFormTxFeeEt.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            tipDialog.dismiss();
-                        }
-                    }, 1500);
-                    return;
-                }
-
-                if (!TextUtils.isEmpty(available)) {
-                    int available = Integer.parseInt(BPSendTokenVoucherFragment.this.available);
-                    if (available == 0) {
-                        ToastUtil.showToast(getActivity(), R.string.send_voucher_num_limit, Toast.LENGTH_LONG);
-                        return;
-                    }
-                }
-
-                if (destAccountAddressEt.getText().toString().trim().equals(WalletCurrentUtils.getWalletAddress(spHelper))) {
-                    ToastUtil.showToast(getActivity(), R.string.not_my_self_send_voucher, Toast.LENGTH_LONG);
-                    return;
-                }
-
-                showConfirmDialog();
-
+                startSendVoucher();
 
             }
         });
+    }
+
+    private void startSendVoucher() {
+        final QMUITipDialog tipDialog;
+
+        String address = destAccountAddressEt.getText().toString().trim();
+        Boolean flag = Wallet.getInstance().checkAccAddress(address);
+        if (!flag || CommonUtil.isNull(address)) {
+            tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setTipWord(getResources().getString(R.string.invalid_address))
+                    .create();
+            tipDialog.show();
+            destAccountAddressEt.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tipDialog.dismiss();
+                }
+            }, 1500);
+
+            return;
+        }
+
+        final String note = sendFormNoteEt.getText().toString();
+
+        if (!CommonUtil.isNull(note) && note.length() > Constants.SEND_TOKEN_NOTE_MAX_LENGTH) {
+            tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setTipWord(getResources().getString(R.string.send_token_note_too_long))
+                    .create();
+            tipDialog.show();
+            sendFormNoteEt.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tipDialog.dismiss();
+                }
+            }, 1500);
+            return;
+        }
+
+        final String txFee = CommonUtil.rvZeroAndDot(sendFormTxFeeEt.getText().toString());
+
+        if (!CommonUtil.isBU(txFee) || CommonUtil.isNull(txFee) || CommonUtil.checkSendAmountDecimals(txFee, Constants.BU_DECIMAL.toString())) {
+            tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setTipWord(getResources().getString(R.string.invalid_tx_fee))
+                    .create();
+            tipDialog.show();
+            sendFormTxFeeEt.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tipDialog.dismiss();
+                }
+            }, 1500);
+            return;
+        }
+        if (Double.parseDouble(txFee) > Constants.MAX_FEE) {
+            tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setTipWord(getResources().getString(R.string.tx_fee_too_big))
+                    .create();
+            tipDialog.show();
+            sendFormTxFeeEt.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tipDialog.dismiss();
+                }
+            }, 1500);
+            return;
+        }
+
+        if (!TextUtils.isEmpty(available)) {
+            int available = Integer.parseInt(BPSendTokenVoucherFragment.this.available);
+            if (available == 0) {
+                ToastUtil.showToast(getActivity(), R.string.send_voucher_num_limit, Toast.LENGTH_LONG);
+                return;
+            }
+        }
+
+        if (destAccountAddressEt.getText().toString().trim().equals(WalletCurrentUtils.getWalletAddress(spHelper))) {
+            ToastUtil.showToast(getActivity(), R.string.not_my_self_send_voucher, Toast.LENGTH_LONG);
+            return;
+        }
+
+        showConfirmDialog();
     }
 
     private void showConfirmDialog() {
 
         final String transferDetail = getString(R.string.send_voucher);
 
-        String toAddress = destAccountAddressEt.getText().toString().trim();
+        final String toAddress = destAccountAddressEt.getText().toString().trim();
 
 
         final String contractAddress = voucherDetailModel.getContractAddress();
@@ -506,7 +510,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                                     DialogUtils.getSignatureInfo(getActivity(), mContext, getBPAccountData(), getWalletAddress(), new SignatureListener() {
                                         @Override
                                         public void success(String privateKey) {
-                                            submitTransactionBase(privateKey, buildBlobResponse, fragmentTag);
+                                            submitTransactionBase(privateKey, buildBlobResponse, fragmentTag,toAddress);
                                         }
                                     });
 

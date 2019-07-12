@@ -16,6 +16,7 @@ public class Constants {
     public static final Integer HELP_FEEDBACK_CONTACT_LENGTH = 20;
     public static final double MIN_FEE = 0.01;
     public static final double MAX_FEE = 10;
+    public static final double VOUCHER_MIN_FEE = 0.1;
     public static final double RESERVE_AMOUNT = 0.02;
     public static final Double ACTIVE_AMOUNT_FEE = 0.02;
 
@@ -84,13 +85,13 @@ public class Constants {
 
 
         //development
-//        WEB_SERVER_DOMAIN("http://192.168.6.97:5648/"),
-//        BUMO_NODE_URL("http://192.168.21.35:36002"),
+        WEB_SERVER_DOMAIN("http://192.168.6.97:5648/"),
+        BUMO_NODE_URL("http://192.168.21.35:36002"),
 
 
         //test-main
-        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
-        BUMO_NODE_URL("http://wallet-node.bumotest.io"),
+//        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
+//        BUMO_NODE_URL("http://wallet-node.bumotest.io"),
 
 
         PUSH_MESSAGE_SOCKET_URL("https://ws-tools.bumotest.io");
