@@ -17,6 +17,7 @@ import com.bupocket.common.ConstantsType;
 import com.bupocket.fragment.BPAssetsHomeFragment;
 import com.bupocket.fragment.BPProfileHomeFragment;
 import com.bupocket.fragment.discover.BPDiscoverHomeFragment;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.voucher.BPVoucherHomeFragment;
 import com.qmuiteam.qmui.widget.QMUIPagerAdapter;
@@ -51,9 +52,25 @@ public class HomeFragment extends BaseFragment {
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_asset_selected),
                 getResources().getString(R.string.tabbar_assets_txt), false
         );
+
+        int voucher_normal = R.mipmap.icon_tabbar_voucher;
+        int voucher_selected = R.mipmap.icon_tabbar_voucher_selected;
+
+        if (spHelper.getSharedPreference(ConstantsType.FIRST_OPEN_VOUCHER, "yes").equals("yes")) {
+
+            if (CommonUtil.isEnglishLangage()) {
+                 voucher_normal = R.mipmap.icon_tabbar_voucher_new_en;
+                 voucher_selected = R.mipmap.icon_tabbar_voucher_new_en_selected;
+            }else{
+                voucher_normal = R.mipmap.icon_tabbar_voucher_new_cn;
+                voucher_selected = R.mipmap.icon_tabbar_voucher_new_cn_selected;
+            }
+        }
+
+
         QMUITabSegment.Tab voucher = new QMUITabSegment.Tab(
-                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabber_voucher_selected),
-                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_voucher),
+                ContextCompat.getDrawable(getContext(), voucher_normal),
+                ContextCompat.getDrawable(getContext(), voucher_selected),
                 getResources().getString(R.string.tabbar_toucher_txt), false
         );
         QMUITabSegment.Tab discover = new QMUITabSegment.Tab(
@@ -84,12 +101,12 @@ public class HomeFragment extends BaseFragment {
                 }
 
 
-                if (index==1) {
-                    if (spHelper.getSharedPreference(ConstantsType.FIRST_OPEN_VOUCHER,"yes").equals("yes")){
-                        spHelper.put(ConstantsType.FIRST_OPEN_VOUCHER,"no");
+                if (index == 1) {
+                    if (spHelper.getSharedPreference(ConstantsType.FIRST_OPEN_VOUCHER, "yes").equals("yes")) {
+                        spHelper.put(ConstantsType.FIRST_OPEN_VOUCHER, "no");
                         DialogUtils.showMessageDialog(mContext,
                                 getString(R.string.number_voucher_package_info),
-                                getString(R.string.number_voucher_package_title),new DialogUtils.KnowListener() {
+                                getString(R.string.number_voucher_package_title), new DialogUtils.KnowListener() {
                                     @Override
                                     public void Know() {
 
@@ -194,7 +211,6 @@ public class HomeFragment extends BaseFragment {
                     fragment.setMenuVisibility(false);
                     fragment.setUserVisibleHint(false);
                 }
-
 
 
             }

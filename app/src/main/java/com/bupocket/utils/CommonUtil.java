@@ -858,9 +858,9 @@ public class CommonUtil {
 
     public static String string2Json(String s) {
         StringBuffer sb = new StringBuffer();
-        for (int i=0; i<s.length(); i++) {
+        for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            switch (c){
+            switch (c) {
                 case '\"':
                     sb.append("");
                     break;
@@ -892,6 +892,15 @@ public class CommonUtil {
         return sb.toString();
     }
 
+
+    public static boolean isEnglishLangage() {
+        switch (LocaleUtil.getLanguageStatus()) {
+            case 1:
+                return true;
+
+        }
+        return false;
+    }
 
 
 }
