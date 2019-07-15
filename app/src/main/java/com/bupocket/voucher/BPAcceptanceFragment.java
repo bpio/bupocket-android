@@ -67,7 +67,7 @@ public class BPAcceptanceFragment extends AbsBaseFragment implements InitViewLis
                 String intro = voucherAcceptance.getIntro();
                 String shortName = voucherAcceptance.getShortName();
                 if (!TextUtils.isEmpty(shortName)) {
-                    acceptanceShortNameTv.setText(getString(R.string.short_name) +shortName);
+                    acceptanceShortNameTv.setText(getString(R.string.short_name_hint) +shortName);
                 }
 
                 if (!TextUtils.isEmpty(intro)) {
