@@ -825,6 +825,8 @@
     <string name="no_description">暂无</string>
     <string name="password_backup_hint">请填写安全密码以确认备份</string>
     <string name="empty_introduce">暂无介绍</string>
+    <string name="short_name_hint">简称：</string>
+
 
 
 

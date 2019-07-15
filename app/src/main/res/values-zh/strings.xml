@@ -786,12 +786,12 @@
 
 
     <string name="asset_issuer_introduce">资产发行方介绍</string>
-    <!--<string name="data_public">数据公示</string>-->
+    <string name="data_public">数据公示</string>
 
-    <!--<string name="delete_time">销毁时间：</string>-->
-    <!--<string name="delete_num">销毁数量：</string>-->
-    <!--<string name="issue_time">发行时间：</string>-->
-    <!--<string name="issue_num">发行数量：</string>-->
+    <string name="delete_time">销毁时间：</string>
+    <string name="delete_num">销毁数量：</string>
+    <string name="issue_time">发行时间：</string>
+    <string name="issue_num">发行数量：</string>
 
 
 
@@ -825,6 +825,8 @@
     <string name="no_description">暂无</string>
     <string name="password_backup_hint">请填写安全密码以确认备份</string>
     <string name="empty_introduce">暂无介绍</string>
+    <string name="short_name_hint">简称：</string>
+
 
 
 

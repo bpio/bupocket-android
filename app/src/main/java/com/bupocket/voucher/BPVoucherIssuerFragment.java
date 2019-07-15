@@ -27,7 +27,7 @@ public class BPVoucherIssuerFragment extends AbsBaseFragment implements InitView
     @BindView(R.id.dPartyNameRiv)
     TextView dPartyNameRiv;
     @BindView(R.id.dPartyNickRiv)
-    TextView dPartyNickRiv;
+    TextView issuerNickRiv;
     @BindView(R.id.dPartyIntroduceTv)
     TextView issuerIntroduceTv;
     @BindView(R.id.assetIssuerLv)
@@ -54,7 +54,7 @@ public class BPVoucherIssuerFragment extends AbsBaseFragment implements InitView
 
     @Override
     protected void initData() {
-        if (getArguments()!=null) {
+        if (getArguments() != null) {
             voucherIssuer = ((VoucherIssuerBean) getArguments().getSerializable("voucherIssuer"));
 
             String icon = voucherIssuer.getIcon();
@@ -69,15 +69,16 @@ public class BPVoucherIssuerFragment extends AbsBaseFragment implements InitView
                 dPartyNameRiv.setText(name);
             }
             String shortName = voucherIssuer.getShortName();
+
             if (!TextUtils.isEmpty(shortName)) {
-                dPartyNickRiv.setText(shortName);
+                issuerNickRiv.setText(getString(R.string.short_name) + shortName);
             }
 
             String intro = voucherIssuer.getIntro();
             if (!TextUtils.isEmpty(intro)) {
                 issuerIntroduceTv.setText(intro);
                 issuerIntroduceTv.setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 issuerIntroduceTv.setVisibility(View.GONE);
                 recordEmptyLL.setVisibility(View.VISIBLE);
             }

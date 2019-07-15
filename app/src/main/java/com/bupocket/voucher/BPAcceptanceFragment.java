@@ -26,9 +26,9 @@ public class BPAcceptanceFragment extends AbsBaseFragment implements InitViewLis
     @BindView(R.id.dPartyNameRiv)
     TextView dPartyNameRiv;
     @BindView(R.id.dPartyNickRiv)
-    TextView dPartyNickRiv;
+    TextView acceptanceShortNameTv;
     @BindView(R.id.dPartyIntroduceTv)
-    TextView dPartyIntroduceTv;
+    TextView acceptanceIntroduceTv;
     @BindView(R.id.deliveryInstructionsTv)
     TextView deliveryInstructionsTv;
     @BindView(R.id.recordEmptyLL)
@@ -66,13 +66,16 @@ public class BPAcceptanceFragment extends AbsBaseFragment implements InitViewLis
                 dPartyNameRiv.setText(voucherAcceptance.getName());
                 String intro = voucherAcceptance.getIntro();
                 String shortName = voucherAcceptance.getShortName();
-                dPartyNickRiv.setText(shortName);
+                if (!TextUtils.isEmpty(shortName)) {
+                    acceptanceShortNameTv.setText(getString(R.string.short_name) +shortName);
+                }
+
                 if (!TextUtils.isEmpty(intro)) {
-                    dPartyIntroduceTv.setText(intro);
-                    dPartyIntroduceTv.setVisibility(View.VISIBLE);
+                    acceptanceIntroduceTv.setText(intro);
+                    acceptanceIntroduceTv.setVisibility(View.VISIBLE);
 
                 }else{
-                    dPartyIntroduceTv.setVisibility(View.GONE);
+                    acceptanceIntroduceTv.setVisibility(View.GONE);
                     recordEmptyLL.setVisibility(View.VISIBLE);
                 }
 

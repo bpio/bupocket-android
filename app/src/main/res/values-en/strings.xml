@@ -825,4 +825,5 @@
     <string name="no_description">None</string>
     <string name="password_backup_hint">Fill in the security code to confirm to back up</string>
     <string name="empty_introduce">No Introduction</string>
+    <string name="short_name_hint">Abbreviation:</string>
 </resources>
