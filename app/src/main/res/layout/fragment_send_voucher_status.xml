@@ -15,7 +15,6 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="20dp"
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:scrollbars="none">
 
@@ -298,6 +297,18 @@
                         tools:text="assss" />
 
                 </LinearLayout>
+
+
+                <Button
+                    android:id="@+id/iKnowBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp"
+                    android:background="@drawable/shape_corner_green"
+                    android:text="@string/i_knew_btn_txt"
+                    android:textColor="@color/app_color_white"
+                    android:textSize="@dimen/common_btn_size" />
+
             </LinearLayout>
 
         </LinearLayout>

@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -68,6 +69,10 @@ public class BPSendVoucherStatusFragment extends BaseFragment {
     TextView tvTransHash;
     @BindView(R.id.tvFromAddress)
     TextView tvFormAddress;
+    @BindView(R.id.iKnowBtn)
+    Button iKonwBtn;
+
+
     private String fragmentTag;
 
 
@@ -82,6 +87,12 @@ public class BPSendVoucherStatusFragment extends BaseFragment {
 
     private void initListener() {
 
+        iKonwBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popBackStack();
+            }
+        });
     }
 
 
@@ -148,7 +159,7 @@ public class BPSendVoucherStatusFragment extends BaseFragment {
 
         if (fragmentTag.equals(VoucherStatusEnum.ASSETS_HOME_FRAGMENT.getCode())) {
             startFragment(new HomeFragment());
-        }else if (fragmentTag.equals(VoucherStatusEnum.VOUCHER_HOME_FRAGMENT.getCode())){
+        } else if (fragmentTag.equals(VoucherStatusEnum.VOUCHER_HOME_FRAGMENT.getCode())) {
             super.popBackStack();
             getFragmentManager().popBackStack(BPVoucherDetailFragment.class.getSimpleName(), 1);
         }
