@@ -21,6 +21,7 @@
             android:id="@+id/acceptanceIconRiv"
             android:layout_width="22dp"
             android:layout_height="22dp"
+            android:scaleType="fitXY"
             android:layout_marginTop="12dp"
             android:src="@mipmap/icon_goods_empty"
             app:riv_oval="true" />

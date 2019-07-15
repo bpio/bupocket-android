@@ -37,7 +37,9 @@
                 android:background="@mipmap/icon_voucher_detail_bg"
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:paddingRight="15dp"
+                android:visibility="gone"
+                >
 
 
                 <RelativeLayout
@@ -52,6 +54,7 @@
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_marginTop="10dp"
+                        android:scaleType="fitXY"
                         android:src="@mipmap/icon_goods_empty"
                         app:riv_oval="true" />
 
@@ -91,6 +94,7 @@
                         android:layout_height="62dp"
                         android:layout_below="@+id/acceptanceIconRiv"
                         android:layout_alignParentStart="true"
+                        android:scaleType="fitXY"
                         android:layout_marginStart="0dp"
                         android:layout_marginTop="25dp"
                         android:src="@mipmap/icon_goods_empty"
@@ -251,6 +255,7 @@
                             android:layout_height="22dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
+                            android:scaleType="fitXY"
                             android:src="@mipmap/icon_goods_empty"
                             app:riv_oval="true" />
 
@@ -300,6 +305,7 @@
                             android:layout_height="22dp"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
+                            android:scaleType="fitXY"
                             android:src="@mipmap/icon_goods_empty"
                             app:riv_oval="true" />
 
