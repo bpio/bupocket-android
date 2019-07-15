@@ -16,6 +16,7 @@ import com.bupocket.base.AbsViewHolderAdapter;
 import com.bupocket.base.BaseViewHolder;
 import com.bupocket.common.Constants;
 import com.bupocket.utils.TimeUtil;
+import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.voucher.model.VoucherDetailModel;
 import com.bupocket.voucher.model.VoucherListModel;
 
@@ -81,23 +82,17 @@ public class VoucherAdapter extends AbsViewHolderAdapter<VoucherDetailModel> {
 
         String startTime = itemData.getStartTime();
         String endTime = itemData.getEndTime();
-        String date = context.getString(R.string.validity_date);
-        if (!TextUtils.isEmpty(startTime)&&startTime!="-1") {
-            date = date + ": " +
-                    String.format(context.getString(R.string.goods_validity_date),
-                            TimeUtil.timeStamp2Date(startTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD),
-                            TimeUtil.timeStamp2Date(endTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD));
+        String date = context.getString(R.string.validity_date)+ ": ";
 
-        }else{
-            date+="  "+context.getResources().getString(R.string.long_date);
-        }
+        date = date + WalletCurrentUtils.voucherDate(startTime, endTime, context);
+
         holder.setText(R.id.goodsDateTv, date);
 
-        if (selectedVoucherDetailModel!=null) {
+        if (selectedVoucherDetailModel != null) {
             if (selectedVoucherDetailModel.getSpuId().equals(itemData.getSpuId())
-                    &&selectedVoucherDetailModel.getTrancheId().equals(itemData.getTrancheId())) {
+                    && selectedVoucherDetailModel.getTrancheId().equals(itemData.getTrancheId())) {
                 holder.getView(R.id.selectedStatusIv).setVisibility(View.VISIBLE);
-            }else{
+            } else {
                 holder.getView(R.id.selectedStatusIv).setVisibility(View.INVISIBLE);
             }
         }

@@ -318,14 +318,8 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
 
         String startTime = detailModel.getStartTime();
         String endTime = detailModel.getEndTime();
-        String date = mContext.getString(R.string.validity_date);
-        if (!TextUtils.isEmpty(startTime)) {
-            date = date + ": " +
-                    String.format(mContext.getString(R.string.goods_validity_date),
-                            TimeUtil.timeStamp2Date(startTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD),
-                            TimeUtil.timeStamp2Date(endTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD));
-
-        }
+        String date = mContext.getString(R.string.validity_date) + ": ";
+        date = date + WalletCurrentUtils.voucherDate(startTime, endTime, mContext);
         goodsDateTv.setText(date);
         mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), detailModel.getBalance() + "")));
 
@@ -466,13 +460,13 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
             return;
         }
 
-        if (TextUtils.isEmpty(available)||Integer.parseInt(BPSendTokenVoucherFragment.this.available)==0) {
-                ToastUtil.showToast(getActivity(), R.string.send_voucher_num_limit, Toast.LENGTH_LONG);
-                return;
+        if (TextUtils.isEmpty(available) || Integer.parseInt(BPSendTokenVoucherFragment.this.available) == 0) {
+            ToastUtil.showToast(getActivity(), R.string.send_voucher_num_limit, Toast.LENGTH_LONG);
+            return;
 //            }
         }
         minFee = sendFormTxFeeEt.getText().toString().trim();
-       String tokenBalance = spHelper.getSharedPreference(getWalletAddress() + "tokenBalance", "0").toString();
+        String tokenBalance = spHelper.getSharedPreference(getWalletAddress() + "tokenBalance", "0").toString();
         if (Double.parseDouble(tokenBalance) < Double.parseDouble(minFee)) {
             tipDialog = new QMUITipDialog.Builder(getContext())
                     .setTipWord(getResources().getString(R.string.balance_not_enough))

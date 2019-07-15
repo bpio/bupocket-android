@@ -763,7 +763,7 @@
 
 
     <!--voucher package-->
-    <string name="tabbar_toucher_txt">Voucher</string>
+    <string name="tabbar_toucher_txt">Vouchers</string>
     <string name="voucher_empty">None</string>
     <string name="voucher_empty_btn">Voucher Receiving QR Code</string>
     <string name="goods_price">Nominal Value:</string>
@@ -789,7 +789,7 @@
     <string name="delivery_instructions">Instruction for Delivery</string>
 
 
-    <string name="asset_issuer_introduce">About the Issuer of Digital Asset</string>
+    <string name="asset_issuer_introduce">About the Issuer of Asset</string>
     <!--<string name="data_public">数据公示</string>-->
 
     <!--<string name="delete_time">销毁时间：</string>-->
@@ -824,4 +824,5 @@
     <string name="long_date">Long Term</string>
     <string name="no_description">None</string>
     <string name="password_backup_hint">Fill in the security code to confirm to back up</string>
+    <string name="empty_introduce">No Introduction</string>
 </resources>

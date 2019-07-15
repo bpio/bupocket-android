@@ -510,6 +510,20 @@ public class BPAssetsHomeFragment extends BaseFragment {
     }
 
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (CommonUtil.isNull(currentWalletAddress) || currentWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString())) {
+            currentWalletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName", NORMAL_WALLET_NAME).toString();
+        } else {
+            currentWalletName = sharedPreferencesHelper.getSharedPreference(currentWalletAddress + "-walletName", "").toString();
+        }
+        if (!currentWalletName.equals(mCurrentWalletNameTv.getText())) {
+            mCurrentWalletNameTv.setText(currentWalletName);
+        }
+
+    }
+
     private void showTransactionConfirmView(final GetQRContentDto contentDto) {
         String destAddress = contentDto.getDestAddress();
         String transactionAmount = contentDto.getAmount();
@@ -702,7 +716,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         String address = resultContent.replace(Constants.VOUCHER_QRCODE, "");
         BPSendTokenVoucherFragment fragment = new BPSendTokenVoucherFragment();
         Bundle args = new Bundle();
-        args.putString(ConstantsType.ADDRESS,address);
+        args.putString(ConstantsType.ADDRESS, address);
         args.putString(ConstantsType.FRAGMENT_TAG, VoucherStatusEnum.ASSETS_HOME_FRAGMENT.getCode());
         fragment.setArguments(args);
         startFragment(fragment);

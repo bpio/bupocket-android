@@ -1,10 +1,13 @@
 package com.bupocket.utils;
 
+import android.content.Context;
 import android.text.TextUtils;
 
+import com.bupocket.R;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 
+import java.util.Date;
 import java.util.Random;
 
 public class WalletCurrentUtils {
@@ -43,6 +46,22 @@ public class WalletCurrentUtils {
     public static void saveInitHeadIcon(SharedPreferencesHelper spHelper, String walletAddress) {
         int selectedPosition = (int) (Math.random() * 10);
         spHelper.put(walletAddress + ConstantsType.WALLET_HEAD_ICON, selectedPosition);
+    }
+
+
+    public static String voucherDate(String startTime, String endTime, Context context){
+      String date="";
+        if (!TextUtils.isEmpty(startTime)&&!startTime.equals("-1")) {
+            date = date  +
+                    String.format(context.getString(R.string.goods_validity_date),
+                            TimeUtil.timeStamp2Date(startTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD),
+                            TimeUtil.timeStamp2Date(endTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD));
+
+        }else{
+            date+="  "+context.getResources().getString(R.string.long_date);
+        }
+
+        return date;
     }
 
 }

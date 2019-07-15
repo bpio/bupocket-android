@@ -1,6 +1,7 @@
 package com.bupocket.voucher;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -20,6 +21,7 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.EventBus.SendVoucherMessage;
 import com.bupocket.utils.TimeUtil;
+import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.voucher.http.VoucherService;
 import com.bupocket.voucher.model.VoucherAcceptanceBean;
 import com.bupocket.voucher.model.VoucherDetailModel;
@@ -98,6 +100,8 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
     QMUIEmptyView detailEmptyView;
     @BindView(R.id.voucherDetailLl)
     LinearLayout voucherDetailLl;
+    @BindView(R.id.emptyInfoTv)
+    TextView emptyInfoTv;
 
 
     private VoucherDetailModel voucherDetailModel;
@@ -113,6 +117,8 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
     protected void initView() {
 
         initTopBar();
+        emptyInfoTv.setText(R.string.empty_introduce);
+
     }
 
     @SuppressLint("ResourceAsColor")
@@ -197,13 +203,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
 
                     String startTime = detailModel.getStartTime();
                     String endTime = detailModel.getEndTime();
-                    String date = getString(R.string.long_date);
-                    if (!TextUtils.isEmpty(startTime)) {
-                        date = String.format(mContext.getString(R.string.goods_validity_date),
-                                TimeUtil.timeStamp2Date(startTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD),
-                                TimeUtil.timeStamp2Date(endTime, TimeUtil.TIME_TYPE_YYYYY_MM_DD));
-
-                    }
+                    String date = WalletCurrentUtils.voucherDate(startTime,endTime, mContext);
                     validityDateInfoTv.setText(date);
 
                     voucherCodeInfoTv.setText(detailModel.getVoucherId());
