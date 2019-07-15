@@ -407,7 +407,7 @@ public class DialogUtils {
 
     public interface ConfirmListener {
 
-        void confirm(String msg);
+        void confirm(final String password);
     }
 
 
@@ -416,37 +416,10 @@ public class DialogUtils {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                final QMUIDialog qmuiDialog = new QMUIDialog(mContext);
-                qmuiDialog.setCanceledOnTouchOutside(false);
-                qmuiDialog.setContentView(R.layout.view_password_comfirm_common);
 
-                Button mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
-                EditText passwordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
-                passwordConfirmEt.setHint(mContext.getString(R.string.create_wallet_pw_err_hint));
-                TextView passwordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
-                passwordConfirmNotice.setText(mContext.getString(R.string.voucher_pwd_confirm_hint));
-
-                ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
-                final EditText tvPw = qmuiDialog.findViewById(R.id.passwordConfirmEt);
-                qmuiDialog.show();
-                mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
+                DialogUtils.showPassWordInputDialog(mActivity, mContext.getString(R.string.voucher_pwd_confirm_hint), mContext.getString(R.string.create_wallet_pw_err_hint), new ConfirmListener() {
                     @Override
-                    public void onClick(View v) {
-                        qmuiDialog.dismiss();
-                    }
-                });
-
-                tvPw.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        showSoftInputFromWindow(tvPw);
-                    }
-                }, 10);
-
-                mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        qmuiDialog.dismiss();
+                    public void confirm(final String msg) {
 
                         final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(mContext)
                                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
@@ -459,7 +432,7 @@ public class DialogUtils {
                             public void run() {
                                 String pkbyAccountPassword = null;
                                 try {
-                                    pkbyAccountPassword = Wallet.getInstance().getPKBYAccountPassword(tvPw.getText().toString(), accountData, walletAddress);
+                                    pkbyAccountPassword = Wallet.getInstance().getPKBYAccountPassword(msg, accountData, walletAddress);
                                     txSendingTipDialog.dismiss();
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -485,24 +458,8 @@ public class DialogUtils {
 
                     }
                 });
-
             }
         });
-    }
-
-
-
-
-
-
-    public static void showSoftInputFromWindow(EditText editText) {
-        editText.setFocusable(true);
-        editText.setFocusableInTouchMode(true);
-        editText.requestFocus();
-        editText.findFocus();
-        InputMethodManager inputManager =
-                (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputManager.showSoftInput(editText, InputMethodManager.SHOW_FORCED);
     }
 
 }

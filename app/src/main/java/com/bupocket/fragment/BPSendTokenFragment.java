@@ -31,6 +31,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DecimalCalculate;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
@@ -465,101 +466,11 @@ public class BPSendTokenFragment extends BaseFragment {
                     public void onClick(View v) {
                         sheet.dismiss();
 
-                        final long finalNonce = nonce;
-                        final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
-                        qmuiDialog.setCanceledOnTouchOutside(false);
-                        qmuiDialog.setContentView(R.layout.view_password_comfirm);
-                        final EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
-                        qmuiDialog.show();
-                        mPasswordConfirmEt.postDelayed(new Runnable() {
+
+                        DialogUtils.showPassWordInputDialog(getActivity(), new DialogUtils.ConfirmListener() {
                             @Override
-                            public void run() {
-                                showSoftInputFromWindow(mPasswordConfirmEt);
-                            }
-                        }, 10);
-
-                        QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
-
-                        ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
-
-                        mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                qmuiDialog.dismiss();
-                            }
-                        });
-
-
-                        mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
-
-                            @Override
-                            public void onClick(View v) {
-
-                                final String password = mPasswordConfirmEt.getText().toString().trim();
-                                txSendingTipDialog = new QMUITipDialog.Builder(getContext())
-                                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                                        .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
-                                        .create();
-                                txSendingTipDialog.show();
-                                txSendingTipDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
-                                    @Override
-                                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-
-                                        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-                                            return true;
-                                        }
-                                        return false;
-                                    }
-                                });
-
-
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-
-                                        String accountBPData = getAccountBPData();
-                                        String destAddess = getDestAccAddr();
-                                        try {
-
-//                                            if(TokenTypeEnum.BU.getCode().equals(tokenType)){
-//                                                hash = Wallet.getInstance().sendBu(password,accountBPData, currentWalletAddress, destAddess, sendAmount, note,txFee);
-//                                            }else if(TokenTypeEnum.ATP10.getCode().equals(tokenType)){
-//                                                hash = Wallet.getInstance().sendToken(password,accountBPData,currentWalletAddress,destAddess,tokenCode,tokenIssuer, sendAmount,tokenDecimals,note, txFee);
-//                                            }
-                                            if (TokenTypeEnum.BU.getCode().equals(tokenType)) {
-                                                hash = Wallet.getInstance().sendBuNoNonce(password, accountBPData, currentWalletAddress, destAddess, sendAmount, note, txFee, nonce);
-                                            } else if (TokenTypeEnum.ATP10.getCode().equals(tokenType)) {
-                                                hash = Wallet.getInstance().sendTokenNoNonce(password, accountBPData, currentWalletAddress, destAddess, tokenCode, tokenIssuer, sendAmount, tokenDecimals, note, txFee, nonce);
-                                            }
-
-
-                                        } catch (WalletException e) {
-                                            e.printStackTrace();
-                                            Looper.prepare();
-                                            if (ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
-                                                Toast.makeText(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT).show();
-                                            } else if (ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
-                                                Toast.makeText(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT).show();
-                                            } else {
-                                                Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
-                                            }
-                                            txSendingTipDialog.dismiss();
-                                            Looper.loop();
-                                        } catch (Exception e) {
-                                            e.printStackTrace();
-                                            Looper.prepare();
-                                            Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
-                                            txSendingTipDialog.dismiss();
-                                            Looper.loop();
-                                        } finally {
-                                            timer.schedule(timerTask,
-                                                    1 * 1000,//延迟1秒执行
-                                                    1000);
-                                        }
-                                    }
-                                }).start();
-                                qmuiDialog.dismiss();
-
+                            public void confirm(String password) {
+                                sendToken(password,sendAmount,note,txFee);
                             }
                         });
 
@@ -567,6 +478,65 @@ public class BPSendTokenFragment extends BaseFragment {
                 });
             }
         });
+    }
+
+    private void sendToken(final String password,final String sendAmount,final String note, final String txFee) {
+        txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
+                .create();
+        txSendingTipDialog.show();
+        txSendingTipDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+
+                if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                String accountBPData = getAccountBPData();
+                String destAddess = getDestAccAddr();
+                try {
+                    if (TokenTypeEnum.BU.getCode().equals(tokenType)) {
+                        hash = Wallet.getInstance().sendBuNoNonce(password, accountBPData, currentWalletAddress, destAddess, sendAmount, note, txFee, nonce);
+                    } else if (TokenTypeEnum.ATP10.getCode().equals(tokenType)) {
+                        hash = Wallet.getInstance().sendTokenNoNonce(password, accountBPData, currentWalletAddress, destAddess, tokenCode, tokenIssuer, sendAmount, tokenDecimals, note, txFee, nonce);
+                    }
+
+
+                } catch (WalletException e) {
+                    e.printStackTrace();
+                    Looper.prepare();
+                    if (ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
+                        Toast.makeText(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT).show();
+                    } else if (ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
+                        Toast.makeText(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
+                    }
+                    txSendingTipDialog.dismiss();
+                    Looper.loop();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Looper.prepare();
+                    Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+                    txSendingTipDialog.dismiss();
+                    Looper.loop();
+                } finally {
+                    timer.schedule(timerTask,
+                            1 * 1000,//延迟1秒执行
+                            1000);
+                }
+            }
+        }).start();
     }
 
     private void setDestAddress() {
