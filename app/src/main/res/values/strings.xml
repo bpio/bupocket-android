@@ -810,7 +810,7 @@
 
     <string name="voucher_send_confirm_title">确认转赠</string>
     <string name="send_voucher">转赠加密数字券</string>
-    <string name="voucher_pwd_confirm_hint" >请填写安全密码以确认转增</string>
+    <string name="voucher_pwd_confirm_hint" >请填写安全密码以确认转赠</string>
     <string name="tx_voucher_status_success_txt">转赠成功</string>
     <string name="send_voucher_failure">转赠失败</string>
     <string name="send_voucher_timeout">转赠超时</string>
