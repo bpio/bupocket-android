@@ -14,7 +14,7 @@
         <LinearLayout
             android:id="@+id/confirmLl"
             android:layout_width="match_parent"
-            android:layout_height="350dp"
+            android:layout_height="380dp"
             android:layout_marginLeft="18dp"
             android:layout_marginRight="18dp"
             android:orientation="vertical"
