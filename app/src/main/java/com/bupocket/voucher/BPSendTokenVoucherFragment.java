@@ -158,9 +158,10 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
             @Override
             public void afterTextChanged(Editable s) {
                 boolean signAccountAddress = destAccountAddressEt.getText().toString().trim().length() > 0;
-                boolean signAmount = sendAmountET.getText().toString().trim().length() > 0;
+                String amount = sendAmountET.getText().toString().trim();
+                boolean signAmount = amount.length() > 0;
                 boolean signTxFee = sendFormTxFeeEt.getText().toString().trim().length() > 0;
-                if (signAccountAddress && signAmount && signTxFee) {
+                if (signAccountAddress && signAmount && signTxFee&&Double.parseDouble(amount)>0) {
                     mConfirmSendBtn.setEnabled(true);
                     mConfirmSendBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
                 } else {
