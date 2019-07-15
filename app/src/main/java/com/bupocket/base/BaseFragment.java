@@ -61,6 +61,7 @@ public abstract class BaseFragment extends QMUIFragment {
     private TransferHandler transferHandler;
     private static String fragmentTag;
     private static String toAddress;
+    private static String voucherAmount;
 
 
     @Override
@@ -204,9 +205,10 @@ public abstract class BaseFragment extends QMUIFragment {
         });
     }
 
-    protected void submitTransactionBase(final String privateKey, final TransactionBuildBlobResponse transBlob, String fragmentTag,String toAddress) {
+    protected void submitTransactionBase(final String privateKey, final TransactionBuildBlobResponse transBlob, String fragmentTag,String toAddress,String amount) {
         this.toAddress = toAddress;
         this.fragmentTag = fragmentTag;
+        this.voucherAmount = amount;
         submitTransactionBase(privateKey,transBlob);
     }
 
@@ -390,6 +392,7 @@ public abstract class BaseFragment extends QMUIFragment {
                                 if (!TextUtils.isEmpty(fragmentTag)) {
                                     argz.putString(ConstantsType.FRAGMENT_TAG, fragmentTag);
                                     argz.putString("destAccAddr",toAddress);
+                                    argz.putString("sendAmount", voucherAmount);
                                     BPSendVoucherStatusFragment bpSendTokenVoucherFragment = new BPSendVoucherStatusFragment();
                                     bpSendTokenVoucherFragment.setArguments(argz);
                                     mFragment.startFragment(bpSendTokenVoucherFragment);

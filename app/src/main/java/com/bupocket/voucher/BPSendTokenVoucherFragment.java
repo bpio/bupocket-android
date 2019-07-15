@@ -513,7 +513,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
 
 
                                 try {
-                                    final TransactionBuildBlobResponse transactionBuildBlobResponse = Wallet.getInstance().buildBlob(amount,
+                                    final TransactionBuildBlobResponse transactionBuildBlobResponse = Wallet.getInstance().buildBlob("0",
                                             input, WalletCurrentUtils.getWalletAddress(spHelper),
                                             minFee, contractAddress, remark);
 
@@ -550,7 +550,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                                                                 @Override
                                                                 public void run() {
                                                                     submitDialog.dismiss();
-                                                                    submitTransactionBase(privateKey, transactionBuildBlobResponse1, fragmentTag, toAddress);
+                                                                    submitTransactionBase(privateKey, transactionBuildBlobResponse1, fragmentTag, toAddress,amount);
                                                                 }
                                                             });
 
@@ -566,7 +566,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                                                                 submitDialog.dismiss();
                                                             }
                                                         });
-                                                        submitTransactionBase(privateKey, transactionBuildBlobResponse, fragmentTag, toAddress);
+                                                        submitTransactionBase(privateKey, transactionBuildBlobResponse, fragmentTag, toAddress,amount);
                                                     }
 //
 //
