@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.Constants;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.AddressBookService;
 import com.bupocket.http.api.RetrofitFactory;
@@ -233,6 +234,7 @@ public class BPAddressAddFragment extends BaseFragment {
                 Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
             } else {
                 String destAddress = result.getContents();
+                destAddress=destAddress.replace(Constants.VOUCHER_QRCODE,"");
                 mNewAddressEt.setText(destAddress);
             }
         } else {

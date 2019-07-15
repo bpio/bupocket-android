@@ -137,7 +137,7 @@
     <string name="amount_too_small">Each transfer cannot be less than</string>
     <string name="amount_too_big">Each transfer cannot exceed 100,000,000</string>
     <string name="invalid_tx_fee">The format of maximum payment transaction fee is incorrect. Please enter again</string>
-    <string name="balance_not_enough">Insufficient balance available</string>
+    <string name="balance_not_enough">Available balance is insufficient</string>
     <string name="send_token_note_too_long">Remarks cannot exceed 20 characterscharacters</string>
     <string name="send_loading">Processing...</string>
     <string name="splash_txt0">BU Pocket</string>

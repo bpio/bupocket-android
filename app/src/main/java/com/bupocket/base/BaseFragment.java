@@ -26,6 +26,7 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
@@ -132,37 +133,10 @@ public abstract class BaseFragment extends QMUIFragment {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
-                qmuiDialog.setCanceledOnTouchOutside(false);
-                qmuiDialog.setContentView(R.layout.view_password_comfirm);
 
-                qmuiDialog.show();
-                LogUtils.e("Thread===" + Thread.currentThread().getName());
-
-                QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
-
-                ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
-                final EditText tvPw = qmuiDialog.findViewById(R.id.passwordConfirmEt);
-
-                mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
+                DialogUtils.showPassWordInputDialog(getActivity(), new DialogUtils.ConfirmListener() {
                     @Override
-                    public void onClick(View v) {
-                        qmuiDialog.dismiss();
-                    }
-                });
-
-                tvPw.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        showSoftInputFromWindow(tvPw);
-                    }
-                }, 10);
-
-                mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        qmuiDialog.dismiss();
-
+                    public void confirm(final  String password) {
                         final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
                                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                                 .setTipWord(getResources().getString(R.string.send_tx_sign_txt))
@@ -174,7 +148,7 @@ public abstract class BaseFragment extends QMUIFragment {
                             public void run() {
                                 String pkbyAccountPassword = null;
                                 try {
-                                    pkbyAccountPassword = Wallet.getInstance().getPKBYAccountPassword(tvPw.getText().toString(), getBPAccountData(), getWalletAddress());
+                                    pkbyAccountPassword = Wallet.getInstance().getPKBYAccountPassword(password, getBPAccountData(), getWalletAddress());
                                     txSendingTipDialog.dismiss();
                                 } catch (Exception e) {
                                     e.printStackTrace();
@@ -395,6 +369,7 @@ public abstract class BaseFragment extends QMUIFragment {
                                     argz.putString("sendAmount", voucherAmount);
                                     BPSendVoucherStatusFragment bpSendTokenVoucherFragment = new BPSendVoucherStatusFragment();
                                     bpSendTokenVoucherFragment.setArguments(argz);
+                                    fragmentTag="";
                                     mFragment.startFragment(bpSendTokenVoucherFragment);
                                     return;
                                 }

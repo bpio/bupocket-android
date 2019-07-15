@@ -45,6 +45,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
+import io.bumo.common.Constant;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -598,6 +599,7 @@ public class BPSendTokenFragment extends BaseFragment {
                 Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
             } else {
                 String destAddress = result.getContents();
+                destAddress=destAddress.replace(Constants.VOUCHER_QRCODE,"");
                 destAccountAddressEt.setText(destAddress);
             }
         } else {
