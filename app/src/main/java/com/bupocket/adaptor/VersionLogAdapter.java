@@ -33,7 +33,7 @@ public class VersionLogAdapter extends AbsViewHolderAdapter<LogListModel> {
         TextView versionNumTv = (TextView) holder.getView(R.id.versionNumTV);
         TextView versionInfoTv = (TextView) holder.getView(R.id.versionInfoTV);
         if (!TextUtils.isEmpty(itemData.getVerContents())) {
-            versionNumTv.setText("V"+itemData.getVerNumber() + "  (" + TimeUtil.timeStamp2Date(itemData.getCreateTime(), TimeUtil.TIME_TYPE_ONE)+")");
+            versionNumTv.setText("V"+itemData.getVerNumber() + "  (" + TimeUtil.timeStamp2Date(itemData.getCreateTime(), TimeUtil.TIME_TYPE)+")");
         }
 
         switch (LocaleUtil.getLanguageStatus()) {
