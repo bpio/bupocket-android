@@ -114,7 +114,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
     private static final int CHOOSE_ADDRESS_CODE = 1;
 
     private String toAddress;
-    final double minFee = Constants.VOUCHER_MIN_FEE;
+    private String minFee = Constants.VOUCHER_MIN_FEE + "";
     private boolean isVoucherDetailFragment;
     private String fragmentTag;
     private String available = "";
@@ -466,12 +466,25 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
             return;
         }
 
-        if (!TextUtils.isEmpty(available)) {
-            int available = Integer.parseInt(BPSendTokenVoucherFragment.this.available);
-            if (available == 0) {
+        if (TextUtils.isEmpty(available)||Integer.parseInt(BPSendTokenVoucherFragment.this.available)==0) {
                 ToastUtil.showToast(getActivity(), R.string.send_voucher_num_limit, Toast.LENGTH_LONG);
                 return;
-            }
+//            }
+        }
+        minFee = sendFormTxFeeEt.getText().toString().trim();
+       String tokenBalance = spHelper.getSharedPreference(getWalletAddress() + "tokenBalance", "0").toString();
+        if (Double.parseDouble(tokenBalance) < Double.parseDouble(minFee)) {
+            tipDialog = new QMUITipDialog.Builder(getContext())
+                    .setTipWord(getResources().getString(R.string.balance_not_enough))
+                    .create();
+            tipDialog.show();
+            sendFormTxFeeEt.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    tipDialog.dismiss();
+                }
+            }, 1500);
+            return;
         }
 
         if (destAccountAddressEt.getText().toString().trim().equals(WalletCurrentUtils.getWalletAddress(spHelper))) {
@@ -493,9 +506,10 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
         final String amount = sendAmountET.getText().toString();
 
         final String input = "{\"method\":\"transfer\",\"params\":{\"skuId\":\"" + voucherDetailModel.getVoucherId() + "\",\"trancheId\":\"" + voucherDetailModel.getTrancheId() + "\",\"to\":\"" + toAddress + "\",\"value\":\"" + amount + "\"}}";
+        final String remark = sendFormNoteEt.getText().toString();
         TransferUtils.confirmSendVoucherDialog(mContext, getWalletAddress(), toAddress,
                 "", amount, minFee,
-                transferDetail, input, sendFormNoteEt.getText().toString(), new TransferUtils.TransferListener() {
+                transferDetail, input, remark, new TransferUtils.TransferListener() {
                     @Override
                     public void confirm() {
 
@@ -505,10 +519,9 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
 
 
                                 try {
-//                                    final TransactionBuildBlobResponse[] buildBlobResponse = {transactionBuildBlobResponse};
                                     final TransactionBuildBlobResponse transactionBuildBlobResponse = Wallet.getInstance().buildBlob(amount,
                                             input, WalletCurrentUtils.getWalletAddress(spHelper),
-                                            String.valueOf(minFee), contractAddress, transferDetail);
+                                            minFee, contractAddress, remark);
 
 //
                                     DialogUtils.getSignatureInfo(getActivity(), mContext, getBPAccountData(), getWalletAddress(), new SignatureListener() {

@@ -8,7 +8,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:background="@color/app_color_gray"
         android:fitsSystemWindows="true"
@@ -61,6 +60,7 @@
                 android:id="@+id/visibleStartBtnLL"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/app_bg_color_gray"
                 android:orientation="vertical">
 
                 <Button

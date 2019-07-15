@@ -113,12 +113,12 @@ public class TransferUtils {
                                                 String destAddress,
                                                 String destTag,
                                                 String amount,
-                                                Double fee,
+                                                String fee,
                                                 String metaData,
                                                 String input,String remark,
                                                 final TransferListener transferListener) {
 
-        String tx_fee = String.valueOf(fee);
+        String tx_fee = fee;
         String destAddressTag = destAddress;
         if (!TextUtils.isEmpty(destTag)) {
             destAddressTag = destAddress.concat(destTag);
