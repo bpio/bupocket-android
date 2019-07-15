@@ -50,107 +50,121 @@
                 android:layout_alignTop="@+id/sendConfirmBtnRl" />
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/fragment_title_tx_detail_txt"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/transactionDetailTv"
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/app_txt_color_gray_2"
-                android:textSize="14sp"
-                tools:text="向谷神668(buQk4h9Ygc5QSyDWCxgps6ZH)投票(buQk4h9Ygc5QSyDWCxgps6ZH)投票6894票" />
+                android:scrollbars="none">
 
-            <TextView
-                android:id="@+id/destAddressTvHint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14.5dp"
-                android:text="@string/tx_to"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="13sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/destAddressTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/app_txt_color_gray_2"
-                android:textSize="14sp"
-                tools:text="bujslk3i3kkdkladkl8dfkdfk3kl3kl3ldsjf" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/fragment_title_tx_detail_txt"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="13sp" />
 
-            <TextView
-                android:id="@+id/sendNumTvHint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14.5dp"
-                android:text="@string/send_voucher_num"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="13sp" />
+                    <TextView
+                        android:id="@+id/transactionDetailTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/app_txt_color_gray_2"
+                        android:textSize="14sp"
+                        tools:text="向谷神668(buQk4h9Ygc5QSyDWCxgps6ZH)投票(buQk4h9Ygc5QSyDWCxgps6ZH)投票6894票" />
 
-            <TextView
-                android:id="@+id/sendNumTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/app_txt_color_gray_2"
-                android:textSize="14sp"
-                />
+                    <TextView
+                        android:id="@+id/destAddressTvHint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14.5dp"
+                        android:text="@string/tx_to"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="13sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14.5dp"
-                android:text="@string/tx_fee_bu"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="13sp" />
+                    <TextView
+                        android:id="@+id/destAddressTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/app_txt_color_gray_2"
+                        android:textSize="14sp"
+                        tools:text="bujslk3i3kkdkladkl8dfkdfk3kl3kl3ldsjf" />
 
-            <TextView
-                android:id="@+id/txFeeTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/app_txt_color_gray_2"
-                android:textSize="14sp"
-                tools:text="0.001675" />
+                    <TextView
+                        android:id="@+id/sendNumTvHint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14.5dp"
+                        android:text="@string/send_voucher_num"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="13sp" />
 
-            <TextView
-                android:id="@+id/remarkHintTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14.5dp"
-                android:text="@string/send_note_title"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="13sp" />
+                    <TextView
+                        android:id="@+id/sendNumTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/app_txt_color_gray_2"
+                        android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/remarkTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/app_txt_color_gray_2"
-                android:textSize="14sp"
-                android:layout_marginRight="10dp"
-                tools:text="bujslk3i3kkdk" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14.5dp"
+                        android:text="@string/tx_fee_bu"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/txFeeTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/app_txt_color_gray_2"
+                        android:textSize="14sp"
+                        tools:text="0.001675" />
+
+                    <TextView
+                        android:id="@+id/remarkHintTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14.5dp"
+                        android:text="@string/send_note_title"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/remarkTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginRight="10dp"
+                        android:textColor="@color/app_txt_color_gray_2"
+                        android:textSize="14sp"
+                        tools:text="bujslk3i3kkdk" />
 
 
-            <TextView
-                android:id="@+id/detailBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:layout_marginTop="15dp"
-                android:layout_marginRight="5dp"
-                android:padding="3dp"
-                android:text="@string/details_txt"
-                android:textColor="@color/app_color_main"
-                android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/detailBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginRight="5dp"
+                        android:padding="3dp"
+                        android:text="@string/details_txt"
+                        android:textColor="@color/app_color_main"
+                        android:textSize="14sp" />
+
+
+                </LinearLayout>
+
+            </ScrollView>
 
         </LinearLayout>
 
@@ -202,13 +216,13 @@
             </RelativeLayout>
 
 
-            <View
-               style="@style/BPDivideLine1"/>
+            <View style="@style/BPDivideLine1" />
 
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -254,7 +268,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14.5dp"
-                        android:text="@string/tx_value_bu"
+                        android:text="@string/send_voucher_num"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="13sp" />
 
@@ -314,10 +328,10 @@
         <View
             android:id="@+id/v_gray_line"
             style="@style/BPDivideLine1"
+            android:layout_alignTop="@+id/sendConfirmBtnRl"
             android:layout_marginLeft="18dp"
             android:layout_marginRight="18dp"
-            android:layout_marginBottom="15dp"
-            android:layout_alignTop="@+id/sendConfirmBtnRl" />
+            android:layout_marginBottom="15dp" />
 
         <RelativeLayout
             android:id="@+id/sendConfirmBtnRl"
