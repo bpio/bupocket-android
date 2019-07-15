@@ -10,25 +10,24 @@
     <include
         layout="@layout/view_topbar_layout"
         android:layout_width="match_parent"
-        android:layout_height="?attr/qmui_topbar_height"
-        android:fitsSystemWindows="true" />
+        android:layout_height="wrap_content" />
 
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="15dp"
-        android:fitsSystemWindows="true"
-        android:layout_marginTop="?attr/qmui_topbar_height"
-        android:layout_marginRight="15dp">
+        android:layout_marginTop="60dp"
+        android:layout_marginRight="15dp"
+        android:scrollbars="none">
 
 
         <com.qmuiteam.qmui.widget.QMUIEmptyView
             android:id="@+id/detailEmptyView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="20dp"
             android:background="@mipmap/view_voucher_empty"
+            android:layout_gravity="center_vertical"
             android:fitsSystemWindows="true">
 
             <LinearLayout
@@ -38,8 +37,7 @@
                 android:background="@mipmap/icon_voucher_detail_bg"
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp"
-                >
+                android:paddingRight="15dp">
 
 
                 <RelativeLayout
