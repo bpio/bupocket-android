@@ -279,6 +279,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
                     if (index == 1) {
                         if (voucherEmptyLL != null) {
                             voucherEmptyLL.setVisibility(View.VISIBLE);
+                            adapter.clear();
                         }
                     }
 

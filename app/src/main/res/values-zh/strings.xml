@@ -124,7 +124,7 @@
 
     <!-- 异常 -->
     <string name="create_wallet_fail">创建失败</string>
-    <string name="checking_password_error">安全密码输入不正确</string>
+    <string name="checking_password_error">安全密码输入有误</string>
     <string name="geting_account_bu_balance">获取中</string>
     <string name="check_mneonic_code_err1">助记词顺序有误，请您核对后更正</string>
     <string name="next_key_down_err">再按一次退出程序</string>
