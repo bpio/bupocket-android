@@ -367,10 +367,11 @@ public class BPAssetsDetailFragment extends BaseFragment {
         if (showFlag) {
             mRecentlyTxRecordEmptyLL.setVisibility(View.VISIBLE);
             mMyTokenTxLv.setVisibility(View.GONE);
-//            mMyTokenTxTitleTv.setVisibility(View.GONE);
+            mMyTokenTxTitleTv.setVisibility(View.GONE);
         } else {
             mRecentlyTxRecordEmptyLL.setVisibility(View.GONE);
             mMyTokenTxLv.setVisibility(View.VISIBLE);
+            mMyTokenTxTitleTv.setVisibility(View.VISIBLE);
         }
     }
 

@@ -768,8 +768,12 @@
     <string name="voucher_empty_btn">Voucher Receiving QR Code</string>
     <string name="goods_price">Nominal Value:</string>
     <string name="goods_validity_date">%1$s To %2$s</string>
-    <string name="number_voucher_package_title">Digital Asset Vouchers</string>
-    <string name="number_voucher_package_info">明月高挂，月光如水，照着妈妈美丽的脸庞，我的目光也如水，看着妈妈的脸庞，觉得妈妈的脸庞是第二个月亮。妈妈用双手捧起我的脸庞，让月光照在我脸上，然后情不自禁地说：小可爱，你是我的小月亮。明月高挂，月光如水，照着妈妈美丽的脸庞，我的目光也如水。小可爱，你是我的小月亮。小可爱，你是我的小月亮。</string>
+    <string name="number_voucher_package_title">Encrypted Digital Vouchers</string>
+    <string name="number_voucher_package_info">
+        The encrypted digital voucher is a digital equity certificate on the BUMO blockchain. It is a mapping of real equity in the digital world and is freely circulated on the BUMO blockchain network.\n
+        The Vouchers of BU Pocket supports the management of encrypted digital vouchers including functions such as one-click transfer, easy acceptance. You can transfer vouchers to your family and friends anytime, anywhere, and they can easily redeem these vouchers.\n
+        (Acceptance function is being developed, so stay tuned...)\n
+        The future of equities: digital, decentralized and freely circulated</string>
 
 
     <!--voucher detail-->
@@ -798,18 +802,18 @@
     <!--<string name="issue_num">发行数量：</string>-->
 
 
-    <string name="send_voucher_title">Donate Vouchers</string>
+    <string name="send_voucher_title">Transfer Vouchers</string>
     <string name="send_voucher_title1">Transfer Voucher</string>
     <string name="send_voucher_title2">Select a voucher to donate</string>
-    <string name="send_voucher_num">Amount to Donate</string>
-    <string name="send_voucher_num_hint">Please input the amount to donate</string>
+    <string name="send_voucher_num">Amount to Transfer</string>
+    <string name="send_voucher_num_hint">Please input the amount to transfer</string>
     <string name="send_voucher_info_hint">20 characters at most</string>
     <string name="send_name_hint">Available vouchers in &lt;font color=\'#00D175\'> %1$s &lt;/font></string>
     <string name="voucher_avail_balance" >Abbreviation：&lt;font color=\'#00D175\'> %1$s &lt;/font></string>
 
-    <string name="voucher_send_confirm_title">Confirm to Donate</string>
-    <string name="send_voucher">Donate encrypted digital vouchers</string>
-    <string name="voucher_pwd_confirm_hint" >Fill in the security code to confirm to donate</string>
+    <string name="voucher_send_confirm_title">Confirm to Transfer</string>
+    <string name="send_voucher">Transfer encrypted digital vouchers</string>
+    <string name="voucher_pwd_confirm_hint" >Fill in the security code to confirm to transfer</string>
 
 
     <string name="tx_voucher_status_success_txt">Donation Success</string>

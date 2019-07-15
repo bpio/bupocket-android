@@ -22,6 +22,7 @@ import com.bupocket.fragment.BPWalletsHomeFragment;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.utils.WalletLocalInfoUtil;
 import com.bupocket.voucher.adapter.VoucherAdapter;

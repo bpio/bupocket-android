@@ -417,7 +417,7 @@ public class DialogUtils {
             @Override
             public void run() {
 
-                DialogUtils.showPassWordInputDialog(mActivity, mContext.getString(R.string.voucher_pwd_confirm_hint), mContext.getString(R.string.create_wallet_pw_err_hint), new ConfirmListener() {
+                DialogUtils.showPassWordInputDialog(mActivity, mContext.getString(R.string.voucher_pwd_confirm_hint), new ConfirmListener() {
                     @Override
                     public void confirm(final String msg) {
 
