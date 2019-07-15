@@ -100,8 +100,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
     QMUIEmptyView detailEmptyView;
     @BindView(R.id.voucherDetailLl)
     LinearLayout voucherDetailLl;
-    @BindView(R.id.emptyInfoTv)
-    TextView emptyInfoTv;
+
 
 
     private VoucherDetailModel voucherDetailModel;
@@ -117,7 +116,6 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
     protected void initView() {
 
         initTopBar();
-        emptyInfoTv.setText(R.string.empty_introduce);
 
     }
 

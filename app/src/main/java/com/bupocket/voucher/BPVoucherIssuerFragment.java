@@ -1,10 +1,7 @@
 package com.bupocket.voucher;
 
-import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,8 +16,6 @@ import com.makeramen.roundedimageview.RoundedImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class BPVoucherIssuerFragment extends AbsBaseFragment implements InitViewListener {
 
@@ -34,11 +29,13 @@ public class BPVoucherIssuerFragment extends AbsBaseFragment implements InitView
     @BindView(R.id.dPartyNickRiv)
     TextView dPartyNickRiv;
     @BindView(R.id.dPartyIntroduceTv)
-    TextView dPartyIntroduceTv;
+    TextView issuerIntroduceTv;
     @BindView(R.id.assetIssuerLv)
     ListView assetIssuerLv;
     @BindView(R.id.recordEmptyLL)
     LinearLayout recordEmptyLL;
+    @BindView(R.id.emptyInfoTv)
+    TextView emptyInfoTv;
 
 
     private VoucherIssuerBean voucherIssuer;
@@ -52,6 +49,7 @@ public class BPVoucherIssuerFragment extends AbsBaseFragment implements InitView
     protected void initView() {
         initTopBar();
         initListView();
+        emptyInfoTv.setText(R.string.empty_introduce);
     }
 
     @Override
@@ -77,10 +75,10 @@ public class BPVoucherIssuerFragment extends AbsBaseFragment implements InitView
 
             String intro = voucherIssuer.getIntro();
             if (!TextUtils.isEmpty(intro)) {
-                dPartyIntroduceTv.setText(intro);
-                dPartyIntroduceTv.setVisibility(View.VISIBLE);
+                issuerIntroduceTv.setText(intro);
+                issuerIntroduceTv.setVisibility(View.VISIBLE);
             }else{
-                dPartyIntroduceTv.setVisibility(View.GONE);
+                issuerIntroduceTv.setVisibility(View.GONE);
                 recordEmptyLL.setVisibility(View.VISIBLE);
             }
 

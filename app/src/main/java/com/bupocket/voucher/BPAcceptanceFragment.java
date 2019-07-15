@@ -33,6 +33,8 @@ public class BPAcceptanceFragment extends AbsBaseFragment implements InitViewLis
     TextView deliveryInstructionsTv;
     @BindView(R.id.recordEmptyLL)
     LinearLayout recordEmptyLL;
+    @BindView(R.id.emptyInfoTv)
+    TextView emptyInfoTv;
 
     Unbinder unbinder;
     private VoucherAcceptanceBean voucherAcceptance;
@@ -45,6 +47,7 @@ public class BPAcceptanceFragment extends AbsBaseFragment implements InitViewLis
     @Override
     protected void initView() {
         initTopBar();
+        emptyInfoTv.setText(R.string.empty_introduce);
     }
 
     @Override
