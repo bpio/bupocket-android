@@ -809,20 +809,20 @@
     <string name="send_voucher_num_hint">Please input the amount to transfer</string>
     <string name="send_voucher_info_hint">20 characters at most</string>
     <string name="send_name_hint">Available vouchers in &lt;font color=\'#00D175\'> %1$s &lt;/font></string>
-    <string name="voucher_avail_balance" >Abbreviation：&lt;font color=\'#00D175\'> %1$s &lt;/font></string>
+    <string name="voucher_avail_balance" >&lt;font color=\'#00D175\'> %1$s &lt;/font> available</string>
 
     <string name="voucher_send_confirm_title">Confirm to Transfer</string>
     <string name="send_voucher">Transfer encrypted digital vouchers</string>
     <string name="voucher_pwd_confirm_hint" >Fill in the security code to confirm to transfer</string>
 
 
-    <string name="tx_voucher_status_success_txt">Donation Success</string>
-    <string name="send_voucher_failure">Donation Failure</string>
-    <string name="send_voucher_timeout">Donation Timeout</string>
+    <string name="tx_voucher_status_success_txt">Success</string>
+    <string name="send_voucher_failure">Failure</string>
+    <string name="send_voucher_timeout">Timeout</string>
 
     <string name="send_address">Please input the receiving account address</string>
     <string name="send_voucher_num_limit">Insufficient Vouchers</string>
-    <string name="not_my_self_send_voucher">Voucher donation to yourself is not allowed</string>
+    <string name="not_my_self_send_voucher">Voucher transferring to yourself is not allowed</string>
     <string name="select_voucher">Select a Voucher</string>
 
     <string name="long_date">Long Term</string>
@@ -832,4 +832,7 @@
     <string name="short_name_hint">Abbreviation:</string>
 
     <string name="checking_password_error">Invalid Keystore file</string>
+
+    <string name="error_node">The blocks of the currently added node lag behind other nodes {block number offset > 10}, and your assets may be inaccurate. Please refer to the blockchain browser (https://explorer.bumo.io) for accurate assets.</string>
+
 </resources>

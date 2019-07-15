@@ -143,6 +143,7 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
                                     @Override
                                     public void failed() {
 
+
                                     }
                                 });
 

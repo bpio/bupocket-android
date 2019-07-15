@@ -830,8 +830,7 @@
     <string name="password_backup_hint">请填写安全密码以确认备份</string>
     <string name="empty_introduce">暂无介绍</string>
     <string name="short_name_hint">简称：</string>
-
-
+    <string name="error_node">当前添加节点的区块落后于其它节点 {区块数偏移量>10} 个区块，您的资产数量可能会不准确，请以区块链浏览器（https://explorer.bumo.io）上的资产数量为准。</string>
 
 
 </resources>

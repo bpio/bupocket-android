@@ -315,13 +315,13 @@ public class BPWalletImportFragment extends BaseFragment {
                             tipDialog.dismiss();
                         } catch (WalletException e) {
                             e.printStackTrace();
-                            ToastUtil.showToast(getActivity(), R.string.wallet_mneonic_error, Toast.LENGTH_SHORT);
+                            ToastUtil.showToast(getActivity(), R.string.wallet_keystore_error, Toast.LENGTH_SHORT);
                             tipDialog.dismiss();
 
                             return;
                         } catch (Exception e) {
                             e.printStackTrace();
-                            ToastUtil.showToast(getActivity(), R.string.wallet_mneonic_error, Toast.LENGTH_SHORT);
+                            ToastUtil.showToast(getActivity(), R.string.wallet_keystore_error, Toast.LENGTH_SHORT);
                             tipDialog.dismiss();
                             return;
                         }
@@ -668,7 +668,7 @@ public class BPWalletImportFragment extends BaseFragment {
     private boolean walletNameFlag(EditText nameEt) {
         String walletName = nameEt.getText().toString().trim();
         if (!CommonUtil.validateNickname(walletName)) {
-            DialogUtils.showTitleDialog(mContext, getString(R.string.wallet_create_form_error4), getString(R.string.error_hint));
+            DialogUtils.showTitleDialog(mContext, getString(R.string.wallet_create_form_error5), getString(R.string.error_hint));
             return false;
         }
         return true;

@@ -242,6 +242,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
                                         resultSeq = Math.abs(resultSeq);
                                         if (resultSeq >=0 && resultSeq <= 10) {
 
+
                                             mActivity.runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
@@ -256,9 +257,27 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
 
 
                                         } else {
-                                            ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
-                                            txSendingTipDialog.dismiss();
-                                            nodeListener.failed();
+
+                                            mActivity.runOnUiThread(new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    txSendingTipDialog.dismiss();
+                                                    nodeListener.success(url);
+                                                    if (!(position == 0)) {
+                                                        getData().get(position).setUrl(url);
+                                                        notifyDataSetChanged();
+                                                    }
+
+                                                    DialogUtils.showMessageDialog(context,
+                                                            context.getString(R.string.error_node),
+                                                            context.getString(R.string.create_wallet_prompt_dialog_title), new DialogUtils.KnowListener() {
+                                                                @Override
+                                                                public void Know() {
+
+                                                                }
+                                                            });
+                                                }
+                                            });
                                         }
                                     } else {
                                         ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
