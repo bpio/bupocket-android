@@ -399,6 +399,10 @@ public class DialogUtils {
 
     }
 
+    public static void showPassWordInputDialog(final Activity mContext, String title, String input, String etInpput, ConfirmListener confirmListener) {
+        showPassWordInputDialog(mContext,title,input,etInpput,0,confirmListener);
+    }
+
 
     public interface KnowListener {
 

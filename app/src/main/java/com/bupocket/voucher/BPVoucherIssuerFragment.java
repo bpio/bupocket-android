@@ -68,11 +68,8 @@ public class BPVoucherIssuerFragment extends AbsBaseFragment implements InitView
             if (!TextUtils.isEmpty(name)) {
                 dPartyNameRiv.setText(name);
             }
-            String shortName = voucherIssuer.getShortName();
 
-            if (!TextUtils.isEmpty(shortName)) {
-                issuerNickRiv.setText(getString(R.string.short_name_hint) + shortName);
-            }
+            issuerNickRiv.setVisibility(View.GONE);
 
             String intro = voucherIssuer.getIntro();
             if (!TextUtils.isEmpty(intro)) {

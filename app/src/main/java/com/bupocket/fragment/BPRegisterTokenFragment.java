@@ -34,6 +34,7 @@ import com.bupocket.model.RegisterTokenInfo;
 import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DecimalCalculate;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.SocketUtil;
 import com.bupocket.wallet.Wallet;
@@ -231,24 +232,11 @@ public class BPRegisterTokenFragment extends BaseFragment {
     }
 
     private void showPasswordConfirmDialog() {
-        final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
-        qmuiDialog.setCanceledOnTouchOutside(false);
-        qmuiDialog.setContentView(R.layout.view_password_comfirm);
-        qmuiDialog.show();
-        QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
-        ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
-        TextView mPasswordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
-        TextView mPpasswordConfirmTitle = qmuiDialog.findViewById(R.id.passwordConfirmTitle);
 
-        mPasswordConfirmNotice.setText(getString(R.string.register_token_password_confirm_txt));
-        mPpasswordConfirmTitle.setText(getString(R.string.password_comfirm_dialog_title));
-
-        mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
+        DialogUtils.showPassWordInputDialog(getActivity(), getString(R.string.register_token_password_confirm_txt), new DialogUtils.ConfirmListener() {
             @Override
-            public void onClick(View v) {
+            public void confirm(final String password) {
 
-                EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
-                final String password = mPasswordConfirmEt.getText().toString().trim();
                 txSendingTipDialog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                         .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
@@ -303,17 +291,10 @@ public class BPRegisterTokenFragment extends BaseFragment {
                         }
                     }
                 }).start();
-
-                qmuiDialog.dismiss();
             }
         });
 
-        mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiDialog.dismiss();
-            }
-        });
+
     }
 
     private String getAccountBPData(){

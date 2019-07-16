@@ -1,9 +1,12 @@
 package com.bupocket.fragment;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -12,7 +15,9 @@ import android.widget.TextView;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
+import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.CustomNodeTypeEnum;
 import com.bupocket.enums.LanguageEnum;
 import com.bupocket.utils.AddressUtil;
@@ -84,14 +89,30 @@ public class BPProfileHomeFragment extends BaseFragment {
         return false;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     private void init() {
         initView();
+        initTopBar();
         initData();
         setListener();
     }
 
-    private void initView() {
+
+    private void initTopBar() {
+
         topbar.setTitle(R.string.tabbar_profile_txt);
+        Button button = topbar.addLeftTextButton("", R.id.topbar_left_arrow);
+        button.setTextColor(getResources().getColor(R.color.app_color_green));
+        int isStart = (int) spHelper.getSharedPreference(ConstantsType.IS_START_CUSTOM_SERVICE, 0);
+        if (isStart == CustomNodeTypeEnum.START.getServiceType()) {
+            button.setText(getString(R.string.custom_environment));
+        } else if (SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()) {
+            button.setText(getString(R.string.current_test_message_txt));
+        }
+    }
+
+    private void initView() {
+
         String currencyType = spHelper.getSharedPreference("currencyType", "CNY").toString();
         tvProfileCurrency.setText(currencyType);
 

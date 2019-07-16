@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.util.LogTime;
 import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeSettingAdapter;
@@ -24,14 +26,28 @@ import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.CustomNodeTypeEnum;
 import com.bupocket.fragment.home.HomeFragment;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.WalletCheckService;
+import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.model.NodeAddressModel;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUtils;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
+import com.google.gson.Gson;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher {
 
@@ -125,43 +141,76 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
                 } else {
 
                     if (checkWalletService()) {
-                        CommonUtil.invalidService(nodeServiceEt.getText().toString().trim(), getActivity(), new NodeSettingAdapter.NodeAddressListener() {
-                            @Override
-                            public void success(String url) {
 
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        saveBtn.setText(R.string.edit_node_info);
-                                        walletServiceEt.setEnabled(false);
-                                        nodeServiceEt.setEnabled(false);
-                                        visibleStartBtnLL.setVisibility(View.VISIBLE);
-                                        saveServiceInfo();
+                        try {
+                            final OkHttpClient okHttpClient = new OkHttpClient();
+                            final Request request = new Request.Builder()
+                                    .url(walletServiceEt.getText().toString().trim()+"healthcheck/")
+                                    .build();
+
+                            okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
+                                @Override
+                                public void onFailure(okhttp3.Call call, IOException e) {
+
+                                    LogUtils.e(e.getMessage());
+                                    ToastUtil.showToast(getActivity(),R.string.not_use_wallet_service,Toast.LENGTH_LONG);
+                                }
+
+                                @Override
+                                public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+                                    if (response.code() == 200) {
+                                        checkNodeService();
+                                    } else {
+                                        ToastUtil.showToast(getActivity(),R.string.not_use_wallet_service,Toast.LENGTH_LONG);
                                     }
-                                });
+
+                                }
+                            });
+                        } catch (Exception e) {
+                            LogUtils.e("");
+                            ToastUtil.showToast(getActivity(),R.string.not_use_wallet_service,Toast.LENGTH_LONG);
+                        }
 
 
-                            }
-
-                            @Override
-                            public void failed() {
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                    }
-                                });
-
-                            }
-                        });
                     }
                 }
-
-
 
 
             }
         });
         saveBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.app_color_green));
+    }
+
+    private void checkNodeService() {
+
+        CommonUtil.invalidService(nodeServiceEt.getText().toString().trim(), getActivity(), new NodeSettingAdapter.NodeAddressListener() {
+            @Override
+            public void success(String url) {
+
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        saveBtn.setText(R.string.edit_node_info);
+                        walletServiceEt.setEnabled(false);
+                        nodeServiceEt.setEnabled(false);
+                        visibleStartBtnLL.setVisibility(View.VISIBLE);
+                        saveServiceInfo();
+                    }
+                });
+
+
+            }
+
+            @Override
+            public void failed() {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                    }
+                });
+
+            }
+        });
     }
 
     private void saveServiceInfo() {
@@ -262,6 +311,10 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
 
     }
 
+
+    public static void main(String[] args) {
+
+    }
 
 }
 

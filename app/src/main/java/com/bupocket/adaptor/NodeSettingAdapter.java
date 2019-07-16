@@ -262,11 +262,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
                                                 @Override
                                                 public void run() {
                                                     txSendingTipDialog.dismiss();
-                                                    nodeListener.success(url);
-                                                    if (!(position == 0)) {
-                                                        getData().get(position).setUrl(url);
-                                                        notifyDataSetChanged();
-                                                    }
+                                                    nodeListener.failed();
 
                                                     DialogUtils.showMessageDialog(context,
                                                             context.getString(R.string.error_node),
