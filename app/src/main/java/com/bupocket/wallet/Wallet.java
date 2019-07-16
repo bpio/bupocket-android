@@ -653,6 +653,7 @@ public class Wallet {
 
         AccountGetNonceResponse response = sdk.getAccountService().getNonce(request);
         if (0 == response.getErrorCode()) {
+            LogUtils.e("nonce" + response.getResult().getNonce());
             return response.getResult().getNonce();
         } else if (11007 == response.getErrorCode()) {
             throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
@@ -865,42 +866,47 @@ public class Wallet {
         return walletBPData;
     }
 
-    /**
-     * build blob
-     *
-     * @param buAmount
-     * @param input
-     * @param fromAccAddr
-     * @param nonce
-     * @param feeLimit
-     * @param gasPrice
-     * @return
-     */
+    public TransactionBuildBlobResponse buildBlob(String amount, String input, String sourceAddress, String fee, String contractAddress, String transMetadata, long nonce) throws Exception {
 
-    private TransactionBuildBlobResponse buildBlob(Long buAmount, JSONObject input, String fromAccAddr, Long nonce, Long feeLimit, Long gasPrice, String contractAddress) {
-        // build contractInvokeByBUOperation
+        TransactionBuildBlobResponse transactionBuildBlobResponse = null;
+        Long gasPrice = 1000L;
+        Long feeLimit = ToBaseUnit.BU2MO(fee);
+        Long buAmount = ToBaseUnit.BU2MO(amount);
+
         ContractInvokeByBUOperation contractInvokeByBUOperation = new ContractInvokeByBUOperation();
         contractInvokeByBUOperation.setContractAddress(contractAddress);
         contractInvokeByBUOperation.setBuAmount(buAmount);
-        contractInvokeByBUOperation.setInput(input.toJSONString());
+        contractInvokeByBUOperation.setInput(input);
+
+        if (!transMetadata.isEmpty()) {
+            contractInvokeByBUOperation.setMetadata(transMetadata);
+        }
+
 
         TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
-        transactionBuildBlobRequest.setSourceAddress(fromAccAddr);
+        transactionBuildBlobRequest.setSourceAddress(sourceAddress);
         transactionBuildBlobRequest.setNonce(nonce);
         transactionBuildBlobRequest.setFeeLimit(feeLimit);
         transactionBuildBlobRequest.setGasPrice(gasPrice);
         transactionBuildBlobRequest.addOperation(contractInvokeByBUOperation);
+        if (!transMetadata.isEmpty()) {
+            transactionBuildBlobRequest.setMetadata(transMetadata);
+        }
 
-        String transactionBlob = null;
-        TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
+        transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
+        LogUtils.e("transactionBuildBlobResponse:" + transactionBuildBlobResponse.getErrorCode() + "" +
+                "t" + transactionBuildBlobResponse.getErrorDesc());
+
         return transactionBuildBlobResponse;
     }
+
 
     public TransactionBuildBlobResponse buildBlob(String amount, String input, String sourceAddress, String fee, String contractAddress, String transMetadata) throws Exception {
 
         TransactionBuildBlobResponse transactionBuildBlobResponse = null;
         try {
             Long nonce = getAccountNonce(sourceAddress) + 1;
+
             Long gasPrice = 1000L;
             Long feeLimit = ToBaseUnit.BU2MO(fee);
             Long buAmount = ToBaseUnit.BU2MO(amount);

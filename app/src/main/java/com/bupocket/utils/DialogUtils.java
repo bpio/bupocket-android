@@ -427,9 +427,9 @@ public class DialogUtils {
                                 .create();
                         txSendingTipDialog.show();
 
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
+//                        new Thread(new Runnable() {
+//                            @Override
+//                            public void run() {
                                 String pkbyAccountPassword = null;
                                 try {
                                     pkbyAccountPassword = Wallet.getInstance().getPKBYAccountPassword(msg, accountData, walletAddress);
@@ -453,8 +453,8 @@ public class DialogUtils {
                                 });
 
 
-                            }
-                        }).start();
+//                            }
+//                        }).start();
 
                     }
                 });

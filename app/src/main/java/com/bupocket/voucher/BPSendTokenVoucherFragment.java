@@ -44,6 +44,7 @@ import com.bupocket.utils.TimeUtil;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.utils.WalletCurrentUtils;
+import com.bupocket.utils.WalletUtils;
 import com.bupocket.voucher.model.VoucherDetailModel;
 import com.bupocket.voucher.model.VoucherPackageDetailModel;
 import com.bupocket.wallet.Wallet;
@@ -323,7 +324,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
         date = date + WalletCurrentUtils.voucherDate(startTime, endTime, mContext);
         goodsDateTv.setText(date);
         mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), detailModel.getBalance() + "")));
-        available=detailModel.getBalance();
+        available = detailModel.getBalance();
         callVoucherBalance();
 
     }
@@ -525,56 +526,76 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                                         @Override
                                         public void success(final String privateKey) {
 
-                                            new Thread(new Runnable() {
+                                            getActivity().runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
-
-                                                    getActivity().runOnUiThread(new Runnable() {
-                                                        @Override
-                                                        public void run() {
-                                                            submitDialog = new QMUITipDialog.Builder(getContext())
-                                                                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                                                                    .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
-                                                                    .create();
-                                                            submitDialog.show();
-                                                        }
-                                                    });
-                                                    long oldNonce = Wallet.getInstance().checkToAddressValidateAndOpenAccount(privateKey, getBPAccountData(), getWalletAddress(), toAddress, 0.02 + "", Constants.MIN_FEE + "");
+                                                    submitDialog = new QMUITipDialog.Builder(getContext())
+                                                            .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                                                            .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
+                                                            .create();
+                                                    submitDialog.show();
+                                                }
+                                            });
+//                                                    long oldNonce = Wallet.getInstance().checkToAddressValidateAndOpenAccount(privateKey, getBPAccountData(), getWalletAddress(), toAddress, 0.02 + "", Constants.MIN_FEE + "");
 //                                                    submitDialog.dismiss();
 //
-                                                    if (oldNonce != 0) {
-
-                                                        try {
-                                                            final TransactionBuildBlobResponse transactionBuildBlobResponse1 = Wallet.getInstance().buildBlob(amount,
-                                                                    input, WalletCurrentUtils.getWalletAddress(spHelper),
-                                                                    String.valueOf(minFee), contractAddress, transferDetail);
-
-                                                            getActivity().runOnUiThread(new Runnable() {
+                                            WalletUtils.checkToAddressValidateAndOpenAccount
+                                                    (privateKey, getBPAccountData(), getWalletAddress(),
+                                                            toAddress, 0.02 + "",
+                                                            Constants.MIN_FEE + "", new WalletUtils.ReqListener() {
                                                                 @Override
-                                                                public void run() {
-                                                                    submitDialog.dismiss();
-                                                                    submitTransactionBase(privateKey, transactionBuildBlobResponse1, fragmentTag, toAddress, amount);
+                                                                public void success(final int status,final long nonce) {
+
+                                                                    new Thread(new Runnable() {
+                                                                        @Override
+                                                                        public void run() {
+                                                                            if (status==0) {
+
+
+                                                                                try {
+
+                                                                                    final TransactionBuildBlobResponse transactionBuildBlobResponse = Wallet.getInstance().buildBlob("0",
+                                                                                            input, WalletCurrentUtils.getWalletAddress(spHelper),
+                                                                                            minFee, contractAddress, remark,nonce+1);
+//
+                                                                                    getActivity().runOnUiThread(new Runnable() {
+                                                                                        @Override
+                                                                                        public void run() {
+                                                                                            submitDialog.dismiss();
+                                                                                        }
+                                                                                    });
+                                                                                    LogUtils.e("bbbb0000"+Thread.currentThread().getName());
+                                                                                    submitTransactionBase(privateKey, transactionBuildBlobResponse, fragmentTag, toAddress, amount);
+
+                                                                                } catch (Exception e) {
+                                                                                    e.printStackTrace();
+                                                                                }
+                                                                            }else if (status==1){
+
+
+                                                                                getActivity().runOnUiThread(new Runnable() {
+                                                                                    @Override
+                                                                                    public void run() {
+                                                                                        submitDialog.dismiss();
+                                                                                    }
+                                                                                });
+
+                                                                                LogUtils.e("bbbb11111"+Thread.currentThread().getName());
+                                                                                submitTransactionBase(privateKey, transactionBuildBlobResponse, fragmentTag, toAddress, amount);
+                                                                            }
+
+//
+                                                                        }
+                                                                    }).start();
+
+                                                                }
+
+                                                                @Override
+                                                                public void failed() {
+
                                                                 }
                                                             });
 
-
-                                                        } catch (Exception e) {
-                                                            e.printStackTrace();
-                                                        }
-//
-                                                    } else {
-                                                        getActivity().runOnUiThread(new Runnable() {
-                                                            @Override
-                                                            public void run() {
-                                                                submitDialog.dismiss();
-                                                            }
-                                                        });
-                                                        submitTransactionBase(privateKey, transactionBuildBlobResponse, fragmentTag, toAddress, amount);
-                                                    }
-//
-//
-                                                }
-                                            }).start();
 
 
                                         }
