@@ -35,6 +35,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
+import org.apache.commons.collections.functors.TruePredicate;
 import org.bitcoinj.crypto.MnemonicCode;
 
 import java.util.ArrayList;
@@ -77,6 +78,7 @@ public class BPWalletManageFragment extends BaseFragment {
     private List<String> importedWallets = new ArrayList<>();
     private Boolean whetherIdentityWallet = false;
     public QMUITipDialog exportingTipDialog;
+    public static boolean isManagerFragment;
 
     @Override
     protected View onCreateView() {
@@ -416,6 +418,7 @@ public class BPWalletManageFragment extends BaseFragment {
         Bundle argz = new Bundle();
         argz.putString(ConstantsType.WALLET_ADDRESS, walletAddress);
         BPCreateWalletFormFragment.isCreateWallet = true;
+        isManagerFragment=true;
         backupWalletFragment.setArguments(argz);
         startFragment(backupWalletFragment);
 

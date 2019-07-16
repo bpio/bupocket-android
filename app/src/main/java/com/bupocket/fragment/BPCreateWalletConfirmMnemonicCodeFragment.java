@@ -18,6 +18,7 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TO;
+import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -88,9 +89,14 @@ public class BPCreateWalletConfirmMnemonicCodeFragment extends BaseFragment {
     }
 
     private void popBackStackFragment() {
-        getFragmentManager().popBackStack(BPWalletManageFragment.class.getSimpleName(), 0);
-        getFragmentManager().popBackStack(BPCreateWalletFormFragment.class.getSimpleName(), 1);
-        getFragmentManager().popBackStack(BPUserInfoFragment.class.getSimpleName(), 0);
+
+        if (BPWalletManageFragment.isManagerFragment) {
+            getFragmentManager().popBackStack(BPWalletManageFragment.class.getSimpleName(), 0);
+        }else{
+            getFragmentManager().popBackStack(BPCreateWalletFormFragment.class.getSimpleName(), 1);
+            getFragmentManager().popBackStack(BPUserInfoFragment.class.getSimpleName(), 0);
+        }
+
     }
 
     private void getMnemonicCode() {
