@@ -414,6 +414,8 @@ public class BPAssetsHomeFragment extends BaseFragment {
         }
 
         mTokensAdapter = new TokensAdapter(mTokenList, getContext());
+        String amount = mTokenList.get(0).getAmount();
+        sharedPreferencesHelper.put(currentWalletAddress + "tokenBalance", amount);
         mTokenListLv.setAdapter(mTokensAdapter);
         mTokenListLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

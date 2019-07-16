@@ -178,7 +178,7 @@ public class BPUserInfoFragment extends BaseFragment {
 
         DialogUtils.showPassWordInputDialog(getActivity(), "",
                 getString(R.string.user_info_logout_warning),
-                "",getResources().getColor(R.color.qmui_config_color_red) , new DialogUtils.ConfirmListener() {
+                "", getResources().getColor(R.color.qmui_config_color_red), new DialogUtils.ConfirmListener() {
                     @Override
                     public void confirm(final String password) {
 
@@ -201,10 +201,13 @@ public class BPUserInfoFragment extends BaseFragment {
                                 String ciphertextSkeyData = getSkeyStr();
                                 try {
                                     Wallet.getInstance().checkPwd(password, ciphertextSkeyData);
+                                    String firstVoucher = (String) spHelper.getSharedPreference(ConstantsType.FIRST_OPEN_VOUCHER, "yes");
                                     sharedPreferencesHelper.clear();
                                     SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus", HiddenFunctionStatusEnum.DISABLE.getCode());
                                     SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.MAIN.getCode());
                                     BPApplication.switchNetConfig(BumoNodeEnum.MAIN.getName());
+                                    spHelper.put(ConstantsType.FIRST_OPEN_VOUCHER, firstVoucher);
+
                                     tipDialog.dismiss();
                                     getActivity().runOnUiThread(new Runnable() {
                                         @Override

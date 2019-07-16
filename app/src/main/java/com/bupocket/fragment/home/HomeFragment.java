@@ -50,7 +50,7 @@ public class HomeFragment extends BaseFragment {
     private void initTabs() {
 
 
-        clearFragment();
+//        clearFragment();
 
         QMUITabSegment.Tab assets = new QMUITabSegment.Tab(
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_asset),
@@ -89,7 +89,6 @@ public class HomeFragment extends BaseFragment {
                 getResources().getString(R.string.tabbar_profile_txt), false
         );
 
-
         mTabSegment.addTab(assets);
         mTabSegment.addTab(voucher);
         mTabSegment.addTab(discover);
@@ -114,7 +113,14 @@ public class HomeFragment extends BaseFragment {
                                 getString(R.string.number_voucher_package_title), new DialogUtils.KnowListener() {
                                     @Override
                                     public void Know() {
-
+                                        int voucher_normal = R.mipmap.icon_tabbar_voucher;
+                                        int voucher_selected = R.mipmap.icon_tabbar_voucher_selected;
+                                        QMUITabSegment.Tab voucher = new QMUITabSegment.Tab(
+                                                ContextCompat.getDrawable(getContext(), voucher_normal),
+                                                ContextCompat.getDrawable(getContext(), voucher_selected),
+                                                getResources().getString(R.string.tabbar_toucher_txt), false
+                                        );
+                                        mTabSegment.replaceTab(1,voucher);
                                     }
                                 });
                     }
