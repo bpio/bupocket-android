@@ -757,7 +757,6 @@
     <string name="wallet_create__input_rePassword">请再次输入安全密码</string>
 
 
-
     <!--voucher package-->
     <string name="tabbar_toucher_txt">券包</string>
     <string name="voucher_empty">这里一张券都没有</string>
@@ -798,7 +797,6 @@
     <string name="issue_num">发行数量：</string>
 
 
-
     <string name="delete_current_wallet_title">确认删除该钱包吗？</string>
     <string name="delete_current_wallet_info">当前删除钱包为当前使用钱包，删除后将默认设置当前身份下的钱包为当前使用钱包。</string>
 
@@ -810,11 +808,11 @@
     <string name="send_voucher_num_hint">请输入转赠数量</string>
     <string name="send_voucher_info_hint">不能超过20个字符</string>
     <string name="send_name_hint">&lt;font color=\'#00D175\'> %1$s &lt;/font>下可使用的券</string>
-    <string name="voucher_avail_balance" >可转&lt;font color=\'#00D175\'> %1$s &lt;/font>个</string>
+    <string name="voucher_avail_balance">可转&lt;font color=\'#00D175\'> %1$s &lt;/font>个</string>
 
     <string name="voucher_send_confirm_title">确认转赠</string>
     <string name="send_voucher">转赠加密数字券</string>
-    <string name="voucher_pwd_confirm_hint" >请填写安全密码以确认转赠</string>
+    <string name="voucher_pwd_confirm_hint">请填写安全密码以确认转赠</string>
     <string name="tx_voucher_status_success_txt">转赠成功</string>
     <string name="send_voucher_failure">转赠失败</string>
     <string name="send_voucher_timeout">转赠超时</string>
@@ -831,6 +829,6 @@
     <string name="empty_introduce">暂无介绍</string>
     <string name="short_name_hint">简称：</string>
     <string name="error_node">当前添加节点的区块落后于其它节点 {区块数偏移量>10} 个区块，您的资产数量可能会不准确，请以区块链浏览器（https://explorer.bumo.io）上的资产数量为准。</string>
-
+    <string name="no_valid_send_voucher">无效的转赠数量</string>
 
 </resources>

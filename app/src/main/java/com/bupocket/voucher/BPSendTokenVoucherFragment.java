@@ -462,7 +462,14 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
             return;
         }
 
-        int sendNum = Integer.parseInt(sendAmountET.getText().toString().trim());
+        String sendNumStr = sendAmountET.getText().toString().trim();
+
+        if (!CommonUtil.isPureDigital(sendNumStr)) {
+            ToastUtil.showToast(getActivity(), R.string.no_valid_send_voucher, Toast.LENGTH_LONG);
+            return;
+        }
+
+        int sendNum = Integer.parseInt(sendNumStr);
         int availableNum = Integer.parseInt(BPSendTokenVoucherFragment.this.available);
         if (TextUtils.isEmpty(available) || availableNum == 0 || (sendNum > availableNum)) {
             ToastUtil.showToast(getActivity(), R.string.send_voucher_num_limit, Toast.LENGTH_LONG);

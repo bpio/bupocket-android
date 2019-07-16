@@ -784,7 +784,7 @@
     <string name="voucher_hold_num">Amount Held</string>
     <string name="d_party">Acceptor</string>
     <string name="asset_issuer">Asset Issuer</string>
-    <string name="transfer_voucher">Donate</string>
+    <string name="transfer_voucher">Transfer</string>
     <string name="voucher_detail_title">Details of Voucher</string>
 
 
@@ -834,5 +834,5 @@
     <string name="checking_password_error">Incorrect security password</string>
 
     <string name="error_node">The blocks of the currently added node lag behind other nodes {block number offset > 10}, and your assets may be inaccurate. Please refer to the blockchain browser (https://explorer.bumo.io) for accurate assets.</string>
-
+    <string name="no_valid_send_voucher">Invalid Number</string>
 </resources>

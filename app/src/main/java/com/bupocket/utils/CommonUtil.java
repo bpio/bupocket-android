@@ -84,6 +84,11 @@ public class CommonUtil {
     public static final Pattern BANK_CARD_PATTERN = Pattern.compile("^\\d{16,30}$");
 
 
+    public static final Pattern IS_PURE_DIGITAL = Pattern.compile("^[1-9]\\d*$");
+
+
+
+
     public static int random() {
         int x = Math.abs(random.nextInt(899999));
 
@@ -902,5 +907,14 @@ public class CommonUtil {
         return false;
     }
 
+
+    public static boolean isPureDigital(String str) {
+        Matcher match = IS_PURE_DIGITAL.matcher(str);
+        if (match.matches() == false) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
 }
