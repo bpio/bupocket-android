@@ -831,7 +831,7 @@
     <string name="empty_introduce">No Introduction</string>
     <string name="short_name_hint">Abbreviation:</string>
 
-    <string name="checking_password_error">Invalid Keystore file</string>
+    <string name="checking_password_error">Incorrect security password</string>
 
     <string name="error_node">The blocks of the currently added node lag behind other nodes {block number offset > 10}, and your assets may be inaccurate. Please refer to the blockchain browser (https://explorer.bumo.io) for accurate assets.</string>
 

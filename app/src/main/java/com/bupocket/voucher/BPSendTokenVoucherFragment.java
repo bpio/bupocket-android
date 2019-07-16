@@ -161,7 +161,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                 String amount = sendAmountET.getText().toString().trim();
                 boolean signAmount = amount.length() > 0;
                 boolean signTxFee = sendFormTxFeeEt.getText().toString().trim().length() > 0;
-                if (signAccountAddress && signAmount && signTxFee&&Double.parseDouble(amount)>0) {
+                if (signAccountAddress && signAmount && signTxFee && Double.parseDouble(amount) > 0) {
                     mConfirmSendBtn.setEnabled(true);
                     mConfirmSendBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
                 } else {
@@ -323,7 +323,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
         date = date + WalletCurrentUtils.voucherDate(startTime, endTime, mContext);
         goodsDateTv.setText(date);
         mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), detailModel.getBalance() + "")));
-
+        available=detailModel.getBalance();
         callVoucherBalance();
 
     }
@@ -461,7 +461,9 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
             return;
         }
 
-        if (TextUtils.isEmpty(available) || Integer.parseInt(BPSendTokenVoucherFragment.this.available) == 0) {
+        int sendNum = Integer.parseInt(sendAmountET.getText().toString().trim());
+        int availableNum = Integer.parseInt(BPSendTokenVoucherFragment.this.available);
+        if (TextUtils.isEmpty(available) || availableNum == 0 || (sendNum > availableNum)) {
             ToastUtil.showToast(getActivity(), R.string.send_voucher_num_limit, Toast.LENGTH_LONG);
             return;
 //            }
@@ -551,7 +553,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                                                                 @Override
                                                                 public void run() {
                                                                     submitDialog.dismiss();
-                                                                    submitTransactionBase(privateKey, transactionBuildBlobResponse1, fragmentTag, toAddress,amount);
+                                                                    submitTransactionBase(privateKey, transactionBuildBlobResponse1, fragmentTag, toAddress, amount);
                                                                 }
                                                             });
 
@@ -567,7 +569,7 @@ public class BPSendTokenVoucherFragment extends AbsBaseFragment {
                                                                 submitDialog.dismiss();
                                                             }
                                                         });
-                                                        submitTransactionBase(privateKey, transactionBuildBlobResponse, fragmentTag, toAddress,amount);
+                                                        submitTransactionBase(privateKey, transactionBuildBlobResponse, fragmentTag, toAddress, amount);
                                                     }
 //
 //
