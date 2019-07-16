@@ -149,7 +149,7 @@ public class BPWalletsHomeFragment extends AbsBaseFragment {
                         }
                     });
                 }
-                startFragment(new HomeFragment());
+                goHomeFragment();
             }
         });
     }
@@ -211,18 +211,26 @@ public class BPWalletsHomeFragment extends AbsBaseFragment {
                         }
                     });
 
-                    if (getArguments() != null) {
-                        if (BPVoucherHomeFragment.class.getSimpleName().equals(getArguments().getString(ConstantsType.FRAGMENT_TAG))) {
-                            HomeFragment fragment = new HomeFragment();
-                            startFragment(fragment);
-                        }
-                    } else {
-                        startFragment(new HomeFragment());
-                    }
+
+                    goHomeFragment();
+
+
 
                 }
             });
 
+        }
+    }
+
+    private void goHomeFragment() {
+        if (getArguments() != null && BPVoucherHomeFragment.class.getSimpleName().equals(getArguments().getString(ConstantsType.FRAGMENT_TAG))) {
+            HomeFragment fragment = new HomeFragment();
+            Bundle args = new Bundle();
+            args.putString(ConstantsType.FRAGMENT_TAG, BPVoucherHomeFragment.class.getSimpleName());
+            fragment.setArguments(args);
+            startFragment(fragment);
+        } else {
+            startFragment(new HomeFragment());
         }
     }
 

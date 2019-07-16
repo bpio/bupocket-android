@@ -47,10 +47,21 @@ public class HomeFragment extends BaseFragment {
         return layout;
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (getArguments()!=null) {
+            if (BPVoucherHomeFragment.class.getSimpleName().equals(getArguments().getString(ConstantsType.FRAGMENT_TAG))) {
+                mTabSegment.selectTab(1);
+            }
+        }
+
+    }
+
     private void initTabs() {
 
-
-//        clearFragment();
 
         QMUITabSegment.Tab assets = new QMUITabSegment.Tab(
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_asset),
@@ -65,10 +76,8 @@ public class HomeFragment extends BaseFragment {
 
             if (CommonUtil.isEnglishLangage()) {
                 voucher_normal = R.mipmap.icon_tabbar_voucher_new_en;
-                voucher_selected = R.mipmap.icon_tabbar_voucher_new_en_selected;
             } else {
                 voucher_normal = R.mipmap.icon_tabbar_voucher_new_cn;
-                voucher_selected = R.mipmap.icon_tabbar_voucher_new_cn_selected;
             }
         }
 
@@ -108,19 +117,21 @@ public class HomeFragment extends BaseFragment {
                 if (index == 1) {
                     if (spHelper.getSharedPreference(ConstantsType.FIRST_OPEN_VOUCHER, "yes").equals("yes")) {
                         spHelper.put(ConstantsType.FIRST_OPEN_VOUCHER, "no");
+                        int voucher_normal = R.mipmap.icon_tabbar_voucher;
+                        int voucher_selected = R.mipmap.icon_tabbar_voucher_selected;
+                        QMUITabSegment.Tab voucher = new QMUITabSegment.Tab(
+                                ContextCompat.getDrawable(getContext(), voucher_normal),
+                                ContextCompat.getDrawable(getContext(), voucher_selected),
+                                getResources().getString(R.string.tabbar_toucher_txt), false
+                        );
+                        mTabSegment.replaceTab(1,voucher);
+
                         DialogUtils.showMessageDialog(mContext,
                                 getString(R.string.number_voucher_package_info),
                                 getString(R.string.number_voucher_package_title), new DialogUtils.KnowListener() {
                                     @Override
                                     public void Know() {
-                                        int voucher_normal = R.mipmap.icon_tabbar_voucher;
-                                        int voucher_selected = R.mipmap.icon_tabbar_voucher_selected;
-                                        QMUITabSegment.Tab voucher = new QMUITabSegment.Tab(
-                                                ContextCompat.getDrawable(getContext(), voucher_normal),
-                                                ContextCompat.getDrawable(getContext(), voucher_selected),
-                                                getResources().getString(R.string.tabbar_toucher_txt), false
-                                        );
-                                        mTabSegment.replaceTab(1,voucher);
+
                                     }
                                 });
                     }
