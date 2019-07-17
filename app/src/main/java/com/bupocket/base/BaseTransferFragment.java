@@ -27,6 +27,7 @@ import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.voucher.BPSendVoucherStatusFragment;
 import com.bupocket.wallet.Wallet;
@@ -83,7 +84,7 @@ public abstract class BaseTransferFragment extends AbsBaseFragment {
                                 .create();
                         txSendingTipDialog.show();
 
-                        new Thread(new Runnable() {
+                        Runnable privateKeyRunnable = new Runnable() {
                             @Override
                             public void run() {
                                 String pkbyAccountPassword = null;
@@ -110,7 +111,11 @@ public abstract class BaseTransferFragment extends AbsBaseFragment {
 
 
                             }
-                        }).start();
+                        };
+//                        new Thread(privateKeyRunable).start();
+
+
+                        ThreadManager.getInstance().execute(privateKeyRunnable);
 
                     }
                 });
@@ -138,7 +143,7 @@ public abstract class BaseTransferFragment extends AbsBaseFragment {
                 submitDialog.show();
             }
         });
-        new Thread(new Runnable() {
+        Runnable submitRunnable = new Runnable() {
             @Override
             public void run() {
                 txHash = submitTransaction(privateKey, transBlob);
@@ -149,7 +154,10 @@ public abstract class BaseTransferFragment extends AbsBaseFragment {
                 ByHashQueryResult(txHash);
 
             }
-        }).start();
+        };
+//        new Thread(sumbitRunable).start();
+
+        ThreadManager.getInstance().execute(submitRunnable);
     }
 
 
@@ -294,7 +302,6 @@ public abstract class BaseTransferFragment extends AbsBaseFragment {
                                     bpSendStatusFragment.setArguments(argz);
                                     mFragment.startFragment(bpSendStatusFragment);
                                 }
-
 
                             }
                         }
