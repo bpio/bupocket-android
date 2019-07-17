@@ -804,7 +804,7 @@
 
     <string name="send_voucher_title">Transfer Vouchers</string>
     <string name="send_voucher_title1">Transfer Voucher</string>
-    <string name="send_voucher_title2">Select a voucher to donate</string>
+    <string name="send_voucher_title2">Select a voucher to Transfer</string>
     <string name="send_voucher_num">Amount to Transfer</string>
     <string name="send_voucher_num_hint">Please input the amount to transfer</string>
     <string name="send_voucher_info_hint">20 characters at most</string>

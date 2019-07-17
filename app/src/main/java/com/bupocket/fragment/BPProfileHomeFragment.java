@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
@@ -23,6 +24,7 @@ import com.bupocket.enums.LanguageEnum;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.TO;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
@@ -89,7 +91,7 @@ public class BPProfileHomeFragment extends BaseFragment {
         return false;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
+
     private void init() {
         initView();
         initTopBar();
@@ -103,8 +105,10 @@ public class BPProfileHomeFragment extends BaseFragment {
         topbar.setTitle(R.string.tabbar_profile_txt);
         Button button = topbar.addLeftTextButton("", R.id.topbar_left_arrow);
         button.setTextColor(getResources().getColor(R.color.app_color_green));
+
         int isStart = (int) spHelper.getSharedPreference(ConstantsType.IS_START_CUSTOM_SERVICE, 0);
         if (isStart == CustomNodeTypeEnum.START.getServiceType()) {
+            button.setTextSize(TO.dip2px(mContext,6));
             button.setText(getString(R.string.custom_environment));
         } else if (SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()) {
             button.setText(getString(R.string.current_test_message_txt));

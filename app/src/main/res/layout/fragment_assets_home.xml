@@ -54,7 +54,7 @@
                             android:layout_weight="1"
                             android:paddingLeft="10dp"
                             android:textColor="@color/app_color_green"
-                            android:textSize="15sp"
+                            android:textSize="14sp"
                             tools:text="test" />
 
                         <TextView
