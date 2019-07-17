@@ -178,7 +178,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
             public void onClick(View v) {
 
                 if (isUpdate) {
-                    BPUpgradeManager.getInstance(getActivity()).init();
+                    BPUpgradeManager.getInstance(BPAboutUsFragment.this.getActivity()).init();
                 }
             }
         });

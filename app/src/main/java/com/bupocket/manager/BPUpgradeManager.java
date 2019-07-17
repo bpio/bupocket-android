@@ -1,6 +1,8 @@
 package com.bupocket.manager;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
+
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.common.Constants;
@@ -29,6 +31,7 @@ public class BPUpgradeManager {
         if(bpUpgradeManager == null){
             bpUpgradeManager = new BPUpgradeManager(mActivity);
         }
+        bpUpgradeManager.mActivity=mActivity;
         return bpUpgradeManager;
     }
 
@@ -83,7 +86,10 @@ public class BPUpgradeManager {
                         } else {
 
                         }
+                        LogUtils.e("showDialogFragment");
+
                         updateAppManager.showDialogFragment();
+
                     }
                     /**
                      * 网络请求之前
