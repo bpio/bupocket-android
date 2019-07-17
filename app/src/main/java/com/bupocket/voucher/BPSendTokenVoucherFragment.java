@@ -26,6 +26,7 @@ import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.base.AbsBaseFragment;
+import com.bupocket.base.BaseTransferFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.AddressClickEventEnum;
@@ -66,7 +67,7 @@ import butterknife.BindView;
 import io.bumo.model.response.TransactionBuildBlobResponse;
 import io.bumo.model.response.result.ContractCallResult;
 
-public class BPSendTokenVoucherFragment extends AbsBaseFragment {
+public class BPSendTokenVoucherFragment extends BaseTransferFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
     @BindView(R.id.destAccountAddressEt)

@@ -28,6 +28,7 @@ import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.adaptor.TokensAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.base.BaseTransferFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.CustomNodeTypeEnum;
@@ -89,7 +90,7 @@ import java.util.Map;
 
 import static com.bupocket.common.Constants.NORMAL_WALLET_NAME;
 
-public class BPAssetsHomeFragment extends BaseFragment {
+public class BPAssetsHomeFragment extends BaseTransferFragment {
 
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
@@ -146,18 +147,12 @@ public class BPAssetsHomeFragment extends BaseFragment {
     private String expiryTime;
     private View faildlayout;
     List<GetTokensRespDto.TokenListBean> mTokenList;
-    private Unbinder bind;
+
+
 
     @Override
-    protected View onCreateView() {
-        View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_assets_home, null);
-        bind = ButterKnife.bind(this, root);
-        initView();
-        initData();
-        setListeners();
-
-        initPermission();
-        return root;
+    protected int getLayoutView() {
+        return R.layout.fragment_assets_home;
     }
 
     private void initPermission() {
@@ -172,7 +167,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
     }
 
-    private void initView() {
+    public void initView() {
         faildlayout = LayoutInflater.from(mContext).inflate(R.layout.view_load_failed, null);
         faildlayout.findViewById(R.id.reloadBtn).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,7 +191,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         initBackground();
     }
 
-    private void setListeners() {
+    public void setListeners() {
         mHomeScanLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -208,8 +203,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
             public void onClick(View v) {
 
                 startFragment(new BPCollectionFragment());
-
-//                showAccountAddressView();
             }
         });
         mAddTokenLl.setOnClickListener(new View.OnClickListener() {
@@ -221,11 +214,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
         mImmediatelyBackupBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Bundle argz = new Bundle();
-//                argz.putString("accName", currentAccNick);
-//                BPUserInfoFragment bpUserInfoFragment = new BPUserInfoFragment();
-//                bpUserInfoFragment.setArguments(argz);
-//                startFragment(bpUserInfoFragment);
                 go2BPCreateWalletShowMnemonicCodeFragment();
 
             }
@@ -241,7 +229,6 @@ public class BPAssetsHomeFragment extends BaseFragment {
         ivAssetsInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                WalletUtils.showWalletPopup(mContext,getString(R.string.wallet_bu_info),v);
                 DialogUtils.showMessageNoTitleDialog(mContext, getString(R.string.wallet_bu_info));
             }
         });
@@ -402,10 +389,9 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
     }
 
-    private void initData() {
+    public void initData() {
         mTokenList = new ArrayList<>();
         QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
-//        QMUIStatusBarHelper.translucent(getActivity());
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
         currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
@@ -423,9 +409,13 @@ public class BPAssetsHomeFragment extends BaseFragment {
         if (tokensCache != null) {
             handleTokens(tokensCache);
         }
-//        initBackground();
         initTokensView();
         refreshLayout.autoRefresh();
+
+
+
+
+        initPermission();
     }
 
     private void initBackground() {
@@ -914,9 +904,4 @@ public class BPAssetsHomeFragment extends BaseFragment {
 
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        bind.unbind();
-    }
 }

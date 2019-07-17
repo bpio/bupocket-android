@@ -24,6 +24,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeCampaignAdapter;
 import com.bupocket.base.AbsBaseFragment;
+import com.bupocket.base.BaseTransferFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.enums.ExceptionEnum;
@@ -63,7 +64,7 @@ import retrofit2.Response;
 import static android.content.Context.INPUT_METHOD_SERVICE;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-public class BPNodeCampaignFragment extends AbsBaseFragment {
+public class BPNodeCampaignFragment extends BaseTransferFragment {
 
 
     @BindView(R.id.topbar)

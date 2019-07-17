@@ -21,6 +21,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeBuildDetailAdapter;
 import com.bupocket.base.AbsBaseFragment;
+import com.bupocket.base.BaseTransferFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.enums.CoBuildDetailStatusEnum;
@@ -65,7 +66,7 @@ import retrofit2.Response;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-public class BPNodeBuildDetailFragment extends AbsBaseFragment {
+public class BPNodeBuildDetailFragment extends BaseTransferFragment {
 
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
