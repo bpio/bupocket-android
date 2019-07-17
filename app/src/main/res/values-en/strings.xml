@@ -570,7 +570,7 @@
     <string name="bound_address_note_txt"> Please refresh the QR code and scan the code again</string>
     <string name="refresh_qr_tips_txt">Please update the QR code and then scan again</string>
     <string name="node_plan_management_system_txt">Operation and management system of node initiative</string>
-    <string name="scan_qr_login_management_system_note_txt">Log in to the %1$s soon; please confirm it is conducted by yourself.</string>
+    <string name="scan_qr_login_management_system_note_txt">Log in  %1$s soon, and please make sure that is your personal operation.</string>
     <string name="address_be_made_public_note_txt"> Your account address will be made public</string>
     <string name="confirm_login_txt">Confirm Login</string>
 
