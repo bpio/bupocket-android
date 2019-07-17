@@ -290,14 +290,14 @@
     <string name="error_issue_overflow_message_txt">Your total tokens to be issued exceed the upper limit</string>
 
     <string name="profile_setting_txt">Setting</string>
-    <string name="switch_node_title_txt">Switch to Test Network</string>
+    <string name="switch_node_title_txt">Switch to Testnet</string>
     <string name="monetary_title_txt">Currency Unit</string>
     <string name="currency_cny_txt">CNY</string>
     <string name="currency_usd_txt">USD</string>
     <string name="currency_jpy_txt">JPY</string>
     <string name="currency_krw_txt">KRW</string>
-    <string name="switch_test_net_message_txt">Whether to switch to the test network</string>
-    <string name="switch_main_net_message_txt">You have stopped the test network</string>
+    <string name="switch_test_net_message_txt">Whether to switch to the testnet</string>
+    <string name="switch_main_net_message_txt">You have stopped the testnet</string>
     <string name="yes_txt">Yes</string>
     <string name="no_txt">No</string>
     <string name="current_test_message_txt">Testnet</string>
@@ -308,7 +308,7 @@
     <string name="safety_tips_content_txt"> The wallet mnemonics in your current identity have not been backed up. To prevent loss of assets caused by forgetting the password, deleting/uninstalling the app, or losing the phone, please be sure to back up the mnemonics.</string>
     <string name="backup_immediately_txt">Backup Now</string>
     <string name="search_result_not_found">No search results found</string>
-    <string name="switch_to_test_net_message_txt">You have started the test network</string>
+    <string name="switch_to_test_net_message_txt">You have started the testnet</string>
     <string name="issue_token_password_confirm_txt">Please fill in the wallet password to confirm the issuance</string>
     <string name="recover_identity_confirm_message_txt">Are you sure to update your password and import your identity</string>
     <!--<string name="wallet_management_txt">Wallet Management</string>-->

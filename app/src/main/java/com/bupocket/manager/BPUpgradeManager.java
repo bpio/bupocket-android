@@ -86,7 +86,6 @@ public class BPUpgradeManager {
                         } else {
 
                         }
-                        LogUtils.e("showDialogFragment");
 
                         updateAppManager.showDialogFragment();
 
