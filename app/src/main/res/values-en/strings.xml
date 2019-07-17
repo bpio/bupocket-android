@@ -770,10 +770,7 @@
     <string name="goods_validity_date">%1$s To %2$s</string>
     <string name="number_voucher_package_title">Encrypted Digital Vouchers</string>
     <string name="number_voucher_package_info">
-        The encrypted digital voucher is a digital equity certificate on the BUMO blockchain. It is a mapping of real equity in the digital world and is freely circulated on the BUMO blockchain network.\n
-        The Vouchers of BU Pocket supports the management of encrypted digital vouchers including functions such as one-click transfer, easy acceptance. You can transfer vouchers to your family and friends anytime, anywhere, and they can easily redeem these vouchers.\n
-        (Acceptance function is being developed, so stay tuned...)\n
-        The future of equities: digital, decentralized and freely circulated</string>
+        The encrypted digital voucher is a digital equity certificate on the BUMO blockchain. It is a mapping of real equity in the digital world and is freely circulated on the BUMO blockchain network.\nThe Vouchers of BU Pocket supports the management of encrypted digital vouchers including functions such as one-click transfer, easy acceptance. You can transfer vouchers to your family and friends anytime, anywhere, and they can easily redeem these vouchers.\n(Acceptance function is being developed, so stay tuned...)\nThe future of equities: digital, decentralized and freely circulated</string>
 
 
     <!--voucher detail-->
@@ -835,4 +832,6 @@
 
     <string name="error_node">The blocks of the currently added node lag behind other nodes {block number offset > 10}, and your assets may be inaccurate. Please refer to the blockchain browser (https://explorer.bumo.io) for accurate assets.</string>
     <string name="no_valid_send_voucher">Invalid Number</string>
+
+    <string name="upgrade">Update</string>
 </resources>

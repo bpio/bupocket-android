@@ -3,6 +3,7 @@ package com.bupocket.fragment;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -108,7 +109,7 @@ public class BPProfileHomeFragment extends BaseFragment {
 
         int isStart = (int) spHelper.getSharedPreference(ConstantsType.IS_START_CUSTOM_SERVICE, 0);
         if (isStart == CustomNodeTypeEnum.START.getServiceType()) {
-            button.setTextSize(TO.dip2px(mContext,6));
+            button.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
             button.setText(getString(R.string.custom_environment));
         } else if (SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()) {
             button.setText(getString(R.string.current_test_message_txt));
