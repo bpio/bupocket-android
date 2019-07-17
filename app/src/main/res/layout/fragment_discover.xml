@@ -15,7 +15,7 @@
         <com.qmuiteam.qmui.widget.QMUITopBarLayout
             android:id="@+id/topbar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@color/app_btn_color_white"
             android:fitsSystemWindows="true"
