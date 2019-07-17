@@ -20,6 +20,7 @@ import com.bupocket.enums.VoucherStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.EventBus.SendVoucherMessage;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.TimeUtil;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.voucher.http.VoucherService;
@@ -119,14 +120,10 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
 
     }
 
-    @SuppressLint("ResourceAsColor")
+
+
     private void initTopBar() {
-        leftTopbarIv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popBackStack();
-            }
-        });
+
         titleTopbarTv.setText(R.string.voucher_detail_title);
     }
 
@@ -250,7 +247,12 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
 
     @Override
     protected void setListeners() {
-
+        leftTopbarIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popBackStack();
+            }
+        });
     }
 
 
