@@ -155,7 +155,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         initView();
         initData();
         setListeners();
-        backupState();
+
         initPermission();
         return root;
     }
@@ -255,43 +255,7 @@ public class BPAssetsHomeFragment extends BaseFragment {
         }
     }
 
-    private void showAccountAddressView() {
-        final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
-        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_show_address, null));
-        TextView accountAddressTv = qmuiBottomSheet.findViewById(R.id.printAccAddressTv);
-        accountAddressTv.setText(currentWalletAddress);
 
-        Bitmap mBitmap = QRCodeUtil.createQRCodeBitmap(currentWalletAddress, 356, 356);
-        ImageView mImageView = qmuiBottomSheet.findViewById(R.id.qr_pocket_address_image);
-        mImageView.setImageBitmap(mBitmap);
-
-        qmuiBottomSheet.findViewById(R.id.addressCopyBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData mClipData = ClipData.newPlainText("Label", currentWalletAddress);
-                cm.setPrimaryClip(mClipData);
-                final QMUITipDialog copySuccessDiglog = new QMUITipDialog.Builder(getContext())
-                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
-                        .setTipWord(copySuccessMessage)
-                        .create();
-                copySuccessDiglog.show();
-                getView().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        copySuccessDiglog.dismiss();
-                    }
-                }, 1500);
-            }
-        });
-        qmuiBottomSheet.findViewById(R.id.closeBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.dismiss();
-            }
-        });
-        qmuiBottomSheet.show();
-    }
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -515,6 +479,12 @@ public class BPAssetsHomeFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        initWalletName();
+        backupState();
+
+    }
+
+    private void initWalletName() {
         if (CommonUtil.isNull(currentWalletAddress) || currentWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString())) {
             currentWalletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName", NORMAL_WALLET_NAME).toString();
         } else {
