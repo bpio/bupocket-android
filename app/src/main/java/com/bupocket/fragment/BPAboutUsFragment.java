@@ -27,8 +27,6 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 
 import butterknife.BindView;
 import retrofit2.Call;
@@ -43,7 +41,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
     LinearLayout versionInfoListLL;
     @BindView(R.id.newVersionCodeTV)
     TextView newVersionCodeTV;
-    @BindView(R.id.versionUpdate)
+    @BindView(R.id.languageLL)
     LinearLayout versionUpdate;
     @BindView(R.id.changeTestLL)
     LinearLayout changeTestLL;

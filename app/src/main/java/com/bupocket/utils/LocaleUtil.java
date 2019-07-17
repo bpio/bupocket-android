@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.bupocket.BPMainActivity;
 import com.bupocket.R;
+import com.bupocket.common.ConstantsType;
 
 import java.util.Locale;
 
@@ -115,6 +116,7 @@ public class LocaleUtil {
         Intent intent = new Intent(context, BPMainActivity.class);
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.putExtra(ConstantsType.CHANGE_LANGUAGE,ConstantsType.STATUS_YES);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }

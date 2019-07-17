@@ -1,8 +1,6 @@
 package com.bupocket.fragment;
 
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -13,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
@@ -25,8 +22,6 @@ import com.bupocket.enums.LanguageEnum;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
-import com.bupocket.utils.TO;
-import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import butterknife.BindView;
@@ -67,8 +62,8 @@ public class BPProfileHomeFragment extends BaseFragment {
     RelativeLayout mVersionRl;
     @BindView(R.id.nodeSettingRl)
     RelativeLayout nodeSettingRl;
-    @BindView(R.id.versionUpdate)
-    LinearLayout mAddressBookRl;
+    @BindView(R.id.languageLL)
+    LinearLayout languageLL;
     @BindView(R.id.llProfileProtocol)
     LinearLayout llProfileProtocol;
     @BindView(R.id.tvProfileCurrency)
@@ -187,10 +182,10 @@ public class BPProfileHomeFragment extends BaseFragment {
                 gotoSettingFragment();
             }
         });
-        mAddressBookRl.setOnClickListener(new View.OnClickListener() {
+        languageLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoAddressBookFragment();
+                goLanguageFragment();
             }
         });
 
@@ -271,7 +266,7 @@ public class BPProfileHomeFragment extends BaseFragment {
         startFragment(new BPNodeSettingFragment());
     }
 
-    private void gotoAddressBookFragment() {
+    private void goLanguageFragment() {
         startFragment(new BPLanguageFragment());
     }
 

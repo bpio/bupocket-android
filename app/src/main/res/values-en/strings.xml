@@ -834,4 +834,6 @@
     <string name="no_valid_send_voucher">Invalid Number</string>
 
     <string name="upgrade">Update</string>
+    <string name="whether_upgrade_versions">Whether to update to the new version %s</string>
+    <string name="new_version_size">The size of the new version:  </string>
 </resources>

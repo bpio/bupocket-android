@@ -37,4 +37,8 @@ public class ConstantsType {
 
     public static final String BACKUP_STATUS = "backup_status";
 
+    public static final String CHANGE_LANGUAGE = "change_language";
+
+    public static final String  STATUS_YES="yes";
+    public static final String  STATUS_NO="no";
 }

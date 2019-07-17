@@ -834,4 +834,8 @@
     <string name="no_valid_send_voucher">无效的转赠数量</string>
 
     <string name="upgrade">更新版本</string>
+    <string name="whether_upgrade_versions">是否更新到版本 %s?</string>
+    <string name="new_version_size">新版本大小： </string>
+
+
 </resources>

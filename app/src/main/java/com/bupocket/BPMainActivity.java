@@ -8,6 +8,7 @@ import android.util.Log;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.base.BaseFragmentActivity;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.fragment.BPBackupWalletFragment;
 import com.bupocket.fragment.BPCreateWalletFragment;
 import com.bupocket.fragment.BPSendStatusFragment;
@@ -50,7 +51,12 @@ public class BPMainActivity extends BaseFragmentActivity {
             e.printStackTrace();
         }
 
-        BPUpgradeManager.getInstance(this).init();
+        if (getIntent()==null||getIntent().getExtras()==null||!ConstantsType.STATUS_YES.
+                equals(getIntent().getExtras().getString(ConstantsType.CHANGE_LANGUAGE,ConstantsType.STATUS_NO))) {
+            BPUpgradeManager.getInstance(this).init();
+        }
+
+
         loadSRLData();
     }
 

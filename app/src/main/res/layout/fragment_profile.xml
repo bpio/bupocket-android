@@ -215,7 +215,7 @@
                     android:background="@color/gray_line" />
 
                 <LinearLayout
-                    android:id="@+id/versionUpdate"
+                    android:id="@+id/languageLL"
                     style="@style/BPLLDiscover">
 
                     <ImageView
