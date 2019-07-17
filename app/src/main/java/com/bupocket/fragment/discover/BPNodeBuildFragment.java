@@ -19,6 +19,7 @@ import com.bupocket.wallet.enums.ExceptionEnum;
 import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -36,7 +37,7 @@ import retrofit2.Response;
 public class BPNodeBuildFragment extends AbsBaseFragment {
 
     @BindView(R.id.topbar)
-    QMUITopBar mTopBar;
+    QMUITopBarLayout mTopBar;
     @BindView(R.id.refreshComLv)
     ListView lvNodeBuild;
     @BindView(R.id.reloadBtn)

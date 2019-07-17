@@ -25,6 +25,7 @@ import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import java.util.ArrayList;
 
@@ -56,7 +57,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
     ViewPager vpDisBanner;
 
     @BindView(R.id.topbar)
-    QMUITopBar topBar;
+    QMUITopBarLayout topBar;
 
     private ArrayList<SlideModel.ImageInfo> banListData;
     private DisBannerAdapter disBannerAdapter;
