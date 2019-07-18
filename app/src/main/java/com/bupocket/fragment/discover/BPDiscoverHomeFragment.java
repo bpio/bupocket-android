@@ -185,7 +185,8 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
     private void initUI() {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
-        topBar.setTitle(R.string.tabbar_discover_txt);
+        topBar.setTitle(R.string.run_for_node_txt);
+        topBar.setBackgroundDividerEnabled(false);
     }
 
     private void setListener() {

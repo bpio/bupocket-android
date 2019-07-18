@@ -10,19 +10,13 @@
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:layout_marginBottom="80dp"
-        android:scrollbars="none"
-        >
+        android:scrollbars="none">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/help_txt"
-                android:theme="@style/BPViewTitle" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -69,7 +63,6 @@
 
 
     </ScrollView>
-
 
 
     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton

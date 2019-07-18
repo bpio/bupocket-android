@@ -10,11 +10,6 @@
         android:background="@color/qmui_config_color_white"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/language_txt"
-            android:theme="@style/BPViewTitle" />
 
         <RelativeLayout
             android:id="@+id/languageCNRL"

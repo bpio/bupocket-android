@@ -12,12 +12,6 @@
         android:background="@color/app_bg_color_gray"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/user_info_title"
-            android:theme="@style/BPViewTitle" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

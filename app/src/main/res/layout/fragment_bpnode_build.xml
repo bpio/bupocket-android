@@ -19,13 +19,6 @@
             android:fitsSystemWindows="true" />
 
 
-        <TextView
-            android:id="@+id/titleTv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/build_node_txt"
-            android:theme="@style/BPViewTitle" />
-
 
         <include
             layout="@layout/view_common_lv_layout"

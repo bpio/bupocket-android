@@ -37,8 +37,6 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
     ListView nodeSetLv;
     @BindView(R.id.addMoreLL)
     LinearLayout addMoreLL;
-    @BindView(R.id.nodeTitleTv)
-    TextView nodeTitleTv;
 
 
     private NodeSettingAdapter nodeSettingAdapter;
@@ -84,7 +82,7 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
 
         if (SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()) {
             testTitle = "(" + getString(R.string.current_test_message_txt) + ")";
-            nodeTitleTv.setText(getString(R.string.node_setting_title) + testTitle);
+            topbar.setTitle(getString(R.string.node_setting_title) + testTitle);
         }
 
     }
@@ -179,7 +177,7 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
 
     @SuppressLint("ResourceAsColor")
     private void initTopBar() {
-
+        topbar.setBackgroundDividerEnabled(false);
         topbar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -189,10 +187,10 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
         });
 
         Button rightButton = topbar.addRightTextButton(getString(R.string.save), R.id.skipBackupBtn);
+        rightButton.setTextColor(ContextCompat.getColor(getContext(), R.color.app_color_main));
         rightButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 
                 for (int j = 0; j < nodeSettingAdapter.getData().size(); j++) {
                     if (nodeSettingAdapter.getData().get(j).isSelected()) {
@@ -201,15 +199,13 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
                         }
                     }
                 }
-
                 nodeSettingAdapter.saveNodeData(nodeSettingAdapter.getData());
                 BPApplication.switchNetConfig(null);
                 isSaveBtn = true;
                 popBackStack();
             }
         });
-        Button skipBackuoBtn = topbar.findViewById(R.id.skipBackupBtn);
-        skipBackuoBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.app_color_main));
+
 
 
     }

@@ -23,7 +23,6 @@ import android.widget.Toast;
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeCampaignAdapter;
-import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.base.BaseTransferFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.interfaces.SignatureListener;
@@ -87,8 +86,6 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
     QMUIRoundButton reloadBtn;
     @BindView(R.id.loadFailedLL)
     LinearLayout loadFailedLL;
-    @BindView(R.id.titleTv)
-    TextView titleTv;
     @BindView(R.id.nodeSearchRL)
     RelativeLayout nodeSearchRL;
     @BindView(R.id.qmuiEmptyView)
@@ -178,7 +175,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
                         GoRevokeVote(superNodeModel);
                         break;
                     case R.id.shareBtn:
-                        GoShareVote(superNodeModel);
+                        goShareVote(superNodeModel);
                         break;
                     case R.id.voteRecordBtn:
                         GoVoteRecord(superNodeModel);
@@ -253,7 +250,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
         startFragment(fragment);
     }
 
-    private void GoShareVote(SuperNodeModel superNodeModel) {
+    private void goShareVote(SuperNodeModel superNodeModel) {
         String status = superNodeModel.getStatus();
         if (SuperNodeStatusEnum.RUNNING.getCode().equals(status)) {
             DialogUtils.showMessageNoTitleDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
@@ -485,6 +482,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
 
     private void initTopBar() {
         mTopBar.setBackgroundDividerEnabled(false);
+        mTopBar.setTitle(R.string.run_for_node_txt);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
