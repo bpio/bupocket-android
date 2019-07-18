@@ -156,11 +156,8 @@ public class BPProfileHomeFragment extends BaseFragment {
     }
 
     private void initUI() {
-
         mVersionNameTv.setText(CommonUtil.packageName(getContext()));
-//        if (userNickTx.getWidth() > 260) {
-//            userNickTx.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT, Gravity.LEFT));
-//        }
+
     }
 
     private void setListener() {
