@@ -52,10 +52,8 @@ public class BPDiscoverHomeFragment extends BaseFragment {
     RelativeLayout mInformationRl;
     @BindView(R.id.xiaobuYoupinRl)
     RelativeLayout mXiaobuYoupinRl;
-
     @BindView(R.id.vpDisBanner)
     ViewPager vpDisBanner;
-
     @BindView(R.id.topbar)
     QMUITopBarLayout topBar;
 

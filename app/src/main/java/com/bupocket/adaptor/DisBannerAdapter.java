@@ -69,13 +69,6 @@ public class DisBannerAdapter extends PagerAdapter {
                 public void onClick(View v) {
 
                     String url = images.get(index).getUrl();
-//                    BPBannerFragment fragment = new BPBannerFragment();
-//                    Bundle args = new Bundle();
-//                    args.putString("url",url);
-//                    fragment.setArguments(args);
-//                    DisBannerAdapter.this.fragment.startFragmentForResult(fragment,1001);
-
-
                     Intent intent = new Intent();
                     intent.setClass(mContext, BPWebActivity.class);
                     intent.putExtra("url",url);
