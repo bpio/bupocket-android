@@ -107,9 +107,4 @@ public class BumoNewsActivity extends AppCompatActivity {
         mTopBar.setTitle(R.string.information_txt);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        bind.unbind();
-    }
 }

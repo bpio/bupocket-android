@@ -215,7 +215,9 @@ public class BPAssetsDetailFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ApiResult<GetMyTxsRespDto>> call, Response<ApiResult<GetMyTxsRespDto>> response) {
                 ApiResult<GetMyTxsRespDto> respDto = response.body();
-                llLoadFailed.setVisibility(View.GONE);
+                if (llLoadFailed!=null) {
+                    llLoadFailed.setVisibility(View.GONE);
+                }
                 if (respDto != null && isAdded()) {
                     handleMyTxs(respDto.getData());
                     if (respDto.getData().getTxRecord().size() == 0) {
@@ -446,10 +448,4 @@ public class BPAssetsDetailFragment extends BaseFragment {
         intentIntegrator.initiateScan();
     }
 
-    @Override
-    public void onDestroy() {
-        callTxService.cancel();
-        super.onDestroy();
-        bind.unbind();
-    }
 }

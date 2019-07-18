@@ -143,7 +143,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
             requestData();
         }
 
-        LogUtils.e("底层交易"+ Constants.BUMO_NODE_URL_BASE);
+        LogUtils.e("node wallet service url:"+ Constants.BUMO_NODE_URL_BASE);
 
     }
 
@@ -243,60 +243,4 @@ public class BPDiscoverHomeFragment extends BaseFragment {
         });
 
     }
-
-
-    private class PageImageOnClick implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-
-            switch (v.getId()) {
-                case 0:
-                    Toast.makeText(getContext(), "图片1被点击", Toast.LENGTH_SHORT).show();
-                    break;
-                case 2:
-                    Toast.makeText(getContext(), "图片3被点击", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-
-        }
-    }
-
-    private class PageImageOnTouch implements View.OnTouchListener {
-
-        private long downTime;
-
-        @Override
-        public boolean onTouch(View v, MotionEvent event) {
-
-
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    isDownStop = true;
-                    downTime = System.currentTimeMillis();
-                    break;
-                case MotionEvent.ACTION_MOVE:
-                    isDownStop = true;
-                    break;
-                case MotionEvent.ACTION_UP:
-                    isDownStop = false;
-                    if (System.currentTimeMillis() - downTime < 500) {
-                        Toast.makeText(getContext(), "图片" + v.getId() + "被点击", Toast.LENGTH_SHORT).show();
-                    }
-
-                    break;
-                case MotionEvent.ACTION_CANCEL:
-                    isDownStop = false;
-                    break;
-
-
-            }
-
-            return true;
-        }
-    }
-
-
-
-
-
 }
