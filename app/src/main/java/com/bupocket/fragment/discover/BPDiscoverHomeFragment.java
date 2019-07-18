@@ -233,12 +233,6 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                         }
                     });
                 }
-
-
-
-
-
-
             }
         });
 
