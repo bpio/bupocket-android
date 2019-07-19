@@ -9,6 +9,7 @@ import android.support.v7.widget.DialogTitle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -53,8 +54,7 @@ public class BPWalletManageFragment extends BaseFragment {
     @BindView(R.id.walletAddressTv)
     TextView mWalletAddressTv;
     @BindView(R.id.deleteWalletBtn)
-    QMUIRoundButton mDeleteWalletBtn;
-
+    Button mDeleteWalletBtn;
     @BindView(R.id.walletInfoLl)
     LinearLayout mWalletInfoLl;
     @BindView(R.id.exportKeystoreRl)
@@ -425,6 +425,7 @@ public class BPWalletManageFragment extends BaseFragment {
     }
 
     private void initTopBar() {
+        mTopBar.setBackgroundDividerEnabled(true);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

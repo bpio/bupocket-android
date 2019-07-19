@@ -46,17 +46,16 @@
 
             <TextView
                 android:id="@+id/walletSignTv"
+                style="@style/BPComGreenBgWhiteTextBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
-                android:background="@drawable/shape_corner_green_min"
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp"
                 android:maxLines="1"
                 android:text="@string/current_wallet_sign_txt"
-                android:textColor="@color/app_color_white"
                 android:textSize="13sp"
                 android:visibility="gone" />
         </LinearLayout>

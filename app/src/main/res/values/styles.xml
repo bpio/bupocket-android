@@ -321,7 +321,7 @@
         <item name="android:paddingLeft">@dimen/common_left_right_padding</item>
         <item name="android:paddingRight">@dimen/common_left_right_padding</item>
         <item name="android:gravity">center_vertical</item>
-
+        <item name="android:background">@color/app_color_white</item>
     </style>
 
     <style name="BPTextViewDiscover">

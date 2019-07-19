@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -52,7 +53,7 @@ public class BPWalletsHomeFragment extends AbsBaseFragment {
     LinearLayout mIdentityWalletInfoRl;
 
     @BindView(R.id.importBigWalletBtn)
-    QMUIRoundButton mImportBigWalletBtn;
+    Button mImportBigWalletBtn;
     @BindView(R.id.importWalletsLv)
     ListView mImportWalletsLv;
     @BindView(R.id.walletHeadRiv)

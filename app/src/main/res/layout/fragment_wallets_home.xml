@@ -39,28 +39,22 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/common_top_bottom_padding"
                 android:layout_marginTop="@dimen/common_top_bottom_padding"
                 android:text="@string/imported_wallet_home_title_txt"
                 android:textColor="@color/app_txt_color_gray"
                 android:textSize="14sp" />
 
 
-            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+            <Button
                 android:id="@+id/importBigWalletBtn"
+                style="@style/BPComGreenBgWhiteTextBtn"
                 android:layout_width="wrap_content"
-                android:layout_height="43.5dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="37dp"
-                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
                 android:paddingLeft="50dp"
                 android:paddingRight="50dp"
-                android:text="@string/imported_wallet_title_txt"
-                android:textColor="@color/app_color_white"
-                android:textSize="18sp"
-                android:visibility="visible"
-                app:qmui_backgroundColor="@color/app_color_main"
-                app:qmui_borderWidth="0dp"
-                app:qmui_radius="4dp" />
+                android:text="@string/imported_wallet_title_txt" />
 
             <com.qmuiteam.qmui.widget.QMUIEmptyView
                 android:id="@+id/emptyView"
@@ -74,7 +68,6 @@
                     android:divider="@color/tx_list_view_background_col"
                     android:dividerHeight="10dp"
                     android:fadeScrollbars="false"
-                    android:padding="12.5dp"
                     android:scrollbars="none">
 
                 </ListView>
