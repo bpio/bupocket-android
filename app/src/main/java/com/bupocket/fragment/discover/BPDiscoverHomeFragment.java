@@ -5,10 +5,8 @@ import android.os.SystemClock;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.widget.LinearLayout;
 
 import com.bupocket.R;
 import com.bupocket.activity.BumoNewsActivity;
@@ -24,7 +22,6 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
-import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import java.util.ArrayList;
@@ -42,16 +39,14 @@ import static com.bupocket.common.Constants.XB_YOUPING_USERNAME;
 public class BPDiscoverHomeFragment extends BaseFragment {
 
 
-    @BindView(R.id.cardPackageRl)
-    RelativeLayout mCardPackageRl;
-    @BindView(R.id.nodePlanRl)
-    RelativeLayout mNodePlanRl;
-    @BindView(R.id.nodeBuildRl)
-    RelativeLayout mNodeBuildRl;
-    @BindView(R.id.informationRl)
-    RelativeLayout mInformationRl;
-    @BindView(R.id.xiaobuYoupinRl)
-    RelativeLayout mXiaobuYoupinRl;
+    @BindView(R.id.nodePlanLl)
+    LinearLayout mNodePlanLl;
+    @BindView(R.id.nodeBuildLl)
+    LinearLayout mNodeBuildRl;
+    @BindView(R.id.informationLl)
+    LinearLayout mInformationLl;
+    @BindView(R.id.xiaobuYoupinLl)
+    LinearLayout mXiaobuYoupinLl;
     @BindView(R.id.vpDisBanner)
     ViewPager vpDisBanner;
     @BindView(R.id.topbar)
@@ -190,7 +185,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
     }
 
     private void setListener() {
-        mNodePlanRl.setOnClickListener(new View.OnClickListener() {
+        mNodePlanLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startFragment(new BPNodeCampaignFragment());
@@ -205,7 +200,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
         });
 
         // open https://m-news.bumo.io/
-        mInformationRl.setOnClickListener(new View.OnClickListener() {
+        mInformationLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent();
@@ -215,7 +210,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
         });
 
         // open weixin mini program
-        mXiaobuYoupinRl.setOnClickListener(new View.OnClickListener() {
+        mXiaobuYoupinLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 

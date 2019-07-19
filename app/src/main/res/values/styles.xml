@@ -215,8 +215,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
         <item name="android:background">@drawable/shape_corner</item>
-        <item name="android:layout_marginTop">10dp</item>
-
+        <item name="android:paddingLeft">@dimen/common_left_right_padding</item>
+        <item name="android:paddingRight">@dimen/common_left_right_padding</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 
     <style name="BPTextBuildHeaderHint">
@@ -308,6 +309,8 @@
     <style name="BPLLDiscover">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">58dp</item>
+        <item name="android:paddingLeft">@dimen/common_left_right_padding</item>
+        <item name="android:paddingRight">@dimen/common_left_right_padding</item>
         <item name="android:gravity">center_vertical</item>
 
     </style>
@@ -316,9 +319,16 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">@dimen/common_text_size_15</item>
         <item name="android:textColor">@color/app_txt_color_gray_2</item>
         <item name="android:layout_marginLeft">13dp</item>
+    </style>
+    <style name="BPTextViewAbout">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/common_text_size_15</item>
+        <item name="android:textColor">@color/app_txt_color_gray_2</item>
     </style>
 
 

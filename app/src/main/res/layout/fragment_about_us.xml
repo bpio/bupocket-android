@@ -42,7 +42,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="17dp"
                 android:textColor="@color/app_txt_color_gray_2"
-                android:textSize="15sp"
+                android:textSize="@dimen/common_text_size_15"
                 tools:text="@string/about_us_version_code" />
 
 
@@ -52,9 +52,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
             android:background="@drawable/shape_corner_white"
             android:orientation="vertical">
 
@@ -63,17 +61,12 @@
                 style="@style/BPLLDiscover">
 
                 <TextView
-                    style="@style/BPTextViewDiscover"
+                    style="@style/BPTextViewAbout"
                     android:text="@string/version_info" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="17.5dp"
-                    android:layout_marginRight="15dp"
                     android:background="@mipmap/icon_right_arrow" />
             </LinearLayout>
 
@@ -90,7 +83,7 @@
 
 
                 <TextView
-                    style="@style/BPTextViewDiscover"
+                    style="@style/BPTextViewAbout"
                     android:text="@string/version_refresh" />
 
                 <ImageView
@@ -105,7 +98,6 @@
                     android:id="@+id/newVersionCodeTV"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
                     android:textColor="@color/app_txt_color_gray"
                     android:textSize="15sp"
                     tools:text="V1.0.0" />
@@ -125,22 +117,19 @@
         <LinearLayout
             android:id="@+id/changeTestLL"
             style="@style/BPLLDiscover"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
             android:visibility="gone"
+            android:layout_marginTop="10dp"
             android:background="@drawable/shape_corner_white">
 
             <TextView
                 android:id="@+id/customTv"
-                style="@style/BPTextViewDiscover"
+                style="@style/BPTextViewAbout"
                 android:text="@string/switch_node_title_txt" />
 
             <TextView
                 android:id="@+id/changeTestNetTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="15dp"
                 android:background="@mipmap/icon_switch_normal" />
 
         </LinearLayout>
@@ -149,25 +138,18 @@
         <LinearLayout
             android:id="@+id/customEnvironmentLL"
             style="@style/BPLLDiscover"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
             android:visibility="gone"
+            android:layout_marginTop="10dp"
             android:background="@drawable/shape_corner_white">
 
             <TextView
-                style="@style/BPTextViewDiscover"
+                style="@style/BPTextViewAbout"
                 android:text="@string/custom_environment" />
 
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginEnd="17.5dp"
-                android:layout_marginRight="15dp"
                 android:background="@mipmap/icon_right_arrow" />
         </LinearLayout>
 

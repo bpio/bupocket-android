@@ -8,8 +8,6 @@
     android:orientation="vertical">
 
 
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,9 +31,9 @@
                 android:id="@+id/llProfileIdentity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="@dimen/common_left_right_padding"
                 android:layout_marginTop="20dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="@dimen/common_left_right_padding"
                 android:layout_marginBottom="25dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
@@ -62,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="10dp"
                         android:textColor="@color/app_color_black"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/common_text_size_18"
                         android:textStyle="bold"
                         tools:text="name" />
 
@@ -71,7 +69,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textColor="@color/app_txt_color_gray_2"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/common_text_size_14"
                         tools:text="address" />
                 </LinearLayout>
 
@@ -81,8 +79,6 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="17.5dp"
-                    android:layout_marginRight="17.5dp"
                     android:background="@mipmap/icon_right_arrow" />
 
 
@@ -93,8 +89,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
+                android:layout_marginLeft="@dimen/common_left_right_padding"
+                android:layout_marginRight="@dimen/common_left_right_padding"
                 android:layout_marginBottom="24dp"
                 android:orientation="horizontal">
 
@@ -114,7 +110,7 @@
                         android:layout_marginTop="23dp"
                         android:text="@string/address_book_txt"
                         android:textColor="@color/app_color_white"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/common_text_size_18"
                         android:textStyle="bold" />
 
 
@@ -142,7 +138,7 @@
                         android:layout_marginTop="23dp"
                         android:text="@string/wallet_manage"
                         android:textColor="@color/app_color_white"
-                        android:textSize="18sp"
+                        android:textSize="@dimen/common_text_size_18"
                         android:textStyle="bold" />
 
 
@@ -160,7 +156,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="12dp"
+                android:layout_height="@dimen/common_top_bottom_padding"
                 android:background="@color/app_color_gray" />
 
 
@@ -180,8 +176,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginLeft="15dp"
+
                         android:background="@mipmap/currency_price" />
 
                     <TextView
@@ -203,8 +198,6 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="17.5dp"
-                        android:layout_marginRight="17.5dp"
                         android:background="@mipmap/icon_right_arrow" />
                 </LinearLayout>
 
@@ -225,8 +218,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginLeft="15dp"
+
                         android:background="@mipmap/icon_profile_item_language" />
 
                     <TextView
@@ -248,8 +240,6 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="17.5dp"
-                        android:layout_marginRight="17.5dp"
                         android:background="@mipmap/icon_right_arrow" />
                 </LinearLayout>
 
@@ -261,8 +251,7 @@
 
                 <RelativeLayout
                     android:id="@+id/nodeSettingRl"
-                    android:layout_width="match_parent"
-                    android:layout_height="55dp">
+                    style="@style/BPLLDiscover">
 
                     <ImageView
                         android:id="@+id/manageWalletIcon"
@@ -271,8 +260,6 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginLeft="15dp"
                         android:background="@mipmap/node_setting" />
 
                     <TextView
@@ -293,8 +280,6 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="17.5dp"
-                        android:layout_marginRight="17.5dp"
                         android:background="@mipmap/icon_right_arrow" />
                 </RelativeLayout>
 
@@ -303,7 +288,7 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="12dp"
+                android:layout_height="@dimen/common_top_bottom_padding"
                 android:background="@color/app_color_gray" />
 
             <LinearLayout
@@ -322,8 +307,6 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginLeft="15dp"
                         android:background="@mipmap/user_protocol" />
 
                     <TextView
@@ -336,8 +319,6 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="17.5dp"
-                        android:layout_marginRight="17.5dp"
                         android:background="@mipmap/icon_right_arrow" />
                 </LinearLayout>
 
@@ -358,8 +339,6 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginLeft="15dp"
                         android:background="@mipmap/feed_back" />
 
                     <TextView
@@ -380,8 +359,6 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="17.5dp"
-                        android:layout_marginRight="17.5dp"
                         android:background="@mipmap/icon_right_arrow" />
                 </RelativeLayout>
 
@@ -402,8 +379,6 @@
                         android:layout_alignParentStart="true"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginLeft="15dp"
                         android:background="@mipmap/icon_profile_item_help" />
 
                     <TextView
@@ -436,8 +411,6 @@
                         android:layout_alignParentEnd="true"
                         android:layout_alignParentRight="true"
                         android:layout_centerVertical="true"
-                        android:layout_marginEnd="17.5dp"
-                        android:layout_marginRight="17.5dp"
                         android:background="@mipmap/icon_right_arrow" />
                 </RelativeLayout>
 
