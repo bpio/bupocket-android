@@ -323,6 +323,7 @@
         <item name="android:textColor">@color/app_txt_color_gray_2</item>
         <item name="android:layout_marginLeft">13dp</item>
     </style>
+
     <style name="BPTextViewAbout">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">0dp</item>
@@ -382,5 +383,8 @@
         <item name="android:textColor">@color/app_color_white</item>
 
     </style>
+
+
+
 
 </resources>
