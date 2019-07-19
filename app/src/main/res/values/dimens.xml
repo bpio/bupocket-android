@@ -55,6 +55,10 @@
     <dimen name="common_text_size_11">11sp</dimen>
 
 
+    <dimen name="common_border_4">4</dimen>
+    <dimen name="common_border_5">5</dimen>
+
+
 
 
 </resources>

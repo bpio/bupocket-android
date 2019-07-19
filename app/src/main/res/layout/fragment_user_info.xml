@@ -15,25 +15,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="10dp"
             android:background="@drawable/shape_corner"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/shape_corner"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp">
+            <LinearLayout style="@style/BPLayoutDiscover">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_marginRight="20dp"
                     android:gravity="center"
                     android:text="@string/user_info_wallet_name"
-
                     android:textColor="@color/app_txt_color_gray"
                     android:textSize="15sp">
 
@@ -46,7 +37,6 @@
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
                     android:textColor="@color/app_txt_color_gray_2"
-                    android:paddingRight="10dp"
                     android:textSize="15sp"
                     tools:text="identityName" />
             </LinearLayout>
@@ -54,16 +44,10 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginHorizontal="@dimen/common_left_right_padding"
                 android:background="@color/gray_line" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/shape_corner"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp">
+            <LinearLayout style="@style/BPLayoutDiscover">
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -91,7 +75,6 @@
                     android:gravity="right|center_vertical"
                     android:textAlignment="textEnd"
                     android:textColor="@color/app_txt_color_gray_2"
-                    android:paddingRight="10dp"
                     android:textSize="15sp"
                     tools:ignore="RtlCompat"
                     tools:text="test-idtest-idtest-idtest-idtest-idtest-idtest-idtest-idtest-idtest-idtest-id" />
@@ -99,43 +82,19 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="90dp"
-            android:padding="@dimen/view_padding">
 
+        <Button
+            android:id="@+id/userInfoBackupWalletBtn"
+            style="@style/BPComGreenBgWhiteTextBtn"
+            android:layout_marginTop="30dp"
+            android:text="@string/user_info_backup_current_wallet" />
 
-
-            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                android:id="@+id/userInfoBackupWalletTv"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/bp_btn_hight"
-                android:gravity="center"
-                android:text="@string/user_info_backup_current_wallet"
-                android:textColor="@color/qmui_config_color_white"
-                app:qmui_backgroundColor="@color/app_color_main"
-                app:qmui_borderColor="@color/app_color_main"
-                app:qmui_borderWidth="0dp"
-                android:textSize="18sp"
-                app:qmui_radius="5dp" />
-
-            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                android:id="@+id/userInfoLogoutWalletTv"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/bp_btn_hight"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:gravity="center"
-                android:text="@string/user_info_logout_title"
-                android:textSize="18sp"
-                android:textColor="@color/app_txt_color_red_3"
-                app:qmui_backgroundColor="@color/app_color_white"
-                app:qmui_borderColor="@color/app_color_green_disabled"
-                app:qmui_borderWidth="0dp"
-                app:qmui_radius="5dp" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/userInfoLogoutWalletBtn"
+            style="@style/BPComWhiteBgRegTextBtn"
+            android:layout_marginTop="20dp"
+            android:text="@string/user_info_logout_title"
+            />
 
     </LinearLayout>
 

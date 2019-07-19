@@ -2,12 +2,11 @@ package com.bupocket.fragment;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
 import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,31 +27,24 @@ import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
-import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
-import org.bitcoinj.crypto.MnemonicCode;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
-import static com.bupocket.R.string.user_info_logout_notice;
 
 public class BPUserInfoFragment extends BaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
-    @BindView(R.id.userInfoBackupWalletTv)
-    TextView mUserInfoBackupWalletTv;
-    @BindView(R.id.userInfoLogoutWalletTv)
-    TextView mUserInfoLogoutWalletTv;
+    @BindView(R.id.userInfoBackupWalletBtn)
+    Button mUserInfoBackupWalletTv;
+    @BindView(R.id.userInfoLogoutWalletBtn)
+    Button mUserInfoLogoutWalletTv;
     @BindView(R.id.userInfoAccNameTv)
     TextView mUserInfoAccNameTv;
     @BindView(R.id.identityIdTv)
@@ -61,9 +53,7 @@ public class BPUserInfoFragment extends BaseFragment {
     ImageView mTipsIv;
 
 
-    private int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
     private SharedPreferencesHelper sharedPreferencesHelper;
-    private List<String> mnemonicCodeList;
     private QMUIPopup identityIdExplainPopup;
 
     @Override
@@ -150,7 +140,7 @@ public class BPUserInfoFragment extends BaseFragment {
     }
 
     private void initTopBar() {
-        mTopBar.setBackgroundDividerEnabled(false);
+        mTopBar.setBackgroundDividerEnabled(true);
         mTopBar.setTitle(R.string.user_info_title);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override

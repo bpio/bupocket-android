@@ -214,7 +214,16 @@
     <style name="BPLayoutDiscover">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
-        <item name="android:background">@drawable/shape_corner</item>
+        <item name="android:background">@color/app_color_white</item>
+        <item name="android:paddingLeft">@dimen/common_left_right_padding</item>
+        <item name="android:paddingRight">@dimen/common_left_right_padding</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="BPLayoutWhite55">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">55dp</item>
+        <item name="android:background">@color/app_color_white</item>
         <item name="android:paddingLeft">@dimen/common_left_right_padding</item>
         <item name="android:paddingRight">@dimen/common_left_right_padding</item>
         <item name="android:gravity">center_vertical</item>
@@ -308,7 +317,7 @@
 
     <style name="BPLLDiscover">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">58dp</item>
+        <item name="android:layout_height">50dp</item>
         <item name="android:paddingLeft">@dimen/common_left_right_padding</item>
         <item name="android:paddingRight">@dimen/common_left_right_padding</item>
         <item name="android:gravity">center_vertical</item>
@@ -384,7 +393,27 @@
 
     </style>
 
+    <style name="BPComGreenBgWhiteTextBtn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">43dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/common_text_size_18</item>
+        <item name="android:textColor">@color/app_color_white</item>
+        <item name="android:background">@drawable/shape_corner_green</item>
+        <item name="android:layout_marginLeft">@dimen/common_left_right_padding</item>
+        <item name="android:layout_marginRight">@dimen/common_left_right_padding</item>
+    </style>
 
+    <style name="BPComWhiteBgRegTextBtn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">43dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/common_text_size_18</item>
+        <item name="android:textColor">@color/bp_color_red</item>
+        <item name="android:background">@drawable/shape_corner_white_btn</item>
+        <item name="android:layout_marginLeft">@dimen/common_left_right_padding</item>
+        <item name="android:layout_marginRight">@dimen/common_left_right_padding</item>
+    </style>
 
 
 </resources>

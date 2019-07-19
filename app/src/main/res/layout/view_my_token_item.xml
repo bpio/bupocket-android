@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
     android:orientation="vertical">
 
     <LinearLayout
@@ -13,25 +13,28 @@
         android:baselineAligned="false"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:padding="12dp">
+        android:paddingLeft="5dp"
+        android:paddingTop="20dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="10dp">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <ImageView
-                android:layout_centerInParent="true"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@mipmap/icon_token_bg_list"/>
+                android:layout_centerInParent="true"
+                android:background="@mipmap/icon_token_bg_list" />
 
             <com.qmuiteam.qmui.widget.QMUIRadiusImageView
-                android:layout_centerInParent="true"
                 android:id="@+id/headIconIv"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_centerInParent="true"
                 app:qmui_border_width="0dp"
-                app:qmui_is_circle="true"/>
+                app:qmui_is_circle="true" />
 
         </RelativeLayout>
 
@@ -41,8 +44,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="10dp"
-            tools:text="testnum"
-            android:textSize="18sp" />
+            android:layout_marginBottom="5dp"
+            android:textSize="18sp"
+            tools:text="testnum" />
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -17,14 +17,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/app_bg_color_gray"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/common_left_right_padding"
+            android:paddingRight="@dimen/common_left_right_padding">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
+                android:paddingTop="@dimen/common_top_bottom_padding"
+                android:paddingBottom="@dimen/common_top_bottom_padding"
                 android:text="@string/current_identity_wallet_title_txt"
                 android:textColor="@color/app_txt_color_gray"
                 android:textSize="14sp" />
@@ -33,15 +34,12 @@
                 android:id="@+id/identityWalletInfoLl"
                 layout="@layout/view_wallet_list_item"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginRight="12dp" />
+                android:layout_height="wrap_content" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="@dimen/common_top_bottom_padding"
                 android:text="@string/imported_wallet_home_title_txt"
                 android:textColor="@color/app_txt_color_gray"
                 android:textSize="14sp" />
@@ -62,7 +60,7 @@
                 android:visibility="visible"
                 app:qmui_backgroundColor="@color/app_color_main"
                 app:qmui_borderWidth="0dp"
-                app:qmui_radius="5dp" />
+                app:qmui_radius="4dp" />
 
             <com.qmuiteam.qmui.widget.QMUIEmptyView
                 android:id="@+id/emptyView"

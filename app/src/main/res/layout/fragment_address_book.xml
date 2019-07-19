@@ -14,47 +14,47 @@
 
         <com.qmuiteam.qmui.widget.QMUIEmptyView
             android:id="@+id/addressEv"
-            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="15dp"
             android:visibility="visible">
 
             <com.scwang.smartrefresh.layout.SmartRefreshLayout
                 android:id="@+id/refreshLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srlEnableScrollContentWhenLoaded="true"
-                app:srlEnableFooterFollowWhenLoadFinished="true">
+                app:srlEnableFooterFollowWhenLoadFinished="true"
+                app:srlEnableScrollContentWhenLoaded="true">
 
                 <com.scwang.smartrefresh.layout.header.ClassicsHeader
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <ListView
                         android:id="@+id/addressBookLv"
-                        android:paddingLeft="12.5dp"
-                        android:paddingRight="12.5dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:layout_marginHorizontal="@dimen/common_left_right_padding"
                         android:divider="@color/tx_list_view_background_col"
                         android:dividerHeight="10dp"
-                        android:scrollbars="none"
-                        android:fadeScrollbars="false"/>
+                        android:fadeScrollbars="false"
+                        android:scrollbars="none" />
 
 
                     <include
                         android:id="@+id/recordEmptyLL"
-                        layout="@layout/view_empty_record"/>
+                        layout="@layout/view_empty_record" />
                 </LinearLayout>
 
                 <com.scwang.smartrefresh.layout.footer.ClassicsFooter
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srlClassicsSpinnerStyle="Translate"/>
+                    app:srlClassicsSpinnerStyle="Translate" />
 
             </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
