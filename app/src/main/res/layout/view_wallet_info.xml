@@ -38,6 +38,7 @@
                 android:textColor="@color/app_color_black"
                 android:lines="1"
                 android:ellipsize="end"
+                android:textStyle="bold"
                 android:textSize="16sp"
                 tools:text="Wallet-1" />
 

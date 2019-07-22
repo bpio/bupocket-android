@@ -40,6 +40,7 @@
                 android:ellipsize="end"
                 android:maxWidth="120dp"
                 android:singleLine="true"
+                android:textStyle="bold"
                 android:textColor="@color/app_color_black"
                 android:textSize="15sp"
                 tools:text="Wallet-1" />

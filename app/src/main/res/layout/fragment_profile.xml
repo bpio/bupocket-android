@@ -263,11 +263,11 @@
                         android:background="@mipmap/node_setting" />
 
                     <TextView
+                        style="@style/BPTextViewDiscover"
+                        android:layout_marginLeft="9dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_marginStart="13dp"
-                        android:layout_marginLeft="13dp"
                         android:layout_toEndOf="@id/manageWalletIcon"
                         android:layout_toRightOf="@id/manageWalletIcon"
                         android:text="@string/profile_node_setting"
@@ -311,6 +311,7 @@
 
                     <TextView
                         style="@style/BPTextViewDiscover"
+                        android:layout_marginLeft="14dp"
                         android:text="@string/profile_user_protocol" />
 
                     <ImageView
