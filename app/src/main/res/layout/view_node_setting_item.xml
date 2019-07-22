@@ -33,8 +33,7 @@
             android:id="@+id/ivAddMore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="10dp"
-            android:padding="15dp"
+            android:padding="@dimen/common_left_right_padding"
             android:src="@mipmap/node_setting_more" />
 
     </LinearLayout>

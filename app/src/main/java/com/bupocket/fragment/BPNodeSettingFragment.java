@@ -101,9 +101,6 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
             Type type = new TypeToken<List<NodeSettingModel>>() {
             }.getType();
             nodeSettingModels = gson.fromJson(urlJson, type);
-//            if (nodeSettingModels.size()==1) {
-//                nodeSettingModels.get(0).setSelected(true);
-//            }
         }
         for (int i = 0; i < nodeSettingModels.size(); i++) {
             if (nodeSettingModels.get(i).isSelected()) {
@@ -177,7 +174,7 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
 
     @SuppressLint("ResourceAsColor")
     private void initTopBar() {
-        topbar.setBackgroundDividerEnabled(false);
+        topbar.setBackgroundDividerEnabled(true);
         topbar.setTitle(R.string.node_setting_title);
         topbar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
