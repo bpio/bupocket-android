@@ -66,9 +66,9 @@
         android:layout_height="@dimen/bp_btn_hight"
         android:layout_centerInParent="true"
         android:layout_gravity="bottom"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="@dimen/common_left_right_padding"
+        android:layout_marginRight="@dimen/common_left_right_padding"
+        android:layout_marginBottom="30dp"
         android:enabled="false"
         android:gravity="center"
         android:text="@string/submit_feedback_btn_txt"
@@ -76,7 +76,7 @@
         android:textSize="@dimen/bp_btn_text_size"
         app:qmui_backgroundColor="@color/app_color_green_disabled"
         app:qmui_borderColor="@color/app_color_green_disabled"
-        app:qmui_radius="5dp" />
+        app:qmui_radius="4dp" />
 
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
         android:id="@+id/topbar"
