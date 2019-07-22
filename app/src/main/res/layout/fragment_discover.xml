@@ -75,7 +75,8 @@
 
                         <View
                             style="@style/BPDivideLine"
-                            android:layout_marginLeft="50dp" />
+                            android:layout_marginRight="0dp"
+                            android:layout_marginLeft="45dp" />
 
 
                         <LinearLayout
