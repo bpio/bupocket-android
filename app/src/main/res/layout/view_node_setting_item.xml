@@ -17,7 +17,7 @@
             android:id="@+id/ivNodeSetSelected"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="@dimen/common_left_right_padding"
             android:background="@mipmap/icon_language_selected" />
 
         <TextView
