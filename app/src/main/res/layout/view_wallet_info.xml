@@ -34,12 +34,12 @@
             <TextView
                 android:id="@+id/walletNameTv"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="@color/app_color_black"
-                android:lines="1"
+                android:layout_height="match_parent"
                 android:ellipsize="end"
+                android:lines="1"
+                android:textColor="@color/app_color_black"
+                android:textSize="15sp"
                 android:textStyle="bold"
-                android:textSize="16sp"
                 tools:text="Wallet-1" />
 
         </LinearLayout>

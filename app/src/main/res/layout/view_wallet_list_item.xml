@@ -25,41 +25,42 @@
         android:orientation="vertical"
         android:paddingLeft="15sp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:layout_marginRight="5dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/walletNameTv"
-                android:layout_width="0dp"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/walletSignTv"
                 android:ellipsize="end"
-                android:maxWidth="120dp"
                 android:singleLine="true"
-                android:textStyle="bold"
                 android:textColor="@color/app_color_black"
                 android:textSize="15sp"
-                tools:text="Wallet-1" />
+                android:textStyle="bold"
+                tools:text="中国字体好不好啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊" />
 
             <TextView
                 android:id="@+id/walletSignTv"
                 style="@style/BPComGreenBgWhiteTextBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="15dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="10dp"
+                android:lines="1"
+                android:minWidth="50dp"
                 android:paddingLeft="5dp"
-                android:paddingRight="5dp"
                 android:paddingTop="3dp"
+                android:paddingRight="5dp"
                 android:paddingBottom="3dp"
-                android:maxLines="1"
                 android:text="@string/current_wallet_sign_txt"
                 android:textSize="13sp"
                 android:visibility="gone" />
-        </LinearLayout>
+        </RelativeLayout>
 
 
         <TextView
@@ -67,9 +68,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:layout_marginBottom="20dp"
             android:textColor="@color/app_txt_color_gray"
             android:textSize="14sp"
-            android:layout_marginBottom="20dp"
             tools:text="buQhSMWw···4Bo73c8C" />
     </LinearLayout>
 

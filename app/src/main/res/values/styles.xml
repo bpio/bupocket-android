@@ -395,7 +395,7 @@
 
     <style name="BPComGreenBgWhiteTextBtn">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">43dp</item>
+        <item name="android:layout_height">45dp</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/common_text_size_18</item>
         <item name="android:textColor">@color/app_color_white</item>
@@ -406,7 +406,7 @@
 
     <style name="BPComWhiteBgRegTextBtn">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">43dp</item>
+        <item name="android:layout_height">45dp</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/common_text_size_18</item>
         <item name="android:textColor">@color/app_txt_color_red</item>
