@@ -12,11 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/qmui_topbar_height"
         android:fitsSystemWindows="true" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/gray_line"
-        />
 
 
     <ScrollView
@@ -72,9 +67,9 @@
                 android:layout_height="45dp"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="15dp"
-                android:layout_marginTop="60dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginRight="15dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="30dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:gravity="center"
@@ -88,8 +83,7 @@
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                 android:id="@+id/skipBackupBtn"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
+                style="@style/BPComGreenBgWhiteTextBtn"
                 android:layout_centerInParent="true"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="20dp"
@@ -98,12 +92,11 @@
                 android:focusable="true"
                 android:gravity="center"
                 android:text="@string/no_backup_mneonic_btn_code"
-                android:textColor="@color/app_color_main"
                 android:textSize="18sp"
                 android:visibility="gone"
                 app:qmui_backgroundColor="@color/app_btn_color_white"
                 app:qmui_borderColor="@color/app_color_main"
-                app:qmui_radius="5dp" />
+                app:qmui_radius="4dp" />
 
 
         </LinearLayout>

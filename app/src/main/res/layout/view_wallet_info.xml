@@ -12,7 +12,7 @@
         android:id="@+id/headIconPwdRiv"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginLeft="@dimen/common_left_right_padding"
         android:layout_marginTop="20dp"
         android:src="@mipmap/ic_wallet_head_normal"
         app:riv_corner_radius="4dp" />

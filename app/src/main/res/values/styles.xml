@@ -164,7 +164,8 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:paddingTop">15dp</item>
         <item name="android:textSize">13sp</item>
-        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:paddingRight">20dp</item>
     </style>
 
 
@@ -311,9 +312,7 @@
         <item name="android:textColor">@color/app_txt_color_gray_2</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">5dp</item>
-        <item name="android:layout_marginTop">10dp</item>
-        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:layout_marginTop">25dp</item>
     </style>
 
     <style name="BPLLDiscover">
@@ -403,6 +402,7 @@
         <item name="android:background">@drawable/shape_corner_green</item>
         <item name="android:layout_marginLeft">@dimen/common_left_right_padding</item>
         <item name="android:layout_marginRight">@dimen/common_left_right_padding</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="BPComWhiteBgRegTextBtn">
@@ -410,14 +410,14 @@
         <item name="android:layout_height">43dp</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">@dimen/common_text_size_18</item>
-        <item name="android:textColor">@color/bp_color_red</item>
+        <item name="android:textColor">@color/app_txt_color_red</item>
         <item name="android:background">@drawable/shape_corner_white_btn</item>
         <item name="android:layout_marginLeft">@dimen/common_left_right_padding</item>
         <item name="android:layout_marginRight">@dimen/common_left_right_padding</item>
     </style>
 
     <style name="BPTextViewGrayBg">
-        <item name="android:background">@drawable/shape_corner_gray</item>
+        <item name="android:background">@drawable/shape_corner_gray_et</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:textSize">15sp</item>

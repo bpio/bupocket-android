@@ -27,7 +27,7 @@
     <color name="app_txt_color_gray_5">#888888</color>
     <color name="app_txt_color_gray_6">#BBBBBB</color>
     <color name="app_txt_color_gray_7">#737791</color>
-    <color name="app_txt_color_red">#FF7272</color>
+    <color name="app_txt_color_red">#FF6464</color>
     <color name="app_txt_color_red_2">#ff0000</color>
     <color name="app_txt_color_red_3">#e23b1b</color>
     <color name="app_txt_color_red_4">#FF2424</color>
@@ -81,7 +81,7 @@
     <color name="asset_home_background_color">#f8f8f8</color>
     <color name="token_list_view_background_color">#f7f7f7</color>
     <color name="asset_price_txt_color">#999999</color>
-    <color name="scan_btn_background_color">#72AFFF</color>
+    <color name="scan_btn_background_color">#6D8BFF</color>
     <color name="transfer_btn_background_color">#02CA71</color>
     <color name="tx_list_view_background_col">#f7f7f7</color>
     <color name="search_token_asset_code_txt_color">#333333</color>
@@ -102,7 +102,6 @@
     <color name="build_exit_color">#A1A7C7</color>
 
 
-    <color name="bp_color_red">#FF6464</color>
 
 
 </resources>

@@ -173,11 +173,11 @@ public class BPCreateWalletConfirmMnemonicCodeFragment extends BaseFragment {
             mnemonicWord.setWordId(wordId);
             if (!mnemonicCodeListSelected.contains(mnemonicWord)) {
                 textView.setTextColor(getResources().getColor(R.color.app_color_white));
-                textView.setBackgroundColor(getResources().getColor(R.color.app_color_main));
+                textView.setBackground(getResources().getDrawable(R.drawable.shape_corner_green_tv2));
                 mnemonicCodeListSelected.add(mnemonicWord);
             } else {
                 textView.setTextColor(getResources().getColor(R.color.app_color_main));
-                textView.setBackgroundColor(getResources().getColor(R.color.app_bg_color_gray));
+                textView.setBackground(getResources().getDrawable(R.drawable.shape_corner_gray_tv2));
                 mnemonicCodeListSelected.remove(mnemonicWord);
             }
             printMneonicCodeSelected();
@@ -198,7 +198,8 @@ public class BPCreateWalletConfirmMnemonicCodeFragment extends BaseFragment {
 
 
     private void initTopBar() {
-        mTopBar.setBackgroundDividerEnabled(false);
+        mTopBar.setBackgroundDividerEnabled(true);
+        mTopBar.setTitle(R.string.view_title_confirm_mneonic_code);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

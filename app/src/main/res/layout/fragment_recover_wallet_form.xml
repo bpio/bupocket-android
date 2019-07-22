@@ -50,7 +50,7 @@
                         android:id="@+id/recoverMneonicCodeEt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/shape_corner_gray"
+                        android:background="@drawable/shape_corner_gray_et"
                         android:gravity="start|top"
                         android:hint="@string/recover_edit_mneonic_code_hint"
                         android:inputType="textMultiLine"

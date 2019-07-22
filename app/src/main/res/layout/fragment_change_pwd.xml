@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_bg_color_gray"
+    android:background="@color/app_color_white"
     android:orientation="vertical">
 
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
@@ -16,46 +16,33 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/common_left_padding"
-            android:layout_marginRight="@dimen/common_left_padding"
             android:orientation="vertical">
 
 
-            <TextView
+            <include
+                layout="@layout/view_wallet_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/wallet_info"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="14sp" />
+                android:layout_marginRight="15dp" />
 
-
-            <include layout="@layout/view_wallet_info" />
-
-
-            <TextView
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:text="@string/change_the_password_txt"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="14sp" />
+                android:layout_height="@dimen/common_top_bottom_padding"
+                android:background="@color/app_bg_color_gray" />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_left_right_padding"
+                android:layout_marginRight="@dimen/common_left_right_padding"
                 android:background="@drawable/shape_corner_white"
                 android:orientation="vertical"
-                android:paddingLeft="15dp"
                 android:paddingBottom="34dp">
 
 
@@ -69,8 +56,7 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="12.5dp">
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/oldPasswordET"
@@ -78,7 +64,6 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/change_old_pwd_hint"
                         android:inputType="textPassword|textMultiLine"
-                        android:paddingRight="20dp"
                         android:theme="@style/BPEditText" />
 
                     <ImageView
@@ -94,15 +79,12 @@
 
                 <TextView
                     style="@style/BPTextViewCreateWallet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/change_new_pwd" />
+                    android:text="@string/change_new_pwd"
+                    />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="12.5dp">
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/newPasswordET"
@@ -118,24 +100,20 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
                         android:paddingTop="10dp"
                         android:paddingBottom="20dp"
-                        android:layout_centerVertical="true"
                         android:src="@mipmap/icon_close_eye" />
 
                 </RelativeLayout>
 
                 <TextView
                     style="@style/BPTextViewCreateWallet"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:text="@string/change_new_pwd_confirm" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingRight="12.5dp">
+                    android:layout_height="wrap_content">
 
                     <EditText
                         android:id="@+id/newPasswordConfirmET"
@@ -158,27 +136,21 @@
 
             </LinearLayout>
 
-
-            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                android:id="@+id/nextChangePwdBtn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/bp_btn_hight"
-                android:layout_centerInParent="true"
-                android:layout_gravity="bottom"
-                android:layout_marginTop="40dp"
-                android:layout_marginBottom="20dp"
-                android:enabled="false"
-                android:focusable="true"
-                android:gravity="center"
-                android:text="@string/change_confirm_change"
-                android:textColor="@color/app_color_font"
-                android:textSize="18sp"
-                app:qmui_backgroundColor="@color/app_color_green_disabled"
-                app:qmui_borderColor="@color/app_color_green_disabled"
-                app:qmui_radius="5dp" />
         </LinearLayout>
 
     </ScrollView>
 
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        android:id="@+id/nextChangePwdBtn"
+        style="@style/BPComGreenBgWhiteTextBtn"
+        android:layout_centerInParent="true"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="30dp"
+        android:enabled="false"
+        android:focusable="true"
+        android:text="@string/change_confirm_change"
+        app:qmui_backgroundColor="@color/app_color_green_disabled"
+        app:qmui_borderColor="@color/app_color_green_disabled"
+        app:qmui_radius="5dp" />
 
 </LinearLayout>
