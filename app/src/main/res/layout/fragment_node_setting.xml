@@ -20,9 +20,9 @@
             android:id="@+id/nodeSetLv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="@dimen/common_left_right_padding"
+            android:layout_marginTop="@dimen/common_top_bottom_padding"
+            android:layout_marginRight="@dimen/common_left_right_padding"
             android:background="@drawable/shape_corner_white"
             android:divider="@null" />
 

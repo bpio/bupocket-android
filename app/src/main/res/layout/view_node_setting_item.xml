@@ -3,7 +3,7 @@
     android:id="@+id/llNodeSettingMain"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/app_color_white"
+    android:background="@drawable/shape_corner_white"
     android:gravity="center_vertical"
     android:orientation="vertical">
 

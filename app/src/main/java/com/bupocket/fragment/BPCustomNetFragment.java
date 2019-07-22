@@ -301,7 +301,7 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
 
             } else if (isStart == CustomNodeTypeEnum.START.getServiceType()) {
                 saveBtn.setVisibility(View.INVISIBLE);
-                setNodeBtn.setBackgroundResource(R.drawable.shape_corner_white);
+                setNodeBtn.setBackgroundResource(R.drawable.shape_corner_white_btn);
                 setNodeBtn.setTextColor(getResources().getColor(R.color.app_txt_color_red));
                 setNodeBtn.setText(R.string.stop_custom_service);
                 nodeHintTv.setText(R.string.stop_custom_service_hint);

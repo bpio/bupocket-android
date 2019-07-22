@@ -33,9 +33,6 @@ public class BPUserTermsFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
 
-//    @BindView(R.id.userTermsContentTv)
-//    TextView mUserTermsContentTv;
-
     @BindView(R.id.agreeUserTermsCheckbox)
     CheckBox mAgreeUserTerms;
 
