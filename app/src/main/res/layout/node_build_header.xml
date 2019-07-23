@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:background="@color/app_btn_color_white"
         android:paddingTop="10dp"
-        android:paddingLeft="13sp">
+        android:paddingLeft="@dimen/common_left_right_padding">
 
         <TextView
             android:id="@+id/tvBuildDetailName"
@@ -44,8 +44,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/app_btn_color_white"
-        android:paddingLeft="13sp"
-        android:paddingRight="10dp"
+        android:paddingLeft="@dimen/common_left_right_padding"
+        android:paddingRight="@dimen/common_left_right_padding"
         android:paddingBottom="15dp">
 
 
@@ -101,7 +101,7 @@
             <TextView
                 android:id="@+id/tvProgress"
                 android:layout_width="70dp"
-                android:gravity="center"
+                android:gravity="right"
                 android:layout_marginLeft="3dp"
                 android:layout_height="wrap_content"
                 tools:text="166.66%" />
@@ -230,7 +230,8 @@
     <TextView
         style="@style/BPTextBuildHeaderHint"
         android:layout_width="match_parent"
-        android:layout_marginLeft="13dp"
+        android:layout_marginLeft="@dimen/common_left_right_padding"
+        android:layout_marginRight="@dimen/common_left_right_padding"
         android:layout_marginTop="15dp"
         android:text="@string/build_rist_info_record"
         android:textColor="@color/app_txt_color_gray"
@@ -239,7 +240,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="13dp"
+        android:layout_marginLeft="@dimen/common_left_right_padding"
+        android:layout_marginRight="@dimen/common_left_right_padding"
+        android:layout_marginTop="@dimen/common_top_bottom_padding"
         android:background="@drawable/edit_border_bg_white"
         android:padding="13dp"
         android:lineSpacingMultiplier="1.5"
@@ -251,8 +254,9 @@
         android:id="@+id/tvRecord"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="13dp"
+        android:layout_marginLeft="@dimen/common_left_right_padding"
         android:layout_marginTop="15dp"
+        android:layout_marginRight="@dimen/common_left_right_padding"
         android:layout_marginBottom="12dp"
         android:text="@string/build_support_record"
         android:textColor="@color/app_txt_color_gray"
