@@ -25,10 +25,9 @@
         android:orientation="vertical"
         android:paddingLeft="15sp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -37,31 +36,35 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_toLeftOf="@+id/walletSignTv"
                 android:ellipsize="end"
                 android:singleLine="true"
+                android:maxWidth="100dp"
                 android:textColor="@color/app_color_black"
                 android:textSize="15sp"
                 android:textStyle="bold"
-                tools:text="中国字体好不好啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊" />
+                tools:text="中国字体好不啊sdfsd" />
+
+
 
             <TextView
                 android:id="@+id/walletSignTv"
                 style="@style/BPComGreenBgWhiteTextBtn"
+                android:layout_marginRight="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
+                android:paddingLeft="2dp"
+                android:visibility="gone"
+                android:paddingRight="2dp"
                 android:lines="1"
-                android:minWidth="50dp"
-                android:paddingLeft="5dp"
                 android:paddingTop="3dp"
-                android:paddingRight="5dp"
                 android:paddingBottom="3dp"
                 android:text="@string/current_wallet_sign_txt"
-                android:textSize="13sp"
-                android:visibility="gone" />
-        </RelativeLayout>
+                android:textSize="12sp" />
+
+
+
+        </LinearLayout>
 
 
         <TextView
@@ -82,12 +85,12 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_gravity="right|center_vertical"
-        android:layout_marginRight="10dp"
+        android:layout_marginRight="5dp"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:text="@string/manage_txt"
         android:textColor="@color/app_color_main"
         android:textSize="15sp"
