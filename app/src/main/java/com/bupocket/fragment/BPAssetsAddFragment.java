@@ -32,16 +32,12 @@ import java.util.Map;
 public class BPAssetsAddFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
-
     @BindView(R.id.searchTokenListView)
     ListView mSearchTokenListView;
-
     @BindView(R.id.emptyView)
     QMUIEmptyView mEmptyView;
-
     @BindView(R.id.searchResultEmptyLL)
     LinearLayout mSearchResultEmptyLL;
-
     @BindView(R.id.searchTokenEt)
     DrawableEditText mSearchTokenEt;
 
@@ -179,18 +175,17 @@ public class BPAssetsAddFragment extends BaseFragment {
 
     private void showOrHideNoResult(boolean showFlag) {
         if (showFlag) {
-//            show
             mSearchResultEmptyLL.setVisibility(View.VISIBLE);
             mSearchTokenListView.setVisibility(View.GONE);
         } else {
-//            hide
             mSearchResultEmptyLL.setVisibility(View.GONE);
             mSearchTokenListView.setVisibility(View.VISIBLE);
         }
     }
 
     private void initTopBar() {
-        mTopBar.setBackgroundDividerEnabled(false);
+        mTopBar.setBackgroundDividerEnabled(true);
+        mTopBar.setTitle(R.string.assets_add_txt);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

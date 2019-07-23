@@ -176,16 +176,26 @@ public class BPHelpFeedbackFragment extends BaseFragment {
                 e.printStackTrace();
             }
 
+
+            final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                    .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                    .setTipWord(getResources().getString(R.string.user_info_backup_loading))
+                    .create();
+            txSendingTipDialog.show();
+
+
             Call<ApiResult> call = userService.submitFeedback(parmasMap);
             call.enqueue(new Callback<ApiResult>() {
 
                 @Override
                 public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
                     ApiResult respDto = response.body();
+                    txSendingTipDialog.dismiss();
                     final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.help_feedback_submit_success_msg))
                             .create();
                     tipDialog.show();
+
                     mNextHelpFeedbackBtn.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -198,6 +208,7 @@ public class BPHelpFeedbackFragment extends BaseFragment {
 
                 @Override
                 public void onFailure(Call<ApiResult> call, Throwable t) {
+                    txSendingTipDialog.dismiss();
                     final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(getResources().getString(R.string.help_feedback_submit_failed_msg))
                             .create();

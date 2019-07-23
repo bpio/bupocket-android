@@ -2,19 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="104dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="20dp"
+    android:paddingBottom="20dp"
+    android:layout_gravity="center"
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp">
 
         <com.qmuiteam.qmui.widget.QMUIRadiusImageView
             android:id="@+id/headIconIv"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_gravity="top"
             android:clickable="false"
             app:qmui_border_color="@color/app_color_gray"
             app:qmui_border_width="1px"
@@ -24,63 +25,67 @@
             app:qmui_selected_mask_color="?attr/qmui_config_color_gray_8" />
 
         <LinearLayout
-
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="13dp"
+            android:layout_marginLeft="12dp"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/assetCodeTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:textColor="@color/search_token_asset_code_txt_color"
+                tools:text="apple"
                 android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/assetNameTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/search_token_item_txt_color"
-                android:textSize="10sp" />
+                android:layout_marginTop="7dp"
+                android:textColor="@color/app_txt_color_gray_2"
+                tools:text="appleTest"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/assetIssuerTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/search_token_item_txt_color"
-                android:textSize="10sp" />
+                android:layout_marginTop="7dp"
+                android:textColor="@color/app_txt_color_gray_2"
+                tools:text="buffffffffffffffffffffffffffffffffffffff"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="53dp"
             android:layout_height="25dp"
-            android:orientation="horizontal"
-            android:layout_gravity="center_vertical">
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
             <ImageView
                 android:id="@+id/tokenOptAddBtn"
                 android:layout_width="53dp"
                 android:layout_height="25dp"
                 android:layout_marginRight="0dp"
                 android:focusable="false"
-                android:text="@string/add_token_btn_txt"
                 android:src="@mipmap/icon_switch_normal"
+                android:text="@string/add_token_btn_txt"
                 android:visibility="visible" />
 
             <ImageView
                 android:id="@+id/tokenOptCancelCBtn"
                 android:layout_width="53dp"
                 android:layout_height="25dp"
-                android:text="@string/delete_token_btn_txt"
                 android:layout_marginRight="0dp"
                 android:focusable="false"
                 android:src="@mipmap/icon_switch_checked"
+                android:text="@string/delete_token_btn_txt"
                 android:visibility="gone" />
         </LinearLayout>
 
-
-    </LinearLayout>
 
 </LinearLayout>
