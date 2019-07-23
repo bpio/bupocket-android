@@ -71,7 +71,7 @@
                         android:layout_marginTop="12dp"
                         android:layout_toRightOf="@id/acceptanceNameTv"
                         android:text="@string/provide_acceptance"
-                        android:textColor="@color/multiline_edit_hint_color"
+                        android:textColor="@color/app_txt_color_gray_8"
                         android:textSize="12dp" />
 
                     <View

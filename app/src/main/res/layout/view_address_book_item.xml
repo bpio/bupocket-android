@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/common_left_right_padding"
+    android:paddingRight="@dimen/common_left_right_padding"
+    android:background="@color/app_color_white"
+    android:orientation="vertical">
+
+        <TextView
+            style="@style/BPTextViewCreateWallet"
+            android:layout_marginTop="20dp"
+            android:text="@string/add_address_name" />
+
+        <EditText
+            android:id="@+id/addressNameEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_address_name_hint"
+            android:theme="@style/BPEditText" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/BPTextViewCreateWallet"
+                android:text="@string/add_address_describe" />
+
+            <TextView
+                style="@style/BPTextViewCreateWallet"
+                android:text="@string/optional" />
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/addressDescribeEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/add_address_describe_hint"
+            android:theme="@style/BPEditText" />
+
+        <TextView
+            style="@style/BPTextViewCreateWallet"
+            android:text="@string/add_address_public_addr" />
+
+        <com.bupocket.view.DrawableEditText
+            android:id="@+id/newAddressEt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableRight="@mipmap/icon_scan_green_little"
+            android:hint="@string/add_address_public_addr_hint"
+            android:theme="@style/BPEditText" />
+
+
+
+
+</LinearLayout>

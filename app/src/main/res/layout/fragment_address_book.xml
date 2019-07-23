@@ -16,7 +16,6 @@
             android:id="@+id/addressEv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="15dp"
             android:visibility="visible">
 
             <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -39,9 +38,7 @@
                         android:id="@+id/addressBookLv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginHorizontal="@dimen/common_left_right_padding"
                         android:divider="@color/tx_list_view_background_col"
-                        android:dividerHeight="10dp"
                         android:fadeScrollbars="false"
                         android:scrollbars="none" />
 

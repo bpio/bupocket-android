@@ -237,7 +237,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/multiline_edit_hint_color</item>
+        <item name="android:textColor">@color/app_txt_color_gray_8</item>
     </style>
 
     <style name="BPTextBuildHeadGray">

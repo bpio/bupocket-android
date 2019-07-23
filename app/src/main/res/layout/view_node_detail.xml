@@ -72,7 +72,7 @@
                 android:id="@+id/haveVotesNumTvHint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/multiline_edit_hint_color"
+                android:textColor="@color/app_txt_color_gray_8"
                 android:textSize="12sp"
                 tools:text="@string/number_have_votes" />
 
@@ -103,7 +103,7 @@
                 android:id="@+id/supportPeopleTvHint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/multiline_edit_hint_color"
+                android:textColor="@color/app_txt_color_gray_8"
                 android:textSize="12sp"
                 tools:text="@string/my_votes_number" />
 

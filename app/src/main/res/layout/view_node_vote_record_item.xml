@@ -56,7 +56,7 @@
                 android:background="@drawable/shape_corner_gray_no_stroke"
                 android:gravity="center"
                 android:padding="3dp"
-                android:textColor="@color/multiline_edit_hint_color"
+                android:textColor="@color/app_txt_color_gray_8"
                 android:textSize="11sp"
                 tools:text="@string/common_node" />
         </LinearLayout>

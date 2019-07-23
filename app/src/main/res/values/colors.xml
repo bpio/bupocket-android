@@ -27,6 +27,7 @@
     <color name="app_txt_color_gray_5">#888888</color>
     <color name="app_txt_color_gray_6">#BBBBBB</color>
     <color name="app_txt_color_gray_7">#737791</color>
+    <color name="app_txt_color_gray_8">#b2b2b2</color>
     <color name="app_txt_color_red">#FF6464</color>
     <color name="app_txt_color_red_2">#ff0000</color>
     <color name="app_txt_color_red_3">#e23b1b</color>
@@ -69,7 +70,7 @@
     <color name="send_confirm_title_color">#333333</color>
     <color name="send_confirm_info_color">#666666</color>
     <color name="send_confirm_gray_color">#999999</color>
-    <color name="multiline_edit_hint_color">#b2b2b2</color>
+
     <color name="terms_unagree_btn_grey">#c9c9c9</color>
     <color name="help_feedback_et_background_color">#F5F5F5</color>
 

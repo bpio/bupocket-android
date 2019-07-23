@@ -24,6 +24,7 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.ArrayList;
@@ -130,6 +131,13 @@ public class BPAddressAddFragment extends BaseFragment {
         final String describe = mAddressDescribeEt.getText().toString().trim();
         final String linkmanAddress = mNewAddressEt.getText().toString().trim();
 
+
+        final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord(getResources().getString(R.string.user_info_backup_loading))
+                .create();
+        txSendingTipDialog.show();
+
         AddressBookService addressBookService = RetrofitFactory.getInstance().getRetrofit().create(AddressBookService.class);
         Call<ApiResult> call;
         Map<String, Object> paramsMap = new HashMap<>();
@@ -142,6 +150,7 @@ public class BPAddressAddFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
                 ApiResult respDto = response.body();
+                txSendingTipDialog.dismiss();
                 if(null != respDto){
                     if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                         Toast.makeText(getContext(),getString(R.string.save_address_success_message_txt),Toast.LENGTH_SHORT).show();
@@ -159,6 +168,7 @@ public class BPAddressAddFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult> call, Throwable t) {
+                txSendingTipDialog.dismiss();
                 Toast.makeText(getContext(),getString(R.string.save_address_failure_message_txt),Toast.LENGTH_SHORT).show();
             }
         });
@@ -244,7 +254,7 @@ public class BPAddressAddFragment extends BaseFragment {
 
 
     private void initTopBar() {
-        mTopBar.setBackgroundDividerEnabled(false);
+        mTopBar.setBackgroundDividerEnabled(true);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

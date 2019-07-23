@@ -83,7 +83,7 @@
                     android:imeOptions="actionSearch"
                     android:paddingRight="20dp"
                     android:singleLine="true"
-                    android:textColor="@color/multiline_edit_hint_color"
+                    android:textColor="@color/app_txt_color_gray_8"
                     android:textCursorDrawable="@drawable/shape_cursor_et"
                     android:textSize="11sp" />
 

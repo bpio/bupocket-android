@@ -56,7 +56,7 @@
                         android:inputType="textMultiLine"
                         android:minLines="6"
                         android:padding="10dp"
-                        android:textColorHint="@color/multiline_edit_hint_color"
+                        android:textColorHint="@color/app_txt_color_gray_8"
                         android:textSize="13sp" />
                 </LinearLayout>
 

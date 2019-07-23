@@ -64,7 +64,7 @@
                     android:paddingTop="3dp"
                     android:paddingRight="5dp"
                     android:paddingBottom="3dp"
-                    android:textColor="@color/multiline_edit_hint_color"
+                    android:textColor="@color/app_txt_color_gray_8"
                     android:textSize="11sp"
                     tools:text="@string/common_node" />
 
@@ -84,7 +84,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/number_have_votes"
-                    android:textColor="@color/multiline_edit_hint_color"
+                    android:textColor="@color/app_txt_color_gray_8"
                     android:textSize="12sp" />
 
                 <TextView
@@ -103,7 +103,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/my_votes_number"
-                    android:textColor="@color/multiline_edit_hint_color"
+                    android:textColor="@color/app_txt_color_gray_8"
                     android:textSize="12sp" />
 
                 <TextView

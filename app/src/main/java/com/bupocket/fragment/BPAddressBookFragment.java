@@ -108,7 +108,6 @@ public class BPAddressBookFragment extends BaseFragment {
         faildLayout.findViewById(R.id.reloadBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                refreshLayout.autoRefreshAnimationOnly();
                 refreshLayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -266,7 +265,7 @@ public class BPAddressBookFragment extends BaseFragment {
     }
 
     private void initTopBar() {
-        mTopBar.setBackgroundDividerEnabled(false);
+        mTopBar.setBackgroundDividerEnabled(true);
         mTopBar.setTitle(R.string.address_book_txt);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override

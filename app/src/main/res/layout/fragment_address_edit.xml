@@ -1,85 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_bg_color_gray">
+    android:background="@color/app_color_white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:background="@color/app_bg_color_gray"
-        android:orientation="vertical"
-        android:paddingLeft="12.5dp"
-        android:paddingRight="12.5dp">
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:text="@string/add_address_name"
-            android:textSize="16sp" />
-
-        <EditText
-            android:id="@+id/addressNameEt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/add_address_name_hint"
-            android:textSize="14sp"
-            android:theme="@style/BPEditText" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/add_address_describe"
-                android:textSize="16sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/optional"
-                android:textColor="@color/app_txt_color_gray_2"
-                android:textSize="16sp" />
-        </LinearLayout>
-
-        <EditText
-            android:id="@+id/addressDescribeEt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/add_address_describe_hint"
-            android:textSize="14sp"
-            android:theme="@style/BPEditText" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:text="@string/add_address_public_addr"
-            android:textSize="16sp" />
-
-        <com.bupocket.view.DrawableEditText
-            android:id="@+id/newAddressEt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/add_address_public_addr_hint"
-            android:textSize="14sp"
-            android:theme="@style/BPEditText"
-            android:drawableRight="@mipmap/icon_scan_green_little"/>
+        <include layout="@layout/view_address_book_item" />
 
         <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-            android:layout_marginTop="66.5dp"
             android:id="@+id/saveAddressBtn"
+            style="@style/BPComGreenBgWhiteTextBtn"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bp_btn_hight"
             android:layout_centerInParent="true"
+            android:layout_marginTop="66.5dp"
             android:enabled="true"
             android:focusable="true"
             android:gravity="center"
@@ -89,17 +30,16 @@
             app:qmui_backgroundColor="@color/app_color_main"
             app:qmui_borderColor="@color/app_color_main"
             app:qmui_radius="5dp" />
-        
+
         <TextView
             android:id="@+id/deleteAddressTv"
-            android:layout_marginTop="55dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/delete_address"
+            style="@style/BPComWhiteBgRegTextBtn"
             android:layout_gravity="center"
-            android:textSize="16sp"
+            android:layout_marginTop="55dp"
+            android:text="@string/delete_address"
             android:textColor="@color/app_txt_color_red"
-            android:textStyle="bold"/>
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
