@@ -9,8 +9,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/bp_create_wallet_layout_bottom"
-        >
+        android:layout_marginBottom="@dimen/bp_create_wallet_layout_bottom">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,10 +41,10 @@
 
             <EditText
                 android:id="@+id/walletNameEt"
-                android:theme="@style/BPEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/change_wallet_name_hint" />
+                android:hint="@string/change_wallet_name_hint"
+                android:theme="@style/BPEditText" />
 
             <TextView
                 style="@style/BPTextViewCreateWallet"
@@ -57,11 +56,11 @@
 
                 <EditText
                     android:id="@+id/passwordEt"
-                    android:theme="@style/BPEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/create_wallet_pw_err_hint"
-                    android:inputType="textPassword|textMultiLine" />
+                    android:inputType="textPassword|textMultiLine"
+                    android:theme="@style/BPEditText" />
 
                 <ImageView
                     android:id="@+id/passwordIv"
@@ -81,11 +80,11 @@
 
                 <EditText
                     android:id="@+id/passwordConfirmEt"
-                    android:theme="@style/BPEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/wallet_create__input_rePassword"
-                    android:inputType="textPassword" />
+                    android:inputType="textPassword"
+                    android:theme="@style/BPEditText" />
 
                 <ImageView
                     android:id="@+id/passwordConfirmIv"

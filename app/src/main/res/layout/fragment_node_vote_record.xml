@@ -24,9 +24,9 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="13dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="@dimen/common_left_right_padding"
             android:layout_marginTop="10dp"
+            android:layout_marginBottom="12dp"
             android:text="@string/vote_record_txt"
             android:textColor="@color/app_txt_color_gray"
             android:textSize="13sp" />

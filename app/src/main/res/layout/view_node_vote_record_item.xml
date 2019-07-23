@@ -9,10 +9,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="13dp"
-        android:layout_marginRight="13dp"
+        android:layout_marginLeft="@dimen/common_left_right_padding"
+        android:layout_marginRight="@dimen/common_left_right_padding"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/shape_corner"
+        android:background="@drawable/shape_corner_white"
         android:orientation="vertical">
 
         <LinearLayout
@@ -20,19 +20,18 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="14dp"
-            android:gravity="center"
-            >
+            android:gravity="center">
 
             <TextView
                 android:id="@+id/recordTypeTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="4dp"
-                android:paddingRight="4dp"
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
                 android:background="@drawable/shape_corner_green"
                 android:gravity="center"
+                android:paddingLeft="4dp"
+                android:paddingTop="2dp"
+                android:paddingRight="4dp"
+                android:paddingBottom="2dp"
                 android:text="@string/vote_txt"
                 android:textColor="@color/app_color_white"
                 android:textSize="13sp" />
@@ -54,11 +53,11 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="7.5dp"
                 android:layout_toRightOf="@+id/nodeNameTv"
-                android:background="@drawable/shape_corner_bg_gray"
+                android:background="@drawable/shape_corner_gray_no_stroke"
                 android:gravity="center"
+                android:padding="3dp"
                 android:textColor="@color/multiline_edit_hint_color"
                 android:textSize="11sp"
-                android:padding="3dp"
                 tools:text="@string/common_node" />
         </LinearLayout>
 
