@@ -2,20 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/shape_corner_orange"
+    android:background="@drawable/shape_corner_gray_stroke"
     android:orientation="vertical"
-    android:paddingLeft="17dp"
-    android:paddingTop="10dp"
-    android:paddingRight="14dp"
-    android:paddingBottom="18dp">
-
+    android:paddingLeft="10dp"
+    android:paddingTop="17dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="17dp">
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:lineSpacingMultiplier="1.4"
+        android:lineSpacingMultiplier="@dimen/bp_line_spacing_multiplier"
         android:text="@string/create_wallet_prompt_txt3"
-        android:textColor="@color/app_txt_color_gray_2" />
+        android:textColor="@color/app_txt_color_red"
+        android:textSize="13sp" />
 
 </LinearLayout>

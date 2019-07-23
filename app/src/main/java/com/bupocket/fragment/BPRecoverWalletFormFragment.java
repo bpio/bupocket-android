@@ -25,6 +25,7 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.WalletCurrentUtils;
+import com.bupocket.utils.WalletUtils;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
 import com.bupocket.wallet.model.WalletBPData;
@@ -201,37 +202,18 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
         mPwdShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isPwdHideFirst) {
-                    mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_open_eye));
-                    mPwdEt.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mPwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    mPwdEt.setSelection(mPwdEt.getText().length());
-                    isPwdHideFirst = true;
-                } else {
-                    mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
-                    mPwdEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    mPwdEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    mPwdEt.setSelection(mPwdEt.getText().length());
-                    isPwdHideFirst = false;
-                }
+
+                WalletUtils.setEditTextEyeHide(mPwdShow,mPwdEt,isPwdHideFirst);
+                isPwdHideFirst=!isPwdHideFirst;
+
             }
         });
         mConfirmPwdShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isConfirmPwdHideFirst) {
-                    mConfirmPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_open_eye));
-                    mConfirmPwdEt.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mConfirmPwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    mConfirmPwdEt.setSelection(mConfirmPwdEt.getText().length());
-                    isConfirmPwdHideFirst = true;
-                } else {
-                    mConfirmPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
-                    mConfirmPwdEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    mConfirmPwdEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    mConfirmPwdEt.setSelection(mConfirmPwdEt.getText().length());
-                    isConfirmPwdHideFirst = false;
-                }
+
+                WalletUtils.setEditTextEyeHide(mConfirmPwdShow,mConfirmPwdEt,isConfirmPwdHideFirst);
+                isConfirmPwdHideFirst=!isConfirmPwdHideFirst;
             }
         });
 

@@ -166,6 +166,8 @@
         <item name="android:textSize">13sp</item>
         <item name="android:paddingBottom">20dp</item>
         <item name="android:paddingRight">20dp</item>
+        <item name="android:inputType">textMultiLine</item>
+
     </style>
 
 
@@ -312,7 +314,8 @@
         <item name="android:textColor">@color/app_txt_color_gray_2</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">25dp</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:layout_marginTop">30dp</item>
     </style>
 
     <style name="BPLLDiscover">
@@ -393,6 +396,14 @@
 
     </style>
 
+
+    <style name="BPCreateWalletGreenBtn"  parent="BPComGreenBgWhiteTextBtn">
+        <item name="android:layout_marginBottom">@dimen/bp_btn_bottom_margin</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_gravity">bottom</item>
+    </style>
+
+
     <style name="BPComGreenBgWhiteTextBtn">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">45dp</item>
@@ -416,7 +427,7 @@
     </style>
 
     <style name="BPTextViewGrayBg">
-        <item name="android:background">@drawable/shape_corner_gray_et</item>
+        <item name="android:background">@drawable/shape_corner_gray_stroke</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:textSize">15sp</item>
@@ -426,6 +437,18 @@
         <item name="android:paddingRight">10dp</item>
         <item name="android:paddingBottom">20dp</item>
         <item name="android:lineSpacingMultiplier">1.3</item>
+    </style>
+
+    <style name="BPCreateWalletEye">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:src">@mipmap/icon_close_eye</item>
     </style>
 
 

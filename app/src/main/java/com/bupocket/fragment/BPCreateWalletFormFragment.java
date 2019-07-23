@@ -28,6 +28,7 @@ import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.WalletCurrentUtils;
+import com.bupocket.utils.WalletUtils;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
 import com.bupocket.wallet.exception.WalletException;
@@ -69,7 +70,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
     TextView createWalletNameTitle;
 
 
-    private boolean isPwdHideFirst = false;
+    public boolean isPwdHideFirst = false;
     private boolean isConfirmPwdHideFirst = false;
     private SharedPreferencesHelper sharedPreferencesHelper;
     public static boolean isCreateWallet;
@@ -92,37 +93,16 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
         mPwdShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isPwdHideFirst) {
-                    mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_open_eye));
-                    mSetPwdEt.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mSetPwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    mSetPwdEt.setSelection(mSetPwdEt.getText().length());
-                    isPwdHideFirst = true;
-                } else {
-                    mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
-                    mSetPwdEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    mSetPwdEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    mSetPwdEt.setSelection(mSetPwdEt.getText().length());
-                    isPwdHideFirst = false;
-                }
+                WalletUtils.setEditTextEyeHide(mPwdShow, mSetPwdEt, isPwdHideFirst);
+                isPwdHideFirst = !isPwdHideFirst;
             }
         });
         mConfirmPwdShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isConfirmPwdHideFirst) {
-                    mConfirmPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_open_eye));
-                    mRepeatPwdEt.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mRepeatPwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    mRepeatPwdEt.setSelection(mRepeatPwdEt.getText().length());
-                    isConfirmPwdHideFirst = true;
-                } else {
-                    mConfirmPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
-                    mRepeatPwdEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    mRepeatPwdEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    mRepeatPwdEt.setSelection(mRepeatPwdEt.getText().length());
-                    isConfirmPwdHideFirst = false;
-                }
+                WalletUtils.setEditTextEyeHide(mConfirmPwdShow, mRepeatPwdEt, isConfirmPwdHideFirst);
+                isConfirmPwdHideFirst = !isConfirmPwdHideFirst;
+
             }
         });
 
@@ -296,7 +276,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
 
 
     private void initTopBar() {
-        mTopBar.setBackgroundDividerEnabled(false);
+        mTopBar.setBackgroundDividerEnabled(true);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

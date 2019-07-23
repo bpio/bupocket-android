@@ -28,7 +28,7 @@
     <dimen name="spanUtils_common_textSize">16sp</dimen>
 
 
-    <dimen name="bp_btn_text_size">18sp</dimen>
+
     <dimen name="view_padding">10dp</dimen>
     <dimen name="mnemonic_word_view_padding">15dp</dimen>
     <dimen name="transaction_status_width">100dp</dimen>
@@ -58,7 +58,14 @@
     <dimen name="common_border_4">4</dimen>
     <dimen name="common_border_5">5</dimen>
 
-    <dimen name="bp_btn_hight">43.5dp</dimen>
+    <dimen name="bp_btn_hight">45dp</dimen>
+    <dimen name="bp_btn_text_size">18sp</dimen>
 
+    <dimen name="bp_btn_bottom_margin">30dp</dimen>
+
+    <dimen name="bp_line_spacing_multiplier">1.2</dimen>
+
+
+    <dimen name="bp_create_wallet_layout_bottom">85dp</dimen>
 
 </resources>

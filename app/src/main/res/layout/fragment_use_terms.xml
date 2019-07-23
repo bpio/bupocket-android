@@ -37,14 +37,14 @@
         <LinearLayout
             android:id="@+id/llAgreeProtocol"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:gravity="bottom"
             android:orientation="horizontal">
 
             <CheckBox
                 android:id="@+id/agreeUserTermsCheckbox"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
                 android:background="@color/app_bg_color_gray"
                 android:checked="false"
                 android:paddingLeft="10dp"

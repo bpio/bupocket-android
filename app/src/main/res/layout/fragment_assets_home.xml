@@ -267,6 +267,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="7.5dp"
+                        android:lineSpacingMultiplier="@dimen/bp_line_spacing_multiplier"
                         android:text="@string/safety_tips_content_txt"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="14sp" />

@@ -2,7 +2,11 @@ package com.bupocket.utils;
 
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
+import android.text.InputType;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -59,6 +63,20 @@ public class WalletUtils {
 
             }
         }).start();
+    }
+
+    public static void setEditTextEyeHide(ImageView mPwdShow, EditText mSetPwdEt, boolean isHide) {
+        if (!isHide) {
+            mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_open_eye));
+            mSetPwdEt.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+            mSetPwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            mSetPwdEt.setSelection(mSetPwdEt.getText().length());
+        } else {
+            mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
+            mSetPwdEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+            mSetPwdEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            mSetPwdEt.setSelection(mSetPwdEt.getText().length());
+        }
     }
 
 
