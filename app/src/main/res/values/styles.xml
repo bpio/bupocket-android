@@ -315,7 +315,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginLeft">3dp</item>
-        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:layout_marginTop">25dp</item>
     </style>
 
     <style name="BPLLDiscover">
@@ -401,6 +401,7 @@
         <item name="android:layout_marginBottom">@dimen/bp_btn_bottom_margin</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_gravity">bottom</item>
+        <item name="android:enabled">false</item>
     </style>
 
 

@@ -656,8 +656,8 @@
     <string name="hint_wallet_create_form_input_rePassword">Please confirm the security password again</string>
     <string name="wallet_create__input_rePassword">Please enter your security password again</string>
 
-    <string name="imported_wallet_title_txt">Create/import wallet</string>
-    <string name="imported_wallet_home_title_txt">Create/import wallet</string>
+    <string name="imported_wallet_title_txt">Create/Import wallet</string>
+    <string name="imported_wallet_home_title_txt">Create/Import wallet</string>
     <string name="wallet_create_form_error4">The identity name only allows letters, Chinese characters, numbers and underscores, and the length cannot exceed 20 characters</string>
     <string name="wallet_create_form_error5">The wallet name only allows letters, Chinese characters, numbers and underscores, and the length cannot exceed 20 characters</string>
 

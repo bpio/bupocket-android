@@ -1,127 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/app_color_white">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:paddingLeft="12.5dp"
-        android:paddingRight="12.5dp">
+        android:layout_marginBottom="@dimen/bp_create_wallet_layout_bottom"
+        >
 
-
-        <include
-            layout="@layout/view_mnemonic_hint"/>
-
-        <EditText
-            android:id="@+id/privateKeyEt"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="119.5dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/shape_corner_gray_stroke"
-            android:gravity="top"
-            android:hint="@string/wallet_import_private_et_hint_txt"
-            android:textSize="15sp"
-            android:paddingLeft="15dp"
-            android:paddingTop="12dp" />
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/common_left_right_padding"
+            android:paddingRight="@dimen/common_left_right_padding">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="@string/import_mnemonic_wallet_name"
-            style="@style/BPTextViewCreateWallet" />
 
-        <EditText
-            android:id="@+id/walletNameEt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/change_wallet_name_hint"
-            android:textSize="14sp"
-
-            android:theme="@style/BPEditText"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="17.5dp"
-            android:text="@string/hint_wallet_create_form_input_password"
-            style="@style/BPTextViewCreateWallet" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <include layout="@layout/view_mnemonic_hint" />
 
             <EditText
-                android:id="@+id/passwordEt"
+                android:id="@+id/privateKeyEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/create_wallet_pw_err_hint"
-                android:inputType="textPassword|textMultiLine"
-                android:textSize="14sp"
-                android:theme="@style/BPEditText" />
+                android:layout_marginTop="15dp"
+                android:background="@drawable/shape_corner_gray_stroke"
+                android:gravity="top"
+                android:hint="@string/wallet_import_private_et_hint_txt"
+                android:minLines="5"
+                android:paddingLeft="15dp"
+                android:paddingTop="12dp"
+                android:textSize="15sp" />
 
-            <ImageView
-                android:id="@+id/passwordIv"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingBottom="10dp"
-                android:layout_alignParentRight="true"
-                android:src="@mipmap/icon_close_eye" />
-
-        </RelativeLayout>
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="17.5dp"
-            android:text="@string/hint_wallet_create_form_input_rePassword"
-            style="@style/BPTextViewCreateWallet" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            <TextView
+                style="@style/BPTextViewCreateWallet"
+                android:layout_marginTop="30dp"
+                android:text="@string/import_mnemonic_wallet_name" />
 
             <EditText
-                android:id="@+id/passwordConfirmEt"
+                android:id="@+id/walletNameEt"
+                style="@style/BPEditText"
+                android:hint="@string/change_wallet_name_hint" />
+
+            <TextView
+                style="@style/BPTextViewCreateWallet"
+                android:text="@string/hint_wallet_create_form_input_password" />
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/wallet_create__input_rePassword"
-                android:inputType="textPassword"
-                android:textSize="14sp"
-                android:theme="@style/BPEditText" />
+                android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/passwordConfirmIv"
-                android:layout_width="20dp"
-                android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingBottom="10dp"
-                android:layout_alignParentRight="true"
-                android:src="@mipmap/icon_close_eye" />
+                <EditText
+                    android:id="@+id/passwordEt"
+                    style="@style/BPEditText"
+                    android:hint="@string/create_wallet_pw_err_hint"
+                    android:inputType="textPassword|textMultiLine" />
 
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/passwordIv"
+                    style="@style/BPCreateWalletEye"
+                    android:src="@mipmap/icon_close_eye" />
+
+            </RelativeLayout>
 
 
-        <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-            android:id="@+id/startImportPrivateBtn"
-            android:layout_width="match_parent"
-            android:layout_height="43.5dp"
-            android:layout_marginTop="45dp"
-            android:gravity="center"
-            android:text="@string/start_import_wallet"
-            android:enabled="false"
-            android:textColor="@color/app_color_font"
-            android:layout_marginBottom="20dp"
-            android:textSize="@dimen/bp_btn_text_size"
-            app:qmui_backgroundColor="@color/app_color_green_disabled"
-            app:qmui_borderColor="@color/app_color_green_disabled"
-            app:qmui_radius="5dp" />
+            <TextView
+                style="@style/BPTextViewCreateWallet"
+                android:text="@string/hint_wallet_create_form_input_rePassword" />
 
-    </LinearLayout>
-</ScrollView>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/passwordConfirmEt"
+                    style="@style/BPEditText"
+                    android:hint="@string/wallet_create__input_rePassword"
+                    android:inputType="textPassword" />
+
+                <ImageView
+                    android:id="@+id/passwordConfirmIv"
+                    style="@style/BPCreateWalletEye"
+                    android:src="@mipmap/icon_close_eye" />
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        android:id="@+id/startImportPrivateBtn"
+        style="@style/BPCreateWalletGreenBtn"
+        android:enabled="false"
+        android:text="@string/start_import_wallet"
+        app:qmui_backgroundColor="@color/app_color_green_disabled"
+        app:qmui_borderColor="@color/app_color_green_disabled"
+        app:qmui_radius="5dp" />
+
+
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

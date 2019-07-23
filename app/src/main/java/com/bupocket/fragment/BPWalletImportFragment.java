@@ -33,6 +33,7 @@ import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.TO;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.WalletCurrentUtils;
+import com.bupocket.utils.WalletUtils;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.bupocket.wallet.model.WalletBPData;
@@ -40,6 +41,7 @@ import com.qmuiteam.qmui.widget.QMUITabSegment;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+import com.qmuiteam.qmui.widget.textview.ISpanTouchFix;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -277,19 +279,9 @@ public class BPWalletImportFragment extends BaseFragment {
         mPasswordIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isPwdHideFirst) {
-                    mPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_open_eye));
-                    mPasswordEt.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mPasswordEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    mPasswordEt.setSelection(mPasswordEt.getText().length());
-                    isPwdHideFirst = true;
-                } else {
-                    mPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
-                    mPasswordEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    mPasswordEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    mPasswordEt.setSelection(mPasswordEt.getText().length());
-                    isPwdHideFirst = false;
-                }
+
+                WalletUtils.setEditTextEyeHide(mPasswordIv,mPasswordEt,isPwdHideFirst);
+                isPwdHideFirst=!isPwdHideFirst;
             }
         });
 
@@ -431,37 +423,18 @@ public class BPWalletImportFragment extends BaseFragment {
         mPasswordIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isPwdHideFirst) {
-                    mPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_open_eye));
-                    mPasswordEt.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mPasswordEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    mPasswordEt.setSelection(mPasswordEt.getText().length());
-                    isPwdHideFirst = true;
-                } else {
-                    mPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
-                    mPasswordEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    mPasswordEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    mPasswordEt.setSelection(mPasswordEt.getText().length());
-                    isPwdHideFirst = false;
-                }
+
+                WalletUtils.setEditTextEyeHide(mPasswordIv,mPasswordEt,isPwdHideFirst);
+                isPwdHideFirst=!isPwdHideFirst;
+
             }
         });
         mPasswordConfirmIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isConfirmPwdHideFirst) {
-                    mPasswordConfirmIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_open_eye));
-                    mPasswordConfirmEt.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mPasswordConfirmEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    mPasswordConfirmEt.setSelection(mPasswordConfirmEt.getText().length());
-                    isConfirmPwdHideFirst = true;
-                } else {
-                    mPasswordConfirmIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
-                    mPasswordConfirmEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    mPasswordConfirmEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    mPasswordConfirmEt.setSelection(mPasswordConfirmEt.getText().length());
-                    isConfirmPwdHideFirst = false;
-                }
+
+                WalletUtils.setEditTextEyeHide(mPasswordConfirmIv,mPasswordConfirmEt,isConfirmPwdHideFirst);
+                isConfirmPwdHideFirst=!isConfirmPwdHideFirst;
             }
         });
 
@@ -573,42 +546,25 @@ public class BPWalletImportFragment extends BaseFragment {
         mPasswordEt.addTextChangedListener(textWatcher);
         mPasswordConfirmEt.addTextChangedListener(textWatcher);
 
+
         mPasswordIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isPwdHideFirst) {
-                    mPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_open_eye));
-                    mPasswordEt.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mPasswordEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    mPasswordEt.setSelection(mPasswordEt.getText().length());
-                    isPwdHideFirst = true;
-                } else {
-                    mPasswordIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
-                    mPasswordEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
-                    mPasswordEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    mPasswordEt.setSelection(mPasswordEt.getText().length());
-                    isPwdHideFirst = false;
-                }
+
+                WalletUtils.setEditTextEyeHide(mPasswordIv,mPasswordEt,isPwdHideFirst);
+                isPwdHideFirst=!isPwdHideFirst;
+
             }
         });
         mPasswordConfirmIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isConfirmPwdHideFirst) {
-                    mPasswordConfirmIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_open_eye));
-                    mPasswordConfirmEt.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mPasswordConfirmEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    mPasswordConfirmEt.setSelection(mPasswordConfirmEt.getText().length());
-                    isConfirmPwdHideFirst = true;
-                } else {
-                    mPasswordConfirmIv.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_close_eye));
-                    mPasswordConfirmEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    mPasswordConfirmEt.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    mPasswordConfirmEt.setSelection(mPasswordConfirmEt.getText().length());
-                    isConfirmPwdHideFirst = false;
-                }
+
+                WalletUtils.setEditTextEyeHide(mPasswordConfirmIv,mPasswordConfirmEt,isConfirmPwdHideFirst);
+                isConfirmPwdHideFirst=!isConfirmPwdHideFirst;
             }
         });
+
 
         mStartImportPrivateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
