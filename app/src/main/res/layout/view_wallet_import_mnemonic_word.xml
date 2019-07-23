@@ -24,7 +24,8 @@
             <EditText
                 android:id="@+id/mnemonicWordEt"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
+                android:layout_height="wrap_content"
+                android:minLines="6"
                 android:layout_marginTop="15dp"
                 android:background="@drawable/shape_corner_gray_stroke"
                 android:gravity="top"
@@ -40,7 +41,9 @@
 
             <EditText
                 android:id="@+id/walletNameEt"
-                style="@style/BPEditText"
+                android:theme="@style/BPEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="@string/change_wallet_name_hint" />
 
             <TextView
@@ -53,7 +56,9 @@
 
                 <EditText
                     android:id="@+id/passwordEt"
-                    style="@style/BPEditText"
+                    android:theme="@style/BPEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:hint="@string/create_wallet_pw_err_hint"
                     android:inputType="textPassword|textMultiLine" />
 
@@ -74,7 +79,9 @@
 
                 <EditText
                     android:id="@+id/passwordConfirmEt"
-                    style="@style/BPEditText"
+                    android:theme="@style/BPEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:hint="@string/wallet_create__input_rePassword"
                     android:inputType="textPassword" />
 
