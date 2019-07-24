@@ -128,8 +128,8 @@ public class BPCreateWalletConfirmMnemonicCodeFragment extends BaseFragment {
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
             textView.setText(mnemonicCodeList.get(i).getCode());
             textView.setHint(mnemonicCodeList.get(i).getWordId());
-            textView.setTextColor(getResources().getColor(R.color.app_color_main));
-            textView.setBackgroundColor(getResources().getColor(R.color.app_bg_color_gray));
+            textView.setTextColor(getResources().getColor(R.color.app_color_green));
+            textView.setBackground(getResources().getDrawable(R.drawable.shape_corner_gray_tv2));
             textView.setOnClickListener(clickListener);
             GridLayout.Spec rowSpec = GridLayout.spec(i / 4, 1.0f);
             GridLayout.Spec columnSpec = GridLayout.spec(i % 4, 1.0f);
@@ -173,10 +173,10 @@ public class BPCreateWalletConfirmMnemonicCodeFragment extends BaseFragment {
             mnemonicWord.setWordId(wordId);
             if (!mnemonicCodeListSelected.contains(mnemonicWord)) {
                 textView.setTextColor(getResources().getColor(R.color.app_color_white));
-                textView.setBackground(getResources().getDrawable(R.drawable.shape_corner_green_tv2));
+                textView.setBackground(getResources().getDrawable(R.drawable.shape_corner_green_tv2_mnemonic));
                 mnemonicCodeListSelected.add(mnemonicWord);
             } else {
-                textView.setTextColor(getResources().getColor(R.color.app_color_main));
+                textView.setTextColor(getResources().getColor(R.color.app_color_green));
                 textView.setBackground(getResources().getDrawable(R.drawable.shape_corner_gray_tv2));
                 mnemonicCodeListSelected.remove(mnemonicWord);
             }

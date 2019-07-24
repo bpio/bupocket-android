@@ -2,11 +2,8 @@ package com.bupocket.voucher;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.Html;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -21,15 +18,12 @@ import com.bupocket.fragment.BPCollectionFragment;
 import com.bupocket.fragment.BPWalletsHomeFragment;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
-import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.utils.WalletLocalInfoUtil;
 import com.bupocket.voucher.adapter.VoucherAdapter;
 import com.bupocket.voucher.http.VoucherService;
 import com.bupocket.voucher.model.VoucherDetailModel;
 import com.bupocket.voucher.model.VoucherListModel;
-import com.google.gson.Gson;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -37,9 +31,6 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -81,7 +72,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     private VoucherAdapter adapter;
     private VoucherListModel voucherListModel;
     private boolean isSendVoucher;
-    private SelectedVoucherListener mSeletedVoucherListener;
+    private SelectedVoucherListener mSelectedVoucherListener;
     private VoucherDetailModel selectedVoucherDetail;
 
 
@@ -199,7 +190,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 if (isSendVoucher) {
-                    mSeletedVoucherListener.getSelectedDetail(adapter.getData().get(position));
+                    mSelectedVoucherListener.getSelectedDetail(adapter.getData().get(position));
                     popBackStack();
                 } else {
                     goDetailFragment(position);
@@ -325,7 +316,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     }
 
     public void setSelectedVoucherListener(SelectedVoucherListener mSeletedVoucherListener) {
-        this.mSeletedVoucherListener = mSeletedVoucherListener;
+        this.mSelectedVoucherListener = mSeletedVoucherListener;
     }
 
 }

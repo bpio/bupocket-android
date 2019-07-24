@@ -21,8 +21,8 @@
             android:id="@+id/acceptanceIconRiv"
             android:layout_width="22dp"
             android:layout_height="22dp"
-            android:scaleType="fitXY"
             android:layout_marginTop="12dp"
+            android:scaleType="fitXY"
             android:src="@mipmap/icon_goods_empty"
             app:riv_oval="true" />
 
@@ -38,13 +38,14 @@
             android:paddingRight="15dp"
             tools:text="name" />
 
-        <ImageView
+        <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/voucherGoodsIv"
             android:layout_width="62dp"
             android:layout_height="62dp"
             android:layout_below="@+id/acceptanceIconRiv"
             android:layout_marginTop="12dp"
-            android:background="@mipmap/icon_goods_empty" />
+            android:src="@mipmap/icon_goods_empty"
+            app:riv_corner_radius="8dp" />
 
         <TextView
             android:id="@+id/goodsNameTv"
@@ -104,8 +105,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:background="@mipmap/view_voucher_selected"
-            android:visibility="gone"
-           />
+            android:visibility="gone" />
 
 
     </RelativeLayout>

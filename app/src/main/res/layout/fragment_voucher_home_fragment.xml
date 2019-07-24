@@ -23,11 +23,11 @@
             android:id="@+id/sendNameTv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="15dp"
+            android:layout_marginLeft="@dimen/common_left_right_padding"
             android:layout_marginTop="15dp"
-            android:visibility="gone"
-            android:textSize="13sp" />
+            android:layout_marginRight="@dimen/common_left_right_padding"
+            android:textSize="13sp"
+            android:visibility="gone" />
 
 
         <include
