@@ -61,6 +61,7 @@
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/transactionDetailHintTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
@@ -100,7 +101,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14.5dp"
-                        android:text="@string/send_voucher_num"
+                        android:text="@string/tx_value"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="13sp" />
 
@@ -113,10 +114,11 @@
                         android:textSize="14sp" />
 
                     <TextView
+                        android:id="@+id/txFeeHintTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14.5dp"
-                        android:text="@string/tx_fee_bu"
+                        android:text="@string/send_fee_title"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="13sp" />
 
@@ -269,7 +271,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14.5dp"
-                        android:text="@string/send_voucher_num"
+                        android:text="@string/tx_value"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="13sp" />
 
@@ -286,7 +288,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14.5dp"
-                        android:text="@string/tx_fee_bu"
+                        android:text="@string/send_fee_title"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="13sp" />
 

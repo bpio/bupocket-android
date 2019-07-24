@@ -75,6 +75,7 @@
     <string name="view_title_wallet_sendBU">Transfer</string>
     <string name="send_note_title">Memo</string>
     <string name="send_fee_title">Maximum transaction fee (BU)</string>
+    <string name="send_fee_title_no_bu">Maximum transaction fee</string>
     <string name="send_input_receiver_address_hint">Please enter the recipient address</string>
 
     <string name="send_amount_title">Amount to transfer</string>

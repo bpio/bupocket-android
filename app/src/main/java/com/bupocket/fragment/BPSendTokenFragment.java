@@ -33,6 +33,8 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DecimalCalculate;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ThreadManager;
+import com.bupocket.utils.TransferUtils;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
@@ -426,31 +428,7 @@ public class BPSendTokenFragment extends BaseFragment {
                 }
 
 
-                final QMUIBottomSheet sheet = new QMUIBottomSheet(getContext());
-
-                sheet.setContentView(R.layout.view_send_token_confirm);
-
-                final TextView addressTxt = sheet.findViewById(R.id.sendTargetAddress);
-                addressTxt.setText(address);
-
-                TextView amountTxt = sheet.findViewById(R.id.sendAmount);
-                amountTxt.setText(sendAmount + " " + tokenCode);
-
-                TextView estimateCostTxt = sheet.findViewById(R.id.sendEstimateCost);
-                estimateCostTxt.setText(txFee + " BU");
-
-                TextView remarkTxt = sheet.findViewById(R.id.sendRemark);
-                remarkTxt.setText(note);
-
-                sheet.findViewById(R.id.sendConfirmCloseBtn).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        sheet.dismiss();
-                    }
-                });
-
-                sheet.show();
-                new Thread(new Runnable() {
+                Runnable sendRunnable = new Runnable() {
                     @Override
                     public void run() {
                         try {
@@ -460,12 +438,12 @@ public class BPSendTokenFragment extends BaseFragment {
                         }
 
                     }
-                }).start();
-                sheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        sheet.dismiss();
+                };
+                ThreadManager.getInstance().execute(sendRunnable);
 
+                TransferUtils.confirmSendTokenDialog(mContext,getWalletAddress(),address,sendAmount,txFee,note,tokenCode, new TransferUtils.TransferListener() {
+                    @Override
+                    public void confirm() {
 
                         DialogUtils.showPassWordInputDialog(getActivity(), new DialogUtils.ConfirmListener() {
                             @Override
@@ -473,7 +451,6 @@ public class BPSendTokenFragment extends BaseFragment {
                                 sendToken(password,sendAmount,note,txFee);
                             }
                         });
-
                     }
                 });
             }

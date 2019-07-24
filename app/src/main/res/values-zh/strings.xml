@@ -78,6 +78,7 @@
 
     <string name="send_note_title">备注</string>
     <string name="send_fee_title">最多支付交易费用(BU)</string>
+    <string name="send_fee_title_no_bu">最多支付交易费用</string>
     <string name="send_input_receiver_address_hint">请输入接收方地址</string>
     <string name="no_backup_tips_btn">请备份</string>
 
@@ -810,7 +811,7 @@
     <string name="send_voucher_num_hint">请输入转赠数量</string>
     <string name="send_voucher_info_hint">不能超过20个字符</string>
     <string name="send_name_hint">&lt;font color=\'#00D175\'> %1$s &lt;/font>下可使用的券</string>
-    <string name="voucher_avail_balance" >可转</string>
+    <string name="voucher_avail_balance">可转</string>
 
     <string name="voucher_send_confirm_title">确认转赠</string>
     <string name="send_voucher">转赠加密数字券</string>

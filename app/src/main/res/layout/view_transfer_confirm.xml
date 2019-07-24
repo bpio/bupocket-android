@@ -249,7 +249,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14.5dp"
-                        android:text="@string/tx_fee_bu"
+                        android:text="@string/send_fee_title"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="13sp" />
 
