@@ -65,7 +65,7 @@
     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
         android:id="@+id/loginConfirmBtn"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/bp_btn_hight"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="42dp"
         android:layout_marginRight="40dp"
@@ -83,7 +83,7 @@
     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
         android:id="@+id/loginCancelBtn"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/bp_btn_hight"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="40dp"

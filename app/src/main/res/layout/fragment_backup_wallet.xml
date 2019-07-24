@@ -55,7 +55,7 @@
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="25dp"
-                android:lineSpacingMultiplier="1.1"
+                android:lineSpacingMultiplier="@dimen/bp_line_spacing_multiplier"
                 android:text="@string/backup_wallet_care_three_info"
                 android:textColor="@color/app_txt_color_gray_2"
                 android:textSize="13sp" />

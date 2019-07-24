@@ -67,8 +67,6 @@
     <dimen name="bp_text_top2">25dp</dimen>
 
     <dimen name="bp_line_spacing_multiplier">1.2</dimen>
-
-
     <dimen name="bp_create_wallet_layout_bottom">85dp</dimen>
 
 </resources>
