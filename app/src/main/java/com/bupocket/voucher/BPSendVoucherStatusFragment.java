@@ -69,8 +69,7 @@ public class BPSendVoucherStatusFragment extends BaseFragment {
     TextView tvTransHash;
     @BindView(R.id.tvFromAddress)
     TextView tvFormAddress;
-    @BindView(R.id.iKnowBtn)
-    Button iKonwBtn;
+
 
 
     private String fragmentTag;
@@ -87,12 +86,6 @@ public class BPSendVoucherStatusFragment extends BaseFragment {
 
     private void initListener() {
 
-        iKonwBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                popBackStack();
-            }
-        });
     }
 
 

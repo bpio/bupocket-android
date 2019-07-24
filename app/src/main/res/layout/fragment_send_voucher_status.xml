@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/qmui_config_color_white">
+    android:background="@color/app_bg_color_gray">
 
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
         android:id="@+id/topbar"
@@ -64,8 +64,6 @@
                 android:layout_alignParentBottom="true"
                 android:background="@color/app_bg_color_gray"
                 android:orientation="vertical"
-                android:padding="10dp"
-                android:paddingBottom="30dp"
                 android:visibility="visible">
 
                 <LinearLayout
@@ -75,6 +73,9 @@
                     android:background="@color/app_color_white"
                     android:orientation="vertical"
                     android:paddingBottom="30dp"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:layout_marginTop="@dimen/common_top_bottom_padding"
                     android:visibility="visible">
 
                     <LinearLayout
@@ -246,7 +247,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="7dp"
+                    android:layout_marginTop="@dimen/common_top_bottom_padding"
                     android:background="@drawable/shape_corner_white"
                     android:orientation="horizontal"
                     android:padding="10dp">
@@ -299,15 +300,6 @@
                 </LinearLayout>
 
 
-                <Button
-                    android:id="@+id/iKnowBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:background="@drawable/shape_corner_green"
-                    android:text="@string/i_knew_btn_txt"
-                    android:textColor="@color/app_color_white"
-                    android:textSize="@dimen/common_btn_size" />
 
             </LinearLayout>
 
