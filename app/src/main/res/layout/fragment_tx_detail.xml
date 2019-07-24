@@ -21,7 +21,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="?attr/qmui_topbar_height"
                 android:orientation="vertical"
-                android:paddingBottom="20dp">
+                android:layout_marginBottom="20dp">
 
 
                 <LinearLayout
@@ -31,7 +31,7 @@
                     android:background="@color/app_bg_color_gray_2"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:visibility="invisible">
+                 >
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -428,6 +428,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="23dp"
+                                    android:layout_marginTop="@dimen/common_top_bottom_padding"
                                     android:orientation="horizontal">
 
                                     <TextView
