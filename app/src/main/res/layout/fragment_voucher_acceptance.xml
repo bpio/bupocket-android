@@ -28,11 +28,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/app_bg_color_gray"
+            android:paddingLeft="@dimen/common_left_right_padding"
+            android:paddingRight="@dimen/common_left_right_padding"
             android:orientation="vertical">
 
             <TextView
                 style="@style/BPTextViewCommon13"
-                android:layout_marginLeft="13dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginBottom="12dp"
                 android:text="@string/d_party_introduce" />
@@ -41,8 +42,6 @@
             <TextView
                 android:id="@+id/dPartyIntroduceTv"
                 style="@style/BPTextViewCommon13"
-                android:layout_marginLeft="13dp"
-                android:layout_marginRight="12dp"
                 android:layout_marginBottom="12dp"
                 android:background="@drawable/shape_corner_white"
                 android:minLines="5"
@@ -52,7 +51,7 @@
                 android:paddingBottom="15dp"
                 android:textColor="@color/app_txt_color_gray_2"
                 android:textSize="13dp"
-                android:visibility="gone"
+                android:lineSpacingMultiplier="@dimen/bp_line_spacing_multiplier"
                 tools:text="@string/start_custom_service_hint" />
 
 

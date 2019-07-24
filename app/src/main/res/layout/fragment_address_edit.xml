@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/qmui_topbar_height"
-        android:background="@color/app_bg_color_gray"
         android:orientation="vertical">
 
         <include layout="@layout/view_address_book_item" />
@@ -20,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/bp_btn_hight"
             android:layout_centerInParent="true"
-            android:layout_marginTop="66.5dp"
+            android:layout_marginTop="30dp"
             android:enabled="true"
             android:focusable="true"
             android:gravity="center"
@@ -33,9 +32,10 @@
 
         <TextView
             android:id="@+id/deleteAddressTv"
-            style="@style/BPComWhiteBgRegTextBtn"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="30dp"
             android:text="@string/delete_address"
             android:textColor="@color/app_txt_color_red"
             android:textSize="16sp"

@@ -101,7 +101,8 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
     QMUIEmptyView detailEmptyView;
     @BindView(R.id.voucherDetailLl)
     LinearLayout voucherDetailLl;
-
+    @BindView(R.id.voucherEmptyIv)
+    ImageView voucherEmptyIv;
 
 
     private VoucherDetailModel voucherDetailModel;
@@ -158,6 +159,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
                     return;
                 }
                 detailEmptyView.show("", "");
+                voucherEmptyIv.setBackgroundResource(R.mipmap.icon_voucher_detail_bg);
                 ApiResult<VoucherPackageDetailModel> body = response.body();
                 if (body != null && ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
 

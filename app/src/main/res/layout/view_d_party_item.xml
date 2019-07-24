@@ -10,7 +10,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="12dp"
+        android:layout_marginLeft="@dimen/common_left_right_padding"
         android:scaleType="fitXY"
         android:src="@mipmap/icon_goods_empty"
         app:riv_oval="true" />
