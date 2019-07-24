@@ -54,6 +54,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class BPSendTokenFragment extends BaseFragment {
+
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
     @BindView(R.id.accountAvailableBalanceTv)
@@ -74,10 +75,9 @@ public class BPSendTokenFragment extends BaseFragment {
     TextView mTokenCodeTv;
 
     @BindView(R.id.sendTokenAmountLabel)
-    TextView mSendTokenAmountLable;
+    TextView mSendTokenAmountLabel;
 
     public final static String SEND_TOKEN_STATUS = "sendTokenStatus";
-    ;
     private static final int CHOOSE_ADDRESS_CODE = 1;
 
     private String hash;
@@ -91,7 +91,7 @@ public class BPSendTokenFragment extends BaseFragment {
     private Boolean whetherIdentityWallet = false;
     protected SharedPreferencesHelper sharedPreferencesHelper;
 
-    private TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean;
+    private TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean;
     private long nonce;
 
     @Override
@@ -104,21 +104,6 @@ public class BPSendTokenFragment extends BaseFragment {
         confirmSendInfo();
         initTopBar();
         setDestAddress();
-
-        mOpenAddressBookBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Bundle argz = new Bundle();
-                argz.putString("flag", AddressClickEventEnum.CHOOSE.getCode());
-                argz.putString("tokenType", tokenType);
-                argz.putString("tokenCode", tokenCode);
-                argz.putString("tokenDecimals", tokenDecimals);
-                argz.putString("tokenIssuer", tokenIssuer);
-                BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
-                bpAddressBookFragment.setArguments(argz);
-                startFragmentForResult(bpAddressBookFragment, CHOOSE_ADDRESS_CODE);
-            }
-        });
         buildWatcher();
         return root;
 
@@ -224,13 +209,29 @@ public class BPSendTokenFragment extends BaseFragment {
         tokenDecimals = getArguments().getString("tokenDecimals");
         String tokenBalance = getArguments().getString("tokenBalance");
         mTokenCodeTv.setText(tokenCode);
-        mSendTokenAmountLable.setText(getResources().getText(R.string.send_amount_title) + "(" + tokenCode + ")");
+        mSendTokenAmountLabel.setText(getResources().getText(R.string.send_amount_title) + "(" + tokenCode + ")");
         getAccountAvailableTokenBalance(tokenType, tokenBalance);
+
+        mOpenAddressBookBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle argz = new Bundle();
+                argz.putString("flag", AddressClickEventEnum.CHOOSE.getCode());
+                argz.putString("tokenType", tokenType);
+                argz.putString("tokenCode", tokenCode);
+                argz.putString("tokenDecimals", tokenDecimals);
+                argz.putString("tokenIssuer", tokenIssuer);
+                BPAddressBookFragment bpAddressBookFragment = new BPAddressBookFragment();
+                bpAddressBookFragment.setArguments(argz);
+                startFragmentForResult(bpAddressBookFragment, CHOOSE_ADDRESS_CODE);
+            }
+        });
 
     }
 
     private void initTopBar() {
-        mTopBar.setBackgroundDividerEnabled(false);
+        mTopBar.setBackgroundDividerEnabled(true);
+        mTopBar.setTitle(R.string.view_title_wallet_sendBU);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -660,20 +661,20 @@ public class BPSendTokenFragment extends BaseFragment {
                             ) {
                                 return;
                             } else {
-                                txDeatilRespBoBean = resp.getData().getTxDeatilRespBo();
+                                txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
                                 timerTask.cancel();
                                 txSendingTipDialog.dismiss();
-                                if (ExceptionEnum.BU_NOT_ENOUGH_FOR_PAYMENT.getCode().equals(txDeatilRespBoBean.getErrorCode())) {
+                                if (ExceptionEnum.BU_NOT_ENOUGH_FOR_PAYMENT.getCode().equals(txDetailRespBoBean.getErrorCode())) {
                                     Toast.makeText(getActivity(), R.string.balance_not_enough, Toast.LENGTH_SHORT).show();
                                 }
                                 Bundle argz = new Bundle();
-                                argz.putString("destAccAddr", txDeatilRespBoBean.getDestAddress());
-                                argz.putString("sendAmount", txDeatilRespBoBean.getAmount());
-                                argz.putString("txFee", txDeatilRespBoBean.getFee());
+                                argz.putString("destAccAddr", txDetailRespBoBean.getDestAddress());
+                                argz.putString("sendAmount", txDetailRespBoBean.getAmount());
+                                argz.putString("txFee", txDetailRespBoBean.getFee());
                                 argz.putString("tokenCode", tokenCode);
-                                argz.putString("note", txDeatilRespBoBean.getOriginalMetadata());
-                                argz.putString("state", txDeatilRespBoBean.getStatus().toString());
-                                argz.putString("sendTime", txDeatilRespBoBean.getApplyTimeDate());
+                                argz.putString("note", txDetailRespBoBean.getOriginalMetadata());
+                                argz.putString("state", txDetailRespBoBean.getStatus().toString());
+                                argz.putString("sendTime", txDetailRespBoBean.getApplyTimeDate());
                                 argz.putString("sendTokenStatusKey", SEND_TOKEN_STATUS);
                                 argz.putString("txHash", hash);
                                 BPSendStatusFragment bpSendStatusFragment = new BPSendStatusFragment();
