@@ -63,6 +63,9 @@
 
     <dimen name="bp_btn_bottom_margin">30dp</dimen>
 
+    <dimen name="bp_text_top">30dp</dimen>
+    <dimen name="bp_text_top2">25dp</dimen>
+
     <dimen name="bp_line_spacing_multiplier">1.2</dimen>
 
 

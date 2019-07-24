@@ -167,7 +167,6 @@
         <item name="android:paddingBottom">20dp</item>
         <item name="android:paddingRight">20dp</item>
         <item name="android:inputType">textMultiLine</item>
-
     </style>
 
 
@@ -318,6 +317,9 @@
         <item name="android:layout_marginTop">25dp</item>
     </style>
 
+
+
+
     <style name="BPLLDiscover">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
@@ -345,10 +347,17 @@
     </style>
 
 
-    <style name="BPTextViewCommon15">
+    <style name="BPTextViewCommonSize15Color99">
         <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/app_txt_color_gray</item>
         <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="BPTextViewCommonSize15Color66">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/app_txt_color_gray_2</item>
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
 
@@ -402,6 +411,7 @@
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_gravity">bottom</item>
         <item name="android:enabled">false</item>
+        <item name="android:focusable">true</item>
     </style>
 
 

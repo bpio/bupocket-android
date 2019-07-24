@@ -1,12 +1,10 @@
 package com.bupocket.voucher;
 
-import android.annotation.SuppressLint;
+
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.annotation.Nullable;
+
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.Html;
@@ -25,7 +23,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
-import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.base.BaseTransferFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
@@ -33,21 +30,16 @@ import com.bupocket.enums.AddressClickEventEnum;
 
 import com.bupocket.enums.VoucherStatusEnum;
 import com.bupocket.fragment.BPAddressBookFragment;
-import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.model.CallVoucherBalanceModel;
-import com.bupocket.model.EventBus.SendVoucherMessage;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
-import com.bupocket.utils.SharedPreferencesHelper;
-import com.bupocket.utils.TimeUtil;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.utils.WalletUtils;
 import com.bupocket.voucher.model.VoucherDetailModel;
-import com.bupocket.voucher.model.VoucherPackageDetailModel;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
 import com.google.gson.Gson;
@@ -58,10 +50,6 @@ import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import io.bumo.model.response.TransactionBuildBlobResponse;
@@ -85,8 +73,8 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
     @BindView(R.id.tokenCodeTv)
     TextView mTokenCodeTv;
 
-    @BindView(R.id.sendTokenAmountLable)
-    TextView mSendTokenAmountLable;
+    @BindView(R.id.sendTokenAmountLabel)
+    TextView mSendTokenAmountLabel;
     @BindView(R.id.voucherItemLL)
     LinearLayout voucherItemLL;
     @BindView(R.id.acceptanceIconRiv)
@@ -197,7 +185,6 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
     }
 
     public void initData() {
-        mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), 0 + "")));
         if (getArguments() != null) {
 
             fragmentTag = getArguments().getString(ConstantsType.FRAGMENT_TAG);
@@ -324,7 +311,7 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
         String date = mContext.getString(R.string.validity_date) + ": ";
         date = date + WalletCurrentUtils.voucherDate(startTime, endTime, mContext);
         goodsDateTv.setText(date);
-        mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), detailModel.getBalance() + "")));
+        mTokenCodeTv.setText(detailModel.getBalance());
         available = detailModel.getBalance();
         callVoucherBalance();
 
@@ -362,7 +349,7 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
                             @Override
                             public void run() {
                                 available = callVoucherBalanceMode.getResult().getValue().getAvailable();
-                                mTokenCodeTv.setText(Html.fromHtml(String.format(mContext.getString(R.string.voucher_avail_balance), available)));
+                                mTokenCodeTv.setText( available);
 
                             }
                         });
@@ -377,7 +364,8 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
     }
 
     private void initTopBar() {
-        mTopBar.setBackgroundDividerEnabled(false);
+        mTopBar.setBackgroundDividerEnabled(true);
+        mTopBar.setTitle(R.string.send_voucher_title1);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -552,19 +540,19 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
                                                             toAddress, 0.02 + "",
                                                             Constants.MIN_FEE + "", new WalletUtils.ReqListener() {
                                                                 @Override
-                                                                public void success(final int status,final long nonce) {
+                                                                public void success(final int status, final long nonce) {
 
                                                                     new Thread(new Runnable() {
                                                                         @Override
                                                                         public void run() {
-                                                                            if (status==0) {
+                                                                            if (status == 0) {
 
 
                                                                                 try {
 
                                                                                     final TransactionBuildBlobResponse transactionBuildBlobResponse = Wallet.getInstance().buildBlob("0",
                                                                                             input, WalletCurrentUtils.getWalletAddress(spHelper),
-                                                                                            minFee, contractAddress, remark,nonce+1);
+                                                                                            minFee, contractAddress, remark, nonce + 1);
 //
                                                                                     getActivity().runOnUiThread(new Runnable() {
                                                                                         @Override
@@ -572,13 +560,13 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
                                                                                             submitDialog.dismiss();
                                                                                         }
                                                                                     });
-                                                                                    LogUtils.e("bbbb0000"+Thread.currentThread().getName());
+                                                                                    LogUtils.e("bbbb0000" + Thread.currentThread().getName());
                                                                                     submitTransactionBase(privateKey, transactionBuildBlobResponse, fragmentTag, toAddress, amount);
 
                                                                                 } catch (Exception e) {
                                                                                     e.printStackTrace();
                                                                                 }
-                                                                            }else if (status==1){
+                                                                            } else if (status == 1) {
 
 
                                                                                 getActivity().runOnUiThread(new Runnable() {
@@ -588,7 +576,7 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
                                                                                     }
                                                                                 });
 
-                                                                                LogUtils.e("bbbb11111"+Thread.currentThread().getName());
+                                                                                LogUtils.e("bbbb11111" + Thread.currentThread().getName());
                                                                                 submitTransactionBase(privateKey, transactionBuildBlobResponse, fragmentTag, toAddress, amount);
                                                                             }
 
@@ -603,7 +591,6 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
 
                                                                 }
                                                             });
-
 
 
                                         }

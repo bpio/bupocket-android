@@ -41,11 +41,9 @@ import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
-import io.bumo.common.Constant;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -75,7 +73,7 @@ public class BPSendTokenFragment extends BaseFragment {
     @BindView(R.id.tokenCodeTv)
     TextView mTokenCodeTv;
 
-    @BindView(R.id.sendTokenAmountLable)
+    @BindView(R.id.sendTokenAmountLabel)
     TextView mSendTokenAmountLable;
 
     public final static String SEND_TOKEN_STATUS = "sendTokenStatus";
