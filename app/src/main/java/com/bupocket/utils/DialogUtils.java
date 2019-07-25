@@ -274,6 +274,29 @@ public class DialogUtils {
 
     }
 
+
+    public static void showMessageScrollDialog(Context mContext, String msg, String title, final DialogUtils.KnowListener knowListener) {
+        final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
+                setLayout(R.layout.qmui_com_dialog_green_scroll).create();
+        qmuiDialog.findViewById(R.id.tvComKnow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+                knowListener.Know();
+            }
+        });
+
+        TextView tvTitle = qmuiDialog.findViewById(R.id.tvComTitle);
+        if (!TextUtils.isEmpty(title)) {
+            tvTitle.setVisibility(View.VISIBLE);
+            tvTitle.setText(title);
+        }
+
+        ((TextView) qmuiDialog.findViewById(R.id.tvComMassage)).setText(msg);
+        qmuiDialog.show();
+
+    }
+
     /**
      * @param mContext
      * @param confirmListener

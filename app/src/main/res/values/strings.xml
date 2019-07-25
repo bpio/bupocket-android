@@ -766,11 +766,7 @@
     <string name="goods_price">面值：</string>
     <string name="goods_validity_date">%1$s 至 %2$s</string>
     <string name="number_voucher_package_title">加密数字券</string>
-    <string name="number_voucher_package_info">
-        加密数字券是BUMO区块链上的数字权益凭证，它是真实权益在数字世界的映射，可在BUMO区块链网络上自由流通。\n
-        小布口袋的券包支持加密数字券的管理、一键转赠、轻松承兑等功能，随时随地转赠给家人朋友，可轻松承兑进行使用。\n
-        （承兑功能正在开发，敬请期待...）\n
-        真实权益的未来：数字化、去中心化与自由流通</string>
+    <string name="number_voucher_package_info">加密数字券是BUMO区块链上的数字权益凭证，它是真实权益在数字世界的映射，可在BUMO区块链网络上自由流通。\n\n小布口袋的券包支持加密数字券的管理、一键转赠、轻松承兑等功能，随时随地转赠给家人朋友，可轻松承兑进行使用。\n（承兑功能正在开发，敬请期待...）\n\n真实权益的未来：\n数字化、去中心化与自由流通</string>
 
 
     <!--voucher detail-->

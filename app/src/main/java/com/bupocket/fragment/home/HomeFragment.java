@@ -126,7 +126,7 @@ public class HomeFragment extends BaseFragment {
                         );
                         mTabSegment.replaceTab(1,voucher);
 
-                        DialogUtils.showMessageDialog(mContext,
+                        DialogUtils.showMessageScrollDialog(mContext,
                                 getString(R.string.number_voucher_package_info),
                                 getString(R.string.number_voucher_package_title), new DialogUtils.KnowListener() {
                                     @Override
