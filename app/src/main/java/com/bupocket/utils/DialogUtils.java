@@ -363,11 +363,13 @@ public class DialogUtils {
         }
 
         TextView mPasswordConfirmCloseTv = qmuiDialog.findViewById(R.id.dialogCancelTV);
-
+        final InputMethodManager inputManager = (InputMethodManager) passwordEt.getContext().
+                getSystemService(Context.INPUT_METHOD_SERVICE);
 
         mPasswordConfirmCloseTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                inputManager.showSoftInput(passwordEt, InputMethodManager.HIDE_IMPLICIT_ONLY);
                 qmuiDialog.dismiss();
             }
         });
@@ -376,6 +378,7 @@ public class DialogUtils {
         mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                inputManager.showSoftInput(passwordEt, InputMethodManager.HIDE_IMPLICIT_ONLY);
                 confirmListener.confirm(passwordEt.getText().toString().trim());
                 qmuiDialog.dismiss();
             }
@@ -388,8 +391,7 @@ public class DialogUtils {
                 passwordEt.setFocusableInTouchMode(true);
                 passwordEt.requestFocus();
                 passwordEt.findFocus();
-                InputMethodManager inputManager =
-                        (InputMethodManager) passwordEt.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+
                 inputManager.showSoftInput(passwordEt, InputMethodManager.SHOW_FORCED);
             }
         }, 10);

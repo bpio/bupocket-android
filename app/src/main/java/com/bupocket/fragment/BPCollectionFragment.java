@@ -101,21 +101,6 @@ public class BPCollectionFragment extends AbsBaseFragment {
 
     }
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        DialogUtils.showMessageDialog(mContext,
-                getString(R.string.delete_current_wallet_info),
-                getString(R.string.number_voucher_package_title), new DialogUtils.KnowListener() {
-                    @Override
-                    public void Know() {
-
-                    }
-                });
-    }
-
     @Override
     protected void setListeners() {
 

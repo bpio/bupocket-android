@@ -28,6 +28,7 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.wallet.Wallet;
@@ -197,11 +198,10 @@ public class BPWalletManageFragment extends BaseFragment {
             }
         });
 
-        new Thread(new Runnable() {
+        Runnable exportPrivateRunnable = new Runnable() {
             @Override
             public void run() {
                 String bpData = getAccountBPData();
-                LogUtils.e("bpData::::" + bpData);
                 try {
                     privateKeyStr = Wallet.getInstance().exportPrivateKey(password, bpData, walletAddress);
                     exportingTipDialog.dismiss();
@@ -231,7 +231,8 @@ public class BPWalletManageFragment extends BaseFragment {
                     Looper.loop();
                 }
             }
-        }).start();
+        };
+        ThreadManager.getInstance().execute(exportPrivateRunnable);
 
     }
 
@@ -252,19 +253,19 @@ public class BPWalletManageFragment extends BaseFragment {
             }
         });
 
-        new Thread(new Runnable() {
+        Runnable keystoreStrRunnable = new Runnable() {
             @Override
             public void run() {
                 try {
                     String bpData = getAccountBPData();
-                    keystoreStr = Wallet.getInstance().exportKeyStore(password, bpData, walletAddress);
+                    BPWalletManageFragment.this.keystoreStr = Wallet.getInstance().exportKeyStore(password, bpData, walletAddress);
                     exportingTipDialog.dismiss();
 
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Bundle argz = new Bundle();
-                            argz.putString("keystoreStr", keystoreStr);
+                            argz.putString("keystoreStr", BPWalletManageFragment.this.keystoreStr);
                             BPWalletExportKeystoreFragment bpWalletExportKeystoreFragment = new BPWalletExportKeystoreFragment();
                             bpWalletExportKeystoreFragment.setArguments(argz);
                             startFragment(bpWalletExportKeystoreFragment);
@@ -279,7 +280,9 @@ public class BPWalletManageFragment extends BaseFragment {
                     Looper.loop();
                 }
             }
-        }).start();
+        };
+
+        ThreadManager.getInstance().execute(keystoreStrRunnable);
     }
 
     private void deleteWallet(final boolean isCurrentWallet) {
@@ -303,7 +306,7 @@ public class BPWalletManageFragment extends BaseFragment {
                     }
                 });
 
-                new Thread(new Runnable() {
+                Runnable privateRunnable = new Runnable() {
                     @Override
                     public void run() {
                         String bpData = getAccountBPData();
@@ -336,7 +339,8 @@ public class BPWalletManageFragment extends BaseFragment {
                             exportingTipDialog.dismiss();
                         }
                     }
-                }).start();
+                };
+                ThreadManager.getInstance().execute(privateRunnable);
             }
         });
 
