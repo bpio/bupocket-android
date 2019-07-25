@@ -73,6 +73,8 @@ public class BPSendTokenFragment extends BaseFragment {
     QMUIRoundButton mConfirmSendBtn;
     @BindView(R.id.openAddressBookBtn)
     ImageView mOpenAddressBookBtn;
+    @BindView(R.id.sendFormScanIv)
+    ImageView sendFormScanIv;
     @BindView(R.id.tokenCodeTv)
     TextView mTokenCodeTv;
 
@@ -107,8 +109,18 @@ public class BPSendTokenFragment extends BaseFragment {
         initTopBar();
         setDestAddress();
         buildWatcher();
+        setListener();
         return root;
 
+    }
+
+    private void setListener() {
+        sendFormScanIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startScan();
+            }
+        });
     }
 
     private void buildWatcher() {
@@ -240,12 +252,7 @@ public class BPSendTokenFragment extends BaseFragment {
                 popBackStack();
             }
         });
-        mTopBar.addRightImageButton(R.mipmap.icon_scan_green_little, R.id.walletScanBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startScan();
-            }
-        });
+
     }
 
     private void getAccountAvailableTokenBalance(String tokenType, String tokenBalance) {

@@ -24,6 +24,7 @@ import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.utils.WalletUtils;
 import com.bupocket.wallet.Wallet;
@@ -235,7 +236,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
                         .setTipWord(getResources().getString(R.string.recover_wallet_reloading))
                         .create();
                 tipDialog.show();
-                new Thread(new Runnable() {
+                Runnable recoverRunnable = new Runnable() {
                     @Override
                     public void run() {
                         try {
@@ -250,8 +251,8 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
                             sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.BACKUPED_MNEONIC_CODE.getCode());
                             sharedPreferencesHelper.put("currentWalletAddress", address);
                             sharedPreferencesHelper.put("mnemonicWordBackupState", "0");
-                            sharedPreferencesHelper.put(address+ConstantsType.WALLET_SKEY, walletBPData.getSkey());
-                            WalletCurrentUtils.saveInitHeadIcon(spHelper,address);
+                            sharedPreferencesHelper.put(address + ConstantsType.WALLET_SKEY, walletBPData.getSkey());
+                            WalletCurrentUtils.saveInitHeadIcon(spHelper, address);
                             tipDialog.dismiss();
 
                             getActivity().runOnUiThread(new Runnable() {
@@ -271,7 +272,8 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
                             return;
                         }
                     }
-                }).start();
+                };
+                ThreadManager.getInstance().execute(recoverRunnable);
             }
         });
 
