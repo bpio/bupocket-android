@@ -99,7 +99,7 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
             public void onClick(View v) {
                 if (mnemonicCodeList == null) {
                     String input=getString(R.string.password_backup_hint);
-                    DialogUtils.showPassWordInputDialog(getActivity(), input, "", new DialogUtils.ConfirmListener() {
+                    DialogUtils.showPassWordInputDialog(getActivity(), input, new DialogUtils.ConfirmListener() {
                         @Override
                         public void confirm(final String password) {
                             final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())

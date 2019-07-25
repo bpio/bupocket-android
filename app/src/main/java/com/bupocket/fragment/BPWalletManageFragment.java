@@ -113,7 +113,7 @@ public class BPWalletManageFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-                DialogUtils.showPassWordInputDialog(getActivity(), getString(R.string.export_keystore_password_confirm_txt), "", new DialogUtils.ConfirmListener() {
+                DialogUtils.showPassWordInputDialog(getActivity(), getString(R.string.export_keystore_password_confirm_txt), new DialogUtils.ConfirmListener() {
                     @Override
                     public void confirm(final String password) {
                         exportKeystore(password);
@@ -128,7 +128,7 @@ public class BPWalletManageFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-                DialogUtils.showPassWordInputDialog(getActivity(), getString(R.string.export_keystore_password_confirm_txt), "", new DialogUtils.ConfirmListener() {
+                DialogUtils.showPassWordInputDialog(getActivity(), getString(R.string.export_keystore_password_confirm_txt), new DialogUtils.ConfirmListener() {
                     @Override
                     public void confirm(final String password) {
                         exportPrivate(password);

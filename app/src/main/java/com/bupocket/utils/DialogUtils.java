@@ -344,7 +344,7 @@ public class DialogUtils {
         qmuiDialog.setCanceledOnTouchOutside(false);
         qmuiDialog.setContentView(R.layout.view_password_comfirm_common);
         qmuiDialog.show();
-        final Button mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
+        final TextView mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.dialogConfirmTV);
         TextView titleTv = (TextView) qmuiDialog.findViewById(R.id.passwordConfirmTitle);
         TextView inputTv = (TextView) qmuiDialog.findViewById(R.id.passwordConfirmNotice);
         final EditText passwordEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
@@ -362,10 +362,10 @@ public class DialogUtils {
             inputTv.setTextColor(inputColor);
         }
 
-        ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
+        TextView mPasswordConfirmCloseTv = qmuiDialog.findViewById(R.id.dialogCancelTV);
 
 
-        mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
+        mPasswordConfirmCloseTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 qmuiDialog.dismiss();

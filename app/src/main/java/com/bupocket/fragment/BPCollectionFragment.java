@@ -21,6 +21,7 @@ import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.CurrencyTypeEnum;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.TO;
 import com.bupocket.utils.WalletCurrentUtils;
@@ -98,6 +99,21 @@ public class BPCollectionFragment extends AbsBaseFragment {
         walletNameTv.setText(walletName);
         CommonUtil.setHeadIvRes(currentWalletAddress, walletIconRIV, spHelper);
 
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        DialogUtils.showMessageDialog(mContext,
+                getString(R.string.delete_current_wallet_info),
+                getString(R.string.number_voucher_package_title), new DialogUtils.KnowListener() {
+                    @Override
+                    public void Know() {
+
+                    }
+                });
     }
 
     @Override
