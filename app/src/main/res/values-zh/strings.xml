@@ -63,7 +63,6 @@
     <string name="tx_status_runing">处理中</string>
 
 
-    <string name="tx_status_success_txt1">转账成功</string>
     <string name="tx_status_fail_txt1">转账失败</string>
 
 
