@@ -14,6 +14,7 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.*;
 
 import butterknife.BindString;
@@ -183,6 +184,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                 }, 400);
             }
         });
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
     @Override

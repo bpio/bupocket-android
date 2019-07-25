@@ -15,8 +15,8 @@
             android:id="@+id/confirmLl"
             android:layout_width="match_parent"
             android:layout_height="460dp"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp"
+            android:layout_marginLeft="@dimen/common_left_right_padding"
+            android:layout_marginRight="@dimen/common_left_right_padding"
             android:orientation="vertical"
             android:visibility="visible">
 
@@ -136,8 +136,8 @@
             android:layout_width="match_parent"
             android:layout_height="460dp"
             android:layout_above="@+id/v_gray_line"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp"
+            android:layout_marginLeft="@dimen/common_left_right_padding"
+            android:layout_marginRight="@dimen/common_left_right_padding"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -302,15 +302,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:paddingLeft="18dp"
-            android:paddingRight="18dp"
+            android:paddingLeft="@dimen/common_left_right_padding"
+            android:paddingRight="@dimen/common_left_right_padding"
             android:paddingBottom="25dp">
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                 android:id="@+id/sendConfirmBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="19.5dp"
+                android:layout_marginTop="20dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="10dp"
