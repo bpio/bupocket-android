@@ -14,7 +14,7 @@
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="Title"
-        android:textColor="@color/app_txt_color_black_2"
+        android:textColor="@color/app_color_black"
         android:textSize="18sp"
         android:textStyle="bold" />
 
@@ -33,10 +33,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="left|center_vertical"
+            android:lineSpacingMultiplier="@dimen/bp_line_spacing_multiplier"
             android:minHeight="50dp"
             android:textColor="@color/search_token_item_txt_color"
             android:textSize="14sp"
-            android:lineSpacingMultiplier="@dimen/bp_line_spacing_multiplier"
             tools:text="@string/number_voucher_package_info" />
 
 
@@ -45,19 +45,12 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:background="@color/gray_line" />
 
     <TextView
         android:id="@+id/tvComKnow"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:gravity="center"
-        android:text="@string/i_knew_btn_txt"
-        android:textColor="@color/app_color_green"
-        android:textSize="16sp" />
+        style="@style/BPTextViewIKnow"
+        android:text="@string/i_knew_btn_txt" />
 
 </LinearLayout>

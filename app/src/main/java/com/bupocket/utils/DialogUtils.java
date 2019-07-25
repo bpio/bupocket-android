@@ -19,16 +19,13 @@ import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
-import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
-
-import org.w3c.dom.Text;
 
 public class DialogUtils {
 
 
     public static void showConfirmDialog(Context mContext, String title, String msg, final DialogUtils.KnowListener knowListener) {
         final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
-                setLayout(R.layout.view_com_dialog_no_title).create();
+                setLayout(R.layout.view_com_dialog_confirm).create();
 
         if (TextUtils.isEmpty(title)) {
             qmuiDialog.findViewById(R.id.dialogTitleTv).setVisibility(View.GONE);

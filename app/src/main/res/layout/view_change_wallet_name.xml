@@ -8,19 +8,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:background="@drawable/shape_corner"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:background="@drawable/shape_corner"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="22.5dp"
-            android:layout_marginLeft="22.5dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginBottom="20dp"
             android:orientation="vertical">
 
             <TextView
@@ -47,19 +42,18 @@
                 android:paddingTop="20dp"
                 android:paddingRight="12dp"
                 android:paddingBottom="20dp"
-                android:textSize="14sp" />
+                android:textSize="13sp" />
 
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="16dp"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="20dp"
                 android:background="@color/app_txt_color_gray_3" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:layout_marginTop="15dp">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/cancelNameTv"
@@ -67,24 +61,28 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
                     android:text="@string/common_dialog_cancel"
                     android:textColor="@color/app_txt_color_gray"
                     android:textSize="18sp" />
 
                 <View
-                    android:layout_width="1.5dp"
-                    android:layout_height="18.5dp"
+                    android:layout_width="1dp"
+                    android:layout_height="15dp"
                     android:layout_gravity="center"
-                    android:background="@color/app_txt_color_gray_3" />
+                    android:background="@color/gray_line" />
 
                 <TextView
                     android:id="@+id/confirmNameTv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="@string/common_dialog_confirm"
                     android:enabled="false"
+                    android:gravity="center"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp"
+                    android:text="@string/common_dialog_confirm"
                     android:textColor="@drawable/textview_green_selector"
                     android:textSize="18sp" />
             </LinearLayout>
