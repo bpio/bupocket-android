@@ -55,6 +55,7 @@ public class BPCurrencyFragment extends BaseFragment {
 //        mMonetaryLv.setDividerPadding(10);
 //        mMonetaryLv.setShowDividers(LinearLayout.SHOW_DIVIDER_END);
 //        mMonetaryLv.setDividerDrawable(getResources().getDrawable(R.drawable.shape_corner_green));
+        mMonetaryLv.setDividerDrawable(getResources().getDrawable(R.drawable.bg_gray_line));
         final QMUICommonListItemView CNYItem = mMonetaryLv.createItemView(getString(R.string.currency_cny_txt));
         CNYItem.getTextView().setTextColor(getResources().getColor(R.color.app_txt_color_gray_2));
 //        View lineView=LayoutInflater.from(mContext).inflate(R.layout.view_gray_line,null);

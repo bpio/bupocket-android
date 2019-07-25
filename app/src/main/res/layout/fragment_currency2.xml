@@ -7,16 +7,17 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/qmui_config_color_white"
         android:layout_marginTop="?attr/qmui_topbar_height"
+        android:background="@color/app_color_gray"
         android:orientation="vertical">
 
 
-        <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
+        <ListView
             android:id="@+id/monetaryLv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:divider="@null"
+            android:scrollbars="none" />
 
     </LinearLayout>
 
@@ -24,6 +25,6 @@
         android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"/>
+        android:fitsSystemWindows="true" />
 
 </android.support.design.widget.CoordinatorLayout>

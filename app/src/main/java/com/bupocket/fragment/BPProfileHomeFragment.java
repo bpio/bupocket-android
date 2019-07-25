@@ -256,7 +256,7 @@ public class BPProfileHomeFragment extends BaseFragment {
     }
 
     private void gotoSettingFragment() {
-        startFragment(new BPCurrencyFragment());
+        startFragment(new BPCurrencyFragment2());
     }
 
     private void gotoManageWalletFragment() {
