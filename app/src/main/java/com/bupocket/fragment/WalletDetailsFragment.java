@@ -57,6 +57,7 @@ public class WalletDetailsFragment extends AbsBaseFragment {
     }
 
     private void initTopBar() {
+        topbar.setBackgroundDividerEnabled(true);
         topbar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
