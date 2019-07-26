@@ -240,14 +240,16 @@ public class BPWalletsHomeFragment extends AbsBaseFragment {
     }
 
     private void initCurrentIdentityView() {
+
+        if (currentWalletAddress.equals(currentIdentityWalletAddress)) {
+            mCurrentIdentityWalletNameTv.setMaxWidth(TO.dip2px(mContext,100));
+            mCurrentIdentityWalletSignTv.setVisibility(View.VISIBLE);
+
+        }else{
+            mCurrentIdentityWalletNameTv.setMaxWidth(TO.dip2px(mContext,300));
+        }
         mCurrentIdentityWalletNameTv.setText(currentIdentityWalletName);
         mCurrentIdentityWalletAddressTv.setText(AddressUtil.anonymous(currentIdentityWalletAddress));
-        if (currentWalletAddress.equals(currentIdentityWalletAddress)) {
-            mCurrentIdentityWalletSignTv.setVisibility(View.VISIBLE);
-            mCurrentIdentityWalletNameTv.setWidth(TO.dip2px(mContext,100));
-        }else{
-            mCurrentIdentityWalletNameTv.setWidth(TO.dip2px(mContext,300));
-        }
     }
 
     private void initTopBar() {
