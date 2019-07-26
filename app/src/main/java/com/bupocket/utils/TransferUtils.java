@@ -224,7 +224,7 @@ public class TransferUtils {
         ((TextView) qmuiBottomSheet.findViewById(R.id.transactionDetailHintTv)).setText(R.string.tx_from);
 
         ((TextView) qmuiBottomSheet.findViewById(R.id.sendNumTvHint)).setText(context.getString(R.string.tx_value) + tokenType);
-        ((TextView) qmuiBottomSheet.findViewById(R.id.txFeeHintTv)).setText(context.getString(R.string.send_fee_title_no_bu) + tokenType);
+        ((TextView) qmuiBottomSheet.findViewById(R.id.txFeeHintTv)).setText(context.getString(R.string.send_fee_title));
 
 
 

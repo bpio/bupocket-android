@@ -131,7 +131,7 @@ public class BPSendStatusFragment extends BaseFragment {
         String destAccAddr = getArguments().getString("destAccAddr");
         String tokenCode = getArguments().getString("tokenCode");
         amountHintTv.setText(getString(R.string.tx_value)+"("+tokenCode+")");
-        txFeeHintTv.setText(getString(R.string.tx_fee)+"("+tokenCode+")");
+        txFeeHintTv.setText(getString(R.string.tx_fee_bu));
         String sendAmount = getArguments().getString("sendAmount") ;
         String txFee = getArguments().getString("txFee") ;
         String note = getArguments().getString("note");
