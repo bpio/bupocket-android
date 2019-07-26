@@ -56,12 +56,11 @@
     <string name="no_recently_tx_record">No transaction records</string>
     <string name="tx_status_success_txt">Success</string>
     <string name="tx_status_fail_txt">Failure</string>
-    <string name="tx_status_success_txt1">Success</string>
     <string name="tx_status_fail_txt1">Failure</string>
     <string name="tx_timeout_txt1">Request timeout</string>
 
     <string name="password_comfirm_dialog_title">Confirm password</string>
-    <string name="password_comfirm_dialog_sub_txt">Fill in the security code to confirm to transfer</string>
+    <string name="password_comfirm_dialog_sub_txt">Fill in the security password to confirm the transaction</string>
     <!-- 恢复身份 -->
     <string name="recover_wallet_title">Restore Identity</string>
     <string name="recover_input_wallet_name_error">Only letters, numerals, and underscores are allowed and it cannot exceed 20 characters</string>

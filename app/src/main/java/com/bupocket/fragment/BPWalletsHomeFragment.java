@@ -134,8 +134,9 @@ public class BPWalletsHomeFragment extends AbsBaseFragment {
             @Override
             public void onClick(View v) {
                 sharedPreferencesHelper.put("currentWalletAddress", currentIdentityWalletAddress);
-                mCurrentIdentityWalletSignTv.setVisibility(View.VISIBLE);
                 mCurrentIdentityWalletNameTv.setMaxWidth(TO.dip2px(mContext,100));
+                mCurrentIdentityWalletSignTv.setVisibility(View.VISIBLE);
+
                 currentWalletAddress = currentIdentityWalletAddress;
                 if (walletInfoList != null && walletInfoList.size() > 0) {
                     importedWalletAdapter = new ImportedWalletAdapter(walletInfoList, getContext(), currentWalletAddress);
@@ -199,8 +200,9 @@ public class BPWalletsHomeFragment extends AbsBaseFragment {
                     String address = walletInfo.getWalletAddress();
                     sharedPreferencesHelper.put("currentWalletAddress", address);
                     currentWalletAddress = address;
-                    mCurrentIdentityWalletSignTv.setVisibility(View.GONE);
                     mCurrentIdentityWalletNameTv.setMaxWidth(TO.dip2px(mContext,300));
+                    mCurrentIdentityWalletSignTv.setVisibility(View.GONE);
+
                     importedWalletAdapter = new ImportedWalletAdapter(walletInfoList, getContext(), currentWalletAddress);
                     mImportWalletsLv.setAdapter(importedWalletAdapter);
                     importedWalletAdapter.setOnManageWalletBtnListener(new ImportedWalletAdapter.OnManageWalletBtnListener() {

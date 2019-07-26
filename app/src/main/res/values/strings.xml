@@ -70,7 +70,7 @@
     <string name="tx_timeout_txt1">请求超时</string>
 
     <string name="password_comfirm_dialog_title">密码确认</string>
-    <string name="password_comfirm_dialog_sub_txt">请填写安全密码以确认转出</string>
+    <string name="password_comfirm_dialog_sub_txt">请填写安全密码以确认交易</string>
 
 
     <string name="view_title_wallet_sendBU">转账</string>
