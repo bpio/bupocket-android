@@ -15,6 +15,7 @@ import com.bupocket.model.WalletInfo;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.TO;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.List;
@@ -67,8 +68,10 @@ public class ImportedWalletAdapter extends BaseAdapter {
             holder.walletAddressTv.setText(AddressUtil.anonymous(address));
             if(mCurrentWalletAddress.equals(address)){
                 holder.walletSignTv.setVisibility(View.VISIBLE);
+                holder.walletNameTv.setMaxWidth(TO.dip2px(mContext,100));
             }else {
                 holder.walletSignTv.setVisibility(View.GONE);
+                holder.walletNameTv.setMaxWidth(TO.dip2px(mContext,300));
             }
             holder.manageWalletBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

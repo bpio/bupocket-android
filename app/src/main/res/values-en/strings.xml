@@ -327,7 +327,7 @@
     <string name="wallet_private_txt">Wallet Private Key</string>
     <string name="export_keystore_password_confirm_txt">Please enter the wallet password</string>
     <string name="export_private_password_confirm_txt">Please enter the wallet password</string>
-    <string name="current_wallet_sign_txt">Currently Used</string>
+    <string name="current_wallet_sign_txt">In Use</string>
     <string name="import_wallet_btn_txt">Import Now</string>
     <string name="import_wallet_title_txt">Import Wallet</string>
     <string name="mnemonic_word_txt">Mnemonics</string>

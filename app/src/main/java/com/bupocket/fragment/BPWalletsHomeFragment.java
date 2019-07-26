@@ -24,6 +24,7 @@ import com.bupocket.model.WalletInfo;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.TO;
 import com.bupocket.voucher.BPVoucherHomeFragment;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -134,6 +135,7 @@ public class BPWalletsHomeFragment extends AbsBaseFragment {
             public void onClick(View v) {
                 sharedPreferencesHelper.put("currentWalletAddress", currentIdentityWalletAddress);
                 mCurrentIdentityWalletSignTv.setVisibility(View.VISIBLE);
+                mCurrentIdentityWalletNameTv.setMaxWidth(TO.dip2px(mContext,100));
                 currentWalletAddress = currentIdentityWalletAddress;
                 if (walletInfoList != null && walletInfoList.size() > 0) {
                     importedWalletAdapter = new ImportedWalletAdapter(walletInfoList, getContext(), currentWalletAddress);
@@ -198,6 +200,7 @@ public class BPWalletsHomeFragment extends AbsBaseFragment {
                     sharedPreferencesHelper.put("currentWalletAddress", address);
                     currentWalletAddress = address;
                     mCurrentIdentityWalletSignTv.setVisibility(View.GONE);
+                    mCurrentIdentityWalletNameTv.setMaxWidth(TO.dip2px(mContext,300));
                     importedWalletAdapter = new ImportedWalletAdapter(walletInfoList, getContext(), currentWalletAddress);
                     mImportWalletsLv.setAdapter(importedWalletAdapter);
                     importedWalletAdapter.setOnManageWalletBtnListener(new ImportedWalletAdapter.OnManageWalletBtnListener() {
@@ -214,7 +217,6 @@ public class BPWalletsHomeFragment extends AbsBaseFragment {
 
 
                     goHomeFragment();
-
 
 
                 }
@@ -240,6 +242,9 @@ public class BPWalletsHomeFragment extends AbsBaseFragment {
         mCurrentIdentityWalletAddressTv.setText(AddressUtil.anonymous(currentIdentityWalletAddress));
         if (currentWalletAddress.equals(currentIdentityWalletAddress)) {
             mCurrentIdentityWalletSignTv.setVisibility(View.VISIBLE);
+            mCurrentIdentityWalletNameTv.setWidth(TO.dip2px(mContext,100));
+        }else{
+            mCurrentIdentityWalletNameTv.setWidth(TO.dip2px(mContext,300));
         }
     }
 
