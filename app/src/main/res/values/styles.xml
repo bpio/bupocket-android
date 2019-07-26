@@ -360,6 +360,12 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+    <style name="BPTextViewCommonSize14Color66">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/app_txt_color_gray_2</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
 
     <style name="BPTextViewCommon13">
         <item name="android:textSize">13sp</item>

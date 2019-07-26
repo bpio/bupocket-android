@@ -69,6 +69,8 @@ public class BPSendVoucherStatusFragment extends BaseFragment {
     TextView tvTransHash;
     @BindView(R.id.tvFromAddress)
     TextView tvFormAddress;
+    @BindView(R.id.sendDetailTv)
+    TextView sendDetailTv;
 
 
 
@@ -78,6 +80,7 @@ public class BPSendVoucherStatusFragment extends BaseFragment {
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_send_voucher_status, null);
         ButterKnife.bind(this, root);
+        sendDetailTv.setText(R.string.send_voucher);
         initTopBar();
         initData();
         initListener();

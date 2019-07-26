@@ -812,10 +812,11 @@
     <string name="send_voucher_num_hint">Please input the amount to transfer</string>
     <string name="send_voucher_info_hint">20 characters at most</string>
     <string name="send_name_hint">Available vouchers in &lt;font color=\'#00D175\'> %1$s &lt;/font></string>
-    <string name="voucher_avail_balance" >available</string>
+    <string name="voucher_avail_balance" >Available</string>
 
     <string name="voucher_send_confirm_title">Confirm to Transfer</string>
     <string name="send_voucher">Transfer encrypted digital vouchers</string>
+    <string name="send_token_transfer">Transfer Transaction</string>
     <string name="voucher_pwd_confirm_hint" >Fill in the security code to confirm to transfer</string>
 
 

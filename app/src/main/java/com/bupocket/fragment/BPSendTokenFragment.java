@@ -482,7 +482,7 @@ public class BPSendTokenFragment extends BaseFragment {
         });
 
 
-        new Thread(new Runnable() {
+        Runnable sendTokenRunnable = new Runnable() {
             @Override
             public void run() {
 
@@ -520,7 +520,8 @@ public class BPSendTokenFragment extends BaseFragment {
                             1000);
                 }
             }
-        }).start();
+        };
+        ThreadManager.getInstance().execute(sendTokenRunnable);
     }
 
     private void setDestAddress() {

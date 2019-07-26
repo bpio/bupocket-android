@@ -2,58 +2,16 @@ package com.bupocket.base;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.view.View;
 import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bupocket.BPApplication;
-import com.bupocket.R;
-import com.bupocket.common.Constants;
-import com.bupocket.common.ConstantsType;
-import com.bupocket.fragment.BPAssetsHomeFragment;
-import com.bupocket.interfaces.SignatureListener;
-import com.bupocket.enums.TxStatusEnum;
-import com.bupocket.fragment.BPSendStatusFragment;
-import com.bupocket.fragment.BPTransactionTimeoutFragment;
-import com.bupocket.fragment.home.HomeFragment;
-import com.bupocket.http.api.RetrofitFactory;
-import com.bupocket.http.api.TxService;
-import com.bupocket.http.api.dto.resp.ApiResult;
-import com.bupocket.http.api.dto.resp.TxDetailRespDto;
-import com.bupocket.utils.DialogUtils;
-import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
-import com.bupocket.utils.ToastUtil;
-import com.bupocket.voucher.BPSendVoucherStatusFragment;
-import com.bupocket.wallet.Wallet;
-import com.bupocket.wallet.enums.ExceptionEnum;
-import com.bupocket.wallet.exception.WalletException;
 import com.qmuiteam.qmui.arch.QMUIFragment;
-import com.qmuiteam.qmui.arch.QMUIFragmentActivity;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
-import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.squareup.leakcanary.RefWatcher;
 import com.umeng.analytics.MobclickAgent;
-
-import java.lang.ref.WeakReference;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import io.bumo.model.response.TransactionBuildBlobResponse;
-import retrofit2.Call;
-import retrofit2.Response;
 
 public abstract class BaseFragment extends QMUIFragment {
 
@@ -70,10 +28,7 @@ public abstract class BaseFragment extends QMUIFragment {
             spHelper = new SharedPreferencesHelper(getContext(), BP_FILE_NAME);
         }
 
-//        if (((QMUIFragmentActivity) getActivity()).getCurrentFragment().getClass().getSimpleName().equals(BPAssetsHomeFragment.class.getSimpleName())) {
-//
-
-            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
 
     }
@@ -129,9 +84,6 @@ public abstract class BaseFragment extends QMUIFragment {
     }
 
 
-
-
-
     @Override
     public void onResume() {
         super.onResume();
@@ -149,8 +101,6 @@ public abstract class BaseFragment extends QMUIFragment {
     public void popBackStack() {
         super.popBackStack();
     }
-
-
 
 
     @Override

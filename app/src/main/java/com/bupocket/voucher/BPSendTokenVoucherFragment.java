@@ -101,6 +101,7 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
     FrameLayout firstAddVoucherFl;
 
 
+
     private static final int CHOOSE_ADDRESS_CODE = 1;
 
     private String toAddress;
@@ -118,6 +119,7 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
 
     @Override
     protected void initView() {
+
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
 
         confirmSendInfo();
@@ -459,11 +461,15 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
         }
 
         int sendNum = Integer.parseInt(sendNumStr);
+        if (available.isEmpty()) {
+            ToastUtil.showToast(getActivity(), R.string.send_voucher_num_limit, Toast.LENGTH_LONG);
+            return;
+        }
+
         int availableNum = Integer.parseInt(BPSendTokenVoucherFragment.this.available);
         if (TextUtils.isEmpty(available) || availableNum == 0 || (sendNum > availableNum)) {
             ToastUtil.showToast(getActivity(), R.string.send_voucher_num_limit, Toast.LENGTH_LONG);
             return;
-//            }
         }
         minFee = sendFormTxFeeEt.getText().toString().trim();
         String tokenBalance = spHelper.getSharedPreference(getWalletAddress() + "tokenBalance", "0").toString();

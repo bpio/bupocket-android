@@ -84,6 +84,12 @@ public class BPSendStatusFragment extends BaseFragment {
 
     @BindView(R.id.tvFromAddress)
     TextView tvFormAddress;
+    @BindView(R.id.amountHintTv)
+    TextView amountHintTv;
+    @BindView(R.id.txFeeHintTv)
+    TextView txFeeHintTv;
+
+
 
     private AdModel ad;
     private String fragmentTag;
@@ -120,11 +126,14 @@ public class BPSendStatusFragment extends BaseFragment {
 
     private void initData() {
 
+
         Drawable txStatusIconDrawable;
         String destAccAddr = getArguments().getString("destAccAddr");
         String tokenCode = getArguments().getString("tokenCode");
-        String sendAmount = getArguments().getString("sendAmount") + " " + tokenCode;
-        String txFee = getArguments().getString("txFee") + " BU";
+        amountHintTv.setText(getString(R.string.tx_value)+"("+tokenCode+")");
+        txFeeHintTv.setText(getString(R.string.tx_fee)+"("+tokenCode+")");
+        String sendAmount = getArguments().getString("sendAmount") ;
+        String txFee = getArguments().getString("txFee") ;
         String note = getArguments().getString("note");
         String sendTime = getArguments().getString("sendTime");
         Integer txStatus = Integer.parseInt(getArguments().getString("state"));
