@@ -41,7 +41,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:textColor="@color/app_color_black"
-            android:textSize="18sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <TextView
@@ -51,7 +51,8 @@
             android:layout_marginTop="15dp"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:textColor="@color/send_confirm_gray_color" />
+            android:textColor="@color/send_confirm_gray_color"
+            android:textSize="@dimen/common_text_size_15" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -66,26 +67,24 @@
                 android:id="@+id/walletScanBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/bp_btn_hight"
-                android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:drawableStart="@mipmap/collection_qr_code"
+                android:drawableLeft="@mipmap/collection_qr_code"
                 android:gravity="center"
                 android:paddingLeft="30dp"
                 android:paddingRight="30dp"
                 android:text="@string/receive_qr_txt"
                 android:textColor="@color/app_color_font"
-                android:textSize="@dimen/bp_btn_text_size"
+                android:textSize="@dimen/common_text_size_14"
                 app:qmui_backgroundColor="@color/scan_btn_background_color"
                 app:qmui_borderColor="@color/app_btn_color_white"
-                app:qmui_radius="5dp" />
+                app:qmui_radius="4dp" />
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                 android:id="@+id/walletSendBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/bp_btn_hight"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp"
                 android:layout_weight="1"
                 android:drawableStart="@mipmap/icon_send_img"
                 android:drawableLeft="@mipmap/icon_send_img"
@@ -94,10 +93,10 @@
                 android:paddingRight="30dp"
                 android:text="@string/wallet_send_txt"
                 android:textColor="@color/app_color_font"
-                android:textSize="@dimen/bp_btn_text_size"
+                android:textSize="@dimen/common_text_size_14"
                 app:qmui_backgroundColor="@color/transfer_btn_background_color"
                 app:qmui_borderColor="@color/transfer_btn_background_color"
-                app:qmui_radius="5dp" />
+                app:qmui_radius="4dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -112,10 +111,8 @@
 
             <TextView
                 android:id="@+id/myTokenTxTitleTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/recently_tx_txt"
-                android:textSize="15sp" />
+                style="@style/BPTextViewCommonSize14Color99"
+                android:text="@string/recently_tx_txt" />
 
             <include
                 layout="@layout/view_load_failed"
