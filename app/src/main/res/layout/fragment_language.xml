@@ -32,10 +32,11 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="13dp"
                 android:layout_marginLeft="13dp"
+                style="@style/BPTextViewCommonSize14Color66"
                 android:layout_toEndOf="@id/languageCNIcon"
                 android:layout_toRightOf="@id/languageCNIcon"
                 android:text="@string/language_cn"
-                android:textSize="15sp" />
+         />
 
             <ImageView
                 android:id="@+id/cnSelectedIV"
@@ -72,10 +73,11 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="13dp"
                 android:layout_marginLeft="13dp"
+                style="@style/BPTextViewCommonSize14Color66"
                 android:layout_toEndOf="@id/languageENIcon"
                 android:layout_toRightOf="@id/languageENIcon"
                 android:text="@string/language_en"
-                android:textSize="15sp" />
+              />
 
             <ImageView
                 android:id="@+id/enSelectedIV"

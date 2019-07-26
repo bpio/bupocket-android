@@ -24,6 +24,7 @@
             android:hint="@string/add_token_search_hint"
             android:imeOptions="actionSearch"
             android:singleLine="true"
+            android:textSize="14sp"
             android:theme="@style/BPEditText" />
 
         <com.qmuiteam.qmui.widget.QMUIEmptyView

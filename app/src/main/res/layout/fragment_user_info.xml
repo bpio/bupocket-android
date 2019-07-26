@@ -36,8 +36,8 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:textColor="@color/app_txt_color_gray_2"
-                    android:textSize="15sp"
+                    style="@style/BPTextViewCommonSize14Color66"
+
                     tools:text="identityName" />
             </LinearLayout>
 
@@ -74,8 +74,7 @@
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
                     android:textAlignment="textEnd"
-                    android:textColor="@color/app_txt_color_gray_2"
-                    android:textSize="15sp"
+                    style="@style/BPTextViewCommonSize14Color66"
                     tools:ignore="RtlCompat"
                     tools:text="test-idtest-idtest-idtest-idtest-idtest-idtest-idtest-idtest-idtest-idtest-id" />
             </LinearLayout>
