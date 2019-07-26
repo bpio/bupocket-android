@@ -14,14 +14,13 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="?attr/qmui_topbar_height"
             android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="?attr/qmui_topbar_height"
-                android:orientation="vertical"
-                android:layout_marginBottom="20dp">
+                android:orientation="vertical">
 
 
                 <LinearLayout
@@ -30,8 +29,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/app_bg_color_gray_2"
                     android:gravity="center"
-                    android:orientation="vertical"
-                 >
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -100,16 +98,16 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_corner"
+                            android:orientation="vertical"
                             android:paddingLeft="@dimen/common_left_right_padding"
-                            android:paddingRight="@dimen/common_left_right_padding"
-                            android:orientation="vertical">
+                            android:paddingRight="@dimen/common_left_right_padding">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="23dp"
-                                android:paddingTop="@dimen/common_top_bottom_padding"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:paddingTop="@dimen/common_top_bottom_padding">
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -223,11 +221,11 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/shape_corner"
-                            android:paddingLeft="@dimen/common_left_right_padding"
-                            android:paddingRight="@dimen/common_left_right_padding"
                             android:layout_marginTop="@dimen/common_top_bottom_padding"
-                            android:orientation="vertical">
+                            android:background="@drawable/shape_corner"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/common_left_right_padding"
+                            android:paddingRight="@dimen/common_left_right_padding">
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -406,10 +404,10 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:paddingLeft="@dimen/common_left_right_padding"
-                            android:paddingRight="@dimen/common_left_right_padding"
                             android:background="@drawable/shape_corner"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/common_left_right_padding"
+                            android:paddingRight="@dimen/common_left_right_padding">
 
                             <TextView
                                 android:layout_width="match_parent"
@@ -427,8 +425,8 @@
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginBottom="23dp"
                                     android:layout_marginTop="@dimen/common_top_bottom_padding"
+                                    android:layout_marginBottom="23dp"
                                     android:orientation="horizontal">
 
                                     <TextView
