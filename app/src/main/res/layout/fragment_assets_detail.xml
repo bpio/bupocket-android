@@ -63,6 +63,9 @@
             android:paddingRight="@dimen/common_left_right_padding"
             android:paddingBottom="10dp">
 
+
+
+
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                 android:id="@+id/walletScanBtn"
                 android:layout_width="wrap_content"

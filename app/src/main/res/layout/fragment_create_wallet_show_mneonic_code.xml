@@ -23,7 +23,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="28dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/shape_corner_gray_tv2"
                 android:orientation="vertical"
                 android:layout_marginLeft="@dimen/common_left_right_padding"

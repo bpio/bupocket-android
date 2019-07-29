@@ -81,6 +81,14 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
                 showSelectedView(ivAddMore);
             }
         });
+
+
+        View nodeLineView = holder.getView(R.id.nodeLineView);
+        if (getData().size()==1) {
+            nodeLineView.setVisibility(View.GONE);
+        }
+
+
     }
 
     @SuppressLint("ResourceAsColor")

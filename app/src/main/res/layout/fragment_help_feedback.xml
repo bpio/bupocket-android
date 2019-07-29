@@ -43,7 +43,6 @@
                 style="@style/BPTextViewCreateWallet"
                 android:layout_marginLeft="0dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginBottom="15dp"
                 android:text="@string/contact_title_txt" />
 
             <EditText
