@@ -56,6 +56,7 @@ public class HomeFragment extends BaseFragment {
         if (getArguments()!=null) {
             if (BPVoucherHomeFragment.class.getSimpleName().equals(getArguments().getString(ConstantsType.FRAGMENT_TAG))) {
                 mTabSegment.selectTab(1);
+                getArguments().clear();
             }
         }
 
