@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -71,9 +72,9 @@ public class BPAssetsDetailFragment extends BaseFragment {
     @BindView(R.id.myTokenTxLv)
     ListView mMyTokenTxLv;
     @BindView(R.id.walletScanBtn)
-    QMUIRoundButton mWalletScanBtn;
+    Button mWalletScanBtn;
     @BindView(R.id.walletSendBtn)
-    QMUIRoundButton mWalletSendBtn;
+    Button mWalletSendBtn;
     @BindView(R.id.myTokenTxTitleTv)
     TextView mMyTokenTxTitleTv;
     @BindView(R.id.reloadBtn)
