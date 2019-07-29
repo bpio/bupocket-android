@@ -263,8 +263,8 @@ public class BPAboutUsFragment extends AbsBaseFragment {
         if (mHits[0] > SystemClock.uptimeMillis() - DURATION) {
 
 
-            DialogUtils.showConfirmDialog(mContext, "",
-                    getString(R.string.switch_test_net_message_txt),
+            DialogUtils.showConfirmNoTitleDialog(mContext,   getString(R.string.switch_test_net_message_txt)
+                  ,
                     new DialogUtils.KnowListener() {
                         @Override
                         public void Know() {
