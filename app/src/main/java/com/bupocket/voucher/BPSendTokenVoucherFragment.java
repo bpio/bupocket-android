@@ -537,13 +537,10 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
                                                     submitDialog = new QMUITipDialog.Builder(getContext())
                                                             .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                                                             .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
-                                                            .create();
+                                                            .create(false);
                                                     submitDialog.show();
                                                 }
                                             });
-//                                                    long oldNonce = Wallet.getInstance().checkToAddressValidateAndOpenAccount(privateKey, getBPAccountData(), getWalletAddress(), toAddress, 0.02 + "", Constants.MIN_FEE + "");
-//                                                    submitDialog.dismiss();
-//
                                             WalletUtils.checkToAddressValidateAndOpenAccount
                                                     (privateKey, getBPAccountData(), getWalletAddress(),
                                                             toAddress, 0.02 + "",
