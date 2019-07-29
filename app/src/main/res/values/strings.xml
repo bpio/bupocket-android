@@ -540,7 +540,7 @@
 
     <string name="transaction_timeout_title">交易状态</string>
     <string name="transaction_timeout_hint">交易广播成功</string>
-    <string name="transaction_timeout_info">交易广播成功，交易最终状态请复制交易摘要到&lt;font color=\'#02CA71\'>https://explorer.bumo.io&lt;/font>查询</string>
+    <string name="transaction_timeout_info">交易广播成功，交易最终状态请复制交易摘要到&lt;font color=\'#02CA71\'>%1$s&lt;/font>查询</string>
     <string name="transaction_info">交易摘要</string>
 
 

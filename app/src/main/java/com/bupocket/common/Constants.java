@@ -60,6 +60,9 @@ public class Constants {
     public static final String KOL_PATH = "supernodes/detail/kol/";
     public static final String BUMO_NODE_URL_PATH="/getLedger";
 
+    public static final String BUMO_TIMEOUT_MAIN_URL="https://explorer.bumotest.io/";
+    public static final String BUMO_TIMEOUT_TEST_URL="https://explorer.bumo.io/";
+
 
     public static enum MainNetConfig {
         WEB_SERVER_DOMAIN("https://api-bp.bumo.io/"),
