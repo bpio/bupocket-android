@@ -36,6 +36,8 @@ public class BPVoucherIssuerFragment extends AbsBaseFragment implements InitView
     LinearLayout recordEmptyLL;
     @BindView(R.id.emptyInfoTv)
     TextView emptyInfoTv;
+    @BindView(R.id.issuerInfoLL)
+    LinearLayout issuerInfoLL;
 
 
     private VoucherIssuerBean voucherIssuer;
@@ -73,10 +75,11 @@ public class BPVoucherIssuerFragment extends AbsBaseFragment implements InitView
 
             String intro = voucherIssuer.getIntro();
             if (!TextUtils.isEmpty(intro)) {
+                issuerInfoLL.setVisibility(View.VISIBLE);
                 issuerIntroduceTv.setText(intro);
-                issuerIntroduceTv.setVisibility(View.VISIBLE);
+                recordEmptyLL.setVisibility(View.GONE);
             } else {
-                issuerIntroduceTv.setVisibility(View.GONE);
+                issuerInfoLL.setVisibility(View.GONE);
                 recordEmptyLL.setVisibility(View.VISIBLE);
             }
 

@@ -35,6 +35,8 @@ public class BPAcceptanceFragment extends AbsBaseFragment implements InitViewLis
     LinearLayout recordEmptyLL;
     @BindView(R.id.emptyInfoTv)
     TextView emptyInfoTv;
+    @BindView(R.id.acceptanceInfoLL)
+    LinearLayout acceptanceInfoLL;
 
     Unbinder unbinder;
     private VoucherAcceptanceBean voucherAcceptance;
@@ -67,16 +69,15 @@ public class BPAcceptanceFragment extends AbsBaseFragment implements InitViewLis
                 String intro = voucherAcceptance.getIntro();
                 String shortName = voucherAcceptance.getShortName();
                 if (!TextUtils.isEmpty(shortName)) {
-                    acceptanceShortNameTv.setText(getString(R.string.short_name_hint) +shortName);
+                    acceptanceShortNameTv.setText(getString(R.string.short_name_hint) + shortName);
                 }
 
                 if (!TextUtils.isEmpty(intro)) {
                     acceptanceIntroduceTv.setText(intro);
-                    acceptanceIntroduceTv.setVisibility(View.VISIBLE);
-
-                }else{
-                    acceptanceIntroduceTv.setVisibility(View.GONE);
+                    acceptanceInfoLL.setVisibility(View.VISIBLE);
+                } else {
                     recordEmptyLL.setVisibility(View.VISIBLE);
+                    acceptanceInfoLL.setVisibility(View.GONE);
                 }
 
             }
