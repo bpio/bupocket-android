@@ -35,12 +35,14 @@ import com.bupocket.model.CallVoucherBalanceModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.utils.WalletUtils;
 import com.bupocket.voucher.model.VoucherDetailModel;
 import com.bupocket.wallet.Wallet;
+import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
@@ -325,7 +327,7 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
             return;
         }
 
-        new Thread(new Runnable() {
+        Runnable balanceRunnable = new Runnable() {
             @Override
             public void run() {
                 JSONObject input = new JSONObject();
@@ -351,7 +353,7 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
                             @Override
                             public void run() {
                                 available = callVoucherBalanceMode.getResult().getValue().getAvailable();
-                                mTokenCodeTv.setText( available);
+                                mTokenCodeTv.setText(available);
 
                             }
                         });
@@ -362,7 +364,8 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
 
                 }
             }
-        }).start();
+        };
+        ThreadManager.getInstance().execute(balanceRunnable);
     }
 
     private void initTopBar() {
@@ -513,7 +516,7 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
                     @Override
                     public void confirm() {
 
-                        new Thread(new Runnable() {
+                        Runnable buildBlobRunnable = new Runnable() {
                             @Override
                             public void run() {
 
@@ -548,12 +551,10 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
                                                                 @Override
                                                                 public void success(final int status, final long nonce) {
 
-                                                                    new Thread(new Runnable() {
+                                                                    Runnable buildBlobRunnable = new Runnable() {
                                                                         @Override
                                                                         public void run() {
                                                                             if (status == 0) {
-
-
                                                                                 try {
 
                                                                                     final TransactionBuildBlobResponse transactionBuildBlobResponse = Wallet.getInstance().buildBlob("0",
@@ -588,7 +589,8 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
 
 //
                                                                         }
-                                                                    }).start();
+                                                                    };
+                                                                    ThreadManager.getInstance().execute(buildBlobRunnable);
 
                                                                 }
 
@@ -604,7 +606,7 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
 //
 //
                                 } catch (WalletException e) {
-                                    if (e.getErrCode().equals(com.bupocket.wallet.enums.ExceptionEnum.ADDRESS_NOT_EXIST.getCode())) {
+                                    if (e.getErrCode().equals(ExceptionEnum.ADDRESS_NOT_EXIST.getCode())) {
                                         ToastUtil.showToast(getActivity(), getString(R.string.address_not_exist), Toast.LENGTH_SHORT);
                                     }
                                 } catch (Exception e) {
@@ -612,7 +614,9 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
 
                                 }
                             }
-                        }).start();
+                        };
+
+                        ThreadManager.getInstance().execute(buildBlobRunnable);
 
                     }
                 });

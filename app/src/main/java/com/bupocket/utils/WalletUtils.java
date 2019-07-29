@@ -30,7 +30,7 @@ public class WalletUtils {
     public static void checkToAddressValidateAndOpenAccount(final String password, final String bPData, final String fromAddr, final String toAddr, final String amount, final String fee, final ReqListener reqListener) {
 
 
-        new Thread(new Runnable() {
+        Runnable getInfoRunnable = new Runnable() {
             @Override
             public void run() {
 
@@ -45,7 +45,7 @@ public class WalletUtils {
                         String hash = Wallet.getInstance().sendBuNoNonceVoucher(password, bPData, fromAddr, toAddr, amount, "", fee, nonce);
                         if (hash != null) {
                             isOne = true;
-                            reqListener.success(0,nonce);
+                            reqListener.success(0, nonce);
                         } else {
                             reqListener.failed();
                         }
@@ -57,12 +57,13 @@ public class WalletUtils {
                 }
 
                 if (!isOne) {
-                    reqListener.success(1,nonce);
+                    reqListener.success(1, nonce);
                 }
 
 
             }
-        }).start();
+        };
+        ThreadManager.getInstance().execute(getInfoRunnable);
     }
 
     public static void setEditTextEyeHide(ImageView mPwdShow, EditText mSetPwdEt, boolean isHide) {

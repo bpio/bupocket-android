@@ -35,6 +35,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.SuperNodeDto;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.DialogUtils;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.wallet.Wallet;
@@ -347,7 +348,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
                         .create();
                 txSendingTipDialog.show();
 
-                new Thread(new Runnable() {
+                Runnable unVoteRunnable = new Runnable() {
                     @Override
                     public void run() {
                         try {
@@ -391,8 +392,9 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
                             txSendingTipDialog.dismiss();
                         }
                     }
-                }).start();
+                };
 
+                ThreadManager.getInstance().execute(unVoteRunnable);
             }
         });
 

@@ -81,7 +81,7 @@ public abstract class BaseTransferFragment extends AbsBaseFragment {
                         final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
                                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                                 .setTipWord(getResources().getString(R.string.send_tx_sign_txt))
-                                .create();
+                                .create(false);
                         txSendingTipDialog.show();
 
                         Runnable privateKeyRunnable = new Runnable() {
@@ -139,7 +139,7 @@ public abstract class BaseTransferFragment extends AbsBaseFragment {
                 submitDialog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                         .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
-                        .create();
+                        .create(false);
                 submitDialog.show();
             }
         });
@@ -293,6 +293,9 @@ public abstract class BaseTransferFragment extends AbsBaseFragment {
                                     return;
                                 }
 
+                                if (mFragment.getActivity()==null) {
+                                    return;
+                                }
 
                                 if (((BaseFragmentActivity) mFragment.getActivity()).getCurrentFragment().getTag().equals(HomeFragment.class.getSimpleName())) {
                                     argz.putString("fragmentTag", HomeFragment.class.getSimpleName());

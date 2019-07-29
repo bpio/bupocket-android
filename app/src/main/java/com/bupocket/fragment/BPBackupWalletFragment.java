@@ -17,6 +17,7 @@ import com.bupocket.common.ConstantsType;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.wallet.Wallet;
@@ -107,7 +108,7 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
                                     .setTipWord(getResources().getString(R.string.tx_status_runing))
                                     .create();
                             tipDialog.show();
-                            new Thread(new Runnable() {
+                            Runnable getSkeyRunnable = new Runnable() {
                                 @Override
                                 public void run() {
                                     String ciphertextSkeyData = getSkeyStr();
@@ -128,7 +129,8 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
                                         return;
                                     }
                                 }
-                            }).start();
+                            };
+                            ThreadManager.getInstance().execute(getSkeyRunnable);
                         }
                     });
 

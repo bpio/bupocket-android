@@ -26,6 +26,7 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.utils.WalletUtils;
@@ -180,7 +181,7 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
                         .setTipWord(getResources().getString(R.string.wallet_create_creating_txt))
                         .create();
                 tipDialog.show();
-                new Thread(new Runnable() {
+                Runnable createWalletRunnable = new Runnable() {
                     @Override
                     public void run() {
                         String accountPwd = mSetPwdEt.getText().toString().trim();
@@ -205,8 +206,8 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
                             return;
                         }
                     }
-                }).start();
-
+                };
+                ThreadManager.getInstance().execute(createWalletRunnable);
 
             }
         });

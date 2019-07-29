@@ -11,6 +11,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DecimalCalculate;
 import com.bupocket.utils.LogUtils;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.wallet.enums.BUChainExceptionEnum;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
@@ -666,7 +667,7 @@ public class Wallet {
     }
 
     private void deviceBind(final String walletAddress, final String identityAddress, final String publicKey, final String signData, final Context context) {
-        new Thread(new Runnable() {
+        Runnable deviceBindRunnable = new Runnable() {
             @Override
             public void run() {
 
@@ -691,7 +692,8 @@ public class Wallet {
                     }
                 });
             }
-        }).start();
+        };
+        ThreadManager.getInstance().execute(deviceBindRunnable);
     }
 
 

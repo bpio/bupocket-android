@@ -31,6 +31,7 @@ import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.QRCodeUtil;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.TimeUtil;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
@@ -210,8 +211,7 @@ public class BPNodeShareFragment extends AbsBaseFragment {
         webView.loadDataWithBaseURL(null, source, "text/html", "utf-8", null);
 
 
-
-        new Thread(new Runnable() {
+        Runnable shareRunnable = new Runnable() {
             @Override
             public void run() {
                 try {
@@ -227,7 +227,8 @@ public class BPNodeShareFragment extends AbsBaseFragment {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        };
+        ThreadManager.getInstance().execute(shareRunnable);
     }
 
 

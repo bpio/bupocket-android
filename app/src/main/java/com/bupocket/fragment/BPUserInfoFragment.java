@@ -21,6 +21,7 @@ import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.wallet.Wallet;
@@ -186,7 +187,7 @@ public class BPUserInfoFragment extends BaseFragment {
                                 .create();
                         tipDialog.show();
 
-                        new Thread(new Runnable() {
+                        Runnable checkPwd = new Runnable() {
                             @Override
                             public void run() {
                                 String ciphertextSkeyData = getSkeyStr();
@@ -214,8 +215,9 @@ public class BPUserInfoFragment extends BaseFragment {
                                     return;
                                 }
                             }
-                        }).start();
+                        };
 
+                        ThreadManager.getInstance().execute(checkPwd);
                     }
                 });
 

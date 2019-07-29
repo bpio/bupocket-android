@@ -31,6 +31,7 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.TO;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.utils.WalletUtils;
@@ -297,7 +298,7 @@ public class BPWalletImportFragment extends BaseFragment {
                         .setTipWord(getResources().getString(R.string.importing_loading_txt))
                         .create();
                 tipDialog.show();
-                new Thread(new Runnable() {
+                Runnable importKeyStoreRunnable = new Runnable() {
                     @Override
                     public void run() {
                         try {
@@ -318,8 +319,9 @@ public class BPWalletImportFragment extends BaseFragment {
                             return;
                         }
                     }
-                }).start();
+                };
 
+                ThreadManager.getInstance().execute(importKeyStoreRunnable);
             }
 
             private boolean pwdFlag() {
@@ -459,7 +461,7 @@ public class BPWalletImportFragment extends BaseFragment {
                         .setTipWord(getResources().getString(R.string.importing_loading_txt))
                         .create();
                 tipDialog.show();
-                new Thread(new Runnable() {
+                Runnable importMnemonicRunnable = new Runnable() {
                     @Override
                     public void run() {
                         try {
@@ -477,7 +479,8 @@ public class BPWalletImportFragment extends BaseFragment {
                             return;
                         }
                     }
-                }).start();
+                };
+                ThreadManager.getInstance().execute(importMnemonicRunnable);
             }
 
             private List<String> getMnemonicCode() {
@@ -586,7 +589,7 @@ public class BPWalletImportFragment extends BaseFragment {
                         .setTipWord(getResources().getString(R.string.importing_loading_txt))
                         .create();
                 tipDialog.show();
-                new Thread(new Runnable() {
+                Runnable importPrivateKeyRunnable = new Runnable() {
                     @Override
                     public void run() {
                         try {
@@ -602,7 +605,8 @@ public class BPWalletImportFragment extends BaseFragment {
                             return;
                         }
                     }
-                }).start();
+                };
+                ThreadManager.getInstance().execute(importPrivateKeyRunnable);
             }
 
 

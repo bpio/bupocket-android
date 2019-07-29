@@ -33,6 +33,7 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.SocketUtil;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
@@ -159,7 +160,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                             }
                         });
 
-                        new Thread(new Runnable() {
+                        Runnable confirmRunnable = new Runnable() {
                             @Override
                             public void run() {
                                 String accountBPData = getAccountBPData();
@@ -196,7 +197,8 @@ public class BPIssueTokenFragment extends BaseFragment {
                                             1000);
                                 }
                             }
-                        }).start();
+                        };
+                        ThreadManager.getInstance().execute(confirmRunnable);
                     }
                 });
 

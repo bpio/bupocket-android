@@ -59,6 +59,7 @@ import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LocaleUtil;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.utils.WalletCurrentUtils;
@@ -297,9 +298,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                 }
             }
         };
-        new Thread(getBalanceRunnable).start();
-
-
+        ThreadManager.getInstance().execute(getBalanceRunnable);
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
         if (BumoNodeEnum.TEST.getCode() == bumoNodeType) {
             localTokenListSharedPreferenceKey = BumoNodeEnum.TEST.getLocalTokenListSharedPreferenceKey();
@@ -539,7 +538,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         final String transMetaData = contentDto.getQrRemarkEn();
 
 
-        new Thread(new Runnable() {
+        Runnable buildBlobRunnable = new Runnable() {
             @Override
             public void run() {
                 try {
@@ -626,7 +625,8 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
 
                 }
             }
-        }).start();
+        };
+        ThreadManager.getInstance().execute(buildBlobRunnable);
     }
 
 
@@ -722,7 +722,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                     getString(R.string.transaction_metadata), udcbuModel.getInput(), new TransferUtils.TransferListener() {
                         @Override
                         public void confirm() {
-                            new Thread(new Runnable() {
+                            Runnable buildBlob = new Runnable() {
                                 @Override
                                 public void run() {
                                     try {
@@ -749,7 +749,8 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                                     }
 
                                 }
-                            }).start();
+                            };
+                            ThreadManager.getInstance().execute(buildBlob);
                         }
                     });
 

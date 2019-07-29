@@ -201,7 +201,7 @@ public class BPSendTokenFragment extends BaseFragment {
                             handler.sendMessage(message);
                         }
                     };
-                    new Thread(runnable).start();
+                    ThreadManager.getInstance().execute(runnable);
                 }
 
             }
@@ -560,7 +560,7 @@ public class BPSendTokenFragment extends BaseFragment {
                         handler.sendMessage(message);
                     }
                 };
-                new Thread(runnable).start();
+                ThreadManager.getInstance().execute(runnable);
             }
 
         }

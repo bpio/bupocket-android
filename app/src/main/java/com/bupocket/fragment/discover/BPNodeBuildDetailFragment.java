@@ -36,6 +36,7 @@ import com.bupocket.model.TransConfirmModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.wallet.Wallet;
@@ -427,7 +428,7 @@ public class BPNodeBuildDetailFragment extends BaseTransferFragment {
 
     private void confirmExit() {
 
-        new Thread(new Runnable() {
+        Runnable confirmExitRunnable = new Runnable() {
             @Override
             public void run() {
                 try {
@@ -505,8 +506,8 @@ public class BPNodeBuildDetailFragment extends BaseTransferFragment {
                     e.printStackTrace();
                 }
             }
-        }).start();
-
+        };
+        ThreadManager.getInstance().execute(confirmExitRunnable);
     }
 
     private void ShowSupport() {
@@ -622,7 +623,7 @@ public class BPNodeBuildDetailFragment extends BaseTransferFragment {
         final String num = numSupport.getText().toString();
         final String contractAddress = detailModel.getContractAddress();
 
-        new Thread(new Runnable() {
+        Runnable confirmSupportRunnable = new Runnable() {
             @Override
             public void run() {
                 try {
@@ -700,8 +701,9 @@ public class BPNodeBuildDetailFragment extends BaseTransferFragment {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        };
 
+        ThreadManager.getInstance().execute(confirmSupportRunnable);
 
     }
 

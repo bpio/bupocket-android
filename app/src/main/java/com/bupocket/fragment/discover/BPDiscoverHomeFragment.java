@@ -21,6 +21,7 @@ import com.bupocket.model.SlideModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
+import com.bupocket.utils.ThreadManager;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
@@ -148,7 +149,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
     private void autoPlayView() {
         //自动播放图片
-        new Thread(new Runnable() {
+        Runnable bannerRunnable = new Runnable() {
             @Override
             public void run() {
                 while (!isStop) {
@@ -175,7 +176,8 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
                 }
             }
-        }).start();
+        };
+        ThreadManager.getInstance().execute(bannerRunnable);
     }
 
     private void initUI() {

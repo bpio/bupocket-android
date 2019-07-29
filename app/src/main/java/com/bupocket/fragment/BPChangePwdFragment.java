@@ -30,6 +30,7 @@ import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
@@ -95,7 +96,7 @@ public class BPChangePwdFragment extends BaseFragment {
                             .setTipWord(getResources().getString(R.string.handling))
                             .create();
                     tipDialog.show();
-                    new Thread(new Runnable() {
+                    Runnable changePwdRunnable = new Runnable() {
 
                         @Override
                         public void run() {
@@ -110,7 +111,7 @@ public class BPChangePwdFragment extends BaseFragment {
                                 skey = sharedPreferencesHelper.getSharedPreference(BPChangePwdFragment.this.walletAddress + ConstantsType.WALLET_SKEY_PRIV, "").toString();
                                 if (!TextUtils.isEmpty(skey)) {
                                     walletBPData = Wallet.getInstance().updateAccountWalletPassword(oldPwd, newPwd, skey, getContext());
-                                    sharedPreferencesHelper.put(walletAddress +ConstantsType.WALLET_SKEY_PRIV, walletBPData.getSkey());
+                                    sharedPreferencesHelper.put(walletAddress + ConstantsType.WALLET_SKEY_PRIV, walletBPData.getSkey());
                                     sharedPreferencesHelper.put(walletAddress + "-BPdata", JSON.toJSONString(walletBPData.getAccounts()));
                                 } else {
                                     if (walletAddress.equals(identityWalletAddress)) {
@@ -127,7 +128,6 @@ public class BPChangePwdFragment extends BaseFragment {
                                         sharedPreferencesHelper.put(walletAddress + "-BPdata", JSON.toJSONString(walletBPData.getAccounts()));
                                     }
                                 }
-
 
 
                                 tipDialog.dismiss();
@@ -151,9 +151,8 @@ public class BPChangePwdFragment extends BaseFragment {
                                 tipDialog.dismiss();
                             }
                         }
-                    }).start();
-
-
+                    };
+                    ThreadManager.getInstance().execute(changePwdRunnable);
                 }
             }
         });

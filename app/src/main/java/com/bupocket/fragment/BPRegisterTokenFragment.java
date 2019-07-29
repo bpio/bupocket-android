@@ -37,6 +37,7 @@ import com.bupocket.utils.DecimalCalculate;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.SocketUtil;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
@@ -253,25 +254,25 @@ public class BPRegisterTokenFragment extends BaseFragment {
                     }
                 });
 
-                new Thread(new Runnable() {
+                Runnable getAccountRunnable = new Runnable() {
                     @Override
                     public void run() {
                         String accountBPData = getAccountBPData();
                         try {
-                            hash = Wallet.getInstance().registerATP10Token(password,accountBPData,issueAddress,tokenName,tokenCode,tokenDecimals,tokenDesc,Constants.REGISTER_TOKEN_FEE,issueAmount);
-                        } catch (WalletException e){
+                            hash = Wallet.getInstance().registerATP10Token(password, accountBPData, issueAddress, tokenName, tokenCode, tokenDecimals, tokenDesc, Constants.REGISTER_TOKEN_FEE, issueAmount);
+                        } catch (WalletException e) {
                             e.printStackTrace();
                             Looper.prepare();
-                            if(ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())){
+                            if (ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
                                 Toast.makeText(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT).show();
-                            }else if(ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())){
+                            } else if (ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
                                 Toast.makeText(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT).show();
-                            }else {
+                            } else {
                                 Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
                             }
                             txSendingTipDialog.dismiss();
                             Looper.loop();
-                        } catch (NumberFormatException e){
+                        } catch (NumberFormatException e) {
                             e.printStackTrace();
                             Looper.prepare();
                             Toast.makeText(getActivity(), R.string.error_issue_amount_message_txt, Toast.LENGTH_SHORT).show();
@@ -284,13 +285,14 @@ public class BPRegisterTokenFragment extends BaseFragment {
                             txSendingTipDialog.dismiss();
                             Looper.loop();
                         } finally {
-                            mSocket.emit("token.register.processing","");
+                            mSocket.emit("token.register.processing", "");
                             timer.schedule(timerTask,
                                     1 * 1000,//延迟1秒执行
                                     1000);
                         }
                     }
-                }).start();
+                };
+                ThreadManager.getInstance().execute(getAccountRunnable);
             }
         });
 
