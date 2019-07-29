@@ -30,6 +30,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:gravity="center"
+                android:layout_marginLeft="@dimen/common_left_right_padding"
+                android:layout_marginRight="@dimen/common_left_right_padding"
                 android:text="@string/tv_backup_hint" />
 
             <ImageView
