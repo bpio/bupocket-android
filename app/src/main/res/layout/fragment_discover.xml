@@ -66,6 +66,7 @@
 
                             <TextView
                                 style="@style/BPTextViewDiscover"
+                                android:layout_marginLeft="11dp"
                                 android:text="@string/run_for_node_txt" />
 
                             <ImageView
