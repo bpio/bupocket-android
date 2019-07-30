@@ -26,6 +26,7 @@ import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -97,7 +98,10 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
     private void requestData() {
         DiscoverService discoverService = RetrofitFactory.getInstance().getRetrofit().create(DiscoverService.class);
-        discoverService.slideShow().enqueue(new Callback<ApiResult<SlideModel>>() {
+
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("target",1+"");
+        discoverService.slideShowNew(map).enqueue(new Callback<ApiResult<SlideModel>>() {
             @Override
             public void onResponse(Call<ApiResult<SlideModel>> call, Response<ApiResult<SlideModel>> response) {
                 ApiResult<SlideModel> body = response.body();

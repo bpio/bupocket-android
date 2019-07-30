@@ -15,4 +15,7 @@ public interface DiscoverService {
     @GET("nodeServer/slideshow/v1")
     Call<ApiResult<SlideModel>> slideShow();
 
+    @POST("newsApi/slideshow/list")
+    Call<ApiResult<SlideModel>> slideShowNew(@Body Map<String, Object> map);
+
 }
