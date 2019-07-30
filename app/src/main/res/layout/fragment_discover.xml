@@ -120,6 +120,7 @@
 
                         <TextView
                             style="@style/BPTextViewDiscover"
+                            android:layout_marginLeft="15dp"
                             android:text="@string/information_txt" />
 
                         <ImageView

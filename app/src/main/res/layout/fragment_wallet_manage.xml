@@ -9,9 +9,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:background="@color/app_bg_color_gray"
         android:layout_marginTop="?attr/qmui_topbar_height"
+        android:background="@color/app_bg_color_gray"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <LinearLayout
@@ -51,9 +51,8 @@
 
                 <ImageView
                     android:id="@+id/exportKeystoreIconIv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="15dp"
                     android:layout_height="wrap_content"
-
                     android:src="@mipmap/icon_export_keystore" />
 
                 <TextView
@@ -80,7 +79,7 @@
 
                 <ImageView
                     android:id="@+id/exportPrivateIconIv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="15dp"
                     android:layout_height="wrap_content"
 
                     android:src="@mipmap/icon_export_private" />
@@ -107,12 +106,11 @@
 
             <LinearLayout
                 android:id="@+id/backupMnemonicRl"
-                style="@style/BPLLDiscover"
-                android:visibility="gone">
+                style="@style/BPLLDiscover">
 
                 <ImageView
                     android:id="@+id/backupMnemonicIconIv"
-                    android:layout_width="wrap_content"
+                    android:layout_width="15dp"
                     android:layout_height="wrap_content"
 
                     android:src="@mipmap/icon_backup_mnemonic" />
@@ -142,7 +140,7 @@
 
             <ImageView
                 android:id="@+id/changePwIconIv"
-                android:layout_width="wrap_content"
+                android:layout_width="15dp"
                 android:layout_height="wrap_content"
 
                 android:src="@mipmap/icon_profile_item_pwd" />
