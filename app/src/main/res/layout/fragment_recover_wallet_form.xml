@@ -48,16 +48,9 @@
 
                     <EditText
                         android:id="@+id/recoverMneonicCodeEt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@drawable/shape_corner_gray_stroke"
-                        android:gravity="start|top"
+                        style="@style/BPEditTextMultiInput"
                         android:hint="@string/recover_edit_mneonic_code_hint"
-                        android:inputType="textMultiLine"
-                        android:minLines="6"
-                        android:padding="10dp"
-                        android:textColorHint="@color/app_txt_color_gray_8"
-                        android:textSize="13sp" />
+                        android:inputType="textMultiLine" />
                 </LinearLayout>
 
                 <TextView

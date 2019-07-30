@@ -29,15 +29,10 @@
 
             <EditText
                 android:id="@+id/feedbackContentET"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_corner_gray1"
-                android:gravity="left|top"
+                style="@style/BPEditTextMultiInput"
                 android:hint="@string/help_hint"
                 android:inputType=""
-                android:minLines="6"
-                android:padding="10dp"
-                android:textSize="13sp" />
+                android:minLines="6" />
 
             <TextView
                 style="@style/BPTextViewCreateWallet"

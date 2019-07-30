@@ -22,6 +22,12 @@
         <item name="app_primary_color">?attr/qmui_config_color_blue</item>
         <item name="app_content_bg_color">@color/qmui_config_color_white</item>
 
+
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/app_color_main</item>
+        <item name="colorPrimaryDark">@color/app_color_main</item>
+        <item name="colorAccent">@color/app_color_main</item>
+
     </style>
 
     <style name="QDtextAppearanceListItem">
@@ -318,8 +324,6 @@
     </style>
 
 
-
-
     <style name="BPLLDiscover">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
@@ -360,12 +364,14 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="BPTextViewCommonSize14Color66">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/app_txt_color_gray_2</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
+
     <style name="BPTextViewCommonSize14Color99">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/app_txt_color_gray</item>
@@ -418,7 +424,7 @@
     </style>
 
 
-    <style name="BPCreateWalletGreenBtn"  parent="BPComGreenBgWhiteTextBtn">
+    <style name="BPCreateWalletGreenBtn" parent="BPComGreenBgWhiteTextBtn">
         <item name="android:layout_marginBottom">@dimen/bp_btn_bottom_margin</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_gravity">bottom</item>
@@ -491,6 +497,17 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@drawable/bg_dash_line</item>
         <item name="android:layerType">software</item>
+    </style>
+
+
+    <style name="BPEditTextMultiInput">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/shape_corner_gray1</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:gravity">left|top</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:minLines">6</item>
     </style>
 
 
