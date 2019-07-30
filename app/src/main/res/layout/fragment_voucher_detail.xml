@@ -79,11 +79,9 @@
 
                     <View
                         android:id="@+id/topLineV"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
+                        style="@style/BPDashBgLine"
                         android:layout_below="@+id/acceptanceIconRiv"
-                        android:layout_marginTop="13dp"
-                        android:background="@drawable/bg_dash_line" />
+                        android:layout_marginTop="13dp" />
 
                     <com.makeramen.roundedimageview.RoundedImageView
                         android:id="@+id/voucherGoodsIv"
@@ -194,11 +192,9 @@
 
                     <View
                         android:id="@+id/numLineTv"
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
+                        style="@style/BPDashBgLine"
                         android:layout_below="@+id/voucherDescribeTv"
-                        android:layout_marginTop="15dp"
-                        android:background="@drawable/bg_dash_line" />
+                        android:layout_marginTop="15dp" />
 
                     <TextView
                         android:id="@+id/voucherNumTv"

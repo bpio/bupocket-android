@@ -486,4 +486,12 @@
     </style>
 
 
+    <style name="BPDashBgLine">
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/bg_dash_line</item>
+        <item name="android:layerType">software</item>
+    </style>
+
+
 </resources>

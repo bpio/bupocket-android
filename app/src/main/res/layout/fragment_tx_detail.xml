@@ -237,10 +237,8 @@
 
 
                             <View
-                                android:layout_width="match_parent"
-                                android:layout_height="2dp"
-                                android:layout_marginBottom="23dp"
-                                android:background="@drawable/bg_dash_line" />
+                                style="@style/BPDashBgLine"
+                                android:layout_marginBottom="23dp" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
