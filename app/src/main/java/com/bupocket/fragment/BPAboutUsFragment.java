@@ -75,6 +75,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
     }
 
     private void initTopBar() {
+        topBar.setBackgroundDividerEnabled(false);
         topBar.setTitle(R.string.profile_about_us);
         topBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override

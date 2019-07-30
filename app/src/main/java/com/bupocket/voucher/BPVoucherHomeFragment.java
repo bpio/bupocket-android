@@ -76,8 +76,6 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     private VoucherDetailModel selectedVoucherDetail;
 
 
-
-
     @Override
     protected int getLayoutView() {
 
@@ -101,7 +99,6 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     }
 
 
-
     private void initListView() {
         adapter = new VoucherAdapter(mContext);
         adapter.setSelectedVoucherDetailModel(selectedVoucherDetail);
@@ -112,6 +109,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
 
     private void initTopbar() {
 
+        mTopBar.setBackgroundDividerEnabled(false);
         if (isSendVoucher) {
             mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
                 @Override

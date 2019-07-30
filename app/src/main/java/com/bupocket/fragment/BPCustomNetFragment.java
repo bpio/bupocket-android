@@ -112,6 +112,7 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
 
             }
         });
+        topbar.setBackgroundDividerEnabled(false);
         topbar.setTitle(R.string.custom_environment);
         saveBtn = topbar.addRightTextButton(getString(R.string.save), R.id.skipBackupBtn);
         saveBtn.setOnClickListener(new View.OnClickListener() {
