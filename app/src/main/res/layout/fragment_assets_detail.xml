@@ -115,6 +115,11 @@
                 layout="@layout/view_load_failed"
                 android:visibility="gone" />
 
+            <include
+                android:id="@+id/recentlyTxRecordEmptyLL"
+                layout="@layout/view_empty_record"
+                android:visibility="gone" />
+
             <com.qmuiteam.qmui.widget.QMUIEmptyView
                 android:id="@+id/emptyView"
                 android:layout_width="match_parent"
@@ -147,10 +152,7 @@
                             android:scrollbars="none" />
 
 
-                        <include
-                            android:id="@+id/recentlyTxRecordEmptyLL"
-                            layout="@layout/view_empty_record"
-                            android:visibility="gone" />
+
 
                     </LinearLayout>
 
