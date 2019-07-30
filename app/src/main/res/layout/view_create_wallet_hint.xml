@@ -14,8 +14,27 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lineSpacingMultiplier="@dimen/bp_line_spacing_multiplier"
-        android:text="@string/create_wallet_prompt_txt3"
+        android:text="@string/create_wallet_prompt_text1"
         android:textColor="@color/app_txt_color_red"
         android:textSize="13sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:lineSpacingMultiplier="@dimen/bp_line_spacing_multiplier"
+        android:text="@string/create_wallet_prompt_text2"
+        android:textColor="@color/app_txt_color_red"
+        android:textSize="13sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:lineSpacingMultiplier="@dimen/bp_line_spacing_multiplier"
+        android:text="@string/create_wallet_prompt_text3"
+        android:textColor="@color/app_txt_color_red"
+        android:textSize="13sp" />
+
+
 
 </LinearLayout>
