@@ -97,7 +97,7 @@ public class BPProfileHomeFragment extends BaseFragment {
 
 
     private void initTopBar() {
-
+        topbar.setBackgroundDividerEnabled(false);
         topbar.setTitle(R.string.tabbar_profile_txt);
         Button button = topbar.addLeftTextButton("", R.id.topbar_left_arrow);
         button.setTextColor(getResources().getColor(R.color.app_color_green));

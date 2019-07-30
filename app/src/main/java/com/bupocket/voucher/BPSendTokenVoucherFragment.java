@@ -369,7 +369,7 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
     }
 
     private void initTopBar() {
-        mTopBar.setBackgroundDividerEnabled(true);
+        mTopBar.setBackgroundDividerEnabled(false);
         mTopBar.setTitle(R.string.send_voucher_title1);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override

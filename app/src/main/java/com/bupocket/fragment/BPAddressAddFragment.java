@@ -254,7 +254,7 @@ public class BPAddressAddFragment extends BaseFragment {
 
 
     private void initTopBar() {
-        mTopBar.setBackgroundDividerEnabled(true);
+        mTopBar.setBackgroundDividerEnabled(false);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

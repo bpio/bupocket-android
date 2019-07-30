@@ -425,6 +425,5 @@
         android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        app:qmui_topbar_title_text_size="21sp" />
+        android:fitsSystemWindows="true" />
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

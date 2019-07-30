@@ -31,7 +31,7 @@ public class BPWalletUnderstandKeystoreFragment extends BaseFragment {
     }
 
     private void initTopBar() {
-        mTopBar.setBackgroundDividerEnabled(true);
+        mTopBar.setBackgroundDividerEnabled(false);
         mTopBar.setTitle(R.string.keystore_txt);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override

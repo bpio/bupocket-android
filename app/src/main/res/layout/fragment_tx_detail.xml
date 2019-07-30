@@ -107,7 +107,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="23dp"
                                 android:orientation="horizontal"
-                                android:paddingTop="@dimen/common_top_bottom_padding">
+                                android:paddingTop="23dp">
 
                                 <TextView
                                     android:layout_width="match_parent"
@@ -221,7 +221,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/common_top_bottom_padding"
+                            android:layout_marginTop="23dp"
                             android:background="@drawable/shape_corner"
                             android:orientation="vertical"
                             android:paddingLeft="@dimen/common_left_right_padding"
@@ -230,10 +230,17 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
+                                android:layout_marginTop="23dp"
+                                android:layout_marginBottom="23dp"
                                 android:text="TX Info"
                                 android:textStyle="bold" />
+
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="2dp"
+                                android:background="@drawable/bg_dash_line"
+                                />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
