@@ -2,6 +2,7 @@ package com.bupocket.fragment;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -436,6 +437,8 @@ public class BPWalletManageFragment extends BaseFragment {
                 popBackStack();
             }
         });
-        mTopBar.setTitle(getString(R.string.manage_txt));
+        TextView title = mTopBar.setTitle(getString(R.string.manage_txt));
+//        title.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+
     }
 }

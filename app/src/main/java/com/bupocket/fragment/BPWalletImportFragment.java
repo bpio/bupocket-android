@@ -444,6 +444,10 @@ public class BPWalletImportFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
+                if (!mnemonicFlag(mMnemonicWordEt)) {
+                    return;
+                }
+
                 if (!walletNameFlag(mWalletNameEt)) {
                     return;
                 }
@@ -451,9 +455,7 @@ public class BPWalletImportFragment extends BaseFragment {
                     return;
                 }
 
-                if (!mnemonicFlag(mMnemonicWordEt)) {
-                    return;
-                }
+
 
                 final String password = mPasswordEt.getText().toString().trim();
                 final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
@@ -573,6 +575,10 @@ public class BPWalletImportFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
+                if (!privateKeyFlag()) {
+                    return;
+                }
+
                 if (!walletNameFlag(mWalletNameEt)) {
                     return;
                 }
@@ -580,9 +586,7 @@ public class BPWalletImportFragment extends BaseFragment {
                     return;
                 }
 
-                if (!privateKeyFlag()) {
-                    return;
-                }
+
                 final String password = mPasswordEt.getText().toString().trim();
                 final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)

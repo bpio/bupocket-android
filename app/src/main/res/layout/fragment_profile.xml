@@ -22,10 +22,6 @@
             android:fitsSystemWindows="true"
             android:orientation="vertical">
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.5dp"
-                android:background="@color/gray_line" />
 
             <LinearLayout
                 android:id="@+id/llProfileIdentity"
@@ -263,10 +259,10 @@
 
                     <TextView
                         style="@style/BPTextViewDiscover"
-                        android:layout_marginLeft="9dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
+                        android:layout_marginLeft="9dp"
                         android:layout_toEndOf="@id/manageWalletIcon"
                         android:layout_toRightOf="@id/manageWalletIcon"
                         android:text="@string/profile_node_setting"
@@ -429,5 +425,6 @@
         android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true" />
+        android:fitsSystemWindows="true"
+        app:qmui_topbar_title_text_size="21sp" />
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
