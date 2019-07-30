@@ -1,22 +1,19 @@
 package com.bupocket.fragment;
 
 import android.annotation.SuppressLint;
-import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.LayoutInflater;
+
 import android.view.View;
-import android.view.ViewGroup;
+
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bumptech.glide.util.LogTime;
 import com.bupocket.BPApplication;
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeSettingAdapter;
@@ -26,28 +23,20 @@ import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.CustomNodeTypeEnum;
 import com.bupocket.fragment.home.HomeFragment;
-import com.bupocket.http.api.RetrofitFactory;
-import com.bupocket.http.api.WalletCheckService;
-import com.bupocket.http.api.dto.resp.ApiResult;
-import com.bupocket.model.NodeAddressModel;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
-import com.google.gson.Gson;
+
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import java.io.IOException;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
 
 public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher {
 
@@ -80,9 +69,6 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
 
     @Override
     protected void initData() {
-
-//        walletServiceEt.setText("http://api-bp.bumotest.io/");
-//        nodeServiceEt.setText("http://wallet-node.bumotest.io");
 
         initServiceData();
 

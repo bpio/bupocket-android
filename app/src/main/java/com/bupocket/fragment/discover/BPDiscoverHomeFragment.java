@@ -84,17 +84,15 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
     private void initData() {
         banListData = new ArrayList<>();
-        disBannerAdapter = new DisBannerAdapter(this,banListData, vpDisBanner);
+        disBannerAdapter = new DisBannerAdapter(this, banListData, vpDisBanner);
         vpDisBanner.setAdapter(disBannerAdapter);
         String youpin = (String) spHelper.getSharedPreference("youpin", "");
         if (TextUtils.isEmpty(youpin)) {
-            spHelper.put("youpin","0");
+            spHelper.put("youpin", "0");
         }
         requestData();
 
     }
-
-
 
 
     private void requestData() {
@@ -108,13 +106,13 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                 }
 
                 SlideModel imageList = body.getData();
-                if (imageList != null&&imageList.getSlideshow()!=null&&imageList.getSlideshow().size()>0) {
+                if (imageList != null && imageList.getSlideshow() != null && imageList.getSlideshow().size() > 0) {
                     slideshow = imageList.getSlideshow();
                     disBannerAdapter.setData(slideshow);
                     disBannerAdapter.notifyDataSetChanged();
                     vpDisBanner.setCurrentItem(vpDisBanner.getCurrentItem() + 100);
                     vpDisBanner.setVisibility(View.VISIBLE);
-                }else {
+                } else {
                     vpDisBanner.setVisibility(View.GONE);
                 }
 
@@ -133,12 +131,9 @@ public class BPDiscoverHomeFragment extends BaseFragment {
         super.onResume();
         isDownStop = false;
 
-        if (slideshow==null||slideshow.size()==0) {
+        if (slideshow == null || slideshow.size() == 0) {
             requestData();
         }
-
-        LogUtils.e("node wallet service url:"+ Constants.BUMO_NODE_URL_BASE);
-
     }
 
     @Override
@@ -148,7 +143,6 @@ public class BPDiscoverHomeFragment extends BaseFragment {
     }
 
     private void autoPlayView() {
-        //自动播放图片
         Runnable bannerRunnable = new Runnable() {
             @Override
             public void run() {
@@ -218,14 +212,14 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
                 String youpin = (String) spHelper.getSharedPreference("youpin", "0");
                 if (youpin.equals("1")) {
-                    CommonUtil.goWeChat(mContext,WeChat_APPID,XB_YOUPING_USERNAME);
-                }else{
+                    CommonUtil.goWeChat(mContext, WeChat_APPID, XB_YOUPING_USERNAME);
+                } else {
 
-                    DialogUtils.showMessageDialog(mContext, getString(R.string.open_youpin),getString(R.string.open_youpin_title), new DialogUtils.KnowListener() {
+                    DialogUtils.showMessageDialog(mContext, getString(R.string.open_youpin), getString(R.string.open_youpin_title), new DialogUtils.KnowListener() {
                         @Override
                         public void Know() {
-                            spHelper.put("youpin","1");
-                            CommonUtil.goWeChat(mContext,WeChat_APPID,XB_YOUPING_USERNAME);
+                            spHelper.put("youpin", "1");
+                            CommonUtil.goWeChat(mContext, WeChat_APPID, XB_YOUPING_USERNAME);
                         }
                     });
                 }
