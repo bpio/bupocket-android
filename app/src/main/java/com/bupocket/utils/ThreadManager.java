@@ -36,7 +36,7 @@ public class ThreadManager {
 
     private ThreadManager() {
 
-        corePoolSize = Runtime.getRuntime().availableProcessors() + 1;
+        corePoolSize = Runtime.getRuntime().availableProcessors()*2 + 1;
 //        corePoolSize = 4;
         maximumPoolSize = corePoolSize;
         executor = new ThreadPoolExecutor(

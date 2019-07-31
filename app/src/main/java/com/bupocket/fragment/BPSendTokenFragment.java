@@ -32,8 +32,10 @@ import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DecimalCalculate;
 import com.bupocket.utils.DialogUtils;
+import com.bupocket.utils.NetworkUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ThreadManager;
+import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
@@ -435,6 +437,12 @@ public class BPSendTokenFragment extends BaseFragment {
                 }
 
 
+                if (!NetworkUtils.isNetWorkAvailable(getActivity())) {
+                    ToastUtil.showToast(getActivity(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT);
+                    return;
+                }
+
+
                 Runnable sendRunnable = new Runnable() {
                     @Override
                     public void run() {
@@ -448,14 +456,14 @@ public class BPSendTokenFragment extends BaseFragment {
                 };
                 ThreadManager.getInstance().execute(sendRunnable);
 
-                TransferUtils.confirmSendTokenDialog(mContext,getWalletAddress(),address,sendAmount,txFee,note,tokenCode, new TransferUtils.TransferListener() {
+                TransferUtils.confirmSendTokenDialog(mContext, getWalletAddress(), address, sendAmount, txFee, note, tokenCode, new TransferUtils.TransferListener() {
                     @Override
                     public void confirm() {
 
-                        DialogUtils.showPassWordInputDialog(getActivity(),getString(R.string.password_comfirm_dialog_send_txt),new DialogUtils.ConfirmListener() {
+                        DialogUtils.showPassWordInputDialog(getActivity(), getString(R.string.password_comfirm_dialog_send_txt), new DialogUtils.ConfirmListener() {
                             @Override
                             public void confirm(String password) {
-                                sendToken(password,sendAmount,note,txFee);
+                                sendToken(password, sendAmount, note, txFee);
                             }
                         });
                     }
@@ -464,7 +472,7 @@ public class BPSendTokenFragment extends BaseFragment {
         });
     }
 
-    private void sendToken(final String password,final String sendAmount,final String note, final String txFee) {
+    private void sendToken(final String password, final String sendAmount, final String note, final String txFee) {
         txSendingTipDialog = new QMUITipDialog.Builder(getContext())
                 .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                 .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
@@ -583,7 +591,7 @@ public class BPSendTokenFragment extends BaseFragment {
                 Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
             } else {
                 String destAddress = result.getContents();
-                destAddress=destAddress.replace(Constants.VOUCHER_QRCODE,"");
+                destAddress = destAddress.replace(Constants.VOUCHER_QRCODE, "");
                 destAccountAddressEt.setText(destAddress);
             }
         } else {
@@ -640,7 +648,7 @@ public class BPSendTokenFragment extends BaseFragment {
                             ApiResult<TxDetailRespDto> resp = response.body();
 
                             if (resp == null || resp.getErrCode() == null ||
-                                    resp.getData()==null||resp.getData().getTxDeatilRespBo()==null||
+                                    resp.getData() == null || resp.getData().getTxDeatilRespBo() == null ||
                                     !TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())
 
                             ) {

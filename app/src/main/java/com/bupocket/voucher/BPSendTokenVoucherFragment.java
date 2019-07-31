@@ -35,6 +35,7 @@ import com.bupocket.model.CallVoucherBalanceModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
+import com.bupocket.utils.NetworkUtils;
 import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
@@ -516,6 +517,11 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
                     @Override
                     public void confirm() {
 
+                        if (!NetworkUtils.isNetWorkAvailable(getActivity())) {
+                            ToastUtil.showToast(getActivity(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT);
+                            return;
+                        }
+
                         Runnable buildBlobRunnable = new Runnable() {
                             @Override
                             public void run() {
@@ -596,8 +602,6 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
 
                                                                 }
                                                             });
-
-
                                         }
                                     });
 //
