@@ -98,7 +98,7 @@
 
 
                         <TextView
-                            style="@style/BPTextViewCommonSize15Color66"
+                            style="@style/BPSendTokenTextView"
                             android:layout_height="match_parent"
                             android:text="@string/tx_to" />
 
@@ -159,7 +159,7 @@
 
                         <TextView
                             android:id="@+id/sendTokenAmountLabel"
-                            style="@style/BPTextViewCommonSize15Color66"
+                            style="@style/BPSendTokenTextView"
                             android:text="@string/send_voucher_num" />
 
                         <TextView
@@ -211,7 +211,7 @@
 
 
                     <TextView
-                        style="@style/BPTextViewCommonSize15Color66"
+                        style="@style/BPSendTokenTextView"
                         android:layout_marginTop="@dimen/bp_text_top2"
                         android:text="@string/send_note_title" />
 
@@ -238,7 +238,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            style="@style/BPTextViewCommonSize15Color66"
+                            style="@style/BPSendTokenTextView"
                             android:text="@string/send_fee_title" />
 
                         <TextView

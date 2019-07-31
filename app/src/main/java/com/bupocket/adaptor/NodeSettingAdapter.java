@@ -158,7 +158,7 @@ public class NodeSettingAdapter extends AbsViewHolderAdapter<NodeSettingModel> {
                     });
 
                 } else {
-                    DialogUtils.showConfirmDialog(context, context.getString(R.string.confirm_delete_node), "", new DialogUtils.KnowListener() {
+                    DialogUtils.showConfirmNoTitleDialog(context, context.getString(R.string.confirm_delete_node), new DialogUtils.KnowListener() {
                         @Override
                         public void Know() {
                             getData().remove(position);

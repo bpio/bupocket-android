@@ -43,8 +43,7 @@
                             android:layout_height="wrap_content" />
 
                         <TextView
-                            style="@style/BPTextViewCommonSize15Color66"
-
+                            style="@style/BPSendTokenTextView"
                             android:text="@string/tx_to_bu" />
 
                         <TextView
@@ -114,7 +113,8 @@
 
                         <TextView
                             android:id="@+id/sendTokenAmountLabel"
-                            style="@style/BPTextViewCommonSize15Color66"
+                            style="@style/BPSendTokenTextView"
+
                             android:text="@string/send_amount_title" />
 
                         <TextView
@@ -179,7 +179,7 @@
 
 
                     <TextView
-                        style="@style/BPTextViewCommonSize15Color66"
+                        style="@style/BPSendTokenTextView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/bp_text_top2"
@@ -211,7 +211,7 @@
 
 
                         <TextView
-                            style="@style/BPTextViewCommonSize15Color66"
+                            style="@style/BPSendTokenTextView"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/send_fee_title" />

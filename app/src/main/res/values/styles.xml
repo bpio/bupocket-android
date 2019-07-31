@@ -365,6 +365,10 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
 
+    <style name="BPSendTokenTextView" parent="BPTextViewCommonSize15Color66">
+        <item name="android:layout_marginLeft">3dp</item>
+    </style>
+
     <style name="BPTextViewCommonSize14Color66">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/app_txt_color_gray_2</item>
