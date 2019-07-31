@@ -452,7 +452,7 @@ public class BPSendTokenFragment extends BaseFragment {
                     @Override
                     public void confirm() {
 
-                        DialogUtils.showPassWordInputDialog(getActivity(), new DialogUtils.ConfirmListener() {
+                        DialogUtils.showPassWordInputDialog(getActivity(),getString(R.string.password_comfirm_dialog_send_txt),new DialogUtils.ConfirmListener() {
                             @Override
                             public void confirm(String password) {
                                 sendToken(password,sendAmount,note,txFee);
