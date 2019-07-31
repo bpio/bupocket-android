@@ -444,6 +444,18 @@
         <item name="android:layout_marginRight">@dimen/common_left_right_padding</item>
     </style>
 
+    <style name="BPComGreenBorderWhiteBgGreenTextBtn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/common_text_size_18</item>
+        <item name="android:textColor">@color/app_color_green</item>
+        <item name="android:background">@drawable/shape_stroke_green</item>
+        <item name="android:layout_marginLeft">@dimen/common_left_right_padding</item>
+        <item name="android:layout_marginRight">@dimen/common_left_right_padding</item>
+    </style>
+
+
     <style name="BPComWhiteBgRegTextBtn">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">45dp</item>

@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/qmui_config_color_white"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/qmui_config_color_white">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/qmui_topbar_height"
-        android:orientation="vertical"
+        android:background="@color/app_color_white"
         android:gravity="center_horizontal"
-        android:background="@color/app_color_white">
-        
+        android:orientation="vertical">
+
         <ImageView
-            android:layout_marginTop="40dp"
             android:layout_width="128dp"
             android:layout_height="100dp"
+            android:layout_marginTop="40dp"
             android:background="@mipmap/issue_token_bg" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/please_confirm_register_token_info_txt"
-            android:textSize="14sp"
-            android:layout_marginTop="15dp"
             android:layout_marginLeft="12dp"
+            android:layout_marginTop="15dp"
             android:layout_marginRight="12dp"
-            android:textColor="@color/app_txt_color_gray"/>
-        
+            android:text="@string/please_confirm_register_token_info_txt"
+            android:textColor="@color/app_txt_color_gray"
+            android:textSize="14sp" />
+
         <LinearLayout
             android:id="@+id/registerLl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/common_left_right_padding"
             android:layout_marginTop="30dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:padding="10dp"
-            android:background="@drawable/bg_layout_border">
+            android:layout_marginRight="@dimen/common_left_right_padding"
+            android:background="@drawable/bg_layout_border"
+            android:orientation="vertical"
+            android:padding="10dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -48,22 +48,23 @@
                     android:id="@+id/tokenNameTitleTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/token_info_name_txt"
                     android:layout_alignParentLeft="true"
-                    android:textSize="15sp"
-                    android:textColor="@color/app_txt_color_gray"/>
+                    android:text="@string/token_info_name_txt"
+                    android:textColor="@color/app_txt_color_gray"
+                    android:textSize="15sp" />
 
                 <TextView
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/tokenNameTitleTv"
-                    android:gravity="right"
                     android:id="@+id/tokenNameTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/tokenNameTitleTv"
+                    android:gravity="right"
                     android:textColor="@color/app_txt_color_gray_2"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -73,22 +74,23 @@
                     android:id="@+id/tokenCodeTitleTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/token_info_code_txt"
                     android:layout_alignParentLeft="true"
-                    android:textSize="15sp"
-                    android:textColor="@color/app_txt_color_gray"/>
+                    android:text="@string/token_info_code_txt"
+                    android:textColor="@color/app_txt_color_gray"
+                    android:textSize="15sp" />
 
                 <TextView
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/tokenCodeTitleTv"
-                    android:gravity="right"
                     android:id="@+id/tokenCodeTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/tokenCodeTitleTv"
+                    android:gravity="right"
                     android:textColor="@color/app_txt_color_gray_2"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:id="@+id/tokenAmountRl"
                 android:layout_width="match_parent"
@@ -99,22 +101,23 @@
                     android:id="@+id/tokenAmountTitleTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/token_info_amount_txt"
                     android:layout_alignParentLeft="true"
-                    android:textSize="15sp"
-                    android:textColor="@color/app_txt_color_gray" />
+                    android:text="@string/token_info_amount_txt"
+                    android:textColor="@color/app_txt_color_gray"
+                    android:textSize="15sp" />
 
                 <TextView
-                    android:layout_marginLeft="10dp"
-                    android:layout_toRightOf="@+id/tokenAmountTitleTv"
-                    android:gravity="right"
                     android:id="@+id/tokenAmountTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@+id/tokenAmountTitleTv"
+                    android:gravity="right"
                     android:textColor="@color/app_txt_color_gray_2"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -123,10 +126,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/register_token_fee_txt"
                     android:layout_alignParentLeft="true"
-                    android:textSize="15sp"
-                    android:textColor="@color/app_txt_color_gray"/>
+                    android:text="@string/register_token_fee_txt"
+                    android:textColor="@color/app_txt_color_gray"
+                    android:textSize="15sp" />
 
                 <TextView
                     android:id="@+id/registerFeeTv"
@@ -134,25 +137,25 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:textColor="@color/app_txt_color_gray_2"
-                    android:textSize="15sp"/>
+                    android:textSize="15sp" />
             </RelativeLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/common_left_right_padding"
+            android:layout_marginRight="@dimen/common_left_right_padding"
             android:gravity="bottom"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp">
+            android:orientation="vertical">
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                 android:id="@+id/registerConfirmBtn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bp_btn_hight"
                 android:layout_centerInParent="true"
-                android:gravity="center"
                 android:enabled="false"
+                android:gravity="center"
                 android:text="@string/confirm_register_token_btn_txt"
                 android:textColor="@color/app_color_font"
                 android:textSize="@dimen/bp_btn_text_size"
@@ -161,12 +164,12 @@
                 app:qmui_radius="5dp" />
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
                 android:id="@+id/registerCancelBtn"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/bp_btn_hight"
                 android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 android:gravity="center"
                 android:text="@string/qr_cancel_btn_des"
                 android:textColor="@color/app_color_main"
@@ -176,10 +179,11 @@
                 app:qmui_radius="5dp" />
         </LinearLayout>
     </LinearLayout>
+
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
         android:id="@+id/topbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"/>
+        android:fitsSystemWindows="true" />
 
 </android.support.design.widget.CoordinatorLayout>

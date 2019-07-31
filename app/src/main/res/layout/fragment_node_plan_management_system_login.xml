@@ -62,8 +62,9 @@
         android:textSize="13sp" />
 
 
-    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+    <Button
         android:id="@+id/loginConfirmBtn"
+        style="@style/BPComGreenBgWhiteTextBtn"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bp_btn_hight"
         android:layout_marginLeft="40dp"
@@ -73,17 +74,11 @@
         android:focusable="true"
         android:gravity="center"
         android:padding="10dp"
-        android:text="@string/confirm_login_txt"
-        android:textColor="@color/qmui_config_color_white"
-        android:textSize="18sp"
-        app:qmui_backgroundColor="@color/app_color_main"
-        app:qmui_borderColor="@color/app_color_main"
-        app:qmui_radius="4dp" />
+        android:text="@string/confirm_login_txt" />
 
-    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+    <Button
         android:id="@+id/loginCancelBtn"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/bp_btn_hight"
+        style="@style/BPComGreenBorderWhiteBgGreenTextBtn"
         android:layout_marginLeft="40dp"
         android:layout_marginTop="30dp"
         android:layout_marginRight="40dp"
@@ -91,11 +86,6 @@
         android:focusable="true"
         android:gravity="center"
         android:padding="10dp"
-        android:text="@string/common_dialog_cancel"
-        android:textColor="@color/app_txt_color_gray_6"
-        android:textSize="18sp"
-        app:qmui_backgroundColor="@color/app_bg_color_gray_6"
-        app:qmui_borderColor="@color/app_bg_color_gray_6"
-        app:qmui_radius="4dp" />
+        android:text="@string/common_dialog_cancel" />
 
 </LinearLayout>

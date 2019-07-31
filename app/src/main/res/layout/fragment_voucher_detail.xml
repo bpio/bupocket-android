@@ -11,9 +11,9 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none"
         android:layout_marginTop="75dp"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="10dp"
+        android:scrollbars="none">
 
         <com.qmuiteam.qmui.widget.QMUIEmptyView
             android:id="@+id/detailEmptyView"
@@ -36,7 +36,8 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
-                android:paddingRight="15dp">
+                android:paddingRight="15dp"
+                android:visibility="gone">
 
 
                 <RelativeLayout
@@ -153,15 +154,15 @@
                         android:id="@+id/voucherCodeTv"
                         style="@style/BPTextViewVoucherHint14"
                         android:layout_below="@id/validityDateTv"
-                        android:visibility="gone"
-                        android:text="@string/voucher_code" />
+                        android:text="@string/voucher_code"
+                        android:visibility="gone" />
 
                     <TextView
                         android:id="@+id/voucherCodeInfoTv"
                         style="@style/BPTextViewVoucher14"
-                        android:visibility="gone"
                         android:layout_alignTop="@id/voucherCodeTv"
                         android:layout_toRightOf="@id/voucherCodeTv"
+                        android:visibility="gone"
                         tools:text="Q1000000001" />
 
                     <TextView
@@ -235,12 +236,12 @@
                     <LinearLayout
                         android:id="@+id/dPartyLL"
                         style="@style/BPLLDiscover"
-                        android:paddingLeft="0dp"
-                        android:paddingRight="0dp"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_marginTop="10dp"
-                        android:background="@null">
+                        android:background="@null"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="0dp">
 
 
                         <TextView
@@ -288,11 +289,11 @@
                     <LinearLayout
                         android:id="@+id/assetIssuerLL"
                         style="@style/BPLLDiscover"
-                        android:paddingLeft="0dp"
-                        android:paddingRight="0dp"
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
-                        android:background="@null">
+                        android:background="@null"
+                        android:paddingLeft="0dp"
+                        android:paddingRight="0dp">
 
 
                         <TextView

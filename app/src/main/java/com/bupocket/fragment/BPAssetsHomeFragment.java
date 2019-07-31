@@ -57,6 +57,7 @@ import com.bupocket.model.UDCBUModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LocaleUtil;
+import com.bupocket.utils.NetworkUtils;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ThreadManager;
@@ -151,7 +152,6 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     List<GetTokensRespDto.TokenListBean> mTokenList;
 
 
-
     @Override
     protected int getLayoutView() {
         return R.layout.fragment_assets_home;
@@ -185,7 +185,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                 }, 400);
             }
         });
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
     @Override
@@ -246,7 +246,6 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     }
 
 
-
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             mTotalAssetsValueTv.setText("≈" + msg.getData().get("assetValuation").toString());
@@ -287,6 +286,11 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     }
 
     private void loadAssetList() {
+        if (!NetworkUtils.isNetWorkAvailable(getContext())) {
+            ToastUtil.showToast(getActivity(), getString(R.string.network_error_msg), Toast.LENGTH_LONG);
+            return;
+        }
+
 
         tokenBalance = sharedPreferencesHelper.getSharedPreference(currentWalletAddress + "tokenBalance", "0").toString();
         Runnable getBalanceRunnable = new Runnable() {
@@ -412,8 +416,6 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         }
         initTokensView();
         refreshLayout.autoRefresh();
-
-
 
 
         initPermission();
@@ -661,6 +663,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                     }
                 }
             } else {
+
                 Bundle argz = new Bundle();
                 argz.putString("destAddress", resultContent);
                 argz.putString("tokenCode", "BU");
