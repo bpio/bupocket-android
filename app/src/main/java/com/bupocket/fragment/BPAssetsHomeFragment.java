@@ -286,13 +286,15 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     }
 
     private void loadAssetList() {
-        if (!NetworkUtils.isNetWorkAvailable(getContext())) {
-            ToastUtil.showToast(getActivity(), getString(R.string.network_error_msg), Toast.LENGTH_LONG);
-            return;
-        }
 
 
         tokenBalance = sharedPreferencesHelper.getSharedPreference(currentWalletAddress + "tokenBalance", "0").toString();
+
+        if (!NetworkUtils.isNetWorkAvailable(getContext())) {
+//            ToastUtil.showToast(getActivity(), getString(R.string.network_error_msg), Toast.LENGTH_LONG);
+            return;
+        }
+
         Runnable getBalanceRunnable = new Runnable() {
             @Override
             public void run() {

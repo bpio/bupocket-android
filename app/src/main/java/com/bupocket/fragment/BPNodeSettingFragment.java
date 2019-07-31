@@ -16,6 +16,7 @@ import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.BumoNodeEnum;
+import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.model.NodeSettingModel;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
@@ -123,7 +124,7 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
                 }
 
                 DialogUtils.showEditMessageDialog(mContext,
-                        getString(R.string.add_node_address_title) ,
+                        getString(R.string.add_node_address_title),
                         getString(R.string.add_node_address_title),
                         new DialogUtils.ConfirmListener() {
                             @Override
@@ -200,10 +201,9 @@ public class BPNodeSettingFragment extends AbsBaseFragment {
                 nodeSettingAdapter.saveNodeData(nodeSettingAdapter.getData());
                 BPApplication.switchNetConfig(null);
                 isSaveBtn = true;
-                popBackStack();
+                startFragment(new HomeFragment());
             }
         });
-
 
 
     }
