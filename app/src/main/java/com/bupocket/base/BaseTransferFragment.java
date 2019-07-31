@@ -112,8 +112,6 @@ public abstract class BaseTransferFragment extends AbsBaseFragment {
 
                             }
                         };
-//                        new Thread(privateKeyRunable).start();
-
 
                         ThreadManager.getInstance().execute(privateKeyRunnable);
 
@@ -155,7 +153,6 @@ public abstract class BaseTransferFragment extends AbsBaseFragment {
 
             }
         };
-//        new Thread(sumbitRunable).start();
 
         ThreadManager.getInstance().execute(submitRunnable);
     }

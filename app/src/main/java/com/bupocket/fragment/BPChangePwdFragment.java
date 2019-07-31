@@ -31,6 +31,7 @@ import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ThreadManager;
+import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
@@ -143,10 +144,8 @@ public class BPChangePwdFragment extends BaseFragment {
 
                             } catch (WalletException e) {
                                 e.printStackTrace();
-                                Looper.prepare();
-                                Toast.makeText(getActivity(), R.string.old_pwd_error, Toast.LENGTH_SHORT).show();
+                                ToastUtil.showToast(getActivity(),R.string.old_pwd_error, Toast.LENGTH_SHORT);
                                 tipDialog.dismiss();
-                                Looper.loop();
                             } finally {
                                 tipDialog.dismiss();
                             }
