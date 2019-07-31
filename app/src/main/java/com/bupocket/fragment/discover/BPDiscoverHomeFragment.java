@@ -56,7 +56,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
     private ArrayList<SlideModel.ImageInfo> banListData;
     private DisBannerAdapter disBannerAdapter;
-    private long PAGER_TIME = 5 * 1000;
+    private long PAGER_TIME =4 * 1000;
     private boolean isStop;
     private boolean isDownStop;
     private Unbinder bind;
@@ -150,8 +150,9 @@ public class BPDiscoverHomeFragment extends BaseFragment {
         Runnable bannerRunnable = new Runnable() {
             @Override
             public void run() {
-                while (!isStop) {
-                    isDownStop = !HomeFragment.isDisFragment;
+                while (true) {
+                    LogUtils.e("bannerRunnable");
+//                    isDownStop = !HomeFragment.isDisFragment;
                     if (!isDownStop) {
 
                         try {
@@ -161,6 +162,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                                     if (vpDisBanner != null) {
                                         vpDisBanner.setCurrentItem(vpDisBanner.getCurrentItem() + 1);
                                         disBannerAdapter.notifyDataSetChanged();
+                                        LogUtils.e("disBannerAdapter");
                                     }
                                 }
 
@@ -175,6 +177,8 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                 }
             }
         };
+
+//        new Thread(bannerRunnable).start();
         ThreadManager.getInstance().execute(bannerRunnable);
     }
 

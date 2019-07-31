@@ -31,9 +31,6 @@ import butterknife.ButterKnife;
 
 public class HomeFragment extends BaseFragment {
 
-
-    public static boolean isDisFragment;
-
     @BindView(R.id.pager)
     ViewPager mViewPager;
     @BindView(R.id.tabs)
@@ -109,12 +106,6 @@ public class HomeFragment extends BaseFragment {
         mTabSegment.addOnTabSelectedListener(new QMUITabSegment.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int index) {
-                if (index == 1) {
-                    isDisFragment = true;
-                } else {
-                    isDisFragment = false;
-                }
-
 
                 if (index == 1) {
                     if (spHelper.getSharedPreference(ConstantsType.FIRST_OPEN_VOUCHER, "yes").equals("yes")) {
