@@ -15,6 +15,7 @@ import com.bupocket.fragment.BPSendStatusFragment;
 import com.bupocket.fragment.BPSendTokenFragment;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.manager.BPUpgradeManager;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
 import com.qmuiteam.qmui.arch.QMUIFragment;
@@ -22,6 +23,8 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
+
+import static com.bupocket.BPApplication.getContext;
 
 public class BPMainActivity extends BaseFragmentActivity {
     private static final String KEY_FRAGMENT = "key_fragment";
@@ -113,16 +116,16 @@ public class BPMainActivity extends BaseFragmentActivity {
             ((HomeFragment)getCurrentFragment()).onBackPressed();
         }else if(getCurrentFragment().getTag().equals("BPCreateWalletFragment")){
             ((BPCreateWalletFragment)getCurrentFragment()).onBackPressed();
-        }
-
-//        else if (getCurrentFragment().getTag().equals(BPSendStatusFragment.class.getSimpleName())){
-//            ((BPSendStatusFragment)getCurrentFragment()).onBackPressed();
-//        }
-
-        else{
-
+        } else{
             ((BaseFragment) getCurrentFragment()).popBackStack();
-//            super.onBackPressed();
         }
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SharedPreferencesHelper spHelper = new SharedPreferencesHelper(getContext(), "buPocket");
+        spHelper.put("youpin", "0");
     }
 }

@@ -130,4 +130,5 @@ public class BPApplication extends Application {
         CrashHandler crashHandler = CrashHandler.getInstance();
         crashHandler.init(this);
     }
+
 }
