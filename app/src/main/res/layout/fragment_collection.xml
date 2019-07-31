@@ -154,7 +154,7 @@
         android:layout_gravity="bottom|center_horizontal"
         android:layout_marginBottom="35dp"
         android:text="@string/splash_txt0"
-        android:textColor="@color/app_color_white"
+        android:textColor="#6A71F0"
         android:textSize="12sp" />
 
 
