@@ -44,7 +44,7 @@
 
                         <TextView
                             style="@style/BPSendTokenTextView"
-                            android:text="@string/tx_to_bu" />
+                            android:text="@string/tx_to" />
 
                         <TextView
                             android:layout_width="0dp"
@@ -114,7 +114,6 @@
                         <TextView
                             android:id="@+id/sendTokenAmountLabel"
                             style="@style/BPSendTokenTextView"
-
                             android:text="@string/send_amount_title" />
 
                         <TextView
@@ -190,7 +189,7 @@
                         android:id="@+id/sendFormNoteEt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/send_hint_txt2"
+                        android:hint="@string/send_voucher_info_hint"
                         android:inputType=""
                         android:theme="@style/BPEditText" />
 

@@ -104,7 +104,6 @@ public class LocaleUtil {
             LocaleUtil.updateLocale(appContext, myLocale);
         }
 
-//        Toast.makeText(appContext, appContext.getString(R.string.set_success), Toast.LENGTH_SHORT).show();
         restartApp(appContext);
     }
 

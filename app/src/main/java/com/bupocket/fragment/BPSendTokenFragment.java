@@ -223,7 +223,7 @@ public class BPSendTokenFragment extends BaseFragment {
         tokenDecimals = getArguments().getString("tokenDecimals");
         String tokenBalance = getArguments().getString("tokenBalance");
         mTokenCodeTv.setText(tokenCode);
-        mSendTokenAmountLabel.setText(getResources().getText(R.string.send_amount_title) + "(" + tokenCode + ")");
+//        mSendTokenAmountLabel.setText(getResources().getText(R.string.send_amount_title) + "(" + tokenCode + ")");
         getAccountAvailableTokenBalance(tokenType, tokenBalance);
 
         mOpenAddressBookBtn.setOnClickListener(new View.OnClickListener() {

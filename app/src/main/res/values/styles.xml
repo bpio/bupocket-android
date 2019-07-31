@@ -171,6 +171,7 @@
         <item name="android:paddingTop">15dp</item>
         <item name="android:textSize">13sp</item>
         <item name="android:paddingBottom">20dp</item>
+        <item name="android:maxLines">2</item>
         <item name="android:paddingRight">20dp</item>
         <item name="android:inputType">textMultiLine</item>
     </style>
@@ -524,6 +525,7 @@
         <item name="android:gravity">left|top</item>
         <item name="android:padding">10dp</item>
         <item name="android:minLines">6</item>
+        <item name="android:maxLines">8</item>
     </style>
 
 
