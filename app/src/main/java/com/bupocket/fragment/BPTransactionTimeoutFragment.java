@@ -86,11 +86,6 @@ public class BPTransactionTimeoutFragment extends BaseFragment {
                     if (AdvertisingEnum.APP.getCode().equals(ad.getType())) {
                         CommonUtil.goWeChat(getContext(), WeChat_APPID, XB_YOUPING_USERNAME);
                     } else if (AdvertisingEnum.H5.getCode().equals(ad.getType())) {
-//                        BPBannerFragment fragment = new BPBannerFragment();
-//                        Bundle args = new Bundle();
-//                        args.putString("url",ad.getUrl());
-//                        fragment.setArguments(args);
-//                        startFragment(fragment);
 
                         Intent intent = new Intent();
                         intent.setClass(mContext, BPWebActivity.class);

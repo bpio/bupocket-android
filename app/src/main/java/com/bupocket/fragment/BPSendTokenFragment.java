@@ -639,7 +639,7 @@ public class BPSendTokenFragment extends BaseFragment {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    if (timerTimes > Constants.TX_REQUEST_TIMEOUT_TIMES) {
+                    if (timerTimes >Constants.TX_REQUEST_TIMEOUT_TIMES) {
                         timerTask.cancel();
                         txSendingTipDialog.dismiss();
 
