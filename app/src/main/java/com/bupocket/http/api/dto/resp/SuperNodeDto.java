@@ -16,7 +16,24 @@ public class SuperNodeDto {
 //             "myVoteCount": "20"
 
     private ArrayList<SuperNodeModel>  nodeList;
+    private String accountTag;
+    private String accountTagEn;
 
+    public String getAccountTag() {
+        return accountTag;
+    }
+
+    public void setAccountTag(String accountTag) {
+        this.accountTag = accountTag;
+    }
+
+    public String getAccountTagEn() {
+        return accountTagEn;
+    }
+
+    public void setAccountTagEn(String accountTagEn) {
+        this.accountTagEn = accountTagEn;
+    }
 
     public ArrayList<SuperNodeModel> getNodeList() {
         return nodeList;

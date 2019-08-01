@@ -34,11 +34,11 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:button="@null"
+                android:layout_marginTop="1dp"
                 android:cropToPadding="true"
-                android:drawableStart="@drawable/selector_my_node"
                 android:drawableLeft="@drawable/selector_my_node"
                 android:paddingLeft="@dimen/common_left_right_padding"
-                android:paddingRight="6dp" />
+                android:paddingRight="10dp" />
 
             <TextView
                 android:id="@+id/myNodeTv"

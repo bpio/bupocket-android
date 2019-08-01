@@ -35,6 +35,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.SuperNodeDto;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.DialogUtils;
+import com.bupocket.utils.LocaleUtil;
 import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
@@ -100,6 +101,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
     private ArrayList<SuperNodeModel> nodeList;
     private String metaData;
     private Call<ApiResult<SuperNodeDto>> serviceSuperNode;
+    private SuperNodeDto allData;
 
 
     @Override
@@ -319,8 +321,18 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
         input.put("params", params);
 
         String transactionParams = input.toJSONString();
+        String accountTag = "";
+        if (allData != null) {
+            accountTag = allData.getAccountTag();
 
-        TransferUtils.confirmTxSheet(mContext, getWalletAddress(), destAddress,
+            switch (LocaleUtil.getLanguageStatus()) {
+                case 1:
+                    accountTag = allData.getAccountTagEn();
+                    break;
+            }
+        }
+
+        TransferUtils.confirmTxSheet(mContext, getWalletAddress(), destAddress, accountTag,
                 transactionAmount, Constants.NODE_COMMON_FEE,
                 transactionDetail, transactionParams, new TransferUtils.TransferListener() {
                     @Override
@@ -427,13 +439,14 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
                 if (body == null) {
                     return;
                 }
+                allData = body.getData();
                 nodeList = body.getData().getNodeList();
                 myVoteInfoList = myVoteInfoList(nodeList);
 
                 notifyData();
                 loadFailedLL.setVisibility(View.GONE);
                 refreshLayout.finishRefresh();
-                qmuiEmptyView.show("","");
+                qmuiEmptyView.show("", "");
             }
 
             @Override
@@ -447,7 +460,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
                 refreshLayout.finishRefresh();
                 setEmpty(false);
                 superNodeAdapter.setNewData(new ArrayList<SuperNodeModel>());
-                qmuiEmptyView.show("","");
+                qmuiEmptyView.show("", "");
             }
         });
 
