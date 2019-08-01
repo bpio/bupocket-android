@@ -834,7 +834,7 @@
     <string name="whether_upgrade_versions">是否更新到版本 %s?</string>
     <string name="new_version_size">新版本大小： </string>
 
-
+    <string name="send_token_error">可用资产数量不足</string>
 
 
 </resources>

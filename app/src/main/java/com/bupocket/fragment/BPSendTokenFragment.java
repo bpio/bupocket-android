@@ -349,6 +349,21 @@ public class BPSendTokenFragment extends BaseFragment {
                     }, 1500);
                     return;
                 }
+
+//                if (CommonUtil.isToken(tokenCode)|| CommonUtil.isNull(sendAmountInput) || CommonUtil.checkSendAmountDecimals(sendAmountInput, tokenDecimals)) {
+//                    tipDialog = new QMUITipDialog.Builder(getContext())
+//                            .setTipWord(getResources().getString(R.string.send_token_error))
+//                            .create();
+//                    tipDialog.show();
+//                    sendAmountET.postDelayed(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            tipDialog.dismiss();
+//                        }
+//                    }, 1500);
+//                    return;
+//                }
+
                 if (Double.parseDouble(sendAmountInput) < com.bupocket.common.Constants.MIN_SEND_AMOUNT) {
                     tipDialog = new QMUITipDialog.Builder(getContext())
                             .setTipWord(CommonUtil.addSuffix(CommonUtil.addSuffix(getResources().getString(R.string.amount_too_small), CommonUtil.calculateMinSendAmount(tokenDecimals)), tokenCode))

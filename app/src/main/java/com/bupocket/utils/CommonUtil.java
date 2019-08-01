@@ -106,6 +106,11 @@ public class CommonUtil {
     }
 
 
+    public static boolean isToken(String tokenCode) {
+        return !tokenCode.equals("BU");
+    }
+
+
     public static String urlEncoder(String url) {
         if (isEmpty(url)) {
             return null;
