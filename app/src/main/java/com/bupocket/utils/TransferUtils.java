@@ -41,14 +41,17 @@ public class TransferUtils {
         TextView mTransactionParamsTv = qmuiBottomSheet.findViewById(R.id.transactionParamsTv);
         TextView mDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.destAddressTvHint);
         TextView mDetailsDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTvHint);
+        TextView mDetailsAmountTv1 = qmuiBottomSheet.findViewById(R.id.detailsAmountTv1);
+
 
 
         mTransactionDetailTv.setText(metaData);
         mDestAddressTv.setText(destAddressTag);
         mSourceAddressTv.setText(fromAddress);
-        mDetailsDestAddressTv.setText(destAddress);
+        mDetailsDestAddressTv.setText(destAddressTag);
         mTransactionParamsTv.setText(input);
         mDetailsAmountTv.setText(amount);
+        mDetailsAmountTv1.setText(amount);
         mDetailsTxFeeTv.setText(tx_fee);
         mTxFeeTv.setText(tx_fee);
 

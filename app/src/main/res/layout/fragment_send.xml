@@ -86,7 +86,7 @@
                             android:id="@+id/destAccountAddressEt"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="@string/send_input_receiver_address_hint"
+                            android:hint="@string/send_address"
                             android:inputType=""
                             android:theme="@style/BPEditText" />
 
