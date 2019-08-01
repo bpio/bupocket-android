@@ -13,8 +13,8 @@
             android:id="@+id/issueStatusTotalLl"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="@color/app_color_white">
+            android:background="@color/app_bg_color_gray"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,6 +40,7 @@
                         android:layout_marginTop="17.5dp"
                         android:layout_marginBottom="20dp"
                         android:text="@string/issue_token_success_txt"
+                        android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="16sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -48,16 +49,16 @@
                 android:id="@+id/issueStatusLl"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="12dp"
                 android:background="@drawable/shape_corner"
                 android:orientation="vertical"
-                android:padding="10dp">
+                android:paddingLeft="@dimen/common_left_right_padding"
+                android:paddingRight="@dimen/common_left_right_padding">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
 
                     <TextView
                         android:id="@+id/tokenNameTitleTv"
@@ -69,12 +70,12 @@
                         android:textSize="15sp" />
 
                     <TextView
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/tokenNameTitleTv"
                         android:id="@+id/tokenNameTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/tokenNameTitleTv"
                         android:gravity="right"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
@@ -95,12 +96,12 @@
                         android:textSize="15sp" />
 
                     <TextView
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/tokenCodeTitleTv"
                         android:id="@+id/tokenCodeTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/tokenCodeTitleTv"
                         android:gravity="right"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
@@ -122,12 +123,12 @@
                         android:textSize="15sp" />
 
                     <TextView
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/assetAmountTitleTv"
                         android:id="@+id/assetAmountTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/assetAmountTitleTv"
                         android:gravity="right"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
@@ -148,12 +149,12 @@
                         android:textSize="15sp" />
 
                     <TextView
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/issueAmountTitleTv"
                         android:id="@+id/issueAmountTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/issueAmountTitleTv"
                         android:gravity="right"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
@@ -175,12 +176,12 @@
                         android:textSize="15sp" />
 
                     <TextView
-                        android:layout_marginLeft="10dp"
-                        android:layout_toRightOf="@+id/accumulativeIssueAmountTitleTv"
                         android:id="@+id/accumulativeIssueAmountTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/accumulativeIssueAmountTitleTv"
                         android:gravity="right"
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
@@ -234,6 +235,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="23dp"
+                    android:layout_marginBottom="20dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -259,16 +261,16 @@
                 android:id="@+id/issueTxInfolL"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="12dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginRight="12dp"
                 android:background="@drawable/shape_corner"
                 android:orientation="vertical"
-                android:padding="10dp">
+                android:paddingLeft="@dimen/common_left_right_padding"
+                android:paddingRight="@dimen/common_left_right_padding">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -310,10 +312,12 @@
                         android:textColor="@color/app_txt_color_gray_2"
                         android:textSize="15sp" />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
+                    android:layout_marginBottom="20dp"
                     android:orientation="vertical">
 
                     <TextView

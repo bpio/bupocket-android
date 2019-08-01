@@ -56,11 +56,13 @@ public class BPDiscoverHomeFragment extends BaseFragment {
 
     private ArrayList<SlideModel.ImageInfo> banListData;
     private DisBannerAdapter disBannerAdapter;
-    private long PAGER_TIME =4 * 1000;
+    private long PAGER_TIME = 4 * 1000;
     private boolean isStop;
     private boolean isDownStop;
     private Unbinder bind;
     private ArrayList<SlideModel.ImageInfo> slideshow;
+
+    private static Runnable bannerRunnable;
 
 
     @Override
@@ -100,7 +102,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
         DiscoverService discoverService = RetrofitFactory.getInstance().getRetrofit().create(DiscoverService.class);
 
         HashMap<String, Object> map = new HashMap<>();
-        map.put("target",1+"");
+        map.put("target", 1 + "");
         discoverService.slideShowNew(map).enqueue(new Callback<ApiResult<SlideModel>>() {
             @Override
             public void onResponse(Call<ApiResult<SlideModel>> call, Response<ApiResult<SlideModel>> response) {
@@ -147,7 +149,11 @@ public class BPDiscoverHomeFragment extends BaseFragment {
     }
 
     private void autoPlayView() {
-        Runnable bannerRunnable = new Runnable() {
+
+        if (bannerRunnable!=null) {
+            return;
+        }
+        bannerRunnable = new Runnable() {
             @Override
             public void run() {
                 while (true) {
@@ -170,9 +176,9 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                         } catch (Exception e) {
 
                         }
-                        SystemClock.sleep(PAGER_TIME);
-                    }
 
+                    }
+                    SystemClock.sleep(PAGER_TIME);
 
                 }
             }
