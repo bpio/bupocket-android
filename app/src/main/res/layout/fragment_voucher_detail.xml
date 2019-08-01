@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_color_blue1"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/view_topbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/qmui_topbar_height"
+        android:fitsSystemWindows="true" />
 
 
     <com.qmuiteam.qmui.widget.QMUIEmptyView
         android:id="@+id/detailEmptyView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="75dp"
+        android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:paddingLeft="@dimen/common_left_right_padding"
         android:paddingRight="@dimen/common_left_right_padding">
@@ -31,7 +38,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingLeft="15dp"
-            android:paddingRight="15dp">
+            android:paddingRight="15dp"
+            android:visibility="gone">
 
 
             <RelativeLayout
@@ -235,9 +243,8 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
-                    android:layout_weight="1"
                     android:layout_marginBottom="25dp"
-                    />
+                    android:layout_weight="1" />
 
             </LinearLayout>
 
@@ -361,10 +368,4 @@
     </com.qmuiteam.qmui.widget.QMUIEmptyView>
 
 
-    <include
-        layout="@layout/view_topbar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-
-</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
+</LinearLayout>

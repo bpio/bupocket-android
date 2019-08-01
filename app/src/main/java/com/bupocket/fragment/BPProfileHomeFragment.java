@@ -107,6 +107,7 @@ public class BPProfileHomeFragment extends BaseFragment {
             button.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
             button.setText(getString(R.string.custom_environment));
         } else if (SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()) {
+            button.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
             button.setText(getString(R.string.current_test_message_txt));
         }
     }
