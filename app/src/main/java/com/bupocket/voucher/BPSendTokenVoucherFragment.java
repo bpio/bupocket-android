@@ -501,6 +501,8 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
 
     private void showConfirmDialog() {
 
+
+
         final String transferDetail = getString(R.string.send_voucher);
 
         final String toAddress = destAccountAddressEt.getText().toString().trim();
@@ -516,7 +518,6 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
                 transferDetail, input, remark, new TransferUtils.TransferListener() {
                     @Override
                     public void confirm() {
-
                         if (!NetworkUtils.isNetWorkAvailable(getActivity())) {
                             ToastUtil.showToast(getActivity(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT);
                             return;
@@ -525,7 +526,6 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
                         Runnable buildBlobRunnable = new Runnable() {
                             @Override
                             public void run() {
-
 
                                 try {
                                     final TransactionBuildBlobResponse transactionBuildBlobResponse = Wallet.getInstance().buildBlob("0",
@@ -553,6 +553,9 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
                                                             Constants.MIN_FEE + "", new WalletUtils.ReqListener() {
                                                                 @Override
                                                                 public void success(final int status, final long nonce) {
+
+
+
 
                                                                     Runnable buildBlobRunnable = new Runnable() {
                                                                         @Override
