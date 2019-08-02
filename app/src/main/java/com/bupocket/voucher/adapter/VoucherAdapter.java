@@ -79,7 +79,7 @@ public class VoucherAdapter extends AbsViewHolderAdapter<VoucherDetailModel> {
         if (!TextUtils.isEmpty(faceValue)) {
             holder.setText(R.id.goodsPriceTv, context.getString(R.string.goods_price) + faceValue);
         }else{
-            holder.setText(R.id.goodsPriceTv, context.getString(R.string.goods_price) );
+            holder.setText(R.id.goodsPriceTv, "" );
         }
 
         String startTime = itemData.getStartTime();

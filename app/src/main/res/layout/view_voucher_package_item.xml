@@ -70,7 +70,7 @@
             android:layout_marginBottom="5dp"
             android:layout_toRightOf="@+id/voucherGoodsIv"
             android:gravity="bottom"
-            android:text="@string/goods_price"
+            tools:text="@string/goods_price"
             android:textColor="@color/app_txt_color_gray_2"
             android:textSize="12sp" />
 
