@@ -54,6 +54,11 @@
             android:launchMode="singleInstance" />
 
         <activity
+            android:name=".activity.RedPacketActivity"
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
             android:name=".activity.LauncherActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>

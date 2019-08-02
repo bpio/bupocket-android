@@ -28,6 +28,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bupocket.BPMainActivity;
 import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
+import com.bupocket.activity.RedPacketActivity;
 import com.bupocket.adaptor.TokensAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.base.BaseTransferFragment;
@@ -85,6 +86,7 @@ import io.bumo.model.response.TransactionBuildBlobResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.POST;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -131,6 +133,8 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     TextView mCurrentWalletNameTv;
     @BindView(R.id.ivAssetsInfo)
     ImageView ivAssetsInfo;
+    @BindView(R.id.redPacketTv)
+    TextView redPacketTv;
 
     protected SharedPreferencesHelper sharedPreferencesHelper;
     private TokensAdapter mTokensAdapter;
@@ -234,6 +238,16 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
             @Override
             public void onClick(View v) {
                 DialogUtils.showMessageNoTitleDialog(mContext, getString(R.string.wallet_bu_info));
+            }
+        });
+
+        redPacketTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                BPRedPacketHomeFragment bpRedPacketHomeFragment = new BPRedPacketHomeFragment();
+//                startFragment(bpRedPacketHomeFragment);
+
+                startActivity(new Intent(getContext(), RedPacketActivity.class));
             }
         });
     }
