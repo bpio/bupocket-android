@@ -42,7 +42,7 @@
     <string name="backup_mneonic_code_txt3">Please record each word in order and keep it safe</string>
     <string name="backup_mneonic_code_btn_txt">I Have Copied</string>
     <string name="view_title_confirm_mneonic_code">Confirm Mnemonics</string>
-    <string name="confirm_mneonic_code_txt">Please click the mnemonic words in order to confirm that you backed up correctly.</string>
+    <string name="confirm_mneonic_code_txt">Please click the mnemonics sequentially to confirm that you are backing up correctly.</string>
     <string name="confirm_mneonic_code_btn_txt">Completed</string>
     <string name="wallet_password_confirm_title">Confirm password</string>
     <string name="wallet_password_confirm_txt1">Please fill in the identity password to confirm the backup</string>
@@ -486,10 +486,7 @@
     <string name="transaction_process_title">Processing business data</string>
     <string name="transaction_process_title_info"> Business data is analyzed and processed according to the transaction metadata of the chain, and the processing is expected to be completed within 20 seconds.</string>
     <string name="transaction_refresh_title">Data is refreshed</string>
-    <string name="transaction_success_hint">
-        Tips:\n
-         After transactions such as voting to  node or withdrawing votes from  node are successful on the chain, the statistics of related data are delayed, and it is expected to be completed within 30 seconds.</string>
-
+    <string name="transaction_success_hint">Tips: \n after transactions such as voting to a node or withdrawing votes from a node are successful on the chain, the statistics of related data are delayed, and it is expected to be completed within 30 seconds.</string>
 
     <string name="build_exit_confirm_title">Withdraw sponsor \"%1$s\" project</string>
     <string name="build_support_confirm_title">Sponsor \"%1$s\" project</string>
