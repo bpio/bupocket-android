@@ -68,7 +68,7 @@
 
             <TextView
                 style="@style/BPTextViewCreateWallet"
-                android:text="@string/wallet_create_form_input_rePassword_empty" />
+                android:text="@string/hint_wallet_create_form_input_rePassword" />
 
 
             <RelativeLayout

@@ -2,6 +2,7 @@ package com.bupocket;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -39,7 +40,6 @@ public class BPMainActivity extends BaseFragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         sharedPreferencesHelper = new SharedPreferencesHelper(BPMainActivity.this, "buPocket");
         try{
             if(savedInstanceState == null){

@@ -660,7 +660,7 @@
     <string name="wallet_create_form_error2">The password must be composed of numbers and uppercase or lowercase letters and the combination must be between 6-30 characters</string>
     <string name="change_the_password_txt">Modify Security Password</string>
     <string name="import_mnemonic_wallet_name">Please set the wallet name</string>
-    <string name="hint_wallet_create_form_input_password">Please enter your security password again</string>
+    <string name="hint_wallet_create_form_input_password">Please set the security password</string>
     <string name="hint_wallet_create_form_input_rePassword">Please confirm the security password again</string>
     <string name="wallet_create__input_rePassword">Please enter your security password again</string>
 
