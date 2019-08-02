@@ -2,10 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#33141212"
     android:orientation="vertical">
 
 
     <LinearLayout
+        android:id="@+id/redPacketLL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="30dp"
@@ -13,6 +15,16 @@
         android:layout_marginRight="30dp"
         android:layout_marginBottom="100dp"
         android:background="@color/app_txt_color_red">
+
+
+        <Button
+            android:id="@+id/saveShareBtn"
+            style="@style/BPComGreenBgWhiteTextBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="保存并分享" />
 
 
     </LinearLayout>
