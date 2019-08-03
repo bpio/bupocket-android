@@ -11,13 +11,28 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.bupocket.R;
+import com.bupocket.adaptor.RedPacketAdapter;
 import com.bupocket.base.BaseTransferFragment;
+import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
+import com.bupocket.http.api.RedPacketService;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.model.RedPacketDetailModel;
+import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.WalletCurrentUtils;
+import com.bupocket.utils.WalletUtils;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BPRedPacketHomeFragment extends BaseTransferFragment {
 
@@ -55,6 +70,7 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
 
 
     Unbinder unbinder;
+    private RedPacketAdapter adapter;
 
     @Override
     protected int getLayoutView() {
@@ -64,7 +80,13 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
     @Override
     protected void initView() {
         initTopBar();
+        initListView();
         cancelRedDetailBtn.setVisibility(View.GONE);
+    }
+
+    private void initListView() {
+        adapter = new RedPacketAdapter(mContext);
+        redPacketLv.setAdapter(adapter);
     }
 
     private void initTopBar() {
@@ -81,6 +103,29 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
     @Override
     protected void initData() {
 
+        reqAllData();
+
+    }
+
+    private void reqAllData() {
+
+        RedPacketService redPacketService = RetrofitFactory.getInstance().getRetrofit().create(RedPacketService.class);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(ConstantsType.BONUSCODE, "");
+        map.put(ConstantsType.ADDRESS, WalletCurrentUtils.getWalletAddress(spHelper));
+        redPacketService.queryRedPacketDetail(map).enqueue(new Callback<ApiResult<RedPacketDetailModel>>() {
+            @Override
+            public void onResponse(Call<ApiResult<RedPacketDetailModel>> call, Response<ApiResult<RedPacketDetailModel>> response) {
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<RedPacketDetailModel>> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
