@@ -2,6 +2,7 @@ package com.bupocket.adaptor;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.TimeUtils;
 import android.view.TextureView;
@@ -20,9 +21,22 @@ import com.bupocket.utils.TimeUtil;
 public class RedPacketAdapter extends AbsViewHolderAdapter<LuckRedModel> {
 
 
+    @Override
+    public int getCount() {
+        return super.getCount()*100;
+    }
+
+    @Nullable
+    @Override
+    public LuckRedModel getItem(int position) {
+        position=position%getData().size();
+        return super.getItem(position);
+    }
+
     public RedPacketAdapter(@NonNull Context context) {
         super(context);
     }
+
 
     @Override
     protected int getLayoutId() {
