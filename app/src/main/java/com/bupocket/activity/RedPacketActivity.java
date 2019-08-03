@@ -136,7 +136,10 @@ public class RedPacketActivity extends Activity {
                 openRedPacket();
                 break;
             case R.id.closeRedBtn:
+                finish();
+                break;
             case R.id.cancelRedDetailBtn:
+                setResult(1);
                 finish();
                 break;
             case R.id.saveShareBtn:
@@ -160,7 +163,7 @@ public class RedPacketActivity extends Activity {
                     if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
                         BonusInfoBean data = body.getData();
                         initOpenRedPacketView(data);
-                        BPAssetsHomeFragment.openStatus=true;
+                        BPAssetsHomeFragment.openStatus = true;
                     }
                 }
             }
@@ -206,4 +209,6 @@ public class RedPacketActivity extends Activity {
         ShareUtils.shareImage(redPacketDetailLL, this);
 //        ShareUtils.saveImage("redPacket",redPacketDetailLL,this);
     }
+
+
 }

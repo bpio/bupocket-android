@@ -104,6 +104,7 @@ import static com.bupocket.common.Constants.NORMAL_WALLET_NAME;
 
 public class BPAssetsHomeFragment extends BaseTransferFragment {
 
+    private static final int REQUEST_CODE_RED_PACKET = 0x1022;
     @BindView(R.id.refreshLayout)
     RefreshLayout refreshLayout;
     @BindView(R.id.assetsHomeEmptyView)
@@ -165,7 +166,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
 
     private BonusInfoBean redPacketNoOpenData;
     private RedPacketDetailModel redPacketDetailModel;
-    public static  boolean openStatus;
+    public static boolean openStatus;
 
     @Override
     protected int getLayoutView() {
@@ -268,7 +269,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         BPRedPacketHomeFragment bpRedPacketHomeFragment = new BPRedPacketHomeFragment();
         Bundle args = new Bundle();
         args.putString(ConstantsType.BONUSCODE, bonusCode);
-        args.putSerializable(ConstantsType.REDPACKETDETAILMODEL,redPacketDetailModel);
+        args.putSerializable(ConstantsType.REDPACKETDETAILMODEL, redPacketDetailModel);
         bpRedPacketHomeFragment.setArguments(args);
         startFragment(bpRedPacketHomeFragment);
     }
@@ -455,8 +456,6 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         initTokensView();
         refreshLayout.autoRefresh();
         initPermission();
-        String identityId = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
-        LogUtils.e("identityId:" + identityId);
         reqOpenRedPacketStatus();
     }
 
@@ -554,13 +553,16 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
 
     private void openRedPacketActivity(BonusInfoBean data, String bonusCode) {
 
+        if (data == null) {
+            return;
+        }
         Intent intent = new Intent(getActivity(), RedPacketActivity.class);
         intent.putExtra(ConstantsType.BONUSCODE, bonusCode);
         intent.putExtra(ConstantsType.REDOPENSTATUS, "0");
         Bundle extras = new Bundle();
         extras.putSerializable(ConstantsType.BONUSINFOBEAN, data);
         intent.putExtras(extras);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE_RED_PACKET);
 
     }
 
@@ -595,6 +597,13 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        LogUtils.e(requestCode+"+requestCode+"+requestCode);
+        if (requestCode == REQUEST_CODE_RED_PACKET && resultCode == 1) {
+            reqRedPacketData();
+            return;
+        }
+
+
         if (null != data) {
             if (Constants.REQUEST_IMAGE == resultCode) {
                 if (null != data) {

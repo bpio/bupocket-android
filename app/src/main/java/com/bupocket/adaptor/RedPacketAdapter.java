@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bupocket.R;
 import com.bupocket.base.AbsViewHolderAdapter;
 import com.bupocket.base.BaseViewHolder;
+import com.bupocket.enums.RedPacketKingEnum;
 import com.bupocket.model.LuckRedModel;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
@@ -52,7 +53,7 @@ public class RedPacketAdapter extends AbsViewHolderAdapter<LuckRedModel> {
         }
         String mvpFlag = itemData.getMvpFlag();
         View mvpFlagView = holder.getView(R.id.redKingIv);
-        if (mvpFlag.equals(1)) {
+        if (mvpFlag.equals(RedPacketKingEnum.YES.getCode())) {
             mvpFlagView.setVisibility(View.VISIBLE);
         } else {
             mvpFlagView.setVisibility(View.INVISIBLE);

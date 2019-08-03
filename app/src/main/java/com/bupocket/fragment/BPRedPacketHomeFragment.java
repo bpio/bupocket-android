@@ -27,6 +27,7 @@ import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.ShareUtils;
 import com.bupocket.utils.TO;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.utils.WalletUtils;
@@ -154,12 +155,14 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
     private void scrollLuckListView() {
         if (adapter.getData()!=null) {
             if (adapter.getData().size()>0) {
-                new Thread(new Runnable() {
+                Runnable redPacketRunnable = new Runnable() {
                     @Override
                     public void run() {
-                        while (true){
+                        while (true) {
 
-                            redPacketLv.smoothScrollBy(TO.dip2px(mContext,60),100);
+                            if (redPacketLv != null) {
+                                redPacketLv.smoothScrollBy(TO.dip2px(mContext, 60), 100);
+                            }
                             try {
                                 Thread.sleep(1500);
                             } catch (InterruptedException e) {
@@ -167,7 +170,8 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
                             }
                         }
                     }
-                }).start();
+                };
+                ThreadManager.getInstance().execute(redPacketRunnable);
             }
         }
     }
