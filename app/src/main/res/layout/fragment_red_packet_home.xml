@@ -36,6 +36,7 @@
                 android:background="@color/app_bg_color_gray" />
 
             <TextView
+                android:id="@+id/luckTitleTv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -48,7 +49,9 @@
             <ListView
                 android:id="@+id/redPacketLv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="480dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
                 android:divider="@null"></ListView>
 
             <View

@@ -21,9 +21,11 @@ import com.bupocket.http.api.RedPacketService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.BonusInfoBean;
+import com.bupocket.model.LuckRedModel;
 import com.bupocket.model.RedPacketDetailModel;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.ShareUtils;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.utils.WalletUtils;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -31,6 +33,7 @@ import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -72,6 +75,8 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
     TextView redPacketDetailTitleTv;
     @BindView(R.id.redPacketDetailTv)
     TextView redPacketDetailTv;
+    @BindView(R.id.luckTitleTv)
+    TextView luckTitleTv;
 
 
     Unbinder unbinder;
@@ -110,12 +115,20 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
     @Override
     protected void initData() {
         Bundle arguments = getArguments();
-        if (arguments!=null) {
+        if (arguments != null) {
             bonusCode = arguments.getString(ConstantsType.BONUSCODE);
             redPacketDetailModel = (RedPacketDetailModel) arguments.getSerializable(ConstantsType.REDPACKETDETAILMODEL);
 
             BonusInfoBean bonusInfo = redPacketDetailModel.getBonusInfo();
             initOpenRedPacketView(bonusInfo);
+
+            List<LuckRedModel> data = redPacketDetailModel.getLatelyData().getData();
+            adapter.setNewData(data);
+            luckTitleTv.setText(redPacketDetailModel.getLatelyData().getLabel());
+
+            redPacketDetailTitleTv.setText(redPacketDetailModel.getActivityRules().getLabel());
+            redPacketDetailTv.setText(redPacketDetailModel.getActivityRules().getData());
+
         }
 //        reqAllData();
 
@@ -132,7 +145,6 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
             public void onResponse(Call<ApiResult<RedPacketDetailModel>> call, Response<ApiResult<RedPacketDetailModel>> response) {
 
 
-
             }
 
             @Override
@@ -144,7 +156,12 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
 
     @Override
     protected void setListeners() {
-
+        saveShareBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareUtils.shareImage(redPacketDetailLL, getActivity());
+            }
+        });
     }
 
     @Override
