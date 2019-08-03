@@ -25,6 +25,7 @@ import com.bupocket.model.LuckRedModel;
 import com.bupocket.model.RedPacketDetailModel;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.ShareUtils;
 import com.bupocket.utils.TO;
 import com.bupocket.utils.ThreadManager;
@@ -159,15 +160,20 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
                     @Override
                     public void run() {
                         while (true) {
-
-                            if (redPacketLv != null) {
-                                redPacketLv.smoothScrollBy(TO.dip2px(mContext, 60), 100);
-                            }
                             try {
                                 Thread.sleep(1500);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
+                            if (redPacketLv != null) {
+
+                                View view = adapter.getView(0, null, redPacketLv);
+                                view.measure(0,0);
+                                int measuredHeight = view.getMeasuredHeight();
+                                LogUtils.e(measuredHeight+"measuredHeight");
+                                redPacketLv.smoothScrollBy(measuredHeight, 500);
+                            }
+
                         }
                     }
                 };
