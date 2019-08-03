@@ -18,8 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="15dp"
-            android:scaleType="fitXY"
-            android:background="@mipmap/ic_red_packet_empty" />
+            android:background="@mipmap/ic_red_packet_empty"
+            android:scaleType="fitXY" />
 
         <ImageView
             android:id="@+id/cancelRedDetailBtn"
@@ -98,19 +98,28 @@
         android:layout_height="100dp" />
 
 
-    <Button
-        android:id="@+id/saveShareBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="35dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/shape_corner_red_1"
-        android:gravity="center"
-        android:paddingLeft="25dp"
-        android:paddingRight="25dp"
-        android:text="@string/save_and_share"
-        android:textColor="@color/app_color_white" />
+    <RelativeLayout
+        android:id="@+id/saveSHareRL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/saveShareBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_corner_red_1"
+            android:gravity="center"
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:text="@string/save_and_share"
+            android:textColor="@color/app_color_white" />
+
+
+    </RelativeLayout>
 
 
 </LinearLayout>

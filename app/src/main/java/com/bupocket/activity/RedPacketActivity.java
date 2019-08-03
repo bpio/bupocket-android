@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -71,6 +72,9 @@ public class RedPacketActivity extends Activity {
     TextView redTokenTypeTv;
     @BindView(R.id.redWalletAddressTv)
     TextView redWalletAddressTv;
+    @BindView(R.id.saveSHareRL)
+    RelativeLayout saveSHareRL;
+
 
     private Unbinder bind;
     private String bonusCode;
@@ -92,8 +96,6 @@ public class RedPacketActivity extends Activity {
         if (intent != null) {
             String openStatus = intent.getStringExtra(ConstantsType.REDOPENSTATUS);
             if (!TextUtils.isEmpty(openStatus)) {
-
-
                 if (openStatus.equals(RedPacketTypeEnum.CLOSE_RED_PACKET.getCode())) {
                     this.openStatus = false;
                     bonusCode = intent.getStringExtra(ConstantsType.BONUSCODE);
@@ -201,10 +203,9 @@ public class RedPacketActivity extends Activity {
 
     private void shareRedPacket() {
 
-        saveShareBtn.setVisibility(View.GONE);
+        saveSHareRL.setVisibility(View.GONE);
         ShareUtils.shareImage(redPacketDetailLL, this);
-        saveShareBtn.setVisibility(View.VISIBLE);
-//        ShareUtils.saveImage("redPacket",redPacketDetailLL,this);
+        saveSHareRL.setVisibility(View.VISIBLE);
     }
 
 

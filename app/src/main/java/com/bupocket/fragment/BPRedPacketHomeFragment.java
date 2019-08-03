@@ -1,6 +1,10 @@
 package com.bupocket.fragment;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,13 +13,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.adaptor.RedPacketAdapter;
 import com.bupocket.base.BaseTransferFragment;
-import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.http.api.RedPacketService;
 import com.bupocket.http.api.RetrofitFactory;
@@ -24,18 +28,13 @@ import com.bupocket.model.BonusInfoBean;
 import com.bupocket.model.LuckRedModel;
 import com.bupocket.model.RedPacketDetailModel;
 import com.bupocket.utils.AddressUtil;
-import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.ShareUtils;
-import com.bupocket.utils.TO;
 import com.bupocket.utils.ThreadManager;
-import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.WalletCurrentUtils;
-import com.bupocket.utils.WalletUtils;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
@@ -81,6 +80,8 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
     TextView redPacketDetailTv;
     @BindView(R.id.luckTitleTv)
     TextView luckTitleTv;
+    @BindView(R.id.saveSHareRL)
+    RelativeLayout saveShareRL;
 
 
     Unbinder unbinder;
@@ -208,9 +209,10 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
             @Override
             public void onClick(View v) {
 
-                saveShareBtn.setVisibility(View.GONE);
+
+                saveShareRL.setVisibility(View.GONE);
                 ShareUtils.shareImage(redPacketDetailLL, getActivity());
-                saveShareBtn.setVisibility(View.VISIBLE);
+                saveShareRL.setVisibility(View.VISIBLE);
             }
         });
     }

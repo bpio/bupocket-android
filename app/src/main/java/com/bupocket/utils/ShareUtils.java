@@ -29,7 +29,7 @@ public class ShareUtils {
     }
 
 
-    private static void shareImg(String dlgTitle, String subject, String content, Uri uri, Activity mActivity) {
+    public static void shareImg(String dlgTitle, String subject, String content, Uri uri, Activity mActivity) {
         if (uri == null) {
             return;
         }
