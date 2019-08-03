@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -62,6 +63,7 @@ import com.bupocket.model.UDCBUModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LocaleUtil;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.NetworkUtils;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
@@ -159,7 +161,8 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     private View faildlayout;
     List<GetTokensRespDto.TokenListBean> mTokenList;
     private String bonusCode;
-
+    private boolean openStatus;
+    private BonusInfoBean redPacketNoOpenData;
 
     @Override
     protected int getLayoutView() {
@@ -249,14 +252,15 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
             @Override
             public void onClick(View v) {
 
-
-                BPRedPacketHomeFragment bpRedPacketHomeFragment = new BPRedPacketHomeFragment();
-                Bundle args = new Bundle();
-                args.putString(ConstantsType.BONUSCODE, "");
-                bpRedPacketHomeFragment.setArguments(args);
-                startFragment(bpRedPacketHomeFragment);
-
-//                startActivity(new Intent(getContext(), RedPacketActivity.class));
+                if (openStatus){
+                    BPRedPacketHomeFragment bpRedPacketHomeFragment = new BPRedPacketHomeFragment();
+                    Bundle args = new Bundle();
+                    args.putString(ConstantsType.BONUSCODE, "");
+                    bpRedPacketHomeFragment.setArguments(args);
+                    startFragment(bpRedPacketHomeFragment);
+                }else{
+                    openRedPacketActivity(redPacketNoOpenData,bonusCode);
+                }
             }
         });
     }
@@ -443,7 +447,8 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         initTokensView();
         refreshLayout.autoRefresh();
         initPermission();
-
+        String identityId = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
+        LogUtils.e("identityId:" + identityId);
         reqOpenRedPacketStatus();
     }
 
@@ -453,6 +458,9 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
             @Override
             public void onResponse(Call<ApiResult<OpenStatusModel>> call, Response<ApiResult<OpenStatusModel>> response) {
                 ApiResult<OpenStatusModel> body = response.body();
+                if (body == null) {
+                    return;
+                }
                 String errCode = body.getErrCode();
                 if (TextUtils.isEmpty(errCode)) {
                     return;
@@ -489,19 +497,24 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         HashMap<String, Object> map = new HashMap<>();
         map.put(ConstantsType.BONUSCODE, bonusCode);
         map.put(Constants.ADDRESS, WalletCurrentUtils.getWalletAddress(spHelper));
+//        String identityId = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
+//        map.put(Constants.ADDRESS,identityId);
+
+
         redPacketService.queryRedPacket(map).enqueue(new Callback<ApiResult<BonusInfoBean>>() {
             @Override
             public void onResponse(Call<ApiResult<BonusInfoBean>> call, Response<ApiResult<BonusInfoBean>> response) {
                 ApiResult<BonusInfoBean> body = response.body();
                 String errCode = body.getErrCode();
                 if (ExceptionEnum.SUCCESS.getCode().equals(errCode)) {
-                    BonusInfoBean data = body.getData();
-                    if (data != null) {
-                        openRedPacketActivity(data, bonusCode);
+                    redPacketNoOpenData = body.getData();
+                    if (redPacketNoOpenData != null) {
+                        openRedPacketActivity(redPacketNoOpenData, bonusCode);
                     }
+                   openStatus=false;
                 } else if (ExceptionEnum.ERROR_BUILD_10022.getCode().equals(errCode)) {//
 
-
+                    openStatus=true;
                 }
             }
 
@@ -516,6 +529,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
 
         Intent intent = new Intent(getActivity(), RedPacketActivity.class);
         intent.putExtra(ConstantsType.BONUSCODE, bonusCode);
+        intent.putExtra(ConstantsType.REDOPENSTATUS,"0");
         Bundle extras = new Bundle();
         extras.putSerializable(ConstantsType.BONUSINFOBEAN, data);
         intent.putExtras(extras);

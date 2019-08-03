@@ -3,14 +3,21 @@ package com.bupocket.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bupocket.R;
+import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
+import com.bupocket.enums.ExceptionEnum;
+import com.bupocket.enums.RedPacketTypeEnum;
+import com.bupocket.model.BonusInfoBean;
 import com.bupocket.utils.ShareUtils;
 import com.makeramen.roundedimageview.RoundedImageView;
 
@@ -24,6 +31,8 @@ import butterknife.Unbinder;
 public class RedPacketActivity extends Activity {
 
 
+    @BindView(R.id.noOpenRedBgIv)
+    ImageView noOpenRedBgIv;
     @BindView(R.id.redPacketDetailLL)
     LinearLayout redPacketDetailLL;
     @BindView(R.id.saveShareBtn)
@@ -53,7 +62,8 @@ public class RedPacketActivity extends Activity {
 
     private Unbinder bind;
     private String bonusCode;
-    private Serializable bonusInfoBean;
+    private BonusInfoBean bonusInfoBean;
+    private boolean openStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +77,35 @@ public class RedPacketActivity extends Activity {
     private void initData() {
 
         Intent intent = getIntent();
-        if (intent!=null) {
-            bonusCode = intent.getStringExtra(ConstantsType.BONUSCODE);
-            Bundle extras = intent.getExtras();
-            bonusInfoBean = extras.getSerializable(ConstantsType.BONUSINFOBEAN);
+        if (intent != null) {
+            String openStatus = intent.getStringExtra(ConstantsType.REDOPENSTATUS);
+            if (!TextUtils.isEmpty(openStatus)) {
+
+
+                if (openStatus.equals(RedPacketTypeEnum.CLOSE_RED_PACKET.getCode())) {
+                    this.openStatus = false;
+                    bonusCode = intent.getStringExtra(ConstantsType.BONUSCODE);
+                    Bundle extras = intent.getExtras();
+                    bonusInfoBean = ((BonusInfoBean) extras.getSerializable(ConstantsType.BONUSINFOBEAN));
+
+                    setNoOpenRedPacketView(bonusInfoBean);
+                }
+
+//                else if (openStatus.equals(RedPacketTypeEnum.OPEN_RED_PACKET.getCode())) {
+//                    this.openStatus = true;
+//
+//
+//                }
+
+            }
+
         }
+
+
+    }
+
+    private void setNoOpenRedPacketView(BonusInfoBean bonusInfoBean) {
+        Glide.with(this).load(bonusInfoBean.getTopImage()).into(noOpenRedBgIv);
     }
 
     private void initView() {

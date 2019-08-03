@@ -1,5 +1,7 @@
 package com.bupocket.common;
 
+import android.content.Intent;
+
 public class ConstantsType {
 
     public static final String VOUCHER_DETAIL = "voucherDetail";
@@ -43,4 +45,5 @@ public class ConstantsType {
     public static final String  STATUS_NO="no";
     public static final String BONUSCODE = "bonusCode";
     public static final String BONUSINFOBEAN = "BonusInfoBean";
+    public static final String REDOPENSTATUS = "redOpenStatus";
 }
