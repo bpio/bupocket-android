@@ -48,14 +48,14 @@ public class RedPacketAdapter extends AbsViewHolderAdapter<LuckRedModel> {
 
         String date = itemData.getDate();
         if (!TextUtils.isEmpty(date)) {
-            holder.setText(R.id.dateItemTv, TimeUtil.getDateDiff(Long.parseLong(itemData.getDate()),context));
+            holder.setText(R.id.dateItemTv, TimeUtil.getDateDiff(Long.parseLong(itemData.getDate()), context));
         }
         String mvpFlag = itemData.getMvpFlag();
         View mvpFlagView = holder.getView(R.id.redKingIv);
         if (mvpFlag.equals(1)) {
             mvpFlagView.setVisibility(View.VISIBLE);
-        }else{
-            mvpFlagView.setVisibility(View.GONE);
+        } else {
+            mvpFlagView.setVisibility(View.INVISIBLE);
         }
     }
 }

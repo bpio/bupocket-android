@@ -49,9 +49,12 @@
             <ListView
                 android:id="@+id/redPacketLv"
                 android:layout_width="match_parent"
-                android:layout_height="480dp"
+                android:layout_height="300dp"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
+                android:background="@null"
+                android:dividerHeight="0dp"
+                android:scrollbars="none"
                 android:divider="@null"></ListView>
 
             <View

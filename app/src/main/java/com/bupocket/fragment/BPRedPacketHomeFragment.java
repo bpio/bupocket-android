@@ -26,6 +26,8 @@ import com.bupocket.model.RedPacketDetailModel;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.ShareUtils;
+import com.bupocket.utils.TO;
+import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.utils.WalletUtils;
 import com.makeramen.roundedimageview.RoundedImageView;
@@ -132,6 +134,42 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
         }
 //        reqAllData();
 
+
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        redPacketLv.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                scrollLuckListView();
+            }
+        },1000);
+
+    }
+
+    private void scrollLuckListView() {
+        if (adapter.getData()!=null) {
+            if (adapter.getData().size()>0) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        while (true){
+
+                            redPacketLv.smoothScrollBy(TO.dip2px(mContext,60),100);
+                            try {
+                                Thread.sleep(1500);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }).start();
+            }
+        }
     }
 
     private void reqAllData() {
