@@ -837,6 +837,8 @@
     <string name="send_token_error">可用资产数量不足</string>
     <string name="save_and_share">保存图片并分享</string>
     <string name="red_success_title">领取成功</string>
+    <string name="save_wallet">已存入钱包，稍后到账</string>
+    <string name="save_wallet_1">已存入钱包</string>
 
 
 </resources>

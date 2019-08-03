@@ -31,10 +31,11 @@
 
         <TextView
             android:id="@+id/tokenTypeItemTv"
-            style="@style/BPTextViewCommonSize14Color66"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
+            android:textColor="@color/app_color_black"
+            android:textSize="14sp"
             tools:text="BU" />
 
 
@@ -45,12 +46,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:paddingBottom="15dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingBottom="15dp">
 
         <TextView
             android:id="@+id/dateItemTv"
-            style="@style/BPTextViewCommonSize14Color66"
+            style="@style/BPTextViewCommonSize14Color99"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"

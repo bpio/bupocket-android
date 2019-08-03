@@ -207,7 +207,10 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
         saveShareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                saveShareBtn.setVisibility(View.GONE);
                 ShareUtils.shareImage(redPacketDetailLL, getActivity());
+                saveShareBtn.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -249,7 +252,7 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
 
         String receiver = data.getReceiver();
         if (!TextUtils.isEmpty(receiver)) {
-            redWalletAddressTv.setText(AddressUtil.anonymous(receiver));
+            redWalletAddressTv.setText(getString(R.string.save_wallet_1)+"\n"+AddressUtil.anonymous(receiver));
         }
 
         redPacketDetailLL.setVisibility(View.VISIBLE);

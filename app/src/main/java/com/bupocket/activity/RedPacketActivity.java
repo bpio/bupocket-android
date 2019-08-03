@@ -103,12 +103,6 @@ public class RedPacketActivity extends Activity {
                     setNoOpenRedPacketView(bonusInfoBean);
                 }
 
-//                else if (openStatus.equals(RedPacketTypeEnum.OPEN_RED_PACKET.getCode())) {
-//                    this.openStatus = true;
-//
-//
-//                }
-
             }
 
         }
@@ -197,7 +191,7 @@ public class RedPacketActivity extends Activity {
 
         String receiver = data.getReceiver();
         if (!TextUtils.isEmpty(receiver)) {
-            redWalletAddressTv.setText(AddressUtil.anonymous(receiver));
+            redWalletAddressTv.setText(getString(R.string.save_wallet) + "\n" + AddressUtil.anonymous(receiver));
         }
 
         redPacketFirstLL.setVisibility(View.GONE);
@@ -206,7 +200,10 @@ public class RedPacketActivity extends Activity {
 
 
     private void shareRedPacket() {
+
+        saveShareBtn.setVisibility(View.GONE);
         ShareUtils.shareImage(redPacketDetailLL, this);
+        saveShareBtn.setVisibility(View.VISIBLE);
 //        ShareUtils.saveImage("redPacket",redPacketDetailLL,this);
     }
 

@@ -86,9 +86,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"
+        android:gravity="center"
         android:textColor="@color/app_txt_color_gray_2"
         android:textSize="12sp"
-        tools:text="钱包地址\nasssssss" />
+        tools:text="钱包地址\nassssssss" />
 
 
     <ImageView
