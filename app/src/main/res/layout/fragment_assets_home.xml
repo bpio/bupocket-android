@@ -332,11 +332,10 @@
 
     <TextView
         android:id="@+id/redPacketTv"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="right|bottom"
         android:layout_marginBottom="100dp"
-        android:background="@color/app_txt_color_red"
-        android:gravity="center"
-        android:text="红包拿来" />
+        android:background="@mipmap/ic_send_red_packet"
+        android:gravity="center" />
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

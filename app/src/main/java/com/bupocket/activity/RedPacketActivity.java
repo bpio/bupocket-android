@@ -16,7 +16,7 @@ import butterknife.Unbinder;
 public class RedPacketActivity extends Activity {
 
 
-    @BindView(R.id.redPacketLL)
+    @BindView(R.id.redPacketDetailLL)
     LinearLayout redPacketLL;
     @BindView(R.id.saveShareBtn)
     Button saveShareBtn;

@@ -1,21 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#33141212"
+    android:background="#99000000"
+    android:gravity="center"
     android:orientation="vertical">
 
 
     <LinearLayout
-        android:id="@+id/redPacketLL"
+        android:id="@+id/redPacketFirstLL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/ic_red_bg">
+
+            <Button
+                android:id="@+id/openRedPacketBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginBottom="30dp"
+                android:background="@mipmap/ic_open_red_packet" />
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/app_color_white" />
+
+        <ImageView
+            android:id="@+id/closeRedBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@mipmap/cancle_red_first" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/redPacketDetailLL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="30dp"
         android:layout_marginTop="50dp"
         android:layout_marginRight="30dp"
         android:layout_marginBottom="100dp"
-        android:background="@color/app_txt_color_red">
+        android:background="@color/app_color_white"
+        android:orientation="vertical"
+        android:visibility="gone">
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="30dp"
+                android:background="@mipmap/ic_asset_home_bg" />
+
+            <include
+                android:id="@+id/nodeIconRl"
+                layout="@layout/view_circle_head_layout"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="bottom|center_horizontal"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp" />
+
+
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@string/app_name" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:id="@+id/redAmountTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:textSize="30dp"
+                tools:text="7777.77" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="@string/build_bu" />
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            tools:text="钱包地址\nasssssss" />
+
+        <View style="@style/BPDashBgLine" />
+
+        <ImageView
+            android:id="@+id/downloadQrIv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View style="@style/BPDashBgLine" />
 
         <Button
             android:id="@+id/saveShareBtn"
