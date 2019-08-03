@@ -1,8 +1,9 @@
 package com.bupocket.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class RedPacketDetailModel {
+public class RedPacketDetailModel implements Serializable {
 
 
     private BonusInfoBean bonusInfo;

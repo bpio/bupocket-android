@@ -58,6 +58,7 @@ import com.bupocket.http.api.dto.resp.GetTokensRespDto;
 import com.bupocket.http.api.dto.resp.UserScanQrLoginDto;
 import com.bupocket.model.BonusInfoBean;
 import com.bupocket.model.OpenStatusModel;
+import com.bupocket.model.RedPacketDetailModel;
 import com.bupocket.model.TransConfirmModel;
 import com.bupocket.model.UDCBUModel;
 import com.bupocket.utils.CommonUtil;
@@ -163,6 +164,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     private String bonusCode;
     private boolean openStatus;
     private BonusInfoBean redPacketNoOpenData;
+    private RedPacketDetailModel redPacketDetailModel;
 
     @Override
     protected int getLayoutView() {
@@ -252,17 +254,22 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
             @Override
             public void onClick(View v) {
 
-                if (openStatus){
-                    BPRedPacketHomeFragment bpRedPacketHomeFragment = new BPRedPacketHomeFragment();
-                    Bundle args = new Bundle();
-                    args.putString(ConstantsType.BONUSCODE, "");
-                    bpRedPacketHomeFragment.setArguments(args);
-                    startFragment(bpRedPacketHomeFragment);
-                }else{
-                    openRedPacketActivity(redPacketNoOpenData,bonusCode);
+                if (openStatus) {
+                    openRedPacketDetailFragment();
+                } else {
+                    openRedPacketActivity(redPacketNoOpenData, bonusCode);
                 }
             }
         });
+    }
+
+    private void openRedPacketDetailFragment() {
+        BPRedPacketHomeFragment bpRedPacketHomeFragment = new BPRedPacketHomeFragment();
+        Bundle args = new Bundle();
+        args.putString(ConstantsType.BONUSCODE, bonusCode);
+        args.putSerializable(ConstantsType.REDPACKETDETAILMODEL,redPacketDetailModel);
+        bpRedPacketHomeFragment.setArguments(args);
+        startFragment(bpRedPacketHomeFragment);
     }
 
     private void backupState() {
@@ -453,7 +460,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     }
 
     private void reqOpenRedPacketStatus() {
-        RedPacketService redPacketService = RetrofitFactory.getInstance().getRetrofit().create(RedPacketService.class);
+        final RedPacketService redPacketService = RetrofitFactory.getInstance().getRetrofit().create(RedPacketService.class);
         redPacketService.queryOpen().enqueue(new Callback<ApiResult<OpenStatusModel>>() {
             @Override
             public void onResponse(Call<ApiResult<OpenStatusModel>> call, Response<ApiResult<OpenStatusModel>> response) {
@@ -469,7 +476,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                     OpenStatusModel data = body.getData();
                     if (data.getType().equals("1")) {
                         bonusCode = data.getActivityId();
-
+                        redPacketTv.setVisibility(View.VISIBLE);
                         queryRedPacket(bonusCode);
 
                     }
@@ -477,7 +484,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                 }
 
                 if (ExceptionEnum.ERROR_BUILD_10021.getCode().equals(body.getErrCode())) {//close
-
+                    redPacketTv.setVisibility(View.GONE);
 
                     return;
                 }
@@ -497,9 +504,6 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         HashMap<String, Object> map = new HashMap<>();
         map.put(ConstantsType.BONUSCODE, bonusCode);
         map.put(Constants.ADDRESS, WalletCurrentUtils.getWalletAddress(spHelper));
-//        String identityId = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
-//        map.put(Constants.ADDRESS,identityId);
-
 
         redPacketService.queryRedPacket(map).enqueue(new Callback<ApiResult<BonusInfoBean>>() {
             @Override
@@ -511,15 +515,37 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                     if (redPacketNoOpenData != null) {
                         openRedPacketActivity(redPacketNoOpenData, bonusCode);
                     }
-                   openStatus=false;
+                    openStatus = false;
                 } else if (ExceptionEnum.ERROR_BUILD_10022.getCode().equals(errCode)) {//
+                    openStatus = true;
+                    reqRedPacketData();
 
-                    openStatus=true;
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResult<BonusInfoBean>> call, Throwable t) {
+                LogUtils.e("");
+            }
+        });
+    }
+
+    private void reqRedPacketData() {
+        RedPacketService redPacketService = RetrofitFactory.getInstance().getRetrofit().create(RedPacketService.class);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(ConstantsType.BONUSCODE, bonusCode);
+        map.put(ConstantsType.ADDRESS, WalletCurrentUtils.getWalletAddress(spHelper));
+        redPacketService.queryRedPacketDetail(map).enqueue(new Callback<ApiResult<RedPacketDetailModel>>() {
+            @Override
+            public void onResponse(Call<ApiResult<RedPacketDetailModel>> call, Response<ApiResult<RedPacketDetailModel>> response) {
+                ApiResult<RedPacketDetailModel> body = response.body();
+                if (body.getErrCode().equals(ExceptionEnum.SUCCESS.getCode())) {
+                    redPacketDetailModel = body.getData();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<RedPacketDetailModel>> call, Throwable t) {
 
             }
         });
@@ -529,7 +555,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
 
         Intent intent = new Intent(getActivity(), RedPacketActivity.class);
         intent.putExtra(ConstantsType.BONUSCODE, bonusCode);
-        intent.putExtra(ConstantsType.REDOPENSTATUS,"0");
+        intent.putExtra(ConstantsType.REDOPENSTATUS, "0");
         Bundle extras = new Bundle();
         extras.putSerializable(ConstantsType.BONUSINFOBEAN, data);
         intent.putExtras(extras);

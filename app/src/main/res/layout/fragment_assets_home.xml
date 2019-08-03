@@ -337,5 +337,6 @@
         android:layout_gravity="right|bottom"
         android:layout_marginBottom="80dp"
         android:background="@mipmap/ic_send_red_packet"
+        android:visibility="gone"
         android:gravity="center" />
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>
