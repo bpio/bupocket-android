@@ -1,59 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#80000000"
+    android:background="@color/app_color_white"
     android:fitsSystemWindows="true"
-    android:gravity="center_vertical"
     android:orientation="vertical">
 
 
-    <LinearLayout
-        android:id="@+id/redPacketFirstLL"
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:orientation="vertical">
+        android:scrollbars="none">
 
-        <FrameLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@mipmap/ic_red_bg">
+            android:background="@color/app_color_white"
+            android:orientation="vertical">
 
-            <Button
-                android:id="@+id/openRedPacketBtn"
-                android:layout_width="wrap_content"
+            <include
+                layout="@layout/view_red_packet_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/app_bg_color_gray" />
+
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginBottom="30dp"
-                android:background="@mipmap/ic_open_red_packet" />
+                android:gravity="center"
+                android:paddingTop="20dp"
+                android:paddingBottom="27dp"
+                android:textColor="@color/app_txt_color_red_packet"
+                android:textSize="18sp"
+                tools:text="七夕幸运儿" />
 
-        </FrameLayout>
+            <ListView
+                android:id="@+id/redPacketLv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"></ListView>
 
-        <View
-            android:layout_width="1dp"
-            android:layout_height="30dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/app_color_white" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/app_bg_color_gray" />
 
-        <ImageView
-            android:id="@+id/closeRedBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@mipmap/cancle_red_first" />
+            <TextView
+                android:id="@+id/redPacketDetailTitleTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="20dp"
+                android:paddingBottom="30dp"
+                android:textColor="@color/app_txt_color_red_packet"
+                android:textSize="18sp"
+                tools:text="活动细则" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/redPacketDetailTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/common_left_right_padding"
+                android:paddingRight="@dimen/common_left_right_padding"
+                android:paddingBottom="20dp"
+                android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="14sp"
+                tools:text="活动细则" />
 
 
-    <include
-        android:visibility="gone"
-        layout="@layout/view_red_packet_detail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/app_bg_color_gray" />
+        </LinearLayout>
+
+
+    </ScrollView>
 
 
 </LinearLayout>

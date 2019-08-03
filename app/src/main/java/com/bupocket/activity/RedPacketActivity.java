@@ -52,7 +52,7 @@ public class RedPacketActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_red_packet_home);
+        setContentView(R.layout.activity_red_packet_home);
         bind = ButterKnife.bind(this);
         initView();
         initData();

@@ -244,10 +244,10 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         redPacketTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                BPRedPacketHomeFragment bpRedPacketHomeFragment = new BPRedPacketHomeFragment();
-//                startFragment(bpRedPacketHomeFragment);
+                BPRedPacketHomeFragment bpRedPacketHomeFragment = new BPRedPacketHomeFragment();
+                startFragment(bpRedPacketHomeFragment);
 
-                startActivity(new Intent(getContext(), RedPacketActivity.class));
+//                startActivity(new Intent(getContext(), RedPacketActivity.class));
             }
         });
     }
