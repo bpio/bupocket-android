@@ -1,6 +1,7 @@
 package com.bupocket.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -9,8 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bupocket.R;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.utils.ShareUtils;
 import com.makeramen.roundedimageview.RoundedImageView;
+
+import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +52,8 @@ public class RedPacketActivity extends Activity {
     TextView redWalletAddressTv;
 
     private Unbinder bind;
+    private String bonusCode;
+    private Serializable bonusInfoBean;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +66,12 @@ public class RedPacketActivity extends Activity {
 
     private void initData() {
 
+        Intent intent = getIntent();
+        if (intent!=null) {
+            bonusCode = intent.getStringExtra(ConstantsType.BONUSCODE);
+            Bundle extras = intent.getExtras();
+            bonusInfoBean = extras.getSerializable(ConstantsType.BONUSINFOBEAN);
+        }
     }
 
     private void initView() {

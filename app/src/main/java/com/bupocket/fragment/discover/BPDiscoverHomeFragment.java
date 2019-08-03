@@ -157,7 +157,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
             @Override
             public void run() {
                 while (true) {
-                    LogUtils.e("bannerRunnable");
+//                    LogUtils.e("bannerRunnable");
 //                    isDownStop = !HomeFragment.isDisFragment;
                     if (!isDownStop) {
 
@@ -168,7 +168,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                                     if (vpDisBanner != null) {
                                         vpDisBanner.setCurrentItem(vpDisBanner.getCurrentItem() + 1);
                                         disBannerAdapter.notifyDataSetChanged();
-                                        LogUtils.e("disBannerAdapter");
+//                                        LogUtils.e("disBannerAdapter");
                                     }
                                 }
 

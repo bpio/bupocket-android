@@ -1,6 +1,8 @@
 package com.bupocket.model;
 
-public class BonusInfoBean {
+import java.io.Serializable;
+
+public class BonusInfoBean  implements Serializable {
     private String topImage;
     private String bottomImage;
     private String issuerPhoto;

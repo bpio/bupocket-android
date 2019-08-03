@@ -15,7 +15,7 @@ public interface RedPacketService {
 
 
     @POST("activity/v1/open/status")
-    Call<ApiResult<OpenStatusModel>> queryOpen(@Body Map<String, Object> map);
+    Call<ApiResult<OpenStatusModel>> queryOpen();
 
     @POST("activity/bonus/v1/status")
     Call<ApiResult<BonusInfoBean>> queryRedPacket(@Body Map<String, Object> map);

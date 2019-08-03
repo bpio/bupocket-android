@@ -36,6 +36,7 @@ import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.CustomNodeTypeEnum;
 import com.bupocket.enums.VoucherStatusEnum;
+import com.bupocket.http.api.RedPacketService;
 import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.enums.BackupTipsStateEnum;
 import com.bupocket.enums.BumoNodeEnum;
@@ -54,6 +55,8 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetQRContentDto;
 import com.bupocket.http.api.dto.resp.GetTokensRespDto;
 import com.bupocket.http.api.dto.resp.UserScanQrLoginDto;
+import com.bupocket.model.BonusInfoBean;
+import com.bupocket.model.OpenStatusModel;
 import com.bupocket.model.TransConfirmModel;
 import com.bupocket.model.UDCBUModel;
 import com.bupocket.utils.CommonUtil;
@@ -155,6 +158,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     private String expiryTime;
     private View faildlayout;
     List<GetTokensRespDto.TokenListBean> mTokenList;
+    private String bonusCode;
 
 
     @Override
@@ -246,10 +250,9 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
             public void onClick(View v) {
 
 
-
                 BPRedPacketHomeFragment bpRedPacketHomeFragment = new BPRedPacketHomeFragment();
                 Bundle args = new Bundle();
-                args.putString(ConstantsType.BONUSCODE,"");
+                args.putString(ConstantsType.BONUSCODE, "");
                 bpRedPacketHomeFragment.setArguments(args);
                 startFragment(bpRedPacketHomeFragment);
 
@@ -439,9 +442,85 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         }
         initTokensView();
         refreshLayout.autoRefresh();
-
-
         initPermission();
+
+        reqOpenRedPacketStatus();
+    }
+
+    private void reqOpenRedPacketStatus() {
+        RedPacketService redPacketService = RetrofitFactory.getInstance().getRetrofit().create(RedPacketService.class);
+        redPacketService.queryOpen().enqueue(new Callback<ApiResult<OpenStatusModel>>() {
+            @Override
+            public void onResponse(Call<ApiResult<OpenStatusModel>> call, Response<ApiResult<OpenStatusModel>> response) {
+                ApiResult<OpenStatusModel> body = response.body();
+                String errCode = body.getErrCode();
+                if (TextUtils.isEmpty(errCode)) {
+                    return;
+                }
+                if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {//open
+                    OpenStatusModel data = body.getData();
+                    if (data.getType().equals("1")) {
+                        bonusCode = data.getActivityId();
+
+                        queryRedPacket(bonusCode);
+
+                    }
+                    return;
+                }
+
+                if (ExceptionEnum.ERROR_BUILD_10021.getCode().equals(body.getErrCode())) {//close
+
+
+                    return;
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<OpenStatusModel>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void queryRedPacket(final String bonusCode) {
+        RedPacketService redPacketService = RetrofitFactory.getInstance().getRetrofit().create(RedPacketService.class);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(ConstantsType.BONUSCODE, bonusCode);
+        map.put(Constants.ADDRESS, WalletCurrentUtils.getWalletAddress(spHelper));
+        redPacketService.queryRedPacket(map).enqueue(new Callback<ApiResult<BonusInfoBean>>() {
+            @Override
+            public void onResponse(Call<ApiResult<BonusInfoBean>> call, Response<ApiResult<BonusInfoBean>> response) {
+                ApiResult<BonusInfoBean> body = response.body();
+                String errCode = body.getErrCode();
+                if (ExceptionEnum.SUCCESS.getCode().equals(errCode)) {
+                    BonusInfoBean data = body.getData();
+                    if (data != null) {
+                        openRedPacketActivity(data, bonusCode);
+                    }
+                } else if (ExceptionEnum.ERROR_BUILD_10022.getCode().equals(errCode)) {//
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<BonusInfoBean>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void openRedPacketActivity(BonusInfoBean data, String bonusCode) {
+
+        Intent intent = new Intent(getActivity(), RedPacketActivity.class);
+        intent.putExtra(ConstantsType.BONUSCODE, bonusCode);
+        Bundle extras = new Bundle();
+        extras.putSerializable(ConstantsType.BONUSINFOBEAN, data);
+        intent.putExtras(extras);
+        startActivity(intent);
+
     }
 
     private void initBackground() {
