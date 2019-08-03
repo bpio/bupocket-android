@@ -63,7 +63,6 @@ public class RedPacketActivity extends Activity {
     }
 
     private void initView() {
-        redPacketDetailLL.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -86,6 +85,7 @@ public class RedPacketActivity extends Activity {
             case R.id.saveShareBtn:
                 shareRedPacket();
                 break;
+
         }
     }
 
