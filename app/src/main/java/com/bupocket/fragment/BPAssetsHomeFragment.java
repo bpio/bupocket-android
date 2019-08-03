@@ -162,9 +162,10 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     private View faildlayout;
     List<GetTokensRespDto.TokenListBean> mTokenList;
     private String bonusCode;
-    private boolean openStatus;
+
     private BonusInfoBean redPacketNoOpenData;
     private RedPacketDetailModel redPacketDetailModel;
+    public static  boolean openStatus;
 
     @Override
     protected int getLayoutView() {

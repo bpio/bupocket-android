@@ -17,6 +17,7 @@ import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.RedPacketTypeEnum;
+import com.bupocket.fragment.BPAssetsHomeFragment;
 import com.bupocket.http.api.RedPacketService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
@@ -159,6 +160,7 @@ public class RedPacketActivity extends Activity {
                     if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
                         BonusInfoBean data = body.getData();
                         initOpenRedPacketView(data);
+                        BPAssetsHomeFragment.openStatus=true;
                     }
                 }
             }
