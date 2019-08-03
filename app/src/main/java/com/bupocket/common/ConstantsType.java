@@ -3,7 +3,7 @@ package com.bupocket.common;
 import android.content.Intent;
 
 public class ConstantsType {
-
+    public static final String BP_FILE_NAME = "buPocket";
     public static final String VOUCHER_DETAIL = "voucherDetail";
 
     public static final String CUSTOM_WALLET_SERVICE = "customWalletService";

@@ -31,13 +31,13 @@
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/redHeadIv"
-            app:riv_border_color="@color/app_color_white"
-            app:riv_border_width="1dp"
-            app:riv_oval="true"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="bottom|center_horizontal"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_launcher"
+            app:riv_border_color="@color/app_color_white"
+            app:riv_border_width="1dp"
+            app:riv_oval="true" />
 
 
     </FrameLayout>
@@ -60,12 +60,12 @@
 
         <TextView
             android:id="@+id/redAmountTv"
-            tools:text="7777.77"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:textColor="@color/app_color_black"
-            android:textSize="44sp" />
+            android:textSize="44sp"
+            tools:text="7777.77" />
 
         <TextView
             android:id="@+id/redTokenTypeTv"
@@ -81,13 +81,13 @@
 
     <TextView
         android:id="@+id/redWalletAddressTv"
-        tools:text="钱包地址\nasssssss"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"
         android:textColor="@color/app_txt_color_gray_2"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        tools:text="钱包地址\nasssssss" />
 
 
     <ImageView

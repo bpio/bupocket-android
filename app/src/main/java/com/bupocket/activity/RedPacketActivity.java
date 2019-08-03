@@ -17,16 +17,27 @@ import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.RedPacketTypeEnum;
+import com.bupocket.http.api.RedPacketService;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.BonusInfoBean;
+import com.bupocket.utils.AddressUtil;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.ShareUtils;
+import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.WalletCurrentUtils;
 import com.makeramen.roundedimageview.RoundedImageView;
 
 import java.io.Serializable;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RedPacketActivity extends Activity {
 
@@ -121,8 +132,7 @@ public class RedPacketActivity extends Activity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.openRedPacketBtn:
-                redPacketFirstLL.setVisibility(View.GONE);
-                redPacketDetailLL.setVisibility(View.VISIBLE);
+                openRedPacket();
                 break;
             case R.id.closeRedBtn:
             case R.id.cancelRedDetailBtn:
@@ -133,6 +143,60 @@ public class RedPacketActivity extends Activity {
                 break;
 
         }
+    }
+
+    private void openRedPacket() {
+        final RedPacketService redPacketService = RetrofitFactory.getInstance().getRetrofit().create(RedPacketService.class);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(ConstantsType.BONUSCODE, bonusCode);
+        SharedPreferencesHelper spHelper = new SharedPreferencesHelper(this, ConstantsType.BP_FILE_NAME);
+        map.put(ConstantsType.ADDRESS, WalletCurrentUtils.getWalletAddress(spHelper));
+        redPacketService.openRedPacket(map).enqueue(new Callback<ApiResult<BonusInfoBean>>() {
+            @Override
+            public void onResponse(Call<ApiResult<BonusInfoBean>> call, Response<ApiResult<BonusInfoBean>> response) {
+                ApiResult<BonusInfoBean> body = response.body();
+                if (body != null && !TextUtils.isEmpty(body.getErrCode())) {
+                    if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
+                        BonusInfoBean data = body.getData();
+                        initOpenRedPacketView(data);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<BonusInfoBean>> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void initOpenRedPacketView(BonusInfoBean data) {
+        Glide.with(this).load(data.getTopImage()).into(redTopIv);
+        Glide.with(this).load(data.getBottomImage()).into(downloadQrIv);
+        Glide.with(this).load(data.getIssuerPhoto()).into(redHeadIv);
+
+        String issuerNick = data.getIssuerNick();
+        if (!TextUtils.isEmpty(issuerNick)) {
+            redNameIv.setText(issuerNick);
+        }
+
+        String amount = data.getAmount();
+        if (!TextUtils.isEmpty(amount)) {
+            redAmountTv.setText(amount);
+        }
+
+        String tokenSymbol = data.getTokenSymbol();
+        if (!TextUtils.isEmpty(tokenSymbol)) {
+            redTokenTypeTv.setText(tokenSymbol);
+        }
+
+        String receiver = data.getReceiver();
+        if (!TextUtils.isEmpty(receiver)) {
+            redWalletAddressTv.setText(AddressUtil.anonymous(receiver));
+        }
+
+        redPacketFirstLL.setVisibility(View.GONE);
+        redPacketDetailLL.setVisibility(View.VISIBLE);
     }
 
 
