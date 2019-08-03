@@ -835,6 +835,7 @@
     <string name="new_version_size">新版本大小： </string>
 
     <string name="send_token_error">可用资产数量不足</string>
+    <string name="save_and_share">保存图片并分享</string>
 
 
 </resources>

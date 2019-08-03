@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#99000000"
-    android:gravity="center"
+    android:background="#80000000"
+    android:gravity="center_vertical"
     android:orientation="vertical">
 
 
@@ -50,49 +51,63 @@
     <LinearLayout
         android:id="@+id/redPacketDetailLL"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="30dp"
-        android:layout_marginBottom="100dp"
-        android:background="@color/app_color_white"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:background="@drawable/shape_corner_white"
+        android:visibility="gone"
+        android:orientation="vertical">
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+
             <ImageView
+                android:id="@+id/redTopIv"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginBottom="30dp"
-                android:background="@mipmap/ic_asset_home_bg" />
+                android:layout_marginBottom="25dp"
+                android:background="@mipmap/ic_red_packet_empty" />
 
-            <include
-                android:id="@+id/nodeIconRl"
-                layout="@layout/view_circle_head_layout"
+            <ImageView
+                android:id="@+id/cancelRedDetailBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:padding="10dp"
+                android:src="@mipmap/ic_cancel_white" />
+
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/redHeadIv"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_gravity="bottom|center_horizontal"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp" />
+                android:src="@mipmap/ic_wallet_head_normal"
+                app:riv_border_color="@color/app_color_white"
+                app:riv_border_width="1dp"
+                app:riv_oval="true" />
 
 
         </FrameLayout>
 
         <TextView
+            android:id="@+id/redNameIv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:gravity="center"
-            android:text="@string/app_name" />
+            android:text="@string/app_name"
+            android:textColor="@color/app_txt_color_gray_2" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginTop="26dp"
+            android:layout_marginBottom="20dp"
             android:gravity="center_horizontal">
 
             <TextView
@@ -100,43 +115,55 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:textSize="30dp"
+                android:textColor="@color/app_color_black"
+                android:textSize="44sp"
                 tools:text="7777.77" />
 
             <TextView
+                android:id="@+id/redTokenTypeTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:text="@string/build_bu" />
+                android:paddingLeft="5dp"
+                android:text="@string/build_bu"
+                android:textColor="@color/app_color_black"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
 
         <TextView
+            android:id="@+id/redWalletAddressTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginBottom="20dp"
+            android:textColor="@color/app_txt_color_gray_2"
+            android:textSize="12sp"
             tools:text="钱包地址\nasssssss" />
 
-        <View style="@style/BPDashBgLine" />
 
         <ImageView
             android:id="@+id/downloadQrIv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="100dp" />
 
-        <View style="@style/BPDashBgLine" />
 
         <Button
             android:id="@+id/saveShareBtn"
-            style="@style/BPComGreenBgWhiteTextBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/shape_corner_red_1"
             android:gravity="center"
-            android:text="保存并分享" />
+            android:paddingLeft="25dp"
+            android:paddingRight="25dp"
+            android:text="@string/save_and_share"
+            android:textColor="@color/app_color_white" />
 
 
     </LinearLayout>
+
 
 </LinearLayout>
