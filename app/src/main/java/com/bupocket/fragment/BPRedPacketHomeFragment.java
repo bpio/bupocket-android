@@ -1,10 +1,6 @@
 package com.bupocket.fragment;
 
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +17,7 @@ import com.bupocket.R;
 import com.bupocket.adaptor.RedPacketAdapter;
 import com.bupocket.base.BaseTransferFragment;
 import com.bupocket.common.ConstantsType;
+import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.RedPacketService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
@@ -88,6 +85,10 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
     private RedPacketAdapter adapter;
     private String bonusCode;
     private RedPacketDetailModel redPacketDetailModel;
+    int measuredHeight;
+    private static int SCROLL_TIME = 1500;
+    private int LUCE_NUM = 16;
+    private int luckIndex;
 
     @Override
     protected int getLayoutView() {
@@ -131,12 +132,11 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
             List<LuckRedModel> data = redPacketDetailModel.getLatelyData().getData();
             adapter.setNewData(data);
             luckTitleTv.setText(redPacketDetailModel.getLatelyData().getLabel());
+            LUCE_NUM = data.size();
 
             redPacketDetailTitleTv.setText(redPacketDetailModel.getActivityRules().getLabel());
             redPacketDetailTv.setText(redPacketDetailModel.getActivityRules().getData());
-
         }
-//        reqAllData();
 
 
     }
@@ -149,33 +149,37 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
         redPacketLv.postDelayed(new Runnable() {
             @Override
             public void run() {
+                luckIndex = 0;
+                View view = adapter.getView(0, null, redPacketLv);
+                view.measure(0, 0);
+                measuredHeight = view.getMeasuredHeight();
                 scrollLuckListView();
             }
-        },1000);
+        }, 2000);
 
     }
 
     private void scrollLuckListView() {
-        if (adapter.getData()!=null) {
-            if (adapter.getData().size()>0) {
+        if (adapter.getData() != null) {
+            if (adapter.getData().size() > 0) {
                 Runnable redPacketRunnable = new Runnable() {
                     @Override
                     public void run() {
                         while (true) {
                             try {
-                                Thread.sleep(1500);
+                                Thread.sleep(SCROLL_TIME);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
                             if (redPacketLv != null) {
 
-                                View view = adapter.getView(0, null, redPacketLv);
-                                view.measure(0,0);
-                                int measuredHeight = view.getMeasuredHeight();
-                                LogUtils.e(measuredHeight+"measuredHeight");
                                 redPacketLv.smoothScrollBy(measuredHeight, 500);
                             }
-
+                            ++luckIndex;
+                            if (luckIndex == adapter.getData().size()) {
+                                luckIndex = 0;
+                                reqAllData();
+                            }
                         }
                     }
                 };
@@ -188,12 +192,22 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
 
         RedPacketService redPacketService = RetrofitFactory.getInstance().getRetrofit().create(RedPacketService.class);
         HashMap<String, Object> map = new HashMap<>();
-        map.put(ConstantsType.BONUSCODE, "");
+        map.put(ConstantsType.BONUSCODE, bonusCode);
         map.put(ConstantsType.ADDRESS, WalletCurrentUtils.getWalletAddress(spHelper));
         redPacketService.queryRedPacketDetail(map).enqueue(new Callback<ApiResult<RedPacketDetailModel>>() {
             @Override
             public void onResponse(Call<ApiResult<RedPacketDetailModel>> call, Response<ApiResult<RedPacketDetailModel>> response) {
+                ApiResult<RedPacketDetailModel> body = response.body();
+                if (body.getErrCode().equals(ExceptionEnum.SUCCESS.getCode())) {
+                    if (body.getData() != null) {
 
+                        List<LuckRedModel> data = body.getData().getLatelyData().getData();
+                        if (data != null) {
+                            adapter.setNewData(data);
+                        }
+                    }
+
+                }
 
             }
 
@@ -256,7 +270,7 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
 
         String receiver = data.getReceiver();
         if (!TextUtils.isEmpty(receiver)) {
-            redWalletAddressTv.setText(getString(R.string.save_wallet_1)+"\n"+AddressUtil.anonymous(receiver));
+            redWalletAddressTv.setText(getString(R.string.save_wallet_1) + "\n" + AddressUtil.anonymous(receiver));
         }
 
         redPacketDetailLL.setVisibility(View.VISIBLE);

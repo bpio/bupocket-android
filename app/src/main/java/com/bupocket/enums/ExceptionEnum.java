@@ -20,9 +20,9 @@ public enum ExceptionEnum {
     ERROR_BUILD_1035("1035","",R.string.error_1035),
     ERROR_BUILD_1036("1036","",R.string.error_1036),
     ERROR_BUILD_1038("1038","",R.string.error_1038),
-    ERROR_BUILD_10020("100020","",R.string.error_1038),
-    ERROR_BUILD_10021("100021","",R.string.error_1038),
-    ERROR_BUILD_10022("100022","",R.string.error_1038),
+    ERROR_RED_PACKET_NOT_OPEN("100021","not  open ",0),
+    ERROR_RED_PACKET_ALREADY_RECEIVED("100022","already received",0),
+    ERROR_RED_PACKET_ALL_ALREADY_RECEIVED("100023","all already received",0),
     ;
     private final String code;
     private final String message;

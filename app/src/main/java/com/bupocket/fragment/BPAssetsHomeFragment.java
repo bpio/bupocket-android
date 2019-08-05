@@ -1,13 +1,7 @@
 package com.bupocket.fragment;
 
 import android.Manifest;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -21,7 +15,6 @@ import android.widget.*;
 
 import butterknife.BindString;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -31,7 +24,6 @@ import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.activity.RedPacketActivity;
 import com.bupocket.adaptor.TokensAdapter;
-import com.bupocket.base.BaseFragment;
 import com.bupocket.base.BaseTransferFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
@@ -66,7 +58,6 @@ import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LocaleUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.NetworkUtils;
-import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
@@ -80,19 +71,16 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
-import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import butterknife.Unbinder;
 import io.bumo.encryption.key.PublicKey;
 import io.bumo.model.response.TransactionBuildBlobResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.POST;
 
 import java.net.MalformedURLException;
 import java.util.ArrayList;
@@ -483,7 +471,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                     return;
                 }
 
-                if (ExceptionEnum.ERROR_BUILD_10021.getCode().equals(body.getErrCode())) {//close
+                if (ExceptionEnum.ERROR_RED_PACKET_NOT_OPEN.getCode().equals(body.getErrCode())) {//close
                     redPacketTv.setVisibility(View.GONE);
 
                     return;
@@ -516,7 +504,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                         openRedPacketActivity(redPacketNoOpenData, bonusCode);
                     }
                     openStatus = false;
-                } else if (ExceptionEnum.ERROR_BUILD_10022.getCode().equals(errCode)) {//
+                } else if (ExceptionEnum.ERROR_RED_PACKET_ALREADY_RECEIVED.getCode().equals(errCode)) {//
                     openStatus = true;
                     reqRedPacketData();
 
