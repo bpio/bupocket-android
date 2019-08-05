@@ -77,8 +77,8 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
     TextView redPacketDetailTv;
     @BindView(R.id.luckTitleTv)
     TextView luckTitleTv;
-    @BindView(R.id.saveSHareRL)
-    RelativeLayout saveShareRL;
+    @BindView(R.id.shareRedPacketLL)
+    LinearLayout shareRedPacketLL;
 
 
     Unbinder unbinder;
@@ -150,7 +150,7 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
             @Override
             public void run() {
                 luckIndex = 0;
-                if (adapter==null||redPacketLv==null) {
+                if (adapter == null || redPacketLv == null) {
                     return;
                 }
                 View view = adapter.getView(0, null, redPacketLv);
@@ -226,12 +226,7 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
         saveShareBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                cancelRedDetailBtn.setVisibility(View.GONE);
-                saveShareRL.setVisibility(View.GONE);
-                ShareUtils.shareImage(redPacketDetailLL, getActivity());
-                saveShareRL.setVisibility(View.VISIBLE);
-                cancelRedDetailBtn.setVisibility(View.VISIBLE);
+                ShareUtils.shareImage(shareRedPacketLL, getActivity());
             }
         });
     }

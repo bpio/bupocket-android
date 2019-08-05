@@ -69,8 +69,8 @@ public class RedPacketActivity extends Activity {
     TextView redTokenTypeTv;
     @BindView(R.id.redWalletAddressTv)
     TextView redWalletAddressTv;
-    @BindView(R.id.saveSHareRL)
-    RelativeLayout saveSHareRL;
+    @BindView(R.id.shareRedPacketLL)
+    LinearLayout shareRedPacketLL;
 
 
     private Unbinder bind;
@@ -226,11 +226,8 @@ public class RedPacketActivity extends Activity {
 
 
     private void shareRedPacket() {
-
-        cancelRedDetailBtn.setVisibility(View.GONE);
-        saveSHareRL.setVisibility(View.GONE);
-        ShareUtils.shareImage(redPacketDetailLL, this);
-        saveSHareRL.setVisibility(View.VISIBLE);
+        cancelRedDetailBtn.setVisibility(View.INVISIBLE);
+        ShareUtils.shareImage(shareRedPacketLL, this);
         cancelRedDetailBtn.setVisibility(View.VISIBLE);
     }
 
