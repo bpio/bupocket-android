@@ -23,6 +23,7 @@ import butterknife.BindView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import com.bumptech.glide.Glide;
 import com.bupocket.BPMainActivity;
 import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
@@ -134,7 +135,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     @BindView(R.id.ivAssetsInfo)
     ImageView ivAssetsInfo;
     @BindView(R.id.redPacketTv)
-    TextView redPacketTv;
+    ImageView redPacketTv;
 
     protected SharedPreferencesHelper sharedPreferencesHelper;
     private TokensAdapter mTokensAdapter;
@@ -474,9 +475,9 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                 if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {//open
                     OpenStatusModel data = body.getData();
                     if (data.getType().equals("1")) {
-                        bonusCode = data.getActivityId();
+                        bonusCode = data.getBonusId();
                         redPacketTv.setVisibility(View.VISIBLE);
-                        redPacketAnimation(redPacketTv);
+                        Glide.with(getActivity()).load(data.getBonusEntranceImage()).into(redPacketTv);
                         queryRedPacket(bonusCode);
 
                     }
@@ -499,7 +500,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         });
     }
 
-    private void redPacketAnimation(TextView redPacketTv) {
+    private void redPacketAnimation(ImageView redPacketTv) {
 
         RotateAnimation animation =new RotateAnimation(3f,-3f,Animation.RELATIVE_TO_SELF,
                 0.5f,Animation.RELATIVE_TO_SELF,0.5f);
@@ -523,6 +524,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                 ApiResult<BonusInfoBean> body = response.body();
                 RED_PACKET_ERR_CODE = body.getErrCode();
                 if (ExceptionEnum.SUCCESS.getCode().equals(RED_PACKET_ERR_CODE)) {
+                    redPacketAnimation(redPacketTv);
                     redPacketNoOpenData = body.getData();
                     if (redPacketNoOpenData != null) {
                         openRedPacketActivity(redPacketNoOpenData, bonusCode);
@@ -552,6 +554,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                 ApiResult<RedPacketDetailModel> body = response.body();
                 if (body.getErrCode().equals(ExceptionEnum.SUCCESS.getCode())) {
                     redPacketDetailModel = body.getData();
+                    redPacketTv.clearAnimation();
                 }
             }
 
