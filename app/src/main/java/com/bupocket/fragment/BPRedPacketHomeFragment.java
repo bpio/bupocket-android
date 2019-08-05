@@ -270,7 +270,7 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
 
         String receiver = data.getReceiver();
         if (!TextUtils.isEmpty(receiver)) {
-            redWalletAddressTv.setText(getString(R.string.save_wallet_1) + "\n" + AddressUtil.anonymous(receiver));
+            redWalletAddressTv.setText(getString(R.string.save_wallet_1) + "\n(" + AddressUtil.anonymous(receiver)+")");
         }
 
         redPacketDetailLL.setVisibility(View.VISIBLE);

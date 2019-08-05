@@ -228,7 +228,7 @@ public class RedPacketActivity extends Activity {
 
         String receiver = data.getReceiver();
         if (!TextUtils.isEmpty(receiver)) {
-            redWalletAddressTv.setText(getString(R.string.save_wallet) + "\n" + AddressUtil.anonymous(receiver));
+            redWalletAddressTv.setText(getString(R.string.save_wallet) + "\n(" + AddressUtil.anonymous(receiver)+")");
         }
 
         redPacketFirstLL.setVisibility(View.GONE);
