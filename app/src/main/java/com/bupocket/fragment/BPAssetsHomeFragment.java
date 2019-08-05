@@ -514,7 +514,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                 ApiResult<BonusInfoBean> body = response.body();
                 RED_PACKET_ERR_CODE = body.getErrCode();
                 if (ExceptionEnum.SUCCESS.getCode().equals(RED_PACKET_ERR_CODE)) {
-                    RedPacketAnimationUtils.loopRotateAnimation(redPacketTv,true);
+                    RedPacketAnimationUtils.loopRotateAnimation(redPacketTv);
                     redPacketNoOpenData = body.getData();
                     if (redPacketNoOpenData != null) {
                         openRedPacketActivity(redPacketNoOpenData, bonusCode);
@@ -544,7 +544,8 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                 ApiResult<RedPacketDetailModel> body = response.body();
                 if (body.getErrCode().equals(ExceptionEnum.SUCCESS.getCode())) {
                     redPacketDetailModel = body.getData();
-                    RedPacketAnimationUtils.isLoop=false;
+                    redPacketTv.clearAnimation();
+//                    RedPacketAnimationUtils.isLoop=false;
                 }
             }
 
@@ -607,7 +608,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                 reqRedPacketData();
             }else if (resultCode==Integer.parseInt(RedPacketTypeEnum.ALL_ALREADY_RECEIVED.getCode())){
                 redPacketTv.clearAnimation();
-                RedPacketAnimationUtils.isLoop=false;
+//                RedPacketAnimationUtils.isLoop=false;
             }
             return;
         }
