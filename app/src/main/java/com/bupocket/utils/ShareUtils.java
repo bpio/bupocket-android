@@ -21,9 +21,11 @@ public class ShareUtils {
 
 
     public static void shareImage(View view, Activity mActivity) {
+
+
         Bitmap bitmap = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.RGBA_F16);
+            bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.RGBA_F16,false);
         }else{
             bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
         }

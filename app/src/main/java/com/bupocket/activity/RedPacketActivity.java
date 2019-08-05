@@ -160,7 +160,13 @@ public class RedPacketActivity extends Activity {
         animation.setRepeatCount(10);
         openRedPacketBtn.startAnimation(animation);
         openRedPacketBtn.setFocusable(false);
-        openRedPacket();
+        openRedPacketBtn.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                openRedPacket();
+            }
+        },1200);
+
     }
 
     private void openRedPacket() {
