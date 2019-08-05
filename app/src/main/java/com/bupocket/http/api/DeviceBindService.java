@@ -16,10 +16,10 @@ import retrofit2.http.POST;
 public interface DeviceBindService {
 
 
-    @GET("wallet/v1/config4")
+    @GET("wallet/v1/config")
     Call<ApiResult<SKModel>> getConfig();
 
 
-    @POST("activity/v1/check")
+    @POST("wallet/v1/check")
     Call<ApiResult<DeviceBindModel>> deviceBind(@Body Map<String, Object> map);
 }
