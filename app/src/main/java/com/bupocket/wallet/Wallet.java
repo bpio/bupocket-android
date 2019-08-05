@@ -101,7 +101,6 @@ public class Wallet {
             String walletAccountPk = getPk(privateKeys.get(1));
 
             String walletAccountSignData = signData(privateKeys.get(1), walletAccountBean.getAddress());
-
             deviceBind(walletAccountBean.getAddress(), identityAccountBean.getAddress(), walletAccountPk, walletAccountSignData, context);
 
             return walletBPData;
@@ -702,7 +701,7 @@ public class Wallet {
     }
 
 
-    private String signData(String sk, String message) {
+    public String signData(String sk, String message) {
         return HexFormat.byteToHex(PrivateKey.sign(message.getBytes(), sk));
     }
 

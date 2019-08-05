@@ -11,10 +11,6 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.OvershootInterpolator;
-import android.view.animation.RotateAnimation;
-import android.view.animation.TranslateAnimation;
 import android.widget.*;
 
 import butterknife.BindString;
@@ -35,6 +31,7 @@ import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.CustomNodeTypeEnum;
 import com.bupocket.enums.RedPacketTypeEnum;
 import com.bupocket.enums.VoucherStatusEnum;
+import com.bupocket.http.api.DeviceBindService;
 import com.bupocket.http.api.RedPacketService;
 import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.enums.BackupTipsStateEnum;
@@ -55,8 +52,10 @@ import com.bupocket.http.api.dto.resp.GetQRContentDto;
 import com.bupocket.http.api.dto.resp.GetTokensRespDto;
 import com.bupocket.http.api.dto.resp.UserScanQrLoginDto;
 import com.bupocket.model.BonusInfoBean;
+import com.bupocket.model.DeviceBindModel;
 import com.bupocket.model.OpenStatusModel;
 import com.bupocket.model.RedPacketDetailModel;
+import com.bupocket.model.SKModel;
 import com.bupocket.model.TransConfirmModel;
 import com.bupocket.model.UDCBUModel;
 import com.bupocket.utils.CommonUtil;
@@ -161,7 +160,8 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
 
     private BonusInfoBean redPacketNoOpenData;
     private RedPacketDetailModel redPacketDetailModel;
-    public static String RED_PACKET_ERR_CODE ="-1";
+    public static String RED_PACKET_ERR_CODE = "-1";
+    private String sk;
 
     @Override
     protected int getLayoutView() {
@@ -253,9 +253,9 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
 
                 if (RED_PACKET_ERR_CODE.equals(RedPacketTypeEnum.OPEN_RED_PACKET.getCode())) {
                     openRedPacketDetailFragment();
-                }else if (RED_PACKET_ERR_CODE.equals(RedPacketTypeEnum.ALL_ALREADY_RECEIVED.getCode())){
+                } else if (RED_PACKET_ERR_CODE.equals(RedPacketTypeEnum.ALL_ALREADY_RECEIVED.getCode())) {
                     openRedPacketActivity(redPacketNoOpenData, "");
-                }else if (RED_PACKET_ERR_CODE.equals(RedPacketTypeEnum.CLOSE_RED_PACKET.getCode())){
+                } else if (RED_PACKET_ERR_CODE.equals(RedPacketTypeEnum.CLOSE_RED_PACKET.getCode())) {
                     openRedPacketActivity(redPacketNoOpenData, bonusCode);
                 }
             }
@@ -264,7 +264,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
 
     private void openRedPacketDetailFragment() {
 
-        if (redPacketDetailModel==null) {
+        if (redPacketDetailModel == null) {
             return;
         }
         BPRedPacketHomeFragment bpRedPacketHomeFragment = new BPRedPacketHomeFragment();
@@ -435,6 +435,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     }
 
     public void initData() {
+        getSkData();
         mTokenList = new ArrayList<>();
         QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
@@ -458,6 +459,28 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         refreshLayout.autoRefresh();
         initPermission();
         reqOpenRedPacketStatus();
+
+    }
+
+    private void getSkData() {
+
+        DeviceBindService deviceBindService = RetrofitFactory.getInstance().getRetrofit().create(DeviceBindService.class);
+        deviceBindService.getConfig().enqueue(new Callback<ApiResult<SKModel>>() {
+            @Override
+            public void onResponse(Call<ApiResult<SKModel>> call, Response<ApiResult<SKModel>> response) {
+                ApiResult<SKModel> body = response.body();
+                if (body != null) {
+                    if (body.getErrCode().equals(ExceptionEnum.SUCCESS.getCode())) {
+                        sk = body.getData().getSk();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<SKModel>> call, Throwable t) {
+
+            }
+        });
     }
 
     private void reqOpenRedPacketStatus() {
@@ -521,14 +544,44 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                     }
                 } else if (ExceptionEnum.ERROR_RED_PACKET_ALREADY_RECEIVED.getCode().equals(RED_PACKET_ERR_CODE)) {//
                     reqRedPacketData();
-                }else if (ExceptionEnum.ERROR_RED_PACKET_ALL_ALREADY_RECEIVED.getCode().equals(RED_PACKET_ERR_CODE)){
+                } else if (ExceptionEnum.ERROR_RED_PACKET_ALL_ALREADY_RECEIVED.getCode().equals(RED_PACKET_ERR_CODE)) {
                     redPacketNoOpenData = body.getData();
+                } else if (ExceptionEnum.ERROR_RED_PACKET_UNBIND_DEVICE.getCode().equals(RED_PACKET_ERR_CODE)) {
+
+                    bindDevice();
                 }
             }
 
             @Override
             public void onFailure(Call<ApiResult<BonusInfoBean>> call, Throwable t) {
                 LogUtils.e("");
+            }
+        });
+    }
+
+    private void bindDevice() {
+        DeviceBindService deviceBindService = RetrofitFactory.getInstance().getRetrofit().create(DeviceBindService.class);
+        HashMap<String, Object> map = new HashMap<>();
+        String walletAddress = WalletCurrentUtils.getWalletAddress(spHelper);
+        map.put(ConstantsType.WALLETADDRESS, walletAddress);
+        map.put(ConstantsType.IDENTITYADDRESS, WalletCurrentUtils.getIdentityAddress(spHelper));
+        map.put(ConstantsType.DEVICEID, CommonUtil.getUniqueId(mContext));
+        String walletAccountSignData = Wallet.getInstance().signData(sk, walletAddress);
+        map.put(ConstantsType.SIGNDATA, walletAccountSignData);
+        deviceBindService.deviceBind(map).enqueue(new Callback<ApiResult<DeviceBindModel>>() {
+            @Override
+            public void onResponse(Call<ApiResult<DeviceBindModel>> call, Response<ApiResult<DeviceBindModel>> response) {
+                ApiResult<DeviceBindModel> body = response.body();
+                if (body != null) {
+                    if (body.getErrCode().equals(ExceptionEnum.SUCCESS.getCode())) {
+                        queryRedPacket(bonusCode);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<DeviceBindModel>> call, Throwable t) {
+
             }
         });
     }
@@ -602,11 +655,11 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        LogUtils.e(requestCode+"+requestCode+"+resultCode);
+        LogUtils.e(requestCode + "+requestCode+" + resultCode);
         if (requestCode == REQUEST_CODE_RED_PACKET) {
-            if (resultCode==1){
+            if (resultCode == 1) {
                 reqRedPacketData();
-            }else if (resultCode==Integer.parseInt(RedPacketTypeEnum.ALL_ALREADY_RECEIVED.getCode())){
+            } else if (resultCode == Integer.parseInt(RedPacketTypeEnum.ALL_ALREADY_RECEIVED.getCode())) {
                 redPacketTv.clearAnimation();
 //                RedPacketAnimationUtils.isLoop=false;
             }
