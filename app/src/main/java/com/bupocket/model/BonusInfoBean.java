@@ -11,6 +11,15 @@ public class BonusInfoBean  implements Serializable {
     private String amount;
     private String tokenSymbol;
     private String receiver;
+    private String BonusOverImage;
+
+    public String getBonusOverImage() {
+        return BonusOverImage;
+    }
+
+    public void setBonusOverImage(String bonusOverImage) {
+        BonusOverImage = bonusOverImage;
+    }
 
     public String getTopImage() {
         return topImage;

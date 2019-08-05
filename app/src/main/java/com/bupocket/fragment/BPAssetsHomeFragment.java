@@ -28,6 +28,7 @@ import com.bupocket.base.BaseTransferFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.CustomNodeTypeEnum;
+import com.bupocket.enums.RedPacketTypeEnum;
 import com.bupocket.enums.VoucherStatusEnum;
 import com.bupocket.http.api.RedPacketService;
 import com.bupocket.interfaces.SignatureListener;
@@ -154,7 +155,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
 
     private BonusInfoBean redPacketNoOpenData;
     private RedPacketDetailModel redPacketDetailModel;
-    public static boolean openStatus;
+    public static String RED_PACKET_ERR_CODE ="-1";
 
     @Override
     protected int getLayoutView() {
@@ -244,9 +245,11 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
             @Override
             public void onClick(View v) {
 
-                if (openStatus) {
+                if (RED_PACKET_ERR_CODE.equals(RedPacketTypeEnum.OPEN_RED_PACKET.getCode())) {
                     openRedPacketDetailFragment();
-                } else {
+                }else if (RED_PACKET_ERR_CODE.equals(RedPacketTypeEnum.ALL_ALREADY_RECEIVED.getCode())){
+                    openRedPacketActivity(redPacketNoOpenData, "");
+                }else if (RED_PACKET_ERR_CODE.equals(RedPacketTypeEnum.CLOSE_RED_PACKET.getCode())){
                     openRedPacketActivity(redPacketNoOpenData, bonusCode);
                 }
             }
@@ -254,6 +257,10 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     }
 
     private void openRedPacketDetailFragment() {
+
+        if (redPacketDetailModel==null) {
+            return;
+        }
         BPRedPacketHomeFragment bpRedPacketHomeFragment = new BPRedPacketHomeFragment();
         Bundle args = new Bundle();
         args.putString(ConstantsType.BONUSCODE, bonusCode);
@@ -497,17 +504,16 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
             @Override
             public void onResponse(Call<ApiResult<BonusInfoBean>> call, Response<ApiResult<BonusInfoBean>> response) {
                 ApiResult<BonusInfoBean> body = response.body();
-                String errCode = body.getErrCode();
-                if (ExceptionEnum.SUCCESS.getCode().equals(errCode)) {
+                RED_PACKET_ERR_CODE = body.getErrCode();
+                if (ExceptionEnum.SUCCESS.getCode().equals(RED_PACKET_ERR_CODE)) {
                     redPacketNoOpenData = body.getData();
                     if (redPacketNoOpenData != null) {
                         openRedPacketActivity(redPacketNoOpenData, bonusCode);
                     }
-                    openStatus = false;
-                } else if (ExceptionEnum.ERROR_RED_PACKET_ALREADY_RECEIVED.getCode().equals(errCode)) {//
-                    openStatus = true;
+                } else if (ExceptionEnum.ERROR_RED_PACKET_ALREADY_RECEIVED.getCode().equals(RED_PACKET_ERR_CODE)) {//
                     reqRedPacketData();
-
+                }else if (ExceptionEnum.ERROR_RED_PACKET_ALL_ALREADY_RECEIVED.getCode().equals(RED_PACKET_ERR_CODE)){
+                    redPacketNoOpenData = body.getData();
                 }
             }
 

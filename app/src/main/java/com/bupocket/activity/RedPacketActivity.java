@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bupocket.R;
-import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.RedPacketTypeEnum;
@@ -25,13 +23,11 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.BonusInfoBean;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.AnimationUtils;
-import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.ShareUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.makeramen.roundedimageview.RoundedImageView;
 
-import java.io.Serializable;
 import java.util.HashMap;
 
 import butterknife.BindView;
@@ -98,12 +94,10 @@ public class RedPacketActivity extends Activity {
             String openStatus = intent.getStringExtra(ConstantsType.REDOPENSTATUS);
             if (!TextUtils.isEmpty(openStatus)) {
                 if (openStatus.equals(RedPacketTypeEnum.CLOSE_RED_PACKET.getCode())) {
-                    this.openStatus = false;
-                    bonusCode = intent.getStringExtra(ConstantsType.BONUSCODE);
-                    Bundle extras = intent.getExtras();
-                    bonusInfoBean = ((BonusInfoBean) extras.getSerializable(ConstantsType.BONUSINFOBEAN));
 
-                    setNoOpenRedPacketView(bonusInfoBean);
+                    setNoOpenRedPacketView();
+                } else if (openStatus.equals(RedPacketTypeEnum.ALL_ALREADY_RECEIVED.getCode())) {
+                    setAlreadyReceivedView();
                 }
 
             }
@@ -113,7 +107,20 @@ public class RedPacketActivity extends Activity {
 
     }
 
-    private void setNoOpenRedPacketView(BonusInfoBean bonusInfoBean) {
+    private void setAlreadyReceivedView() {
+        redPacketFirstLL.setVisibility(View.VISIBLE);
+        openRedPacketBtn.setVisibility(View.INVISIBLE);
+        Bundle extras = getIntent().getExtras();
+        bonusInfoBean = ((BonusInfoBean) extras.getSerializable(ConstantsType.BONUSINFOBEAN));
+        Glide.with(this).load(bonusInfoBean.getTopImage()).into(noOpenRedBgIv);
+    }
+
+    private void setNoOpenRedPacketView() {
+        redPacketFirstLL.setVisibility(View.VISIBLE);
+        this.openStatus = false;
+        bonusCode = getIntent().getStringExtra(ConstantsType.BONUSCODE);
+        Bundle extras = getIntent().getExtras();
+        bonusInfoBean = ((BonusInfoBean) extras.getSerializable(ConstantsType.BONUSINFOBEAN));
         Glide.with(this).load(bonusInfoBean.getTopImage()).into(noOpenRedBgIv);
     }
 
@@ -147,7 +154,7 @@ public class RedPacketActivity extends Activity {
     }
 
     private void openAnimation() {
-        AnimationUtils animation = new AnimationUtils ();
+        AnimationUtils animation = new AnimationUtils();
         animation.setRepeatCount(10);
         openRedPacketBtn.startAnimation(animation);
         openRedPacketBtn.setFocusable(false);
@@ -169,7 +176,14 @@ public class RedPacketActivity extends Activity {
                     if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
                         BonusInfoBean data = body.getData();
                         initOpenRedPacketView(data);
-                        BPAssetsHomeFragment.openStatus = true;
+                        BPAssetsHomeFragment.RED_PACKET_ERR_CODE = RedPacketTypeEnum.OPEN_RED_PACKET.getCode();
+                    } else if (ExceptionEnum.ERROR_RED_PACKET_ALL_ALREADY_RECEIVED.getCode().equals(body.getErrCode())) {
+                        BonusInfoBean data = body.getData();
+                        String bonusOverImage = data.getBonusOverImage();
+//                        setAlreadyReceivedView();
+                        redPacketFirstLL.setVisibility(View.VISIBLE);
+                        openRedPacketBtn.setVisibility(View.INVISIBLE);
+                        Glide.with(RedPacketActivity.this).load(bonusOverImage).into(noOpenRedBgIv);
                     }
                 }
             }

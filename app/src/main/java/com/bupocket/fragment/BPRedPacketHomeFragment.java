@@ -87,7 +87,7 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
     private RedPacketDetailModel redPacketDetailModel;
     int measuredHeight;
     private static int SCROLL_TIME = 1500;
-    private int LUCE_NUM = 16;
+    private int LUCE_NUM = 40;
     private int luckIndex;
 
     @Override
@@ -132,7 +132,7 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
             List<LuckRedModel> data = redPacketDetailModel.getLatelyData().getData();
             adapter.setNewData(data);
             luckTitleTv.setText(redPacketDetailModel.getLatelyData().getLabel());
-            LUCE_NUM = data.size();
+//            LUCE_NUM = data.size();
 
             redPacketDetailTitleTv.setText(redPacketDetailModel.getActivityRules().getLabel());
             redPacketDetailTv.setText(redPacketDetailModel.getActivityRules().getData());
@@ -150,6 +150,9 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
             @Override
             public void run() {
                 luckIndex = 0;
+                if (adapter==null||redPacketLv==null) {
+                    return;
+                }
                 View view = adapter.getView(0, null, redPacketLv);
                 view.measure(0, 0);
                 measuredHeight = view.getMeasuredHeight();
@@ -176,8 +179,8 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
                                 redPacketLv.smoothScrollBy(measuredHeight, 500);
                             }
                             ++luckIndex;
-                            if (luckIndex == adapter.getData().size()) {
-                                luckIndex = 0;
+                            if (luckIndex == LUCE_NUM) {
+                                luckIndex = 40;
                                 reqAllData();
                             }
                         }
