@@ -24,6 +24,7 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.BonusInfoBean;
 import com.bupocket.utils.AddressUtil;
+import com.bupocket.utils.AnimationUtils;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.ShareUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
@@ -129,7 +130,7 @@ public class RedPacketActivity extends Activity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.openRedPacketBtn:
-                openRedPacket();
+                openAnimation();
                 break;
             case R.id.closeRedBtn:
                 finish();
@@ -145,6 +146,14 @@ public class RedPacketActivity extends Activity {
         }
     }
 
+    private void openAnimation() {
+        AnimationUtils animation = new AnimationUtils ();
+        animation.setRepeatCount(10);
+        openRedPacketBtn.startAnimation(animation);
+        openRedPacketBtn.setFocusable(false);
+        openRedPacket();
+    }
+
     private void openRedPacket() {
         final RedPacketService redPacketService = RetrofitFactory.getInstance().getRetrofit().create(RedPacketService.class);
         HashMap<String, Object> map = new HashMap<>();
@@ -154,6 +163,7 @@ public class RedPacketActivity extends Activity {
         redPacketService.openRedPacket(map).enqueue(new Callback<ApiResult<BonusInfoBean>>() {
             @Override
             public void onResponse(Call<ApiResult<BonusInfoBean>> call, Response<ApiResult<BonusInfoBean>> response) {
+                openRedPacketBtn.setFocusable(true);
                 ApiResult<BonusInfoBean> body = response.body();
                 if (body != null && !TextUtils.isEmpty(body.getErrCode())) {
                     if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
@@ -166,7 +176,7 @@ public class RedPacketActivity extends Activity {
 
             @Override
             public void onFailure(Call<ApiResult<BonusInfoBean>> call, Throwable t) {
-
+                openRedPacketBtn.setFocusable(true);
             }
         });
     }
