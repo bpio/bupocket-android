@@ -42,7 +42,10 @@ public class RedPacketAnimationUtils extends Animation {
         matrix.postTranslate(centerX, centerY);
         camera.restore();
     }
-
+    public static void loopRotateAnimation(final View view,boolean loop) {
+        isLoop=loop;
+        loopRotateAnimation(view);
+    }
 
     public static void loopRotateAnimation(final View view) {
         if (isLoop==false) {
@@ -54,7 +57,6 @@ public class RedPacketAnimationUtils extends Animation {
         animation.setDuration(100);
         animation.setStartOffset(100);
         animation.setRepeatCount(1);
-//        animation.setRepeatMode(Animation.REVERSE);
         view.startAnimation(animation);
         animation.setAnimationListener(new AnimationListener() {
             @Override

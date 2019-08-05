@@ -514,7 +514,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                 ApiResult<BonusInfoBean> body = response.body();
                 RED_PACKET_ERR_CODE = body.getErrCode();
                 if (ExceptionEnum.SUCCESS.getCode().equals(RED_PACKET_ERR_CODE)) {
-                    RedPacketAnimationUtils.loopRotateAnimation(redPacketTv);
+                    RedPacketAnimationUtils.loopRotateAnimation(redPacketTv,true);
                     redPacketNoOpenData = body.getData();
                     if (redPacketNoOpenData != null) {
                         openRedPacketActivity(redPacketNoOpenData, bonusCode);
