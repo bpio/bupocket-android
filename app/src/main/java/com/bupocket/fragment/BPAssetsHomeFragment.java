@@ -11,6 +11,9 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.*;
 
 import butterknife.BindString;
@@ -472,6 +475,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                     if (data.getType().equals("1")) {
                         bonusCode = data.getActivityId();
                         redPacketTv.setVisibility(View.VISIBLE);
+                        redPacketAnimation(redPacketTv);
                         queryRedPacket(bonusCode);
 
                     }
@@ -492,6 +496,15 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
 
             }
         });
+    }
+
+    private void redPacketAnimation(TextView redPacketTv) {
+        TranslateAnimation animation = new TranslateAnimation(0, -5, 0, 0);
+        animation.setInterpolator(new OvershootInterpolator());
+        animation.setDuration(100);
+        animation.setRepeatCount(-1);
+        animation.setRepeatMode(Animation.REVERSE);
+        redPacketTv.startAnimation(animation);
     }
 
     private void queryRedPacket(final String bonusCode) {

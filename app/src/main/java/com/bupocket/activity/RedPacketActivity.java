@@ -112,7 +112,7 @@ public class RedPacketActivity extends Activity {
         openRedPacketBtn.setVisibility(View.INVISIBLE);
         Bundle extras = getIntent().getExtras();
         bonusInfoBean = ((BonusInfoBean) extras.getSerializable(ConstantsType.BONUSINFOBEAN));
-        Glide.with(this).load(bonusInfoBean.getTopImage()).into(noOpenRedBgIv);
+        Glide.with(this).load(bonusInfoBean.getBonusOverImage()).into(noOpenRedBgIv);
     }
 
     private void setNoOpenRedPacketView() {
@@ -171,6 +171,7 @@ public class RedPacketActivity extends Activity {
             @Override
             public void onResponse(Call<ApiResult<BonusInfoBean>> call, Response<ApiResult<BonusInfoBean>> response) {
                 openRedPacketBtn.setFocusable(true);
+                openRedPacketBtn.clearAnimation();
                 ApiResult<BonusInfoBean> body = response.body();
                 if (body != null && !TextUtils.isEmpty(body.getErrCode())) {
                     if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
@@ -190,6 +191,7 @@ public class RedPacketActivity extends Activity {
 
             @Override
             public void onFailure(Call<ApiResult<BonusInfoBean>> call, Throwable t) {
+                openRedPacketBtn.clearAnimation();
                 openRedPacketBtn.setFocusable(true);
             }
         });
