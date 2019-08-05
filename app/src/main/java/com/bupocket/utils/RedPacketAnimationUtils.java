@@ -56,44 +56,45 @@ public class RedPacketAnimationUtils extends Animation {
         animation.setInterpolator(new OvershootInterpolator());
         animation.setDuration(100);
         animation.setStartOffset(100);
-        animation.setRepeatCount(1);
+        animation.setRepeatCount(-1);
+        animation.setRepeatMode(Animation.REVERSE);
         view.startAnimation(animation);
-        animation.setAnimationListener(new AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0, 0);
-                translateAnimation.setInterpolator(new OvershootInterpolator());
-                translateAnimation.setDuration(3000);
-                translateAnimation.setRepeatCount(1);
-                view.startAnimation(translateAnimation);
-                translateAnimation.setAnimationListener(new AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        loopRotateAnimation(view);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
+//        animation.setAnimationListener(new AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//                TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0, 0);
+//                translateAnimation.setInterpolator(new OvershootInterpolator());
+//                translateAnimation.setDuration(3000);
+//                translateAnimation.setRepeatCount(1);
+//                view.startAnimation(translateAnimation);
+//                translateAnimation.setAnimationListener(new AnimationListener() {
+//                    @Override
+//                    public void onAnimationStart(Animation animation) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onAnimationEnd(Animation animation) {
+//                        loopRotateAnimation(view);
+//                    }
+//
+//                    @Override
+//                    public void onAnimationRepeat(Animation animation) {
+//
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//
+//            }
+//        });
 
 
     }
