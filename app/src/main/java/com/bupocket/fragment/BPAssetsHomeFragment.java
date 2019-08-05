@@ -64,6 +64,7 @@ import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LocaleUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.NetworkUtils;
+import com.bupocket.utils.RedPacketAnimationUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
@@ -524,7 +525,8 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                 ApiResult<BonusInfoBean> body = response.body();
                 RED_PACKET_ERR_CODE = body.getErrCode();
                 if (ExceptionEnum.SUCCESS.getCode().equals(RED_PACKET_ERR_CODE)) {
-                    redPacketAnimation(redPacketTv);
+//                    redPacketAnimation(redPacketTv);
+                    RedPacketAnimationUtils.loopRotateAnimation(redPacketTv);
                     redPacketNoOpenData = body.getData();
                     if (redPacketNoOpenData != null) {
                         openRedPacketActivity(redPacketNoOpenData, bonusCode);

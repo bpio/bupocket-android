@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -22,7 +21,7 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.BonusInfoBean;
 import com.bupocket.utils.AddressUtil;
-import com.bupocket.utils.AnimationUtils;
+import com.bupocket.utils.RedPacketAnimationUtils;
 import com.bupocket.utils.ShareUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.WalletCurrentUtils;
@@ -154,7 +153,7 @@ public class RedPacketActivity extends Activity {
     }
 
     private void openAnimation() {
-        AnimationUtils animation = new AnimationUtils();
+        RedPacketAnimationUtils animation = new RedPacketAnimationUtils();
         animation.setRepeatCount(10);
         openRedPacketBtn.startAnimation(animation);
         openRedPacketBtn.setFocusable(false);
