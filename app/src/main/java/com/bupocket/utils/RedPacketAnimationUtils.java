@@ -5,6 +5,7 @@ import android.graphics.Matrix;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.Transformation;
@@ -51,13 +52,12 @@ public class RedPacketAnimationUtils extends Animation {
 //        if (isLoop==false) {
 //            return;
 //        }
-        RotateAnimation animation = new RotateAnimation(3f, -3f, Animation.RELATIVE_TO_SELF,
+        RotateAnimation animation = new RotateAnimation(5f, -5f, Animation.RELATIVE_TO_SELF,
                 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        animation.setInterpolator(new OvershootInterpolator());
-        animation.setDuration(200);
-        animation.setStartOffset(10);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setDuration(150);
         animation.setRepeatCount(-1);
-        animation.setRepeatMode(Animation.REVERSE);
+        animation.setRepeatMode(Animation.REVERSE );
         view.startAnimation(animation);
 //        animation.setAnimationListener(new AnimationListener() {
 //            @Override
