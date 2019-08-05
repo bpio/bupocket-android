@@ -205,7 +205,9 @@ public class RedPacketActivity extends Activity {
     }
 
     private void initOpenRedPacketView(BonusInfoBean data) {
-        Glide.with(this).load(data.getTopImage()).into(redTopIv);
+        Glide.with(this).load(data.getTopImage())
+                .error(R.mipmap.ic_red_packet_empty)
+                .into(redTopIv);
         Glide.with(this).load(data.getBottomImage()).into(downloadQrIv);
         Glide.with(this).load(data.getIssuerPhoto()).into(redHeadIv);
 

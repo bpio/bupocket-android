@@ -24,9 +24,8 @@
             <ImageView
                 android:id="@+id/redTopIv"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="25dp"
-                android:background="@mipmap/ic_red_packet_empty"
                 android:scaleType="fitXY" />
 
             <ImageView
