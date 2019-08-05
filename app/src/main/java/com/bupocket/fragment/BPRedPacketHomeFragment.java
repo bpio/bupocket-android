@@ -98,7 +98,7 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
     protected void initView() {
         initTopBar();
         initListView();
-        cancelRedDetailBtn.setVisibility(View.GONE);
+
     }
 
     private void initListView() {
@@ -119,6 +119,7 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
 
     @Override
     protected void initData() {
+        cancelRedDetailBtn.setVisibility(View.GONE);
         Bundle arguments = getArguments();
         if (arguments != null) {
             bonusCode = arguments.getString(ConstantsType.BONUSCODE);
@@ -209,10 +210,11 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
             @Override
             public void onClick(View v) {
 
-
+                cancelRedDetailBtn.setVisibility(View.GONE);
                 saveShareRL.setVisibility(View.GONE);
                 ShareUtils.shareImage(redPacketDetailLL, getActivity());
                 saveShareRL.setVisibility(View.VISIBLE);
+                cancelRedDetailBtn.setVisibility(View.VISIBLE);
             }
         });
     }

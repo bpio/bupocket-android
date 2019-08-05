@@ -203,9 +203,11 @@ public class RedPacketActivity extends Activity {
 
     private void shareRedPacket() {
 
+        cancelRedDetailBtn.setVisibility(View.GONE);
         saveSHareRL.setVisibility(View.GONE);
         ShareUtils.shareImage(redPacketDetailLL, this);
         saveSHareRL.setVisibility(View.VISIBLE);
+        cancelRedDetailBtn.setVisibility(View.VISIBLE);
     }
 
 
