@@ -135,7 +135,22 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
 //            LUCE_NUM = data.size();
 
             redPacketDetailTitleTv.setText(redPacketDetailModel.getActivityRules().getLabel());
-            redPacketDetailTv.setText(redPacketDetailModel.getActivityRules().getData());
+            String ruleData = redPacketDetailModel.getActivityRules().getData();
+
+            if (!TextUtils.isEmpty(ruleData)) {
+                String[] split = ruleData.split("；");
+                ruleData="";
+                for (int i = 0; i < split.length; i++) {
+                    if (i==split.length-1){
+                        ruleData=ruleData+split[i];
+                    }else{
+                        ruleData=ruleData+split[i]+"；\n";
+                    }
+
+                }
+                redPacketDetailTv.setText(ruleData);
+            }
+
         }
 
 
