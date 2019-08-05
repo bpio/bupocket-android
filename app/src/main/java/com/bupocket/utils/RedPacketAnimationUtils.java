@@ -48,14 +48,14 @@ public class RedPacketAnimationUtils extends Animation {
     }
 
     public static void loopRotateAnimation(final View view) {
-        if (isLoop==false) {
-            return;
-        }
+//        if (isLoop==false) {
+//            return;
+//        }
         RotateAnimation animation = new RotateAnimation(3f, -3f, Animation.RELATIVE_TO_SELF,
                 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         animation.setInterpolator(new OvershootInterpolator());
-        animation.setDuration(100);
-        animation.setStartOffset(100);
+        animation.setDuration(200);
+        animation.setStartOffset(10);
         animation.setRepeatCount(-1);
         animation.setRepeatMode(Animation.REVERSE);
         view.startAnimation(animation);

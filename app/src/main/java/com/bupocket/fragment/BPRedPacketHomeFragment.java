@@ -216,6 +216,9 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
             @Override
             public void onResponse(Call<ApiResult<RedPacketDetailModel>> call, Response<ApiResult<RedPacketDetailModel>> response) {
                 ApiResult<RedPacketDetailModel> body = response.body();
+                if (body==null) {
+                    return;
+                }
                 if (body.getErrCode().equals(ExceptionEnum.SUCCESS.getCode())) {
                     if (body.getData() != null) {
 
