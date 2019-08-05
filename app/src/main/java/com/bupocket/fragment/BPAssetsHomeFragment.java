@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
+import android.view.animation.RotateAnimation;
 import android.view.animation.TranslateAnimation;
 import android.widget.*;
 
@@ -499,9 +500,12 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     }
 
     private void redPacketAnimation(TextView redPacketTv) {
-        TranslateAnimation animation = new TranslateAnimation(0, -5, 0, 0);
+
+        RotateAnimation animation =new RotateAnimation(3f,-3f,Animation.RELATIVE_TO_SELF,
+                0.5f,Animation.RELATIVE_TO_SELF,0.5f);
         animation.setInterpolator(new OvershootInterpolator());
         animation.setDuration(100);
+        animation.setStartOffset(100);
         animation.setRepeatCount(-1);
         animation.setRepeatMode(Animation.REVERSE);
         redPacketTv.startAnimation(animation);
