@@ -45,7 +45,7 @@ public class LogUtils {
     private static final String mTag = "mmmmbumo";
 
     /* 是否允许输出log LEVEL_NONE时候不输出日志 */
-    public static int mDebuggable = LEVEL_NONE;
+    public static int mDebuggable = 5;
 
     /**
      */

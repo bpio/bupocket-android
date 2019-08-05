@@ -184,12 +184,12 @@ public class Wallet {
     }
 
 
-    public WalletBPData updateAccountWalletPassword(String oblPwd, String newPwd, String privData, Context context) throws WalletException {
+    public WalletBPData updateAccountWalletPassword(String oblPwd, String newPwd, String privData,String identityAddress, Context context) throws WalletException {
         try {
 
             BaseKeyStoreEntity baseKeyStoreEntity = JSON.parseObject(privData, BaseKeyStoreEntity.class);
             String decodePrivData = KeyStore.decodeMsg(oblPwd, baseKeyStoreEntity);
-            return importPrivateKey(newPwd, decodePrivData);
+            return importPrivateKey(newPwd, decodePrivData,identityAddress,context);
         } catch (Exception e) {
             e.printStackTrace();
             throw new WalletException(ExceptionEnum.SYS_ERR.getCode(), ExceptionEnum.SYS_ERR.getMessage());
@@ -836,7 +836,7 @@ public class Wallet {
         return senderPrivateKey;
     }
 
-    public WalletBPData importKeystore(String password, String keystore) throws Exception {
+    public WalletBPData importKeystore(String password, String keystore,String  identityAddress,Context context) throws Exception {
         String privateKey = KeyStore.decipherKeyStore(password, JSON.parseObject(keystore, KeyStoreEntity.class));
         if (!privateKey.startsWith("priv")) {
             throw new Exception();
@@ -851,10 +851,16 @@ public class Wallet {
         accountsBeans.add(accountsBean);
         walletBPData.setAccounts(accountsBeans);
         walletBPData.setSkey(JSON.toJSONString(keyStoreEntity));
+
+
+        String walletAccountPk = getPk(privateKey);
+        String walletAccountSignData = signData(privateKey, address);
+        deviceBind(address, identityAddress, walletAccountPk, walletAccountSignData, context);
+
         return walletBPData;
     }
 
-    public WalletBPData importPrivateKey(String password, String privateKey) throws Exception {
+    public WalletBPData importPrivateKey(String password, String privateKey,String identityAddress,Context context) throws Exception {
         String address = new PrivateKey(privateKey).getEncAddress();
         KeyStoreEntity keyStoreEntity = KeyStore.generateKeyStore(password, privateKey, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 2);
         WalletBPData walletBPData = new WalletBPData();
@@ -865,6 +871,11 @@ public class Wallet {
         accountsBeans.add(accountsBean);
         walletBPData.setAccounts(accountsBeans);
         walletBPData.setSkey(JSON.toJSONString(keyStoreEntity));
+
+
+        String walletAccountPk = getPk(privateKey);
+        String walletAccountSignData = signData(privateKey, address);
+        deviceBind(address, identityAddress, walletAccountPk, walletAccountSignData, context);
         return walletBPData;
     }
 
