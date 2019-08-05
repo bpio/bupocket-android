@@ -11,6 +11,9 @@ import android.view.animation.Transformation;
 import android.view.animation.TranslateAnimation;
 
 public class RedPacketAnimationUtils extends Animation {
+
+    public static boolean isLoop=true;
+
     int centerX, centerY;
     Camera camera = new Camera();
 
@@ -42,6 +45,9 @@ public class RedPacketAnimationUtils extends Animation {
 
 
     public static void loopRotateAnimation(final View view) {
+        if (isLoop==false) {
+            return;
+        }
         RotateAnimation animation = new RotateAnimation(3f, -3f, Animation.RELATIVE_TO_SELF,
                 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         animation.setInterpolator(new OvershootInterpolator());

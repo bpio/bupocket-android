@@ -93,7 +93,6 @@ public class RedPacketActivity extends Activity {
             String openStatus = intent.getStringExtra(ConstantsType.REDOPENSTATUS);
             if (!TextUtils.isEmpty(openStatus)) {
                 if (openStatus.equals(RedPacketTypeEnum.CLOSE_RED_PACKET.getCode())) {
-
                     setNoOpenRedPacketView();
                 } else if (openStatus.equals(RedPacketTypeEnum.ALL_ALREADY_RECEIVED.getCode())) {
                     setAlreadyReceivedView();
@@ -139,6 +138,10 @@ public class RedPacketActivity extends Activity {
                 openAnimation();
                 break;
             case R.id.closeRedBtn:
+
+                if (openRedPacketBtn.getVisibility()==View.INVISIBLE){
+                    setResult(Integer.parseInt(RedPacketTypeEnum.ALL_ALREADY_RECEIVED.getCode()));
+                }
                 finish();
                 break;
             case R.id.cancelRedDetailBtn:
@@ -180,7 +183,6 @@ public class RedPacketActivity extends Activity {
                     } else if (ExceptionEnum.ERROR_RED_PACKET_ALL_ALREADY_RECEIVED.getCode().equals(body.getErrCode())) {
                         BonusInfoBean data = body.getData();
                         String bonusOverImage = data.getBonusOverImage();
-//                        setAlreadyReceivedView();
                         redPacketFirstLL.setVisibility(View.VISIBLE);
                         openRedPacketBtn.setVisibility(View.INVISIBLE);
                         Glide.with(RedPacketActivity.this).load(bonusOverImage).into(noOpenRedBgIv);

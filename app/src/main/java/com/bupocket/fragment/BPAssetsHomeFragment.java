@@ -556,7 +556,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                 ApiResult<RedPacketDetailModel> body = response.body();
                 if (body.getErrCode().equals(ExceptionEnum.SUCCESS.getCode())) {
                     redPacketDetailModel = body.getData();
-                    redPacketTv.clearAnimation();
+                    RedPacketAnimationUtils.isLoop=false;
                 }
             }
 
@@ -613,9 +613,14 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        LogUtils.e(requestCode+"+requestCode+"+requestCode);
-        if (requestCode == REQUEST_CODE_RED_PACKET && resultCode == 1) {
-            reqRedPacketData();
+        LogUtils.e(requestCode+"+requestCode+"+resultCode);
+        if (requestCode == REQUEST_CODE_RED_PACKET) {
+            if (resultCode==1){
+                reqRedPacketData();
+            }else if (resultCode==Integer.parseInt(RedPacketTypeEnum.ALL_ALREADY_RECEIVED.getCode())){
+                redPacketTv.clearAnimation();
+                RedPacketAnimationUtils.isLoop=false;
+            }
             return;
         }
 
