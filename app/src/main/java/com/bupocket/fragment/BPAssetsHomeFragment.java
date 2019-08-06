@@ -82,6 +82,8 @@ import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
+import org.apache.commons.collections.functors.ConstantTransformer;
+
 import io.bumo.encryption.key.PublicKey;
 import io.bumo.model.response.TransactionBuildBlobResponse;
 import retrofit2.Call;
@@ -472,6 +474,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                 if (body != null) {
                     if (body.getErrCode().equals(ExceptionEnum.SUCCESS.getCode())) {
                         sk = body.getData().getSk();
+                        spHelper.put(ConstantsType.SK_PACKET,sk);
                     }
                 }
             }
@@ -560,13 +563,18 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     }
 
     private void bindDevice() {
+
+        String skData = (String) spHelper.getSharedPreference(ConstantsType.SK_PACKET, "");
+        if (TextUtils.isEmpty(skData)) {
+            return;
+        }
         DeviceBindService deviceBindService = RetrofitFactory.getInstance().getRetrofit().create(DeviceBindService.class);
         HashMap<String, Object> map = new HashMap<>();
         String walletAddress = WalletCurrentUtils.getWalletAddress(spHelper);
         map.put(ConstantsType.WALLETADDRESS, walletAddress);
         map.put(ConstantsType.IDENTITYADDRESS, WalletCurrentUtils.getIdentityAddress(spHelper));
         map.put(ConstantsType.DEVICEID, CommonUtil.getUniqueId(mContext));
-        String walletAccountSignData = Wallet.getInstance().signData(sk, walletAddress);
+        String walletAccountSignData = Wallet.getInstance().signData(skData, walletAddress);
         map.put(ConstantsType.SIGNDATA, walletAccountSignData);
         deviceBindService.deviceBind(map).enqueue(new Callback<ApiResult<DeviceBindModel>>() {
             @Override

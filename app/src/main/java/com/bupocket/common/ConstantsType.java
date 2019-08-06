@@ -51,4 +51,5 @@ public class ConstantsType {
     public static final String IDENTITYADDRESS="identityAddress";
     public static final String DEVICEID="deviceId";
     public static final String SIGNDATA="signData";
+    public static final String SK_PACKET = "skPacket";
 }

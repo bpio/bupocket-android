@@ -171,6 +171,11 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
                 View view = adapter.getView(0, null, redPacketLv);
                 view.measure(0, 0);
                 measuredHeight = view.getMeasuredHeight();
+
+                ViewGroup.LayoutParams layoutParams = redPacketLv.getLayoutParams();
+                layoutParams.width = ViewGroup.LayoutParams.FILL_PARENT;
+                layoutParams.height =measuredHeight*5 ;
+                redPacketLv.setLayoutParams(layoutParams);
                 scrollLuckListView();
             }
         }, 2000);

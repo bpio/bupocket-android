@@ -21,8 +21,6 @@ public class ShareUtils {
 
 
     public static void shareImage(View view, Activity mActivity) {
-
-
         Bitmap bitmap = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.RGBA_F16,false);
@@ -32,7 +30,7 @@ public class ShareUtils {
         Canvas canvas = new Canvas(bitmap);
         view.draw(canvas);
         Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(mActivity.getContentResolver(), bitmap, null, null));
-        shareImg("收款码", "收款码", "收款码", uri, mActivity);
+        shareImg("", "", "", uri, mActivity);
     }
 
 

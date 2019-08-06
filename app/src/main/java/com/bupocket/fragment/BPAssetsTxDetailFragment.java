@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.alibaba.fastjson.JSON;
@@ -26,6 +28,7 @@ import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.TO;
 import com.bupocket.utils.TimeUtil;
+import com.bupocket.utils.ToastUtil;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
@@ -228,7 +231,12 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
 
 
                 }else{
-                    mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
+
+                    if (getActivity()!=null) {
+                        ToastUtil.showToast(getActivity(),R.string.emptyView_mode_desc_fail_title, Toast.LENGTH_LONG);
+                    }
+
+//                    mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
                 }
             }
 

@@ -36,7 +36,7 @@ public class RedPacketDetailModel implements Serializable {
 
 
 
-    public static class ActivityRulesBean {
+    public static class ActivityRulesBean implements Serializable{
 
         private String label;
         private String data;
@@ -58,7 +58,7 @@ public class RedPacketDetailModel implements Serializable {
         }
     }
 
-    public static class LatelyDataBean {
+    public static class LatelyDataBean implements  Serializable {
 
 
         private String label;

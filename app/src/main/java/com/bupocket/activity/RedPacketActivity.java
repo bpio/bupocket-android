@@ -209,7 +209,8 @@ public class RedPacketActivity extends Activity {
                 .error(R.mipmap.ic_red_packet_empty)
                 .into(redTopIv);
         Glide.with(this).load(data.getBottomImage()).into(downloadQrIv);
-        Glide.with(this).load(data.getIssuerPhoto()).into(redHeadIv);
+        Glide.with(this).load(data.getIssuerPhoto())
+                .into(redHeadIv);
 
         String issuerNick = data.getIssuerNick();
         if (!TextUtils.isEmpty(issuerNick)) {
