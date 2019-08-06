@@ -158,18 +158,6 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
         }
 
 
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        isScroll=false;
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        isScroll=true;
         redPacketLv.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -194,6 +182,20 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
             }
         }, 300);
 
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isScroll=false;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isScroll=true;
+
     }
 
     private void scrollLuckListView() {
@@ -207,7 +209,7 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
                 redPacketRunnable = new Runnable() {
                     @Override
                     public void run() {
-                        while (isScroll) {
+                        while (true) {
                             try {
                                 Thread.sleep(SCROLL_TIME);
                             } catch (InterruptedException e) {
