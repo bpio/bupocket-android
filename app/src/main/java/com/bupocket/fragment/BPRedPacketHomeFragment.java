@@ -45,6 +45,7 @@ import retrofit2.Response;
 public class BPRedPacketHomeFragment extends BaseTransferFragment {
 
 
+    private static int SHOW_HEIGHT_INDEX = 5;
     @BindView(R.id.topbar)
     QMUITopBarLayout topbar;
 
@@ -174,11 +175,14 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
 
                 ViewGroup.LayoutParams layoutParams = redPacketLv.getLayoutParams();
                 layoutParams.width = ViewGroup.LayoutParams.FILL_PARENT;
-                layoutParams.height =measuredHeight*5 ;
+                if (adapter.getData().size()<5){
+                    SHOW_HEIGHT_INDEX=3;
+                }
+                layoutParams.height =measuredHeight*SHOW_HEIGHT_INDEX;
                 redPacketLv.setLayoutParams(layoutParams);
                 scrollLuckListView();
             }
-        }, 2000);
+        }, 500);
 
     }
 
