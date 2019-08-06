@@ -177,7 +177,6 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
                 layoutParams.height = measuredHeight * SHOW_HEIGHT_INDEX+10;
                 redPacketLv.setLayoutParams(layoutParams);
 
-
                 scrollLuckListView();
             }
         }, 300);
