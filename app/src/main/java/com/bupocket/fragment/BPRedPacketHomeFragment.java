@@ -182,7 +182,7 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
                 redPacketLv.setLayoutParams(layoutParams);
                 scrollLuckListView();
             }
-        }, 500);
+        }, 300);
 
     }
 

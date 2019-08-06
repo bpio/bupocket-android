@@ -108,6 +108,7 @@ public class BPDiscoverHomeFragment extends BaseFragment {
             public void onResponse(Call<ApiResult<SlideModel>> call, Response<ApiResult<SlideModel>> response) {
                 ApiResult<SlideModel> body = response.body();
                 if (body == null) {
+                    vpDisBanner.setVisibility(View.GONE);
                     return;
                 }
 

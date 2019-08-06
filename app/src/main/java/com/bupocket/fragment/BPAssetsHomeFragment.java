@@ -82,8 +82,6 @@ import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import org.apache.commons.collections.functors.ConstantTransformer;
-
 import io.bumo.encryption.key.PublicKey;
 import io.bumo.model.response.TransactionBuildBlobResponse;
 import retrofit2.Call;
@@ -474,7 +472,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                 if (body != null) {
                     if (body.getErrCode().equals(ExceptionEnum.SUCCESS.getCode())) {
                         sk = body.getData().getSk();
-                        spHelper.put(ConstantsType.SK_PACKET,sk);
+                        spHelper.put(ConstantsType.SK_PACKET, sk);
                     }
                 }
             }
@@ -695,12 +693,18 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     @Override
     public void onResume() {
         super.onResume();
-        initWalletName();
-        backupState();
+        initWalletStatus();
+
 
     }
 
-    private void initWalletName() {
+    private void initWalletStatus() {
+
+        if (!currentWalletAddress.equals(getWalletAddress())) {
+            initView();
+            initData();
+        }
+
         if (CommonUtil.isNull(currentWalletAddress) || currentWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString())) {
             currentWalletName = sharedPreferencesHelper.getSharedPreference("currentIdentityWalletName", NORMAL_WALLET_NAME).toString();
         } else {
@@ -709,7 +713,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         if (!currentWalletName.equals(mCurrentWalletNameTv.getText())) {
             mCurrentWalletNameTv.setText(currentWalletName);
         }
-
+        backupState();
     }
 
     private void showTransactionConfirmView(final GetQRContentDto contentDto) {
