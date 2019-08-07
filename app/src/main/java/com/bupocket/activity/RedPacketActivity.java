@@ -90,7 +90,7 @@ public class RedPacketActivity extends Activity {
 
         Intent intent = getIntent();
         if (intent != null) {
-            String openStatus = intent.getStringExtra(ConstantsType.REDOPENSTATUS);
+            String openStatus = intent.getStringExtra(ConstantsType.RED_OPEN_STATUS);
             if (!TextUtils.isEmpty(openStatus)) {
                 if (openStatus.equals(RedPacketTypeEnum.CLOSE_RED_PACKET.getCode())) {
                     setNoOpenRedPacketView();
@@ -109,16 +109,16 @@ public class RedPacketActivity extends Activity {
         redPacketFirstLL.setVisibility(View.VISIBLE);
         openRedPacketBtn.setVisibility(View.INVISIBLE);
         Bundle extras = getIntent().getExtras();
-        bonusInfoBean = ((BonusInfoBean) extras.getSerializable(ConstantsType.BONUSINFOBEAN));
+        bonusInfoBean = ((BonusInfoBean) extras.getSerializable(ConstantsType.BONUS_INFO_BEAN));
         Glide.with(this).load(bonusInfoBean.getBonusOverImage()).into(noOpenRedBgIv);
     }
 
     private void setNoOpenRedPacketView() {
         redPacketFirstLL.setVisibility(View.VISIBLE);
         this.openStatus = false;
-        bonusCode = getIntent().getStringExtra(ConstantsType.BONUSCODE);
+        bonusCode = getIntent().getStringExtra(ConstantsType.BONUS_CODE);
         Bundle extras = getIntent().getExtras();
-        bonusInfoBean = ((BonusInfoBean) extras.getSerializable(ConstantsType.BONUSINFOBEAN));
+        bonusInfoBean = ((BonusInfoBean) extras.getSerializable(ConstantsType.BONUS_INFO_BEAN));
         Glide.with(this).load(bonusInfoBean.getTopImage()).into(noOpenRedBgIv);
     }
 
@@ -172,7 +172,7 @@ public class RedPacketActivity extends Activity {
     private void openRedPacket() {
         final RedPacketService redPacketService = RetrofitFactory.getInstance().getRetrofit().create(RedPacketService.class);
         HashMap<String, Object> map = new HashMap<>();
-        map.put(ConstantsType.BONUSCODE, bonusCode);
+        map.put(ConstantsType.BONUS_CODE, bonusCode);
         SharedPreferencesHelper spHelper = new SharedPreferencesHelper(this, ConstantsType.BP_FILE_NAME);
         map.put(ConstantsType.ADDRESS, WalletCurrentUtils.getWalletAddress(spHelper));
         redPacketService.openRedPacket(map).enqueue(new Callback<ApiResult<BonusInfoBean>>() {

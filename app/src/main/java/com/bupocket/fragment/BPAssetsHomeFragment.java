@@ -269,8 +269,8 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         }
         BPRedPacketHomeFragment bpRedPacketHomeFragment = new BPRedPacketHomeFragment();
         Bundle args = new Bundle();
-        args.putString(ConstantsType.BONUSCODE, bonusCode);
-        args.putSerializable(ConstantsType.REDPACKETDETAILMODEL, redPacketDetailModel);
+        args.putString(ConstantsType.BONUS_CODE, bonusCode);
+        args.putSerializable(ConstantsType.RED_PACKET_DETAIL_MODEL, redPacketDetailModel);
         bpRedPacketHomeFragment.setArguments(args);
         startFragment(bpRedPacketHomeFragment);
     }
@@ -529,13 +529,16 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     private void queryRedPacket(final String bonusCode) {
         RedPacketService redPacketService = RetrofitFactory.getInstance().getRetrofit().create(RedPacketService.class);
         HashMap<String, Object> map = new HashMap<>();
-        map.put(ConstantsType.BONUSCODE, bonusCode);
+        map.put(ConstantsType.BONUS_CODE, bonusCode);
         map.put(Constants.ADDRESS, WalletCurrentUtils.getWalletAddress(spHelper));
 
         redPacketService.queryRedPacket(map).enqueue(new Callback<ApiResult<BonusInfoBean>>() {
             @Override
             public void onResponse(Call<ApiResult<BonusInfoBean>> call, Response<ApiResult<BonusInfoBean>> response) {
                 ApiResult<BonusInfoBean> body = response.body();
+                if (body==null||body.getErrCode()==null) {
+                    return;
+                }
                 RED_PACKET_ERR_CODE = body.getErrCode();
                 if (ExceptionEnum.SUCCESS.getCode().equals(RED_PACKET_ERR_CODE)) {
                     RedPacketAnimationUtils.loopRotateAnimation(redPacketTv);
@@ -569,11 +572,11 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         DeviceBindService deviceBindService = RetrofitFactory.getInstance().getRetrofit().create(DeviceBindService.class);
         HashMap<String, Object> map = new HashMap<>();
         String walletAddress = WalletCurrentUtils.getWalletAddress(spHelper);
-        map.put(ConstantsType.WALLETADDRESS, walletAddress);
-        map.put(ConstantsType.IDENTITYADDRESS, WalletCurrentUtils.getIdentityAddress(spHelper));
-        map.put(ConstantsType.DEVICEID, CommonUtil.getUniqueId(mContext));
+        map.put(ConstantsType.WALLET_ADDRESS_TYPE, walletAddress);
+        map.put(ConstantsType.IDENTITY_ADDRESS, WalletCurrentUtils.getIdentityAddress(spHelper));
+        map.put(ConstantsType.DEVICE_ID, CommonUtil.getUniqueId(mContext));
         String walletAccountSignData = Wallet.getInstance().signData(skData, walletAddress);
-        map.put(ConstantsType.SIGNDATA, walletAccountSignData);
+        map.put(ConstantsType.SIGN_DATA, walletAccountSignData);
         deviceBindService.deviceBind(map).enqueue(new Callback<ApiResult<DeviceBindModel>>() {
             @Override
             public void onResponse(Call<ApiResult<DeviceBindModel>> call, Response<ApiResult<DeviceBindModel>> response) {
@@ -595,7 +598,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     private void reqRedPacketData() {
         RedPacketService redPacketService = RetrofitFactory.getInstance().getRetrofit().create(RedPacketService.class);
         HashMap<String, Object> map = new HashMap<>();
-        map.put(ConstantsType.BONUSCODE, bonusCode);
+        map.put(ConstantsType.BONUS_CODE, bonusCode);
         map.put(ConstantsType.ADDRESS, WalletCurrentUtils.getWalletAddress(spHelper));
         redPacketService.queryRedPacketDetail(map).enqueue(new Callback<ApiResult<RedPacketDetailModel>>() {
             @Override
@@ -621,10 +624,10 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
             return;
         }
         Intent intent = new Intent(getActivity(), RedPacketActivity.class);
-        intent.putExtra(ConstantsType.BONUSCODE, bonusCode);
-        intent.putExtra(ConstantsType.REDOPENSTATUS, "0");
+        intent.putExtra(ConstantsType.BONUS_CODE, bonusCode);
+        intent.putExtra(ConstantsType.RED_OPEN_STATUS, "0");
         Bundle extras = new Bundle();
-        extras.putSerializable(ConstantsType.BONUSINFOBEAN, data);
+        extras.putSerializable(ConstantsType.BONUS_INFO_BEAN, data);
         intent.putExtras(extras);
         startActivityForResult(intent, REQUEST_CODE_RED_PACKET);
 

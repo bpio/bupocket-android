@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -127,8 +126,8 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
         cancelRedDetailBtn.setVisibility(View.GONE);
         Bundle arguments = getArguments();
         if (arguments != null) {
-            bonusCode = arguments.getString(ConstantsType.BONUSCODE);
-            redPacketDetailModel = (RedPacketDetailModel) arguments.getSerializable(ConstantsType.REDPACKETDETAILMODEL);
+            bonusCode = arguments.getString(ConstantsType.BONUS_CODE);
+            redPacketDetailModel = (RedPacketDetailModel) arguments.getSerializable(ConstantsType.RED_PACKET_DETAIL_MODEL);
 
             BonusInfoBean bonusInfo = redPacketDetailModel.getBonusInfo();
             initOpenRedPacketView(bonusInfo);
@@ -236,13 +235,13 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
 
         RedPacketService redPacketService = RetrofitFactory.getInstance().getRetrofit().create(RedPacketService.class);
         HashMap<String, Object> map = new HashMap<>();
-        map.put(ConstantsType.BONUSCODE, bonusCode);
+        map.put(ConstantsType.BONUS_CODE, bonusCode);
         map.put(ConstantsType.ADDRESS, WalletCurrentUtils.getWalletAddress(spHelper));
         redPacketService.queryRedPacketDetail(map).enqueue(new Callback<ApiResult<RedPacketDetailModel>>() {
             @Override
             public void onResponse(Call<ApiResult<RedPacketDetailModel>> call, Response<ApiResult<RedPacketDetailModel>> response) {
                 ApiResult<RedPacketDetailModel> body = response.body();
-                if (body == null) {
+                if (body == null||body.getErrCode()==null) {
                     return;
                 }
                 if (body.getErrCode().equals(ExceptionEnum.SUCCESS.getCode())) {

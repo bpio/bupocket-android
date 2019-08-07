@@ -43,14 +43,14 @@ public class ConstantsType {
 
     public static final String  STATUS_YES="yes";
     public static final String  STATUS_NO="no";
-    public static final String BONUSCODE = "bonusCode";
-    public static final String BONUSINFOBEAN = "BonusInfoBean";
-    public static final String REDOPENSTATUS = "redOpenStatus";
-    public static final String REDPACKETDETAILMODEL = "redPacketDetailModel";
-    public static final String WALLETADDRESS="walletAddress";
-    public static final String IDENTITYADDRESS="identityAddress";
-    public static final String DEVICEID="deviceId";
-    public static final String SIGNDATA="signData";
+    public static final String BONUS_CODE = "bonusCode";
+    public static final String BONUS_INFO_BEAN = "BonusInfoBean";
+    public static final String RED_OPEN_STATUS = "redOpenStatus";
+    public static final String RED_PACKET_DETAIL_MODEL = "redPacketDetailModel";
+    public static final String WALLET_ADDRESS_TYPE="walletAddress";
+    public static final String IDENTITY_ADDRESS ="identityAddress";
+    public static final String DEVICE_ID ="deviceId";
+    public static final String SIGN_DATA ="signData";
     public static final String SK_PACKET = "skPacket";
     public static final String RESULT_FROM_BITMAP = "resultFromBitmap";
 }
