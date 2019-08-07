@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingTop="20dp"
-                android:paddingBottom="27dp"
+                android:paddingBottom="20dp"
                 android:textColor="@color/app_txt_color_red_packet"
                 android:textSize="18sp"
                 tools:text="七夕幸运儿" />
@@ -53,9 +53,9 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:background="@null"
+                android:divider="@null"
                 android:dividerHeight="0dp"
-                android:scrollbars="none"
-                android:divider="@null"></ListView>
+                android:scrollbars="none"></ListView>
 
             <View
                 android:layout_width="match_parent"
@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:paddingTop="20dp"
-                android:paddingBottom="30dp"
+                android:paddingBottom="20dp"
                 android:textColor="@color/app_txt_color_red_packet"
                 android:textSize="18sp"
                 tools:text="活动细则" />
@@ -80,6 +80,7 @@
                 android:paddingLeft="@dimen/common_left_right_padding"
                 android:paddingRight="@dimen/common_left_right_padding"
                 android:paddingBottom="20dp"
+                android:lineSpacingMultiplier="1.1"
                 android:textColor="@color/app_txt_color_gray_2"
                 android:textSize="14sp"
                 tools:text="活动细则" />

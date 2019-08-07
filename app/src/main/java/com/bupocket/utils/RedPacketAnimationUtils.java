@@ -5,6 +5,7 @@ import android.graphics.Matrix;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.RotateAnimation;
 import android.view.animation.Transformation;
@@ -42,56 +43,58 @@ public class RedPacketAnimationUtils extends Animation {
         matrix.postTranslate(centerX, centerY);
         camera.restore();
     }
-
+    public static void loopRotateAnimation(final View view,boolean loop) {
+        isLoop=loop;
+        loopRotateAnimation(view);
+    }
 
     public static void loopRotateAnimation(final View view) {
-        if (isLoop==false) {
-            return;
-        }
-        RotateAnimation animation = new RotateAnimation(3f, -3f, Animation.RELATIVE_TO_SELF,
+//        if (isLoop==false) {
+//            return;
+//        }
+        RotateAnimation animation = new RotateAnimation(5f, -5f, Animation.RELATIVE_TO_SELF,
                 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-        animation.setInterpolator(new OvershootInterpolator());
-        animation.setDuration(100);
-        animation.setStartOffset(100);
-        animation.setRepeatCount(1);
-//        animation.setRepeatMode(Animation.REVERSE);
+        animation.setInterpolator(new LinearInterpolator());
+        animation.setDuration(150);
+        animation.setRepeatCount(-1);
+        animation.setRepeatMode(Animation.REVERSE );
         view.startAnimation(animation);
-        animation.setAnimationListener(new AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-                TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0, 0);
-                translateAnimation.setInterpolator(new OvershootInterpolator());
-                translateAnimation.setDuration(3000);
-                translateAnimation.setRepeatCount(1);
-                view.startAnimation(translateAnimation);
-                translateAnimation.setAnimationListener(new AnimationListener() {
-                    @Override
-                    public void onAnimationStart(Animation animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationEnd(Animation animation) {
-                        loopRotateAnimation(view);
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animation animation) {
-
-                    }
-                });
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-
-            }
-        });
+//        animation.setAnimationListener(new AnimationListener() {
+//            @Override
+//            public void onAnimationStart(Animation animation) {
+//
+//            }
+//
+//            @Override
+//            public void onAnimationEnd(Animation animation) {
+//                TranslateAnimation translateAnimation = new TranslateAnimation(0, 0, 0, 0);
+//                translateAnimation.setInterpolator(new OvershootInterpolator());
+//                translateAnimation.setDuration(3000);
+//                translateAnimation.setRepeatCount(1);
+//                view.startAnimation(translateAnimation);
+//                translateAnimation.setAnimationListener(new AnimationListener() {
+//                    @Override
+//                    public void onAnimationStart(Animation animation) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onAnimationEnd(Animation animation) {
+//                        loopRotateAnimation(view);
+//                    }
+//
+//                    @Override
+//                    public void onAnimationRepeat(Animation animation) {
+//
+//                    }
+//                });
+//            }
+//
+//            @Override
+//            public void onAnimationRepeat(Animation animation) {
+//
+//            }
+//        });
 
 
     }

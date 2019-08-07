@@ -1,6 +1,8 @@
 package com.bupocket.model;
 
-public class LuckRedModel {
+import java.io.Serializable;
+
+public class LuckRedModel implements Serializable {
 
 
     private String date;

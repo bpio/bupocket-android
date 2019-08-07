@@ -160,7 +160,13 @@ public class RedPacketActivity extends Activity {
         animation.setRepeatCount(10);
         openRedPacketBtn.startAnimation(animation);
         openRedPacketBtn.setFocusable(false);
-        openRedPacket();
+        openRedPacketBtn.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                openRedPacket();
+            }
+        },1200);
+
     }
 
     private void openRedPacket() {
@@ -199,9 +205,12 @@ public class RedPacketActivity extends Activity {
     }
 
     private void initOpenRedPacketView(BonusInfoBean data) {
-        Glide.with(this).load(data.getTopImage()).into(redTopIv);
+        Glide.with(this).load(data.getTopImage())
+                .error(R.mipmap.ic_red_packet_empty)
+                .into(redTopIv);
         Glide.with(this).load(data.getBottomImage()).into(downloadQrIv);
-        Glide.with(this).load(data.getIssuerPhoto()).into(redHeadIv);
+        Glide.with(this).load(data.getIssuerPhoto())
+                .into(redHeadIv);
 
         String issuerNick = data.getIssuerNick();
         if (!TextUtils.isEmpty(issuerNick)) {
@@ -220,7 +229,7 @@ public class RedPacketActivity extends Activity {
 
         String receiver = data.getReceiver();
         if (!TextUtils.isEmpty(receiver)) {
-            redWalletAddressTv.setText(getString(R.string.save_wallet) + "\n" + AddressUtil.anonymous(receiver));
+            redWalletAddressTv.setText(getString(R.string.save_wallet) + "\n(" + AddressUtil.anonymous(receiver)+")");
         }
 
         redPacketFirstLL.setVisibility(View.GONE);

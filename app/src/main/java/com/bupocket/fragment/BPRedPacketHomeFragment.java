@@ -45,6 +45,7 @@ import retrofit2.Response;
 public class BPRedPacketHomeFragment extends BaseTransferFragment {
 
 
+    private static int SHOW_HEIGHT_INDEX = 5;
     @BindView(R.id.topbar)
     QMUITopBarLayout topbar;
 
@@ -89,6 +90,9 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
     private static int SCROLL_TIME = 1500;
     private int LUCE_NUM = 40;
     private int luckIndex;
+    private boolean isScroll;
+
+    private  Runnable redPacketRunnable;
 
     @Override
     protected int getLayoutView() {
@@ -135,16 +139,24 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
 //            LUCE_NUM = data.size();
 
             redPacketDetailTitleTv.setText(redPacketDetailModel.getActivityRules().getLabel());
-            redPacketDetailTv.setText(redPacketDetailModel.getActivityRules().getData());
+            String ruleData = redPacketDetailModel.getActivityRules().getData();
+
+            if (!TextUtils.isEmpty(ruleData)) {
+                String[] split = ruleData.split("；");
+                ruleData = "";
+                for (int i = 0; i < split.length; i++) {
+                    if (i == split.length - 1) {
+                        ruleData = ruleData + split[i];
+                    } else {
+                        ruleData = ruleData + split[i] + "；\n";
+                    }
+
+                }
+                redPacketDetailTv.setText(ruleData);
+            }
+
         }
 
-
-    }
-
-
-    @Override
-    public void onResume() {
-        super.onResume();
 
         redPacketLv.postDelayed(new Runnable() {
             @Override
@@ -156,16 +168,44 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
                 View view = adapter.getView(0, null, redPacketLv);
                 view.measure(0, 0);
                 measuredHeight = view.getMeasuredHeight();
+
+                ViewGroup.LayoutParams layoutParams = redPacketLv.getLayoutParams();
+                layoutParams.width = ViewGroup.LayoutParams.FILL_PARENT;
+                if (adapter.getData().size() < 5) {
+                    SHOW_HEIGHT_INDEX = 3;
+                }
+                layoutParams.height = measuredHeight * SHOW_HEIGHT_INDEX+10;
+                redPacketLv.setLayoutParams(layoutParams);
+
                 scrollLuckListView();
             }
-        }, 2000);
+        }, 300);
+
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isScroll=false;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isScroll=true;
 
     }
 
     private void scrollLuckListView() {
         if (adapter.getData() != null) {
             if (adapter.getData().size() > 0) {
-                Runnable redPacketRunnable = new Runnable() {
+
+                if (redPacketRunnable!=null) {
+                    return;
+                }
+
+                redPacketRunnable = new Runnable() {
                     @Override
                     public void run() {
                         while (true) {
@@ -175,14 +215,15 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
                                 e.printStackTrace();
                             }
                             if (redPacketLv != null) {
-
                                 redPacketLv.smoothScrollBy(measuredHeight, 500);
                             }
                             ++luckIndex;
                             if (luckIndex == LUCE_NUM) {
-                                luckIndex = 40;
+                                luckIndex = 0;
                                 reqAllData();
                             }
+
+                            LogUtils.e("measuredHeight:" + measuredHeight + "   layoutParams.height: " +  measuredHeight * SHOW_HEIGHT_INDEX+10);
                         }
                     }
                 };
@@ -201,6 +242,9 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
             @Override
             public void onResponse(Call<ApiResult<RedPacketDetailModel>> call, Response<ApiResult<RedPacketDetailModel>> response) {
                 ApiResult<RedPacketDetailModel> body = response.body();
+                if (body == null) {
+                    return;
+                }
                 if (body.getErrCode().equals(ExceptionEnum.SUCCESS.getCode())) {
                     if (body.getData() != null) {
 
@@ -247,7 +291,9 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
 
 
     private void initOpenRedPacketView(BonusInfoBean data) {
-        Glide.with(this).load(data.getTopImage()).into(redTopIv);
+        Glide.with(this).load(data.getTopImage())
+                .error(R.mipmap.ic_red_packet_empty)
+                .into(redTopIv);
         Glide.with(this).load(data.getBottomImage()).into(downloadQrIv);
         Glide.with(this).load(data.getIssuerPhoto()).into(redHeadIv);
 
@@ -268,7 +314,7 @@ public class BPRedPacketHomeFragment extends BaseTransferFragment {
 
         String receiver = data.getReceiver();
         if (!TextUtils.isEmpty(receiver)) {
-            redWalletAddressTv.setText(getString(R.string.save_wallet_1) + "\n" + AddressUtil.anonymous(receiver));
+            redWalletAddressTv.setText(getString(R.string.save_wallet_1) + "\n(" + AddressUtil.anonymous(receiver) + ")");
         }
 
         redPacketDetailLL.setVisibility(View.VISIBLE);

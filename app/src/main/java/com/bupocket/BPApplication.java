@@ -95,7 +95,7 @@ public class BPApplication extends Application {
 
         if (isMainNetConfig) {
             Constants.BUMO_NODE_URL = Constants.MainNetConfig.BUMO_NODE_URL.getValue();
-            LogUtils.mDebuggable = LogUtils.LEVEL_NONE;
+//            LogUtils.mDebuggable = LogUtils.LEVEL_NONE;
             CrashHandler.isWrite = false;
             Constants.WEB_SERVER_DOMAIN = Constants.MainNetConfig.WEB_SERVER_DOMAIN.getValue();
 

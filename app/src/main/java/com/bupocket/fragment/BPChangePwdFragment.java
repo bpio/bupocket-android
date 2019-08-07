@@ -111,7 +111,7 @@ public class BPChangePwdFragment extends BaseFragment {
 
                                 skey = sharedPreferencesHelper.getSharedPreference(BPChangePwdFragment.this.walletAddress + ConstantsType.WALLET_SKEY_PRIV, "").toString();
                                 if (!TextUtils.isEmpty(skey)) {
-                                    walletBPData = Wallet.getInstance().updateAccountWalletPassword(oldPwd, newPwd, skey, getContext());
+                                    walletBPData = Wallet.getInstance().updateAccountWalletPassword(oldPwd, newPwd, skey,WalletCurrentUtils.getIdentityAddress(spHelper), getContext());
                                     sharedPreferencesHelper.put(walletAddress + ConstantsType.WALLET_SKEY_PRIV, walletBPData.getSkey());
                                     sharedPreferencesHelper.put(walletAddress + "-BPdata", JSON.toJSONString(walletBPData.getAccounts()));
                                 } else {

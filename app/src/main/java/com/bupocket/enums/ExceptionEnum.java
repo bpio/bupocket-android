@@ -23,6 +23,7 @@ public enum ExceptionEnum {
     ERROR_RED_PACKET_NOT_OPEN("100021","not  open ",0),
     ERROR_RED_PACKET_ALREADY_RECEIVED("100022","already received",0),
     ERROR_RED_PACKET_ALL_ALREADY_RECEIVED("100023","all already received",0),
+    ERROR_RED_PACKET_UNBIND_DEVICE("100024","unbind device",0),
     ;
     private final String code;
     private final String message;

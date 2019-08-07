@@ -1,6 +1,7 @@
 package com.bupocket.fragment;
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -304,7 +305,7 @@ public class BPWalletImportFragment extends BaseFragment {
                     public void run() {
                         try {
                             String keystore = mKeystoreEt.getText().toString().trim();
-                            WalletBPData walletBPData = Wallet.getInstance().importKeystore(password, keystore);
+                            WalletBPData walletBPData = Wallet.getInstance().importKeystore(password, keystore,WalletCurrentUtils.getIdentityAddress(spHelper), mContext);
                             saveWalletData(walletBPData, mWalletNameEt.getText().toString().trim(), true);
                             tipDialog.dismiss();
                         } catch (WalletException e) {
@@ -599,7 +600,7 @@ public class BPWalletImportFragment extends BaseFragment {
                     public void run() {
                         try {
                             String privateKey = mPrivateKeyEt.getText().toString().trim();
-                            WalletBPData walletBPData = Wallet.getInstance().importPrivateKey(password, privateKey);
+                            WalletBPData walletBPData = Wallet.getInstance().importPrivateKey(password, privateKey,WalletCurrentUtils.getIdentityAddress(spHelper),mContext);
                             saveWalletData(walletBPData, mWalletNameEt.getText().toString(), true);
                             tipDialog.dismiss();
 

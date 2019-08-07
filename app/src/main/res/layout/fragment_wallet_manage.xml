@@ -105,6 +105,7 @@
                 android:background="@color/gray_line" />
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/backupMnemonicRl"
                 style="@style/BPLLDiscover">
 

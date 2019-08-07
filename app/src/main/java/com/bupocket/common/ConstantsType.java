@@ -47,4 +47,9 @@ public class ConstantsType {
     public static final String BONUSINFOBEAN = "BonusInfoBean";
     public static final String REDOPENSTATUS = "redOpenStatus";
     public static final String REDPACKETDETAILMODEL = "redPacketDetailModel";
+    public static final String WALLETADDRESS="walletAddress";
+    public static final String IDENTITYADDRESS="identityAddress";
+    public static final String DEVICEID="deviceId";
+    public static final String SIGNDATA="signData";
+    public static final String SK_PACKET = "skPacket";
 }
