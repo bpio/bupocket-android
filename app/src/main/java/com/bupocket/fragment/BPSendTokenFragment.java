@@ -606,6 +606,8 @@ public class BPSendTokenFragment extends BaseFragment {
                     String destAddress = data.getStringExtra("resultFromBitmap");
                     destAddress = destAddress.replace(Constants.VOUCHER_QRCODE, "");
                     destAccountAddressEt.setText(destAddress);
+
+                    return;
                 }
             }
         }
