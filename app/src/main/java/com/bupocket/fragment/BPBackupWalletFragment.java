@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Looper;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -146,7 +147,11 @@ public class BPBackupWalletFragment extends AbsBaseFragment {
         if (getArguments() != null) {
             walletAddress = getArguments().getString(ConstantsType.WALLET_ADDRESS, "");
         }
-        return sharedPreferencesHelper.getSharedPreference(walletAddress + ConstantsType.WALLET_SKEY, "").toString();
+        String newWalletSkey = sharedPreferencesHelper.getSharedPreference(walletAddress + ConstantsType.WALLET_SKEY, "").toString();
+        if (!TextUtils.isEmpty(newWalletSkey)){
+            return newWalletSkey;
+        }
+        return sharedPreferencesHelper.getSharedPreference("skey","").toString();
     }
 
     private void go2BPCreateWalletShowMnemonicCodeFragment() {
