@@ -600,6 +600,17 @@ public class BPSendTokenFragment extends BaseFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (null != data) {
+            if (Constants.REQUEST_IMAGE == resultCode) {
+                if (null != data) {
+                    String destAddress = data.getStringExtra("resultFromBitmap");
+                    destAddress = destAddress.replace(Constants.VOUCHER_QRCODE, "");
+                    destAccountAddressEt.setText(destAddress);
+                }
+            }
+        }
+
+
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (result.getContents() == null) {

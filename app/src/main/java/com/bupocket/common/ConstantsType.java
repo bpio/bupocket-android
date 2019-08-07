@@ -52,4 +52,5 @@ public class ConstantsType {
     public static final String DEVICEID="deviceId";
     public static final String SIGNDATA="signData";
     public static final String SK_PACKET = "skPacket";
+    public static final String RESULT_FROM_BITMAP = "resultFromBitmap";
 }
