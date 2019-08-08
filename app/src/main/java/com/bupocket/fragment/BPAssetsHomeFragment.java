@@ -196,7 +196,6 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                 }, 400);
             }
         });
-        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
     }
 
     @Override

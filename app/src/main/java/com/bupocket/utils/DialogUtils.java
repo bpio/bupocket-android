@@ -403,7 +403,6 @@ public class DialogUtils {
             @Override
             public void onClick(View v) {
                 inputManager.hideSoftInputFromWindow(passwordEt.getWindowToken(),0);
-//                inputManager.showSoftInput(passwordEt, InputMethodManager.HIDE_IMPLICIT_ONLY);
                 qmuiDialog.dismiss();
             }
         });
@@ -413,7 +412,6 @@ public class DialogUtils {
             @Override
             public void onClick(View v) {
                 inputManager.hideSoftInputFromWindow(passwordEt.getWindowToken(),0);
-//                inputManager.showSoftInput(passwordEt, InputMethodManager.HIDE_IMPLICIT_ONLY);
                 confirmListener.confirm(passwordEt.getText().toString().trim());
                 qmuiDialog.dismiss();
             }
