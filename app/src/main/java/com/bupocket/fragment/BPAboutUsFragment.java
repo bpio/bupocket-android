@@ -273,7 +273,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
                             changeTestLL.setVisibility(View.VISIBLE);
                             ShowSwitchTestNetConfirmDialog();
                         }
-                    });
+                    }).setCancelable(false);
 
         }
     }

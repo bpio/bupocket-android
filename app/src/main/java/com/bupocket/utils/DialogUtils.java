@@ -24,7 +24,7 @@ public class DialogUtils {
 
 
 
-    public static void showConfirmNoTitleDialog(Context mContext, String msg, final DialogUtils.KnowListener knowListener) {
+    public static QMUIDialog showConfirmNoTitleDialog(Context mContext, String msg, final DialogUtils.KnowListener knowListener) {
         final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
                 setLayout(R.layout.view_com_dialog_confirm_no_title).create();
 
@@ -49,6 +49,8 @@ public class DialogUtils {
             }
         });
         qmuiDialog.show();
+
+        return qmuiDialog;
     }
 
 
@@ -400,7 +402,8 @@ public class DialogUtils {
         mPasswordConfirmCloseTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputManager.showSoftInput(passwordEt, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                inputManager.hideSoftInputFromWindow(passwordEt.getWindowToken(),0);
+//                inputManager.showSoftInput(passwordEt, InputMethodManager.HIDE_IMPLICIT_ONLY);
                 qmuiDialog.dismiss();
             }
         });
@@ -409,7 +412,8 @@ public class DialogUtils {
         mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                inputManager.showSoftInput(passwordEt, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                inputManager.hideSoftInputFromWindow(passwordEt.getWindowToken(),0);
+//                inputManager.showSoftInput(passwordEt, InputMethodManager.HIDE_IMPLICIT_ONLY);
                 confirmListener.confirm(passwordEt.getText().toString().trim());
                 qmuiDialog.dismiss();
             }
