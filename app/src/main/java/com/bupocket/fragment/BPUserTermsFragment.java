@@ -1,30 +1,21 @@
 package com.bupocket.fragment;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Scanner;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -150,8 +141,6 @@ public class BPUserTermsFragment extends BaseFragment {
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
-//                startFragmentAndDestroyCurrent(new HomeFragment());
                 popBackStack();
             }
         });

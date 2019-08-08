@@ -353,7 +353,7 @@ public class BPWalletImportFragment extends BaseFragment {
         if (address.equals(spHelper.getSharedPreference("currentAccAddr", "")) || importedWallets.contains(address)) {
             ToastUtil.showToast(getActivity(), R.string.error_already_import_meaaage_txt, Toast.LENGTH_SHORT);
         } else {
-            spHelper.put(address + "-walletName", walletName);
+            spHelper.put(address + "-walletName", walletName.trim());
             spHelper.put(address + "-BPdata", bpData);
             importedWallets.add(address);
             spHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));

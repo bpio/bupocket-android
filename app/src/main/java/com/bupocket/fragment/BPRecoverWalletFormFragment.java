@@ -244,7 +244,7 @@ public class BPRecoverWalletFormFragment extends BaseFragment implements View.On
                             WalletBPData walletBPData = Wallet.getInstance().importMnemonicCode(mnemonicCodes, password, getContext());
                             String address = walletBPData.getAccounts().get(1).getAddress();
                             sharedPreferencesHelper.put("skey", walletBPData.getSkey());
-                            sharedPreferencesHelper.put("currentAccNick", mWalletNameEt.getText().toString());
+                            sharedPreferencesHelper.put("currentAccNick", mWalletNameEt.getText().toString().trim());
                             sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
                             sharedPreferencesHelper.put("currentAccAddr", address);
                             sharedPreferencesHelper.put("identityId", walletBPData.getAccounts().get(0).getAddress());

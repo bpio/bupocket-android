@@ -251,7 +251,8 @@ public class BPCreateWalletFormFragment extends BaseFragment implements View.OnF
     private void createIdentityWallet(WalletBPData walletBPData) {
         final String address = walletBPData.getAccounts().get(1).getAddress();
         sharedPreferencesHelper.put("skey", walletBPData.getSkey());
-        sharedPreferencesHelper.put("currentAccNick", mSetIdentityNameEt.getText().toString());
+        String identityName = mSetIdentityNameEt.getText().toString().trim();
+        sharedPreferencesHelper.put("currentAccNick", identityName);
         sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
         sharedPreferencesHelper.put("identityId", walletBPData.getAccounts().get(0).getAddress());
         sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
