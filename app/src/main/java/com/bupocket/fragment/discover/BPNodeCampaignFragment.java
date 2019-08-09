@@ -463,7 +463,8 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
                 allData = body.getData();
                 nodeList = body.getData().getNodeList();
 
-                superNodeModelDao.insertInTx(nodeList);
+                insertNodeData(nodeList);
+
                 myVoteInfoList = myVoteInfoList(nodeList);
 
                 notifyData();
@@ -492,6 +493,11 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
             }
         });
 
+    }
+
+    private void insertNodeData(List<SuperNodeModel> nodeList) {
+        superNodeModelDao.deleteAll();
+        superNodeModelDao.insertInTx(nodeList);
     }
 
     /**
