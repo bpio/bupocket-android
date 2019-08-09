@@ -428,7 +428,6 @@ public class BPIssueTokenFragment extends BaseFragment {
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
                 popBackStack();
             }
         });

@@ -69,7 +69,7 @@ public class WalletUtils {
     public static void setEditTextEyeHide(ImageView mPwdShow, EditText mSetPwdEt, boolean isHide) {
         if (!isHide) {
             mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(), R.mipmap.icon_open_eye));
-            mSetPwdEt.setInputType(InputType.TYPE_CLASS_TEXT|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+            mSetPwdEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD|InputType.TYPE_TEXT_FLAG_MULTI_LINE);
             mSetPwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
             mSetPwdEt.setSelection(mSetPwdEt.getText().length());
         } else {

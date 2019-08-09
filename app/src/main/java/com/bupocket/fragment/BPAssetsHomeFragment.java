@@ -436,7 +436,6 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
     public void initData() {
         getSkData();
         mTokenList = new ArrayList<>();
-        QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
         currentIdentityWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
