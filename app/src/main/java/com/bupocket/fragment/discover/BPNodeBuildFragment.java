@@ -1,7 +1,6 @@
 package com.bupocket.fragment.discover;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
@@ -10,15 +9,14 @@ import android.widget.ListView;
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeBuildAdapter;
 import com.bupocket.base.AbsBaseFragment;
+import com.bupocket.database.greendao.NodeBuildModelDao;
 import com.bupocket.http.api.NodeBuildService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.CoBuildListModel;
 import com.bupocket.model.NodeBuildModel;
 import com.bupocket.wallet.enums.ExceptionEnum;
-import com.github.ksoichiro.android.observablescrollview.ObservableListView;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
-import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -27,6 +25,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import retrofit2.Call;
@@ -39,7 +38,7 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
     @BindView(R.id.refreshComLv)
-    ListView lvNodeBuild;
+    ListView nodeBuildLv;
     @BindView(R.id.reloadBtn)
     QMUIRoundButton copyCommandBtn;
     @BindView(R.id.loadFailedLL)
@@ -53,9 +52,10 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
 
 
     private NodeBuildAdapter nodeBuildAdapter;
-    private ArrayList<NodeBuildModel> nodeList;
+    private List<NodeBuildModel> nodeList;
 
     private Call<ApiResult<CoBuildListModel>> serviceCoBuild;
+    private NodeBuildModelDao nodeBuildModelDao;
 
 
     @Override
@@ -78,20 +78,41 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
         if (nodeList == null) {
             nodeList = new ArrayList<>();
         }
-        lvNodeBuild.setAdapter(nodeBuildAdapter);
+
+        nodeBuildLv.setAdapter(nodeBuildAdapter);
 
         refreshLayout.setEnableLoadMore(false);
         qmuiEmptyView.show(true);
     }
 
+    private void querySetNewData() {
+        nodeBuildModelDao = mApplication.getDaoSession().getNodeBuildModelDao();
+        if (nodeBuildModelDao==null) {
+            return;
+        }
+        List<NodeBuildModel> nodeBuildModels = nodeBuildModelDao.loadAll();
+        if (nodeBuildModels.size() > 0) {
+            nodeBuildAdapter.setNewData(nodeBuildModels);
+            nodeList=nodeBuildModels;
+        }
+    }
+
     @Override
     protected void initData() {
-        getBuildData();
+        querySetNewData();
+
+        nodeBuildLv.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getBuildData();
+            }
+        },500);
+
     }
 
     @Override
     protected void setListeners() {
-        lvNodeBuild.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        nodeBuildLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
@@ -141,6 +162,7 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
                     nodeList = body.getData().getNodeList();
                     if (nodeList != null) {
                         nodeBuildAdapter.setNewData(nodeList);
+                        insertDao(nodeList);
                         nodeBuildAdapter.notifyDataSetChanged();
                     }
 
@@ -157,20 +179,30 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
                 if (call.isCanceled()) {
                     return;
                 }
+
+                refreshLayout.finishRefresh();
+                if (nodeList!=null&&nodeList.size()>0){
+                    return;
+                }
+
+
                 if (loadFailedLL != null) {
                     loadFailedLL.setVisibility(View.VISIBLE);
                 }
                 nodeBuildAdapter.setNewData(new ArrayList<NodeBuildModel>());
-                nodeBuildAdapter.notifyDataSetChanged();
-
                 qmuiEmptyView.show(null, null);
-                refreshLayout.finishRefresh();
+
             }
 
 
         });
 
 
+    }
+
+    private void insertDao(List<NodeBuildModel> nodeList) {
+        nodeBuildModelDao.deleteAll();
+        nodeBuildModelDao.insertInTx(nodeList);
     }
 
 

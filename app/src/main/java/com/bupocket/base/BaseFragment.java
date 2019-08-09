@@ -19,6 +19,7 @@ public abstract class BaseFragment extends QMUIFragment {
     public static final int TRANSFER_CODE = 200001;
     public SharedPreferencesHelper spHelper;
     protected Context mContext;
+    protected BPApplication mApplication;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public abstract class BaseFragment extends QMUIFragment {
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
-
+        mApplication = ((BPApplication) getActivity().getApplication());
     }
 
 

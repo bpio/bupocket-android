@@ -63,6 +63,8 @@ public class Constants {
     public static final String BUMO_TIMEOUT_MAIN_URL="https://explorer.bumo.io/";
     public static final String BUMO_TIMEOUT_TEST_URL="https://explorer.bumotest.io/";
 
+    public static final String GREEN_DAO_NAME="bu_packet.db";
+
 
     public static enum MainNetConfig {
         WEB_SERVER_DOMAIN("https://api-bp.bumo.io/"),

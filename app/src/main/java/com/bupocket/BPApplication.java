@@ -4,10 +4,13 @@ import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
+import com.bupocket.database.greendao.DaoMaster;
+import com.bupocket.database.greendao.DaoSession;
 import com.bupocket.enums.BackupTipsStateEnum;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.CustomNodeTypeEnum;
@@ -29,6 +32,11 @@ public class BPApplication extends Application {
     private static Context context;
     private RefWatcher refWatcher;
 
+    private DaoSession daoSession;
+    public DaoSession getDaoSession() {
+        return daoSession;
+    }
+
     public static Context getContext() {
         return context;
     }
@@ -47,8 +55,8 @@ public class BPApplication extends Application {
         sharedPreferencesHelper.put("backupTipsState", BackupTipsStateEnum.SHOW.getCode());
 
         initCrash();
-
         initUMeng();
+        initGreenDao();
     }
 
     private void initLeakCanary() {
@@ -129,6 +137,14 @@ public class BPApplication extends Application {
     private void initCrash() {
         CrashHandler crashHandler = CrashHandler.getInstance();
         crashHandler.init(this);
+    }
+
+
+    private void initGreenDao() {
+        DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, Constants.GREEN_DAO_NAME);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        DaoMaster daoMaster = new DaoMaster(db);
+        daoSession = daoMaster.newSession();
     }
 
 }
