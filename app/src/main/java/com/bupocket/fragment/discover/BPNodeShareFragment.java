@@ -98,7 +98,7 @@ public class BPNodeShareFragment extends AbsBaseFragment {
 
     @Override
     protected void initData() {
-        itemData = getArguments().getParcelable("itemInfo");
+        itemData = (SuperNodeModel) getArguments().getSerializable("itemInfo");
         mNodeNameTv.setText(itemData.getNodeName());
 
         shareUrl = Constants.SHARE_URL;

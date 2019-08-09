@@ -3,8 +3,18 @@ package com.bupocket.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class SuperNodeModel implements Parcelable {
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Generated;
 
+import java.io.Serializable;
+
+@Entity
+public class SuperNodeModel implements Serializable {
+
+    private static final long serialVersionUID = -4621715087305120000L;
+
+    @Id
     private String nodeId;
     private String nodeName;
     private String nodeLogo;
@@ -18,6 +28,33 @@ public class SuperNodeModel implements Parcelable {
     private String shareStartTime;
     private String status;
 
+
+
+    @Generated(hash = 1858321937)
+    public SuperNodeModel(String nodeId, String nodeName, String nodeLogo,
+            String nodeCapitalAddress, String identityType, String identityStatus,
+            String nodeVote, String myVoteCount, String introduce, String support,
+            String shareStartTime, String status) {
+        this.nodeId = nodeId;
+        this.nodeName = nodeName;
+        this.nodeLogo = nodeLogo;
+        this.nodeCapitalAddress = nodeCapitalAddress;
+        this.identityType = identityType;
+        this.identityStatus = identityStatus;
+        this.nodeVote = nodeVote;
+        this.myVoteCount = myVoteCount;
+        this.introduce = introduce;
+        this.support = support;
+        this.shareStartTime = shareStartTime;
+        this.status = status;
+    }
+
+    @Generated(hash = 664471356)
+    public SuperNodeModel() {
+    }
+
+
+    
     public String getStatus() {
         return status;
     }
@@ -34,34 +71,8 @@ public class SuperNodeModel implements Parcelable {
         this.shareStartTime = shareStartTime;
     }
 
-    public static Creator<SuperNodeModel> getCREATOR() {
-        return CREATOR;
-    }
 
-    protected SuperNodeModel(Parcel in) {
-        nodeId = in.readString();
-        nodeName = in.readString();
-        nodeLogo = in.readString();
-        nodeCapitalAddress = in.readString();
-        identityType = in.readString();
-        identityStatus = in.readString();
-        nodeVote = in.readString();
-        myVoteCount = in.readString();
-        introduce = in.readString();
-        support = in.readString();
-    }
 
-    public static final Creator<SuperNodeModel> CREATOR = new Creator<SuperNodeModel>() {
-        @Override
-        public SuperNodeModel createFromParcel(Parcel in) {
-            return new SuperNodeModel(in);
-        }
-
-        @Override
-        public SuperNodeModel[] newArray(int size) {
-            return new SuperNodeModel[size];
-        }
-    };
 
     public void setNodeId(String nodeId) {
         this.nodeId = nodeId;
@@ -143,22 +154,4 @@ public class SuperNodeModel implements Parcelable {
         this.support = support;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(nodeId);
-        dest.writeString(nodeName);
-        dest.writeString(nodeLogo);
-        dest.writeString(nodeCapitalAddress);
-        dest.writeString(identityType);
-        dest.writeString(identityStatus);
-        dest.writeString(nodeVote);
-        dest.writeString(myVoteCount);
-        dest.writeString(introduce);
-        dest.writeString(support);
-    }
 }

@@ -25,6 +25,7 @@ import com.bupocket.R;
 import com.bupocket.adaptor.NodeCampaignAdapter;
 import com.bupocket.base.BaseTransferFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.database.greendao.SuperNodeModelDao;
 import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.SuperNodeStatusEnum;
@@ -52,6 +53,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -71,7 +73,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
     @BindView(R.id.refreshComLv)
-    ListView lvPlan;
+    ListView nodeCampaignLv;
     @BindView(R.id.myNodeCB)
     CheckBox myNodeCB;
     @BindView(R.id.myNodeTv)
@@ -97,11 +99,12 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
     private String currentWalletAddress;
     private NodeCampaignAdapter superNodeAdapter;
     private QMUIPopup myNodeExplainPopup;
-    private ArrayList<SuperNodeModel> myVoteInfoList;
-    private ArrayList<SuperNodeModel> nodeList;
+    private List<SuperNodeModel> myVoteInfoList;
+    private List<SuperNodeModel> nodeList;
     private String metaData;
     private Call<ApiResult<SuperNodeDto>> serviceSuperNode;
     private SuperNodeDto allData;
+    private SuperNodeModelDao superNodeModelDao;
 
 
     @Override
@@ -125,7 +128,25 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
         }
 
         currentWalletAddress = getWalletAddress();
-        reqAllNodeData();
+
+        queryData();
+        nodeCampaignLv.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                reqAllNodeData();
+            }
+        },500);
+
+    }
+
+    private void queryData() {
+        superNodeModelDao = mApplication.getDaoSession().getSuperNodeModelDao();
+        List<SuperNodeModel> superNodeModels = superNodeModelDao.loadAll();
+        if (superNodeModels==null) {
+            return;
+        }
+        nodeList=superNodeModels;
+        superNodeAdapter.setNewData(nodeList);
     }
 
 
@@ -218,7 +239,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
     }
 
     private void notifyData() {
-        ArrayList<SuperNodeModel> notifyNodeList = new ArrayList<>();
+        List<SuperNodeModel> notifyNodeList = new ArrayList<>();
         if (myNodeCB.isChecked() && !nodeSearchET.getText().toString().isEmpty()) {
             notifyNodeList = searchData(myVoteInfoList);
         } else if (myNodeCB.isChecked()) {
@@ -232,7 +253,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
         superNodeAdapter.setNewData(notifyNodeList);
     }
 
-    private ArrayList<SuperNodeModel> searchData(ArrayList<SuperNodeModel> sourceData) {
+    private List<SuperNodeModel> searchData(List<SuperNodeModel> sourceData) {
         ArrayList<SuperNodeModel> superNodeModels = new ArrayList<>();
         String inputSearch = nodeSearchET.getText().toString();
         Pattern pattern = Pattern.compile(inputSearch);
@@ -248,7 +269,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
     private void GoVoteRecord(SuperNodeModel superNodeModel) {
         BPMyNodeVoteRecordFragment fragment = new BPMyNodeVoteRecordFragment();
         Bundle args1 = new Bundle();
-        args1.putParcelable("itemNodeInfo", superNodeModel);
+        args1.putSerializable("itemNodeInfo", superNodeModel);
         fragment.setArguments(args1);
         startFragment(fragment);
     }
@@ -261,7 +282,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
             DialogUtils.showMessageNoTitleDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.FAILED.getNameRes())));
         } else {
             Bundle args = new Bundle();
-            args.putParcelable("itemInfo", superNodeModel);
+            args.putSerializable("itemInfo", superNodeModel);
             BPNodeShareFragment bpNodeShareFragment = new BPNodeShareFragment();
             bpNodeShareFragment.setArguments(args);
             startFragment(bpNodeShareFragment);
@@ -441,6 +462,8 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
                 }
                 allData = body.getData();
                 nodeList = body.getData().getNodeList();
+
+                superNodeModelDao.insertInTx(nodeList);
                 myVoteInfoList = myVoteInfoList(nodeList);
 
                 notifyData();
@@ -454,13 +477,18 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
                 if (call.isCanceled()) {
                     return;
                 }
+                qmuiEmptyView.show("", "");
+                refreshLayout.finishRefresh();
+                if (nodeList!=null&&nodeList.size()>0) {
+                    return;
+                }
+
                 myVoteInfoList.clear();
                 nodeList.clear();
                 loadFailedLL.setVisibility(View.VISIBLE);
-                refreshLayout.finishRefresh();
                 setEmpty(false);
                 superNodeAdapter.setNewData(new ArrayList<SuperNodeModel>());
-                qmuiEmptyView.show("", "");
+
             }
         });
 
@@ -470,7 +498,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
      * @param nodeList
      * @return
      */
-    private ArrayList<SuperNodeModel> myVoteInfoList(@NonNull ArrayList<SuperNodeModel> nodeList) {
+    private List<SuperNodeModel> myVoteInfoList(@NonNull List<SuperNodeModel> nodeList) {
 
         ArrayList<SuperNodeModel> superNodeModels = new ArrayList<>();
         for (int i = 0; i < nodeList.size(); i++) {
@@ -490,7 +518,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
 
     private void initListView() {
         superNodeAdapter = new NodeCampaignAdapter(this.getContext());
-        lvPlan.setAdapter(superNodeAdapter);
+        nodeCampaignLv.setAdapter(superNodeAdapter);
         refreshLayout.setEnableLoadMore(false);
         qmuiEmptyView.show(true);
     }

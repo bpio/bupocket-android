@@ -56,7 +56,7 @@ android {
 }
 
 greendao {
-    schemaVersion 1
+    schemaVersion 2
     daoPackage 'com.bupocket.database.greendao'
     targetGenDir 'src/main/java'
     generateTests false

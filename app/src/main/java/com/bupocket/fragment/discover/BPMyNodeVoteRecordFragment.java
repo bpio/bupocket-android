@@ -85,7 +85,7 @@ public class BPMyNodeVoteRecordFragment extends AbsBaseFragment {
 
     @Override
     protected void initData() {
-        SuperNodeModel itemNodeInfo = getArguments().getParcelable("itemNodeInfo");
+        SuperNodeModel itemNodeInfo = (SuperNodeModel) getArguments().getSerializable("itemNodeInfo");
         initHeadView(itemNodeInfo);
         reqNodeVoteData(itemNodeInfo.getNodeId());
 
