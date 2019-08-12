@@ -766,7 +766,11 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         final String contractAddress = contentDto.getDestAddress();
         final String transactionType = contentDto.getType();
         final String transMetaData = contentDto.getQrRemarkEn();
-
+        final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
+                .create(false);
+        txSendingTipDialog.show();
 
         Runnable buildBlobRunnable = new Runnable() {
             @Override
@@ -786,7 +790,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                     }
                     final String txHash = buildBlobResponse.getResult().getHash();
 
-
+                    txSendingTipDialog.dismiss();
                     if (TextUtils.isEmpty(tokenBalance) || (Double.valueOf(tokenBalance) <= Double.valueOf(amount))) {
                         ToastUtil.showToast(getActivity(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT);
                         return;
@@ -847,12 +851,12 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
 
 
                 } catch (WalletException e) {
+                    txSendingTipDialog.dismiss();
                     if (e.getErrCode().equals(com.bupocket.wallet.enums.ExceptionEnum.ADDRESS_NOT_EXIST.getCode())) {
                         ToastUtil.showToast(getActivity(), getString(R.string.address_not_exist), Toast.LENGTH_SHORT);
                     }
                 } catch (Exception e) {
-
-
+                    txSendingTipDialog.dismiss();
                 }
             }
         };
@@ -953,35 +957,47 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                     getString(R.string.transaction_metadata), udcbuModel.getInput(), new TransferUtils.TransferListener() {
                         @Override
                         public void confirm() {
-                            Runnable buildBlob = new Runnable() {
-                                @Override
-                                public void run() {
-                                    try {
-                                        final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(finalUdcbuModel.getAmount(), finalUdcbuModel.getInput(), currentWalletAddress, finalUdcbuModel.getTx_fee(), finalUdcbuModel.getDest_address(), getString(R.string.transaction_metadata));
 
-                                        if (TextUtils.isEmpty(tokenBalance) || (Double.valueOf(tokenBalance) <= Double.valueOf(finalUdcbuModel.getAmount()))) {
-                                            ToastUtil.showToast(getActivity(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT);
-                                            return;
-                                        }
-                                        getSignatureInfo(new SignatureListener() {
-                                            @Override
-                                            public void success(String privateKey) {
+                                    final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                                            .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                                            .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
+                                            .create(false);
+                                    txSendingTipDialog.show();
+                                    Runnable buildBlob = new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(finalUdcbuModel.getAmount(), finalUdcbuModel.getInput(), currentWalletAddress, finalUdcbuModel.getTx_fee(), finalUdcbuModel.getDest_address(), getString(R.string.transaction_metadata));
+                                                txSendingTipDialog.dismiss();
+                                                if (TextUtils.isEmpty(tokenBalance) || (Double.valueOf(tokenBalance) <= Double.valueOf(finalUdcbuModel.getAmount()))) {
+                                                    ToastUtil.showToast(getActivity(), getString(R.string.send_tx_bu_not_enough), Toast.LENGTH_SHORT);
+                                                    return;
+                                                }
 
-                                                submitTransactionBase(privateKey, buildBlobResponse);
+
+                                                getSignatureInfo(new SignatureListener() {
+                                                    @Override
+                                                    public void success(String privateKey) {
+
+                                                        submitTransactionBase(privateKey, buildBlobResponse);
+                                                    }
+                                                });
+
+                                            } catch (WalletException e) {
+                                                txSendingTipDialog.dismiss();
+                                                if (e.getErrCode().equals(com.bupocket.wallet.enums.ExceptionEnum.ADDRESS_NOT_EXIST.getCode())) {
+                                                    ToastUtil.showToast(getActivity(), getString(R.string.address_not_exist), Toast.LENGTH_SHORT);
+                                                }
+                                            } catch (Exception e) {
+                                                txSendingTipDialog.dismiss();
+                                                e.printStackTrace();
                                             }
-                                        });
 
-                                    } catch (WalletException e) {
-                                        if (e.getErrCode().equals(com.bupocket.wallet.enums.ExceptionEnum.ADDRESS_NOT_EXIST.getCode())) {
-                                            ToastUtil.showToast(getActivity(), getString(R.string.address_not_exist), Toast.LENGTH_SHORT);
                                         }
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
+                                    };
+                                    ThreadManager.getInstance().execute(buildBlob);
 
-                                }
-                            };
-                            ThreadManager.getInstance().execute(buildBlob);
+
                         }
                     });
 
