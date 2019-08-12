@@ -1,12 +1,19 @@
 package com.bupocket.model;
 
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Generated;
+
+@Entity
 public class TokenTxInfo {
+
     private String txAccountAddress;
     private String txDate;
     private String txAmount;
     private String txStatus;
     private String outinType;
     private String txHash;
+    @Id
     private String optNo;
 
     public TokenTxInfo(String txAccountAddress, String txDate, String txAmount, String txStatus,String optNo) {
@@ -15,6 +22,22 @@ public class TokenTxInfo {
         this.txAmount = txAmount;
         this.txStatus = txStatus;
         this.optNo = optNo;
+    }
+
+    @Generated(hash = 740187723)
+    public TokenTxInfo(String txAccountAddress, String txDate, String txAmount, String txStatus, String outinType,
+            String txHash, String optNo) {
+        this.txAccountAddress = txAccountAddress;
+        this.txDate = txDate;
+        this.txAmount = txAmount;
+        this.txStatus = txStatus;
+        this.outinType = outinType;
+        this.txHash = txHash;
+        this.optNo = optNo;
+    }
+
+    @Generated(hash = 1214664233)
+    public TokenTxInfo() {
     }
 
     public String getTxAccountAddress() {

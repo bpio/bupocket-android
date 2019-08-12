@@ -216,13 +216,6 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                         txDetailSignatureListLl.setVisibility(View.GONE);
                     }
 
-//                    txDetailSignatureAdapter = new TxDetailSignatureAdapter(signatures, getContext());
-//                    mTxDetailSignatureItemLv.setAdapter(txDetailSignatureAdapter);
-//                    setListViewHeightBasedOnChildren(mTxDetailSignatureItemLv);
-
-//                    mTxDetailTxInfoTxSignaturePkTv.setText(signatureObj.getString("publicKey"));
-//                    mTxDetailTxInfoTxSignatureSdTv.setText(signatureObj.getString("signData"));
-
                     mTxDetailBlockInfoBlockHeightTv.setText(blockInfoRespBoBean.getSeq() + "");
                     mTxDetailBlockInfoBlockHashTv.setText(blockInfoRespBoBean.getHash());
                     mTxDetailBlockInfoPrevBlockHashTv.setText(blockInfoRespBoBean.getPreviousHash());
@@ -236,7 +229,6 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                         ToastUtil.showToast(getActivity(),R.string.emptyView_mode_desc_fail_title, Toast.LENGTH_LONG);
                     }
 
-//                    mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
                 }
             }
 
@@ -244,6 +236,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
             public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
                 t.printStackTrace();
                 mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
+                ToastUtil.showToast(getActivity(),R.string.network_error_msg,Toast.LENGTH_SHORT);
             }
         });
     }

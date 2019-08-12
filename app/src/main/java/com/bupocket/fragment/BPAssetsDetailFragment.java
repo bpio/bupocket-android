@@ -15,6 +15,7 @@ import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.adaptor.MyTokenTxAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.database.greendao.TokenTxInfoDao;
 import com.bupocket.enums.OutinTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
@@ -26,8 +27,10 @@ import com.bupocket.model.TokenTxInfo;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TimeUtil;
+import com.bupocket.utils.ToastUtil;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -100,16 +103,18 @@ public class BPAssetsDetailFragment extends BaseFragment {
     private String currencyType;
     private Unbinder bind;
     private Call<ApiResult<GetMyTxsRespDto>> callTxService;
+    private TokenTxInfoDao tokenTxInfoDao;
 
     @Override
     protected View onCreateView() {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_assets_detail, null);
         bind = ButterKnife.bind(this, root);
-        initData();
+        tokenTxInfoDao = mApplication.getDaoSession().getTokenTxInfoDao();
         initTopBar();
         initTxListView();
         setListener();
+        initData();
         return root;
     }
 
@@ -146,7 +151,6 @@ public class BPAssetsDetailFragment extends BaseFragment {
     }
 
     private void initTxListView() {
-        mEmptyView.show(true);
         refreshLayout.setEnableLoadMore(false);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -157,7 +161,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
                         refreshData();
                         refreshlayout.finishRefresh();
                         refreshLayout.setNoMoreData(false);
-                        initData();
+//                        initData();
                     }
                 }, 500);
 
@@ -201,7 +205,6 @@ public class BPAssetsDetailFragment extends BaseFragment {
     }
 
     private void loadMyTxList() {
-        TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
         TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
         Map<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("tokenType", tokenType);
@@ -216,9 +219,6 @@ public class BPAssetsDetailFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ApiResult<GetMyTxsRespDto>> call, Response<ApiResult<GetMyTxsRespDto>> response) {
                 ApiResult<GetMyTxsRespDto> respDto = response.body();
-                if (llLoadFailed!=null) {
-                    llLoadFailed.setVisibility(View.GONE);
-                }
                 if (respDto != null && isAdded()) {
                     handleMyTxs(respDto.getData());
                     if (respDto.getData().getTxRecord().size() == 0) {
@@ -239,6 +239,10 @@ public class BPAssetsDetailFragment extends BaseFragment {
                 }
                 t.printStackTrace();
                 if (isAdded()) {
+                    if (myTokenTxAdapter!=null&&myTokenTxAdapter.getCount()>0) {
+                        ToastUtil.showToast(getActivity(),R.string.network_error_msg,Toast.LENGTH_SHORT);
+                        return;
+                    }
                     llLoadFailed.setVisibility(View.VISIBLE);
                 }
             }
@@ -258,7 +262,6 @@ public class BPAssetsDetailFragment extends BaseFragment {
                 mAssetAmountTv.setText(CommonUtil.addCurrencySymbol(assetAmount, currencyType));
             }
             if (getMyTxsRespDto.getTxRecord() == null || getMyTxsRespDto.getTxRecord().size() == 0) {
-//                mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_no_data), null);
                 showOrHideNoRecord(true);
                 return;
             } else {
@@ -308,28 +311,17 @@ public class BPAssetsDetailFragment extends BaseFragment {
             return;
         }
 
-        if (myTokenTxAdapter == null) {
+        if (pageStart==1) {
             myTokenTxAdapter = new MyTokenTxAdapter(tokenTxInfoList, getContext());
             myTokenTxAdapter.setPage(getMyTxsRespDto.getPage());
             mMyTokenTxLv.setAdapter(myTokenTxAdapter);
+            tokenTxInfoDao.deleteAll();
+            tokenTxInfoDao.insertInTx(tokenTxInfoList);
+
         } else {
             myTokenTxAdapter.loadMore(getMyTxsRespDto.getTxRecord(), tokenTxInfoMap);
         }
-        mMyTokenTxLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                TokenTxInfo currentItem = (TokenTxInfo) myTokenTxAdapter.getItem(position);
-                Bundle argz = new Bundle();
-                argz.putString("txHash", currentItem.getTxHash());
-                argz.putString("outinType", currentItem.getOutinType());
-                argz.putString("assetCode", assetCode);
-                argz.putString("currentAccAddress", currentWalletAddress);
-                argz.putString("optNo", currentItem.getOptNo());
-                BPAssetsTxDetailFragment bpAssetsTxDetailFragment = new BPAssetsTxDetailFragment();
-                bpAssetsTxDetailFragment.setArguments(argz);
-                startFragment(bpAssetsTxDetailFragment);
-            }
-        });
+
     }
 
     private void initData() {
@@ -363,7 +355,48 @@ public class BPAssetsDetailFragment extends BaseFragment {
         } else {
             mAssetIconIv.setBackgroundResource(R.mipmap.icon_token_default_icon);
         }
-        refreshData();
+
+
+        showOrHideNoRecord(false);
+        mAssetAmountTv.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+                List<TokenTxInfo> tokenTxInfos = tokenTxInfoDao.loadAll();
+                if (tokenTxInfos!=null&&tokenTxInfos.size()>0) {
+                    myTokenTxAdapter = new MyTokenTxAdapter(tokenTxInfos, getContext());
+                    mMyTokenTxLv.setAdapter(myTokenTxAdapter);
+
+                }else{
+                    mEmptyView.show(true);
+                }
+                LogUtils.e("tokenTxInfos:    "+tokenTxInfos.size());
+                refreshData();
+
+
+                mMyTokenTxLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                        if (myTokenTxAdapter==null) {
+                            return;
+                        }
+
+                        TokenTxInfo currentItem = (TokenTxInfo) myTokenTxAdapter.getItem(position);
+                        Bundle argz = new Bundle();
+                        argz.putString("txHash", currentItem.getTxHash());
+                        argz.putString("outinType", currentItem.getOutinType());
+                        argz.putString("assetCode", assetCode);
+                        argz.putString("currentAccAddress", currentWalletAddress);
+                        argz.putString("optNo", currentItem.getOptNo());
+                        BPAssetsTxDetailFragment bpAssetsTxDetailFragment = new BPAssetsTxDetailFragment();
+                        bpAssetsTxDetailFragment.setArguments(argz);
+                        startFragment(bpAssetsTxDetailFragment);
+                    }
+                });
+            }
+        },10);
+
     }
 
     private void showOrHideNoRecord(boolean showFlag) {
@@ -417,36 +450,5 @@ public class BPAssetsDetailFragment extends BaseFragment {
         }
     }
 
-    private void showSendDialog() {
-        int mCurrentDialogStyle = com.qmuiteam.qmui.R.style.QMUI_Dialog;
-        final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext)
-                .setLayout(R.layout.view_send_dialog)
-                .create(mCurrentDialogStyle);
-        qmuiDialog.show();
-
-        qmuiDialog.findViewById(R.id.tvSendDialogClose).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiDialog.dismiss();
-            }
-        });
-
-        qmuiDialog.findViewById(R.id.ivSendDialogScan).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startScanHome();
-            }
-        });
-    }
-
-
-    private void startScanHome() {
-        IntentIntegrator intentIntegrator = IntentIntegrator.forSupportFragment(this);
-        intentIntegrator.setBeepEnabled(true);
-        intentIntegrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE_TYPES);
-        intentIntegrator.setPrompt(getResources().getString(R.string.wallet_scan_notice));
-        intentIntegrator.setCaptureActivity(CaptureActivity.class);
-        intentIntegrator.initiateScan();
-    }
 
 }
