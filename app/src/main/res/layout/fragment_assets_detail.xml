@@ -70,11 +70,11 @@
                 android:layout_height="@dimen/bp_btn_hight"
                 android:layout_marginRight="5dp"
                 android:layout_weight="1"
-                android:paddingLeft="50dp"
                 android:background="@drawable/shape_corner_blue_transfer"
                 android:drawableLeft="@mipmap/collection_qr_code"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
+                android:paddingLeft="50dp"
                 android:text="@string/receive_qr_txt"
                 android:textColor="@color/app_color_font"
                 android:textSize="@dimen/common_text_size_14" />
@@ -109,16 +109,9 @@
             <TextView
                 android:id="@+id/myTokenTxTitleTv"
                 style="@style/BPTextViewCommonSize14Color99"
-                android:text="@string/recently_tx_txt" />
-
-            <include
-                layout="@layout/view_load_failed"
+                android:text="@string/recently_tx_txt"
                 android:visibility="gone" />
 
-            <include
-                android:id="@+id/recentlyTxRecordEmptyLL"
-                layout="@layout/view_empty_record"
-                android:visibility="gone" />
 
             <com.qmuiteam.qmui.widget.QMUIEmptyView
                 android:id="@+id/emptyView"
@@ -145,14 +138,21 @@
                         <ListView
                             android:id="@+id/myTokenTxLv"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_height="wrap_content"
                             android:divider="@color/tx_list_view_background_col"
                             android:dividerHeight="10dp"
                             android:fadeScrollbars="false"
                             android:scrollbars="none" />
 
 
+                        <include
+                            android:id="@+id/recentlyTxRecordEmptyLL"
+                            layout="@layout/view_empty_record"
+                            android:visibility="gone" />
 
+                        <include
+                            layout="@layout/view_load_failed_mini"
+                            android:visibility="gone" />
 
                     </LinearLayout>
 

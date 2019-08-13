@@ -147,7 +147,8 @@ public class BPAssetsDetailFragment extends BaseFragment {
         copyCommandBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refreshData();
+
+                refreshLayout.autoRefresh(100,100,1,false);
             }
         });
     }
@@ -220,6 +221,8 @@ public class BPAssetsDetailFragment extends BaseFragment {
         callTxService.enqueue(new Callback<ApiResult<GetMyTxsRespDto>>() {
             @Override
             public void onResponse(Call<ApiResult<GetMyTxsRespDto>> call, Response<ApiResult<GetMyTxsRespDto>> response) {
+                mEmptyView.show("", "");
+                llLoadFailed.setVisibility(View.GONE);
                 ApiResult<GetMyTxsRespDto> respDto = response.body();
                 if (respDto != null && isAdded()) {
                     handleMyTxs(respDto.getData());
@@ -236,17 +239,10 @@ public class BPAssetsDetailFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<GetMyTxsRespDto>> call, Throwable t) {
-                if (call.isCanceled()) {
-                    return;
-                }
-                t.printStackTrace();
-                if (isAdded()) {
-                    if (myTokenTxAdapter!=null&&myTokenTxAdapter.getCount()>0) {
-                        ToastUtil.showToast(getActivity(),R.string.network_error_msg,Toast.LENGTH_SHORT);
-                        return;
-                    }
-                    llLoadFailed.setVisibility(View.VISIBLE);
-                }
+                mEmptyView.show("", "");
+                llLoadFailed.setVisibility(View.VISIBLE);
+                mMyTokenTxTitleTv.setVisibility(View.GONE);
+                mRecentlyTxRecordEmptyLL.setVisibility(View.GONE);
             }
         });
     }
@@ -275,7 +271,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
 
             for (GetMyTxsRespDto.TxRecordBean obj : getMyTxsRespDto.getTxRecord()) {
 
-                if (obj==null) {
+                if (obj == null) {
                     return;
                 }
                 String txAccountAddress = AddressUtil.anonymous((OutinTypeEnum.OUT.getCode().equals(obj.getOutinType())) ? obj.getToAddress() : obj.getFromAddress());
@@ -285,7 +281,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
                     amountStr = obj.getAmount();
                 } else {
                     if (OutinTypeEnum.OUT.getCode().equals(obj.getOutinType())) {
-                        amountStr =getString(R.string.comm_out) + obj.getAmount();
+                        amountStr = getString(R.string.comm_out) + obj.getAmount();
                     } else {
                         amountStr = getString(R.string.comm_in) + obj.getAmount();
                     }
@@ -313,7 +309,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
             return;
         }
 
-        if (pageStart==1) {
+        if (pageStart == 1) {
             myTokenTxAdapter = new MyTokenTxAdapter(tokenTxInfoList, getContext());
             myTokenTxAdapter.setPage(getMyTxsRespDto.getPage());
             mMyTokenTxLv.setAdapter(myTokenTxAdapter);
@@ -359,20 +355,9 @@ public class BPAssetsDetailFragment extends BaseFragment {
         }
 
 
-        showOrHideNoRecord(false);
         mAssetAmountTv.postDelayed(new Runnable() {
             @Override
             public void run() {
-
-//                List<TokenTxInfo> tokenTxInfos = tokenTxInfoDao.loadAll();
-//                if (tokenTxInfos!=null&&tokenTxInfos.size()>0) {
-//                    myTokenTxAdapter = new MyTokenTxAdapter(tokenTxInfos, getContext());
-//                    mMyTokenTxLv.setAdapter(myTokenTxAdapter);
-//
-//                }else{
-//                    mEmptyView.show(true);
-//                }
-
                 mEmptyView.show(true);
                 refreshData();
 
@@ -381,7 +366,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                        if (myTokenTxAdapter==null) {
+                        if (myTokenTxAdapter == null) {
                             return;
                         }
 
@@ -398,7 +383,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
                     }
                 });
             }
-        },10);
+        }, 10);
 
     }
 
@@ -433,7 +418,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
                 Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
             } else if (!PublicKey.isAddressValid(result.getContents())) {
 
-                DialogUtils.showMessageNoTitleDialog(mContext,R.string.error_qr_message_txt_2);
+                DialogUtils.showMessageNoTitleDialog(mContext, R.string.error_qr_message_txt_2);
 
             } else {
                 Bundle argz = new Bundle();
