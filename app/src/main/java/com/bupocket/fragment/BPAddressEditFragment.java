@@ -286,6 +286,7 @@ public class BPAddressEditFragment extends BaseFragment {
                 if(null != respDto){
                     if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                         Toast.makeText(getContext(),getString(R.string.delete_address_success_message_txt),Toast.LENGTH_SHORT).show();
+                        mApplication.getDaoSession().getAddressBookListBeanDao().deleteByKey(oldLinkmanAddress);
                         popBackStack();
                     }else {
                         Toast.makeText(getContext(),getString(R.string.delete_address_failure_message_txt),Toast.LENGTH_SHORT).show();
