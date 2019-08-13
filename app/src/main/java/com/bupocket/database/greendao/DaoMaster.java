@@ -21,18 +21,18 @@ public class DaoMaster extends AbstractDaoMaster {
 
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(Database db, boolean ifNotExists) {
+        ImageInfoDao.createTable(db, ifNotExists);
         NodeBuildModelDao.createTable(db, ifNotExists);
         SuperNodeModelDao.createTable(db, ifNotExists);
         TokenTxInfoDao.createTable(db, ifNotExists);
-        ImageInfoDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
+        ImageInfoDao.dropTable(db, ifExists);
         NodeBuildModelDao.dropTable(db, ifExists);
         SuperNodeModelDao.dropTable(db, ifExists);
         TokenTxInfoDao.dropTable(db, ifExists);
-        ImageInfoDao.dropTable(db, ifExists);
     }
 
     /**
@@ -51,10 +51,10 @@ public class DaoMaster extends AbstractDaoMaster {
 
     public DaoMaster(Database db) {
         super(db, SCHEMA_VERSION);
+        registerDaoClass(ImageInfoDao.class);
         registerDaoClass(NodeBuildModelDao.class);
         registerDaoClass(SuperNodeModelDao.class);
         registerDaoClass(TokenTxInfoDao.class);
-        registerDaoClass(ImageInfoDao.class);
     }
 
     public DaoSession newSession() {

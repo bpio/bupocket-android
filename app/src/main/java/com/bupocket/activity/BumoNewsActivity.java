@@ -1,20 +1,21 @@
 package com.bupocket.activity;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
 import com.bupocket.R;
+import com.bupocket.common.Constants;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 
 import butterknife.BindView;
@@ -28,8 +29,14 @@ public class BumoNewsActivity extends AppCompatActivity {
     ProgressBar progressBar;
     @BindView(R.id.webView)
     WebView mWebView;
+    @BindView(R.id.loadFailedLL)
+    LinearLayout loadFailedLL;
+
+
+    private boolean isSuccess = false;
+    private boolean isError = false;
     private static final String APP_CACHE_DIRNAME = "/webCache";
-    private static final String URL = "https://m-news.bumo.io/";
+
     private Unbinder bind;
 
     @Override
@@ -39,12 +46,46 @@ public class BumoNewsActivity extends AppCompatActivity {
 
         bind = ButterKnife.bind(this);
         initTopBar();
-        mWebView.loadUrl(URL);
+        mWebView.loadUrl(Constants.NEWS_URL);
         mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return true;
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                isError = true;
+                isSuccess = false;
+                if (mWebView.getVisibility()== View.GONE) {
+                    loadFailedLL.setVisibility(View.VISIBLE);
+                }
+
+            }
+
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                isError = true;
+                isSuccess = false;
+                if (mWebView.getVisibility()== View.GONE) {
+                    loadFailedLL.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                if (!isError) {
+                    isSuccess = true;
+                    //回调成功后的相关操作
+                    loadFailedLL.setVisibility(View.GONE);
+                    mWebView.setVisibility(View.VISIBLE);
+
+                }
             }
         });
 
@@ -72,7 +113,10 @@ public class BumoNewsActivity extends AppCompatActivity {
                 }
 
             }
-        });
+        }
+        );
+
+
         settings.setCacheMode(WebSettings.LOAD_DEFAULT);
         settings.setJavaScriptEnabled(true);
 
@@ -81,6 +125,7 @@ public class BumoNewsActivity extends AppCompatActivity {
         String cacheDirPath = getFilesDir().getAbsolutePath() + APP_CACHE_DIRNAME;
         settings.setAppCachePath(cacheDirPath);
         settings.setAppCacheEnabled(true);
+
 
     }
 

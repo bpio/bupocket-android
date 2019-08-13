@@ -4,11 +4,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import com.bupocket.R;
+import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,11 +27,15 @@ public class BPWebActivity extends AppCompatActivity {
     WebView wvBanner;
     @BindView(R.id.pbWeb)
     ProgressBar progressBar;
-
+    @BindView(R.id.loadFailedLL)
+    LinearLayout loadFailedLL;
 
     private Unbinder bind;
     private String url;
+    private static boolean isNetError=false;
 
+    private boolean isSuccess = false;
+    private boolean isError = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +94,47 @@ public class BPWebActivity extends AppCompatActivity {
             }
         });
 
-        wvBanner.setWebViewClient(new WebViewClient());
+        wvBanner.setWebViewClient(new WebViewClient() {
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                isError = true;
+                isSuccess = false;
+                if (wvBanner.getVisibility()== View.GONE) {
+                    loadFailedLL.setVisibility(View.VISIBLE);
+                }
+            }
+
+
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                isError = true;
+                isSuccess = false;
+                if (wvBanner.getVisibility()== View.GONE) {
+                    loadFailedLL.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+                if (!isError) {
+                    isSuccess = true;
+                    //回调成功后的相关操作
+                    loadFailedLL.setVisibility(View.GONE);
+                    wvBanner.setVisibility(View.VISIBLE);
+
+                }
+            }
+        });
+
         wvBanner.loadUrl(url);
     }
 
