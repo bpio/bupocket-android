@@ -36,7 +36,6 @@
         android:padding="10dp"
         android:text="@string/reload_txt"
         android:textSize="16sp"
-        app:qmui_backgroundColor="@color/app_color_white"
         app:qmui_borderColor="@color/app_color_main"
         app:qmui_radius="4dp"/>
 

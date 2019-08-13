@@ -224,7 +224,7 @@
     <string name="set_success">设置成功</string>
     <string name="handling">处理中...</string>
     <string name="i_knew_btn_txt">我知道了</string>
-    <string name="network_error_msg">您的网络好像不太给力，请稍后再试</string>
+    <string name="network_error_msg"> 网络不太给力，请检查您的网络</string>
     <string name="capture_activity_label">自定义扫描界面</string>
     <string name="capture_activity_title">扫一扫</string>
     <string name="capture_activity_cancel">关闭</string>
@@ -505,7 +505,7 @@
 
 
     <string name="transaction_timeout">请求已超时，请重新操作。</string>
-    <string name="reload_txt">重新加载</string>
+    <string name="reload_txt">刷新试试</string>
 
 
     <string name="transaction_success_title">交易成功</string>
@@ -757,7 +757,6 @@
     <string name="wallet_create__input_rePassword">请再次输入安全密码</string>
 
 
-
     <!--voucher package-->
     <string name="tabbar_toucher_txt">券包</string>
     <string name="voucher_empty">这里一张券都没有</string>
@@ -794,7 +793,6 @@
     <string name="issue_num">发行数量：</string>
 
 
-
     <string name="delete_current_wallet_title">确认删除该钱包吗？</string>
     <string name="delete_current_wallet_info">当前删除钱包为当前使用钱包，删除后将默认设置当前身份下的钱包为当前使用钱包。</string>
 
@@ -811,7 +809,7 @@
     <string name="voucher_send_confirm_title">确认转赠</string>
     <string name="send_voucher">转赠加密数字券</string>
     <string name="send_token_transfer">转账交易</string>
-    <string name="voucher_pwd_confirm_hint" >请填写安全密码以确认转赠</string>
+    <string name="voucher_pwd_confirm_hint">请填写安全密码以确认转赠</string>
     <string name="tx_voucher_status_success_txt">转赠成功</string>
     <string name="send_voucher_failure">转赠失败</string>
     <string name="send_voucher_timeout">转赠超时</string>

@@ -224,7 +224,7 @@
     <string name="set_success">设置成功</string>
     <string name="handling">处理中...</string>
     <string name="i_knew_btn_txt">我知道了</string>
-    <string name="network_error_msg">您的网络好像不太给力，请稍后再试</string>
+    <string name="network_error_msg"> 网络不太给力，请检查您的网络</string>
     <string name="capture_activity_label">自定义扫描界面</string>
     <string name="capture_activity_title">扫一扫</string>
     <string name="capture_activity_cancel">关闭</string>
@@ -505,7 +505,7 @@
 
 
     <string name="transaction_timeout">请求已超时，请重新操作。</string>
-    <string name="reload_txt">重新加载</string>
+    <string name="reload_txt">刷新试试</string>
 
 
     <string name="transaction_success_title">交易成功</string>
@@ -834,7 +834,11 @@
     <string name="whether_upgrade_versions">是否更新到版本 %s?</string>
     <string name="new_version_size">新版本大小： </string>
 
-
+    <string name="send_token_error">可用资产数量不足</string>
+    <string name="save_and_share">保存图片并分享</string>
+    <string name="red_success_title">领取成功</string>
+    <string name="save_wallet">已存入钱包，稍后到账</string>
+    <string name="save_wallet_1">已存入钱包</string>
 
 
 </resources>
