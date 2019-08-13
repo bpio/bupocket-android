@@ -81,7 +81,6 @@ public class BumoNewsActivity extends AppCompatActivity {
                 super.onPageFinished(view, url);
                 if (!isError) {
                     isSuccess = true;
-                    //回调成功后的相关操作
                     loadFailedLL.setVisibility(View.GONE);
                     mWebView.setVisibility(View.VISIBLE);
 
