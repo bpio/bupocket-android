@@ -199,7 +199,7 @@
     <string name="set_success">Set successfully</string>
     <string name="handling">Processing...</string>
     <string name="i_knew_btn_txt">Got It</string>
-    <string name="network_error_msg">Your network is interrupted. Please try again later.</string>
+    <string name="network_error_msg">Internet interrupted, please check your internet</string>
     <string name="capture_activity_title">Scan</string>
     <string name="time_day_ago">day ago</string>
     <string name="time_hour_ago">hr ago</string>
@@ -582,10 +582,7 @@
     <string name="transfer_fee_empty">Invalid transaction fee</string>
     <string name="transfer_amount_bu_empty">Invalid transaction amount of BU</string>
 
-
-
-    <string name="reload_txt">Reload</string>
-
+    <string name="reload_txt">Refresh</string>
 
     <string name="building">In Progress</string>
     <string name="build_success">Success</string>
