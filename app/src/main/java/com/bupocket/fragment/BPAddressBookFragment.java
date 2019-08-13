@@ -19,6 +19,7 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetAddressBookRespDto;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
@@ -56,7 +57,7 @@ public class BPAddressBookFragment extends BaseFragment {
     private String flag;
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String identityAddress;
-    private String pageSize = "10";
+    private int pageSize = 10;
     private Integer pageStart = 1;
     private AddressAdapter addressAdapter;
     private GetAddressBookRespDto.PageBean page;
@@ -113,18 +114,17 @@ public class BPAddressBookFragment extends BaseFragment {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
 
-//        faildLayout = LayoutInflater.from(mContext).inflate(R.layout.view_load_failed, null);
         faildLayout.findViewById(R.id.reloadBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              refreshLayout.autoRefresh(100,100,1,false);
+                refreshLayout.autoRefresh(100, 100, 1, false);
             }
         });
     }
 
     private void initListView() {
         refreshLayout.setNoMoreData(false);
-        mAddressEv.show(true);
+
         refreshLayout.setEnableLoadMore(false);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -164,18 +164,22 @@ public class BPAddressBookFragment extends BaseFragment {
         });
 
 
-        getDataDaoRefresh();
+        getDataDaoRefresh(pageStart);
 
 
     }
 
-    private void getDataDaoRefresh() {
-        List<AddressBookListBean> addressBookListBeans =  addressBookListBeanDao.queryBuilder().limit(10).list();
+    private void getDataDaoRefresh(int pageStart) {
+        List<AddressBookListBean> addressBookListBeans = addressBookListBeanDao.queryBuilder().limit(pageStart*pageSize).list();
         if (addressBookListBeans != null && addressBookListBeans.size() > 0) {
-            addressAdapter = new AddressAdapter(addressList, getContext());
+            addressAdapter = new AddressAdapter(addressBookListBeans, getContext());
             mAddressBookLv.setAdapter(addressAdapter);
             addressAdapter.notifyDataSetChanged();
+        } else {
+            mAddressEv.show(true);
         }
+
+
     }
 
     private void refreshData() {
@@ -220,10 +224,12 @@ public class BPAddressBookFragment extends BaseFragment {
             @Override
             public void onFailure(Call<ApiResult<GetAddressBookRespDto>> call, Throwable t) {
                 t.printStackTrace();
-                if (isAdded()) {
-                    mAddressEv.show(null, null);
-                    faildLayout.setVisibility(View.VISIBLE);
+                mAddressEv.show(null, null);
+                if (addressAdapter != null && addressAdapter.getCount() > 0) {
+                    return;
                 }
+                faildLayout.setVisibility(View.VISIBLE);
+
             }
         });
     }
