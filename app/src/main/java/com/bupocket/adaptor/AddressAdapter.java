@@ -9,6 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.bupocket.R;
+import com.bupocket.http.api.AddressBookListBean;
 import com.bupocket.http.api.dto.resp.GetAddressBookRespDto;
 import com.bupocket.utils.AddressUtil;
 
@@ -18,8 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 public class AddressAdapter extends BaseAdapter {
-    private Map<String, GetAddressBookRespDto.AddressBookListBean> addressMap = new HashMap<>();
-    private List<GetAddressBookRespDto.AddressBookListBean> mData;
+    private Map<String, AddressBookListBean> addressMap = new HashMap<>();
+    private List<AddressBookListBean> mData;
     private GetAddressBookRespDto.PageBean page;
     private Context mContext;
 
@@ -32,13 +33,13 @@ public class AddressAdapter extends BaseAdapter {
     }
     private final DataSetObservable mDataSetObservable = new DataSetObservable();
 
-    public AddressAdapter(List<GetAddressBookRespDto.AddressBookListBean> data,Context Context){
+    public AddressAdapter(List<AddressBookListBean> data,Context Context){
         mData = data;
         mContext = Context;
     }
 
-    public void loadMore(List<GetAddressBookRespDto.AddressBookListBean> data){
-        for(GetAddressBookRespDto.AddressBookListBean addressBookListBean : data){
+    public void loadMore(List<AddressBookListBean> data){
+        for(AddressBookListBean addressBookListBean : data){
             if(addressMap.containsKey(addressBookListBean.getLinkmanAddress())){
                 addressMap.put(addressBookListBean.getLinkmanAddress(),addressBookListBean);
                 mData.add(addressBookListBean);
