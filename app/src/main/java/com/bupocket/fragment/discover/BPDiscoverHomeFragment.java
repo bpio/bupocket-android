@@ -13,20 +13,24 @@ import com.bupocket.activity.BumoNewsActivity;
 import com.bupocket.adaptor.DisBannerAdapter;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.database.greendao.ImageInfoDao;
 import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.http.api.DiscoverService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.model.ImageInfo;
 import com.bupocket.model.SlideModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
+import com.bupocket.utils.NetworkUtils;
 import com.bupocket.utils.ThreadManager;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,15 +58,16 @@ public class BPDiscoverHomeFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout topBar;
 
-    private ArrayList<SlideModel.ImageInfo> banListData;
+    private ArrayList<ImageInfo> banListData;
     private DisBannerAdapter disBannerAdapter;
     private long PAGER_TIME = 4 * 1000;
     private boolean isStop;
     private boolean isDownStop;
     private Unbinder bind;
-    private ArrayList<SlideModel.ImageInfo> slideshow;
+    private ArrayList<ImageInfo> slideshow;
 
     private static Runnable bannerRunnable;
+    private ImageInfoDao imageInfoDao;
 
 
     @Override
@@ -86,19 +91,32 @@ public class BPDiscoverHomeFragment extends BaseFragment {
     }
 
     private void initData() {
+        imageInfoDao = mApplication.getDaoSession().getImageInfoDao();
+
         banListData = new ArrayList<>();
+        List<ImageInfo> imageInfos = imageInfoDao.loadAll();
+        if (imageInfos!=null&&imageInfos.size()>0) {
+            banListData.addAll(imageInfos);
+        }
         disBannerAdapter = new DisBannerAdapter(this, banListData, vpDisBanner);
         vpDisBanner.setAdapter(disBannerAdapter);
         String youpin = (String) spHelper.getSharedPreference("youpin", "");
         if (TextUtils.isEmpty(youpin)) {
             spHelper.put("youpin", "0");
         }
+
+
         requestData();
 
     }
 
 
     private void requestData() {
+
+        if (!NetworkUtils.isNetWorkAvailable(mContext)) {
+            return;
+        }
+
         DiscoverService discoverService = RetrofitFactory.getInstance().getRetrofit().create(DiscoverService.class);
 
         HashMap<String, Object> map = new HashMap<>();
@@ -116,9 +134,12 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                 if (imageList != null && imageList.getSlideshow() != null && imageList.getSlideshow().size() > 0) {
                     slideshow = imageList.getSlideshow();
                     disBannerAdapter.setData(slideshow);
-                    disBannerAdapter.notifyDataSetChanged();
                     vpDisBanner.setCurrentItem(vpDisBanner.getCurrentItem() + 100);
                     vpDisBanner.setVisibility(View.VISIBLE);
+
+                    imageInfoDao.deleteAll();
+                    imageInfoDao.insertInTx(slideshow);
+
                 } else {
                     vpDisBanner.setVisibility(View.GONE);
                 }

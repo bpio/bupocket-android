@@ -16,6 +16,7 @@ import com.bupocket.R;
 import com.bupocket.activity.BPWebActivity;
 import com.bupocket.common.Constants;
 import com.bupocket.fragment.discover.BPBannerFragment;
+import com.bupocket.model.ImageInfo;
 import com.bupocket.model.SlideModel;
 import com.qmuiteam.qmui.arch.QMUIFragment;
 
@@ -26,20 +27,21 @@ public class DisBannerAdapter extends PagerAdapter {
 
     private final Context mContext;
     private final QMUIFragment fragment;
-    private List<SlideModel.ImageInfo> images;
+    private List<ImageInfo> images;
     private ViewPager viewPager;
     private ImageView ivSlide;
 
-    public void setData(List<SlideModel.ImageInfo> images){
-        if (images==null) {
+    public void setData(List<ImageInfo> images) {
+        if (images == null) {
             return;
         }
-        this.images=images;
+        this.images = images;
+        notifyDataSetChanged();
     }
 
-    public DisBannerAdapter(QMUIFragment fragment,List<SlideModel.ImageInfo> images, ViewPager viewPager){
+    public DisBannerAdapter(QMUIFragment fragment, List<ImageInfo> images, ViewPager viewPager) {
         this.fragment = fragment;
-        this.images  = images;
+        this.images = images;
         this.viewPager = viewPager;
         mContext = viewPager.getContext();
     }
@@ -60,9 +62,9 @@ public class DisBannerAdapter extends PagerAdapter {
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         View inflate = LayoutInflater.from(this.viewPager.getContext()).inflate(R.layout.view_discover_slide, null);
-        if (images.size()!=0) {
+        if (images.size() != 0) {
             final int index = position % images.size();
-            SlideModel.ImageInfo info = images.get(index);
+            ImageInfo info = images.get(index);
             ivSlide = inflate.findViewById(R.id.ivSlide);
             ivSlide.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -71,7 +73,7 @@ public class DisBannerAdapter extends PagerAdapter {
                     String url = images.get(index).getUrl();
                     Intent intent = new Intent();
                     intent.setClass(mContext, BPWebActivity.class);
-                    intent.putExtra("url",url);
+                    intent.putExtra("url", url);
                     mContext.startActivity(intent);
 
                 }
