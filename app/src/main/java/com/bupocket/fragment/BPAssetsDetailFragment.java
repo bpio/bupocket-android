@@ -58,6 +58,8 @@ import retrofit2.Response;
 
 
 public class BPAssetsDetailFragment extends BaseFragment {
+
+
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
     @BindView(R.id.headIconIv)
@@ -103,14 +105,14 @@ public class BPAssetsDetailFragment extends BaseFragment {
     private String currencyType;
     private Unbinder bind;
     private Call<ApiResult<GetMyTxsRespDto>> callTxService;
-    private TokenTxInfoDao tokenTxInfoDao;
+//    private TokenTxInfoDao tokenTxInfoDao;
 
     @Override
     protected View onCreateView() {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_assets_detail, null);
         bind = ButterKnife.bind(this, root);
-        tokenTxInfoDao = mApplication.getDaoSession().getTokenTxInfoDao();
+//        tokenTxInfoDao = mApplication.getDaoSession().getTokenTxInfoDao();
         initTopBar();
         initTxListView();
         setListener();
@@ -315,8 +317,8 @@ public class BPAssetsDetailFragment extends BaseFragment {
             myTokenTxAdapter = new MyTokenTxAdapter(tokenTxInfoList, getContext());
             myTokenTxAdapter.setPage(getMyTxsRespDto.getPage());
             mMyTokenTxLv.setAdapter(myTokenTxAdapter);
-            tokenTxInfoDao.deleteAll();
-            tokenTxInfoDao.insertInTx(tokenTxInfoList);
+//            tokenTxInfoDao.deleteAll();
+//            tokenTxInfoDao.insertInTx(tokenTxInfoList);
 
         } else {
             myTokenTxAdapter.loadMore(getMyTxsRespDto.getTxRecord(), tokenTxInfoMap);
@@ -362,15 +364,16 @@ public class BPAssetsDetailFragment extends BaseFragment {
             @Override
             public void run() {
 
-                List<TokenTxInfo> tokenTxInfos = tokenTxInfoDao.loadAll();
-                if (tokenTxInfos!=null&&tokenTxInfos.size()>0) {
-                    myTokenTxAdapter = new MyTokenTxAdapter(tokenTxInfos, getContext());
-                    mMyTokenTxLv.setAdapter(myTokenTxAdapter);
+//                List<TokenTxInfo> tokenTxInfos = tokenTxInfoDao.loadAll();
+//                if (tokenTxInfos!=null&&tokenTxInfos.size()>0) {
+//                    myTokenTxAdapter = new MyTokenTxAdapter(tokenTxInfos, getContext());
+//                    mMyTokenTxLv.setAdapter(myTokenTxAdapter);
+//
+//                }else{
+//                    mEmptyView.show(true);
+//                }
 
-                }else{
-                    mEmptyView.show(true);
-                }
-                LogUtils.e("tokenTxInfos:    "+tokenTxInfos.size());
+                mEmptyView.show(true);
                 refreshData();
 
 

@@ -58,6 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="13dp"
+            android:layout_marginRight="@dimen/common_left_right_padding"
             android:layout_marginTop="5dp"
             android:orientation="vertical">
 

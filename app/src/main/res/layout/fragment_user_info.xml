@@ -73,9 +73,9 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
-                    android:textAlignment="textEnd"
                     style="@style/BPTextViewCommonSize14Color66"
                     tools:ignore="RtlCompat"
+                    android:textIsSelectable="true"
                     tools:text="test-idtest-idtest-idtest-idtest-idtest-idtest-idtest-idtest-idtest-idtest-id" />
             </LinearLayout>
 

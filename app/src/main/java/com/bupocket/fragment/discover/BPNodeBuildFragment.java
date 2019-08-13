@@ -82,7 +82,7 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
         nodeBuildLv.setAdapter(nodeBuildAdapter);
 
         refreshLayout.setEnableLoadMore(false);
-        qmuiEmptyView.show(true);
+
     }
 
     private void querySetNewData() {
@@ -94,6 +94,8 @@ public class BPNodeBuildFragment extends AbsBaseFragment {
         if (nodeBuildModels.size() > 0) {
             nodeBuildAdapter.setNewData(nodeBuildModels);
             nodeList=nodeBuildModels;
+        }else{
+            qmuiEmptyView.show(true);
         }
     }
 

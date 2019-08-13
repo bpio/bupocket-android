@@ -64,6 +64,8 @@ public class BPMyNodeVoteRecordFragment extends AbsBaseFragment {
     TextView haveVotesNumTvHint;
     @BindView(R.id.qmuiEmptyView)
     QMUIEmptyView qmuiEmptyView;
+    @BindView(R.id.recordTitleTv)
+    TextView recordTitleTv;
 
 
     private VoteRecordAdapter voteRecordAdapter;
@@ -127,9 +129,12 @@ public class BPMyNodeVoteRecordFragment extends AbsBaseFragment {
                 loadFailedLL.setVisibility(View.GONE);
 
                 if (body == null | body.getData() == null |
-                        body.getData().getList() == null | body.getData().getList().size() == 0) {
+                        body.getData().getList() == null |
+                        body.getData().getList().size() == 0) {
                     recordEmptyLL.setVisibility(View.VISIBLE);
+                    recordTitleTv.setVisibility(View.GONE);
                 } else {
+                    recordTitleTv.setVisibility(View.VISIBLE);
                     MyVoteRecordModel data = body.getData();
                     voteRecordAdapter.setNewData(data.getList());
                     voteRecordAdapter.notifyDataSetChanged();
@@ -148,6 +153,7 @@ public class BPMyNodeVoteRecordFragment extends AbsBaseFragment {
 
                 if (loadFailedLL != null) {
                     loadFailedLL.setVisibility(View.VISIBLE);
+                    recordTitleTv.setVisibility(View.GONE);
                 }
 
                 if (refreshLayout!=null) {

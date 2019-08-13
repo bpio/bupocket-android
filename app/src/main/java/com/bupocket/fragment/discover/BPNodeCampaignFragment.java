@@ -142,7 +142,8 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
     private void queryData() {
         superNodeModelDao = mApplication.getDaoSession().getSuperNodeModelDao();
         List<SuperNodeModel> superNodeModels = superNodeModelDao.loadAll();
-        if (superNodeModels==null) {
+        if (superNodeModels==null||superNodeModels.size()==0) {
+            qmuiEmptyView.show(true);
             return;
         }
         nodeList=superNodeModels;
@@ -526,7 +527,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
         superNodeAdapter = new NodeCampaignAdapter(this.getContext());
         nodeCampaignLv.setAdapter(superNodeAdapter);
         refreshLayout.setEnableLoadMore(false);
-        qmuiEmptyView.show(true);
+
     }
 
     private void initTopBar() {

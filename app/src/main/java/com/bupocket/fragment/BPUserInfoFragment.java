@@ -73,7 +73,7 @@ public class BPUserInfoFragment extends BaseFragment {
         String identityId = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
         String accName = getArguments().getString("accName");
         mUserInfoAccNameTv.setText(accName);
-        mIdentityIdTv.setText(AddressUtil.anonymous(identityId));
+        mIdentityIdTv.setText(identityId);
     }
 
     private void eventListeners() {
