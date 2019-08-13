@@ -37,15 +37,22 @@
                     <ListView
                         android:id="@+id/addressBookLv"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:divider="@color/tx_list_view_background_col"
                         android:fadeScrollbars="false"
                         android:scrollbars="none" />
 
 
                     <include
+                        android:visibility="gone"
                         android:id="@+id/recordEmptyLL"
                         layout="@layout/view_empty_record" />
+
+
+                    <include
+                        android:visibility="gone"
+                        layout="@layout/view_load_failed"/>
+
                 </LinearLayout>
 
                 <com.scwang.smartrefresh.layout.footer.ClassicsFooter

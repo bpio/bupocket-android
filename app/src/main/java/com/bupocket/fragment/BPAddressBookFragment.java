@@ -49,6 +49,9 @@ public class BPAddressBookFragment extends BaseFragment {
     ListView mAddressBookLv;
     @BindView(R.id.recordEmptyLL)
     LinearLayout mAddressRecordEmptyLL;
+    @BindView(R.id.loadFailedLL)
+    LinearLayout faildLayout;
+
 
     private String flag;
     private SharedPreferencesHelper sharedPreferencesHelper;
@@ -63,7 +66,6 @@ public class BPAddressBookFragment extends BaseFragment {
     private String tokenType;
     private String currentWalletAddress;
     private List<AddressBookListBean> addressList = new ArrayList<>();
-    private View faildLayout;
     private AddressBookListBeanDao addressBookListBeanDao;
 
     @Override
@@ -111,19 +113,11 @@ public class BPAddressBookFragment extends BaseFragment {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
 
-        faildLayout = LayoutInflater.from(mContext).inflate(R.layout.view_load_failed, null);
+//        faildLayout = LayoutInflater.from(mContext).inflate(R.layout.view_load_failed, null);
         faildLayout.findViewById(R.id.reloadBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                refreshLayout.getLayout().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshData();
-                        refreshLayout.finishRefresh();
-                        refreshLayout.setNoMoreData(false);
-                        initData();
-                    }
-                }, 500);
+              refreshLayout.autoRefresh(100,100,1,false);
             }
         });
     }
@@ -219,19 +213,16 @@ public class BPAddressBookFragment extends BaseFragment {
                         mAddressBookLv.setVisibility(View.GONE);
                         mAddressRecordEmptyLL.setVisibility(View.VISIBLE);
                     }
-                } else {
-//                    mAddressEv.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
-                    mAddressEv.removeAllViews();
-                    mAddressEv.addView(faildLayout);
                 }
+                faildLayout.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<ApiResult<GetAddressBookRespDto>> call, Throwable t) {
                 t.printStackTrace();
                 if (isAdded()) {
-                    mAddressEv.removeAllViews();
-                    mAddressEv.addView(faildLayout);
+                    mAddressEv.show(null, null);
+                    faildLayout.setVisibility(View.VISIBLE);
                 }
             }
         });
