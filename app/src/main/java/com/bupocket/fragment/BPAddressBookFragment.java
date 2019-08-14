@@ -58,18 +58,17 @@ public class BPAddressBookFragment extends BaseFragment {
     private String flag;
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String identityAddress;
-    private int pageSize = 5;
-    private Integer pageStart = 1;
     private AddressAdapter addressAdapter;
+
+
     private GetAddressBookRespDto.PageBean page;
-    private String tokenCode;
-    private String tokenDecimals;
-    private String tokenIssuer;
-    private String tokenType;
     private String currentWalletAddress;
     private List<AddressBookListBean> addressList = new ArrayList<>();
     private AddressBookListBeanDao addressBookListBeanDao;
 
+
+    private static final int pageSize = 10;
+    private int pageStart = 1;
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_address_book, null);
@@ -99,12 +98,7 @@ public class BPAddressBookFragment extends BaseFragment {
         identityAddress = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
         Bundle bundle = getArguments();
         flag = bundle != null ? bundle.getString("flag") : AddressClickEventEnum.EDIT.getCode();
-        if (AddressClickEventEnum.CHOOSE.getCode().equals(flag)) {
-            tokenCode = bundle.getString("tokenCode");
-            tokenDecimals = bundle.getString("tokenDecimals");
-            tokenIssuer = bundle.getString("tokenIssuer");
-            tokenType = bundle.getString("tokenType");
-        }
+
         currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress", "").toString();
         if (CommonUtil.isNull(currentWalletAddress) || currentWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString())) {
             currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
@@ -207,12 +201,18 @@ public class BPAddressBookFragment extends BaseFragment {
     }
 
     private void getDataDaoRefresh(int pageStart) {
-        List<AddressBookListBean> addressBookListBeans = addressBookListBeanDao.queryBuilder().offset((pageStart-1)*pageSize).limit(pageSize).list();
+        List<AddressBookListBean> addressBookListBeans = addressBookListBeanDao.queryBuilder().offset((pageStart - 1) * pageSize).limit(pageSize).list();
+
         if (addressBookListBeans != null && addressBookListBeans.size() > 0) {
-            if (pageStart==1) {
+            if (pageStart == 1) {
                 addressAdapter = new AddressAdapter(addressBookListBeans, getContext());
-            }else{
+            } else {
                 addressAdapter.loadMore(addressBookListBeans);
+                if (!NetworkUtils.isNetWorkAvailable(mContext)) {
+                    refreshLayout.finishLoadMore();
+                    return;
+                }
+
             }
             mAddressBookLv.setAdapter(addressAdapter);
             addressAdapter.notifyDataSetChanged();
@@ -231,16 +231,10 @@ public class BPAddressBookFragment extends BaseFragment {
     }
 
     private void loadMoreData() {
+
+        getDataDaoRefresh(pageStart + 1);
         if (page.isNextFlag()) {
             pageStart++;
-
-            getDataDaoRefresh(pageStart);
-
-            if (!NetworkUtils.isNetWorkAvailable(mContext)) {
-                refreshLayout.finishLoadMore();
-                return;
-            }
-
             loadAddressList();
         }
     }
@@ -289,7 +283,9 @@ public class BPAddressBookFragment extends BaseFragment {
         page = getAddressBookRespDto.getPage();
         List<AddressBookListBean> addressBookList = getAddressBookRespDto.getAddressBookList();
         addressList.addAll(addressBookList);
-        addressBookListBeanDao.insertOrReplaceInTx(addressBookList);
+        if (addressBookList.size() > 0) {
+            addressBookListBeanDao.insertOrReplaceInTx(addressBookList);
+        }
         if (addressAdapter == null || pageStart == 1) {
             addressAdapter = new AddressAdapter(addressList, getContext());
             addressAdapter.setPage(page);
