@@ -69,6 +69,7 @@ public class BPAddressBookFragment extends BaseFragment {
 
     private static final int pageSize = 10;
     private int pageStart = 1;
+
     @Override
     protected View onCreateView() {
         View root = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_address_book, null);
@@ -203,22 +204,27 @@ public class BPAddressBookFragment extends BaseFragment {
     private void getDataDaoRefresh(int pageStart) {
         List<AddressBookListBean> addressBookListBeans = addressBookListBeanDao.queryBuilder().offset((pageStart - 1) * pageSize).limit(pageSize).list();
 
-        if (addressBookListBeans != null && addressBookListBeans.size() > 0) {
+        if (addressBookListBeans != null) {
             if (pageStart == 1) {
                 addressAdapter = new AddressAdapter(addressBookListBeans, getContext());
+                if (addressBookListBeans.size() == 0) {
+                    mAddressEv.show(true);
+                }
+
             } else {
-                addressAdapter.loadMore(addressBookListBeans);
-                if (!NetworkUtils.isNetWorkAvailable(mContext)) {
-                    refreshLayout.finishLoadMore();
+
+                if (addressBookListBeans.size() == 0) {
+                    refreshLayout.finishLoadMoreWithNoMoreData();
                     return;
                 }
+                addressAdapter.loadMore(addressBookListBeans);
+                refreshLayout.finishLoadMore();
+
 
             }
             mAddressBookLv.setAdapter(addressAdapter);
             addressAdapter.notifyDataSetChanged();
             refreshLayout.setEnableLoadMore(true);
-        } else {
-            mAddressEv.show(true);
         }
 
 
@@ -232,10 +238,14 @@ public class BPAddressBookFragment extends BaseFragment {
 
     private void loadMoreData() {
 
-        getDataDaoRefresh(pageStart + 1);
-        if (page.isNextFlag()) {
-            pageStart++;
-            loadAddressList();
+
+        if (NetworkUtils.isNetWorkAvailable(mContext)) {
+            if (page.isNextFlag()) {
+                pageStart++;
+                loadAddressList();
+            }
+        } else {
+            getDataDaoRefresh(pageStart + 1);
         }
     }
 
