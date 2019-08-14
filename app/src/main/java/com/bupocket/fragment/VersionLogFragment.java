@@ -9,6 +9,7 @@ import com.bupocket.R;
 import com.bupocket.adaptor.VersionLogAdapter;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.ConstantsType;
+import com.bupocket.database.greendao.LogListModelDao;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.VersionService;
@@ -23,12 +24,10 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -51,11 +50,12 @@ public class VersionLogFragment extends AbsBaseFragment {
     QMUIEmptyView qmuiEmptyView;
 
 
-    private int pageStart;
-    private final int normalPageSize = 10;
+    private int pageStart=1;
+    private static final int pageSize = 10;
     private VersionLogAdapter adapter;
     private VersionLogModel.PageBean page;
     private Call<ApiResult<VersionLogModel>> versionLogService;
+    private LogListModelDao logListModelDao;
 
     @Override
     protected int getLayoutView() {
@@ -89,7 +89,22 @@ public class VersionLogFragment extends AbsBaseFragment {
     protected void initData() {
 
         refreshLayout.setEnableLoadMore(false);
+
+        queryDataBase();
+
         reqVersionLogData(1);
+
+    }
+
+    private void queryDataBase() {
+        if (logListModelDao==null) {
+            logListModelDao = mApplication.getDaoSession().getLogListModelDao();
+        }
+
+        List<LogListModel> logListModels = logListModelDao.queryBuilder().limit(pageSize).list();
+        if (logListModels!=null&&logListModels.size()>0) {
+            adapter.setNewData(logListModels);
+        }
 
     }
 
@@ -98,7 +113,7 @@ public class VersionLogFragment extends AbsBaseFragment {
         HashMap<Object, Object> reqMap = new HashMap<>();
         reqMap.put(ConstantsType.APP_TYPE, 1);
         reqMap.put(ConstantsType.PAGE_START, curPageStart);
-        reqMap.put(ConstantsType.PAGE_SIZE, normalPageSize);
+        reqMap.put(ConstantsType.PAGE_SIZE, pageSize);
         VersionService versionService = RetrofitFactory.getInstance().getRetrofit().create(VersionService.class);
         versionLogService = versionService.getVersionLog(reqMap);
         versionLogService.enqueue(new Callback<ApiResult<VersionLogModel>>() {
@@ -111,8 +126,10 @@ public class VersionLogFragment extends AbsBaseFragment {
                     page = response.body().getData().getPage();
                     if (curPageStart == 1) {
                         adapter.setNewData(logList);
+                        logListModelDao.insertOrReplaceInTx(logList);
                         refreshLayout.setEnableLoadMore(true);
                     } else {
+                        logListModelDao.insertOrReplaceInTx(logList);
                         adapter.addMoreDataList(logList);
                     }
 
@@ -134,7 +151,9 @@ public class VersionLogFragment extends AbsBaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult<VersionLogModel>> call, Throwable t) {
-                if (call.isCanceled()) {
+
+
+                if (adapter.getCount()>0) {
                     return;
                 }
                 if (loadFailedLL != null) {
@@ -204,9 +223,4 @@ public class VersionLogFragment extends AbsBaseFragment {
 
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        versionLogService.cancel();
-    }
 }
