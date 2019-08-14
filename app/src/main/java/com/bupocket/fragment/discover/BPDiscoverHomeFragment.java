@@ -179,8 +179,6 @@ public class BPDiscoverHomeFragment extends BaseFragment {
             @Override
             public void run() {
                 while (true) {
-//                    LogUtils.e("bannerRunnable");
-//                    isDownStop = !HomeFragment.isDisFragment;
                     if (!isDownStop) {
 
                         try {
@@ -190,7 +188,6 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                                     if (vpDisBanner != null) {
                                         vpDisBanner.setCurrentItem(vpDisBanner.getCurrentItem() + 1);
                                         disBannerAdapter.notifyDataSetChanged();
-//                                        LogUtils.e("disBannerAdapter");
                                     }
                                 }
 
@@ -206,7 +203,6 @@ public class BPDiscoverHomeFragment extends BaseFragment {
             }
         };
 
-//        new Thread(bannerRunnable).start();
         ThreadManager.getInstance().execute(bannerRunnable);
     }
 

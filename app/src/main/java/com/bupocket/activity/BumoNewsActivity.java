@@ -144,8 +144,7 @@ public class BumoNewsActivity extends AppCompatActivity {
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
-
+                onBackPressed();
             }
         });
         mTopBar.setTitle(R.string.information_txt);
