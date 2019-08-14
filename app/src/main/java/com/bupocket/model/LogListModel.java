@@ -4,11 +4,13 @@ package com.bupocket.model;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.OrderBy;
 
 @Entity
 public class LogListModel {
 
     @Id
+    @OrderBy("createTime ASC")
     private String createTime;
     private String englishVerContents;
     private String verContents;

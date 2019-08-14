@@ -16,6 +16,7 @@ import com.bupocket.http.api.VersionService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.LogListModel;
 import com.bupocket.model.VersionLogModel;
+import com.bupocket.utils.NetworkUtils;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
@@ -87,11 +88,7 @@ public class VersionLogFragment extends AbsBaseFragment {
 
     @Override
     protected void initData() {
-
-        refreshLayout.setEnableLoadMore(false);
-
         queryDataBase();
-
         reqVersionLogData(1);
 
     }
@@ -104,6 +101,7 @@ public class VersionLogFragment extends AbsBaseFragment {
         List<LogListModel> logListModels = logListModelDao.queryBuilder().limit(pageSize).list();
         if (logListModels!=null&&logListModels.size()>0) {
             adapter.setNewData(logListModels);
+            refreshLayout.setEnableLoadMore(true);
         }
 
     }
@@ -209,18 +207,39 @@ public class VersionLogFragment extends AbsBaseFragment {
             @Override
             public void run() {
                 int curPageStart = pageStart + 1;
-                if (page.getEndOfGroup() < curPageStart) {
-                    refreshLayout.finishLoadMore();
-                    refreshLayout.finishLoadMoreWithNoMoreData();
-                    return;
-                }
-                reqVersionLogData(curPageStart);
-                refreshLayout.finishLoadMore();
 
-                initData();
+
+                if (NetworkUtils.isNetWorkAvailable(mContext)) {
+
+                    if (page.getEndOfGroup() < curPageStart) {
+                        refreshLayout.finishLoadMore();
+                        refreshLayout.finishLoadMoreWithNoMoreData();
+                        return;
+                    }
+                    reqVersionLogData(curPageStart);
+                }else{
+                    queryMoreDataBase(curPageStart);
+
+                }
+
+
+                refreshLayout.finishLoadMore();
             }
         }, 500);
 
+    }
+
+    private void queryMoreDataBase(int curPageStart) {
+        List<LogListModel> logListModels = logListModelDao.queryBuilder().
+                offset((curPageStart-1)*pageSize).limit(pageSize).list();
+        if (logListModels!=null&&logListModels.size()>0) {
+            adapter.addMoreDataList(logListModels);
+        }else{
+            refreshLayout.finishLoadMore();
+            refreshLayout.finishLoadMoreWithNoMoreData();
+        }
+
+        pageStart = curPageStart;
     }
 
 }
