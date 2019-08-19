@@ -33,6 +33,16 @@ public class MyTokenTxAdapter extends BaseAdapter {
         this.mContext = mContext;
     }
 
+    public void setNewData(List<TokenTxInfo> datas) {
+        this.datas = datas;
+        notifyDataSetChanged();
+    }
+
+    public void addData(List<TokenTxInfo> datas) {
+        this.datas.addAll(datas);
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public int getCount() {
@@ -109,7 +119,7 @@ public class MyTokenTxAdapter extends BaseAdapter {
             long optNo = obj.getOptNo();
 
             if (!tokenTxInfoMap.containsKey(String.valueOf(obj.getOptNo()))) {
-                TokenTxInfo tokenTxInfo = new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime(), mContext), amountStr, txStartStr, String.valueOf(optNo));
+                TokenTxInfo tokenTxInfo = new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime(), mContext),obj.getTxTime(), amountStr, txStartStr, String.valueOf(optNo));
                 tokenTxInfo.setTxHash(obj.getTxHash());
                 tokenTxInfo.setOutinType(obj.getOutinType());
                 tokenTxInfoMap.put(String.valueOf(obj.getOptNo()), tokenTxInfo);

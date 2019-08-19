@@ -24,13 +24,16 @@ public class TokenTxInfoDao extends AbstractDao<TokenTxInfo, String> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property TxAccountAddress = new Property(0, String.class, "txAccountAddress", false, "TX_ACCOUNT_ADDRESS");
-        public final static Property TxDate = new Property(1, String.class, "txDate", false, "TX_DATE");
-        public final static Property TxAmount = new Property(2, String.class, "txAmount", false, "TX_AMOUNT");
-        public final static Property TxStatus = new Property(3, String.class, "txStatus", false, "TX_STATUS");
-        public final static Property OutinType = new Property(4, String.class, "outinType", false, "OUTIN_TYPE");
-        public final static Property TxHash = new Property(5, String.class, "txHash", false, "TX_HASH");
-        public final static Property OptNo = new Property(6, String.class, "optNo", true, "OPT_NO");
+        public final static Property TxHash = new Property(0, String.class, "txHash", true, "TX_HASH");
+        public final static Property OptNo = new Property(1, String.class, "optNo", false, "OPT_NO");
+        public final static Property Address = new Property(2, String.class, "address", false, "ADDRESS");
+        public final static Property AssetCode = new Property(3, String.class, "assetCode", false, "ASSET_CODE");
+        public final static Property TxAccountAddress = new Property(4, String.class, "txAccountAddress", false, "TX_ACCOUNT_ADDRESS");
+        public final static Property TxDate = new Property(5, String.class, "txDate", false, "TX_DATE");
+        public final static Property TxTime = new Property(6, long.class, "txTime", false, "TX_TIME");
+        public final static Property TxAmount = new Property(7, String.class, "txAmount", false, "TX_AMOUNT");
+        public final static Property TxStatus = new Property(8, String.class, "txStatus", false, "TX_STATUS");
+        public final static Property OutinType = new Property(9, String.class, "outinType", false, "OUTIN_TYPE");
     }
 
 
@@ -46,13 +49,16 @@ public class TokenTxInfoDao extends AbstractDao<TokenTxInfo, String> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"TOKEN_TX_INFO\" (" + //
-                "\"TX_ACCOUNT_ADDRESS\" TEXT," + // 0: txAccountAddress
-                "\"TX_DATE\" TEXT," + // 1: txDate
-                "\"TX_AMOUNT\" TEXT," + // 2: txAmount
-                "\"TX_STATUS\" TEXT," + // 3: txStatus
-                "\"OUTIN_TYPE\" TEXT," + // 4: outinType
-                "\"TX_HASH\" TEXT," + // 5: txHash
-                "\"OPT_NO\" TEXT PRIMARY KEY NOT NULL );"); // 6: optNo
+                "\"TX_HASH\" TEXT PRIMARY KEY NOT NULL ," + // 0: txHash
+                "\"OPT_NO\" TEXT," + // 1: optNo
+                "\"ADDRESS\" TEXT," + // 2: address
+                "\"ASSET_CODE\" TEXT," + // 3: assetCode
+                "\"TX_ACCOUNT_ADDRESS\" TEXT," + // 4: txAccountAddress
+                "\"TX_DATE\" TEXT," + // 5: txDate
+                "\"TX_TIME\" INTEGER NOT NULL ," + // 6: txTime
+                "\"TX_AMOUNT\" TEXT," + // 7: txAmount
+                "\"TX_STATUS\" TEXT," + // 8: txStatus
+                "\"OUTIN_TYPE\" TEXT);"); // 9: outinType
     }
 
     /** Drops the underlying database table. */
@@ -65,39 +71,50 @@ public class TokenTxInfoDao extends AbstractDao<TokenTxInfo, String> {
     protected final void bindValues(DatabaseStatement stmt, TokenTxInfo entity) {
         stmt.clearBindings();
  
-        String txAccountAddress = entity.getTxAccountAddress();
-        if (txAccountAddress != null) {
-            stmt.bindString(1, txAccountAddress);
-        }
- 
-        String txDate = entity.getTxDate();
-        if (txDate != null) {
-            stmt.bindString(2, txDate);
-        }
- 
-        String txAmount = entity.getTxAmount();
-        if (txAmount != null) {
-            stmt.bindString(3, txAmount);
-        }
- 
-        String txStatus = entity.getTxStatus();
-        if (txStatus != null) {
-            stmt.bindString(4, txStatus);
-        }
- 
-        String outinType = entity.getOutinType();
-        if (outinType != null) {
-            stmt.bindString(5, outinType);
-        }
- 
         String txHash = entity.getTxHash();
         if (txHash != null) {
-            stmt.bindString(6, txHash);
+            stmt.bindString(1, txHash);
         }
  
         String optNo = entity.getOptNo();
         if (optNo != null) {
-            stmt.bindString(7, optNo);
+            stmt.bindString(2, optNo);
+        }
+ 
+        String address = entity.getAddress();
+        if (address != null) {
+            stmt.bindString(3, address);
+        }
+ 
+        String assetCode = entity.getAssetCode();
+        if (assetCode != null) {
+            stmt.bindString(4, assetCode);
+        }
+ 
+        String txAccountAddress = entity.getTxAccountAddress();
+        if (txAccountAddress != null) {
+            stmt.bindString(5, txAccountAddress);
+        }
+ 
+        String txDate = entity.getTxDate();
+        if (txDate != null) {
+            stmt.bindString(6, txDate);
+        }
+        stmt.bindLong(7, entity.getTxTime());
+ 
+        String txAmount = entity.getTxAmount();
+        if (txAmount != null) {
+            stmt.bindString(8, txAmount);
+        }
+ 
+        String txStatus = entity.getTxStatus();
+        if (txStatus != null) {
+            stmt.bindString(9, txStatus);
+        }
+ 
+        String outinType = entity.getOutinType();
+        if (outinType != null) {
+            stmt.bindString(10, outinType);
         }
     }
 
@@ -105,81 +122,98 @@ public class TokenTxInfoDao extends AbstractDao<TokenTxInfo, String> {
     protected final void bindValues(SQLiteStatement stmt, TokenTxInfo entity) {
         stmt.clearBindings();
  
-        String txAccountAddress = entity.getTxAccountAddress();
-        if (txAccountAddress != null) {
-            stmt.bindString(1, txAccountAddress);
-        }
- 
-        String txDate = entity.getTxDate();
-        if (txDate != null) {
-            stmt.bindString(2, txDate);
-        }
- 
-        String txAmount = entity.getTxAmount();
-        if (txAmount != null) {
-            stmt.bindString(3, txAmount);
-        }
- 
-        String txStatus = entity.getTxStatus();
-        if (txStatus != null) {
-            stmt.bindString(4, txStatus);
-        }
- 
-        String outinType = entity.getOutinType();
-        if (outinType != null) {
-            stmt.bindString(5, outinType);
-        }
- 
         String txHash = entity.getTxHash();
         if (txHash != null) {
-            stmt.bindString(6, txHash);
+            stmt.bindString(1, txHash);
         }
  
         String optNo = entity.getOptNo();
         if (optNo != null) {
-            stmt.bindString(7, optNo);
+            stmt.bindString(2, optNo);
+        }
+ 
+        String address = entity.getAddress();
+        if (address != null) {
+            stmt.bindString(3, address);
+        }
+ 
+        String assetCode = entity.getAssetCode();
+        if (assetCode != null) {
+            stmt.bindString(4, assetCode);
+        }
+ 
+        String txAccountAddress = entity.getTxAccountAddress();
+        if (txAccountAddress != null) {
+            stmt.bindString(5, txAccountAddress);
+        }
+ 
+        String txDate = entity.getTxDate();
+        if (txDate != null) {
+            stmt.bindString(6, txDate);
+        }
+        stmt.bindLong(7, entity.getTxTime());
+ 
+        String txAmount = entity.getTxAmount();
+        if (txAmount != null) {
+            stmt.bindString(8, txAmount);
+        }
+ 
+        String txStatus = entity.getTxStatus();
+        if (txStatus != null) {
+            stmt.bindString(9, txStatus);
+        }
+ 
+        String outinType = entity.getOutinType();
+        if (outinType != null) {
+            stmt.bindString(10, outinType);
         }
     }
 
     @Override
     public String readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6);
+        return cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0);
     }    
 
     @Override
     public TokenTxInfo readEntity(Cursor cursor, int offset) {
         TokenTxInfo entity = new TokenTxInfo( //
-            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // txAccountAddress
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // txDate
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // txAmount
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // txStatus
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // outinType
-            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // txHash
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // optNo
+            cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0), // txHash
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // optNo
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // address
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // assetCode
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // txAccountAddress
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // txDate
+            cursor.getLong(offset + 6), // txTime
+            cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // txAmount
+            cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // txStatus
+            cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9) // outinType
         );
         return entity;
     }
      
     @Override
     public void readEntity(Cursor cursor, TokenTxInfo entity, int offset) {
-        entity.setTxAccountAddress(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
-        entity.setTxDate(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setTxAmount(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setTxStatus(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setOutinType(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setTxHash(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
-        entity.setOptNo(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setTxHash(cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0));
+        entity.setOptNo(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setAddress(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setAssetCode(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setTxAccountAddress(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setTxDate(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setTxTime(cursor.getLong(offset + 6));
+        entity.setTxAmount(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
+        entity.setTxStatus(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
+        entity.setOutinType(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
      }
     
     @Override
     protected final String updateKeyAfterInsert(TokenTxInfo entity, long rowId) {
-        return entity.getOptNo();
+        return entity.getTxHash();
     }
     
     @Override
     public String getKey(TokenTxInfo entity) {
         if(entity != null) {
-            return entity.getOptNo();
+            return entity.getTxHash();
         } else {
             return null;
         }
@@ -187,7 +221,7 @@ public class TokenTxInfoDao extends AbstractDao<TokenTxInfo, String> {
 
     @Override
     public boolean hasKey(TokenTxInfo entity) {
-        return entity.getOptNo() != null;
+        return entity.getTxHash() != null;
     }
 
     @Override
