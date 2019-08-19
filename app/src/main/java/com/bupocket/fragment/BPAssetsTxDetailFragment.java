@@ -26,7 +26,6 @@ import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.TO;
 import com.bupocket.utils.TimeUtil;
 import com.bupocket.utils.ToastUtil;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
@@ -156,12 +155,12 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
 
                     mTxDetailLl.setVisibility(View.VISIBLE);
                     TxDetailRespDto.TxInfoRespBoBean txInfoRespBoBean = respDto.getData().getTxInfoRespBo();
-                    TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean = respDto.getData().getTxDeatilRespBo();
+                    TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean = respDto.getData().getTxDetailRespBo();
                     TxDetailRespDto.BlockInfoRespBoBean blockInfoRespBoBean = respDto.getData().getBlockInfoRespBo();
 
                     Drawable txStatusIconDrawable = null;
                     String txStatusStr = null;
-                    if(txDeatilRespBoBean.getStatus().equals(TxStatusEnum.SUCCESS.getCode())){
+                    if(txDetailRespBoBean.getStatus().equals(TxStatusEnum.SUCCESS.getCode())){
                         if(isAdded()){
                             txStatusIconDrawable = ContextCompat.getDrawable(Objects.requireNonNull(getContext()),R.mipmap.icon_send_success);
                             txStatusStr = getResources().getString(R.string.tx_status_success_txt);
@@ -181,12 +180,12 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                         mSendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(outinType) ? mContext.getString(R.string.comm_in) :mContext.getString(R.string.comm_out)) + txInfoRespBoBean.getAmount());
                     }
 
-                    mTxFromAccAddrTv.setText(txDeatilRespBoBean.getSourceAddress());
-                    mTxToAccAddrTv.setText(txDeatilRespBoBean.getDestAddress());
-                    mTxDetailFeeTv.setText(txDeatilRespBoBean.getFee() + " BU");
-                    mTxDetailSendDateTv.setText(TimeUtil.timeStamp2Date(txDeatilRespBoBean.getApplyTimeDate()));
+                    mTxFromAccAddrTv.setText(txDetailRespBoBean.getSourceAddress());
+                    mTxToAccAddrTv.setText(txDetailRespBoBean.getDestAddress());
+                    mTxDetailFeeTv.setText(txDetailRespBoBean.getFee() + " BU");
+                    mTxDetailSendDateTv.setText(TimeUtil.timeStamp2Date(txDetailRespBoBean.getApplyTimeDate()));
                     mTxDetailTXHashTv.setText(txInfoRespBoBean.getHash());
-                    mTxDetailNoteTv.setText(txDeatilRespBoBean.getTxMetadata());
+                    mTxDetailNoteTv.setText(txDetailRespBoBean.getTxMetadata());
 
                     mTxDetailTxInfoSourceAddressTv.setText(txInfoRespBoBean.getSourceAddress());
                     mTxDetailTxInfoDestAddressTv.setText(txInfoRespBoBean.getDestAddress());

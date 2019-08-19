@@ -44,7 +44,6 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -676,13 +675,13 @@ public class BPSendTokenFragment extends BaseFragment {
                             ApiResult<TxDetailRespDto> resp = response.body();
 
                             if (resp == null || resp.getErrCode() == null ||
-                                    resp.getData() == null || resp.getData().getTxDeatilRespBo() == null ||
+                                    resp.getData() == null || resp.getData().getTxDetailRespBo() == null ||
                                     !TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())
 
                             ) {
                                 return;
                             } else {
-                                txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
+                                txDetailRespBoBean = resp.getData().getTxDetailRespBo();
                                 timerTask.cancel();
                                 txSendingTipDialog.dismiss();
                                 if (ExceptionEnum.BU_NOT_ENOUGH_FOR_PAYMENT.getCode().equals(txDetailRespBoBean.getErrorCode())) {

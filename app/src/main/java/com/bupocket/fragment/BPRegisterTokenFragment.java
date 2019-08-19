@@ -12,8 +12,6 @@ import android.support.annotation.RequiresApi;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,7 +41,6 @@ import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -347,7 +344,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
                             if(!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())){
                                 return;
                             }else{
-                                txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
+                                txDetailRespBoBean = resp.getData().getTxDetailRespBo();
                                 timerTask.cancel();
                                 txSendingTipDialog.dismiss();
                                 Bundle argz = new Bundle();
