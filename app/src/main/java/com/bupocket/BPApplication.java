@@ -74,8 +74,6 @@ public class BPApplication extends Application {
 
     private void initUMeng() {
 
-//        UMConfigure.init(Context context, String appkey, String channel, int deviceType, String pushSecret);
-
         UMConfigure.init(this, Constants.UM_APPID, "Umeng", UMConfigure.DEVICE_TYPE_PHONE, "");
 
 
@@ -84,7 +82,6 @@ public class BPApplication extends Application {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-//        Log.e("TAG", "onConfigurationChanged");
         LocaleUtil.setLanguage(context, newConfig);
     }
 
@@ -103,7 +100,6 @@ public class BPApplication extends Application {
 
         if (isMainNetConfig) {
             Constants.BUMO_NODE_URL = Constants.MainNetConfig.BUMO_NODE_URL.getValue();
-//            LogUtils.mDebuggable = LogUtils.LEVEL_NONE;
             CrashHandler.isWrite = false;
             Constants.WEB_SERVER_DOMAIN = Constants.MainNetConfig.WEB_SERVER_DOMAIN.getValue();
 
