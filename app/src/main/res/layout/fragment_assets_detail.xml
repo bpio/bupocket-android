@@ -103,8 +103,7 @@
             android:orientation="vertical"
             android:paddingLeft="@dimen/common_left_right_padding"
             android:paddingTop="@dimen/common_top_bottom_padding"
-            android:paddingRight="@dimen/common_left_right_padding"
-            android:paddingBottom="@dimen/common_top_bottom_padding">
+            android:paddingRight="@dimen/common_left_right_padding">
 
             <TextView
                 android:id="@+id/myTokenTxTitleTv"
