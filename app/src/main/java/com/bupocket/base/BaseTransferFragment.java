@@ -20,6 +20,7 @@ import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.interfaces.SignatureListener;
+import com.bupocket.model.TxDetailRespBoBean;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
@@ -249,7 +250,7 @@ public abstract class BaseTransferFragment extends AbsBaseFragment {
                             if (!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())) {
                                 return;
                             } else {
-                                TxDetailRespDto.TxDetailRespBoBean txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
+                                TxDetailRespBoBean txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
                                 mFragment.timerTask.cancel();
 
                                 if (com.bupocket.wallet.enums.ExceptionEnum.BU_NOT_ENOUGH_FOR_PAYMENT.getCode().equals(txDetailRespBoBean.getErrorCode())) {

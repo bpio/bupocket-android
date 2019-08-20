@@ -29,6 +29,7 @@ import com.bupocket.http.api.dto.resp.GetTokenDetailRespDto;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.model.RegisterStatusInfo;
 import com.bupocket.model.RegisterTokenInfo;
+import com.bupocket.model.TxDetailRespBoBean;
 import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DecimalCalculate;
@@ -88,7 +89,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
     protected SharedPreferencesHelper sharedPreferencesHelper;
     QMUITipDialog txSendingTipDialog;
     private String hash;
-    private TxDetailRespDto.TxDetailRespBoBean txDetailRespBoBean;
+    private TxDetailRespBoBean txDetailRespBoBean;
 
     public BPRegisterTokenFragment(){
         super();

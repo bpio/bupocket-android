@@ -27,6 +27,9 @@ public class DaoMaster extends AbstractDaoMaster {
         NodeBuildModelDao.createTable(db, ifNotExists);
         SuperNodeModelDao.createTable(db, ifNotExists);
         TokenTxInfoDao.createTable(db, ifNotExists);
+        BlockInfoRespBoBeanDao.createTable(db, ifNotExists);
+        TxDetailRespBoBeanDao.createTable(db, ifNotExists);
+        TxInfoRespBoBeanDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
@@ -37,6 +40,9 @@ public class DaoMaster extends AbstractDaoMaster {
         NodeBuildModelDao.dropTable(db, ifExists);
         SuperNodeModelDao.dropTable(db, ifExists);
         TokenTxInfoDao.dropTable(db, ifExists);
+        BlockInfoRespBoBeanDao.dropTable(db, ifExists);
+        TxDetailRespBoBeanDao.dropTable(db, ifExists);
+        TxInfoRespBoBeanDao.dropTable(db, ifExists);
     }
 
     /**
@@ -61,6 +67,9 @@ public class DaoMaster extends AbstractDaoMaster {
         registerDaoClass(NodeBuildModelDao.class);
         registerDaoClass(SuperNodeModelDao.class);
         registerDaoClass(TokenTxInfoDao.class);
+        registerDaoClass(BlockInfoRespBoBeanDao.class);
+        registerDaoClass(TxDetailRespBoBeanDao.class);
+        registerDaoClass(TxInfoRespBoBeanDao.class);
     }
 
     public DaoSession newSession() {

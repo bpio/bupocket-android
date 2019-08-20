@@ -20,12 +20,18 @@ import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.adaptor.TxDetailSignatureAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.database.greendao.BlockInfoRespBoBeanDao;
+import com.bupocket.database.greendao.TxDetailRespBoBeanDao;
+import com.bupocket.database.greendao.TxInfoRespBoBeanDao;
 import com.bupocket.enums.OutinTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
+import com.bupocket.model.BlockInfoRespBoBean;
+import com.bupocket.model.TxDetailRespBoBean;
+import com.bupocket.model.TxInfoRespBoBean;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.TimeUtil;
 import com.bupocket.utils.ToastUtil;
@@ -106,6 +112,9 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
     private String assetCode;
     private String currentWalletAddress;
     private String optNo;
+    private TxDetailRespBoBeanDao txDetailRespBoBeanDao;
+    private TxInfoRespBoBeanDao txInfoRespBoBeanDao;
+    private BlockInfoRespBoBeanDao blockInfoRespBoBeanDao;
 
     @Override
     protected View onCreateView() {
@@ -113,13 +122,6 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
         ButterKnife.bind(this, root);
         initTopBar();
         initData();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                initTxDetailView();
-            }
-        }, 10);
-
         return root;
     }
 
@@ -132,6 +134,20 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
         currentWalletAddress = getArguments().getString("currentAccAddress");
         optNo = getArguments().getString("optNo");
         mAssetCodeTv.setText(assetCode);
+
+
+
+        queryDataBase();
+        initTxDetailView();
+    }
+
+    private void queryDataBase() {
+
+        txDetailRespBoBeanDao = mApplication.getDaoSession().getTxDetailRespBoBeanDao();
+        txInfoRespBoBeanDao = mApplication.getDaoSession().getTxInfoRespBoBeanDao();
+        blockInfoRespBoBeanDao = mApplication.getDaoSession().getBlockInfoRespBoBeanDao();
+
+//        txDetailRespBoBeanDao.queryBuilder().where(TxDetailRespBoBeanDao.Properties.Address)
     }
 
 
@@ -157,6 +173,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
 
                     mTxDetailLl.setVisibility(View.VISIBLE);
                     TxDetailRespDto data = respDto.getData();
+                    insertDataBase(data);
                     refreshView(data);
                 } else {
 
@@ -176,10 +193,26 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
         });
     }
 
+    private void insertDataBase(TxDetailRespDto data) {
+        TxInfoRespBoBean txInfoRespBoBean = data.getTxInfoRespBo();
+        TxDetailRespBoBean txDetailRespBoBean = data.getTxDeatilRespBo();
+        BlockInfoRespBoBean blockInfoRespBoBean = data.getBlockInfoRespBo();
+        txInfoRespBoBean.setAddress(currentWalletAddress);
+        txInfoRespBoBean.setOptNo(optNo);
+        txDetailRespBoBean.setAddress(currentWalletAddress);
+        txDetailRespBoBean.setOptNo(optNo);
+        blockInfoRespBoBean.setAddress(currentWalletAddress);
+        blockInfoRespBoBean.setOptNo(optNo);
+
+        txInfoRespBoBeanDao.insertOrReplace(txInfoRespBoBean);
+        txDetailRespBoBeanDao.insertOrReplace(txDetailRespBoBean);
+        blockInfoRespBoBeanDao.insertOrReplace(blockInfoRespBoBean);
+    }
+
     private void refreshView(TxDetailRespDto data) {
-        TxDetailRespDto.TxInfoRespBoBean txInfoRespBoBean = data.getTxInfoRespBo();
-        TxDetailRespDto.TxDetailRespBoBean txDetailRespBoBean = data.getTxDeatilRespBo();
-        TxDetailRespDto.BlockInfoRespBoBean blockInfoRespBoBean = data.getBlockInfoRespBo();
+        TxInfoRespBoBean txInfoRespBoBean = data.getTxInfoRespBo();
+        TxDetailRespBoBean txDetailRespBoBean = data.getTxDeatilRespBo();
+        BlockInfoRespBoBean blockInfoRespBoBean = data.getBlockInfoRespBo();
 
         Drawable txStatusIconDrawable = null;
         String txStatusStr = null;

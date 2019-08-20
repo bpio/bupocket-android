@@ -29,6 +29,7 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
+import com.bupocket.model.TxDetailRespBoBean;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DecimalCalculate;
 import com.bupocket.utils.DialogUtils;
@@ -96,7 +97,7 @@ public class BPSendTokenFragment extends BaseFragment {
     private Boolean whetherIdentityWallet = false;
     protected SharedPreferencesHelper sharedPreferencesHelper;
 
-    private TxDetailRespDto.TxDetailRespBoBean txDetailRespBoBean;
+    private TxDetailRespBoBean txDetailRespBoBean;
     private long nonce;
 
     @Override

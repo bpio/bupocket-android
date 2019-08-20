@@ -26,6 +26,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetTokenDetailRespDto;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.model.IssueTokenInfo;
+import com.bupocket.model.TxDetailRespBoBean;
 import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
@@ -97,7 +98,7 @@ public class BPIssueTokenFragment extends BaseFragment {
     private String buBalance;
     private QMUITipDialog txSendingTipDialog;
     private String hash;
-    private TxDetailRespDto.TxDetailRespBoBean txDetailRespBoBean;
+    private TxDetailRespBoBean txDetailRespBoBean;
 
     @Override
     protected View onCreateView() {
