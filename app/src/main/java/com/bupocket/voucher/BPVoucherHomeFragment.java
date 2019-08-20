@@ -34,6 +34,7 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -236,6 +237,11 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
 
     private void reqVoucherAllData(final int index) {
 
+
+        if (index==1) {
+            queryDataBase();
+        }
+
         HashMap<String, Object> map = new HashMap<>();
         map.put(ConstantsType.ADDRESS, WalletLocalInfoUtil.getInstance(spHelper).getWalletAddress());
         map.put(ConstantsType.PAGE_START, index);
@@ -253,7 +259,8 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
                 if (body != null && ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode()) && body.getData().getVoucherList().size() > 0) {
                     voucherListModel = body.getData();
                     if (index == 1) {
-                        adapter.setNewData(body.getData().getVoucherList());
+                        List<VoucherDetailModel> voucherList = body.getData().getVoucherList();
+                        adapter.setNewData(voucherList);
                         refreshLayout.setEnableLoadMore(true);
                         pageStart = index;
                     } else {
@@ -287,6 +294,11 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
 
             }
         });
+    }
+
+    private void queryDataBase() {
+
+
     }
 
 
