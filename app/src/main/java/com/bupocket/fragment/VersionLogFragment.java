@@ -88,25 +88,19 @@ public class VersionLogFragment extends AbsBaseFragment {
 
     @Override
     protected void initData() {
-        queryDataBase();
+
         reqVersionLogData(1);
 
     }
 
-    private void queryDataBase() {
-        if (logListModelDao==null) {
-            logListModelDao = mApplication.getDaoSession().getLogListModelDao();
-        }
 
-        List<LogListModel> logListModels = logListModelDao.queryBuilder().limit(pageSize).list();
-        if (logListModels!=null&&logListModels.size()>0) {
-            adapter.setNewData(logListModels);
-            refreshLayout.setEnableLoadMore(true);
-        }
-
-    }
 
     private void reqVersionLogData(final int curPageStart) {
+
+        if (curPageStart==1) {
+            queryDataBase();
+        }
+
         pageStart = curPageStart;
         HashMap<Object, Object> reqMap = new HashMap<>();
         reqMap.put(ConstantsType.APP_TYPE, 1);
@@ -242,4 +236,18 @@ public class VersionLogFragment extends AbsBaseFragment {
         pageStart = curPageStart;
     }
 
+
+    private void queryDataBase() {
+        if (logListModelDao==null) {
+            logListModelDao = mApplication.getDaoSession().getLogListModelDao();
+        }
+
+        List<LogListModel> logListModels = logListModelDao.queryBuilder().limit(pageSize).list();
+        if (logListModels!=null&&logListModels.size()>0) {
+            adapter.setNewData(logListModels);
+            refreshLayout.setEnableLoadMore(true);
+
+        }
+
+    }
 }
