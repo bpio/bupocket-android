@@ -97,7 +97,7 @@ public class BPIssueTokenFragment extends BaseFragment {
     private String buBalance;
     private QMUITipDialog txSendingTipDialog;
     private String hash;
-    private TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean;
+    private TxDetailRespDto.TxDetailRespBoBean txDetailRespBoBean;
 
     @Override
     protected View onCreateView() {
@@ -376,7 +376,7 @@ public class BPIssueTokenFragment extends BaseFragment {
                             if (!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())) {
                                 return;
                             } else {
-                                txDetailRespBoBean = resp.getData().getTxDetailRespBo();
+                                txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
                                 timerTask.cancel();
                                 txSendingTipDialog.dismiss();
                                 Bundle argz = new Bundle();

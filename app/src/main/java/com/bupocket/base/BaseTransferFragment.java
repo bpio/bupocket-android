@@ -249,7 +249,7 @@ public abstract class BaseTransferFragment extends AbsBaseFragment {
                             if (!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())) {
                                 return;
                             } else {
-                                TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean = resp.getData().getTxDetailRespBo();
+                                TxDetailRespDto.TxDetailRespBoBean txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
                                 mFragment.timerTask.cancel();
 
                                 if (com.bupocket.wallet.enums.ExceptionEnum.BU_NOT_ENOUGH_FOR_PAYMENT.getCode().equals(txDetailRespBoBean.getErrorCode())) {

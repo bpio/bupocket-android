@@ -88,7 +88,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
     protected SharedPreferencesHelper sharedPreferencesHelper;
     QMUITipDialog txSendingTipDialog;
     private String hash;
-    private TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean;
+    private TxDetailRespDto.TxDetailRespBoBean txDetailRespBoBean;
 
     public BPRegisterTokenFragment(){
         super();
@@ -344,7 +344,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
                             if(!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())){
                                 return;
                             }else{
-                                txDetailRespBoBean = resp.getData().getTxDetailRespBo();
+                                txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
                                 timerTask.cancel();
                                 txSendingTipDialog.dismiss();
                                 Bundle argz = new Bundle();

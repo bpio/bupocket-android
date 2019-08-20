@@ -3,7 +3,7 @@ package com.bupocket.http.api.dto.resp;
 public class TxDetailRespDto {
 
     private BlockInfoRespBoBean blockInfoRespBo;
-    private TxDeatilRespBoBean txDetailRespBo;
+    private TxDetailRespBoBean txDeatilRespBo;
     private TxInfoRespBoBean txInfoRespBo;
 
     public BlockInfoRespBoBean getBlockInfoRespBo() {
@@ -14,12 +14,12 @@ public class TxDetailRespDto {
         this.blockInfoRespBo = blockInfoRespBo;
     }
 
-    public TxDeatilRespBoBean getTxDetailRespBo() {
-        return txDetailRespBo;
+    public TxDetailRespBoBean getTxDeatilRespBo() {
+        return txDeatilRespBo;
     }
 
-    public void setTxDetailRespBo(TxDeatilRespBoBean txDetailRespBo) {
-        this.txDetailRespBo = txDetailRespBo;
+    public void setTxDeatilRespBo(TxDetailRespBoBean txDeatilRespBo) {
+        this.txDeatilRespBo = txDeatilRespBo;
     }
 
     public TxInfoRespBoBean getTxInfoRespBo() {
@@ -96,7 +96,7 @@ public class TxDetailRespDto {
         }
     }
 
-    public static class TxDeatilRespBoBean {
+    public static class TxDetailRespBoBean {
         /**
          * amount : 1
          * applyTimeDate : 1526544917898299

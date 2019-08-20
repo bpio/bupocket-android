@@ -96,7 +96,7 @@ public class BPSendTokenFragment extends BaseFragment {
     private Boolean whetherIdentityWallet = false;
     protected SharedPreferencesHelper sharedPreferencesHelper;
 
-    private TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean;
+    private TxDetailRespDto.TxDetailRespBoBean txDetailRespBoBean;
     private long nonce;
 
     @Override
@@ -675,13 +675,13 @@ public class BPSendTokenFragment extends BaseFragment {
                             ApiResult<TxDetailRespDto> resp = response.body();
 
                             if (resp == null || resp.getErrCode() == null ||
-                                    resp.getData() == null || resp.getData().getTxDetailRespBo() == null ||
+                                    resp.getData() == null || resp.getData().getTxDeatilRespBo() == null ||
                                     !TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())
 
                             ) {
                                 return;
                             } else {
-                                txDetailRespBoBean = resp.getData().getTxDetailRespBo();
+                                txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
                                 timerTask.cancel();
                                 txSendingTipDialog.dismiss();
                                 if (ExceptionEnum.BU_NOT_ENOUGH_FOR_PAYMENT.getCode().equals(txDetailRespBoBean.getErrorCode())) {
