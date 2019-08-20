@@ -11,7 +11,7 @@ import com.bupocket.R;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.interfaces.InitViewListener;
 import com.bupocket.voucher.adapter.BPAssetIssuerAdapter;
-import com.bupocket.voucher.model.VoucherIssuerBean;
+import com.bupocket.voucher.model.VoucherIssuerBean2;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
@@ -40,7 +40,7 @@ public class BPVoucherIssuerFragment extends AbsBaseFragment implements InitView
     LinearLayout issuerInfoLL;
 
 
-    private VoucherIssuerBean voucherIssuer;
+    private VoucherIssuerBean2 voucherIssuer;
 
     @Override
     protected int getLayoutView() {
@@ -57,7 +57,7 @@ public class BPVoucherIssuerFragment extends AbsBaseFragment implements InitView
     @Override
     protected void initData() {
         if (getArguments() != null) {
-            voucherIssuer = ((VoucherIssuerBean) getArguments().getSerializable("voucherIssuer"));
+            voucherIssuer = ((VoucherIssuerBean2) getArguments().getSerializable("voucherIssuer"));
 
             String icon = voucherIssuer.getIcon();
             if (!TextUtils.isEmpty(icon)) {

@@ -2,7 +2,6 @@ package com.bupocket.voucher.model;
 
 import com.bupocket.model.Voucher_Acceptance;
 import com.bupocket.model.Voucher_Issuer;
-import com.bupocket.model.Voucher_Properties;
 
 import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
@@ -32,21 +31,27 @@ public class VoucherDetailModel implements Serializable {
     @Convert(columnType = String.class, converter = Voucher_Issuer.class)
     private VoucherIssuerBean voucherIssuer;
 
-    @Convert(columnType = String.class, converter = Voucher_Properties.class)
-    private List<VoucherPropertiesBean> voucherProperties;
+//    @Convert(columnType = String.class, converter = Voucher_Properties.class)
+//    private List<VoucherPropertiesBean> voucherProperties;
 
 
     private String voucherIcon;
     private String voucherId;
     private String voucherName;
 
+    
 
-    @Generated(hash = 1087373310)
+    @Generated(hash = 382339780)
+    public VoucherDetailModel() {
+    }
+
+
+    @Generated(hash = 1226970287)
     public VoucherDetailModel(String address, String balance, String contractAddress,
             String endTime, String faceValue, String startTime, String trancheId,
             String spuId, VoucherAcceptanceBean voucherAcceptance,
-            VoucherIssuerBean voucherIssuer, List<VoucherPropertiesBean> voucherProperties,
-            String voucherIcon, String voucherId, String voucherName) {
+            VoucherIssuerBean voucherIssuer, String voucherIcon, String voucherId,
+            String voucherName) {
         this.address = address;
         this.balance = balance;
         this.contractAddress = contractAddress;
@@ -57,14 +62,9 @@ public class VoucherDetailModel implements Serializable {
         this.spuId = spuId;
         this.voucherAcceptance = voucherAcceptance;
         this.voucherIssuer = voucherIssuer;
-        this.voucherProperties = voucherProperties;
         this.voucherIcon = voucherIcon;
         this.voucherId = voucherId;
         this.voucherName = voucherName;
-    }
-
-    @Generated(hash = 382339780)
-    public VoucherDetailModel() {
     }
 
 
@@ -174,13 +174,13 @@ public class VoucherDetailModel implements Serializable {
         this.voucherName = voucherName;
     }
 
-    public List<VoucherPropertiesBean> getVoucherProperties() {
-        return voucherProperties;
-    }
-
-    public void setVoucherProperties(List<VoucherPropertiesBean> voucherProperties) {
-        this.voucherProperties = voucherProperties;
-    }
+//    public List<VoucherPropertiesBean> getVoucherProperties() {
+//        return voucherProperties;
+//    }
+//
+//    public void setVoucherProperties(List<VoucherPropertiesBean> voucherProperties) {
+//        this.voucherProperties = voucherProperties;
+//    }
 
     public static class VoucherAcceptanceBean implements Serializable {
 
@@ -245,28 +245,28 @@ public class VoucherDetailModel implements Serializable {
             this.name = name;
         }
     }
-
-    public static class VoucherPropertiesBean implements Serializable {
-
-        private static final long serialVersionUID = -4621715087305100004L;
-        private String key;
-        private String value;
-
-        public String getKey() {
-            return key;
-        }
-
-        public void setKey(String key) {
-            this.key = key;
-        }
-
-        public String getValue() {
-            return value;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
-    }
+//
+//    public static class VoucherPropertiesBean implements Serializable {
+//
+//        private static final long serialVersionUID = -4621715087305100004L;
+//        private String key;
+//        private String value;
+//
+//        public String getKey() {
+//            return key;
+//        }
+//
+//        public void setKey(String key) {
+//            this.key = key;
+//        }
+//
+//        public String getValue() {
+//            return value;
+//        }
+//
+//        public void setValue(String value) {
+//            this.value = value;
+//        }
+//    }
 
 }

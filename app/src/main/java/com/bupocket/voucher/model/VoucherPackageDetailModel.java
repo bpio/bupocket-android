@@ -12,10 +12,10 @@ public class VoucherPackageDetailModel  implements Serializable {
     private String spuId;
     private String startTime;
     private String trancheId;
-    private VoucherAcceptanceBean voucherAcceptance;
+    private VoucherAcceptanceBean2 voucherAcceptance;
     private String voucherIcon;
     private String voucherId;
-    private VoucherIssuerBean voucherIssuer;
+    private VoucherIssuerBean2 voucherIssuer;
     private String voucherName;
     private String voucherSpec;
     private String description;
@@ -76,11 +76,11 @@ public class VoucherPackageDetailModel  implements Serializable {
         this.trancheId = trancheId;
     }
 
-    public VoucherAcceptanceBean getVoucherAcceptance() {
+    public VoucherAcceptanceBean2 getVoucherAcceptance() {
         return voucherAcceptance;
     }
 
-    public void setVoucherAcceptance(VoucherAcceptanceBean voucherAcceptance) {
+    public void setVoucherAcceptance(VoucherAcceptanceBean2 voucherAcceptance) {
         this.voucherAcceptance = voucherAcceptance;
     }
 
@@ -100,11 +100,11 @@ public class VoucherPackageDetailModel  implements Serializable {
         this.voucherId = voucherId;
     }
 
-    public VoucherIssuerBean getVoucherIssuer() {
+    public VoucherIssuerBean2 getVoucherIssuer() {
         return voucherIssuer;
     }
 
-    public void setVoucherIssuer(VoucherIssuerBean voucherIssuer) {
+    public void setVoucherIssuer(VoucherIssuerBean2 voucherIssuer) {
         this.voucherIssuer = voucherIssuer;
     }
 

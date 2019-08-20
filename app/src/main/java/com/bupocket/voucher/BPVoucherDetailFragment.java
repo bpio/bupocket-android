@@ -1,9 +1,6 @@
 package com.bupocket.voucher;
 
-import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -19,20 +16,14 @@ import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.VoucherStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
-import com.bupocket.model.EventBus.SendVoucherMessage;
-import com.bupocket.utils.LogUtils;
-import com.bupocket.utils.TimeUtil;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.voucher.http.VoucherService;
-import com.bupocket.voucher.model.VoucherAcceptanceBean;
+import com.bupocket.voucher.model.VoucherAcceptanceBean2;
 import com.bupocket.voucher.model.VoucherDetailModel;
-import com.bupocket.voucher.model.VoucherIssuerBean;
+import com.bupocket.voucher.model.VoucherIssuerBean2;
 import com.bupocket.voucher.model.VoucherPackageDetailModel;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.HashMap;
 
@@ -166,7 +157,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
                     voucherDetailLl.setVisibility(View.VISIBLE);
 
                     detailModel = body.getData();
-                    VoucherAcceptanceBean voucherAcceptance = detailModel.getVoucherAcceptance();
+                    VoucherAcceptanceBean2 voucherAcceptance = detailModel.getVoucherAcceptance();
                     if (voucherAcceptance != null) {
                         String icon = voucherAcceptance.getIcon();
                         if (!TextUtils.isEmpty(icon) && acceptanceIconRiv != null) {
@@ -286,7 +277,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
 
     private void goAssetIssuer() {
         BPVoucherIssuerFragment fragment = new BPVoucherIssuerFragment();
-        VoucherIssuerBean voucherIssuer = detailModel.getVoucherIssuer();
+        VoucherIssuerBean2 voucherIssuer = detailModel.getVoucherIssuer();
         Bundle args = new Bundle();
         if (voucherIssuer != null) {
             args.putSerializable("voucherIssuer", voucherIssuer);
@@ -297,7 +288,7 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
 
     private void goAcceptanceFragment() {
 
-        VoucherAcceptanceBean voucherAcceptance = detailModel.getVoucherAcceptance();
+        VoucherAcceptanceBean2 voucherAcceptance = detailModel.getVoucherAcceptance();
         BPAcceptanceFragment fragment = new BPAcceptanceFragment();
         Bundle args = new Bundle();
         if (voucherAcceptance != null) {

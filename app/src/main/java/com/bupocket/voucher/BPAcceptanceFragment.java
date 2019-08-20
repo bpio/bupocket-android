@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.interfaces.InitViewListener;
-import com.bupocket.voucher.model.VoucherAcceptanceBean;
+import com.bupocket.voucher.model.VoucherAcceptanceBean2;
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 
@@ -39,7 +39,7 @@ public class BPAcceptanceFragment extends AbsBaseFragment implements InitViewLis
     LinearLayout acceptanceInfoLL;
 
     Unbinder unbinder;
-    private VoucherAcceptanceBean voucherAcceptance;
+    private VoucherAcceptanceBean2 voucherAcceptance;
 
     @Override
     protected int getLayoutView() {
@@ -55,7 +55,7 @@ public class BPAcceptanceFragment extends AbsBaseFragment implements InitViewLis
     @Override
     protected void initData() {
         if (getArguments() != null) {
-            voucherAcceptance = (VoucherAcceptanceBean) getArguments().getSerializable("voucherAcceptance");
+            voucherAcceptance = (VoucherAcceptanceBean2) getArguments().getSerializable("voucherAcceptance");
             if (voucherAcceptance != null) {
 
                 String icon = voucherAcceptance.getIcon();

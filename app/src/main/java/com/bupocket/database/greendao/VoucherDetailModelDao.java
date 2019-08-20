@@ -11,10 +11,8 @@ import org.greenrobot.greendao.database.DatabaseStatement;
 
 import com.bupocket.model.Voucher_Acceptance;
 import com.bupocket.model.Voucher_Issuer;
-import com.bupocket.model.Voucher_Properties;
-import com.bupocket.voucher.model.VoucherAcceptanceBean;
-import com.bupocket.voucher.model.VoucherIssuerBean;
-import java.util.List;
+import com.bupocket.voucher.model.VoucherDetailModel.VoucherAcceptanceBean;
+import com.bupocket.voucher.model.VoucherDetailModel.VoucherIssuerBean;
 
 import com.bupocket.voucher.model.VoucherDetailModel;
 
@@ -41,15 +39,13 @@ public class VoucherDetailModelDao extends AbstractDao<VoucherDetailModel, Void>
         public final static Property SpuId = new Property(7, String.class, "spuId", false, "SPU_ID");
         public final static Property VoucherAcceptance = new Property(8, String.class, "voucherAcceptance", false, "VOUCHER_ACCEPTANCE");
         public final static Property VoucherIssuer = new Property(9, String.class, "voucherIssuer", false, "VOUCHER_ISSUER");
-        public final static Property VoucherProperties = new Property(10, String.class, "voucherProperties", false, "VOUCHER_PROPERTIES");
-        public final static Property VoucherIcon = new Property(11, String.class, "voucherIcon", false, "VOUCHER_ICON");
-        public final static Property VoucherId = new Property(12, String.class, "voucherId", false, "VOUCHER_ID");
-        public final static Property VoucherName = new Property(13, String.class, "voucherName", false, "VOUCHER_NAME");
+        public final static Property VoucherIcon = new Property(10, String.class, "voucherIcon", false, "VOUCHER_ICON");
+        public final static Property VoucherId = new Property(11, String.class, "voucherId", false, "VOUCHER_ID");
+        public final static Property VoucherName = new Property(12, String.class, "voucherName", false, "VOUCHER_NAME");
     }
 
     private final Voucher_Acceptance voucherAcceptanceConverter = new Voucher_Acceptance();
     private final Voucher_Issuer voucherIssuerConverter = new Voucher_Issuer();
-    private final Voucher_Properties voucherPropertiesConverter = new Voucher_Properties();
 
     public VoucherDetailModelDao(DaoConfig config) {
         super(config);
@@ -73,10 +69,9 @@ public class VoucherDetailModelDao extends AbstractDao<VoucherDetailModel, Void>
                 "\"SPU_ID\" TEXT," + // 7: spuId
                 "\"VOUCHER_ACCEPTANCE\" TEXT," + // 8: voucherAcceptance
                 "\"VOUCHER_ISSUER\" TEXT," + // 9: voucherIssuer
-                "\"VOUCHER_PROPERTIES\" TEXT," + // 10: voucherProperties
-                "\"VOUCHER_ICON\" TEXT," + // 11: voucherIcon
-                "\"VOUCHER_ID\" TEXT," + // 12: voucherId
-                "\"VOUCHER_NAME\" TEXT);"); // 13: voucherName
+                "\"VOUCHER_ICON\" TEXT," + // 10: voucherIcon
+                "\"VOUCHER_ID\" TEXT," + // 11: voucherId
+                "\"VOUCHER_NAME\" TEXT);"); // 12: voucherName
     }
 
     /** Drops the underlying database table. */
@@ -139,24 +134,19 @@ public class VoucherDetailModelDao extends AbstractDao<VoucherDetailModel, Void>
             stmt.bindString(10, voucherIssuerConverter.convertToDatabaseValue(voucherIssuer));
         }
  
-        List voucherProperties = entity.getVoucherProperties();
-        if (voucherProperties != null) {
-            stmt.bindString(11, voucherPropertiesConverter.convertToDatabaseValue(voucherProperties));
-        }
- 
         String voucherIcon = entity.getVoucherIcon();
         if (voucherIcon != null) {
-            stmt.bindString(12, voucherIcon);
+            stmt.bindString(11, voucherIcon);
         }
  
         String voucherId = entity.getVoucherId();
         if (voucherId != null) {
-            stmt.bindString(13, voucherId);
+            stmt.bindString(12, voucherId);
         }
  
         String voucherName = entity.getVoucherName();
         if (voucherName != null) {
-            stmt.bindString(14, voucherName);
+            stmt.bindString(13, voucherName);
         }
     }
 
@@ -214,24 +204,19 @@ public class VoucherDetailModelDao extends AbstractDao<VoucherDetailModel, Void>
             stmt.bindString(10, voucherIssuerConverter.convertToDatabaseValue(voucherIssuer));
         }
  
-        List voucherProperties = entity.getVoucherProperties();
-        if (voucherProperties != null) {
-            stmt.bindString(11, voucherPropertiesConverter.convertToDatabaseValue(voucherProperties));
-        }
- 
         String voucherIcon = entity.getVoucherIcon();
         if (voucherIcon != null) {
-            stmt.bindString(12, voucherIcon);
+            stmt.bindString(11, voucherIcon);
         }
  
         String voucherId = entity.getVoucherId();
         if (voucherId != null) {
-            stmt.bindString(13, voucherId);
+            stmt.bindString(12, voucherId);
         }
  
         String voucherName = entity.getVoucherName();
         if (voucherName != null) {
-            stmt.bindString(14, voucherName);
+            stmt.bindString(13, voucherName);
         }
     }
 
@@ -253,10 +238,9 @@ public class VoucherDetailModelDao extends AbstractDao<VoucherDetailModel, Void>
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // spuId
             cursor.isNull(offset + 8) ? null : voucherAcceptanceConverter.convertToEntityProperty(cursor.getString(offset + 8)), // voucherAcceptance
             cursor.isNull(offset + 9) ? null : voucherIssuerConverter.convertToEntityProperty(cursor.getString(offset + 9)), // voucherIssuer
-            cursor.isNull(offset + 10) ? null : voucherPropertiesConverter.convertToEntityProperty(cursor.getString(offset + 10)), // voucherProperties
-            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // voucherIcon
-            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // voucherId
-            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13) // voucherName
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // voucherIcon
+            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // voucherId
+            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12) // voucherName
         );
         return entity;
     }
@@ -273,10 +257,9 @@ public class VoucherDetailModelDao extends AbstractDao<VoucherDetailModel, Void>
         entity.setSpuId(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
         entity.setVoucherAcceptance(cursor.isNull(offset + 8) ? null : voucherAcceptanceConverter.convertToEntityProperty(cursor.getString(offset + 8)));
         entity.setVoucherIssuer(cursor.isNull(offset + 9) ? null : voucherIssuerConverter.convertToEntityProperty(cursor.getString(offset + 9)));
-        entity.setVoucherProperties(cursor.isNull(offset + 10) ? null : voucherPropertiesConverter.convertToEntityProperty(cursor.getString(offset + 10)));
-        entity.setVoucherIcon(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
-        entity.setVoucherId(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
-        entity.setVoucherName(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
+        entity.setVoucherIcon(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setVoucherId(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setVoucherName(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
      }
     
     @Override

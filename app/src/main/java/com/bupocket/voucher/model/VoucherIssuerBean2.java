@@ -2,7 +2,7 @@ package com.bupocket.voucher.model;
 
 import java.io.Serializable;
 
-public class VoucherAcceptanceBean implements Serializable {
+public class VoucherIssuerBean2 implements Serializable {
 
     private String address;
     private String icon;
@@ -10,20 +10,20 @@ public class VoucherAcceptanceBean implements Serializable {
     private String shortName;
     private String intro;
 
-    public String getShortName() {
-        return shortName;
-    }
-
-    public void setShortName(String shortName) {
-        this.shortName = shortName;
-    }
-
     public String getIntro() {
         return intro;
     }
 
     public void setIntro(String intro) {
         this.intro = intro;
+    }
+
+    public String getShortName() {
+        return shortName;
+    }
+
+    public void setShortName(String shortName) {
+        this.shortName = shortName;
     }
 
     public String getAddress() {

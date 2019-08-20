@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bupocket.R;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.ConstantsType;
+import com.bupocket.database.greendao.VoucherDetailModelDao;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.fragment.BPCollectionFragment;
 import com.bupocket.fragment.BPWalletsHomeFragment;
@@ -75,6 +76,8 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
     private boolean isSendVoucher;
     private SelectedVoucherListener mSelectedVoucherListener;
     private VoucherDetailModel selectedVoucherDetail;
+    private VoucherDetailModelDao voucherDetailModelDao;
+    private String walletAddress;
 
 
     @Override
@@ -155,6 +158,7 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
 
     @Override
     protected void initData() {
+        walletAddress = WalletLocalInfoUtil.getInstance(spHelper).getWalletAddress();
         reqVoucherAllData(1);
     }
 
@@ -236,14 +240,12 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
 
 
     private void reqVoucherAllData(final int index) {
-
-
-        if (index==1) {
+        if (index == 1) {
             queryDataBase();
         }
 
         HashMap<String, Object> map = new HashMap<>();
-        map.put(ConstantsType.ADDRESS, WalletLocalInfoUtil.getInstance(spHelper).getWalletAddress());
+        map.put(ConstantsType.ADDRESS, walletAddress);
         map.put(ConstantsType.PAGE_START, index);
         map.put(ConstantsType.PAGE_SIZE, pageSize);
 
@@ -268,6 +270,8 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
                         pageStart = index;
                     }
 
+                    insertDataBase();
+
                     if (voucherEmptyLL != null) {
                         voucherEmptyLL.setVisibility(View.GONE);
                     }
@@ -288,6 +292,10 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
             @Override
             public void onFailure(Call<ApiResult<VoucherListModel>> call, Throwable t) {
                 if (loadFailedLL != null) {
+
+                    if (adapter != null && adapter.getCount() > 0) {
+                        return;
+                    }
                     loadFailedLL.setVisibility(View.VISIBLE);
                     adapter.setNewData(new ArrayList<VoucherDetailModel>());
                 }
@@ -296,7 +304,23 @@ public class BPVoucherHomeFragment extends AbsBaseFragment {
         });
     }
 
+    private void insertDataBase() {
+
+        List<VoucherDetailModel> data = adapter.getData();
+        for (int i = 0; i < data.size(); i++) {
+            data.get(i).setAddress(walletAddress);
+        }
+        voucherDetailModelDao.deleteAll();
+        voucherDetailModelDao.insertInTx(data);
+    }
+
     private void queryDataBase() {
+        if (voucherDetailModelDao == null) {
+            voucherDetailModelDao = mApplication.getDaoSession().getVoucherDetailModelDao();
+        }
+
+        List<VoucherDetailModel> voucherDetailModelList = voucherDetailModelDao.queryBuilder().where(VoucherDetailModelDao.Properties.Address.eq(walletAddress)).list();
+        adapter.setNewData(voucherDetailModelList);
 
 
     }
