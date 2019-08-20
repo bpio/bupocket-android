@@ -150,7 +150,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
                 TxDetailRespBoBeanDao.Properties.Address.eq(currentWalletAddress)
                 , TxDetailRespBoBeanDao.Properties.OptNo.eq(optNo)).unique();
 
-        if (txDetailRespBoBean==null||txDetailRespBoBean.getAddress().isEmpty()) {
+        if (txDetailRespBoBean == null || txDetailRespBoBean.getAddress().isEmpty()) {
             return;
         }
 
