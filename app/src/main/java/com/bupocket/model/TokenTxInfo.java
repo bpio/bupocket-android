@@ -11,7 +11,7 @@ import org.greenrobot.greendao.annotation.OrderBy;
 public class TokenTxInfo {
 
 
-    @Id
+
     private String txHash;
 
     private String optNo;

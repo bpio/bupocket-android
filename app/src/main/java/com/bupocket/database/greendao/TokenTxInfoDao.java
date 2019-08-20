@@ -15,7 +15,7 @@ import com.bupocket.model.TokenTxInfo;
 /** 
  * DAO for table "TOKEN_TX_INFO".
 */
-public class TokenTxInfoDao extends AbstractDao<TokenTxInfo, String> {
+public class TokenTxInfoDao extends AbstractDao<TokenTxInfo, Void> {
 
     public static final String TABLENAME = "TOKEN_TX_INFO";
 
@@ -24,7 +24,7 @@ public class TokenTxInfoDao extends AbstractDao<TokenTxInfo, String> {
      * Can be used for QueryBuilder and for referencing column names.
      */
     public static class Properties {
-        public final static Property TxHash = new Property(0, String.class, "txHash", true, "TX_HASH");
+        public final static Property TxHash = new Property(0, String.class, "txHash", false, "TX_HASH");
         public final static Property OptNo = new Property(1, String.class, "optNo", false, "OPT_NO");
         public final static Property Address = new Property(2, String.class, "address", false, "ADDRESS");
         public final static Property AssetCode = new Property(3, String.class, "assetCode", false, "ASSET_CODE");
@@ -49,7 +49,7 @@ public class TokenTxInfoDao extends AbstractDao<TokenTxInfo, String> {
     public static void createTable(Database db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"TOKEN_TX_INFO\" (" + //
-                "\"TX_HASH\" TEXT PRIMARY KEY NOT NULL ," + // 0: txHash
+                "\"TX_HASH\" TEXT," + // 0: txHash
                 "\"OPT_NO\" TEXT," + // 1: optNo
                 "\"ADDRESS\" TEXT," + // 2: address
                 "\"ASSET_CODE\" TEXT," + // 3: assetCode
@@ -170,8 +170,8 @@ public class TokenTxInfoDao extends AbstractDao<TokenTxInfo, String> {
     }
 
     @Override
-    public String readKey(Cursor cursor, int offset) {
-        return cursor.isNull(offset + 0) ? null : cursor.getString(offset + 0);
+    public Void readKey(Cursor cursor, int offset) {
+        return null;
     }    
 
     @Override
@@ -206,22 +206,20 @@ public class TokenTxInfoDao extends AbstractDao<TokenTxInfo, String> {
      }
     
     @Override
-    protected final String updateKeyAfterInsert(TokenTxInfo entity, long rowId) {
-        return entity.getTxHash();
+    protected final Void updateKeyAfterInsert(TokenTxInfo entity, long rowId) {
+        // Unsupported or missing PK type
+        return null;
     }
     
     @Override
-    public String getKey(TokenTxInfo entity) {
-        if(entity != null) {
-            return entity.getTxHash();
-        } else {
-            return null;
-        }
+    public Void getKey(TokenTxInfo entity) {
+        return null;
     }
 
     @Override
     public boolean hasKey(TokenTxInfo entity) {
-        return entity.getTxHash() != null;
+        // TODO
+        return false;
     }
 
     @Override

@@ -75,7 +75,6 @@
                     android:gravity="right|center_vertical"
                     style="@style/BPTextViewCommonSize14Color66"
                     tools:ignore="RtlCompat"
-                    android:textIsSelectable="true"
                     tools:text="test-idtest-idtest-idtest-idtest-idtest-idtest-idtest-idtest-idtest-idtest-id" />
             </LinearLayout>
 

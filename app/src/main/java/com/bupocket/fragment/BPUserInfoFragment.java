@@ -18,6 +18,7 @@ import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.HiddenFunctionStatusEnum;
 import com.bupocket.utils.AddressUtil;
+import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
@@ -73,7 +74,7 @@ public class BPUserInfoFragment extends BaseFragment {
         String identityId = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
         String accName = getArguments().getString("accName");
         mUserInfoAccNameTv.setText(accName);
-        mIdentityIdTv.setText(identityId);
+        mIdentityIdTv.setText(AddressUtil.anonymous(identityId));
     }
 
     private void eventListeners() {

@@ -28,6 +28,7 @@ import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
+import com.bupocket.utils.NetworkUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TimeUtil;
 import com.bupocket.utils.ToastUtil;
@@ -148,7 +149,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-                refreshLayout.autoRefresh(100,100,1,false);
+                refreshLayout.autoRefresh(100, 100, 1, false);
             }
         });
 
@@ -219,6 +220,9 @@ public class BPAssetsDetailFragment extends BaseFragment {
         pageStart = 1;
         tokenTxInfoMap.clear();
         tokenTxInfoList.clear();
+
+        queryTxInfoData();
+
         loadMyTxList();
     }
 
@@ -230,8 +234,6 @@ public class BPAssetsDetailFragment extends BaseFragment {
     }
 
     private void loadMyTxList() {
-
-        queryTxInfoData();
 
 
         TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
@@ -266,6 +268,10 @@ public class BPAssetsDetailFragment extends BaseFragment {
             @Override
             public void onFailure(Call<ApiResult<GetMyTxsRespDto>> call, Throwable t) {
                 mEmptyView.show("", "");
+
+                if (myTokenTxAdapter != null && myTokenTxAdapter.getCount() > 0) {
+                    return;
+                }
                 llLoadFailed.setVisibility(View.VISIBLE);
                 mMyTokenTxTitleTv.setVisibility(View.GONE);
                 mRecentlyTxRecordEmptyLL.setVisibility(View.GONE);
@@ -277,18 +283,25 @@ public class BPAssetsDetailFragment extends BaseFragment {
         List<TokenTxInfo> tokenTxInfoList = tokenTxInfoDao.queryBuilder().
                 where(TokenTxInfoDao.Properties.Address.eq(currentWalletAddress),
                         TokenTxInfoDao.Properties.AssetCode.eq(assetCode))
-                .orderAsc(TokenTxInfoDao.Properties.TxTime).limit(Integer.parseInt(pageSize)).list();
-        this.tokenTxInfoList=tokenTxInfoList;
-        if (tokenTxInfoList!=null&&tokenTxInfoList.size()>0) {
-
+                .orderDesc(TokenTxInfoDao.Properties.TxTime).list();
+        this.tokenTxInfoList = tokenTxInfoList;
+        if (tokenTxInfoList != null && tokenTxInfoList.size() > 0) {
             myTokenTxAdapter = new MyTokenTxAdapter(tokenTxInfoList, getContext());
             mMyTokenTxLv.setAdapter(myTokenTxAdapter);
+        } else {
+            mEmptyView.show(true);
         }
+
 
 
     }
 
     private void handleMyTxs(GetMyTxsRespDto getMyTxsRespDto) {
+
+        if (pageStart==1) {
+            tokenTxInfoList.clear();
+        }
+
 
         if (getMyTxsRespDto != null) {
             page = getMyTxsRespDto.getPage();
@@ -337,7 +350,7 @@ public class BPAssetsDetailFragment extends BaseFragment {
                 long optNo = obj.getOptNo();
 
                 if (!tokenTxInfoMap.containsKey(String.valueOf(obj.getOptNo()))) {
-                    TokenTxInfo tokenTxInfo = new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime(), getContext()),obj.getTxTime(), amountStr, txStartStr, String.valueOf(optNo));
+                    TokenTxInfo tokenTxInfo = new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime(), getContext()), obj.getTxTime(), amountStr, txStartStr, String.valueOf(optNo));
                     tokenTxInfo.setTxHash(obj.getTxHash());
                     tokenTxInfo.setOutinType(obj.getOutinType());
                     tokenTxInfo.setAssetCode(assetCode);
@@ -359,7 +372,9 @@ public class BPAssetsDetailFragment extends BaseFragment {
         } else {
             myTokenTxAdapter.loadMore(getMyTxsRespDto.getTxRecord(), tokenTxInfoMap);
         }
-        tokenTxInfoDao.insertOrReplaceInTx(tokenTxInfoList);
+
+        tokenTxInfoDao.deleteAll();
+        tokenTxInfoDao.insertInTx(tokenTxInfoList);
 
     }
 
@@ -396,14 +411,8 @@ public class BPAssetsDetailFragment extends BaseFragment {
         }
 
 
-        mAssetAmountTv.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mEmptyView.show(true);
-                refreshData();
+        refreshData();
 
-            }
-        }, 10);
 
 
 
