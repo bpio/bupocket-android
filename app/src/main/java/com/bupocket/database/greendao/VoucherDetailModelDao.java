@@ -11,8 +11,8 @@ import org.greenrobot.greendao.database.DatabaseStatement;
 
 import com.bupocket.model.Voucher_Acceptance;
 import com.bupocket.model.Voucher_Issuer;
-import com.bupocket.voucher.model.VoucherDetailModel.VoucherAcceptanceBean;
-import com.bupocket.voucher.model.VoucherDetailModel.VoucherIssuerBean;
+import com.bupocket.voucher.model.VoucherAcceptanceBean2;
+import com.bupocket.voucher.model.VoucherIssuerBean2;
 
 import com.bupocket.voucher.model.VoucherDetailModel;
 
@@ -124,12 +124,12 @@ public class VoucherDetailModelDao extends AbstractDao<VoucherDetailModel, Void>
             stmt.bindString(8, spuId);
         }
  
-        VoucherAcceptanceBean voucherAcceptance = entity.getVoucherAcceptance();
+        VoucherAcceptanceBean2 voucherAcceptance = entity.getVoucherAcceptance();
         if (voucherAcceptance != null) {
             stmt.bindString(9, voucherAcceptanceConverter.convertToDatabaseValue(voucherAcceptance));
         }
  
-        VoucherIssuerBean voucherIssuer = entity.getVoucherIssuer();
+        VoucherIssuerBean2 voucherIssuer = entity.getVoucherIssuer();
         if (voucherIssuer != null) {
             stmt.bindString(10, voucherIssuerConverter.convertToDatabaseValue(voucherIssuer));
         }
@@ -194,12 +194,12 @@ public class VoucherDetailModelDao extends AbstractDao<VoucherDetailModel, Void>
             stmt.bindString(8, spuId);
         }
  
-        VoucherAcceptanceBean voucherAcceptance = entity.getVoucherAcceptance();
+        VoucherAcceptanceBean2 voucherAcceptance = entity.getVoucherAcceptance();
         if (voucherAcceptance != null) {
             stmt.bindString(9, voucherAcceptanceConverter.convertToDatabaseValue(voucherAcceptance));
         }
  
-        VoucherIssuerBean voucherIssuer = entity.getVoucherIssuer();
+        VoucherIssuerBean2 voucherIssuer = entity.getVoucherIssuer();
         if (voucherIssuer != null) {
             stmt.bindString(10, voucherIssuerConverter.convertToDatabaseValue(voucherIssuer));
         }

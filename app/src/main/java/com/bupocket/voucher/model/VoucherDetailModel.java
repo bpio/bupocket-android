@@ -7,7 +7,7 @@ import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 
 import java.io.Serializable;
-import java.util.List;
+
 import org.greenrobot.greendao.annotation.Generated;
 
 @Entity
@@ -26,10 +26,10 @@ public class VoucherDetailModel implements Serializable {
     private String spuId;
 
     @Convert(columnType = String.class, converter = Voucher_Acceptance.class)
-    private VoucherAcceptanceBean voucherAcceptance;
+    private VoucherAcceptanceBean2 voucherAcceptance;
 
     @Convert(columnType = String.class, converter = Voucher_Issuer.class)
-    private VoucherIssuerBean voucherIssuer;
+    private VoucherIssuerBean2 voucherIssuer;
 
 //    @Convert(columnType = String.class, converter = Voucher_Properties.class)
 //    private List<VoucherPropertiesBean> voucherProperties;
@@ -39,18 +39,15 @@ public class VoucherDetailModel implements Serializable {
     private String voucherId;
     private String voucherName;
 
-    
-
-    @Generated(hash = 382339780)
-    public VoucherDetailModel() {
-    }
 
 
-    @Generated(hash = 1226970287)
-    public VoucherDetailModel(String address, String balance, String contractAddress,
-            String endTime, String faceValue, String startTime, String trancheId,
-            String spuId, VoucherAcceptanceBean voucherAcceptance,
-            VoucherIssuerBean voucherIssuer, String voucherIcon, String voucherId,
+
+    @Generated(hash = 632054181)
+    public VoucherDetailModel(String address, String balance,
+            String contractAddress, String endTime, String faceValue,
+            String startTime, String trancheId, String spuId,
+            VoucherAcceptanceBean2 voucherAcceptance,
+            VoucherIssuerBean2 voucherIssuer, String voucherIcon, String voucherId,
             String voucherName) {
         this.address = address;
         this.balance = balance;
@@ -66,6 +63,12 @@ public class VoucherDetailModel implements Serializable {
         this.voucherId = voucherId;
         this.voucherName = voucherName;
     }
+
+    @Generated(hash = 382339780)
+    public VoucherDetailModel() {
+    }
+
+    
 
 
     public String getAddress() {
@@ -134,11 +137,11 @@ public class VoucherDetailModel implements Serializable {
         this.spuId = spuId;
     }
 
-    public VoucherAcceptanceBean getVoucherAcceptance() {
+    public VoucherAcceptanceBean2 getVoucherAcceptance() {
         return voucherAcceptance;
     }
 
-    public void setVoucherAcceptance(VoucherAcceptanceBean voucherAcceptance) {
+    public void setVoucherAcceptance(VoucherAcceptanceBean2 voucherAcceptance) {
         this.voucherAcceptance = voucherAcceptance;
     }
 
@@ -158,11 +161,11 @@ public class VoucherDetailModel implements Serializable {
         this.voucherId = voucherId;
     }
 
-    public VoucherIssuerBean getVoucherIssuer() {
+    public VoucherIssuerBean2 getVoucherIssuer() {
         return voucherIssuer;
     }
 
-    public void setVoucherIssuer(VoucherIssuerBean voucherIssuer) {
+    public void setVoucherIssuer(VoucherIssuerBean2 voucherIssuer) {
         this.voucherIssuer = voucherIssuer;
     }
 
@@ -174,99 +177,10 @@ public class VoucherDetailModel implements Serializable {
         this.voucherName = voucherName;
     }
 
-//    public List<VoucherPropertiesBean> getVoucherProperties() {
-//        return voucherProperties;
-//    }
-//
-//    public void setVoucherProperties(List<VoucherPropertiesBean> voucherProperties) {
-//        this.voucherProperties = voucherProperties;
-//    }
 
-    public static class VoucherAcceptanceBean implements Serializable {
 
-        private static final long serialVersionUID = -4621715087305100002L;
-        private String address;
-        private String icon;
-        private String name;
 
-        public String getAddress() {
-            return address;
-        }
 
-        public void setAddress(String address) {
-            this.address = address;
-        }
 
-        public String getIcon() {
-            return icon;
-        }
-
-        public void setIcon(String icon) {
-            this.icon = icon;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
-
-    public static class VoucherIssuerBean implements Serializable {
-
-        private static final long serialVersionUID = -4621715087305100003L;
-        private String address;
-        private String icon;
-        private String name;
-
-        public String getAddress() {
-            return address;
-        }
-
-        public void setAddress(String address) {
-            this.address = address;
-        }
-
-        public String getIcon() {
-            return icon;
-        }
-
-        public void setIcon(String icon) {
-            this.icon = icon;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-    }
-//
-//    public static class VoucherPropertiesBean implements Serializable {
-//
-//        private static final long serialVersionUID = -4621715087305100004L;
-//        private String key;
-//        private String value;
-//
-//        public String getKey() {
-//            return key;
-//        }
-//
-//        public void setKey(String key) {
-//            this.key = key;
-//        }
-//
-//        public String getValue() {
-//            return value;
-//        }
-//
-//        public void setValue(String value) {
-//            this.value = value;
-//        }
-//    }
 
 }

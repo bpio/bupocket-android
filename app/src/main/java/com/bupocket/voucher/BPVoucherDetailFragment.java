@@ -7,15 +7,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.common.ConstantsType;
+import com.bupocket.database.greendao.VoucherPackageDetailModelDao;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.VoucherStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.voucher.http.VoucherService;
 import com.bupocket.voucher.model.VoucherAcceptanceBean2;
@@ -98,6 +101,8 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
 
     private VoucherDetailModel voucherDetailModel;
     private VoucherPackageDetailModel detailModel;
+    private VoucherPackageDetailModelDao voucherPackageDetailModelDao;
+    private VoucherPackageDetailModel voucherPackageDetailModelDataBase;
 
 
     @Override
@@ -111,7 +116,6 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
         initTopBar();
 
     }
-
 
 
     private void initTopBar() {
@@ -132,6 +136,13 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
     }
 
     private void reqDetailData() {
+        voucherPackageDetailModelDao = mApplication.getDaoSession().getVoucherPackageDetailModelDao();
+
+
+        voucherPackageDetailModelDataBase = queryDataBase();
+        if (voucherPackageDetailModelDataBase !=null) {
+            refreshView(voucherPackageDetailModelDataBase);
+        }
 
         VoucherService voucherService = RetrofitFactory.getInstance().getRetrofit().create(VoucherService.class);
         HashMap<String, Object> map = new HashMap<>();
@@ -150,79 +161,13 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
                     return;
                 }
                 detailEmptyView.show("", "");
-                voucherEmptyIv.setBackgroundResource(R.mipmap.icon_voucher_detail_bg);
+
                 ApiResult<VoucherPackageDetailModel> body = response.body();
                 if (body != null && ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
-
-                    voucherDetailLl.setVisibility(View.VISIBLE);
-
                     detailModel = body.getData();
-                    VoucherAcceptanceBean2 voucherAcceptance = detailModel.getVoucherAcceptance();
-                    if (voucherAcceptance != null) {
-                        String icon = voucherAcceptance.getIcon();
-                        if (!TextUtils.isEmpty(icon) && acceptanceIconRiv != null) {
-                            Glide.with(mContext)
-                                    .load(icon)
-                                    .into(acceptanceIconRiv);
-                        }
-                        String name = voucherAcceptance.getName();
-                        if (!TextUtils.isEmpty(name)) {
-                            acceptanceNameTv.setText(name);
-                        }
 
-                    }
-                    String voucherIcon = detailModel.getVoucherIcon();
-                    if (!TextUtils.isEmpty(voucherIcon) && voucherGoodsIv != null) {
-                        Glide.with(mContext)
-                                .load(voucherIcon)
-                                .into(voucherGoodsIv);
-                    }
-
-                    String voucherName = detailModel.getVoucherName();
-                    if (!TextUtils.isEmpty(voucherName)) {
-                        goodsNameTv.setText(voucherName);
-                    }
-
-                    String faceValue = detailModel.getFaceValue();
-                    if (!TextUtils.isEmpty(faceValue)) {
-                        goodsPriceTv.setText(getString(R.string.goods_price) + faceValue);
-                    }
-
-
-                    String startTime = detailModel.getStartTime();
-                    String endTime = detailModel.getEndTime();
-                    String date = WalletCurrentUtils.voucherDate(startTime,endTime, mContext);
-                    validityDateInfoTv.setText(date);
-
-                    voucherCodeInfoTv.setText(detailModel.getVoucherId());
-                    String voucherSpecNormal = getString(R.string.no_description);
-
-                    String voucherSpec = detailModel.getVoucherSpec();
-                    if (!TextUtils.isEmpty(voucherSpec)) {
-                        voucherSpecNormal=voucherSpec;
-                    }
-                    voucherSizeInfoTv.setText(voucherSpecNormal);
-                    String description = detailModel.getDescription();
-                    if (!TextUtils.isEmpty(description)) {
-                        voucherDescribeInfoTv.setText(description);
-                    }
-                    voucherNumInfoTv.setText(voucherDetailModel.getBalance());
-                    String acceptanceIcon = detailModel.getVoucherAcceptance().getIcon();
-                    if (!TextUtils.isEmpty(acceptanceIcon)) {
-                        Glide.with(mContext)
-                                .load(acceptanceIcon)
-                                .into(dPartyRiv);
-                    }
-                    dPartyTv.setText(detailModel.getVoucherAcceptance().getName());
-
-                    String icon = detailModel.getVoucherIssuer().getIcon();
-                    if (!TextUtils.isEmpty(icon)) {
-                        Glide.with(mContext)
-                                .load(icon)
-                                .into(assetIssuerRiv);
-                    }
-                    assetIssuerTv.setText(detailModel.getVoucherIssuer().getName());
-
+                    insetDataBase(detailModel);
+                    refreshView(detailModel);
                 }
 
 
@@ -234,8 +179,108 @@ public class BPVoucherDetailFragment extends AbsBaseFragment {
                     return;
                 }
                 detailEmptyView.show("", "");
+
+                ToastUtil.showToast(getActivity(),R.string.network_error_msg, Toast.LENGTH_SHORT);
+
             }
         });
+    }
+
+    private void insetDataBase(VoucherPackageDetailModel detailModel) {
+
+        if (voucherPackageDetailModelDataBase!=null&&voucherPackageDetailModelDataBase.getContractAddress().equals(detailModel.getContractAddress())) {
+            return;
+        }
+
+        detailModel.setAddress(getWalletAddress());
+        voucherPackageDetailModelDao.insert(detailModel);
+    }
+
+
+
+    private VoucherPackageDetailModel queryDataBase() {
+
+        VoucherPackageDetailModel voucherPackageDetailModel = voucherPackageDetailModelDao.queryBuilder().where(
+                VoucherPackageDetailModelDao.Properties.Address.eq(getWalletAddress()),
+                VoucherPackageDetailModelDao.Properties.VoucherId.eq(voucherDetailModel.getVoucherId()),
+                VoucherPackageDetailModelDao.Properties.TrancheId.eq(voucherDetailModel.getTrancheId()),
+                VoucherPackageDetailModelDao.Properties.SpuId.eq(voucherDetailModel.getSpuId()),
+                VoucherPackageDetailModelDao.Properties.ContractAddress.eq(voucherDetailModel.getContractAddress())).unique();
+
+
+        return voucherPackageDetailModel;
+    }
+
+    private void refreshView(VoucherPackageDetailModel detailModel) {
+        this.detailModel=detailModel;
+        VoucherAcceptanceBean2 voucherAcceptance = detailModel.getVoucherAcceptance();
+        if (voucherAcceptance != null) {
+            String icon = voucherAcceptance.getIcon();
+            if (!TextUtils.isEmpty(icon) && acceptanceIconRiv != null) {
+                Glide.with(mContext)
+                        .load(icon)
+                        .into(acceptanceIconRiv);
+            }
+            String name = voucherAcceptance.getName();
+            if (!TextUtils.isEmpty(name)) {
+                acceptanceNameTv.setText(name);
+            }
+
+            voucherDetailLl.setVisibility(View.VISIBLE);
+            voucherEmptyIv.setBackgroundResource(R.mipmap.icon_voucher_detail_bg);
+        }
+        String voucherIcon = detailModel.getVoucherIcon();
+        if (!TextUtils.isEmpty(voucherIcon) && voucherGoodsIv != null) {
+            Glide.with(mContext)
+                    .load(voucherIcon)
+                    .into(voucherGoodsIv);
+        }
+
+        String voucherName = detailModel.getVoucherName();
+        if (!TextUtils.isEmpty(voucherName)) {
+            goodsNameTv.setText(voucherName);
+        }
+
+        String faceValue = detailModel.getFaceValue();
+        if (!TextUtils.isEmpty(faceValue)) {
+            goodsPriceTv.setText(getString(R.string.goods_price) + faceValue);
+        }
+
+
+        String startTime = detailModel.getStartTime();
+        String endTime = detailModel.getEndTime();
+        String date = WalletCurrentUtils.voucherDate(startTime, endTime, mContext);
+        validityDateInfoTv.setText(date);
+
+        voucherCodeInfoTv.setText(detailModel.getVoucherId());
+        String voucherSpecNormal = getString(R.string.no_description);
+
+        String voucherSpec = detailModel.getVoucherSpec();
+        if (!TextUtils.isEmpty(voucherSpec)) {
+            voucherSpecNormal = voucherSpec;
+        }
+        voucherSizeInfoTv.setText(voucherSpecNormal);
+        String description = detailModel.getDescription();
+        if (!TextUtils.isEmpty(description)) {
+            voucherDescribeInfoTv.setText(description);
+        }
+        voucherNumInfoTv.setText(voucherDetailModel.getBalance());
+        String acceptanceIcon = detailModel.getVoucherAcceptance().getIcon();
+        if (!TextUtils.isEmpty(acceptanceIcon)) {
+            Glide.with(mContext)
+                    .load(acceptanceIcon)
+                    .into(dPartyRiv);
+        }
+        dPartyTv.setText(detailModel.getVoucherAcceptance().getName());
+
+        String icon = detailModel.getVoucherIssuer().getIcon();
+        if (!TextUtils.isEmpty(icon)) {
+            Glide.with(mContext)
+                    .load(icon)
+                    .into(assetIssuerRiv);
+        }
+        assetIssuerTv.setText(detailModel.getVoucherIssuer().getName());
+
     }
 
     @Override

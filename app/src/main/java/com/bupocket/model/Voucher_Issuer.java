@@ -1,20 +1,21 @@
 package com.bupocket.model;
 
 import com.bupocket.voucher.model.VoucherDetailModel;
+import com.bupocket.voucher.model.VoucherIssuerBean2;
 import com.google.gson.Gson;
 
 import org.greenrobot.greendao.converter.PropertyConverter;
 
-public class Voucher_Issuer implements PropertyConverter<VoucherDetailModel.VoucherIssuerBean,String> {
+public class Voucher_Issuer implements PropertyConverter<VoucherIssuerBean2,String> {
 
 
     @Override
-    public VoucherDetailModel.VoucherIssuerBean convertToEntityProperty(String databaseValue) {
-        return new Gson().fromJson(databaseValue, VoucherDetailModel.VoucherIssuerBean.class);
+    public VoucherIssuerBean2 convertToEntityProperty(String databaseValue) {
+        return new Gson().fromJson(databaseValue, VoucherIssuerBean2.class);
     }
 
     @Override
-    public String convertToDatabaseValue(VoucherDetailModel.VoucherIssuerBean entityProperty) {
+    public String convertToDatabaseValue(VoucherIssuerBean2 entityProperty) {
         return new Gson().toJson(entityProperty);
     }
 }

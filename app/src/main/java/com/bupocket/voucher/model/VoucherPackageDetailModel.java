@@ -1,24 +1,76 @@
 package com.bupocket.voucher.model;
 
-import java.io.Serializable;
+import com.bupocket.model.Voucher_Acceptance;
+import com.bupocket.model.Voucher_Issuer;
 
+import org.greenrobot.greendao.annotation.Convert;
+import org.greenrobot.greendao.annotation.Entity;
+
+import java.io.Serializable;
+import org.greenrobot.greendao.annotation.Generated;
+
+
+@Entity
 public class VoucherPackageDetailModel  implements Serializable {
 
+    private static final long serialVersionUID = -4621715087305100002L;
 
-
+    private String address;
     private String contractAddress;
     private String endTime;
     private String faceValue;
     private String spuId;
     private String startTime;
     private String trancheId;
+
+
+    @Convert(columnType = String.class, converter = Voucher_Acceptance.class)
     private VoucherAcceptanceBean2 voucherAcceptance;
+    @Convert(columnType = String.class, converter = Voucher_Issuer.class)
+    private VoucherIssuerBean2 voucherIssuer;
+
+
     private String voucherIcon;
     private String voucherId;
-    private VoucherIssuerBean2 voucherIssuer;
     private String voucherName;
     private String voucherSpec;
     private String description;
+
+
+    @Generated(hash = 1276462550)
+    public VoucherPackageDetailModel(String address, String contractAddress,
+            String endTime, String faceValue, String spuId, String startTime,
+            String trancheId, VoucherAcceptanceBean2 voucherAcceptance,
+            VoucherIssuerBean2 voucherIssuer, String voucherIcon, String voucherId,
+            String voucherName, String voucherSpec, String description) {
+        this.address = address;
+        this.contractAddress = contractAddress;
+        this.endTime = endTime;
+        this.faceValue = faceValue;
+        this.spuId = spuId;
+        this.startTime = startTime;
+        this.trancheId = trancheId;
+        this.voucherAcceptance = voucherAcceptance;
+        this.voucherIssuer = voucherIssuer;
+        this.voucherIcon = voucherIcon;
+        this.voucherId = voucherId;
+        this.voucherName = voucherName;
+        this.voucherSpec = voucherSpec;
+        this.description = description;
+    }
+
+    @Generated(hash = 1561449982)
+    public VoucherPackageDetailModel() {
+    }
+
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
     public String getDescription() {
         return description;

@@ -7,7 +7,6 @@ import android.os.Bundle;
 
 import android.support.annotation.RequiresApi;
 import android.text.Editable;
-import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
@@ -41,6 +40,7 @@ import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.utils.WalletUtils;
+import com.bupocket.voucher.model.VoucherAcceptanceBean2;
 import com.bupocket.voucher.model.VoucherDetailModel;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
@@ -275,7 +275,7 @@ public class BPSendTokenVoucherFragment extends BaseTransferFragment {
             return;
         }
         this.voucherDetailModel = detailModel;
-        VoucherDetailModel.VoucherAcceptanceBean voucherAcceptance = detailModel.getVoucherAcceptance();
+        VoucherAcceptanceBean2 voucherAcceptance = detailModel.getVoucherAcceptance();
         if (voucherAcceptance != null) {
 
             firstAddVoucherFl.setVisibility(View.GONE);
