@@ -136,7 +136,6 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
         mAssetCodeTv.setText(assetCode);
 
 
-
         queryDataBase();
         initTxDetailView();
     }
@@ -147,7 +146,29 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
         txInfoRespBoBeanDao = mApplication.getDaoSession().getTxInfoRespBoBeanDao();
         blockInfoRespBoBeanDao = mApplication.getDaoSession().getBlockInfoRespBoBeanDao();
 
-//        txDetailRespBoBeanDao.queryBuilder().where(TxDetailRespBoBeanDao.Properties.Address)
+        TxDetailRespBoBean txDetailRespBoBean = txDetailRespBoBeanDao.queryBuilder().where(
+                TxDetailRespBoBeanDao.Properties.Address.eq(currentWalletAddress)
+                , TxDetailRespBoBeanDao.Properties.OptNo.eq(optNo)).unique();
+
+        if (txDetailRespBoBean==null||txDetailRespBoBean.getAddress().isEmpty()) {
+            return;
+        }
+
+        BlockInfoRespBoBean blockInfoRespBoBean = blockInfoRespBoBeanDao.queryBuilder().where(
+                BlockInfoRespBoBeanDao.Properties.Address.eq(currentWalletAddress)
+                , BlockInfoRespBoBeanDao.Properties.OptNo.eq(optNo)).unique();
+
+        TxInfoRespBoBean txInfoRespBoBean = txInfoRespBoBeanDao.queryBuilder().where(
+                TxInfoRespBoBeanDao.Properties.Address.eq(currentWalletAddress)
+                , TxInfoRespBoBeanDao.Properties.OptNo.eq(optNo)).unique();
+
+        TxDetailRespDto txDetailRespDto = new TxDetailRespDto();
+        txDetailRespDto.setBlockInfoRespBo(blockInfoRespBoBean);
+        txDetailRespDto.setTxDeatilRespBo(txDetailRespBoBean);
+        txDetailRespDto.setTxInfoRespBo(txInfoRespBoBean);
+
+        refreshView(txDetailRespDto);
+
     }
 
 
@@ -207,6 +228,11 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
         txInfoRespBoBeanDao.insertOrReplace(txInfoRespBoBean);
         txDetailRespBoBeanDao.insertOrReplace(txDetailRespBoBean);
         blockInfoRespBoBeanDao.insertOrReplace(blockInfoRespBoBean);
+
+//        if (txInfoRespBoBeanDao.queryBuilder().list().size()>=50){
+//
+//
+//        }
     }
 
     private void refreshView(TxDetailRespDto data) {
