@@ -79,6 +79,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
 import io.bumo.encryption.key.PublicKey;
 import io.bumo.model.response.TransactionBuildBlobResponse;
@@ -219,7 +220,10 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         mAddTokenLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startFragment(new BPAssetsAddFragment());
+
+
+                bindWeChat();
+//                startFragment(new BPAssetsAddFragment());
             }
         });
         mImmediatelyBackupBtn.setOnClickListener(new View.OnClickListener() {
@@ -257,6 +261,13 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
                 }
             }
         });
+    }
+
+    private void bindWeChat() {
+        SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "wechat_sdk_bind";
+        mApplication.getWxApi().sendReq(req);
     }
 
     private void openRedPacketDetailFragment() {

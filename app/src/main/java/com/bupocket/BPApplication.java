@@ -25,6 +25,8 @@ import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.arch.QMUISwipeBackActivityManager;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.umeng.commonsdk.UMConfigure;
 
 public class BPApplication extends Application {
@@ -33,6 +35,15 @@ public class BPApplication extends Application {
     private RefWatcher refWatcher;
 
     private DaoSession daoSession;
+    private IWXAPI wxapi;
+
+    public IWXAPI getWxApi() {
+        if (wxapi==null){
+            initWX();
+        }
+        return wxapi;
+    }
+
     public DaoSession getDaoSession() {
         return daoSession;
     }
@@ -57,6 +68,12 @@ public class BPApplication extends Application {
         initCrash();
         initUMeng();
         initGreenDao();
+        initWX();
+    }
+
+    private void initWX() {
+        wxapi = WXAPIFactory.createWXAPI(this, Constants.WeChat_APPID, false);
+        wxapi.registerApp(Constants.WeChat_APPID);
     }
 
     private void initLeakCanary() {
@@ -127,7 +144,7 @@ public class BPApplication extends Application {
             }
         }
         Constants.NODE_PLAN_IMAGE_URL_PREFIX = Constants.WEB_SERVER_DOMAIN + Constants.IMAGE_PATH;
-        Constants.PUSH_MESSAGE_SOCKET_URL=Constants.WEB_SERVER_DOMAIN;
+        Constants.PUSH_MESSAGE_SOCKET_URL = Constants.WEB_SERVER_DOMAIN;
     }
 
     private void initCrash() {
