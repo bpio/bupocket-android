@@ -12,7 +12,10 @@ import com.bupocket.R;
 import com.bupocket.common.Constants;
 import com.bupocket.http.api.HttpCallBack;
 import com.bupocket.http.api.OkHttpUtils;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.WeChatService;
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.model.WeChatInfoModel;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.ToastUtil;
 import com.google.gson.Gson;
@@ -29,6 +32,9 @@ import java.util.Map;
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     private static final int RETURN_MSG_TYPE_LOGIN = 1;
@@ -214,41 +220,60 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         map.put("code", code);
 
         String wxUrl="https://api.weixin.qq.com/techApi/user/verify/v1/bindWeChat";
-        String url="https://api.weixin.qq.com/sns/oauth2/access_token";
-
-        FormBody  formBody=new FormBody.Builder()
-                .add("code",code)
-                .add("appid", Constants.WeChat_APPID)
-                .add("grant_type","authorization_code")
-                .build();
+        String url="http://192.168.15.43:8080/bu_pocket_api_war/wx/v1/bind";
 
 
-        final OkHttpClient okHttpClient = new OkHttpClient();
-        final Request request = new Request.Builder()
-                .url(url)
-                .post(formBody)
-                .build();
-
-        okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
+        WeChatService weChatService = RetrofitFactory.getInstance().getRetrofit().create(WeChatService.class);
+        HashMap<String, Object> map1 = new HashMap<>();
+        map1.put("wxCode",code);
+        map1.put("identityAddress", "buQfy8S29vLJ9Xwqg3UqbZXT8WgJcfVZWXKD");
+        weChatService.getWeChatInfo(map1).enqueue(new Callback<ApiResult<WeChatInfoModel>>() {
             @Override
-            public void onFailure(okhttp3.Call call, IOException e) {
+            public void onResponse(Call<ApiResult<WeChatInfoModel>> call, Response<ApiResult<WeChatInfoModel>> response) {
 
-                LogUtils.e(e.getMessage());
-//                ToastUtil.showToast(getActivity(), R.string.not_use_wallet_service,Toast.LENGTH_LONG);
+
+
             }
 
             @Override
-            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
-                String json = response.body().string();
-                LogUtils.e("response:"+ json);
-                if (response.code() == 200) {
-
-                } else {
-//                    ToastUtil.showToast(getActivity(),R.string.not_use_wallet_service,Toast.LENGTH_LONG);
-                }
+            public void onFailure(Call<ApiResult<WeChatInfoModel>> call, Throwable t) {
 
             }
         });
+
+//
+//        FormBody  formBody=new FormBody.Builder()
+//                .add("code",code)
+//                .add("identityAddress", "buQfy8S29vLJ9Xwqg3UqbZXT8WgJcfVZWXKD")
+//                .build();
+//
+//
+//        final OkHttpClient okHttpClient = new OkHttpClient();
+//        final Request request = new Request.Builder()
+//                .url(url)
+//                .post(formBody)
+//                .build();
+//
+//        okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
+//            @Override
+//            public void onFailure(okhttp3.Call call, IOException e) {
+//
+//                LogUtils.e(e.getMessage());
+////                ToastUtil.showToast(getActivity(), R.string.not_use_wallet_service,Toast.LENGTH_LONG);
+//            }
+//
+//            @Override
+//            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
+//                String json = response.body().string();
+//                LogUtils.e("response:"+ json);
+//                if (response.code() == 200) {
+//
+//                } else {
+////                    ToastUtil.showToast(getActivity(),R.string.not_use_wallet_service,Toast.LENGTH_LONG);
+//                }
+//
+//            }
+//        });
 
 
 //        Map<String, String> map = new HashMap<>();
