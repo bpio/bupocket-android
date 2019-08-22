@@ -259,8 +259,8 @@ public class BPProfileHomeFragment extends BaseFragment {
 
     private void bindWeChat() {
         SendAuth.Req req = new SendAuth.Req();
-        req.scope = "snsapi_userinfo";
-        req.state = "wechat_sdk_bind";
+        req.scope = ConstantsType.WX_SCOPE;
+        req.state = ConstantsType.WX_STATE;
         mApplication.getWxApi().sendReq(req);
     }
 

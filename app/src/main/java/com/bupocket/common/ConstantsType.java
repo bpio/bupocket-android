@@ -53,4 +53,6 @@ public class ConstantsType {
     public static final String SIGN_DATA ="signData";
     public static final String SK_PACKET = "skPacket";
     public static final String RESULT_FROM_BITMAP = "resultFromBitmap";
+    public static final String WX_SCOPE = "snsapi_userinfo";
+    public static final String WX_STATE = "wechat_sdk_bind";
 }
