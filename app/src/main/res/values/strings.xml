@@ -845,6 +845,7 @@
 
     <string name="profile_wx_bind">绑定微信</string>
     <string name="wachat_bind">立即绑定</string>
+    <string name="wx_is_binding" >已绑定</string>
 
 
 </resources>

@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import com.bupocket.BPApplication;
 import com.bupocket.common.ConstantsType;
+import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.WeChatService;
 import com.bupocket.http.api.dto.resp.ApiResult;
@@ -99,7 +100,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     private void doBindWxHttp(BaseResp resp) {
         String code = ((SendAuth.Resp) resp).code;
 
-        SharedPreferencesHelper spHelper = new SharedPreferencesHelper(getBaseContext(), ConstantsType.BU_POCKET);
+        final SharedPreferencesHelper spHelper = new SharedPreferencesHelper(getBaseContext(), ConstantsType.BU_POCKET);
         String identityAddress = WalletCurrentUtils.getIdentityAddress(spHelper);
 
         WeChatService weChatService = RetrofitFactory.getInstance().getRetrofit().create(WeChatService.class);
@@ -109,6 +110,12 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         weChatService.getWeChatInfo(map1).enqueue(new Callback<ApiResult<WeChatInfoModel>>() {
             @Override
             public void onResponse(Call<ApiResult<WeChatInfoModel>> call, Response<ApiResult<WeChatInfoModel>> response) {
+                ApiResult<WeChatInfoModel> body = response.body();
+                if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
+                    String wxHeadImgUrl = body.getData().getWxHeadImgUrl();
+                    spHelper.put(ConstantsType.WX_HEAD_IMG_URL,wxHeadImgUrl);
+                }
+
 
             }
 

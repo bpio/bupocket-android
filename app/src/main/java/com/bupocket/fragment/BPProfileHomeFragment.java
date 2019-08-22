@@ -3,16 +3,15 @@ package com.bupocket.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
@@ -24,7 +23,6 @@ import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
-import com.bupocket.utils.WalletCurrentUtils;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
@@ -110,10 +108,10 @@ public class BPProfileHomeFragment extends BaseFragment {
 
         int isStart = (int) spHelper.getSharedPreference(ConstantsType.IS_START_CUSTOM_SERVICE, 0);
         if (isStart == CustomNodeTypeEnum.START.getServiceType()) {
-            button.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
+            button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
             button.setText(getString(R.string.custom_environment));
         } else if (SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()) {
-            button.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
+            button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
             button.setText(getString(R.string.current_test_message_txt));
         }
     }
@@ -159,7 +157,8 @@ public class BPProfileHomeFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-        CommonUtil.setHeadIvRes(identityAddress, identityHeadRiv, spHelper);
+
+        isWeChatBind();
     }
 
     private void initUI() {
@@ -257,6 +256,28 @@ public class BPProfileHomeFragment extends BaseFragment {
         } else if (isStart == CustomNodeTypeEnum.START.getServiceType()) {
             nodeSettingRl.setVisibility(View.GONE);
         }
+
+
+
+    }
+
+
+
+    private void isWeChatBind() {
+        String wxHeadImgUrl = (String) spHelper.getSharedPreference(ConstantsType.WX_HEAD_IMG_URL, "");
+        if (!wxHeadImgUrl.isEmpty()) {
+            Glide.with(mContext)
+                    .load(wxHeadImgUrl)
+                    .into(identityHeadRiv);
+
+            wxBindTv.setText(R.string.wx_is_binding);
+            wxBindTv.setTextColor(getResources().getColor(R.color.app_txt_color_gray));
+            wxBindTv.setClickable(false);
+        }else{
+            CommonUtil.setHeadIvRes(identityAddress, identityHeadRiv, spHelper);
+        }
+
+
     }
 
 
