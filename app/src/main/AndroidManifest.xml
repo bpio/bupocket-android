@@ -78,6 +78,11 @@
             android:label="@string/capture_activity_label"
             android:screenOrientation="portrait" />
 
+
+        <activity android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            />
+
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.mydomain.fileprovider"
