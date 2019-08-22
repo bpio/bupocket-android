@@ -160,4 +160,5 @@ public class BPApplication extends Application {
         daoSession = daoMaster.newSession();
     }
 
+
 }

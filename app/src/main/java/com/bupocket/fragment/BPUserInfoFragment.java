@@ -18,7 +18,6 @@ import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.HiddenFunctionStatusEnum;
 import com.bupocket.utils.AddressUtil;
-import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
@@ -31,8 +30,6 @@ import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -131,7 +128,7 @@ public class BPUserInfoFragment extends BaseFragment {
         BPCreateWalletFormFragment.isCreateWallet = true;
         BPBackupWalletFragment createWalletShowMneonicCodeFragment = new BPBackupWalletFragment();
         Bundle argz = new Bundle();
-        argz.putString(ConstantsType.WALLET_ADDRESS, WalletCurrentUtils.getIdentityAddress(spHelper));
+        argz.putString(ConstantsType.WALLET_ADDRESS, WalletCurrentUtils.getIdentityWalletAddress(spHelper));
         createWalletShowMneonicCodeFragment.setArguments(argz);
         startFragment(createWalletShowMneonicCodeFragment);
 

@@ -1,10 +1,7 @@
 package com.bupocket.fragment;
 
-import android.location.Address;
 import android.os.Build;
-import android.os.Looper;
 import android.support.annotation.RequiresApi;
-import android.support.annotation.VisibleForTesting;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.InputType;
@@ -13,7 +10,6 @@ import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
-import android.view.TextureView;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -24,11 +20,9 @@ import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.ConstantsType;
-import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
-import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
@@ -111,7 +105,7 @@ public class BPChangePwdFragment extends BaseFragment {
 
                                 skey = sharedPreferencesHelper.getSharedPreference(BPChangePwdFragment.this.walletAddress + ConstantsType.WALLET_SKEY_PRIV, "").toString();
                                 if (!TextUtils.isEmpty(skey)) {
-                                    walletBPData = Wallet.getInstance().updateAccountWalletPassword(oldPwd, newPwd, skey,WalletCurrentUtils.getIdentityAddress(spHelper), getContext());
+                                    walletBPData = Wallet.getInstance().updateAccountWalletPassword(oldPwd, newPwd, skey,WalletCurrentUtils.getIdentityWalletAddress(spHelper), getContext());
                                     sharedPreferencesHelper.put(walletAddress + ConstantsType.WALLET_SKEY_PRIV, walletBPData.getSkey());
                                     sharedPreferencesHelper.put(walletAddress + "-BPdata", JSON.toJSONString(walletBPData.getAccounts()));
                                 } else {

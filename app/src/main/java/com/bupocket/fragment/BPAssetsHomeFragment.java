@@ -79,7 +79,6 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.scwang.smartrefresh.header.MaterialHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
-import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
 import io.bumo.encryption.key.PublicKey;
 import io.bumo.model.response.TransactionBuildBlobResponse;
@@ -571,7 +570,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         HashMap<String, Object> map = new HashMap<>();
         String walletAddress = WalletCurrentUtils.getWalletAddress(spHelper);
         map.put(ConstantsType.WALLET_ADDRESS_TYPE, walletAddress);
-        map.put(ConstantsType.IDENTITY_ADDRESS, WalletCurrentUtils.getIdentityAddress(spHelper));
+        map.put(ConstantsType.IDENTITY_ADDRESS, WalletCurrentUtils.getIdentityWalletAddress(spHelper));
         map.put(ConstantsType.DEVICE_ID, CommonUtil.getUniqueId(mContext));
         String walletAccountSignData = Wallet.getInstance().signData(skData, walletAddress);
         map.put(ConstantsType.SIGN_DATA, walletAccountSignData);
@@ -1142,7 +1141,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         BPCreateWalletFormFragment.isCreateWallet = false;
         BPBackupWalletFragment createWalletShowMneonicCodeFragment = new BPBackupWalletFragment();
         Bundle argz = new Bundle();
-        argz.putString(ConstantsType.WALLET_ADDRESS, WalletCurrentUtils.getIdentityAddress(spHelper));
+        argz.putString(ConstantsType.WALLET_ADDRESS, WalletCurrentUtils.getIdentityWalletAddress(spHelper));
         createWalletShowMneonicCodeFragment.setArguments(argz);
         startFragment(createWalletShowMneonicCodeFragment);
 

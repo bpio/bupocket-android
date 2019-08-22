@@ -7,9 +7,6 @@ import com.bupocket.R;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 
-import java.util.Date;
-import java.util.Random;
-
 public class WalletCurrentUtils {
 
 
@@ -35,12 +32,16 @@ public class WalletCurrentUtils {
     }
 
 
-    public static String getIdentityAddress(SharedPreferencesHelper spHelper) {
+    public static String getIdentityWalletAddress(SharedPreferencesHelper spHelper) {
         return spHelper.getSharedPreference("currentAccAddr", "").toString();
     }
 
+    public static String getIdentityAddress(SharedPreferencesHelper spHelper) {
+        return spHelper.getSharedPreference(ConstantsType.IDENTITY_ID, "").toString();
+    }
+
     public static boolean isIdentityWallet(SharedPreferencesHelper spHelper) {
-        return getIdentityAddress(spHelper).equals(getWalletAddress(spHelper));
+        return getIdentityWalletAddress(spHelper).equals(getWalletAddress(spHelper));
     }
 
     public static void saveInitHeadIcon(SharedPreferencesHelper spHelper, String walletAddress) {

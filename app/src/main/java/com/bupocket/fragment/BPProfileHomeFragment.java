@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -21,7 +22,9 @@ import com.bupocket.enums.CustomNodeTypeEnum;
 import com.bupocket.enums.LanguageEnum;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.WalletCurrentUtils;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
@@ -261,6 +264,9 @@ public class BPProfileHomeFragment extends BaseFragment {
         SendAuth.Req req = new SendAuth.Req();
         req.scope = ConstantsType.WX_SCOPE;
         req.state = ConstantsType.WX_STATE;
+//        Bundle bundle = new Bundle();
+//        bundle.putString(ConstantsType.ADDRESS,WalletCurrentUtils.getIdentityWalletAddress(spHelper));
+//        req.toBundle(bundle);
         mApplication.getWxApi().sendReq(req);
     }
 
@@ -284,4 +290,12 @@ public class BPProfileHomeFragment extends BaseFragment {
         startFragment(new BPLanguageFragment());
     }
 
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        LogUtils.e("bpProfileHomeFragment");
+
+    }
 }

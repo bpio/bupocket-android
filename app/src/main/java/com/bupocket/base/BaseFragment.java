@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.WindowManager;
 
 import com.bupocket.BPApplication;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.arch.QMUIFragment;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
@@ -15,7 +16,6 @@ import com.umeng.analytics.MobclickAgent;
 
 public abstract class BaseFragment extends QMUIFragment {
 
-    private final static String BP_FILE_NAME = "buPocket";
     public static final int TRANSFER_CODE = 200001;
     public SharedPreferencesHelper spHelper;
     protected Context mContext;
@@ -26,7 +26,7 @@ public abstract class BaseFragment extends QMUIFragment {
         super.onCreate(savedInstanceState);
         mContext = this.getContext();
         if (spHelper == null) {
-            spHelper = new SharedPreferencesHelper(getContext(), BP_FILE_NAME);
+            spHelper = new SharedPreferencesHelper(getContext(), ConstantsType.BU_POCKET);
         }
 
         getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);

@@ -1,19 +1,14 @@
 package com.bupocket.fragment;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,7 +25,6 @@ import com.bupocket.base.BaseFragment;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
-import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.TO;
 import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
@@ -43,15 +37,12 @@ import com.qmuiteam.qmui.widget.QMUITabSegment;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
-import com.qmuiteam.qmui.widget.textview.ISpanTouchFix;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -305,7 +296,7 @@ public class BPWalletImportFragment extends BaseFragment {
                     public void run() {
                         try {
                             String keystore = mKeystoreEt.getText().toString().trim();
-                            WalletBPData walletBPData = Wallet.getInstance().importKeystore(password, keystore,WalletCurrentUtils.getIdentityAddress(spHelper), mContext);
+                            WalletBPData walletBPData = Wallet.getInstance().importKeystore(password, keystore,WalletCurrentUtils.getIdentityWalletAddress(spHelper), mContext);
                             saveWalletData(walletBPData, mWalletNameEt.getText().toString().trim(), true);
                             tipDialog.dismiss();
                         } catch (WalletException e) {
@@ -600,7 +591,7 @@ public class BPWalletImportFragment extends BaseFragment {
                     public void run() {
                         try {
                             String privateKey = mPrivateKeyEt.getText().toString().trim();
-                            WalletBPData walletBPData = Wallet.getInstance().importPrivateKey(password, privateKey,WalletCurrentUtils.getIdentityAddress(spHelper),mContext);
+                            WalletBPData walletBPData = Wallet.getInstance().importPrivateKey(password, privateKey,WalletCurrentUtils.getIdentityWalletAddress(spHelper),mContext);
                             saveWalletData(walletBPData, mWalletNameEt.getText().toString(), true);
                             tipDialog.dismiss();
 
