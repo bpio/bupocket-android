@@ -48,6 +48,7 @@ import java.util.Map;
 public class Wallet {
     private static SDK sdk = null;
     private static Wallet wallet;
+    private static Long GAS_PRICE = 1003L;
 
     private Wallet() {
         init();
@@ -183,12 +184,12 @@ public class Wallet {
     }
 
 
-    public WalletBPData updateAccountWalletPassword(String oblPwd, String newPwd, String privData,String identityAddress, Context context) throws WalletException {
+    public WalletBPData updateAccountWalletPassword(String oblPwd, String newPwd, String privData, String identityAddress, Context context) throws WalletException {
         try {
 
             BaseKeyStoreEntity baseKeyStoreEntity = JSON.parseObject(privData, BaseKeyStoreEntity.class);
             String decodePrivData = KeyStore.decodeMsg(oblPwd, baseKeyStoreEntity);
-            return importPrivateKey(newPwd, decodePrivData,identityAddress,context);
+            return importPrivateKey(newPwd, decodePrivData, identityAddress, context);
         } catch (Exception e) {
             e.printStackTrace();
             throw new WalletException(ExceptionEnum.SYS_ERR.getCode(), ExceptionEnum.SYS_ERR.getMessage());
@@ -291,7 +292,7 @@ public class Wallet {
             // The amount to be sent
             Long sendAmount = ToBaseUnit.BU2MO(amount);
             // The fixed write 1000L, the unit is MO
-            Long gasPrice = 1000L;
+            Long gasPrice = GAS_PRICE;
             // Set up the maximum cost 0.01BU
             Long feeLimit = ToBaseUnit.BU2MO(fee);
             // Transaction initiation account's nonce + 1
@@ -316,7 +317,7 @@ public class Wallet {
             // The amount to be sent
             Long sendAmount = ToBaseUnit.BU2MO(amount);
             // The fixed write 1000L, the unit is MO
-            Long gasPrice = 1000L;
+            Long gasPrice = GAS_PRICE;
             // Set up the maximum cost 0.01BU
             Long feeLimit = ToBaseUnit.BU2MO(fee);
             // Transaction initiation account's nonce + 1
@@ -343,7 +344,7 @@ public class Wallet {
             // The amount to be sent
             Long sendAmount = ToBaseUnit.BU2MO(amount);
             // The fixed write 1000L, the unit is MO
-            Long gasPrice = 1000L;
+            Long gasPrice = GAS_PRICE;
             // Set up the maximum cost 0.01BU
             Long feeLimit = ToBaseUnit.BU2MO(fee);
             // Transaction initiation account's nonce + 1
@@ -416,7 +417,7 @@ public class Wallet {
             String senderPrivateKey = getPKBYAccountPassword(password, bPData, fromAccAddr);
             String metadata = note;
             // The fixed write 1000L, the unit is MO
-            Long gasPrice = 1000L;
+            Long gasPrice = GAS_PRICE;
 
 
             // handle send token amount
@@ -512,7 +513,7 @@ public class Wallet {
         // The operation notes
         String metadata = note;
         // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
+        Long gasPrice = GAS_PRICE;
 
 
         // handle send token amount
@@ -725,7 +726,7 @@ public class Wallet {
         // Transaction initiation account's Nonce + 1
         Long nonce = getAccountNonce(fromAccAddr) + 1;
         // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
+        Long gasPrice = GAS_PRICE;
         // Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO(fee);
 
@@ -768,7 +769,7 @@ public class Wallet {
         // Transaction initiation account's Nonce + 1
         Long nonce = getAccountNonce(fromAccAddr) + 1;
         // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
+        Long gasPrice = GAS_PRICE;
         // Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO(fee);
 
@@ -835,7 +836,7 @@ public class Wallet {
         return senderPrivateKey;
     }
 
-    public WalletBPData importKeystore(String password, String keystore,String  identityAddress,Context context) throws Exception {
+    public WalletBPData importKeystore(String password, String keystore, String identityAddress, Context context) throws Exception {
         String privateKey = KeyStore.decipherKeyStore(password, JSON.parseObject(keystore, KeyStoreEntity.class));
         if (!privateKey.startsWith("priv")) {
             throw new Exception();
@@ -859,7 +860,7 @@ public class Wallet {
         return walletBPData;
     }
 
-    public WalletBPData importPrivateKey(String password, String privateKey,String identityAddress,Context context) throws Exception {
+    public WalletBPData importPrivateKey(String password, String privateKey, String identityAddress, Context context) throws Exception {
         String address = new PrivateKey(privateKey).getEncAddress();
         KeyStoreEntity keyStoreEntity = KeyStore.generateKeyStore(password, privateKey, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 2);
         WalletBPData walletBPData = new WalletBPData();
@@ -881,7 +882,7 @@ public class Wallet {
     public TransactionBuildBlobResponse buildBlob(String amount, String input, String sourceAddress, String fee, String contractAddress, String transMetadata, long nonce) throws Exception {
 
         TransactionBuildBlobResponse transactionBuildBlobResponse = null;
-        Long gasPrice = 1000L;
+        Long gasPrice = GAS_PRICE;
         Long feeLimit = ToBaseUnit.BU2MO(fee);
         Long buAmount = ToBaseUnit.BU2MO(amount);
 
@@ -919,7 +920,7 @@ public class Wallet {
         try {
             Long nonce = getAccountNonce(sourceAddress) + 1;
 
-            Long gasPrice = 1000L;
+            Long gasPrice = GAS_PRICE;
             Long feeLimit = ToBaseUnit.BU2MO(fee);
             Long buAmount = ToBaseUnit.BU2MO(amount);
 
@@ -955,7 +956,7 @@ public class Wallet {
     public TransactionBuildBlobResponse applyCoBuildBlob(String sourceAddress, String amount, String initInput, String payload, double fee, String transMetaData) throws Exception {
         Long initBalance = ToBaseUnit.BU2MO(amount);
         // The fixed write 1000L ，the unit is MO
-        Long gasPrice = 1000L;
+        Long gasPrice = GAS_PRICE;
         // Set up the maximum cost 10.01BU
         Long feeLimit = ToBaseUnit.BU2MO(fee + "");//ToBaseUnit.BU2MO("10.01");
         // Transaction initiation account's Nonce + 1
