@@ -220,10 +220,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         mAddTokenLl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                bindWeChat();
-//                startFragment(new BPAssetsAddFragment());
+                startFragment(new BPAssetsAddFragment());
             }
         });
         mImmediatelyBackupBtn.setOnClickListener(new View.OnClickListener() {
@@ -263,12 +260,7 @@ public class BPAssetsHomeFragment extends BaseTransferFragment {
         });
     }
 
-    private void bindWeChat() {
-        SendAuth.Req req = new SendAuth.Req();
-        req.scope = "snsapi_userinfo";
-        req.state = "wechat_sdk_bind";
-        mApplication.getWxApi().sendReq(req);
-    }
+
 
     private void openRedPacketDetailFragment() {
 

@@ -23,6 +23,7 @@ import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,6 +71,8 @@ public class BPProfileHomeFragment extends BaseFragment {
     TextView tvProfileCurrency;
     @BindView(R.id.newVersionCodeTV)
     TextView tvProfileLanguage;
+    @BindView(R.id.wxBindTV)
+    TextView wxBindTv;
 
     private String identityId;
     private String identityAddress;
@@ -227,6 +230,12 @@ public class BPProfileHomeFragment extends BaseFragment {
             }
         });
 
+        wxBindTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bindWeChat();
+            }
+        });
     }
 
 
@@ -247,6 +256,13 @@ public class BPProfileHomeFragment extends BaseFragment {
         }
     }
 
+
+    private void bindWeChat() {
+        SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "wechat_sdk_bind";
+        mApplication.getWxApi().sendReq(req);
+    }
 
     private void gotoChangePwdFragment() {
         startFragment(new BPChangePwdFragment());

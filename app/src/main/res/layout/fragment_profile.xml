@@ -277,7 +277,40 @@
                         android:layout_centerVertical="true"
                         android:background="@mipmap/icon_right_arrow" />
                 </RelativeLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_marginLeft="40dp"
+                    android:background="@color/gray_line" />
 
+                <LinearLayout
+                    android:id="@+id/wxBindLL"
+                    style="@style/BPLLDiscover">
+
+                    <ImageView
+                        android:id="@+id/wxBindIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+
+                        android:background="@mipmap/icon_profile_item_language" />
+
+                    <TextView
+                        style="@style/BPTextViewDiscover"
+                        android:text="@string/profile_wx_bind" />
+
+                    <TextView
+                        android:id="@+id/wxBindTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dp"
+                        android:text="@string/wachat_bind"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 

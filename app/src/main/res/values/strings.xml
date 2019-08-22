@@ -622,6 +622,7 @@
     <string name="profile_user_protocol">用户协议</string>
     <string name="profile_user_help">意见反馈</string>
     <string name="profile_about_us">关于我们</string>
+
     <string name="user_agreement">小布口袋用户服务协议</string>
 
 
@@ -837,6 +838,13 @@
     <string name="red_success_title">领取成功</string>
     <string name="save_wallet">已存入钱包，稍后到账</string>
     <string name="save_wallet_1">已存入钱包</string>
+
+
+
+
+
+    <string name="profile_wx_bind">绑定微信</string>
+    <string name="wachat_bind">立即绑定</string>
 
 
 </resources>
