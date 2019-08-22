@@ -307,7 +307,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="5dp"
                         android:text="@string/wachat_bind"
-                        android:textColor="@color/app_txt_color_gray"
+                        android:textColor="@color/app_color_green"
                         android:textSize="15sp" />
 
                 </LinearLayout>
