@@ -9,7 +9,16 @@ public class WeChatInfoModel {
 
     private String wxNick;
     private String wxHeadImgUrl;
+    private String isBindWx;
 
+
+    public String getIsBindWx() {
+        return isBindWx;
+    }
+
+    public void setIsBindWx(String isBindWx) {
+        this.isBindWx = isBindWx;
+    }
 
     public String getWxNick() {
         return wxNick;

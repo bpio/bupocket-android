@@ -2,6 +2,7 @@ package com.bupocket.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,17 +19,29 @@ import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.BumoNodeEnum;
 import com.bupocket.enums.CustomNodeTypeEnum;
+import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.LanguageEnum;
+import com.bupocket.enums.WXBindEnum;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.WeChatService;
+import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.model.WeChatInfoModel;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.WalletCurrentUtils;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class BPProfileHomeFragment extends BaseFragment {
     @BindView(R.id.topbar)
@@ -236,18 +249,7 @@ public class BPProfileHomeFragment extends BaseFragment {
         wxBindTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                DialogUtils.showConfirmNoTitleDialog(mContext,
-                        getString(R.string.dialog_bind_wx_info),
-                        getString(R.string.wachat_bind),
-                        new DialogUtils.KnowListener() {
-                    @Override
-                    public void Know() {
-                        bindWeChat();
-                    }
-                });
-
-
+                bindWeChat();
             }
         });
     }
@@ -270,12 +272,27 @@ public class BPProfileHomeFragment extends BaseFragment {
         }
 
 
-
     }
 
 
-
     private void isWeChatBind() {
+
+        String bindState = (String) spHelper.getSharedPreference(ConstantsType.BIND_WECHAT_STATE, "");
+
+        if (TextUtils.isEmpty(bindState)) {
+            queryBindState();
+            CommonUtil.setHeadIvRes(identityAddress, identityHeadRiv, spHelper);
+        } else if (bindState.equals(WXBindEnum.BIND_WECHAT.getCode())){
+            setWechatInfo();
+        }
+
+
+
+
+
+    }
+
+    private void setWechatInfo() {
         String wxHeadImgUrl = (String) spHelper.getSharedPreference(ConstantsType.WX_HEAD_IMG_URL, "");
         if (!wxHeadImgUrl.isEmpty()) {
             Glide.with(mContext)
@@ -285,22 +302,67 @@ public class BPProfileHomeFragment extends BaseFragment {
             wxBindTv.setText(R.string.wx_is_binding);
             wxBindTv.setTextColor(getResources().getColor(R.color.app_txt_color_gray));
             wxBindTv.setClickable(false);
-        }else{
-            CommonUtil.setHeadIvRes(identityAddress, identityHeadRiv, spHelper);
         }
+    }
+
+    private void queryBindState() {
+        WeChatService weChatService = RetrofitFactory.getInstance().getRetrofit().create(WeChatService.class);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(ConstantsType.IDENTITY_ADDRESS, WalletCurrentUtils.getIdentityAddress(spHelper));
+        weChatService.getWalletIdentityInfo(map).enqueue(new Callback<ApiResult<WeChatInfoModel>>() {
+            @Override
+            public void onResponse(Call<ApiResult<WeChatInfoModel>> call, Response<ApiResult<WeChatInfoModel>> response) {
+                ApiResult<WeChatInfoModel> body = response.body();
+                if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
+                    WeChatInfoModel data = body.getData();
+                    String isBindWx = data.getIsBindWx();
+                    if (WXBindEnum.BIND_WECHAT.getCode().equals(isBindWx)) {
+
+                        String wxHeadImgUrl = data.getWxHeadImgUrl();
+                        if (!TextUtils.isEmpty(wxHeadImgUrl)) {
+                            spHelper.put(ConstantsType.WX_HEAD_IMG_URL, wxHeadImgUrl);
+                        }
 
 
+                        spHelper.put(ConstantsType.BIND_WECHAT_STATE, isBindWx);
+
+
+                        setWechatInfo();
+
+                    } else if (WXBindEnum.UNBIND_WECHAT.getCode().equals(isBindWx)) {
+                        spHelper.put(ConstantsType.BIND_WECHAT_STATE, isBindWx);
+                    }
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<WeChatInfoModel>> call, Throwable t) {
+
+            }
+        });
     }
 
 
     private void bindWeChat() {
-        SendAuth.Req req = new SendAuth.Req();
-        req.scope = ConstantsType.WX_SCOPE;
-        req.state = ConstantsType.WX_STATE;
-//        Bundle bundle = new Bundle();
-//        bundle.putString(ConstantsType.ADDRESS,WalletCurrentUtils.getIdentityWalletAddress(spHelper));
-//        req.toBundle(bundle);
-        mApplication.getWxApi().sendReq(req);
+
+
+        DialogUtils.showConfirmNoTitleDialog(mContext,
+                getString(R.string.dialog_bind_wx_info),
+                getString(R.string.wachat_bind),
+                new DialogUtils.KnowListener() {
+                    @Override
+                    public void Know() {
+                        SendAuth.Req req = new SendAuth.Req();
+                        req.scope = ConstantsType.WX_SCOPE;
+                        req.state = ConstantsType.WX_STATE;
+                        mApplication.getWxApi().sendReq(req);
+                    }
+                });
+
+
     }
 
     private void gotoChangePwdFragment() {

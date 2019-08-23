@@ -3,18 +3,21 @@ package com.bupocket.wxapi;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.bupocket.BPApplication;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.ExceptionEnum;
+import com.bupocket.enums.WXBindEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.WeChatService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.WeChatInfoModel;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -107,13 +110,21 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         HashMap<String, Object> map1 = new HashMap<>();
         map1.put("wxCode",code);
         map1.put("identityAddress", identityAddress);
-        weChatService.getWeChatInfo(map1).enqueue(new Callback<ApiResult<WeChatInfoModel>>() {
+        weChatService.bindWeChat(map1).enqueue(new Callback<ApiResult<WeChatInfoModel>>() {
             @Override
             public void onResponse(Call<ApiResult<WeChatInfoModel>> call, Response<ApiResult<WeChatInfoModel>> response) {
                 ApiResult<WeChatInfoModel> body = response.body();
                 if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
                     String wxHeadImgUrl = body.getData().getWxHeadImgUrl();
+                    spHelper.put(ConstantsType.BIND_WECHAT_STATE, WXBindEnum.UNBIND_WECHAT.getCode());
                     spHelper.put(ConstantsType.WX_HEAD_IMG_URL,wxHeadImgUrl);
+                }else{
+
+                    String msg = body.getMsg();
+                    if (!TextUtils.isEmpty(msg)) {
+                        ToastUtil.showToast(WXEntryActivity.this,msg,Toast.LENGTH_SHORT);
+                    }
+
                 }
 
 

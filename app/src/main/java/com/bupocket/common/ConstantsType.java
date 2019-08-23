@@ -58,4 +58,5 @@ public class ConstantsType {
 
     public static final String IDENTITY_ID = "identityId";
     public static final String WX_HEAD_IMG_URL = "wxHeadImgUrl";
+    public static final String BIND_WECHAT_STATE = "bind_wechat_state";
 }

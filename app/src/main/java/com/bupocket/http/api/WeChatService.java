@@ -12,7 +12,11 @@ import retrofit2.http.POST;
 public interface WeChatService {
 
     @POST("wx/v1/bind")
-    Call<ApiResult<WeChatInfoModel>> getWeChatInfo(@Body Map<String, Object> map);
+    Call<ApiResult<WeChatInfoModel>> bindWeChat(@Body Map<String, Object> map);
+
+
+    @POST("wallet/v1/identity/info")
+    Call<ApiResult<WeChatInfoModel>> getWalletIdentityInfo(@Body Map<String, Object> map);
 
 
 
