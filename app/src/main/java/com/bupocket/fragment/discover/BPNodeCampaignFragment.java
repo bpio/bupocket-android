@@ -191,23 +191,23 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
             }
         });
 
-        superNodeAdapter.setOnItemBtnListener(new NodeCampaignAdapter.OnItemBtnListener() {
-            @Override
-            public void onClick(int position, int btn) {
-                SuperNodeModel superNodeModel = superNodeAdapter.getItem(position);
-                switch (btn) {
-                    case R.id.revokeVoteBtn:
-                        GoRevokeVote(superNodeModel);
-                        break;
-                    case R.id.shareBtn:
-                        goShareVote(superNodeModel);
-                        break;
-                    case R.id.voteRecordBtn:
-                        GoVoteRecord(superNodeModel);
-                        break;
-                }
-            }
-        });
+//        superNodeAdapter.setOnItemBtnListener(new NodeCampaignAdapter.OnItemBtnListener() {
+//            @Override
+//            public void onClick(int position, int btn) {
+//                SuperNodeModel superNodeModel = superNodeAdapter.getItem(position);
+//                switch (btn) {
+//                    case R.id.revokeVoteBtn:
+//                        GoRevokeVote(superNodeModel);
+//                        break;
+//                    case R.id.shareBtn:
+//                        goShareVote(superNodeModel);
+//                        break;
+//                    case R.id.voteRecordBtn:
+//                        GoVoteRecord(superNodeModel);
+//                        break;
+//                }
+//            }
+//        });
 
 
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {

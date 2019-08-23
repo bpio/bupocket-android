@@ -85,9 +85,9 @@ public class Constants {
 
         //test
 //        WEB_SERVER_DOMAIN("http://192.168.15.43:8080/bu_pocket_api_war/"),
-        WEB_SERVER_DOMAIN("http://test-bupocket-api.bumocdn.com/"),
-        // WEB_SERVER_DOMAIN("http://192.168.3.53:8180/"),
-        BUMO_NODE_URL("http://192.168.3.65:36002"),
+//        WEB_SERVER_DOMAIN("http://test-bupocket-api.bumocdn.com/"),
+//        // WEB_SERVER_DOMAIN("http://192.168.3.53:8180/"),
+//        BUMO_NODE_URL("http://192.168.3.65:36002"),
 
 
         //development
@@ -97,8 +97,8 @@ public class Constants {
 
 
 //        test-main
-//        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
-//        BUMO_NODE_URL("http://wallet-node.bumotest.io"),
+        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
+        BUMO_NODE_URL("http://wallet-node.bumotest.io"),
 
 
         PUSH_MESSAGE_SOCKET_URL("https://ws-tools.bumotest.io");

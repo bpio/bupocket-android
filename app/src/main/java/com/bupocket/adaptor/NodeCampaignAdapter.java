@@ -39,7 +39,6 @@ public class NodeCampaignAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         String nodeLogo = itemData.getNodeLogo();
         ImageView nodeIconIv = holder.getView(R.id.headIconIv);
         String iconUrl = Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo);
-        LogUtils.e("iconUrl"+iconUrl);
         Glide.with(context)
                 .load(iconUrl)
                 .into(nodeIconIv);
@@ -72,30 +71,30 @@ public class NodeCampaignAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
 
         holder.setText(R.id.myVotesNumTv, itemData.getMyVoteCount());
 
-        final View shareBtn = holder.getView(R.id.shareBtn);
-        shareBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                onItemBtnListener.onClick(holder.getPosition(), shareBtn.getId());
-            }
-        });
-
-        final View revokeVoteBtn = holder.getView(R.id.revokeVoteBtn);
-        revokeVoteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemBtnListener.onClick(holder.getPosition(), revokeVoteBtn.getId());
-            }
-        });
-
-        final View voteRecordBtn = holder.getView(R.id.voteRecordBtn);
-        voteRecordBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onItemBtnListener.onClick(holder.getPosition(), R.id.voteRecordBtn);
-            }
-        });
+//        final View shareBtn = holder.getView(R.id.shareBtn);
+//        shareBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                onItemBtnListener.onClick(holder.getPosition(), shareBtn.getId());
+//            }
+//        });
+//
+//        final View revokeVoteBtn = holder.getView(R.id.revokeVoteBtn);
+//        revokeVoteBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onItemBtnListener.onClick(holder.getPosition(), revokeVoteBtn.getId());
+//            }
+//        });
+//
+//        final View voteRecordBtn = holder.getView(R.id.voteRecordBtn);
+//        voteRecordBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onItemBtnListener.onClick(holder.getPosition(), R.id.voteRecordBtn);
+//            }
+//        });
 
     }
 
