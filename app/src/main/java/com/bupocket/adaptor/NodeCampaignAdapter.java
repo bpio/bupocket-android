@@ -71,30 +71,7 @@ public class NodeCampaignAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
 
         holder.setText(R.id.myVotesNumTv, itemData.getMyVoteCount());
 
-//        final View shareBtn = holder.getView(R.id.shareBtn);
-//        shareBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                onItemBtnListener.onClick(holder.getPosition(), shareBtn.getId());
-//            }
-//        });
-//
-//        final View revokeVoteBtn = holder.getView(R.id.revokeVoteBtn);
-//        revokeVoteBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onItemBtnListener.onClick(holder.getPosition(), revokeVoteBtn.getId());
-//            }
-//        });
-//
-//        final View voteRecordBtn = holder.getView(R.id.voteRecordBtn);
-//        voteRecordBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                onItemBtnListener.onClick(holder.getPosition(), R.id.voteRecordBtn);
-//            }
-//        });
+//        holder.setBackgroundResource(R.id.nodeStateTv,);
 
     }
 

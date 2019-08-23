@@ -21,6 +21,15 @@
             android:layout_height="wrap_content"
             android:paddingBottom="15dp">
 
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/nodeStateTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@mipmap/ic_launcher" />
+
             <include
                 android:id="@+id/nodeIconRl"
                 layout="@layout/view_circle_head_layout"
@@ -34,6 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="22dp"
+                android:layout_marginRight="15dp"
                 android:layout_toRightOf="@+id/nodeIconRl">
 
                 <TextView
@@ -49,6 +59,7 @@
                     android:textSize="15sp"
                     android:textStyle="bold"
                     tools:text="node namenode namenode namenode namenode namenode name" />
+
 
                 <TextView
                     android:id="@+id/nodeTypeTv"
@@ -69,6 +80,22 @@
                     android:textSize="11sp"
                     tools:text="@string/common_node" />
 
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/nodeRankTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="NO.4"
+                    android:textColor="@color/app_txt_color_red_7"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -85,12 +112,9 @@
                     android:id="@+id/nodeIntroduceTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="@string/number_have_votes"
                     android:textColor="@color/app_txt_color_gray"
-                    android:textSize="13sp" />
-
-
-
+                    android:textSize="13sp"
+                    tools:text="@string/number_have_votes" />
 
 
             </LinearLayout>
@@ -103,8 +127,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="13dp"
-            android:layout_marginRight="13dp"
             android:layout_marginTop="15dp"
+            android:layout_marginRight="13dp"
             android:layout_marginBottom="15dp"
             android:orientation="horizontal">
 
