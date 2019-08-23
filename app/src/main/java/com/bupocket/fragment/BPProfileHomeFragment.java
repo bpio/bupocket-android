@@ -21,6 +21,7 @@ import com.bupocket.enums.CustomNodeTypeEnum;
 import com.bupocket.enums.LanguageEnum;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -235,7 +236,18 @@ public class BPProfileHomeFragment extends BaseFragment {
         wxBindTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bindWeChat();
+
+                DialogUtils.showConfirmNoTitleDialog(mContext,
+                        getString(R.string.dialog_bind_wx_info),
+                        getString(R.string.wachat_bind),
+                        new DialogUtils.KnowListener() {
+                    @Override
+                    public void Know() {
+                        bindWeChat();
+                    }
+                });
+
+
             }
         });
     }

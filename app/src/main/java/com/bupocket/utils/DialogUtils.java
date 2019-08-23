@@ -22,7 +22,41 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 
 public class DialogUtils {
 
+    public static QMUIDialog showConfirmNoTitleDialog(Context mContext, String msg,String confirmStr, final DialogUtils.KnowListener knowListener) {
+        final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
+                setLayout(R.layout.view_com_dialog_confirm_no_title).create();
 
+
+
+        if (TextUtils.isEmpty(msg)) {
+            qmuiDialog.findViewById(R.id.dialogMessageTv).setVisibility(View.GONE);
+        } else {
+            ((TextView) qmuiDialog.findViewById(R.id.dialogMessageTv)).setText(msg);
+        }
+
+        qmuiDialog.findViewById(R.id.dialogCancelTV).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+            }
+        });
+        TextView confirmTv = qmuiDialog.findViewById(R.id.dialogConfirmTV);
+
+        if (!TextUtils.isEmpty(confirmStr)) {
+            confirmTv.setText(confirmStr);
+        }
+
+        confirmTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiDialog.dismiss();
+                knowListener.Know();
+            }
+        });
+        qmuiDialog.show();
+
+        return qmuiDialog;
+    }
 
     public static QMUIDialog showConfirmNoTitleDialog(Context mContext, String msg, final DialogUtils.KnowListener knowListener) {
         final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
