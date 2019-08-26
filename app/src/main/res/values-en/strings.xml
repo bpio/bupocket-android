@@ -411,7 +411,7 @@
     <string name="node_associated_with_me_help_txt"> Filter the nodes that are related to me, such as the node I voted for or the campaign node itself </string>
     <string name="search_txt">Search </string>
     <string name="cancel_vote">Cancel Votes</string>
-    <string name="vote_record">Record of Votes</string>
+
     <string name="invite_vote_txt">Invite to Vote</string>
     <string name="revoke_no_vote_error_message_txt">No revocable votes</string>
     <string name="invite_share_txt">Invite to Vote</string>
@@ -515,7 +515,6 @@
     <string name="confirm_build_exit">Are you sure to withdraw the amount voted?</string>
 
 
-    <string name="vote_record_txt">Record of Votes</string>
     <string name="bu_share">BU/ share</string>
 
     <string name="transaction_timeout_title">Transaction Status</string>

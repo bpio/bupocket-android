@@ -428,7 +428,7 @@
     <string name="my_votes_number_s">我的投票数</string>
     <string name="confirm_transfer_title_txt">确认交易</string>
 
-    <string name="vote_record_txt">操作记录</string>
+
     <string name="vote_txt">投</string>
     <string name="withdraw_vote_txt">撤</string>
     <string name="status_txt">状态</string>
@@ -853,5 +853,5 @@
     <string name="node_detail_data">节点数据</string>
     <string name="node_detail_state_refresh">状态更新</string>
     <string name="my_node_vote">我要投票</string>
-
+    <string name="vote_record_txt">操作记录</string>
 </resources>
