@@ -172,7 +172,6 @@ public class BPProfileHomeFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
-
         isWeChatBind();
     }
 
@@ -280,10 +279,12 @@ public class BPProfileHomeFragment extends BaseFragment {
 
         String bindState = (String) spHelper.getSharedPreference(ConstantsType.BIND_WECHAT_STATE, "");
 
-        if (TextUtils.isEmpty(bindState)) {
+        if (TextUtils.isEmpty(bindState)) {//unbind
             queryBindState();
             CommonUtil.setHeadIvRes(identityAddress, identityHeadRiv, spHelper);
-        } else if (bindState.equals(WXBindEnum.BIND_WECHAT.getCode())){
+        }  else if (bindState.equals(WXBindEnum.UNBIND_WECHAT.getCode())){//bind
+            CommonUtil.setHeadIvRes(identityAddress, identityHeadRiv, spHelper);
+        } else if (bindState.equals(WXBindEnum.BIND_WECHAT.getCode())){//bind
             setWechatInfo();
         }
 
