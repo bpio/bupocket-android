@@ -29,7 +29,6 @@ import com.bupocket.common.Constants;
 import com.bupocket.database.greendao.SuperNodeModelDao;
 import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.enums.ExceptionEnum;
-import com.bupocket.enums.SuperNodeStatusEnum;
 import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
@@ -294,7 +293,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
 //        } else {
         Bundle args = new Bundle();
         args.putSerializable("itemInfo", superNodeModel);
-        BPNodeShareFragment bpNodeShareFragment = new BPNodeShareFragment();
+        BPNodeDetailFragment bpNodeShareFragment = new BPNodeDetailFragment();
         bpNodeShareFragment.setArguments(args);
         startFragment(bpNodeShareFragment);
 //        }

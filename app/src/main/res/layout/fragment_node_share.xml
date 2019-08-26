@@ -23,6 +23,7 @@
         <include layout="@layout/view_node_detail_2" />
 
         <LinearLayout
+            android:id="@+id/nodeDataDetailLL"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -37,7 +38,8 @@
 
                 <View
                     android:layout_width="2dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center_vertical"
                     android:background="@color/app_color_green" />
 
                 <TextView
@@ -49,43 +51,6 @@
                     android:textSize="14sp" />
 
 
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp">
-
-                <TextView
-                    android:id="@+id/tvOriginPurchaseAmountHint"
-                    style="@style/BPTextBuildHeadGray"
-                    android:layout_below="@+id/tvSupportAmountHint"
-                    tools:text="@string/build_origin_purchase_amount" />
-
-
-                <ImageView
-                    android:id="@+id/ivSheetHint"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_alignTop="@id/tvOriginPurchaseAmountHint"
-                    android:layout_marginTop="0.5dp"
-                    android:layout_toRightOf="@+id/tvOriginPurchaseAmountHint"
-                    android:padding="3dp"
-                    android:src="@mipmap/ic_sheet_hint" />
-
-                <View
-                    android:layout_width="0dp"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-
-                <TextView
-                    android:id="@+id/tvBuildDetailOriginAmount"
-                    style="@style/BPTextBuildBlack"
-                    android:layout_below="@+id/tvBuildDetailSupportAmount"
-                    android:layout_alignParentRight="true"
-                    tools:text="2000" />
             </LinearLayout>
 
 
@@ -107,7 +72,8 @@
 
                 <View
                     android:layout_width="2dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center_vertical"
                     android:background="@color/app_color_green" />
 
                 <TextView
@@ -153,7 +119,8 @@
 
                 <View
                     android:layout_width="2dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="14dp"
+                    android:layout_gravity="center_vertical"
                     android:background="@color/app_color_green" />
 
                 <TextView

@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -45,6 +46,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.concurrent.ExecutionException;
+import java.util.zip.Inflater;
 
 import butterknife.BindView;
 import gdut.bsx.share2.Share2;
@@ -53,7 +55,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BPNodeShareFragment extends AbsBaseFragment {
+public class BPNodeDetailFragment extends AbsBaseFragment {
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
     @BindView(R.id.nodeNameTv)
@@ -64,8 +66,8 @@ public class BPNodeShareFragment extends AbsBaseFragment {
     QMUIRadiusImageView mNodeIconIv;
     @BindView(R.id.wbShare)
     WebView webView;
-
-
+    @BindView(R.id.nodeDataDetailLL)
+    LinearLayout nodeDataDetailLL;
 
 
     private View mShareImageRl;
@@ -99,6 +101,33 @@ public class BPNodeShareFragment extends AbsBaseFragment {
         initHeadView();
         getShareData();
         getUrlData();
+
+
+
+        setNodeDataView();
+
+    }
+
+    private void setNodeDataView() {
+
+        for (int i = 0; i < 5; i++) {
+            addNodeItemData();
+        }
+
+
+    }
+
+    private void addNodeItemData() {
+        LinearLayout nodeDataLL = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.view_node_data_item,null,false);
+        TextView nodeTitle = (TextView) nodeDataLL.findViewById(R.id.nodeDataItemTitleTv);
+
+        nodeTitle.setText("节点权益值");
+        ImageView nodeDataTv = (ImageView) nodeDataLL.findViewById(R.id.nodeDataItemIv);
+
+        TextView nodeAmountTv = (TextView) nodeDataLL.findViewById(R.id.nodeDataItemAmountTv);
+        nodeAmountTv.setText("100,000,000");
+
+        nodeDataDetailLL.addView(nodeDataLL);
     }
 
     private void initHeadView() {
