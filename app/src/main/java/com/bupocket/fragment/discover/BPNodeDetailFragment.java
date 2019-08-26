@@ -113,9 +113,12 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
     }
 
     private void setNodeStateView() {
+        addNodeStateItem("12-01", "18:00", "100,000,000",false,true,false);
+        addNodeStateItem("12-01", "18:00", "100,000,000",true,false,false);
         for (int i = 0; i < 5; i++) {
             addNodeStateItem("12-01", "18:00", "100,000,000");
         }
+        addNodeStateItem("12-01", "18:00", "100,000,000",false,false,true);
     }
 
     private void addNodeStateItem(String date, String time, String amount) {
@@ -128,11 +131,25 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
         stateDateTv.setText(date);
         TextView stateTimeTv = (TextView) nodeDataLL.findViewById(R.id.stateTimeTv);
         stateTimeTv.setText(time);
-
-        ImageView stateTagIV = (ImageView) nodeDataLL.findViewById(R.id.stateTagIV);
-
         TextView stateDetailTv = (TextView) nodeDataLL.findViewById(R.id.stateDetailTv);
         stateDetailTv.setText(amount);
+
+
+        ImageView stateTagIV = (ImageView) nodeDataLL.findViewById(R.id.stateTagIV);
+        ImageView stateTagGreenIV = (ImageView) nodeDataLL.findViewById(R.id.stateTagGreenIV);
+        if (isNode) {
+            stateTagGreenIV.setVisibility(View.VISIBLE);
+        }
+
+        View lineBottom = nodeDataLL.findViewById(R.id.stateLineBottomView);
+        if (isBottom) {
+            lineBottom.setVisibility(View.GONE);
+        }
+        View lineTop = nodeDataLL.findViewById(R.id.stateLineTopView);
+        if (isTop) {
+            lineTop.setVisibility(View.GONE);
+        }
+
 
         nodeDetailStateLL.addView(nodeDataLL);
     }
@@ -140,7 +157,7 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
     private void setNodeDataView() {
 
         for (int i = 0; i < 5; i++) {
-            addNodeItemData("节点权益值","10,000");
+            addNodeItemData("节点权益值", "10,000");
         }
 
 

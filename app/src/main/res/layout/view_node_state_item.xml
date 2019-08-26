@@ -44,6 +44,9 @@
         android:layout_toRightOf="@+id/stateDateTv"
         android:background="@color/gray_line" />
 
+
+
+
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/stateTagIV"
         app:riv_oval="true"
@@ -54,6 +57,17 @@
         android:layout_toRightOf="@+id/stateDateTv"
         android:src="@color/app_bg_color_gray_7" />
 
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/stateTagGreenIV"
+        app:riv_oval="true"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="13dp"
+        android:visibility="gone"
+        android:layout_toRightOf="@+id/stateDateTv"
+        android:src="@color/app_color_green" />
     <TextView
         android:id="@+id/stateDetailTv"
         android:layout_width="wrap_content"
