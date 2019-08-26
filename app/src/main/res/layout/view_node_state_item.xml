@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nodeStateRl"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="13dp">
+
+
+    <TextView
+        android:id="@+id/stateDateTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/app_txt_color_gray_2"
+        android:textSize="14sp"
+        tools:text="02-12" />
+
+    <TextView
+        android:id="@+id/stateTimeTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/stateDateTv"
+        android:layout_alignRight="@+id/stateDateTv"
+        android:textColor="@color/app_txt_color_gray"
+        android:textSize="12sp"
+        tools:text="02:12" />
+
+
+    <View
+        android:id="@+id/stateLineBottomView"
+        android:layout_width="1dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="7dp"
+        android:layout_toRightOf="@+id/stateDateTv"
+        android:background="@color/gray_line" />
+
+    <View
+        android:id="@+id/stateLineTopView"
+        android:layout_width="1dp"
+        android:layout_height="10dp"
+        android:layout_marginLeft="17dp"
+        android:layout_toRightOf="@+id/stateDateTv"
+        android:background="@color/gray_line" />
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/stateTagIV"
+        app:riv_oval="true"
+        android:layout_width="6dp"
+        android:layout_height="6dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/stateDateTv"
+        android:src="@color/app_bg_color_gray_7" />
+
+    <TextView
+        android:id="@+id/stateDetailTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/stateTagIV"
+        android:textColor="@color/app_txt_color_gray_2"
+        android:textSize="14sp"
+        tools:text="bumeme" />
+
+</RelativeLayout>

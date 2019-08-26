@@ -15,6 +15,7 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -68,6 +69,8 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
     WebView webView;
     @BindView(R.id.nodeDataDetailLL)
     LinearLayout nodeDataDetailLL;
+    @BindView(R.id.nodeDetailStateLL)
+    LinearLayout nodeDetailStateLL;
 
 
     private View mShareImageRl;
@@ -103,29 +106,62 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
         getUrlData();
 
 
-
         setNodeDataView();
 
+        setNodeStateView();
+
+    }
+
+    private void setNodeStateView() {
+        for (int i = 0; i < 5; i++) {
+            addNodeStateItem("12-01", "18:00", "100,000,000");
+        }
+    }
+
+    private void addNodeStateItem(String date, String time, String amount) {
+        addNodeStateItem(date, time, amount, false, false, false);
+    }
+
+    private void addNodeStateItem(String date, String time, String amount, boolean isNode, boolean isTop, boolean isBottom) {
+        RelativeLayout nodeDataLL = (RelativeLayout) LayoutInflater.from(mContext).inflate(R.layout.view_node_state_item, null, false);
+        TextView stateDateTv = (TextView) nodeDataLL.findViewById(R.id.stateDateTv);
+        stateDateTv.setText(date);
+        TextView stateTimeTv = (TextView) nodeDataLL.findViewById(R.id.stateTimeTv);
+        stateTimeTv.setText(time);
+
+        ImageView stateTagIV = (ImageView) nodeDataLL.findViewById(R.id.stateTagIV);
+
+        TextView stateDetailTv = (TextView) nodeDataLL.findViewById(R.id.stateDetailTv);
+        stateDetailTv.setText(amount);
+
+        nodeDetailStateLL.addView(nodeDataLL);
     }
 
     private void setNodeDataView() {
 
         for (int i = 0; i < 5; i++) {
-            addNodeItemData();
+            addNodeItemData("节点权益值","10,000");
         }
 
 
     }
 
-    private void addNodeItemData() {
-        LinearLayout nodeDataLL = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.view_node_data_item,null,false);
+    private void addNodeItemData(String title, String amount) {
+        addNodeItemData(title, amount, false);
+    }
+
+    private void addNodeItemData(String title, String amount, boolean isInfo) {
+        LinearLayout nodeDataLL = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.view_node_data_item, null, false);
         TextView nodeTitle = (TextView) nodeDataLL.findViewById(R.id.nodeDataItemTitleTv);
-
-        nodeTitle.setText("节点权益值");
-        ImageView nodeDataTv = (ImageView) nodeDataLL.findViewById(R.id.nodeDataItemIv);
-
+        nodeTitle.setText(title);
+        ImageView nodeDataIv = (ImageView) nodeDataLL.findViewById(R.id.nodeDataItemIv);
+        if (isInfo) {
+            nodeDataIv.setVisibility(View.VISIBLE);
+        } else {
+            nodeDataIv.setVisibility(View.GONE);
+        }
         TextView nodeAmountTv = (TextView) nodeDataLL.findViewById(R.id.nodeDataItemAmountTv);
-        nodeAmountTv.setText("100,000,000");
+        nodeAmountTv.setText(amount);
 
         nodeDataDetailLL.addView(nodeDataLL);
     }
@@ -236,7 +272,6 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
         };
         ThreadManager.getInstance().execute(shareRunnable);
     }
-
 
 
     @SuppressLint("ResourceType")
@@ -371,7 +406,7 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
             @Override
             public void onClick(View v) {
 
-                if (itemInfo==null) {
+                if (itemInfo == null) {
                     return;
                 }
                 String shareStartTime = itemInfo.getShareStartTime();
