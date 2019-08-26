@@ -847,8 +847,7 @@
     <string name="wachat_bind">立即绑定</string>
     <string name="wx_is_binding" >已绑定</string>
     <string name="dialog_bind_wx_info">需绑定微信后，方可使用此功能。</string>
-
-
+    <string name="bind_wechat_error">绑定失败</string>
 
 
 </resources>

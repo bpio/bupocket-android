@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.bupocket.BPApplication;
+import com.bupocket.R;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.WXBindEnum;
@@ -84,10 +85,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             case BaseResp.ErrCode.ERR_USER_CANCEL:
                 default:
                 if (RETURN_MSG_TYPE_LOGIN == resp.getType()) {
-                    Toast.makeText(this, "登录失败", Toast.LENGTH_SHORT).show();
-                }
-                if (RETURN_MSG_TYPE_SHARE == resp.getType()) {
-                    Toast.makeText(this, "分享失败", Toast.LENGTH_SHORT).show();
+                  ToastUtil.showToast(WXEntryActivity.this, R.string.bind_wechat_error,Toast.LENGTH_SHORT);
                 }
                 break;
         }
