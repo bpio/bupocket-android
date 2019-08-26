@@ -154,7 +154,7 @@ public class BPCollectionFragment extends AbsBaseFragment {
         this.collectionLL.draw(canvas);
 
         Uri uri = Uri.parse(MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), bitmap, null, null));
-        shareImg("收款码", "收款码", "收款码", uri);
+        shareImg("", "收款码", "收款码", uri);
         backIv.setVisibility(View.VISIBLE);
         shareQrCodeIv.setVisibility(View.VISIBLE);
     }
