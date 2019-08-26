@@ -430,23 +430,25 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
             }
         });
         mTopBar.setTitle(getResources().getString(R.string.node_detail));
-        mTopBar.addRightImageButton(R.mipmap.icon_share_green, R.id.topbar_right_button).setOnClickListener(new View.OnClickListener() {
+        mTopBar.addRightImageButton(R.mipmap.ic_node_more, R.id.topbar_right_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (itemInfo == null) {
-                    return;
-                }
-                String shareStartTime = itemInfo.getShareStartTime();
 
-                if (TextUtils.isEmpty(shareStartTime)) {
-                    return;
-                }
-                if (TimeUtil.judgeTime(Long.parseLong(shareStartTime))) {
-                    DialogUtils.showMessageNoTitleDialog(getContext(), R.string.share_close);
-                } else {
-                    showShareDialog();
-                }
+
+//                if (itemInfo == null) {
+//                    return;
+//                }
+//                String shareStartTime = itemInfo.getShareStartTime();
+//
+//                if (TextUtils.isEmpty(shareStartTime)) {
+//                    return;
+//                }
+//                if (TimeUtil.judgeTime(Long.parseLong(shareStartTime))) {
+//                    DialogUtils.showMessageNoTitleDialog(getContext(), R.string.share_close);
+//                } else {
+//                    showShareDialog();
+//                }
             }
         });
     }

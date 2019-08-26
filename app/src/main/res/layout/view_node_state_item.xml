@@ -63,7 +63,7 @@
         android:layout_marginLeft="13dp"
         android:layout_marginTop="7dp"
         android:layout_toRightOf="@+id/stateDateTv"
-        android:src="@color/app_color_green"
+        android:src="@mipmap/ic_node_state"
         android:visibility="gone"
         app:riv_oval="true" />
 
