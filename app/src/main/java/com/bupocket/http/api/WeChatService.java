@@ -1,6 +1,7 @@
 package com.bupocket.http.api;
 
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.model.UserInfoModel;
 import com.bupocket.model.WeChatInfoModel;
 
 import java.util.Map;
@@ -16,7 +17,7 @@ public interface WeChatService {
 
 
     @POST("wallet/v1/identity/info")
-    Call<ApiResult<WeChatInfoModel>> getWalletIdentityInfo(@Body Map<String, Object> map);
+    Call<ApiResult<UserInfoModel>> getWalletIdentityInfo(@Body Map<String, Object> map);
 
 
 

@@ -25,6 +25,7 @@ import com.bupocket.enums.WXBindEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.WeChatService;
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.model.UserInfoModel;
 import com.bupocket.model.WeChatInfoModel;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
@@ -309,16 +310,20 @@ public class BPProfileHomeFragment extends BaseFragment {
         WeChatService weChatService = RetrofitFactory.getInstance().getRetrofit().create(WeChatService.class);
         HashMap<String, Object> map = new HashMap<>();
         map.put(ConstantsType.IDENTITY_ADDRESS, WalletCurrentUtils.getIdentityAddress(spHelper));
-        weChatService.getWalletIdentityInfo(map).enqueue(new Callback<ApiResult<WeChatInfoModel>>() {
+        weChatService.getWalletIdentityInfo(map).enqueue(new Callback<ApiResult<UserInfoModel>>() {
             @Override
-            public void onResponse(Call<ApiResult<WeChatInfoModel>> call, Response<ApiResult<WeChatInfoModel>> response) {
-                ApiResult<WeChatInfoModel> body = response.body();
+            public void onResponse(Call<ApiResult<UserInfoModel>> call, Response<ApiResult<UserInfoModel>> response) {
+                ApiResult<UserInfoModel> body = response.body();
+                if (body==null) {
+                    return;
+                }
+
                 if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
-                    WeChatInfoModel data = body.getData();
+                    UserInfoModel data = body.getData();
                     String isBindWx = data.getIsBindWx();
                     if (WXBindEnum.BIND_WECHAT.getCode().equals(isBindWx)) {
 
-                        String wxHeadImgUrl = data.getWxHeadImgUrl();
+                        String wxHeadImgUrl = data.getWxInfo().getWxHeadImgUrl();
                         if (!TextUtils.isEmpty(wxHeadImgUrl)) {
                             spHelper.put(ConstantsType.WX_HEAD_IMG_URL, wxHeadImgUrl);
                         }
@@ -339,7 +344,7 @@ public class BPProfileHomeFragment extends BaseFragment {
             }
 
             @Override
-            public void onFailure(Call<ApiResult<WeChatInfoModel>> call, Throwable t) {
+            public void onFailure(Call<ApiResult<UserInfoModel>> call, Throwable t) {
 
             }
         });
