@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/qmui_topbar_height"
+        android:layout_marginBottom="80dp"
         android:fitsSystemWindows="true"
         android:scrollbars="none">
 
@@ -149,6 +150,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true" />
+
+
+    <LinearLayout
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/app_bg_color_gray">
+
+        <Button
+            android:id="@+id/nodeRevokeBtn"
+            android:layout_gravity="center_vertical"
+            style="@style/BPComGreenBgWhiteTextBtn"
+            android:text="@string/my_node_vote"
+            />
+
+    </LinearLayout>
 
 
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

@@ -428,7 +428,7 @@
     <string name="my_votes_number_s">我的投票数</string>
     <string name="confirm_transfer_title_txt">确认交易</string>
 
-    <string name="vote_record_txt">投票记录</string>
+    <string name="vote_record_txt">操作记录</string>
     <string name="vote_txt">投</string>
     <string name="withdraw_vote_txt">撤</string>
     <string name="status_txt">状态</string>
@@ -472,7 +472,6 @@
     <string name="ecological_node">生态节点</string>
 
     <string name="cancel_vote">撤销投票</string>
-    <string name="vote_record">投票记录</string>
 
     <string name="invite_vote_txt">邀请投票</string>
 
@@ -622,6 +621,7 @@
     <string name="profile_user_protocol">用户协议</string>
     <string name="profile_user_help">意见反馈</string>
     <string name="profile_about_us">关于我们</string>
+
     <string name="user_agreement">小布口袋用户服务协议</string>
 
 
@@ -757,7 +757,6 @@
     <string name="wallet_create__input_rePassword">请再次输入安全密码</string>
 
 
-
     <!--voucher package-->
     <string name="tabbar_toucher_txt">券包</string>
     <string name="voucher_empty">这里一张券都没有</string>
@@ -794,7 +793,6 @@
     <string name="issue_num">发行数量：</string>
 
 
-
     <string name="delete_current_wallet_title">确认删除该钱包吗？</string>
     <string name="delete_current_wallet_info">当前删除钱包为当前使用钱包，删除后将默认设置当前身份下的钱包为当前使用钱包。</string>
 
@@ -811,7 +809,7 @@
     <string name="voucher_send_confirm_title">确认转赠</string>
     <string name="send_voucher">转赠加密数字券</string>
     <string name="send_token_transfer">转账交易</string>
-    <string name="voucher_pwd_confirm_hint" >请填写安全密码以确认转赠</string>
+    <string name="voucher_pwd_confirm_hint">请填写安全密码以确认转赠</string>
     <string name="tx_voucher_status_success_txt">转赠成功</string>
     <string name="send_voucher_failure">转赠失败</string>
     <string name="send_voucher_timeout">转赠超时</string>
@@ -840,5 +838,20 @@
     <string name="save_wallet">已存入钱包，稍后到账</string>
     <string name="save_wallet_1">已存入钱包</string>
 
+
+
+
+
+    <string name="profile_wx_bind">绑定微信</string>
+    <string name="wachat_bind">立即绑定</string>
+    <string name="wx_is_binding" >已绑定</string>
+    <string name="dialog_bind_wx_info">需绑定微信后，方可使用此功能。</string>
+    <string name="bind_wechat_error">绑定失败</string>
+
+    <string name="node_detail">节点详情</string>
+
+    <string name="node_detail_data">节点数据</string>
+    <string name="node_detail_state_refresh">状态更新</string>
+    <string name="my_node_vote">我要投票</string>
 
 </resources>

@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -74,6 +75,8 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
     LinearLayout nodeDataDetailLL;
     @BindView(R.id.nodeDetailStateLL)
     LinearLayout nodeDetailStateLL;
+    @BindView(R.id.nodeRevokeBtn)
+    Button nodeRevokeBtn;
 
 
     private View mShareImageRl;
