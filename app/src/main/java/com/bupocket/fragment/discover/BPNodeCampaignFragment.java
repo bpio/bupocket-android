@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -135,18 +136,18 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
             public void run() {
                 reqAllNodeData();
             }
-        },500);
+        }, 500);
 
     }
 
     private void queryData() {
         superNodeModelDao = mApplication.getDaoSession().getSuperNodeModelDao();
         List<SuperNodeModel> superNodeModels = superNodeModelDao.loadAll();
-        if (superNodeModels==null||superNodeModels.size()==0) {
+        if (superNodeModels == null || superNodeModels.size() == 0) {
             qmuiEmptyView.show(true);
             return;
         }
-        nodeList=superNodeModels;
+        nodeList = superNodeModels;
         superNodeAdapter.setNewData(nodeList);
     }
 
@@ -191,6 +192,15 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
             }
         });
 
+        nodeCampaignLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                SuperNodeModel superNodeModel = superNodeAdapter.getItem(position);
+                goShareVote(superNodeModel);
+
+            }
+        });
+
 //        superNodeAdapter.setOnItemBtnListener(new NodeCampaignAdapter.OnItemBtnListener() {
 //            @Override
 //            public void onClick(int position, int btn) {
@@ -200,7 +210,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
 //                        GoRevokeVote(superNodeModel);
 //                        break;
 //                    case R.id.shareBtn:
-//                        goShareVote(superNodeModel);
+
 //                        break;
 //                    case R.id.voteRecordBtn:
 //                        GoVoteRecord(superNodeModel);
@@ -276,18 +286,18 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
     }
 
     private void goShareVote(SuperNodeModel superNodeModel) {
-        String status = superNodeModel.getStatus();
-        if (SuperNodeStatusEnum.RUNNING.getCode().equals(status)) {
-            DialogUtils.showMessageNoTitleDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
-        } else if (SuperNodeStatusEnum.FAILED.getCode().equals(status)) {
-            DialogUtils.showMessageNoTitleDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.FAILED.getNameRes())));
-        } else {
-            Bundle args = new Bundle();
-            args.putSerializable("itemInfo", superNodeModel);
-            BPNodeShareFragment bpNodeShareFragment = new BPNodeShareFragment();
-            bpNodeShareFragment.setArguments(args);
-            startFragment(bpNodeShareFragment);
-        }
+//        String status = superNodeModel.getStatus();
+//        if (SuperNodeStatusEnum.RUNNING.getCode().equals(status)) {
+//            DialogUtils.showMessageNoTitleDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
+//        } else if (SuperNodeStatusEnum.FAILED.getCode().equals(status)) {
+//            DialogUtils.showMessageNoTitleDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.FAILED.getNameRes())));
+//        } else {
+        Bundle args = new Bundle();
+        args.putSerializable("itemInfo", superNodeModel);
+        BPNodeShareFragment bpNodeShareFragment = new BPNodeShareFragment();
+        bpNodeShareFragment.setArguments(args);
+        startFragment(bpNodeShareFragment);
+//        }
     }
 
     private void GoRevokeVote(SuperNodeModel superNodeModel) {
@@ -481,7 +491,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
                 }
                 qmuiEmptyView.show("", "");
                 refreshLayout.finishRefresh();
-                if (nodeList!=null&&nodeList.size()>0) {
+                if (nodeList != null && nodeList.size() > 0) {
                     return;
                 }
 

@@ -76,13 +76,4 @@ public class NodeCampaignAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
     }
 
 
-    public interface OnItemBtnListener {
-        void onClick(int position, int btn);
-    }
-
-    private OnItemBtnListener onItemBtnListener;
-
-    public void setOnItemBtnListener(OnItemBtnListener onItemBtnListener) {
-        this.onItemBtnListener = onItemBtnListener;
-    }
 }

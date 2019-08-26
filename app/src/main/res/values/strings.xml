@@ -849,5 +849,5 @@
     <string name="dialog_bind_wx_info">需绑定微信后，方可使用此功能。</string>
     <string name="bind_wechat_error">绑定失败</string>
 
-
+    <string name="node_detail">节点详情</string>
 </resources>
