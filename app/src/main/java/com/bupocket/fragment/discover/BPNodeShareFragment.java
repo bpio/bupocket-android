@@ -60,18 +60,11 @@ public class BPNodeShareFragment extends AbsBaseFragment {
     TextView mNodeNameTv;
     @BindView(R.id.nodeTypeTv)
     TextView mNodeTypeTv;
-    @BindView(R.id.haveVotesNumTv)
-    TextView mHaveVotesNumTv;
-    @BindView(R.id.supportPeopleTv)
-    TextView mSupportPeopleTv;
     @BindView(R.id.headIconIv)
     QMUIRadiusImageView mNodeIconIv;
     @BindView(R.id.wbShare)
     WebView webView;
-    @BindView(R.id.haveVotesNumTvHint)
-    TextView haveVotesNumTvHint;
-    @BindView(R.id.supportPeopleTvHint)
-    TextView supportPeopleTvHint;
+
 
 
 
@@ -116,22 +109,6 @@ public class BPNodeShareFragment extends AbsBaseFragment {
         } else if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(itemData.getIdentityType())) {
             mNodeTypeTv.setText(getContext().getResources().getString(R.string.ecological_node));
         }
-
-
-        if (CommonUtil.isSingle(itemData.getNodeVote())) {
-            haveVotesNumTvHint.setText(mContext.getString(R.string.number_have_votes));
-        } else {
-            haveVotesNumTvHint.setText(mContext.getString(R.string.number_have_votes_s));
-        }
-        mHaveVotesNumTv.setText(itemData.getNodeVote());
-
-
-        if (CommonUtil.isSingle(itemData.getMyVoteCount())) {
-            supportPeopleTvHint.setText(mContext.getString(R.string.my_votes_number));
-        } else {
-            supportPeopleTvHint.setText(mContext.getString(R.string.my_votes_number_s));
-        }
-        mSupportPeopleTv.setText(itemData.getMyVoteCount());
 
 
         Glide.with(getContext())
@@ -360,7 +337,7 @@ public class BPNodeShareFragment extends AbsBaseFragment {
                 popBackStack();
             }
         });
-        mTopBar.setTitle(getResources().getString(R.string.invite_share_txt));
+        mTopBar.setTitle(getResources().getString(R.string.node_detail));
         mTopBar.addRightImageButton(R.mipmap.icon_share_green, R.id.topbar_right_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

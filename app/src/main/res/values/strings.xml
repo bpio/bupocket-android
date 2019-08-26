@@ -850,4 +850,8 @@
     <string name="bind_wechat_error">绑定失败</string>
 
     <string name="node_detail">节点详情</string>
+
+    <string name="node_detail_data">节点数据</string>
+    <string name="node_detail_state_refresh">状态更新</string>
+
 </resources>

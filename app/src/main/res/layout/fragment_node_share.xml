@@ -20,28 +20,110 @@
             android:fitsSystemWindows="true" />
 
 
-        <include layout="@layout/view_node_detail" />
-
+        <include layout="@layout/view_node_detail_2" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/common_left_right_padding"
-            android:layout_marginTop="15dp"
-            android:layout_marginRight="@dimen/common_left_right_padding"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/app_color_white"
+            android:orientation="vertical"
+            android:padding="15dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/app_color_green" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:text="@string/node_detail_data"
+                    android:textColor="@color/app_color_black"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/node_introduce_txt"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="13sp" />
+                android:layout_marginTop="15dp">
+
+                <TextView
+                    android:id="@+id/tvOriginPurchaseAmountHint"
+                    style="@style/BPTextBuildHeadGray"
+                    android:layout_below="@+id/tvSupportAmountHint"
+                    tools:text="@string/build_origin_purchase_amount" />
+
+
+                <ImageView
+                    android:id="@+id/ivSheetHint"
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:layout_alignTop="@id/tvOriginPurchaseAmountHint"
+                    android:layout_marginTop="0.5dp"
+                    android:layout_toRightOf="@+id/tvOriginPurchaseAmountHint"
+                    android:padding="3dp"
+                    android:src="@mipmap/ic_sheet_hint" />
+
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+
+                <TextView
+                    android:id="@+id/tvBuildDetailOriginAmount"
+                    style="@style/BPTextBuildBlack"
+                    android:layout_below="@+id/tvBuildDetailSupportAmount"
+                    android:layout_alignParentRight="true"
+                    tools:text="2000" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/app_color_white"
+            android:orientation="vertical"
+            android:padding="15dp"
+            tools:ignore="WebViewLayout">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/app_color_green" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:text="@string/node_introduce_txt"
+                    android:textColor="@color/app_color_black"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
 
             <WebView
                 android:id="@+id/wbShare"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/shape_corner"
@@ -50,6 +132,96 @@
                 android:paddingRight="13dp"
                 android:paddingBottom="15dp"
                 android:scrollbars="none" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/app_color_white"
+            android:orientation="vertical"
+            android:padding="15dp">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp">
+
+                <View
+                    android:layout_width="2dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/app_color_green" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+
+                    android:text="@string/node_detail_state_refresh"
+                    android:textColor="@color/app_color_black"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="13dp">
+
+
+                <TextView
+                    android:id="@+id/stateDateTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/app_txt_color_gray_2"
+                    android:textSize="14sp"
+                    tools:text="02-12" />
+
+                <TextView
+                    android:id="@+id/stateTimeTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/stateDateTv"
+                    android:layout_alignRight="@+id/stateDateTv"
+                    android:textColor="@color/app_txt_color_gray"
+                    android:textSize="12sp"
+                    tools:text="02:12" />
+
+
+                <View
+                    android:id="@+id/stateLineView"
+                    android:layout_width="1dp"
+                    android:layout_height="60dp"
+                    android:layout_marginLeft="18dp"
+                    android:layout_toRightOf="@+id/stateDateTv"
+                    android:background="@color/gray_line" />
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/stateTagIV"
+                    android:layout_width="6dp"
+                    android:layout_height="6dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@+id/stateDateTv"
+                    android:src="@color/app_bg_color_gray_7"
+                    app:riv_oval="true" />
+
+                <TextView
+                    android:id="@+id/stateDetailTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toRightOf="@+id/stateTagIV"
+                    android:textColor="@color/app_txt_color_gray_2"
+                    android:textSize="14sp"
+                    tools:text="bumeme" />
+
+            </RelativeLayout>
 
 
         </LinearLayout>
