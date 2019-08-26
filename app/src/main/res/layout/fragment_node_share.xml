@@ -4,144 +4,151 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_bg_color_gray">
+    android:background="@color/app_bg_color_gray"
+    android:orientation="vertical">
 
-    <LinearLayout
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/app_bg_color_gray"
+        android:layout_marginTop="?attr/qmui_topbar_height"
         android:fitsSystemWindows="true"
-        android:orientation="vertical">
-
-        <com.qmuiteam.qmui.widget.QMUITopBar
-            android:id="@+id/topbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/qmui_topbar_height"
-            android:fitsSystemWindows="true" />
-
-
-        <include layout="@layout/view_node_detail_2" />
-
-        <LinearLayout
-            android:id="@+id/nodeDataDetailLL"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@color/app_color_white"
-            android:orientation="vertical"
-            android:padding="15dp">
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="14dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/app_color_green" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    android:text="@string/node_detail_data"
-                    android:textColor="@color/app_color_black"
-                    android:textSize="14sp" />
-
-
-            </LinearLayout>
-
-
-        </LinearLayout>
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@color/app_color_white"
-            android:orientation="vertical"
-            android:padding="15dp"
-            tools:ignore="WebViewLayout">
+            android:layout_height="match_parent"
+            android:background="@color/app_bg_color_gray"
+            android:fitsSystemWindows="true"
+            android:orientation="vertical">
 
+
+            <include layout="@layout/view_node_detail_2" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="14dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/app_color_green" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    android:text="@string/node_introduce_txt"
-                    android:textColor="@color/app_color_black"
-                    android:textSize="14sp" />
-
-            </LinearLayout>
-
-            <WebView
-                android:id="@+id/wbShare"
+                android:id="@+id/nodeDataDetailLL"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/shape_corner"
-                android:paddingLeft="13dp"
-                android:paddingTop="12dp"
-                android:paddingRight="13dp"
-                android:paddingBottom="15dp"
-                android:scrollbars="none" />
+                android:layout_marginTop="10dp"
+                android:background="@color/app_color_white"
+                android:orientation="vertical"
+                android:padding="15dp">
 
 
-        </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="14dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/app_color_green" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:text="@string/node_detail_data"
+                        android:textColor="@color/app_color_black"
+                        android:textSize="14sp" />
 
 
-        <LinearLayout
-            android:id="@+id/nodeDetailStateLL"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="@color/app_color_white"
-            android:orientation="vertical"
-            android:padding="15dp">
+                </LinearLayout>
 
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp">
+                android:layout_marginTop="10dp"
+                android:background="@color/app_color_white"
+                android:orientation="vertical"
+                android:padding="15dp"
+                tools:ignore="WebViewLayout">
 
-                <View
-                    android:layout_width="2dp"
-                    android:layout_height="14dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@color/app_color_green" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="14dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/app_color_green" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:text="@string/node_introduce_txt"
+                        android:textColor="@color/app_color_black"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
+
+                <WebView
+                    android:id="@+id/wbShare"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-
-                    android:text="@string/node_detail_state_refresh"
-                    android:textColor="@color/app_color_black"
-                    android:textSize="14sp" />
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/shape_corner"
+                    android:paddingLeft="13dp"
+                    android:paddingTop="12dp"
+                    android:paddingRight="13dp"
+                    android:paddingBottom="15dp"
+                    android:scrollbars="none" />
 
 
             </LinearLayout>
 
 
+            <LinearLayout
+                android:id="@+id/nodeDetailStateLL"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/app_color_white"
+                android:orientation="vertical"
+                android:padding="15dp">
 
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp">
 
+                    <View
+                        android:layout_width="2dp"
+                        android:layout_height="14dp"
+                        android:layout_gravity="center_vertical"
+                        android:background="@color/app_color_green" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+
+                        android:text="@string/node_detail_state_refresh"
+                        android:textColor="@color/app_color_black"
+                        android:textSize="14sp" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
+    </ScrollView>
+
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true" />
 
 
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

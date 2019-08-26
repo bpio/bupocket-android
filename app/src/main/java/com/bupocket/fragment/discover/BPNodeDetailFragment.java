@@ -37,6 +37,7 @@ import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.TimeUtil;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
@@ -57,8 +58,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BPNodeDetailFragment extends AbsBaseFragment {
+
+
     @BindView(R.id.topbar)
-    QMUITopBar mTopBar;
+    QMUITopBarLayout mTopBar;
     @BindView(R.id.nodeNameTv)
     TextView mNodeNameTv;
     @BindView(R.id.nodeTypeTv)
@@ -127,18 +130,23 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
 
     private void addNodeStateItem(String date, String time, String amount, boolean isNode, boolean isTop, boolean isBottom) {
         RelativeLayout nodeDataLL = (RelativeLayout) LayoutInflater.from(mContext).inflate(R.layout.view_node_state_item, null, false);
-        TextView stateDateTv = (TextView) nodeDataLL.findViewById(R.id.stateDateTv);
-        stateDateTv.setText(date);
+
         TextView stateTimeTv = (TextView) nodeDataLL.findViewById(R.id.stateTimeTv);
         stateTimeTv.setText(time);
         TextView stateDetailTv = (TextView) nodeDataLL.findViewById(R.id.stateDetailTv);
         stateDetailTv.setText(amount);
 
+        TextView stateDateTv = (TextView) nodeDataLL.findViewById(R.id.stateDateTv);
+        stateDateTv.setText(date);
+        TextView stateDetailNodeTv = (TextView) nodeDataLL.findViewById(R.id.stateDetailNodeTv);
+        stateDetailNodeTv.setText(date);
 
         ImageView stateTagIV = (ImageView) nodeDataLL.findViewById(R.id.stateTagIV);
         ImageView stateTagGreenIV = (ImageView) nodeDataLL.findViewById(R.id.stateTagGreenIV);
+
         if (isNode) {
             stateTagGreenIV.setVisibility(View.VISIBLE);
+            stateDetailNodeTv.setVisibility(View.VISIBLE);
         }
 
         View lineBottom = nodeDataLL.findViewById(R.id.stateLineBottomView);
