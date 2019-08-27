@@ -1,6 +1,5 @@
 package com.bupocket.fragment.discover;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
@@ -19,32 +18,23 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeCampaignAdapter;
 import com.bupocket.base.BaseTransferFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.database.greendao.SuperNodeModelDao;
-import com.bupocket.interfaces.SignatureListener;
-import com.bupocket.enums.ExceptionEnum;
-import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.SuperNodeDto;
 import com.bupocket.model.SuperNodeModel;
-import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LocaleUtil;
-import com.bupocket.utils.ThreadManager;
-import com.bupocket.utils.ToastUtil;
-import com.bupocket.utils.TransferUtils;
-import com.bupocket.wallet.Wallet;
+import com.bupocket.wallet.Account;
 import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -54,12 +44,10 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import butterknife.BindView;
-import io.bumo.model.response.TransactionBuildBlobResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -101,7 +89,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
     private QMUIPopup myNodeExplainPopup;
     private List<SuperNodeModel> myVoteInfoList;
     private List<SuperNodeModel> nodeList;
-    private String metaData;
+
     private Call<ApiResult<SuperNodeDto>> serviceSuperNode;
     private SuperNodeDto allData;
     private SuperNodeModelDao superNodeModelDao;
@@ -195,11 +183,28 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 SuperNodeModel superNodeModel = superNodeAdapter.getItem(position);
-                goShareVote(superNodeModel);
+                goNodeDetail(superNodeModel);
 
             }
         });
 
+//        superNodeAdapter.setOnItemBtnListener(new NodeCampaignAdapter.OnItemBtnListener() {
+//            @Override
+//            public void onClick(int position, int btn) {
+//                SuperNodeModel superNodeModel = superNodeAdapter.getItem(position);
+//                switch (btn) {
+//                    case R.id.revokeVoteBtn:
+//                        GoRevokeVote(superNodeModel);
+//                        break;
+//                    case R.id.shareBtn:
+
+//                        break;
+//                    case R.id.voteRecordBtn:
+//                        GoVoteRecord(superNodeModel);
+//                        break;
+//                }
+//            }
+//        });
 //        superNodeAdapter.setOnItemBtnListener(new NodeCampaignAdapter.OnItemBtnListener() {
 //            @Override
 //            public void onClick(int position, int btn) {
@@ -284,7 +289,7 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
         startFragment(fragment);
     }
 
-    private void goShareVote(SuperNodeModel superNodeModel) {
+    private void goNodeDetail(SuperNodeModel superNodeModel) {
 //        String status = superNodeModel.getStatus();
 //        if (SuperNodeStatusEnum.RUNNING.getCode().equals(status)) {
 //            DialogUtils.showMessageNoTitleDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
@@ -293,19 +298,21 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
 //        } else {
         Bundle args = new Bundle();
         args.putSerializable("itemInfo", superNodeModel);
+        String accountTag;
+        if (LocaleUtil.isChinese()) {
+            accountTag=allData.getAccountTag();
+        }else{
+            accountTag=allData.getAccountTagEn();
+        }
+        args.putString(ConstantsType.ACCOUNT_TAG,accountTag);
+
         BPNodeDetailFragment bpNodeShareFragment = new BPNodeDetailFragment();
         bpNodeShareFragment.setArguments(args);
         startFragment(bpNodeShareFragment);
 //        }
     }
 
-    private void GoRevokeVote(SuperNodeModel superNodeModel) {
-        if ("0".equals(superNodeModel.getMyVoteCount())) {
-            DialogUtils.showMessageNoTitleDialog(getContext(), getString(R.string.revoke_no_vote_error_message_txt));
-        } else {
-            showRevokeVoteDialog(superNodeModel);
-        }
-    }
+
 
 
     private void initPopup() {
@@ -327,122 +334,9 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
     }
 
 
-    private void showRevokeVoteDialog(SuperNodeModel itemInfo) {
-        @SuppressLint("StringFormatMatches")
-        String nodeType = itemInfo.getIdentityType();
-        String role = null;
-        if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(nodeType)) {
-            role = SuperNodeTypeEnum.VALIDATOR.getName();
-        } else if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(nodeType)) {
-            role = SuperNodeTypeEnum.ECOLOGICAL.getName();
-        }
-        String nodeAddress = itemInfo.getNodeCapitalAddress();
-        final String nodeId = itemInfo.getNodeId();
-
-        String destAddress = Constants.CONTRACT_ADDRESS;
-        String transactionDetail = String.format(getString(R.string.revoke_vote_tx_details_txt), itemInfo.getNodeName());
-        metaData = String.format(getString(R.string.revoke_vote_tx_details_txt), itemInfo.getNodeName());
-        String transactionAmount = "0";
-
-        final JSONObject input = new JSONObject();
-        input.put("method", "unVote");
-        JSONObject params = new JSONObject();
-        params.put("role", role);
-        params.put("address", nodeAddress);
-        input.put("params", params);
-
-        String transactionParams = input.toJSONString();
-        String accountTag = "";
-        if (allData != null) {
-            accountTag = allData.getAccountTag();
-
-            switch (LocaleUtil.getLanguageStatus()) {
-                case 1:
-                    accountTag = allData.getAccountTagEn();
-                    break;
-            }
-        }
-
-        TransferUtils.confirmTxSheet(mContext, getWalletAddress(), destAddress, accountTag,
-                transactionAmount, Constants.NODE_COMMON_FEE,
-                transactionDetail, transactionParams, new TransferUtils.TransferListener() {
-                    @Override
-                    public void confirm() {
-                        confirmUnVote(input, nodeId);
-                    }
-                });
-    }
-
-    private void confirmUnVote(final JSONObject input, final String nodeId) {
-
-        final String amount = "0";
-
-        getSignatureInfo(new SignatureListener() {
-            @Override
-            public void success(final String privateKey) {
-
-                if (privateKey.isEmpty()) {
-                    return;
-                }
-
-                final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
-                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                        .setTipWord(getResources().getString(R.string.send_tx_verify))
-                        .create();
-                txSendingTipDialog.show();
-
-                Runnable unVoteRunnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        try {
-                            final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input.toJSONString(), currentWalletAddress, String.valueOf(Constants.NODE_COMMON_FEE), Constants.CONTRACT_ADDRESS, metaData);
-                            String txHash = buildBlobResponse.getResult().getHash();
-                            NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
-                            Call<ApiResult> call;
-                            Map<String, Object> paramsMap = new HashMap<>();
-                            paramsMap.put("hash", txHash);
-                            paramsMap.put("nodeId", nodeId);
-                            paramsMap.put("initiatorAddress", currentWalletAddress);
-                            call = nodePlanService.revokeVote(paramsMap);
-                            call.enqueue(new Callback<ApiResult>() {
-                                @Override
-                                public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
-
-                                    txSendingTipDialog.dismiss();
-                                    ApiResult respDto = response.body();
-                                    if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
-                                        submitTransactionBase(privateKey, buildBlobResponse);
-                                    } else {
-                                        String msg = DialogUtils.byCodeToMsg(mContext, respDto.getErrCode());
-                                        if (!msg.isEmpty()) {
-                                            DialogUtils.showMessageNoTitleDialog(getContext(), msg);
-                                            return;
-                                        }
-                                        DialogUtils.showMessageNoTitleDialog(getContext(), respDto.getMsg());
-
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<ApiResult> call, Throwable t) {
-                                    Toast.makeText(getContext(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
-                                    txSendingTipDialog.dismiss();
-                                }
-                            });
-                        } catch (Exception e) {
-
-                            ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
-                            txSendingTipDialog.dismiss();
-                        }
-                    }
-                };
-
-                ThreadManager.getInstance().execute(unVoteRunnable);
-            }
-        });
 
 
-    }
+
 
     private void setEmpty(boolean isVisible) {
         if (isVisible) {

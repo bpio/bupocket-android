@@ -22,26 +22,34 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 import com.bupocket.R;
 import com.bupocket.base.AbsBaseFragment;
+import com.bupocket.base.BaseTransferFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.model.NodeDetailModel;
 import com.bupocket.model.ShareUrlModel;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LocaleUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.TimeUtil;
 import com.bupocket.utils.ToastUtil;
+import com.bupocket.utils.TransferUtils;
+import com.bupocket.utils.WalletCurrentUtils;
+import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
@@ -57,16 +65,18 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
 import gdut.bsx.share2.Share2;
 import gdut.bsx.share2.ShareContentType;
+import io.bumo.model.response.TransactionBuildBlobResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BPNodeDetailFragment extends AbsBaseFragment {
+public class BPNodeDetailFragment extends BaseTransferFragment {
 
 
     @BindView(R.id.topbar)
@@ -95,7 +105,8 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
     private Call<ApiResult<SuperNodeModel>> callShareService;
     private Call<ApiResult<ShareUrlModel>> callShareUrl;
     private String shareUrl;
-
+    private String metaData;
+    private String accountTag;
 
     @Override
     protected int getLayoutView() {
@@ -111,6 +122,7 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
     @Override
     protected void initData() {
         itemData = (SuperNodeModel) getArguments().getSerializable("itemInfo");
+        accountTag = ((String) getArguments().getString(ConstantsType.ACCOUNT_TAG));
         mNodeNameTv.setText(itemData.getNodeName());
 
         shareUrl = Constants.SHARE_URL;
@@ -118,6 +130,126 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
         initHeadView();
         getNodeDetailData();
         getUrlData();
+
+    }
+
+
+    private void goRevokeVote(SuperNodeModel superNodeModel) {
+        if ("0".equals(superNodeModel.getMyVoteCount())) {
+            DialogUtils.showMessageNoTitleDialog(getContext(), getString(R.string.revoke_no_vote_error_message_txt));
+        } else {
+            showRevokeVoteDialog(superNodeModel);
+        }
+    }
+
+
+    private void showRevokeVoteDialog(SuperNodeModel itemInfo) {
+        @SuppressLint("StringFormatMatches")
+        String nodeType = itemInfo.getIdentityType();
+        String role = null;
+        if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(nodeType)) {
+            role = SuperNodeTypeEnum.VALIDATOR.getName();
+        } else if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(nodeType)) {
+            role = SuperNodeTypeEnum.ECOLOGICAL.getName();
+        }
+        String nodeAddress = itemInfo.getNodeCapitalAddress();
+        final String nodeId = itemInfo.getNodeId();
+
+        String destAddress = Constants.CONTRACT_ADDRESS;
+        String transactionDetail = String.format(getString(R.string.revoke_vote_tx_details_txt), itemInfo.getNodeName());
+        metaData = String.format(getString(R.string.revoke_vote_tx_details_txt), itemInfo.getNodeName());
+        String transactionAmount = "0";
+
+        final JSONObject input = new JSONObject();
+        input.put("method", "unVote");
+        JSONObject params = new JSONObject();
+        params.put("role", role);
+        params.put("address", nodeAddress);
+        input.put("params", params);
+
+        String transactionParams = input.toJSONString();
+        String accountTag = this.accountTag;
+
+
+        TransferUtils.confirmTxSheet(mContext, getWalletAddress(), destAddress, accountTag,
+                transactionAmount, Constants.NODE_COMMON_FEE,
+                transactionDetail, transactionParams, new TransferUtils.TransferListener() {
+                    @Override
+                    public void confirm() {
+                        confirmUnVote(input, nodeId);
+                    }
+                });
+    }
+
+
+    private void confirmUnVote(final JSONObject input, final String nodeId) {
+
+        final String amount = "0";
+
+        getSignatureInfo(new SignatureListener() {
+            @Override
+            public void success(final String privateKey) {
+
+                if (privateKey.isEmpty()) {
+                    return;
+                }
+
+                final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                        .setTipWord(getResources().getString(R.string.send_tx_verify))
+                        .create();
+                txSendingTipDialog.show();
+
+                Runnable unVoteRunnable = new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input.toJSONString(), WalletCurrentUtils.getWalletAddress(spHelper), String.valueOf(Constants.NODE_COMMON_FEE), Constants.CONTRACT_ADDRESS, metaData);
+                            String txHash = buildBlobResponse.getResult().getHash();
+                            NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
+                            Call<ApiResult> call;
+                            Map<String, Object> paramsMap = new HashMap<>();
+                            paramsMap.put("hash", txHash);
+                            paramsMap.put("nodeId", nodeId);
+                            paramsMap.put("initiatorAddress", WalletCurrentUtils.getWalletAddress(spHelper));
+                            call = nodePlanService.revokeVote(paramsMap);
+                            call.enqueue(new Callback<ApiResult>() {
+                                @Override
+                                public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
+
+                                    txSendingTipDialog.dismiss();
+                                    ApiResult respDto = response.body();
+                                    if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
+                                        submitTransactionBase(privateKey, buildBlobResponse);
+                                    } else {
+                                        String msg = DialogUtils.byCodeToMsg(mContext, respDto.getErrCode());
+                                        if (!msg.isEmpty()) {
+                                            DialogUtils.showMessageNoTitleDialog(getContext(), msg);
+                                            return;
+                                        }
+                                        DialogUtils.showMessageNoTitleDialog(getContext(), respDto.getMsg());
+
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<ApiResult> call, Throwable t) {
+                                    Toast.makeText(getContext(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
+                                    txSendingTipDialog.dismiss();
+                                }
+                            });
+                        } catch (Exception e) {
+
+                            ToastUtil.showToast(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT);
+                            txSendingTipDialog.dismiss();
+                        }
+                    }
+                };
+
+                ThreadManager.getInstance().execute(unVoteRunnable);
+            }
+        });
+
 
     }
 
@@ -532,6 +664,7 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
                 @Override
                 public void onClick(View v) {
                     nodeMorePop.dismiss();
+                    goRevokeVote(itemData);
                 }
             });
 

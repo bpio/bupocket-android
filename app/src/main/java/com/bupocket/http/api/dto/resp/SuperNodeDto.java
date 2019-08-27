@@ -2,9 +2,10 @@ package com.bupocket.http.api.dto.resp;
 
 import com.bupocket.model.SuperNodeModel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class SuperNodeDto {
+public class SuperNodeDto implements Serializable {
 
 //     "nodeId": "{nodeId}",
 //             "nodeName": "{nodeName}",
