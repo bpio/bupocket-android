@@ -34,6 +34,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.NodeDetailModel;
 import com.bupocket.model.ShareUrlModel;
 import com.bupocket.model.SuperNodeModel;
+import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
@@ -167,16 +168,19 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
     }
 
     private void setNodeDataView() {
-
-        for (int i = 0; i < 5; i++) {
-            addNodeItemData("节点权益值", "10,000");
-        }
+//
+//        for (int i = 0; i < 5; i++) {
+//            addNodeItemData("节点权益值", "10,000");
+//        }
 
 
     }
 
-    private void addNodeItemData(String title, String amount) {
-        addNodeItemData(title, amount, false);
+
+
+    private void addNodeItemData(int title, String amount) {
+        String titleMsg = getResources().getString(title);
+        addNodeItemData(titleMsg, amount, false);
     }
 
     private void addNodeItemData(String title, String amount, boolean isInfo) {
@@ -253,6 +257,26 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
     }
 
     private void initNodeDataView(NodeDetailModel.NodeDataBean nodeData) {
+
+        addNodeItemData(R.string.node_equity_value,nodeData.getEquityValue());
+        addNodeItemData(R.string.node_deposit, nodeData.getDeposit());
+        addNodeItemData(R.string.node_total_reward_amount, nodeData.getTotalRewardAmount());
+        addNodeItemData(getResources().getString(R.string.node_ratio), nodeData.getRatio()+"%",true);
+
+        String totalVoteCount = nodeData.getTotalVoteCount();
+        int haveVote=R.string.number_have_votes;
+        if (!CommonUtil.isSingle(totalVoteCount)) {
+            haveVote=R.string.number_have_votes_s;
+        }
+        addNodeItemData(haveVote, totalVoteCount);
+
+
+        String totalVoteCount1 = nodeData.getTotalVoteCount();
+        int myVote=R.string.my_votes_number;
+        if (!CommonUtil.isSingle(totalVoteCount1)) {
+            myVote=R.string.my_votes_number_s;
+        }
+        addNodeItemData(myVote, totalVoteCount1);
 
     }
 

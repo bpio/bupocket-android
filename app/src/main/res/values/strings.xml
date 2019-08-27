@@ -854,4 +854,13 @@
     <string name="node_detail_state_refresh">状态更新</string>
     <string name="my_node_vote">我要投票</string>
     <string name="vote_record_txt">操作记录</string>
+
+
+    <!--node detail-->
+    <string name="node_deposit">竞选保证金(BU)</string>
+    <string name="node_equity_value">节点权益值</string>
+    <string name="node_total_reward_amount">累计获得奖励(BU)</string>
+    <string name="node_ratio">对投票用户奖励分享比例</string>
+
+    
 </resources>

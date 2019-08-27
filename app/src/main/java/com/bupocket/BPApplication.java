@@ -145,6 +145,9 @@ public class BPApplication extends Application {
         }
         Constants.NODE_PLAN_IMAGE_URL_PREFIX = Constants.WEB_SERVER_DOMAIN + Constants.IMAGE_PATH;
         Constants.PUSH_MESSAGE_SOCKET_URL = Constants.WEB_SERVER_DOMAIN;
+
+
+        LogUtils.mDebuggable = LogUtils.LEVEL_ERROR;
     }
 
     private void initCrash() {
