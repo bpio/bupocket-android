@@ -8,9 +8,9 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
@@ -30,11 +31,12 @@ import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.model.NodeDetailModel;
 import com.bupocket.model.ShareUrlModel;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.ThreadManager;
-import com.qmuiteam.qmui.util.QMUIDisplayHelper;
+import com.bupocket.utils.ToastUtil;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
@@ -47,6 +49,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
@@ -55,8 +58,6 @@ import gdut.bsx.share2.ShareContentType;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class BPNodeDetailFragment extends AbsBaseFragment {
 
@@ -108,7 +109,7 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
         shareUrl = Constants.SHARE_URL;
 
         initHeadView();
-        getShareData();
+        getNodeDetailData();
         getUrlData();
 
 
@@ -119,12 +120,12 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
     }
 
     private void setNodeStateView() {
-        addNodeStateItem("12-01", "18:00", "100,000,000",false,true,false);
-        addNodeStateItem("12-01", "18:00", "100,000,000",true,false,false);
+        addNodeStateItem("12-01", "18:00", "100,000,000", false, true, false);
+        addNodeStateItem("12-01", "18:00", "100,000,000", true, false, false);
         for (int i = 0; i < 5; i++) {
             addNodeStateItem("12-01", "18:00", "100,000,000");
         }
-        addNodeStateItem("12-01", "18:00", "100,000,000",false,false,true);
+        addNodeStateItem("12-01", "18:00", "100,000,000", false, false, true);
     }
 
     private void addNodeStateItem(String date, String time, String amount) {
@@ -214,29 +215,44 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
 
     }
 
-    private void getShareData() {
+    private void getNodeDetailData() {
         HashMap<String, Object> map = new HashMap<>();
         map.put("nodeId", itemData.getNodeId());
-        map.put("address", getWalletAddress());
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
-
-        callShareService = nodePlanService.getShareData(map);
-        callShareService.enqueue(new Callback<ApiResult<SuperNodeModel>>() {
+        nodePlanService.getNodeDetail(map).enqueue(new Callback<ApiResult<NodeDetailModel>>() {
             @Override
-            public void onResponse(Call<ApiResult<SuperNodeModel>> call, Response<ApiResult<SuperNodeModel>> response) {
-                ApiResult<SuperNodeModel> body = response.body();
+            public void onResponse(Call<ApiResult<NodeDetailModel>> call, Response<ApiResult<NodeDetailModel>> response) {
+                ApiResult<NodeDetailModel> body = response.body();
                 if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
-                    itemInfo = body.getData();
-                    initNodeInfoUI();
+                    NodeDetailModel data = body.getData();
+                    if (data!=null) {
+                        NodeDetailModel.NodeDataBean nodeData = data.getNodeData();
+                        initNodeDataView(nodeData);
+                        List<NodeDetailModel.NodeInfoBean.TimelineBean> timeline = data.getNodeInfo().getTimeline();
+                        initNodeLineView(timeline);
+
+                    }
+
+
+                } else {
+                    ToastUtil.showToast(getActivity(), body.getMsg(), Toast.LENGTH_SHORT);
                 }
+
             }
 
             @Override
-            public void onFailure(Call<ApiResult<SuperNodeModel>> call, Throwable t) {
+            public void onFailure(Call<ApiResult<NodeDetailModel>> call, Throwable t) {
 
             }
         });
 
+    }
+
+    private void initNodeLineView(List<NodeDetailModel.NodeInfoBean.TimelineBean> timeline) {
+
+    }
+
+    private void initNodeDataView(NodeDetailModel.NodeDataBean nodeData) {
 
     }
 
@@ -457,7 +473,7 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
     private void initPopup(View v) {
         if (nodeMorePop == null) {
             nodeMorePop = new QMUIPopup(getContext(), QMUIPopup.DIRECTION_NONE);
-            View moreView=LayoutInflater.from(mContext).inflate(R.layout.view_node_more,null);
+            View moreView = LayoutInflater.from(mContext).inflate(R.layout.view_node_more, null);
             moreView.findViewById(R.id.revokeLL).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -504,10 +520,10 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
     @Override
     public void onDestroyView() {
 
-        callShareService.cancel();
-        callShareUrl.cancel();
+//        callShareService.cancel();
+//        callShareUrl.cancel();
         super.onDestroyView();
-        webView.destroy();
+//        webView.destroy();
     }
 
 

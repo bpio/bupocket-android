@@ -6,6 +6,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetQRContentDto;
 import com.bupocket.http.api.dto.resp.SuperNodeDto;
 import com.bupocket.model.MyVoteRecordModel;
+import com.bupocket.model.NodeDetailModel;
 import com.bupocket.model.ShareUrlModel;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.model.TransConfirmModel;
@@ -39,5 +40,10 @@ public interface NodePlanService {
 
     @POST("nodeServer/node/v1/detail")
     Call<ApiResult<SuperNodeModel>> getShareData(@Body Map<String,Object> map);
+
+    @POST("nodeServer/node/v1/validate/detail")
+    Call<ApiResult<NodeDetailModel>> getNodeDetail(@Body Map<String,Object> map);
+
+
 
 }
