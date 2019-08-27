@@ -2,11 +2,14 @@ package com.bupocket.fragment.discover;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -21,12 +24,15 @@ import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.SuperNodeTypeEnum;
+import com.bupocket.http.api.NodeBuildService;
 import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.http.api.dto.resp.GetQRContentDto;
 import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.model.NodeDetailModel;
 import com.bupocket.model.SuperNodeModel;
+import com.bupocket.model.TransConfirmModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LocaleUtil;
@@ -36,8 +42,10 @@ import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.wallet.Wallet;
+import com.bupocket.wallet.exception.WalletException;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 
@@ -305,6 +313,138 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
     @Override
     protected void setListeners() {
 
+        nodeRevokeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialogVoteNode();
+            }
+        });
+    }
+
+    private void dialogVoteNode() {
+        final QMUIBottomSheet supportDialog = new QMUIBottomSheet(getContext());
+        supportDialog.setContentView(supportDialog.getLayoutInflater().inflate(R.layout.view_node_detail_vote, null));
+        final EditText nodeVoteEt = (EditText) supportDialog.findViewById(R.id.nodeVoteEt);
+        final TextView amountTotalTv = (TextView) supportDialog.findViewById(R.id.tvDialogTotalAmount);
+        nodeVoteEt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!TextUtils.isEmpty(s.toString())) {
+                    amountTotalTv.setText(CommonUtil.format(s.toString()));
+                } else {
+                    amountTotalTv.setText("0");
+                }
+            }
+        });
+
+        supportDialog.findViewById(R.id.tvDialogSupport).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String amount = nodeVoteEt.getText().toString();
+                if (TextUtils.isEmpty(amount)) {
+                    return;
+                }
+
+                supportDialog.dismiss();
+
+                showConfirmSupport(amount);
+
+            }
+        });
+
+        supportDialog.findViewById(R.id.ivDialogCancle).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                supportDialog.dismiss();
+            }
+        });
+
+        supportDialog.show();
+    }
+
+    private void showConfirmSupport(String amount) {
+       final GetQRContentDto getQRContentDto = new GetQRContentDto();
+        String destAddress =  Constants.CONTRACT_ADDRESS;
+        String transactionAmount = amount;
+        double scanTxFee = Constants.NODE_COMMON_FEE;
+        String transactionDetail = "";
+        String nodeType = "validator";
+        String accountTag="";
+        if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(itemData.getIdentityType())) {
+            nodeType = "kol";
+        }
+
+        String transactionParams = "{\"method\":\"vote\",\"params\":{\"role\":\"" + nodeType + "\",\"address\":\"" + itemData.getNodeCapitalAddress() + "\"}}";
+
+
+        getQRContentDto.setAmount(amount);
+        getQRContentDto.setDestAddress(destAddress);
+        getQRContentDto.setScript(transactionParams);
+        getQRContentDto.setFee(scanTxFee);
+        TransferUtils.confirmTxSheet(mContext, getWalletAddress(), destAddress,
+                accountTag, transactionAmount, scanTxFee,
+                transactionDetail, transactionParams, new TransferUtils.TransferListener() {
+                    @Override
+                    public void confirm() {
+
+                        confirmTransaction(getQRContentDto);
+                    }
+                });
+    }
+
+    private void confirmTransaction(final GetQRContentDto getQRContentDto) {
+
+        Runnable confirmSupportRunnable = new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(getQRContentDto.getAmount(), getQRContentDto.getScript(), getWalletAddress(), String.valueOf(getQRContentDto.getFee()), getQRContentDto.getDestAddress(), "");
+                    final String hash = transBlob.getResult().getHash();
+                    if (TextUtils.isEmpty(hash)) {
+
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                DialogUtils.showMessageNoTitleDialog(mContext, transBlob.getErrorDesc());
+                            }
+                        });
+                        return;
+                    }
+
+
+                    getSignatureInfo(new SignatureListener() {
+                        @Override
+                        public void success(String privateKey) {
+
+                            submitTransactionBase(privateKey, transBlob);
+
+                        }
+                    });
+
+                } catch (WalletException walletException) {
+
+                    if (walletException.getErrCode().equals(com.bupocket.wallet.enums.ExceptionEnum.ADDRESS_NOT_EXIST.getCode())) {
+                        ToastUtil.showToast(getActivity(), getString(R.string.address_not_exist), Toast.LENGTH_SHORT);
+                    }
+//                    ToastUtil.showToast(getActivity(), walletException.getErrMsg(), Toast.LENGTH_SHORT);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        ThreadManager.getInstance().execute(confirmSupportRunnable);
+
     }
 
     private void getNodeDetailData() {
@@ -339,8 +479,6 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
 
                         nodeInfoTv.setText(slogan);
                         webView.loadDataWithBaseURL(null, introduce, "text/html", "utf-8", null);
-
-
 
                         initNodeDataView(nodeData);
                         List<NodeDetailModel.NodeInfoBean.TimelineBean> timeline = data.getNodeInfo().getTimeline();
