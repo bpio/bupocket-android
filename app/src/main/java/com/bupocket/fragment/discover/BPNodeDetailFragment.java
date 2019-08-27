@@ -290,6 +290,12 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         } else {
             nodeDataIv.setVisibility(View.GONE);
         }
+        nodeDataIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogUtils.showInformationDialog(getString(R.string.node_ratio_dialog),mContext,v);
+            }
+        });
         TextView nodeAmountTv = (TextView) nodeDataLL.findViewById(R.id.nodeDataItemAmountTv);
         nodeAmountTv.setText(amount);
 

@@ -867,4 +867,5 @@
     <string name="node_vote_support_min_amount">支持金额（最小支持10的倍数的BU ）</string>
 
     <string name="node_vote_input_hint">请输入支持金额</string>
+    <string name="node_ratio_dialog">当前节点自定义设置对投票用户的奖励分享比例，按照投票用户的票数权重进行分配</string>
 </resources>

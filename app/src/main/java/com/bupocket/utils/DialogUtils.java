@@ -2,6 +2,7 @@ package com.bupocket.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -17,8 +18,12 @@ import com.bupocket.R;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.wallet.Wallet;
+import com.qmuiteam.qmui.util.QMUIDisplayHelper;
 import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
+import com.qmuiteam.qmui.widget.popup.QMUIPopup;
+
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 public class DialogUtils {
 
@@ -551,6 +556,31 @@ public class DialogUtils {
                 });
             }
         });
+    }
+
+
+
+    public static void showInformationDialog(String msg,Context mContext,View v){
+
+       QMUIPopup  qmuiPopup = new QMUIPopup(mContext, QMUIPopup.DIRECTION_NONE);
+        TextView textView = new TextView(mContext);
+        textView.setLayoutParams(qmuiPopup.generateLayoutParam(
+                QMUIDisplayHelper.dp2px(mContext, 280),
+                WRAP_CONTENT
+        ));
+        textView.setLineSpacing(QMUIDisplayHelper.dp2px(mContext, 4), 1.0f);
+        int padding = QMUIDisplayHelper.dp2px(mContext, 20);
+        textView.setPadding(padding, padding, padding, padding);
+        textView.setText(msg);
+        textView.setTextColor(ContextCompat.getColor(mContext, R.color.app_color_white));
+        textView.setBackgroundColor(mContext.getResources().getColor(R.color.popup_background_color));
+        qmuiPopup.setContentView(textView);
+        qmuiPopup.setAnimStyle(QMUIPopup.ANIM_GROW_FROM_CENTER);
+        qmuiPopup.setPreferredDirection(QMUIPopup.DIRECTION_BOTTOM);
+        qmuiPopup.show(v);
+        ImageView arrowUp = qmuiPopup.getDecorView().findViewById(R.id.arrow_up);
+        arrowUp.setImageDrawable(mContext.getResources().getDrawable(R.mipmap.triangle));
+
     }
 
 }
