@@ -862,5 +862,9 @@
     <string name="node_total_reward_amount">累计获得奖励(BU)</string>
     <string name="node_ratio">对投票用户奖励分享比例</string>
 
-    
+    <string name="node_vote_total">合计</string>
+    <string name="node_vote_title">节点投票</string>
+    <string name="node_vote_support_min_amount">支持金额（最小支持10的倍数的BU ）</string>
+
+    <string name="node_vote_input_hint">请输入支持金额</string>
 </resources>

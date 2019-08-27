@@ -95,16 +95,10 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
     LinearLayout nodeDetailStateLL;
     @BindView(R.id.nodeRevokeBtn)
     Button nodeRevokeBtn;
-    private QMUIPopup nodeMorePop;
 
-    private View mShareImageRl;
-    private Uri sharePhotoUri = null;
-    private SuperNodeModel itemInfo;
+
+    private QMUIPopup nodeMorePop;
     private SuperNodeModel itemData;
-    private Bitmap nodeLogoBitmap = null;
-    private Call<ApiResult<SuperNodeModel>> callShareService;
-    private Call<ApiResult<ShareUrlModel>> callShareUrl;
-    private String shareUrl;
     private String metaData;
     private String accountTag;
 
@@ -122,15 +116,12 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
     @Override
     protected void initData() {
         itemData = (SuperNodeModel) getArguments().getSerializable("itemInfo");
-        accountTag = ((String) getArguments().getString(ConstantsType.ACCOUNT_TAG));
+        accountTag = getArguments().getString(ConstantsType.ACCOUNT_TAG);
         mNodeNameTv.setText(itemData.getNodeName());
 
-        shareUrl = Constants.SHARE_URL;
 
         initHeadView();
         getNodeDetailData();
-        getUrlData();
-
     }
 
 
@@ -270,8 +261,6 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         stateDateTv.setText(date);
         TextView stateDetailNodeTv = (TextView) nodeDataLL.findViewById(R.id.stateDetailNodeTv);
 
-
-
         ImageView stateTagIV = (ImageView) nodeDataLL.findViewById(R.id.stateTagIV);
         ImageView stateTagGreenIV = (ImageView) nodeDataLL.findViewById(R.id.stateTagGreenIV);
 
@@ -281,7 +270,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
             if (!TextUtils.isEmpty(title)) {
                 stateDetailNodeTv.setText(title);
             }
-        }else{
+        } else {
             stateTagGreenIV.setVisibility(View.GONE);
             stateDetailNodeTv.setVisibility(View.GONE);
         }
@@ -298,8 +287,6 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
 
         nodeDetailStateLL.addView(nodeDataLL);
     }
-
-
 
 
     private void addNodeItemData(int title, String amount) {
@@ -394,8 +381,8 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
             String type = timelineBean.getType();
             title = timelineBean.getTitle();
             if (!LocaleUtil.isChinese()) {
-                content=timelineBean.getEnContent();
-                title=timelineBean.getEnTitle();
+                content = timelineBean.getEnContent();
+                title = timelineBean.getEnTitle();
             }
 
 
@@ -405,11 +392,11 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
             if (i == timeline.size() - 1) {
                 isBottom = true;
             }
-            if (!TextUtils.isEmpty(type)&&type.equals("1")) {
+            if (!TextUtils.isEmpty(type) && type.equals("1")) {
                 isNode = true;
 
             }
-            addNodeStateItem(date, time, content,title, isNode, isTop, isBottom);
+            addNodeStateItem(date, time, content, title, isNode, isTop, isBottom);
 
         }
     }
@@ -442,186 +429,6 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
 
     }
 
-    private void getUrlData() {
-        String path = null;
-        if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(itemData.getIdentityType())) {
-            path = Constants.VALIDATE_PATH + itemData.getNodeId();
-        } else if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(itemData.getIdentityType())) {
-            path = Constants.KOL_PATH + itemData.getNodeId();
-        }
-
-        HashMap<String, Object> map = new HashMap<>();
-        map.put(Constants.TYPE, "1");
-        map.put(Constants.PATH, path);
-        NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
-
-        callShareUrl = nodePlanService.getShareUrl(map);
-        callShareUrl.enqueue(new Callback<ApiResult<ShareUrlModel>>() {
-            @Override
-            public void onResponse(Call<ApiResult<ShareUrlModel>> call, Response<ApiResult<ShareUrlModel>> response) {
-                ApiResult<ShareUrlModel> body = response.body();
-                if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
-                    ShareUrlModel shareUrlModel = body.getData();
-                    shareUrl = shareUrlModel.getShortlink();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ApiResult<ShareUrlModel>> call, Throwable t) {
-
-            }
-        });
-
-
-    }
-
-
-    private void initNodeInfoUI() {
-
-        final String nodeLogo = itemData.getNodeLogo();
-        String source = itemInfo.getIntroduce().trim().toString();
-        webView.loadDataWithBaseURL(null, source, "text/html", "utf-8", null);
-
-
-        Runnable shareRunnable = new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    nodeLogoBitmap = Glide.with(getContext())
-                            .asBitmap()
-                            .load(Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo))
-                            .centerCrop()
-                            .into(Target.SIZE_ORIGINAL, Target.SIZE_ORIGINAL)
-                            .get();
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        ThreadManager.getInstance().execute(shareRunnable);
-    }
-
-
-    @SuppressLint("ResourceType")
-    private void showShareDialog() {
-
-        mShareImageRl = LayoutInflater.from(getActivity()).inflate(R.layout.view_share_image, null);
-        TextView mNodeNameTv = mShareImageRl.findViewById(R.id.nodeNameTv);
-        mNodeNameTv.setText(itemInfo.getNodeName());
-        QMUIRadiusImageView nodeIconIv = mShareImageRl.findViewById(R.id.headIconIv);
-        nodeIconIv.setImageBitmap(nodeLogoBitmap);
-        ImageView mQrIv = mShareImageRl.findViewById(R.id.qrIv);
-        Bitmap QRBitmap = QRCodeUtil.createQRCodeBitmap(shareUrl, 356, 356);
-        mQrIv.setImageBitmap(QRBitmap);
-
-        Bitmap createFromViewBitmap = getViewBitmap(mShareImageRl);
-
-
-        String fileName = "TEMP_" + System.currentTimeMillis() + ".jpg";
-        File PHOTO_DIR = new File(getContext().getCacheDir() + "/image");
-        File shareFile = new File(PHOTO_DIR, fileName);
-
-        if (shareFile.exists()) {
-            boolean delete = shareFile.delete();
-        }
-        if (!shareFile.getParentFile().exists()) {
-            shareFile.getParentFile().mkdirs();
-        }
-        try {
-            boolean newFile = shareFile.createNewFile();
-            FileOutputStream fos = new FileOutputStream(shareFile);
-            createFromViewBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-            fos.flush();
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            sharePhotoUri = FileProvider.getUriForFile(getContext(), "com.mydomain.fileprovider", shareFile);
-        } else {
-            sharePhotoUri = Uri.fromFile(shareFile);
-        }
-
-        final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(getContext());
-        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_node_share, null));
-
-        ImageView mShareImageIv = qmuiBottomSheet.findViewById(R.id.shareImageIv);
-        mShareImageIv.setImageBitmap(createFromViewBitmap);
-        TextView mCancelBtn = qmuiBottomSheet.findViewById(R.id.cancelBtn);
-
-        mCancelBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.dismiss();
-            }
-        });
-
-        qmuiBottomSheet.findViewById(R.id.shareToQQBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Share2.Builder(getActivity())
-                        .setContentType(ShareContentType.IMAGE)
-                        .setShareFileUri(sharePhotoUri)
-                        .setShareToComponent("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity")
-                        .setTitle("Share Image")
-                        .build()
-                        .shareBySystem();
-            }
-        });
-
-        qmuiBottomSheet.findViewById(R.id.shareToWeixinBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Share2.Builder(getActivity())
-                        .setContentType(ShareContentType.IMAGE)
-                        .setShareFileUri(sharePhotoUri)
-                        .setShareToComponent("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI")
-                        .setTitle("Share Image")
-                        .build()
-                        .shareBySystem();
-            }
-        });
-        qmuiBottomSheet.findViewById(R.id.reloadBtn).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiBottomSheet.dismiss();
-                final QMUIDialog xiaobuCommandDialog = new QMUIDialog(getContext());
-                xiaobuCommandDialog.setCanceledOnTouchOutside(true);
-                xiaobuCommandDialog.setContentView(R.layout.view_share_xiaobu_command);
-                final TextView mXiaobuCommandContentTv = xiaobuCommandDialog.findViewById(R.id.xiaobuCommandContentTv);
-                mXiaobuCommandContentTv.setText(Html.fromHtml(String.format(getString(R.string.xiaobu_command_content_txt), itemInfo.getNodeName(), shareUrl)));
-
-                QMUIRoundButton copyCommandBtn = xiaobuCommandDialog.findViewById(R.id.reloadBtn);
-                copyCommandBtn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        String xiaobuCommandStr = mXiaobuCommandContentTv.getText().toString();
-                        ClipboardManager cm = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
-                        ClipData mClipData = ClipData.newPlainText("Label", xiaobuCommandStr);
-                        cm.setPrimaryClip(mClipData);
-                        final QMUITipDialog copySuccessDiglog = new QMUITipDialog.Builder(getContext())
-                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_SUCCESS)
-                                .setTipWord(getString(R.string.qr_copy_success_message))
-                                .create();
-                        copySuccessDiglog.show();
-                        getView().postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                copySuccessDiglog.dismiss();
-                            }
-                        }, 1500);
-                    }
-                });
-                xiaobuCommandDialog.show();
-            }
-        });
-        qmuiBottomSheet.show();
-
-
-    }
 
     private void initTopBar() {
         mTopBar.setBackgroundDividerEnabled(true);
@@ -638,19 +445,6 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
 
                 initPopup(v);
 
-//                if (itemInfo == null) {
-//                    return;
-//                }
-//                String shareStartTime = itemInfo.getShareStartTime();
-//
-//                if (TextUtils.isEmpty(shareStartTime)) {
-//                    return;
-//                }
-//                if (TimeUtil.judgeTime(Long.parseLong(shareStartTime))) {
-//                    DialogUtils.showMessageNoTitleDialog(getContext(), R.string.share_close);
-//                } else {
-//                    showShareDialog();
-//                }
             }
         });
     }
@@ -682,35 +476,6 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         nodeMorePop.show(v);
         ImageView arrowUp = nodeMorePop.getDecorView().findViewById(R.id.arrow_up);
         arrowUp.setImageDrawable(getResources().getDrawable(R.mipmap.triangle));
-    }
-
-
-    private Bitmap getViewBitmap(View addViewContent) {
-
-        addViewContent.setDrawingCacheEnabled(true);
-
-        addViewContent.measure(
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED),
-                View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
-        addViewContent.layout(0, 0,
-                addViewContent.getMeasuredWidth(),
-                addViewContent.getMeasuredHeight());
-
-        addViewContent.buildDrawingCache();
-        Bitmap cacheBitmap = addViewContent.getDrawingCache();
-        Bitmap bitmap = Bitmap.createBitmap(cacheBitmap);
-
-        return bitmap;
-    }
-
-
-    @Override
-    public void onDestroyView() {
-
-//        callShareService.cancel();
-//        callShareUrl.cancel();
-        super.onDestroyView();
-//        webView.destroy();
     }
 
 
