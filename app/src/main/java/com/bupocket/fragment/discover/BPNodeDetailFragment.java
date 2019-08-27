@@ -36,6 +36,7 @@ import com.bupocket.model.NodeDetailModel;
 import com.bupocket.model.ShareUrlModel;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.LocaleUtil;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.ThreadManager;
@@ -48,6 +49,8 @@ import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
+
+import org.intellij.lang.annotations.Language;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -116,21 +119,8 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
         getNodeDetailData();
         getUrlData();
 
-
-//        setNodeDataView();
-//
-//        setNodeStateView();
-
     }
 
-    private void setNodeStateView() {
-//        addNodeStateItem("12-01", "18:00", "100,000,000", false, true, false);
-//        addNodeStateItem("12-01", "18:00", "100,000,000", true, false, false);
-//        for (int i = 0; i < 5; i++) {
-//            addNodeStateItem("12-01", "18:00", "100,000,000");
-//        }
-//        addNodeStateItem("12-01", "18:00", "100,000,000", false, false, true);
-    }
 
     private void addNodeStateItem(String date, String time, String amount) {
         addNodeStateItem(date, time, amount, "", false, false, false);
@@ -177,14 +167,7 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
         nodeDetailStateLL.addView(nodeDataLL);
     }
 
-    private void setNodeDataView() {
-//
-//        for (int i = 0; i < 5; i++) {
-//            addNodeItemData("节点权益值", "10,000");
-//        }
 
-
-    }
 
 
     private void addNodeItemData(int title, String amount) {
@@ -277,6 +260,13 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
 
             String content = timelineBean.getContent();
             String type = timelineBean.getType();
+            title = timelineBean.getTitle();
+            if (!LocaleUtil.isChinese()) {
+                content=timelineBean.getEnContent();
+                title=timelineBean.getEnTitle();
+            }
+
+
             if (i == 0) {
                 isTop = true;
             }
@@ -285,7 +275,7 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
             }
             if (!TextUtils.isEmpty(type)&&type.equals("1")) {
                 isNode = true;
-                title = timelineBean.getTitle();
+
             }
             addNodeStateItem(date, time, content,title, isNode, isTop, isBottom);
 
@@ -311,12 +301,12 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
         addNodeItemData(haveVote, totalVoteCount);
 
 
-        String totalVoteCount1 = nodeData.getTotalVoteCount();
-        int myVote = R.string.my_votes_number;
-        if (!CommonUtil.isSingle(totalVoteCount1)) {
-            myVote = R.string.my_votes_number_s;
-        }
-        addNodeItemData(myVote, totalVoteCount1);
+//        String totalVoteCount1 = nodeData.getTotalVoteCount();
+//        int myVote = R.string.my_votes_number;
+//        if (!CommonUtil.isSingle(totalVoteCount1)) {
+//            myVote = R.string.my_votes_number_s;
+//        }
+//        addNodeItemData(myVote, totalVoteCount1);
 
     }
 

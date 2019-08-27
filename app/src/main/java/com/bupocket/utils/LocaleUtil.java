@@ -18,7 +18,6 @@ import java.util.Locale;
 
 public class LocaleUtil {
     /**
-     *
      * @return Locale
      */
     public static Locale getUserLocale() {
@@ -39,6 +38,7 @@ public class LocaleUtil {
     }
 
     /**
+     *
      */
     public static void changeAppLanguage(Context context) {
         Resources resources = context.getResources();
@@ -80,9 +80,25 @@ public class LocaleUtil {
         return 0;
     }
 
-
     /**
      *
+     * @return
+     */
+    public static boolean isChinese() {
+        int currentLanguage = (int) SharedPreferencesHelper.getInstance().getInt("currentLanguage", 0);
+
+        switch (currentLanguage) {
+            case 0:// Locale.SIMPLIFIED_CHINESE;
+                return true;
+            case 1://Locale.ENGLISH;
+                return false;
+        }
+
+        return false;
+    }
+
+
+    /**
      * @param currentLanguage index
      */
     public static void changeAppLanguage(Context context, int currentLanguage) {
@@ -108,20 +124,18 @@ public class LocaleUtil {
     }
 
     /**
-     *
      * @param context
      */
     public static void restartApp(Context context) {
         Intent intent = new Intent(context, BPMainActivity.class);
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
-        intent.putExtra(ConstantsType.CHANGE_LANGUAGE,ConstantsType.STATUS_YES);
+        intent.putExtra(ConstantsType.CHANGE_LANGUAGE, ConstantsType.STATUS_YES);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
     /**
-     *
      * @param context Context
      * @return Locale
      */
@@ -136,7 +150,6 @@ public class LocaleUtil {
     }
 
     /**
-     *
      * @param context Context
      * @param locale  New User Locale
      */
