@@ -748,7 +748,7 @@ public class CommonUtil {
     public static String format(String num) {
         String format = "";
         try {
-            int num1 = Integer.parseInt(num);
+            Long num1 = Long.parseLong(num);
             format = DecimalFormat.getNumberInstance().format(num1);
             if (TextUtils.isEmpty(format)) {
                 return "0";

@@ -183,6 +183,9 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 SuperNodeModel superNodeModel = superNodeAdapter.getItem(position);
+                if (superNodeModel==null) {
+                    return;
+                }
                 goNodeDetail(superNodeModel);
 
             }
@@ -298,12 +301,15 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
 //        } else {
         Bundle args = new Bundle();
         args.putSerializable("itemInfo", superNodeModel);
-        String accountTag;
-        if (LocaleUtil.isChinese()) {
-            accountTag=allData.getAccountTag();
-        }else{
-            accountTag=allData.getAccountTagEn();
+        String accountTag = "";
+        if (allData!=null) {
+            if (LocaleUtil.isChinese()) {
+                accountTag=allData.getAccountTag();
+            }else{
+                accountTag=allData.getAccountTagEn();
+            }
         }
+
         args.putString(ConstantsType.ACCOUNT_TAG,accountTag);
 
         BPNodeDetailFragment bpNodeShareFragment = new BPNodeDetailFragment();

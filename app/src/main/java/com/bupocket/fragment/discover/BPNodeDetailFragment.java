@@ -86,6 +86,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
     private SuperNodeModel itemData;
     private String metaData;
     private String accountTag;
+    public final static String CSS_STYLE ="<style>* {font-size:13px;line-height:20px;}p {color:#666666;}</style>";
 
     @Override
     protected int getLayoutView() {
@@ -478,7 +479,8 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
                         }
 
                         nodeInfoTv.setText(slogan);
-                        webView.loadDataWithBaseURL(null, introduce, "text/html", "utf-8", null);
+
+                        webView.loadDataWithBaseURL(null, CSS_STYLE+introduce, "text/html", "utf-8", null);
 
                         initNodeDataView(nodeData);
                         List<NodeDetailModel.NodeInfoBean.TimelineBean> timeline = data.getNodeInfo().getTimeline();
