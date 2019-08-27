@@ -42,8 +42,9 @@ public interface NodePlanService {
     Call<ApiResult<SuperNodeModel>> getShareData(@Body Map<String,Object> map);
 
     @POST("nodeServer/node/v1/validate/detail")
-    Call<ApiResult<NodeDetailModel>> getNodeDetail(@Body Map<String,Object> map);
+    Call<ApiResult<NodeDetailModel>> getNodeValidateDetail(@Body Map<String,Object> map);
 
-
+    @POST("nodeServer/node/v1/ecology/detail")
+    Call<ApiResult<NodeDetailModel>> getNodeEcologyDetail(@Body Map<String,Object> map);
 
 }

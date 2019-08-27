@@ -1,17 +1,8 @@
 package com.bupocket.fragment.discover;
 
 import android.annotation.SuppressLint;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.FileProvider;
-import android.text.Html;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
@@ -24,9 +15,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.Target;
 import com.bupocket.R;
-import com.bupocket.base.AbsBaseFragment;
 import com.bupocket.base.BaseTransferFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
@@ -37,13 +26,10 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.model.NodeDetailModel;
-import com.bupocket.model.ShareUrlModel;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LocaleUtil;
-import com.bupocket.utils.LogUtils;
-import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.TimeUtil;
 import com.bupocket.utils.ToastUtil;
@@ -52,25 +38,14 @@ import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
-import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
-import org.intellij.lang.annotations.Language;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
-import gdut.bsx.share2.Share2;
-import gdut.bsx.share2.ShareContentType;
 import io.bumo.model.response.TransactionBuildBlobResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -95,6 +70,8 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
     LinearLayout nodeDetailStateLL;
     @BindView(R.id.nodeRevokeBtn)
     Button nodeRevokeBtn;
+    @BindView(R.id.nodeInfoTv)
+    TextView nodeInfoTv;
 
 
     private QMUIPopup nodeMorePop;
@@ -334,7 +311,18 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         HashMap<String, Object> map = new HashMap<>();
         map.put("nodeId", itemData.getNodeId());
         NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
-        nodePlanService.getNodeDetail(map).enqueue(new Callback<ApiResult<NodeDetailModel>>() {
+        Call<ApiResult<NodeDetailModel>> nodeValidateDetail = null;
+
+        String identityType = itemData.getIdentityType();
+        if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(identityType)) {
+            nodeValidateDetail = nodePlanService.getNodeValidateDetail(map);
+
+        } else if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(identityType)) {
+            nodeValidateDetail = nodePlanService.getNodeEcologyDetail(map);
+        }
+
+
+        nodeValidateDetail.enqueue(new Callback<ApiResult<NodeDetailModel>>() {
             @Override
             public void onResponse(Call<ApiResult<NodeDetailModel>> call, Response<ApiResult<NodeDetailModel>> response) {
                 ApiResult<NodeDetailModel> body = response.body();
@@ -342,6 +330,14 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
                     NodeDetailModel data = body.getData();
                     if (data != null) {
                         NodeDetailModel.NodeDataBean nodeData = data.getNodeData();
+                        NodeDetailModel.NodeInfoBean nodeInfo = data.getNodeInfo();
+                        String slogan = nodeInfo.getSlogan();
+                        String introduce = nodeInfo.getIntroduce();
+                        nodeInfoTv.setText(slogan);
+
+
+
+
                         initNodeDataView(nodeData);
                         List<NodeDetailModel.NodeInfoBean.TimelineBean> timeline = data.getNodeInfo().getTimeline();
                         initNodeLineView(timeline);
