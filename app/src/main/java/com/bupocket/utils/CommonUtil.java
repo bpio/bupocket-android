@@ -759,6 +759,18 @@ public class CommonUtil {
         return format;
     }
 
+    public static String formatDecimalDouble(String num) {
+        String format = "";
+        try {
+            Double num1 = Double.parseDouble(num);
+            DecimalFormat decimalFormat = new DecimalFormat("#,##.00000000");
+            format = decimalFormat.format(num1);
+        } catch (Exception e) {
+            return "0";
+        }
+        return format;
+    }
+
     public static boolean goWeChat(Context context, String appid, String username) {
 
         IWXAPI api = WXAPIFactory.createWXAPI(context, WeChat_APPID);

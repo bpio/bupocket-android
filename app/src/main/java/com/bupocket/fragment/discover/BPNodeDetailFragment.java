@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.FileProvider;
 import android.text.Html;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,8 +36,10 @@ import com.bupocket.model.NodeDetailModel;
 import com.bupocket.model.ShareUrlModel;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.QRCodeUtil;
 import com.bupocket.utils.ThreadManager;
+import com.bupocket.utils.TimeUtil;
 import com.bupocket.utils.ToastUtil;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -114,26 +117,26 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
         getUrlData();
 
 
-        setNodeDataView();
-
-        setNodeStateView();
+//        setNodeDataView();
+//
+//        setNodeStateView();
 
     }
 
     private void setNodeStateView() {
-        addNodeStateItem("12-01", "18:00", "100,000,000", false, true, false);
-        addNodeStateItem("12-01", "18:00", "100,000,000", true, false, false);
-        for (int i = 0; i < 5; i++) {
-            addNodeStateItem("12-01", "18:00", "100,000,000");
-        }
-        addNodeStateItem("12-01", "18:00", "100,000,000", false, false, true);
+//        addNodeStateItem("12-01", "18:00", "100,000,000", false, true, false);
+//        addNodeStateItem("12-01", "18:00", "100,000,000", true, false, false);
+//        for (int i = 0; i < 5; i++) {
+//            addNodeStateItem("12-01", "18:00", "100,000,000");
+//        }
+//        addNodeStateItem("12-01", "18:00", "100,000,000", false, false, true);
     }
 
     private void addNodeStateItem(String date, String time, String amount) {
-        addNodeStateItem(date, time, amount, false, false, false);
+        addNodeStateItem(date, time, amount, "", false, false, false);
     }
 
-    private void addNodeStateItem(String date, String time, String amount, boolean isNode, boolean isTop, boolean isBottom) {
+    private void addNodeStateItem(String date, String time, String amount, String title, boolean isNode, boolean isTop, boolean isBottom) {
         RelativeLayout nodeDataLL = (RelativeLayout) LayoutInflater.from(mContext).inflate(R.layout.view_node_state_item, null, false);
 
         TextView stateTimeTv = (TextView) nodeDataLL.findViewById(R.id.stateTimeTv);
@@ -144,7 +147,8 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
         TextView stateDateTv = (TextView) nodeDataLL.findViewById(R.id.stateDateTv);
         stateDateTv.setText(date);
         TextView stateDetailNodeTv = (TextView) nodeDataLL.findViewById(R.id.stateDetailNodeTv);
-        stateDetailNodeTv.setText(date);
+
+
 
         ImageView stateTagIV = (ImageView) nodeDataLL.findViewById(R.id.stateTagIV);
         ImageView stateTagGreenIV = (ImageView) nodeDataLL.findViewById(R.id.stateTagGreenIV);
@@ -152,6 +156,12 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
         if (isNode) {
             stateTagGreenIV.setVisibility(View.VISIBLE);
             stateDetailNodeTv.setVisibility(View.VISIBLE);
+            if (!TextUtils.isEmpty(title)) {
+                stateDetailNodeTv.setText(title);
+            }
+        }else{
+            stateTagGreenIV.setVisibility(View.GONE);
+            stateDetailNodeTv.setVisibility(View.GONE);
         }
 
         View lineBottom = nodeDataLL.findViewById(R.id.stateLineBottomView);
@@ -175,7 +185,6 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
 
 
     }
-
 
 
     private void addNodeItemData(int title, String amount) {
@@ -229,7 +238,7 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
                 ApiResult<NodeDetailModel> body = response.body();
                 if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
                     NodeDetailModel data = body.getData();
-                    if (data!=null) {
+                    if (data != null) {
                         NodeDetailModel.NodeDataBean nodeData = data.getNodeData();
                         initNodeDataView(nodeData);
                         List<NodeDetailModel.NodeInfoBean.TimelineBean> timeline = data.getNodeInfo().getTimeline();
@@ -254,27 +263,58 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
 
     private void initNodeLineView(List<NodeDetailModel.NodeInfoBean.TimelineBean> timeline) {
 
+
+        for (int i = 0; i < timeline.size(); i++) {
+            String title = "";
+            boolean isNode = false;
+            boolean isTop = false;
+            boolean isBottom = false;
+
+            NodeDetailModel.NodeInfoBean.TimelineBean timelineBean = timeline.get(i);
+            long createTime = timelineBean.getCreateTime();
+            String date = TimeUtil.timeStamp2Date(createTime + "", "MM-dd");
+            String time = TimeUtil.timeStamp2Date(createTime + "", "HH:mm");
+
+            String content = timelineBean.getContent();
+            String type = timelineBean.getType();
+            if (i == 0) {
+                isTop = true;
+            }
+            if (i == timeline.size() - 1) {
+                isBottom = true;
+            }
+            if (!TextUtils.isEmpty(type)&&type.equals("1")) {
+                isNode = true;
+                title = timelineBean.getTitle();
+            }
+            addNodeStateItem(date, time, content,title, isNode, isTop, isBottom);
+
+        }
     }
 
     private void initNodeDataView(NodeDetailModel.NodeDataBean nodeData) {
 
-        addNodeItemData(R.string.node_equity_value,nodeData.getEquityValue());
-        addNodeItemData(R.string.node_deposit, nodeData.getDeposit());
-        addNodeItemData(R.string.node_total_reward_amount, nodeData.getTotalRewardAmount());
-        addNodeItemData(getResources().getString(R.string.node_ratio), nodeData.getRatio()+"%",true);
+        addNodeItemData(R.string.node_equity_value, CommonUtil.format(nodeData.getEquityValue()));
+        addNodeItemData(R.string.node_deposit, CommonUtil.format(nodeData.getDeposit()));
+
+
+        addNodeItemData(R.string.node_total_reward_amount, CommonUtil.formatDecimalDouble(nodeData.getTotalRewardAmount()));
+
+
+        addNodeItemData(getResources().getString(R.string.node_ratio), nodeData.getRatio() + "%", true);
 
         String totalVoteCount = nodeData.getTotalVoteCount();
-        int haveVote=R.string.number_have_votes;
+        int haveVote = R.string.number_have_votes;
         if (!CommonUtil.isSingle(totalVoteCount)) {
-            haveVote=R.string.number_have_votes_s;
+            haveVote = R.string.number_have_votes_s;
         }
         addNodeItemData(haveVote, totalVoteCount);
 
 
         String totalVoteCount1 = nodeData.getTotalVoteCount();
-        int myVote=R.string.my_votes_number;
+        int myVote = R.string.my_votes_number;
         if (!CommonUtil.isSingle(totalVoteCount1)) {
-            myVote=R.string.my_votes_number_s;
+            myVote = R.string.my_votes_number_s;
         }
         addNodeItemData(myVote, totalVoteCount1);
 
@@ -558,4 +598,5 @@ public class BPNodeDetailFragment extends AbsBaseFragment {
         fragment.setArguments(args1);
         startFragment(fragment);
     }
+
 }
