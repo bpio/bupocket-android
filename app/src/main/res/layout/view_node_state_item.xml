@@ -59,14 +59,13 @@
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/stateTagGreenIV"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:layout_marginLeft="13dp"
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:layout_marginLeft="11dp"
         android:layout_marginTop="7dp"
         android:layout_toRightOf="@+id/stateDateTv"
         android:src="@mipmap/ic_node_state"
-        android:visibility="gone"
-        app:riv_oval="true" />
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/stateDetailNodeTv"
