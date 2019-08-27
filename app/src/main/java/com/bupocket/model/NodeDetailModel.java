@@ -74,6 +74,16 @@ public class NodeDetailModel {
         private String budgetaryCost;
         private String contributionPromise;
         private String order;
+        private String applyIntroduce;
+
+        public String getApplyIntroduce() {
+            return applyIntroduce;
+        }
+
+        public void setApplyIntroduce(String applyIntroduce) {
+            this.applyIntroduce = applyIntroduce;
+        }
+
         private List<TimelineBean> timeline;
 
         public String getNodeId() {

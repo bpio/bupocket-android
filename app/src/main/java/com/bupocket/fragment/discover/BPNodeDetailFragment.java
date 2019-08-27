@@ -308,12 +308,12 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
     }
 
     private void getNodeDetailData() {
-        HashMap<String, Object> map = new HashMap<>();
+        final HashMap<String, Object> map = new HashMap<>();
         map.put("nodeId", itemData.getNodeId());
-        NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
+        final NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
         Call<ApiResult<NodeDetailModel>> nodeValidateDetail = null;
 
-        String identityType = itemData.getIdentityType();
+        final String identityType = itemData.getIdentityType();
         if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(identityType)) {
             nodeValidateDetail = nodePlanService.getNodeValidateDetail(map);
 
@@ -333,8 +333,12 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
                         NodeDetailModel.NodeInfoBean nodeInfo = data.getNodeInfo();
                         String slogan = nodeInfo.getSlogan();
                         String introduce = nodeInfo.getIntroduce();
-                        nodeInfoTv.setText(slogan);
+                        if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(identityType)) {
+                            introduce = nodeInfo.getApplyIntroduce();
+                        }
 
+                        nodeInfoTv.setText(slogan);
+                        webView.loadDataWithBaseURL(null, introduce, "text/html", "utf-8", null);
 
 
 
@@ -416,12 +420,12 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         addNodeItemData(haveVote, totalVoteCount);
 
 
-//        String totalVoteCount1 = nodeData.getTotalVoteCount();
-//        int myVote = R.string.my_votes_number;
-//        if (!CommonUtil.isSingle(totalVoteCount1)) {
-//            myVote = R.string.my_votes_number_s;
-//        }
-//        addNodeItemData(myVote, totalVoteCount1);
+        String totalVoteCount1 = itemData.getMyVoteCount();
+        int myVote = R.string.my_votes_number;
+        if (!CommonUtil.isSingle(totalVoteCount1)) {
+            myVote = R.string.my_votes_number_s;
+        }
+        addNodeItemData(myVote, totalVoteCount1);
 
     }
 
