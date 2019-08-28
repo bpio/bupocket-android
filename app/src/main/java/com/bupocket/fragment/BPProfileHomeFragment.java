@@ -270,30 +270,23 @@ public class BPProfileHomeFragment extends BaseFragment {
         } else if (isStart == CustomNodeTypeEnum.START.getServiceType()) {
             nodeSettingRl.setVisibility(View.GONE);
         }
-
-
+        queryBindState();
+        CommonUtil.setHeadIvRes(identityAddress, identityHeadRiv, spHelper);
     }
 
 
     private void isWeChatBind() {
+
         String bindState = (String) spHelper.getSharedPreference(ConstantsType.BIND_WECHAT_STATE, "");
-        queryBindState();
-        LogUtils.e("bindState:"+bindState);
-        if (TextUtils.isEmpty(bindState)) {//unbind
-            CommonUtil.setHeadIvRes(identityAddress, identityHeadRiv, spHelper);
-        }  else if (bindState.equals(WXBindEnum.UNBIND_WECHAT.getCode())){//bind
-            CommonUtil.setHeadIvRes(identityAddress, identityHeadRiv, spHelper);
-        } else if (bindState.equals(WXBindEnum.BIND_WECHAT.getCode())){//bind
+        if (bindState.equals(WXBindEnum.BIND_WECHAT.getCode())) {//bind
             setWechatInfo();
         }
-
-
-
-
 
     }
 
     private void setWechatInfo() {
+
+
         String wxHeadImgUrl = (String) spHelper.getSharedPreference(ConstantsType.WX_HEAD_IMG_URL, "");
         if (!wxHeadImgUrl.isEmpty()) {
             Glide.with(mContext)
@@ -314,7 +307,7 @@ public class BPProfileHomeFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ApiResult<UserInfoModel>> call, Response<ApiResult<UserInfoModel>> response) {
                 ApiResult<UserInfoModel> body = response.body();
-                if (body==null) {
+                if (body == null) {
                     return;
                 }
 
@@ -323,15 +316,11 @@ public class BPProfileHomeFragment extends BaseFragment {
                     String isBindWx = data.getIsBindWx();
                     if (WXBindEnum.BIND_WECHAT.getCode().equals(isBindWx)) {
 
-                        String wxHeadImgUrl = data.getWxInfo().getWxHeadImgUrl();
+                        String wxHeadImgUrl = data.getWxInfo().getHeadImgUrl();
                         if (!TextUtils.isEmpty(wxHeadImgUrl)) {
                             spHelper.put(ConstantsType.WX_HEAD_IMG_URL, wxHeadImgUrl);
                         }
-
-
                         spHelper.put(ConstantsType.BIND_WECHAT_STATE, isBindWx);
-
-
                         setWechatInfo();
 
                     } else if (WXBindEnum.UNBIND_WECHAT.getCode().equals(isBindWx)) {

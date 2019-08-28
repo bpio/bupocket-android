@@ -7,32 +7,23 @@ import java.util.List;
 
 public class WeChatInfoModel {
 
-    private String wxNick;
-    private String wxHeadImgUrl;
-    private String isBindWx;
+    private String nick;
+    private String headImgUrl;
 
 
-    public String getIsBindWx() {
-        return isBindWx;
+    public String getNick() {
+        return nick;
     }
 
-    public void setIsBindWx(String isBindWx) {
-        this.isBindWx = isBindWx;
+    public void setNick(String nick) {
+        this.nick = nick;
     }
 
-    public String getWxNick() {
-        return wxNick;
+    public String getHeadImgUrl() {
+        return headImgUrl;
     }
 
-    public void setWxNick(String wxNick) {
-        this.wxNick = wxNick;
-    }
-
-    public String getWxHeadImgUrl() {
-        return wxHeadImgUrl;
-    }
-
-    public void setWxHeadImgUrl(String wxHeadImgUrl) {
-        this.wxHeadImgUrl = wxHeadImgUrl;
+    public void setHeadImgUrl(String headImgUrl) {
+        this.headImgUrl = headImgUrl;
     }
 }

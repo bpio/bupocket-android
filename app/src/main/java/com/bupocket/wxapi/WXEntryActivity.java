@@ -16,6 +16,7 @@ import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.WeChatService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.model.WeChatInfoModel;
+import com.bupocket.model.WeChatModel;
 import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ToastUtil;
@@ -106,10 +107,10 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         HashMap<String, Object> map1 = new HashMap<>();
         map1.put("wxCode",code);
         map1.put("identityAddress", identityAddress);
-        weChatService.bindWeChat(map1).enqueue(new Callback<ApiResult<WeChatInfoModel>>() {
+        weChatService.bindWeChat(map1).enqueue(new Callback<ApiResult<WeChatModel>>() {
             @Override
-            public void onResponse(Call<ApiResult<WeChatInfoModel>> call, Response<ApiResult<WeChatInfoModel>> response) {
-                ApiResult<WeChatInfoModel> body = response.body();
+            public void onResponse(Call<ApiResult<WeChatModel>> call, Response<ApiResult<WeChatModel>> response) {
+                ApiResult<WeChatModel> body = response.body();
 
                 if (body==null) {
                     return;
@@ -140,7 +141,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             }
 
             @Override
-            public void onFailure(Call<ApiResult<WeChatInfoModel>> call, Throwable t) {
+            public void onFailure(Call<ApiResult<WeChatModel>> call, Throwable t) {
 
             }
         });
