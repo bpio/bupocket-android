@@ -25,8 +25,10 @@ import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+
 import java.util.HashMap;
 import java.util.Map;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -57,8 +59,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             case BaseResp.ErrCode.ERR_OK:
                 switch (resp.getType()) {
                     case RETURN_MSG_TYPE_LOGIN:
-                        SendAuth.Resp resp1=((SendAuth.Resp) resp);
-                        LogUtils.e("wx:"+resp1.code+"\n"+resp1.url+"\n"+resp1.country+"\n"+resp1.lang);
+                        SendAuth.Resp resp1 = ((SendAuth.Resp) resp);
+                        LogUtils.e("wx:" + resp1.code + "\n" + resp1.url + "\n" + resp1.country + "\n" + resp1.lang);
 
                         String code = ((SendAuth.Resp) resp).code;
                         String state = ((SendAuth.Resp) resp).state;
@@ -84,9 +86,9 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
             case BaseResp.ErrCode.ERR_AUTH_DENIED:
             case BaseResp.ErrCode.ERR_USER_CANCEL:
-                default:
+            default:
                 if (RETURN_MSG_TYPE_LOGIN == resp.getType()) {
-                  ToastUtil.showToast(WXEntryActivity.this, R.string.bind_wechat_error,Toast.LENGTH_SHORT);
+                    ToastUtil.showToast(WXEntryActivity.this, R.string.bind_wechat_error, Toast.LENGTH_SHORT);
                 }
                 break;
         }
@@ -105,39 +107,32 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
         WeChatService weChatService = RetrofitFactory.getInstance().getRetrofit().create(WeChatService.class);
         HashMap<String, Object> map1 = new HashMap<>();
-        map1.put("wxCode",code);
+        map1.put("wxCode", code);
         map1.put("identityAddress", identityAddress);
         weChatService.bindWeChat(map1).enqueue(new Callback<ApiResult<WeChatModel>>() {
             @Override
             public void onResponse(Call<ApiResult<WeChatModel>> call, Response<ApiResult<WeChatModel>> response) {
                 ApiResult<WeChatModel> body = response.body();
 
-                if (body==null) {
+                if (body == null) {
                     return;
                 }
 
                 if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
                     String wxHeadImgUrl = body.getData().getWxHeadImgUrl();
                     spHelper.put(ConstantsType.BIND_WECHAT_STATE, WXBindEnum.BIND_WECHAT.getCode());
-                    spHelper.put(ConstantsType.WX_HEAD_IMG_URL,wxHeadImgUrl);
-                }else if (ExceptionEnum.ERROR_IDENTITY_BIND.getCode().equals(body.getErrCode())){
-
-                        ToastUtil.showToast(WXEntryActivity.this,getString(R.string.error_identity_bind),Toast.LENGTH_SHORT);
-
-                }else if (ExceptionEnum.ERROR_WE_CHAT_BIND.getCode().equals(body.getErrCode())){
-
-                    ToastUtil.showToast(WXEntryActivity.this,getString(R.string.error_we_chat_bind),Toast.LENGTH_SHORT);
-
-                }
-
-                else{
+                    spHelper.put(ConstantsType.WX_HEAD_IMG_URL, wxHeadImgUrl);
+                    ToastUtil.showToast(WXEntryActivity.this, R.string.wechat_bind_success, Toast.LENGTH_SHORT);
+                } else if (ExceptionEnum.ERROR_IDENTITY_BIND.getCode().equals(body.getErrCode())) {
+                    ToastUtil.showToast(WXEntryActivity.this, getString(R.string.error_identity_bind), Toast.LENGTH_SHORT);
+                } else if (ExceptionEnum.ERROR_WE_CHAT_BIND.getCode().equals(body.getErrCode())) {
+                    ToastUtil.showToast(WXEntryActivity.this, getString(R.string.error_we_chat_bind), Toast.LENGTH_SHORT);
+                } else {
                     String msg = body.getMsg();
                     if (!TextUtils.isEmpty(msg)) {
-                        ToastUtil.showToast(WXEntryActivity.this,msg,Toast.LENGTH_SHORT);
+                        ToastUtil.showToast(WXEntryActivity.this, msg, Toast.LENGTH_SHORT);
                     }
                 }
-
-
             }
 
             @Override
@@ -205,10 +200,11 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 //            }
 //        });
     }
+
     //绑定完微信进行做任务
     private void doTaskHttp() {
         Map<String, String> map = new HashMap<>();
-        map.put("taskId", 1007+"" );
+        map.put("taskId", 1007 + "");
 //        new HttpHelper(this).post("techApi/user/verify/v1/doTheTask", map, null, false, false).result(new HttpListener() {
 //            @Override
 //            public void success(String data) {
