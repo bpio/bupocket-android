@@ -869,4 +869,6 @@
     <string name="node_ratio_dialog">当前节点自定义设置对投票用户的奖励分享比例，按照投票用户的票数权重进行分配</string>
 
     <string name="comfirm_vote">确认投票</string>
+
+    <string name="node_confirm_detail">投票给\"%1$s\"%2$s票"</string>
 </resources>

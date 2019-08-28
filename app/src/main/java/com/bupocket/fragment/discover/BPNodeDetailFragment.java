@@ -406,9 +406,9 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         String destAddress = Constants.CONTRACT_ADDRESS;
         String transactionAmount = amount;
         double scanTxFee = Constants.NODE_COMMON_FEE;
-        String transactionDetail = "";
+        String transactionDetail = String.format(getString(R.string.node_confirm_detail),itemData.getNodeName(),amount);
         String nodeType = "validator";
-        String accountTag = "";
+        String accountTag = this.accountTag;
         if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(itemData.getIdentityType())) {
             nodeType = "kol";
         }
@@ -420,6 +420,8 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         getQRContentDto.setDestAddress(destAddress);
         getQRContentDto.setScript(transactionParams);
         getQRContentDto.setFee(scanTxFee);
+        getQRContentDto.setAccountTag(accountTag);
+        getQRContentDto.setQrRemark(transactionDetail);
         TransferUtils.confirmTxSheet(mContext, getWalletAddress(), destAddress,
                 accountTag, transactionAmount, scanTxFee,
                 transactionDetail, transactionParams, new TransferUtils.TransferListener() {
@@ -438,7 +440,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
             public void run() {
                 try {
 
-                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(getQRContentDto.getAmount(), getQRContentDto.getScript(), getWalletAddress(), String.valueOf(getQRContentDto.getFee()), getQRContentDto.getDestAddress(), "");
+                    final TransactionBuildBlobResponse transBlob = Wallet.getInstance().buildBlob(getQRContentDto.getAmount(), getQRContentDto.getScript(), getWalletAddress(), String.valueOf(getQRContentDto.getFee()), getQRContentDto.getDestAddress(), getQRContentDto.getQrRemark());
                     final String hash = transBlob.getResult().getHash();
                     if (TextUtils.isEmpty(hash)) {
 
