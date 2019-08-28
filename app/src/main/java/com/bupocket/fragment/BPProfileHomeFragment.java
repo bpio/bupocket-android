@@ -353,19 +353,20 @@ public class BPProfileHomeFragment extends BaseFragment {
 
     private void bindWeChat() {
 
+        SendAuth.Req req = new SendAuth.Req();
+        req.scope = ConstantsType.WX_SCOPE;
+        req.state = ConstantsType.WX_STATE;
+        mApplication.getWxApi().sendReq(req);
 
-        DialogUtils.showConfirmNoTitleDialog(mContext,
-                getString(R.string.dialog_bind_wx_info),
-                getString(R.string.wachat_bind),
-                new DialogUtils.KnowListener() {
-                    @Override
-                    public void Know() {
-                        SendAuth.Req req = new SendAuth.Req();
-                        req.scope = ConstantsType.WX_SCOPE;
-                        req.state = ConstantsType.WX_STATE;
-                        mApplication.getWxApi().sendReq(req);
-                    }
-                });
+//        DialogUtils.showConfirmNoTitleDialog(mContext,
+//                getString(R.string.dialog_bind_wx_info),
+//                getString(R.string.wachat_bind),
+//                new DialogUtils.KnowListener() {
+//                    @Override
+//                    public void Know() {
+//
+//                    }
+//                });
 
 
     }
