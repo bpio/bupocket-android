@@ -293,12 +293,6 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
     }
 
     private void goNodeDetail(SuperNodeModel superNodeModel) {
-//        String status = superNodeModel.getStatus();
-//        if (SuperNodeStatusEnum.RUNNING.getCode().equals(status)) {
-//            DialogUtils.showMessageNoTitleDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
-//        } else if (SuperNodeStatusEnum.FAILED.getCode().equals(status)) {
-//            DialogUtils.showMessageNoTitleDialog(mContext, String.format(getString(R.string.super_status_info), getString(SuperNodeStatusEnum.FAILED.getNameRes())));
-//        } else {
         Bundle args = new Bundle();
         args.putSerializable("itemInfo", superNodeModel);
         String accountTag = "";
@@ -309,8 +303,9 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
                 accountTag=allData.getAccountTagEn();
             }
         }
-
-        args.putString(ConstantsType.ACCOUNT_TAG,accountTag);
+        if (!TextUtils.isEmpty(accountTag)) {
+            args.putString(ConstantsType.ACCOUNT_TAG,accountTag);
+        }
 
         BPNodeDetailFragment bpNodeShareFragment = new BPNodeDetailFragment();
         bpNodeShareFragment.setArguments(args);

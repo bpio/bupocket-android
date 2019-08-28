@@ -24,6 +24,7 @@ import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.enums.SuperNodeTypeEnum;
+import com.bupocket.enums.TokenTypeEnum;
 import com.bupocket.http.api.NodeBuildService;
 import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
@@ -86,7 +87,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
     private SuperNodeModel itemData;
     private String metaData;
     private String accountTag;
-    public final static String CSS_STYLE ="<style>* {font-size:13px;line-height:20px;}p {color:#666666;}</style>";
+    public final static String CSS_STYLE = "<style>* {font-size:13px;line-height:20px;}p {color:#666666;}</style>";
 
     @Override
     protected int getLayoutView() {
@@ -231,7 +232,6 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
     }
 
 
-
     private void addNodeStateItem(String date, String time, String amount, String title, boolean isNode, boolean isTop, boolean isBottom) {
         RelativeLayout nodeDataLL = (RelativeLayout) LayoutInflater.from(mContext).inflate(R.layout.view_node_state_item, null, false);
 
@@ -290,7 +290,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         nodeDataIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogUtils.showInformationDialog(getString(R.string.node_ratio_dialog),mContext,v);
+                DialogUtils.showInformationDialog(getString(R.string.node_ratio_dialog), mContext, v);
             }
         });
         TextView nodeAmountTv = (TextView) nodeDataLL.findViewById(R.id.nodeDataItemAmountTv);
@@ -330,6 +330,8 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         supportDialog.setContentView(supportDialog.getLayoutInflater().inflate(R.layout.view_node_detail_vote, null));
         final EditText nodeVoteEt = (EditText) supportDialog.findViewById(R.id.nodeVoteEt);
         final TextView amountTotalTv = (TextView) supportDialog.findViewById(R.id.tvDialogTotalAmount);
+        final View confirmBtn = supportDialog.findViewById(R.id.tvDialogSupport);
+        amountTotalTv.setText("0");
         nodeVoteEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -343,15 +345,30 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (!TextUtils.isEmpty(s.toString())) {
-                    amountTotalTv.setText(CommonUtil.format(s.toString()));
-                } else {
-                    amountTotalTv.setText("0");
+                String amount = s.toString();
+                if (TextUtils.isEmpty(amount)) {
+                    amount="0";
                 }
+
+                if (amount.length()>9) {
+                    confirmBtn.setEnabled(false);
+                    return;
+                }
+
+                amountTotalTv.setText(CommonUtil.format(amount));
+                long amountNum = Long.parseLong(amount);
+                if (amountNum != 0 && amountNum % 10 == 0 && amountNum < Constants.MAX_SEND_AMOUNT) {
+                    confirmBtn.setEnabled(true);
+                } else {
+                    confirmBtn.setEnabled(false);
+                }
+
+
             }
         });
 
-        supportDialog.findViewById(R.id.tvDialogSupport).setOnClickListener(new View.OnClickListener() {
+
+        confirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String amount = nodeVoteEt.getText().toString();
@@ -359,9 +376,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
                     return;
                 }
 
-                supportDialog.dismiss();
-
-                showConfirmSupport(amount);
+                showConfirmSupport(amount, supportDialog);
 
             }
         });
@@ -376,14 +391,24 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         supportDialog.show();
     }
 
-    private void showConfirmSupport(String amount) {
-       final GetQRContentDto getQRContentDto = new GetQRContentDto();
-        String destAddress =  Constants.CONTRACT_ADDRESS;
+    private void showConfirmSupport(String amount, QMUIBottomSheet supportDialog) {
+
+
+        String tokenBalance = spHelper.getSharedPreference(WalletCurrentUtils.getWalletAddress(spHelper) + "tokenBalance", "0").toString();
+        if (Double.parseDouble(tokenBalance) < Double.parseDouble(amount)) {
+            ToastUtil.showToast(getActivity(), getResources().getString(R.string.balance_not_enough), Toast.LENGTH_SHORT);
+            return;
+        }
+
+
+        supportDialog.dismiss();
+        final GetQRContentDto getQRContentDto = new GetQRContentDto();
+        String destAddress = Constants.CONTRACT_ADDRESS;
         String transactionAmount = amount;
         double scanTxFee = Constants.NODE_COMMON_FEE;
         String transactionDetail = "";
         String nodeType = "validator";
-        String accountTag="";
+        String accountTag = "";
         if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(itemData.getIdentityType())) {
             nodeType = "kol";
         }
@@ -483,7 +508,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
 
                         nodeInfoTv.setText(slogan);
 
-                        webView.loadDataWithBaseURL(null, CSS_STYLE+introduce, "text/html", "utf-8", null);
+                        webView.loadDataWithBaseURL(null, CSS_STYLE + introduce, "text/html", "utf-8", null);
 
                         initNodeDataView(nodeData);
                         List<NodeDetailModel.NodeInfoBean.TimelineBean> timeline = data.getNodeInfo().getTimeline();

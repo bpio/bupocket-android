@@ -76,6 +76,8 @@
         android:textColor="@color/app_color_green"
         android:visibility="gone"
         android:textSize="14sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
         tools:text="bumeme" />
 
     <TextView
