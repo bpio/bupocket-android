@@ -842,6 +842,7 @@
 
 
 
+
     <string name="profile_wx_bind">绑定微信</string>
     <string name="wachat_bind">立即绑定</string>
     <string name="wx_is_binding" >已绑定</string>
@@ -874,6 +875,7 @@
 
     <string name="node_state_error">当前节点处于%1$s&quot;状态，暂不支持投票操作</string>
 
-    <string name="error_identity_bind">该身份地址已绑定</string>
+    <string name="error_identity_bind">当前身份地址已被绑定</string>
     <string name="error_we_chat_bind">当前微信已被绑定，请更换</string>
+
 </resources>
