@@ -110,17 +110,30 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             @Override
             public void onResponse(Call<ApiResult<WeChatInfoModel>> call, Response<ApiResult<WeChatInfoModel>> response) {
                 ApiResult<WeChatInfoModel> body = response.body();
+
+                if (body==null) {
+                    return;
+                }
+
                 if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
                     String wxHeadImgUrl = body.getData().getWxHeadImgUrl();
-                    spHelper.put(ConstantsType.BIND_WECHAT_STATE, WXBindEnum.UNBIND_WECHAT.getCode());
+                    spHelper.put(ConstantsType.BIND_WECHAT_STATE, WXBindEnum.BIND_WECHAT.getCode());
                     spHelper.put(ConstantsType.WX_HEAD_IMG_URL,wxHeadImgUrl);
-                }else{
+                }else if (ExceptionEnum.ERROR_IDENTITY_BIND.getCode().equals(body.getErrCode())){
 
+                        ToastUtil.showToast(WXEntryActivity.this,getString(R.string.error_identity_bind),Toast.LENGTH_SHORT);
+
+                }else if (ExceptionEnum.ERROR_WE_CHAT_BIND.getCode().equals(body.getErrCode())){
+
+                    ToastUtil.showToast(WXEntryActivity.this,getString(R.string.error_we_chat_bind),Toast.LENGTH_SHORT);
+
+                }
+
+                else{
                     String msg = body.getMsg();
                     if (!TextUtils.isEmpty(msg)) {
                         ToastUtil.showToast(WXEntryActivity.this,msg,Toast.LENGTH_SHORT);
                     }
-
                 }
 
 

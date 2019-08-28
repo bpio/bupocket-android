@@ -276,11 +276,10 @@ public class BPProfileHomeFragment extends BaseFragment {
 
 
     private void isWeChatBind() {
-
         String bindState = (String) spHelper.getSharedPreference(ConstantsType.BIND_WECHAT_STATE, "");
-
+        queryBindState();
+        LogUtils.e("bindState:"+bindState);
         if (TextUtils.isEmpty(bindState)) {//unbind
-            queryBindState();
             CommonUtil.setHeadIvRes(identityAddress, identityHeadRiv, spHelper);
         }  else if (bindState.equals(WXBindEnum.UNBIND_WECHAT.getCode())){//bind
             CommonUtil.setHeadIvRes(identityAddress, identityHeadRiv, spHelper);

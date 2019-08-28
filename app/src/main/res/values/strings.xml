@@ -873,4 +873,7 @@
     <string name="node_confirm_detail">投票给\"%1$s\"%2$s票"</string>
 
     <string name="node_state_error">当前节点处于%1$s&quot;状态，暂不支持投票操作</string>
+
+    <string name="error_identity_bind">该身份地址已绑定</string>
+    <string name="error_we_chat_bind">当前微信已被绑定，请更换</string>
 </resources>

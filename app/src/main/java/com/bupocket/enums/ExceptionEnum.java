@@ -24,6 +24,8 @@ public enum ExceptionEnum {
     ERROR_RED_PACKET_ALREADY_RECEIVED("100022","already received",0),
     ERROR_RED_PACKET_ALL_ALREADY_RECEIVED("100023","all already received",0),
     ERROR_RED_PACKET_UNBIND_DEVICE("100024","unbind device",0),
+    ERROR_IDENTITY_BIND("100025"," identity not repeat bind wachet ",0),
+    ERROR_WE_CHAT_BIND("100026","This WeChat ID has been bound by another identity address",0),
     ;
     private final String code;
     private final String message;
