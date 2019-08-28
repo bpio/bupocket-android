@@ -231,9 +231,6 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
     }
 
 
-    private void addNodeStateItem(String date, String time, String amount) {
-        addNodeStateItem(date, time, amount, "", false, false, false);
-    }
 
     private void addNodeStateItem(String date, String time, String amount, String title, boolean isNode, boolean isTop, boolean isBottom) {
         RelativeLayout nodeDataLL = (RelativeLayout) LayoutInflater.from(mContext).inflate(R.layout.view_node_state_item, null, false);

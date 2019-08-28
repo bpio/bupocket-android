@@ -36,6 +36,7 @@ public class SuperNodeModelDao extends AbstractDao<SuperNodeModel, String> {
         public final static Property Support = new Property(9, String.class, "support", false, "SUPPORT");
         public final static Property ShareStartTime = new Property(10, String.class, "shareStartTime", false, "SHARE_START_TIME");
         public final static Property Status = new Property(11, String.class, "status", false, "STATUS");
+        public final static Property Slogan = new Property(12, String.class, "slogan", false, "SLOGAN");
     }
 
 
@@ -62,7 +63,8 @@ public class SuperNodeModelDao extends AbstractDao<SuperNodeModel, String> {
                 "\"INTRODUCE\" TEXT," + // 8: introduce
                 "\"SUPPORT\" TEXT," + // 9: support
                 "\"SHARE_START_TIME\" TEXT," + // 10: shareStartTime
-                "\"STATUS\" TEXT);"); // 11: status
+                "\"STATUS\" TEXT," + // 11: status
+                "\"SLOGAN\" TEXT);"); // 12: slogan
     }
 
     /** Drops the underlying database table. */
@@ -134,6 +136,11 @@ public class SuperNodeModelDao extends AbstractDao<SuperNodeModel, String> {
         if (status != null) {
             stmt.bindString(12, status);
         }
+ 
+        String slogan = entity.getSlogan();
+        if (slogan != null) {
+            stmt.bindString(13, slogan);
+        }
     }
 
     @Override
@@ -199,6 +206,11 @@ public class SuperNodeModelDao extends AbstractDao<SuperNodeModel, String> {
         if (status != null) {
             stmt.bindString(12, status);
         }
+ 
+        String slogan = entity.getSlogan();
+        if (slogan != null) {
+            stmt.bindString(13, slogan);
+        }
     }
 
     @Override
@@ -220,7 +232,8 @@ public class SuperNodeModelDao extends AbstractDao<SuperNodeModel, String> {
             cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // introduce
             cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // support
             cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // shareStartTime
-            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11) // status
+            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // status
+            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12) // slogan
         );
         return entity;
     }
@@ -239,6 +252,7 @@ public class SuperNodeModelDao extends AbstractDao<SuperNodeModel, String> {
         entity.setSupport(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
         entity.setShareStartTime(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
         entity.setStatus(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setSlogan(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
      }
     
     @Override

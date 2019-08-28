@@ -2,6 +2,7 @@ package com.bupocket.adaptor;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -71,7 +72,11 @@ public class NodeCampaignAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
 
         holder.setText(R.id.myVotesNumTv, itemData.getMyVoteCount());
 
-//        holder.setBackgroundResource(R.id.nodeStateTv,);
+        String slogan = itemData.getSlogan();
+        if (!TextUtils.isEmpty(slogan)) {
+            holder.setText(R.id.nodeIntroduceTv,slogan);
+        }
+
 
     }
 

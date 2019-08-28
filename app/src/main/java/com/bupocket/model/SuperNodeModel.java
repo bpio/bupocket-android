@@ -27,14 +27,22 @@ public class SuperNodeModel implements Serializable {
     private String support;
     private String shareStartTime;
     private String status;
+    private String  slogan;
 
 
+    public String getSlogan() {
+        return slogan;
+    }
 
-    @Generated(hash = 1858321937)
+    public void setSlogan(String slogan) {
+        this.slogan = slogan;
+    }
+
+    @Generated(hash = 1512769805)
     public SuperNodeModel(String nodeId, String nodeName, String nodeLogo,
             String nodeCapitalAddress, String identityType, String identityStatus,
             String nodeVote, String myVoteCount, String introduce, String support,
-            String shareStartTime, String status) {
+            String shareStartTime, String status, String slogan) {
         this.nodeId = nodeId;
         this.nodeName = nodeName;
         this.nodeLogo = nodeLogo;
@@ -47,6 +55,7 @@ public class SuperNodeModel implements Serializable {
         this.support = support;
         this.shareStartTime = shareStartTime;
         this.status = status;
+        this.slogan = slogan;
     }
 
     @Generated(hash = 664471356)
