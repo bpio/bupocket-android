@@ -23,6 +23,7 @@ import com.bupocket.base.BaseTransferFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.ExceptionEnum;
+import com.bupocket.enums.SuperNodeStatusEnum;
 import com.bupocket.enums.SuperNodeTypeEnum;
 import com.bupocket.enums.TokenTypeEnum;
 import com.bupocket.http.api.NodeBuildService;
@@ -320,7 +321,16 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         nodeRevokeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogVoteNode();
+
+                String status = itemData.getStatus();
+                if (SuperNodeStatusEnum.RUNNING.getCode().equals(status)) {
+                    DialogUtils.showMessageNoTitleDialog(mContext, String.format(getString(R.string.node_state_error), getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
+                } else if (SuperNodeStatusEnum.FAILED.getCode().equals(status)) {
+                    DialogUtils.showMessageNoTitleDialog(mContext, String.format(getString(R.string.node_state_error), getString(SuperNodeStatusEnum.FAILED.getNameRes())));
+                } else {
+                    dialogVoteNode();
+                }
+
             }
         });
     }
