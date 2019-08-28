@@ -87,9 +87,10 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             case BaseResp.ErrCode.ERR_AUTH_DENIED:
             case BaseResp.ErrCode.ERR_USER_CANCEL:
             default:
-                if (RETURN_MSG_TYPE_LOGIN == resp.getType()) {
-                    ToastUtil.showToast(WXEntryActivity.this, R.string.bind_wechat_error, Toast.LENGTH_SHORT);
-                }
+
+//                if (RETURN_MSG_TYPE_LOGIN == resp.getType()) {
+//                    ToastUtil.showToast(WXEntryActivity.this, R.string.bind_wechat_error, Toast.LENGTH_SHORT);
+//                }
                 break;
         }
         finish();
