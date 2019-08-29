@@ -832,6 +832,7 @@
     <string name="whether_upgrade_versions">是否更新到版本 %s?</string>
     <string name="new_version_size">新版本大小： </string>
 
+    <!--red packet-->
     <string name="send_token_error">可用资产数量不足</string>
     <string name="save_and_share">保存图片并分享</string>
     <string name="red_success_title">领取成功</string>
@@ -839,42 +840,31 @@
     <string name="save_wallet_1">已存入钱包</string>
 
 
-
-
-
-
+    <!--wechaet bind -->
     <string name="profile_wx_bind">绑定微信</string>
     <string name="wachat_bind">立即绑定</string>
-    <string name="wx_is_binding" >已绑定</string>
+    <string name="wx_is_binding">已绑定</string>
     <string name="dialog_bind_wx_info">需绑定微信后，方可使用此功能。</string>
-    <string name="bind_wechat_error">绑定失败</string>
 
+
+
+    <!--node detail-->
     <string name="node_detail">节点详情</string>
-
     <string name="node_detail_data">节点数据</string>
     <string name="node_detail_state_refresh">状态更新</string>
     <string name="my_node_vote">我要投票</string>
     <string name="vote_record_txt">操作记录</string>
-
-
-    <!--node detail-->
     <string name="node_deposit">竞选保证金(BU)</string>
     <string name="node_equity_value">节点权益值</string>
     <string name="node_total_reward_amount">累计获得奖励(BU)</string>
     <string name="node_ratio">对投票用户奖励分享比例</string>
-
     <string name="node_vote_title">节点投票</string>
     <string name="node_vote_support_min_amount">投票数量（请确认投票数是10的倍数）</string>
-
     <string name="node_vote_input_hint">请输入投票数量</string>
-    <string name="node_ratio_dialog">当前节点自定义设置对投票用户的奖励分享比例，按照投票用户的票数权重进行分配</string>
-
+    <string name="node_ratio_dialog">竞选节点自定义设置对投票用户的奖励比例</string>
     <string name="comfirm_vote">确认投票</string>
-
     <string name="node_confirm_detail">投票给\"%1$s\"%2$s票"</string>
-
     <string name="node_state_error">当前节点处于%1$s&quot;状态，暂不支持投票操作</string>
-
     <string name="error_identity_bind">当前身份地址已被绑定</string>
     <string name="error_we_chat_bind">当前微信已被绑定，请更换</string>
     <string name="wechat_bind_success">微信绑定成功</string>

@@ -328,7 +328,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
 
                 String status = itemData.getStatus();
                 if (SuperNodeStatusEnum.RUNNING.getCode().equals(status)) {
-                    DialogUtils.showMessageNoTitleDialog(mContext, String.format(getString(R.string.node_state_error), getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
+                    DialogUtils.showMessageNoTitleDialog(mContext,String.format(getString(R.string.node_state_error), getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
                 } else if (SuperNodeStatusEnum.FAILED.getCode().equals(status)) {
                     DialogUtils.showMessageNoTitleDialog(mContext, String.format(getString(R.string.node_state_error), getString(SuperNodeStatusEnum.FAILED.getNameRes())));
                 } else {

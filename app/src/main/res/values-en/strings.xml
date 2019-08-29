@@ -843,4 +843,33 @@
     <string name="upgrade">Update</string>
     <string name="whether_upgrade_versions">Whether to update to the new version %s?</string>
     <string name="new_version_size">The size of the new version:  </string>
+
+
+    <!--wechaet bind -->
+    <string name="profile_wx_bind">Bind WeChat</string>
+    <string name="wachat_bind">Bind Now</string>
+    <string name="wx_is_binding">Bound</string>
+    <string name="dialog_bind_wx_info">This function is available after binding WeChat.</string>
+
+
+    <!--node detail-->
+    <string name="node_detail">Node Details</string>
+    <string name="node_detail_data">Node Data</string>
+    <string name="node_detail_state_refresh">Status update</string>
+    <string name="my_node_vote">Vote</string>
+    <string name="vote_record_txt">操作记录</string>
+    <string name="node_deposit">Campaign margin(BU)</string>
+    <string name="node_equity_value">Node equity value</string>
+    <string name="node_total_reward_amount">Accumulated rewards(BU)</string>
+    <string name="node_ratio">Proportion of Rewards to voters</string>
+    <string name="node_vote_title">Node Voting</string>
+    <string name="node_vote_support_min_amount">Number of votes (please ensure that the number of votes is a multiple of 10)</string>
+    <string name="node_vote_input_hint">Please input the number of votes</string>
+    <string name="node_ratio_dialog">Campaign node customizes proportion of rewards to voters</string>
+    <string name="comfirm_vote">Confirm</string>
+    <string name="node_confirm_detail">Vote for\"%1$s\"%2$s"</string>
+    <string name="node_state_error">The current node is %1$s, and is not accessible for vote operation</string>
+    <string name="error_identity_bind">The current identity address has been bound</string>
+    <string name="error_we_chat_bind">The current WeChat has been bound; please change another one</string>
+    <string name="wechat_bind_success">WeChat is bound successfully</string>
 </resources>
