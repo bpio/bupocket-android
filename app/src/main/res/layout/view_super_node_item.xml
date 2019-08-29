@@ -114,6 +114,8 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/app_txt_color_gray"
                     android:textSize="13sp"
+                    android:lines="1"
+                    android:ellipsize="end"
                     tools:text="@string/number_have_votes" />
 
 
