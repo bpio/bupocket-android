@@ -55,7 +55,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     public void onResp(BaseResp resp) {
         Log.d("WXEntryActivity", "错误码 : " + resp.errCode + "");
         switch (resp.errCode) {
-
             case BaseResp.ErrCode.ERR_OK:
                 switch (resp.getType()) {
                     case RETURN_MSG_TYPE_LOGIN:
@@ -69,17 +68,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                              * wechat bind
                              * */
                             doBindWxHttp(resp);
-                        } else {
-                            /*
-                             *wechat login
-                             **/
-                            getAccessToken(code);
                         }
-                        break;
-
-                    case RETURN_MSG_TYPE_SHARE:
-                        Toast.makeText(this, "微信分享成功", Toast.LENGTH_SHORT).show();
-                        finish();
                         break;
                 }
                 break;
@@ -87,17 +76,12 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             case BaseResp.ErrCode.ERR_AUTH_DENIED:
             case BaseResp.ErrCode.ERR_USER_CANCEL:
             default:
-
-//                if (RETURN_MSG_TYPE_LOGIN == resp.getType()) {
-//                    ToastUtil.showToast(WXEntryActivity.this, R.string.bind_wechat_error, Toast.LENGTH_SHORT);
-//                }
+                finish();
                 break;
         }
-        finish();
+
     }
 
-    private void getAccessToken(String code) {
-    }
 
     //绑定微信账号
     private void doBindWxHttp(BaseResp resp) {
@@ -134,11 +118,14 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                         ToastUtil.showToast(WXEntryActivity.this, msg, Toast.LENGTH_SHORT);
                     }
                 }
+
+
+                finish();
             }
 
             @Override
             public void onFailure(Call<ApiResult<WeChatModel>> call, Throwable t) {
-
+                finish();
             }
         });
 

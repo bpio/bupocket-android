@@ -278,6 +278,7 @@ public class BPProfileHomeFragment extends BaseFragment {
     private void isWeChatBind() {
 
         String bindState = (String) spHelper.getSharedPreference(ConstantsType.BIND_WECHAT_STATE, "");
+        LogUtils.e("bindWechat resume");
         if (bindState.equals(WXBindEnum.BIND_WECHAT.getCode())) {//bind
             setWechatInfo();
         }
