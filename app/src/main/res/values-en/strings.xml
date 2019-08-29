@@ -857,7 +857,7 @@
     <string name="node_detail_data">Node Data</string>
     <string name="node_detail_state_refresh">Status update</string>
     <string name="my_node_vote">Vote</string>
-    <string name="vote_record_txt">操作记录</string>
+    <string name="vote_record_txt">Operation History</string>
     <string name="node_deposit">Campaign margin(BU)</string>
     <string name="node_equity_value">Node equity value</string>
     <string name="node_total_reward_amount">Accumulated rewards(BU)</string>
@@ -868,7 +868,7 @@
     <string name="node_ratio_dialog">Campaign node customizes proportion of rewards to voters</string>
     <string name="confirm_vote">Confirm</string>
     <string name="node_confirm_detail">Vote for\"%1$s\"%2$s"</string>
-    <string name="node_state_error">The current node is %1$s, and is not accessible for vote operation</string>
+    <string name="node_state_error">The current node in %1$s status, and is not accessible for vote operation</string>
     <string name="error_identity_bind">The current identity address has been bound</string>
     <string name="error_we_chat_bind">The current WeChat has been bound; please change another one</string>
     <string name="wechat_bind_success">WeChat is bound successfully</string>
