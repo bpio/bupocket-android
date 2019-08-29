@@ -866,7 +866,7 @@
     <string name="node_vote_support_min_amount">Number of votes (please ensure that the number of votes is a multiple of 10)</string>
     <string name="node_vote_input_hint">Please input the number of votes</string>
     <string name="node_ratio_dialog">Campaign node customizes proportion of rewards to voters</string>
-    <string name="comfirm_vote">Confirm</string>
+    <string name="confirm_vote">Confirm</string>
     <string name="node_confirm_detail">Vote for\"%1$s\"%2$s"</string>
     <string name="node_state_error">The current node is %1$s, and is not accessible for vote operation</string>
     <string name="error_identity_bind">The current identity address has been bound</string>
