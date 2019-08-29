@@ -25,6 +25,7 @@ import com.bupocket.base.BaseTransferFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.common.ConstantsType;
 import com.bupocket.database.greendao.SuperNodeModelDao;
+import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.NodePlanService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
@@ -365,17 +366,21 @@ public class BPNodeCampaignFragment extends BaseTransferFragment {
                 if (body == null) {
                     return;
                 }
-                allData = body.getData();
-                nodeList = body.getData().getNodeList();
 
-                insertNodeData(nodeList);
+                if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
+                    allData = body.getData();
+                    nodeList = body.getData().getNodeList();
 
-                myVoteInfoList = myVoteInfoList(nodeList);
+                    insertNodeData(nodeList);
 
-                notifyData();
-                loadFailedLL.setVisibility(View.GONE);
-                refreshLayout.finishRefresh();
-                qmuiEmptyView.show("", "");
+                    myVoteInfoList = myVoteInfoList(nodeList);
+
+                    notifyData();
+                    loadFailedLL.setVisibility(View.GONE);
+                    refreshLayout.finishRefresh();
+                    qmuiEmptyView.show("", "");
+                }
+
             }
 
             @Override
