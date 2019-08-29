@@ -86,7 +86,7 @@ public class Constants {
         //test
 //        WEB_SERVER_DOMAIN("http://192.168.15.43:8080/bu_pocket_api_war/"),
 //        WEB_SERVER_DOMAIN("http://test-bupocket-api.bumocdn.com/"),
-//        // WEB_SERVER_DOMAIN("http://192.168.3.53:8180/"),
+//         WEB_SERVER_DOMAIN("http://192.168.3.53:8180/"),
 //        BUMO_NODE_URL("http://192.168.3.65:36002"),
 
 

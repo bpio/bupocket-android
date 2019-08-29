@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +46,7 @@ import com.bupocket.utils.TransferUtils;
 import com.bupocket.utils.WalletCurrentUtils;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.exception.WalletException;
+import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
 import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
@@ -82,7 +84,10 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
     Button nodeRevokeBtn;
     @BindView(R.id.nodeInfoTv)
     TextView nodeInfoTv;
-
+    @BindView(R.id.emptyView)
+    QMUIEmptyView emptyView;
+    @BindView(R.id.nodeScrollView)
+    ScrollView nodeScrollView;
 
     private QMUIPopup nodeMorePop;
     private SuperNodeModel itemData;
@@ -105,8 +110,6 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
     protected void initData() {
         itemData = (SuperNodeModel) getArguments().getSerializable("itemInfo");
         accountTag = getArguments().getString(ConstantsType.ACCOUNT_TAG);
-        mNodeNameTv.setText(itemData.getNodeName());
-
 
         initHeadView();
         getNodeDetailData();
@@ -301,6 +304,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
     }
 
     private void initHeadView() {
+        mNodeNameTv.setText(itemData.getNodeName());
         // set node type
         if (SuperNodeTypeEnum.VALIDATOR.getCode().equals(itemData.getIdentityType())) {
             mNodeTypeTv.setText(getContext().getResources().getString(R.string.common_node));
@@ -357,10 +361,10 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
             public void afterTextChanged(Editable s) {
                 String amount = s.toString();
                 if (TextUtils.isEmpty(amount)) {
-                    amount="0";
+                    amount = "0";
                 }
 
-                if (amount.length()>9) {
+                if (amount.length() > 9) {
                     confirmBtn.setEnabled(false);
                     return;
                 }
@@ -416,7 +420,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         String destAddress = Constants.CONTRACT_ADDRESS;
         String transactionAmount = amount;
         double scanTxFee = Constants.NODE_COMMON_FEE;
-        String transactionDetail = String.format(getString(R.string.node_confirm_detail),itemData.getNodeName(),amount);
+        String transactionDetail = String.format(getString(R.string.node_confirm_detail), itemData.getNodeName(), amount);
         String nodeType = "validator";
         String accountTag = this.accountTag;
         if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(itemData.getIdentityType())) {
@@ -489,6 +493,9 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
     }
 
     private void getNodeDetailData() {
+        emptyView.show(true);
+        nodeScrollView.setVisibility(View.INVISIBLE);
+        nodeRevokeBtn.setVisibility(View.INVISIBLE);
         final HashMap<String, Object> map = new HashMap<>();
         map.put("nodeId", itemData.getNodeId());
         final NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
@@ -506,8 +513,11 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         nodeValidateDetail.enqueue(new Callback<ApiResult<NodeDetailModel>>() {
             @Override
             public void onResponse(Call<ApiResult<NodeDetailModel>> call, Response<ApiResult<NodeDetailModel>> response) {
+
                 ApiResult<NodeDetailModel> body = response.body();
                 if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
+                    nodeScrollView.setVisibility(View.VISIBLE);
+                    nodeRevokeBtn.setVisibility(View.VISIBLE);
                     NodeDetailModel data = body.getData();
                     if (data != null) {
                         NodeDetailModel.NodeDataBean nodeData = data.getNodeData();
@@ -527,17 +537,18 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
                         initNodeLineView(timeline);
 
                     }
-
-
                 } else {
                     ToastUtil.showToast(getActivity(), body.getMsg(), Toast.LENGTH_SHORT);
                 }
-
+                emptyView.show("", "");
             }
 
             @Override
             public void onFailure(Call<ApiResult<NodeDetailModel>> call, Throwable t) {
+                emptyView.show("","");
 
+                View inflate = LayoutInflater.from(mContext).inflate(R.layout.view_load_failed, null);
+                emptyView.addView(inflate);
             }
         });
 
