@@ -854,7 +854,7 @@
 
     <!--node detail-->
     <string name="node_detail">Node Details</string>
-    <string name="node_detail_data">Node Data</string>
+    <string name="node_detail_data">Node data</string>
     <string name="node_detail_state_refresh">Status update</string>
     <string name="my_node_vote">Vote</string>
     <string name="vote_record_txt">Operation History</string>
