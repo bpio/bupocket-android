@@ -66,7 +66,7 @@ public class BPVoteRecordFragment extends AbsBaseFragment {
     private void initListView() {
         voteRecordAdapter = new VoteRecordAdapter(getContext());
         voteRecordLV.setAdapter(voteRecordAdapter);
-        qmuiEmptyView.show();
+        qmuiEmptyView.show(true);
         refreshLayout.setEnableLoadMore(false);
     }
 
@@ -127,7 +127,7 @@ public class BPVoteRecordFragment extends AbsBaseFragment {
 
                 refreshLayout.finishRefresh();
                 refreshLayout.setNoMoreData(false);
-                qmuiEmptyView.show(null, null);
+                qmuiEmptyView.show("", "");
             }
 
             @Override
@@ -139,7 +139,7 @@ public class BPVoteRecordFragment extends AbsBaseFragment {
                 loadFailedLL.setVisibility(View.VISIBLE);
                 refreshLayout.finishRefresh();
                 refreshLayout.setNoMoreData(false);
-                qmuiEmptyView.show(null, null);
+                qmuiEmptyView.show("", "");
             }
         });
 

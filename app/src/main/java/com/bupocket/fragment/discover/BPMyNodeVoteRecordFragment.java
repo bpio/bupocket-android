@@ -142,7 +142,7 @@ public class BPMyNodeVoteRecordFragment extends AbsBaseFragment {
                 if (refreshLayout!=null) {
                     refreshLayout.finishRefresh();
                 }
-                qmuiEmptyView.show(null, null);
+                qmuiEmptyView.show("", "");
             }
 
             @Override
@@ -160,7 +160,7 @@ public class BPMyNodeVoteRecordFragment extends AbsBaseFragment {
                     refreshLayout.finishRefresh();
                 }
 
-                qmuiEmptyView.show(null, null);
+                qmuiEmptyView.show("", "");
 
             }
         });
@@ -211,7 +211,7 @@ public class BPMyNodeVoteRecordFragment extends AbsBaseFragment {
         voteRecordAdapter = new VoteRecordAdapter(getContext());
         voteRecordAdapter.setAdapterType(VoteRecordAdapter.SOME_RECORD);
         lvVoteRecord.setAdapter(voteRecordAdapter);
-        qmuiEmptyView.show();
+        qmuiEmptyView.show(true);
         refreshLayout.setEnableLoadMore(false);
     }
 
