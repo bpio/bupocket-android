@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:maxWidth="220dp"
+            android:maxWidth="180dp"
             android:textSize="15sp"
             android:textStyle="bold"
             tools:text="一二三四五六七八九十一二三四五一二三四五" />
