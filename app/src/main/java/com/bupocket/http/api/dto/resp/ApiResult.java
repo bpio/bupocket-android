@@ -1,5 +1,7 @@
 package com.bupocket.http.api.dto.resp;
 
+import com.bupocket.enums.ExceptionEnum;
+
 public class ApiResult<T> {
     String errCode;
     String msg;
@@ -27,5 +29,14 @@ public class ApiResult<T> {
 
     public void setData(T data) {
         this.data = data;
+    }
+
+
+
+    public boolean isSuccess(){
+        if (ExceptionEnum.SUCCESS.getCode().equals(errCode)) {
+            return true;
+        }
+        return false;
     }
 }
