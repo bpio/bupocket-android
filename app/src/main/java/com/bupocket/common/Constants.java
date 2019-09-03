@@ -67,7 +67,7 @@ public class Constants {
     public static final String NEWS_URL = "https://m-news.bumo.io/";
 
     public static enum MainNetConfig {
-        WEB_SERVER_DOMAIN("https://api-bp.bumo.io/"),
+        WEB_SERVER_DOMAIN("https://bupocket-api.bumo.io"),
         BUMO_NODE_URL("http://wallet-node.bumo.io"),
         PUSH_MESSAGE_SOCKET_URL("https://ws-tools.bumo.io");
         private String value;
@@ -94,7 +94,7 @@ public class Constants {
 
 
         //test-main
-        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
+        WEB_SERVER_DOMAIN("https://bupocket-api.bumotest.io"),
         BUMO_NODE_URL("http://wallet-node.bumotest.io"),
 
 
