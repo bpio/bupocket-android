@@ -5,7 +5,7 @@ public class Constants {
 
     public static String WEB_SERVER_DOMAIN = MainNetConfig.WEB_SERVER_DOMAIN.getValue();
     public static String BUMO_NODE_URL = MainNetConfig.BUMO_NODE_URL.getValue();
-    public static String BUMO_NODE_URL_BASE=BUMO_NODE_URL;
+    public static String BUMO_NODE_URL_BASE = BUMO_NODE_URL;
     public static String PUSH_MESSAGE_SOCKET_URL = WEB_SERVER_DOMAIN;
 
     public static String IMAGE_PATH = "img_dpos/";
@@ -58,12 +58,12 @@ public class Constants {
 
     public static final String VALIDATE_PATH = "supernodes/detail/validate/";
     public static final String KOL_PATH = "supernodes/detail/kol/";
-    public static final String BUMO_NODE_URL_PATH="/getLedger";
+    public static final String BUMO_NODE_URL_PATH = "/getLedger";
 
-    public static final String BUMO_TIMEOUT_MAIN_URL="https://explorer.bumo.io/";
-    public static final String BUMO_TIMEOUT_TEST_URL="https://explorer.bumotest.io/";
+    public static final String BUMO_TIMEOUT_MAIN_URL = "https://explorer.bumo.io/";
+    public static final String BUMO_TIMEOUT_TEST_URL = "https://explorer.bumotest.io/";
 
-    public static final String GREEN_DAO_NAME="bu_packet.db";
+    public static final String GREEN_DAO_NAME = "bu_packet.db";
     public static final String NEWS_URL = "https://m-news.bumo.io/";
 
     public static enum MainNetConfig {
@@ -84,21 +84,18 @@ public class Constants {
     public static enum TestNetConfig {
 
         //test
-//        WEB_SERVER_DOMAIN("http://192.168.15.43:8080/bu_pocket_api_war/"),
 //        WEB_SERVER_DOMAIN("http://test-bupocket-api.bumocdn.com/"),
-//         WEB_SERVER_DOMAIN("http://192.168.3.53:8180/"),
 //        BUMO_NODE_URL("http://192.168.3.65:36002"),
 
 
         //development
-        WEB_SERVER_DOMAIN("http://dev-bp-api.bumocdn.com/"),
-//      //WEB_SERVER_DOMAIN("http://192.168.10.102:5648/"),
-        BUMO_NODE_URL("http://192.168.21.35:36002"),
+//        WEB_SERVER_DOMAIN("http://dev-bp-api.bumocdn.com/"),
+//        BUMO_NODE_URL("http://dev-wallet-node.bumocdn.com"),
 
 
-//        test-main
-//        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
-//        BUMO_NODE_URL("http://wallet-node.bumotest.io"),
+        //test-main
+        WEB_SERVER_DOMAIN("http://api-bp.bumotest.io/"),
+        BUMO_NODE_URL("http://wallet-node.bumotest.io"),
 
 
         PUSH_MESSAGE_SOCKET_URL("https://ws-tools.bumotest.io");
