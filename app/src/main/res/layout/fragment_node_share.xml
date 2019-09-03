@@ -96,7 +96,9 @@
                     android:id="@+id/wbShare"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:minHeight="50dp"
                     android:layout_marginTop="5dp"
+                    android:layerType="software"
                     android:background="@drawable/shape_corner"
                     android:scrollbars="none" />
 

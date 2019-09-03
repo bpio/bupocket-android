@@ -516,8 +516,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
 
                 ApiResult<NodeDetailModel> body = response.body();
                 if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
-                    nodeScrollView.setVisibility(View.VISIBLE);
-                    nodeRevokeBtn.setVisibility(View.VISIBLE);
+
                     NodeDetailModel data = body.getData();
                     if (data != null) {
                         NodeDetailModel.NodeDataBean nodeData = data.getNodeData();
@@ -535,7 +534,8 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
                         initNodeDataView(nodeData);
                         List<NodeDetailModel.NodeInfoBean.TimelineBean> timeline = data.getNodeInfo().getTimeline();
                         initNodeLineView(timeline);
-
+                        nodeScrollView.setVisibility(View.VISIBLE);
+                        nodeRevokeBtn.setVisibility(View.VISIBLE);
                     }
                 } else {
                     ToastUtil.showToast(getActivity(), body.getMsg(), Toast.LENGTH_SHORT);
