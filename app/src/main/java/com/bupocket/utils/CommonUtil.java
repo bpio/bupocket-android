@@ -763,7 +763,7 @@ public class CommonUtil {
         String format = "";
         try {
             Double num1 = Double.parseDouble(num);
-            DecimalFormat decimalFormat = new DecimalFormat("#,##.00000000");
+            DecimalFormat decimalFormat = new DecimalFormat("#,###.00000000");
             format = decimalFormat.format(num1);
         } catch (Exception e) {
             return "0";

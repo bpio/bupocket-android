@@ -40,6 +40,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //如果没回调onResp，八成是这句没有写
         ((BPApplication) getApplication()).getWxApi().handleIntent(getIntent(), this);
     }
@@ -53,7 +54,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     //app发送消息给微信，处理返回消息的回调
     @Override
     public void onResp(BaseResp resp) {
-        Log.d("WXEntryActivity", "错误码 : " + resp.errCode + "");
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
                 switch (resp.getType()) {
@@ -100,6 +100,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 ApiResult<WeChatModel> body = response.body();
 
                 if (body == null) {
+                    finish();
                     return;
                 }
 
@@ -129,87 +130,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             }
         });
 
-//
-//        FormBody  formBody=new FormBody.Builder()
-//                .add("code",code)
-//                .add("identityAddress", "buQfy8S29vLJ9Xwqg3UqbZXT8WgJcfVZWXKD")
-//                .build();
-//
-//
-//        final OkHttpClient okHttpClient = new OkHttpClient();
-//        final Request request = new Request.Builder()
-//                .url(url)
-//                .post(formBody)
-//                .build();
-//
-//        okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
-//            @Override
-//            public void onFailure(okhttp3.Call call, IOException e) {
-//
-//                LogUtils.e(e.getMessage());
-////                ToastUtil.showToast(getActivity(), R.string.not_use_wallet_service,Toast.LENGTH_LONG);
-//            }
-//
-//            @Override
-//            public void onResponse(okhttp3.Call call, okhttp3.Response response) throws IOException {
-//                String json = response.body().string();
-//                LogUtils.e("response:"+ json);
-//                if (response.code() == 200) {
-//
-//                } else {
-////                    ToastUtil.showToast(getActivity(),R.string.not_use_wallet_service,Toast.LENGTH_LONG);
-//                }
-//
-//            }
-//        });
-
-
-//        Map<String, String> map = new HashMap<>();
-//        map.put("code", code);
-//        new HttpHelper(this).post("/techApi/user/verify/v1/bindWeChat", map, null, false, false).result(new HttpListener() {
-//            @Override
-//            public void success(String data) {
-//                SignEntity signEntity = new Gson().fromJson(data, SignEntity.class);
-//                if (signEntity.getStatus().equals("0000")) {
-//                    Toast.makeText(WXEntryActivity.this, "" + data, Toast.LENGTH_SHORT).show();
-//                    //绑定完微信进行做任务
-//                    doTaskHttp();
-//                    finish();
-//                } else {
-//                    Toast.makeText(WXEntryActivity.this, "绑定失败", Toast.LENGTH_SHORT).show();
-//                    finish();
-//                }
-//
-//            }
-//
-//            @Override
-//            public void fail(String error) {
-//
-//            }
-//        });
     }
 
-    //绑定完微信进行做任务
-    private void doTaskHttp() {
-        Map<String, String> map = new HashMap<>();
-        map.put("taskId", 1007 + "");
-//        new HttpHelper(this).post("techApi/user/verify/v1/doTheTask", map, null, false, false).result(new HttpListener() {
-//            @Override
-//            public void success(String data) {
-//                SignEntity signEntity = new Gson().fromJson(data, SignEntity.class);
-//                String status = signEntity.getStatus();
-//                if (status.equals("0000")) {
-//                    Toast.makeText(WXEntryActivity.this, "做任务成功", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(WXEntryActivity.this, "做任务失败", Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//            @Override
-//            public void fail(String error) {
-//
-//            }
-//        });
-    }
 
 }

@@ -117,6 +117,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
     }
 
     private void reqUpdateData() {
+        newVersionCodeTV.setText(CommonUtil.packageName(mContext));
         VersionService versionService = RetrofitFactory.getInstance().getRetrofit().create(VersionService.class);
         Call<ApiResult<GetCurrentVersionRespDto>> call = versionService.getCurrentVersion(Constants.APP_TYPE_CODE);
         call.enqueue(new retrofit2.Callback<ApiResult<GetCurrentVersionRespDto>>() {
@@ -285,10 +286,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
         System.arraycopy(mHitsCustom, 1, mHitsCustom, 0, mHitsCustom.length - 1);
         mHitsCustom[mHitsCustom.length - 1] = SystemClock.uptimeMillis();
         if (mHitsCustom[0] > SystemClock.uptimeMillis() - DURATION) {
-
-
             SharedPreferencesHelper.getInstance().save(ConstantsType.HIDDEN_CUSTOM_SERVICE, HiddenFunctionStatusEnum.ENABLE.getCode());
-
             customEnvironmentLL.setVisibility(View.VISIBLE);
 
         }

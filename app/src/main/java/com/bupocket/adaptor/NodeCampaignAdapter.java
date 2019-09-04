@@ -40,7 +40,6 @@ public class NodeCampaignAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         String nodeLogo = itemData.getNodeLogo();
         ImageView nodeIconIv = holder.getView(R.id.headIconIv);
         String iconUrl = Constants.NODE_PLAN_IMAGE_URL_PREFIX.concat(nodeLogo);
-        LogUtils.e("iconUrl:"+iconUrl);
         Glide.with(context)
                 .load(iconUrl)
                 .into(nodeIconIv);
