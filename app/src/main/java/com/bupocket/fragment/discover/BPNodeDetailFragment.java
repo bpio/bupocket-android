@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
+import android.text.LoginFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -95,6 +96,8 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
     private String metaData;
     private String accountTag;
     public final static String CSS_STYLE = "<style>* {font-size:13px;line-height:20px;}p {color:#666666;}</style>";
+    private String tokenBalance;
+
 
     @Override
     protected int getLayoutView() {
@@ -111,7 +114,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
     protected void initData() {
         itemData = (SuperNodeModel) getArguments().getSerializable("itemInfo");
         accountTag = getArguments().getString(ConstantsType.ACCOUNT_TAG);
-
+        tokenBalance = spHelper.getSharedPreference(WalletCurrentUtils.getWalletAddress(spHelper) + "tokenBalance", "0").toString();
         initHeadView();
         getNodeDetailData();
     }
@@ -329,7 +332,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
 
                 String status = itemData.getStatus();
                 if (SuperNodeStatusEnum.RUNNING.getCode().equals(status)) {
-                    DialogUtils.showMessageNoTitleDialog(mContext,String.format(getString(R.string.node_state_error), getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
+                    DialogUtils.showMessageNoTitleDialog(mContext, String.format(getString(R.string.node_state_error), getString(SuperNodeStatusEnum.RUNNING.getNameRes())));
                 } else if (SuperNodeStatusEnum.FAILED.getCode().equals(status)) {
                     DialogUtils.showMessageNoTitleDialog(mContext, String.format(getString(R.string.node_state_error), getString(SuperNodeStatusEnum.FAILED.getNameRes())));
                 } else {
@@ -345,10 +348,15 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         supportDialog.setContentView(supportDialog.getLayoutInflater().inflate(R.layout.view_node_detail_vote, null));
         TextView voteNumTv = (TextView) supportDialog.findViewById(R.id.voteNumTv);
         voteNumTv.setText(Html.fromHtml(getString(R.string.node_vote_support_min_amount)));
+        TextView currentName = (TextView) supportDialog.findViewById(R.id.currentName);
+        currentName.setText(WalletCurrentUtils.getWalletName(spHelper));
         final EditText nodeVoteEt = (EditText) supportDialog.findViewById(R.id.nodeVoteEt);
         final TextView amountTotalTv = (TextView) supportDialog.findViewById(R.id.tvDialogTotalAmount);
         final View confirmBtn = supportDialog.findViewById(R.id.tvDialogSupport);
-        amountTotalTv.setText("0");
+        if (!TextUtils.isEmpty(tokenBalance)) {
+            amountTotalTv.setText(tokenBalance+" BU");
+        }
+
         nodeVoteEt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -372,9 +380,8 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
                     return;
                 }
 
-                amountTotalTv.setText(CommonUtil.format(amount));
                 long amountNum = Long.parseLong(amount);
-                if (amountNum != 0 && amountNum % 10 == 0 && amountNum < Constants.MAX_SEND_AMOUNT) {
+                if (amountNum != 0 && amountNum % 10 == 0 && amountNum < Constants.MAX_SEND_AMOUNT&&amountNum< Double.parseDouble(tokenBalance)) {
                     confirmBtn.setEnabled(true);
                 } else {
                     confirmBtn.setEnabled(false);
@@ -410,8 +417,6 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
 
     private void showConfirmSupport(String amount, QMUIBottomSheet supportDialog) {
 
-
-        String tokenBalance = spHelper.getSharedPreference(WalletCurrentUtils.getWalletAddress(spHelper) + "tokenBalance", "0").toString();
         if (Double.parseDouble(tokenBalance) < Double.parseDouble(amount)) {
             ToastUtil.showToast(getActivity(), getResources().getString(R.string.balance_not_enough), Toast.LENGTH_SHORT);
             return;
@@ -495,6 +500,24 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
 
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Runnable getBalanceRunnable = new Runnable() {
+            @Override
+            public void run() {
+                String walletAddress = WalletCurrentUtils.getWalletAddress(spHelper);
+                tokenBalance = Wallet.getInstance().getAccountBUBalance(walletAddress);
+                if (!CommonUtil.isNull(tokenBalance)) {
+                    spHelper.put(walletAddress + "tokenBalance", tokenBalance);
+                }
+            }
+        };
+        ThreadManager.getInstance().execute(getBalanceRunnable);
+    }
+
     private void getNodeDetailData() {
         emptyView.show(true);
         nodeScrollView.setVisibility(View.INVISIBLE);
@@ -548,7 +571,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
 
             @Override
             public void onFailure(Call<ApiResult<NodeDetailModel>> call, Throwable t) {
-                emptyView.show("","");
+                emptyView.show("", "");
 
                 View inflate = LayoutInflater.from(mContext).inflate(R.layout.view_load_failed, null);
                 emptyView.addView(inflate);

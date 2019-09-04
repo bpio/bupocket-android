@@ -96,7 +96,7 @@
     <string name="tx_timeout_err">Transaction timeout</string>
     <string name="send_status_note">Remark</string>
 
-    <string name="send_available_balance_txt">Available balance</string>
+    <string name="send_available_balance_txt">Balance</string>
     <string name="send_form_next_btn_txt">Next</string>
 
     <!-- 异常 -->
@@ -872,4 +872,7 @@
     <string name="error_identity_bind">The current identity address has been bound</string>
     <string name="error_we_chat_bind">The current WeChat has been bound; please change another one</string>
     <string name="wechat_bind_success">WeChat is bound successfully</string>
+
+    <string name="balance">Balance</string>
+    <string name="current_wallet">Current Wallet</string>
 </resources>

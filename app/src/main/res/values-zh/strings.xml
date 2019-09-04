@@ -868,5 +868,8 @@
     <string name="error_identity_bind">当前身份地址已被绑定</string>
     <string name="error_we_chat_bind">当前微信已被绑定，请更换</string>
     <string name="wechat_bind_success">微信绑定成功</string>
+    
+    <string name="balance">可用余额</string>
+    <string name="current_wallet">当前钱包</string>
 
 </resources>
