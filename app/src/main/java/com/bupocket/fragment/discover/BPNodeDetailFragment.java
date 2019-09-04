@@ -3,6 +3,7 @@ package com.bupocket.fragment.discover;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -342,6 +343,8 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
     private void dialogVoteNode() {
         final QMUIBottomSheet supportDialog = new QMUIBottomSheet(getContext());
         supportDialog.setContentView(supportDialog.getLayoutInflater().inflate(R.layout.view_node_detail_vote, null));
+        TextView voteNumTv = (TextView) supportDialog.findViewById(R.id.voteNumTv);
+        voteNumTv.setText(Html.fromHtml(getString(R.string.node_vote_support_min_amount)));
         final EditText nodeVoteEt = (EditText) supportDialog.findViewById(R.id.nodeVoteEt);
         final TextView amountTotalTv = (TextView) supportDialog.findViewById(R.id.tvDialogTotalAmount);
         final View confirmBtn = supportDialog.findViewById(R.id.tvDialogSupport);

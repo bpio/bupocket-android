@@ -863,8 +863,8 @@
     <string name="node_total_reward_amount">Accumulated rewards(BU)</string>
     <string name="node_ratio">Proportion of Rewards to voters</string>
     <string name="node_vote_title">Node Voting</string>
-    <string name="node_vote_support_min_amount">Number of votes (please ensure that the number of votes is a multiple of 10)</string>
-    <string name="node_vote_input_hint">Please input the number of votes</string>
+    <string name="node_vote_support_min_amount">&lt;font color=\'#333333\'>Number of votes&lt;/font> (please ensure that the number of votes is a multiple of 10)</string>
+    <string name="node_vote_input_hint">1BU=1Vote</string>
     <string name="node_ratio_dialog">Campaign node customizes proportion of rewards to voters</string>
     <string name="confirm_vote">Confirm</string>
     <string name="node_confirm_detail">Vote for\"%1$s\"%2$s"</string>
