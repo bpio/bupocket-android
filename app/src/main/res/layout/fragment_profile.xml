@@ -295,7 +295,7 @@
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
 
-                        android:background="@mipmap/icon_profile_item_language" />
+                        android:background="@mipmap/icon_wechat" />
 
                     <TextView
                         style="@style/BPTextViewDiscover"
