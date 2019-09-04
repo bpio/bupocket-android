@@ -264,6 +264,8 @@ public class BPCustomNetFragment extends AbsBaseFragment implements TextWatcher 
         }
 
         startFragment(new HomeFragment());
+
+        mApplication.clearDaoData();
     }
 
     private void changeBtnStatus() {

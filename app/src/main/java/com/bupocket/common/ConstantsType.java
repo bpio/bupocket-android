@@ -57,7 +57,10 @@ public class ConstantsType {
     public static final String WX_STATE = "wechat_sdk_bind";
 
     public static final String IDENTITY_ID = "identityId";
+
+    //wx bind
     public static final String WX_HEAD_IMG_URL = "wxHeadImgUrl";
     public static final String BIND_WECHAT_STATE = "bind_wechat_state";
+
     public static final String ACCOUNT_TAG = "account_tag";
 }

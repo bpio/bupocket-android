@@ -234,6 +234,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
                 spHelper.put("tokenBalance", "");
                 changeTestNetTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_normal));
                 startFragment(new HomeFragment());
+                mApplication.clearDaoData();
             }
         });
 
@@ -251,6 +252,7 @@ public class BPAboutUsFragment extends AbsBaseFragment {
                 spHelper.put("tokenBalance", "");
                 changeTestNetTV.setBackground(getResources().getDrawable(R.mipmap.icon_switch_checked));
                 startFragment(new HomeFragment());
+                mApplication.clearDaoData();
             }
         });
     }

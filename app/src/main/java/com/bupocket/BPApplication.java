@@ -29,6 +29,8 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 import com.umeng.commonsdk.UMConfigure;
 
+import org.apache.commons.collections.functors.ConstantTransformer;
+
 public class BPApplication extends Application {
     @SuppressLint("StaticFieldLeak")
     private static Context context;
@@ -36,6 +38,7 @@ public class BPApplication extends Application {
 
     private DaoSession daoSession;
     private IWXAPI wxapi;
+    SharedPreferencesHelper sharedPreferencesHelper;
 
     public IWXAPI getWxApi() {
         if (wxapi==null){
@@ -62,7 +65,7 @@ public class BPApplication extends Application {
         LocaleUtil.changeAppLanguage(context);
         QMUISwipeBackActivityManager.init(this);
         switchNetConfig(null);
-        SharedPreferencesHelper sharedPreferencesHelper = new SharedPreferencesHelper(context, "buPocket");
+        sharedPreferencesHelper= new SharedPreferencesHelper(context, "buPocket");
         sharedPreferencesHelper.put("backupTipsState", BackupTipsStateEnum.SHOW.getCode());
 
         initCrash();
@@ -162,6 +165,20 @@ public class BPApplication extends Application {
         SQLiteDatabase db = helper.getWritableDatabase();
         DaoMaster daoMaster = new DaoMaster(db);
         daoSession = daoMaster.newSession();
+    }
+
+    public void clearDaoData(){
+
+
+//       clear dao data
+        if (daoSession!=null) {
+            DaoMaster.dropAllTables(daoSession.getDatabase(),true);
+            DaoMaster.createAllTables(daoSession.getDatabase(),true);
+        }
+
+//        wx bind data
+        sharedPreferencesHelper.put(ConstantsType.WX_HEAD_IMG_URL,"");
+        sharedPreferencesHelper.put(ConstantsType.BIND_WECHAT_STATE,"");
     }
 
 
