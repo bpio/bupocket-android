@@ -860,7 +860,7 @@
     <string name="node_ratio">对投票用户奖励分享比例</string>
     <string name="node_vote_title">节点投票</string>
     <string name="node_vote_support_min_amount">&lt;font color=\'#333333\'>投票数量&lt;/font>（请确认投票数是10的倍数）</string>
-    <string name="node_vote_input_hint">1BU=1票</string>
+    <string name="node_vote_input_hint">1 BU = 1 票</string>
     <string name="node_ratio_dialog">竞选节点自定义设置对投票用户的奖励比例</string>
     <string name="confirm_vote">确认投票</string>
     <string name="node_confirm_detail">投票给\"%1$s\"%2$s票"</string>

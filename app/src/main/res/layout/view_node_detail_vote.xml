@@ -83,19 +83,23 @@
             android:layout_marginBottom="12dp">
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="@string/current_wallet"
                 android:textColor="@color/app_color_black"
                 android:textSize="@dimen/common_text_size_13" />
 
             <TextView
                 android:id="@+id/currentName"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="50dp"
+                android:ellipsize="middle"
                 android:layout_height="match_parent"
+                tools:text="currentWallet"
+                android:gravity="right"
                 android:textColor="@color/app_color_black"
-                android:textSize="@dimen/common_text_size_13" />
+                android:textSize="@dimen/common_text_size_13"
+                android:singleLine="true" />
 
         </LinearLayout>
 
@@ -124,7 +128,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="5dp"
                 android:gravity="center_vertical"
-                android:text="0"
+                android:text="0 BU"
                 android:textColor="@color/app_color_green"
                 android:textSize="12sp" />
 

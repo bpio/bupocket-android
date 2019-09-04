@@ -62,9 +62,9 @@
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="4"
-                            android:ellipsize="end"
+                            android:ellipsize="middle"
                             android:gravity="center"
-                            android:lines="1"
+                            android:singleLine="true"
                             android:textColor="@color/app_color_white"
                             android:textSize="18sp"
                             tools:text="有钱的钱包" />
