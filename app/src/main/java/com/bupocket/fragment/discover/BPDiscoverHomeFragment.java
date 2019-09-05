@@ -141,6 +141,11 @@ public class BPDiscoverHomeFragment extends BaseFragment {
                     imageInfoDao.insertInTx(slideshow);
 
                 } else {
+
+                    if (disBannerAdapter.getCount()>0) {
+                        return;
+                    }
+
                     vpDisBanner.setVisibility(View.GONE);
                 }
 

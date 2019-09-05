@@ -1,8 +1,11 @@
 package com.bupocket.activity;
 
+import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
@@ -11,9 +14,11 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+
 import com.bupocket.R;
 import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -32,7 +37,7 @@ public class BPWebActivity extends AppCompatActivity {
 
     private Unbinder bind;
     private String url;
-    private static boolean isNetError=false;
+    private static boolean isNetError = false;
 
     private boolean isSuccess = false;
     private boolean isError = false;
@@ -54,6 +59,7 @@ public class BPWebActivity extends AppCompatActivity {
 
     private void initData() {
         url = getIntent().getExtras().getString("url");
+//        url="http://mp.weixin.qq.com/s/qSnnJyd7gwDAw0suUMA9qg?";
     }
 
     private void initView() {
@@ -78,6 +84,12 @@ public class BPWebActivity extends AppCompatActivity {
             webSettings.setDisplayZoomControls(false);
         }
 
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+        webSettings.setBlockNetworkImage(false);
 
         wvBanner.setWebChromeClient(new WebChromeClient() {
 
@@ -106,18 +118,25 @@ public class BPWebActivity extends AppCompatActivity {
                 super.onReceivedError(view, request, error);
                 isError = true;
                 isSuccess = false;
-                if (wvBanner.getVisibility()== View.GONE) {
+                if (wvBanner.getVisibility() == View.GONE) {
                     loadFailedLL.setVisibility(View.VISIBLE);
                 }
+
             }
 
+            @Override
+            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+                handler.proceed();
+//                super.onReceivedSslError(view, handler, error);
+                LogUtils.e(" handler.proceed()");
+            }
 
             @Override
             public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
                 super.onReceivedError(view, errorCode, description, failingUrl);
                 isError = true;
                 isSuccess = false;
-                if (wvBanner.getVisibility()== View.GONE) {
+                if (wvBanner.getVisibility() == View.GONE) {
                     loadFailedLL.setVisibility(View.VISIBLE);
                 }
             }
@@ -135,6 +154,7 @@ public class BPWebActivity extends AppCompatActivity {
         });
 
         wvBanner.loadUrl(url);
+
     }
 
 
