@@ -33,6 +33,7 @@ import com.bupocket.model.TxDetailRespBoBean;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DecimalCalculate;
 import com.bupocket.utils.DialogUtils;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.NetworkUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.ThreadManager;
@@ -267,7 +268,10 @@ public class BPSendTokenFragment extends BaseFragment {
                 if (doubleAvailableTokenBalance < 0) {
                     availableTokenBalance = "0";
                 } else {
+
+                    LogUtils.e("tokenDecimals"+tokenDecimals);
                     availableTokenBalance = CommonUtil.rvZeroAndDot(new BigDecimal(DecimalCalculate.sub(Double.parseDouble(tokenBalance), com.bupocket.common.Constants.RESERVE_AMOUNT)).setScale(Integer.valueOf(tokenDecimals), BigDecimal.ROUND_HALF_UP).toPlainString());
+
                 }
 //                availableTokenBalance = CommonUtil.rvZeroAndDot(new BigDecimal(AmountUtil.availableSubtractionFee(tokenBalance,com.bupocket.common.Constants.RESERVE_AMOUNT)).setScale(Integer.valueOf(tokenDecimals),BigDecimal.ROUND_HALF_UP).toPlainString());
             }

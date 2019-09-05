@@ -39,8 +39,10 @@ import com.bupocket.model.NodeDetailModel;
 import com.bupocket.model.SuperNodeModel;
 import com.bupocket.model.TransConfirmModel;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DecimalCalculate;
 import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LocaleUtil;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.TimeUtil;
 import com.bupocket.utils.ToastUtil;
@@ -55,6 +57,7 @@ import com.qmuiteam.qmui.widget.dialog.QMUIBottomSheet;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.popup.QMUIPopup;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,6 +118,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         itemData = (SuperNodeModel) getArguments().getSerializable("itemInfo");
         accountTag = getArguments().getString(ConstantsType.ACCOUNT_TAG);
         tokenBalance = spHelper.getSharedPreference(WalletCurrentUtils.getWalletAddress(spHelper) + "tokenBalance", "0").toString();
+        LogUtils.e("tokenBalanceMain:"+tokenBalance);
         initHeadView();
         getNodeDetailData();
     }
@@ -354,6 +358,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         final TextView amountTotalTv = (TextView) supportDialog.findViewById(R.id.tvDialogTotalAmount);
         final View confirmBtn = supportDialog.findViewById(R.id.tvDialogSupport);
         if (!TextUtils.isEmpty(tokenBalance)) {
+            tokenBalance = CommonUtil.rvZeroAndDot(new BigDecimal(DecimalCalculate.sub(Double.parseDouble(tokenBalance), com.bupocket.common.Constants.RESERVE_AMOUNT)).setScale(Integer.valueOf(8), BigDecimal.ROUND_HALF_UP).toPlainString());
             amountTotalTv.setText(tokenBalance+" BU");
         }
 
@@ -510,6 +515,8 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
             public void run() {
                 String walletAddress = WalletCurrentUtils.getWalletAddress(spHelper);
                 tokenBalance = Wallet.getInstance().getAccountBUBalance(walletAddress);
+
+                LogUtils.e("tokenBalanceWallet:"+tokenBalance);
                 if (!CommonUtil.isNull(tokenBalance)) {
                     spHelper.put(walletAddress + "tokenBalance", tokenBalance);
                 }
