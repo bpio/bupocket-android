@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 
 import com.bupocket.R;
 import com.bupocket.utils.LogUtils;
+import com.bupocket.utils.NetworkUtils;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 
 import butterknife.BindView;
@@ -106,53 +107,61 @@ public class BPWebActivity extends AppCompatActivity {
             }
         });
 
-        wvBanner.setWebViewClient(new WebViewClient() {
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
+//        wvBanner.setWebViewClient(new WebViewClient() {
+//
+//            @Override
+//            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+//                super.onReceivedError(view, request, error);
+//                isError = true;
+//                isSuccess = false;
+//                if (wvBanner.getVisibility() == View.GONE) {
+//                    loadFailedLL.setVisibility(View.VISIBLE);
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+//                handler.proceed();
+//            }
+//
+//            @Override
+//            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+//                super.onReceivedError(view, errorCode, description, failingUrl);
+//                isError = true;
+//                isSuccess = false;
+//                if (wvBanner.getVisibility() == View.GONE) {
+//                    loadFailedLL.setVisibility(View.VISIBLE);
+//                }
+//            }
+//
+//            @Override
+//            public void onPageFinished(WebView view, String url) {
+//                super.onPageFinished(view, url);
+//                if (!isError) {
+//                    isSuccess = true;
+//                    loadFailedLL.setVisibility(View.GONE);
+//                    wvBanner.setVisibility(View.VISIBLE);
+//
+//                }
+//            }
+//
+//
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                view.loadUrl(url);
+//                return true;
+//            }
+//        });
 
-            @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                super.onReceivedError(view, request, error);
-                isError = true;
-                isSuccess = false;
-                if (wvBanner.getVisibility() == View.GONE) {
-                    loadFailedLL.setVisibility(View.VISIBLE);
-                }
+        if (NetworkUtils.isNetWorkAvailable(this)) {
+            loadFailedLL.setVisibility(View.GONE);
+            wvBanner.setVisibility(View.VISIBLE);
+        }else{
+            loadFailedLL.setVisibility(View.VISIBLE);
+        }
 
-            }
-
-            @Override
-            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-                handler.proceed();
-//                super.onReceivedSslError(view, handler, error);
-                LogUtils.e(" handler.proceed()");
-            }
-
-            @Override
-            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
-                super.onReceivedError(view, errorCode, description, failingUrl);
-                isError = true;
-                isSuccess = false;
-                if (wvBanner.getVisibility() == View.GONE) {
-                    loadFailedLL.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-                if (!isError) {
-                    isSuccess = true;
-                    loadFailedLL.setVisibility(View.GONE);
-                    wvBanner.setVisibility(View.VISIBLE);
-
-                }
-            }
-        });
-
+        wvBanner.setVisibility(View.VISIBLE);
         wvBanner.loadUrl(url);
 
     }
