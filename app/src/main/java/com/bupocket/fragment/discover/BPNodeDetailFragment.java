@@ -375,15 +375,16 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+
+                if (TextUtils.isEmpty(tokenBalance)) {
+                    confirmBtn.setEnabled(false);
+                    return;
+                }
                 String amount = s.toString();
                 if (TextUtils.isEmpty(amount)) {
                     amount = "0";
                 }
 
-                if (amount.length() > 9) {
-                    confirmBtn.setEnabled(false);
-                    return;
-                }
 
                 long amountNum = Long.parseLong(amount);
                 if (amountNum != 0 && amountNum % 10 == 0 && amountNum < Constants.MAX_SEND_AMOUNT&&amountNum< Double.parseDouble(tokenBalance)) {
