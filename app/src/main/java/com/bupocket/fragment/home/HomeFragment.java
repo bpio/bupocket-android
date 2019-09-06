@@ -68,24 +68,24 @@ public class HomeFragment extends BaseFragment {
                 getResources().getString(R.string.tabbar_assets_txt), false
         );
 
-        int voucher_normal = R.mipmap.icon_tabbar_voucher;
-        int voucher_selected = R.mipmap.icon_tabbar_voucher_selected;
+//        int voucher_normal = R.mipmap.icon_tabbar_voucher;
+//        int voucher_selected = R.mipmap.icon_tabbar_voucher_selected;
+//
+//        if (spHelper.getSharedPreference(ConstantsType.FIRST_OPEN_VOUCHER, "yes").equals("yes")) {
+//
+//            if (CommonUtil.isEnglishLangage()) {
+//                voucher_normal = R.mipmap.icon_tabbar_voucher_new_en;
+//            } else {
+//                voucher_normal = R.mipmap.icon_tabbar_voucher_new_cn;
+//            }
+//        }
 
-        if (spHelper.getSharedPreference(ConstantsType.FIRST_OPEN_VOUCHER, "yes").equals("yes")) {
 
-            if (CommonUtil.isEnglishLangage()) {
-                voucher_normal = R.mipmap.icon_tabbar_voucher_new_en;
-            } else {
-                voucher_normal = R.mipmap.icon_tabbar_voucher_new_cn;
-            }
-        }
-
-
-        QMUITabSegment.Tab voucher = new QMUITabSegment.Tab(
-                ContextCompat.getDrawable(getContext(), voucher_normal),
-                ContextCompat.getDrawable(getContext(), voucher_selected),
-                getResources().getString(R.string.tabbar_toucher_txt), false
-        );
+//        QMUITabSegment.Tab voucher = new QMUITabSegment.Tab(
+//                ContextCompat.getDrawable(getContext(), voucher_normal),
+//                ContextCompat.getDrawable(getContext(), voucher_selected),
+//                getResources().getString(R.string.tabbar_toucher_txt), false
+//        );
         QMUITabSegment.Tab discover = new QMUITabSegment.Tab(
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_discover),
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_discover_selected),
@@ -98,7 +98,7 @@ public class HomeFragment extends BaseFragment {
         );
 
         mTabSegment.addTab(assets);
-        mTabSegment.addTab(voucher);
+//        mTabSegment.addTab(voucher);
         mTabSegment.addTab(discover);
         mTabSegment.addTab(profile);
         mTabSegment.setDefaultSelectedColor(getContext().getResources().getColor(R.color.app_color_green));
@@ -107,29 +107,29 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onTabSelected(int index) {
 
-                if (index == 1) {
-                    if (spHelper.getSharedPreference(ConstantsType.FIRST_OPEN_VOUCHER, "yes").equals("yes")) {
-                        spHelper.put(ConstantsType.FIRST_OPEN_VOUCHER, "no");
-                        int voucher_normal = R.mipmap.icon_tabbar_voucher;
-                        int voucher_selected = R.mipmap.icon_tabbar_voucher_selected;
-                        QMUITabSegment.Tab voucher = new QMUITabSegment.Tab(
-                                ContextCompat.getDrawable(getContext(), voucher_normal),
-                                ContextCompat.getDrawable(getContext(), voucher_selected),
-                                getResources().getString(R.string.tabbar_toucher_txt), false
-                        );
-                        mTabSegment.replaceTab(1,voucher);
-
-                        DialogUtils.showMessageScrollDialog(mContext,
-                                getString(R.string.number_voucher_package_info),
-                                getString(R.string.number_voucher_package_title), new DialogUtils.KnowListener() {
-                                    @Override
-                                    public void Know() {
-
-                                    }
-                                });
-                    }
-
-                }
+//                if (index == 1) {
+//                    if (spHelper.getSharedPreference(ConstantsType.FIRST_OPEN_VOUCHER, "yes").equals("yes")) {
+//                        spHelper.put(ConstantsType.FIRST_OPEN_VOUCHER, "no");
+//                        int voucher_normal = R.mipmap.icon_tabbar_voucher;
+//                        int voucher_selected = R.mipmap.icon_tabbar_voucher_selected;
+//                        QMUITabSegment.Tab voucher = new QMUITabSegment.Tab(
+//                                ContextCompat.getDrawable(getContext(), voucher_normal),
+//                                ContextCompat.getDrawable(getContext(), voucher_selected),
+//                                getResources().getString(R.string.tabbar_toucher_txt), false
+//                        );
+//                        mTabSegment.replaceTab(1,voucher);
+//
+//                        DialogUtils.showMessageScrollDialog(mContext,
+//                                getString(R.string.number_voucher_package_info),
+//                                getString(R.string.number_voucher_package_title), new DialogUtils.KnowListener() {
+//                                    @Override
+//                                    public void Know() {
+//
+//                                    }
+//                                });
+//                    }
+//
+//                }
             }
 
             @Override
@@ -162,7 +162,7 @@ public class HomeFragment extends BaseFragment {
 
             @Override
             public int getCount() {
-                return 4;
+                return 3;
             }
 
             @Override
@@ -170,11 +170,11 @@ public class HomeFragment extends BaseFragment {
                 switch (position) {
                     case 0:
                         return getResources().getString(R.string.tabbar_assets_txt);
+//                    case 1:
+//                        return getResources().getString(R.string.tabbar_toucher_txt);
                     case 1:
-                        return getResources().getString(R.string.tabbar_toucher_txt);
-                    case 2:
                         return getResources().getString(R.string.tabbar_discover_txt);
-                    case 3:
+                    case 2:
                     default:
                         return getResources().getString(R.string.tabbar_profile_txt);
                 }
@@ -195,11 +195,11 @@ public class HomeFragment extends BaseFragment {
                 switch (position) {
                     case 0:
                         return new BPAssetsHomeFragment();
+//                    case 1:
+//                        return new BPVoucherHomeFragment();
                     case 1:
-                        return new BPVoucherHomeFragment();
-                    case 2:
                         return new BPDiscoverHomeFragment();
-                    case 3:
+                    case 2:
                     default:
                         return new BPProfileHomeFragment();
                 }

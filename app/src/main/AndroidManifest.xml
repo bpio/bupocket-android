@@ -81,6 +81,10 @@
 
         <activity
             android:name=".wxapi.WXEntryActivity"
+            android:label="wechat_bind"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar.Transparent"
             android:exported="true" />
 
         <provider

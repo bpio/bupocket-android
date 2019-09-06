@@ -347,6 +347,9 @@ public class BPProfileHomeFragment extends BaseFragment {
         req.scope = ConstantsType.WX_SCOPE;
         req.state = ConstantsType.WX_STATE;
         boolean isWechat = mApplication.getWxApi().sendReq(req);
+
+
+
         if (!isWechat) {
             DialogUtils.showMessageNoTitleDialog(mContext, R.string.wechat_down_load_info);
         }
