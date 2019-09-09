@@ -60,7 +60,9 @@ public class NodeCampaignAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
         } else {
             haveVotesNumTvHint.setText(context.getString(R.string.number_have_votes_s));
         }
-        holder.setText(R.id.haveVotesNumTv, itemData.getNodeVote());
+        String nodeVote = itemData.getNodeVote();
+
+        holder.setText(R.id.haveVotesNumTv, CommonUtil.format(nodeVote));
 
 
         TextView myVotesNumTvHint = holder.getView(R.id.myVotesNumTvHint);
@@ -70,7 +72,9 @@ public class NodeCampaignAdapter extends AbsViewHolderAdapter<SuperNodeModel> {
             myVotesNumTvHint.setText(context.getString(R.string.my_votes_number_s));
         }
 
-        holder.setText(R.id.myVotesNumTv, itemData.getMyVoteCount());
+
+        String myVoteCount = itemData.getMyVoteCount();
+        holder.setText(R.id.myVotesNumTv, CommonUtil.format(myVoteCount));
 
         String slogan = itemData.getSlogan();
         if (!TextUtils.isEmpty(slogan)) {

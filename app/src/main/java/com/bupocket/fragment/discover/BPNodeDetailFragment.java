@@ -642,7 +642,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         if (!CommonUtil.isSingle(totalVoteCount)) {
             haveVote = R.string.number_have_votes_s;
         }
-        addNodeItemData(haveVote, totalVoteCount);
+        addNodeItemData(haveVote, CommonUtil.format(totalVoteCount));
 
 
         String totalVoteCount1 = itemData.getMyVoteCount();
@@ -650,7 +650,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         if (!CommonUtil.isSingle(totalVoteCount1)) {
             myVote = R.string.my_votes_number_s;
         }
-        addNodeItemData(myVote, totalVoteCount1);
+        addNodeItemData(myVote, CommonUtil.format(totalVoteCount1));
 
     }
 
