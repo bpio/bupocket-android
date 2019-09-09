@@ -2,6 +2,7 @@ package com.bupocket.model;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
 @Entity
 public  class BlockInfoRespBoBean {
@@ -15,6 +16,7 @@ public  class BlockInfoRespBoBean {
      */
 
     private String address;
+    @Id
     private String optNo;
     private String closeTimeDate;
     private String hash;

@@ -2,6 +2,7 @@ package com.bupocket.model;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
 
 @Entity
 public  class TxDetailRespBoBean {
@@ -13,6 +14,7 @@ public  class TxDetailRespBoBean {
      * sourceAddress : buQfxCc35fLqX95dAPztyH4aneb8GDx8Sy4i
      */
     private String address;
+    @Id
     private String optNo;
     private String amount;
     private String applyTimeDate;

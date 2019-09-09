@@ -2,6 +2,8 @@ package com.bupocket.model;
 
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Id;
+import org.greenrobot.greendao.annotation.Unique;
 
 @Entity
 public  class TxInfoRespBoBean {
@@ -18,6 +20,8 @@ public  class TxInfoRespBoBean {
 
 
     private String address;
+
+    @Id
     private String optNo;
     private String amount;
     private String destAddress;

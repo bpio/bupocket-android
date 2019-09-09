@@ -15,7 +15,7 @@ import com.bupocket.model.TxInfoRespBoBean;
 /** 
  * DAO for table "TX_INFO_RESP_BO_BEAN".
 */
-public class TxInfoRespBoBeanDao extends AbstractDao<TxInfoRespBoBean, Void> {
+public class TxInfoRespBoBeanDao extends AbstractDao<TxInfoRespBoBean, String> {
 
     public static final String TABLENAME = "TX_INFO_RESP_BO_BEAN";
 
@@ -25,7 +25,7 @@ public class TxInfoRespBoBeanDao extends AbstractDao<TxInfoRespBoBean, Void> {
      */
     public static class Properties {
         public final static Property Address = new Property(0, String.class, "address", false, "ADDRESS");
-        public final static Property OptNo = new Property(1, String.class, "optNo", false, "OPT_NO");
+        public final static Property OptNo = new Property(1, String.class, "optNo", true, "OPT_NO");
         public final static Property Amount = new Property(2, String.class, "amount", false, "AMOUNT");
         public final static Property DestAddress = new Property(3, String.class, "destAddress", false, "DEST_ADDRESS");
         public final static Property Fee = new Property(4, String.class, "fee", false, "FEE");
@@ -50,7 +50,7 @@ public class TxInfoRespBoBeanDao extends AbstractDao<TxInfoRespBoBean, Void> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"TX_INFO_RESP_BO_BEAN\" (" + //
                 "\"ADDRESS\" TEXT," + // 0: address
-                "\"OPT_NO\" TEXT," + // 1: optNo
+                "\"OPT_NO\" TEXT PRIMARY KEY NOT NULL ," + // 1: optNo
                 "\"AMOUNT\" TEXT," + // 2: amount
                 "\"DEST_ADDRESS\" TEXT," + // 3: destAddress
                 "\"FEE\" TEXT," + // 4: fee
@@ -162,8 +162,8 @@ public class TxInfoRespBoBeanDao extends AbstractDao<TxInfoRespBoBean, Void> {
     }
 
     @Override
-    public Void readKey(Cursor cursor, int offset) {
-        return null;
+    public String readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1);
     }    
 
     @Override
@@ -198,20 +198,22 @@ public class TxInfoRespBoBeanDao extends AbstractDao<TxInfoRespBoBean, Void> {
      }
     
     @Override
-    protected final Void updateKeyAfterInsert(TxInfoRespBoBean entity, long rowId) {
-        // Unsupported or missing PK type
-        return null;
+    protected final String updateKeyAfterInsert(TxInfoRespBoBean entity, long rowId) {
+        return entity.getOptNo();
     }
     
     @Override
-    public Void getKey(TxInfoRespBoBean entity) {
-        return null;
+    public String getKey(TxInfoRespBoBean entity) {
+        if(entity != null) {
+            return entity.getOptNo();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public boolean hasKey(TxInfoRespBoBean entity) {
-        // TODO
-        return false;
+        return entity.getOptNo() != null;
     }
 
     @Override

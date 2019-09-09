@@ -15,7 +15,7 @@ import com.bupocket.model.BlockInfoRespBoBean;
 /** 
  * DAO for table "BLOCK_INFO_RESP_BO_BEAN".
 */
-public class BlockInfoRespBoBeanDao extends AbstractDao<BlockInfoRespBoBean, Void> {
+public class BlockInfoRespBoBeanDao extends AbstractDao<BlockInfoRespBoBean, String> {
 
     public static final String TABLENAME = "BLOCK_INFO_RESP_BO_BEAN";
 
@@ -25,7 +25,7 @@ public class BlockInfoRespBoBeanDao extends AbstractDao<BlockInfoRespBoBean, Voi
      */
     public static class Properties {
         public final static Property Address = new Property(0, String.class, "address", false, "ADDRESS");
-        public final static Property OptNo = new Property(1, String.class, "optNo", false, "OPT_NO");
+        public final static Property OptNo = new Property(1, String.class, "optNo", true, "OPT_NO");
         public final static Property CloseTimeDate = new Property(2, String.class, "closeTimeDate", false, "CLOSE_TIME_DATE");
         public final static Property Hash = new Property(3, String.class, "hash", false, "HASH");
         public final static Property PreviousHash = new Property(4, String.class, "previousHash", false, "PREVIOUS_HASH");
@@ -48,7 +48,7 @@ public class BlockInfoRespBoBeanDao extends AbstractDao<BlockInfoRespBoBean, Voi
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"BLOCK_INFO_RESP_BO_BEAN\" (" + //
                 "\"ADDRESS\" TEXT," + // 0: address
-                "\"OPT_NO\" TEXT," + // 1: optNo
+                "\"OPT_NO\" TEXT PRIMARY KEY NOT NULL ," + // 1: optNo
                 "\"CLOSE_TIME_DATE\" TEXT," + // 2: closeTimeDate
                 "\"HASH\" TEXT," + // 3: hash
                 "\"PREVIOUS_HASH\" TEXT," + // 4: previousHash
@@ -138,8 +138,8 @@ public class BlockInfoRespBoBeanDao extends AbstractDao<BlockInfoRespBoBean, Voi
     }
 
     @Override
-    public Void readKey(Cursor cursor, int offset) {
-        return null;
+    public String readKey(Cursor cursor, int offset) {
+        return cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1);
     }    
 
     @Override
@@ -170,20 +170,22 @@ public class BlockInfoRespBoBeanDao extends AbstractDao<BlockInfoRespBoBean, Voi
      }
     
     @Override
-    protected final Void updateKeyAfterInsert(BlockInfoRespBoBean entity, long rowId) {
-        // Unsupported or missing PK type
-        return null;
+    protected final String updateKeyAfterInsert(BlockInfoRespBoBean entity, long rowId) {
+        return entity.getOptNo();
     }
     
     @Override
-    public Void getKey(BlockInfoRespBoBean entity) {
-        return null;
+    public String getKey(BlockInfoRespBoBean entity) {
+        if(entity != null) {
+            return entity.getOptNo();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public boolean hasKey(BlockInfoRespBoBean entity) {
-        // TODO
-        return false;
+        return entity.getOptNo() != null;
     }
 
     @Override
