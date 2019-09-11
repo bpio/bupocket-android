@@ -435,6 +435,7 @@
     <string name="time_txt">时间</string>
     <string name="revoke_no_vote_error_message_txt">暂无可撤销的票数</string>
     <string name="revoke_vote_tx_details_txt">撤销对\"%1$s\"的投票</string>
+    <string name="revoke_vote_tx_details_txt_en">Cancel votes to\"%1$s\"</string>
 
 
     <string name="details_txt">详情>></string>
@@ -864,6 +865,7 @@
     <string name="node_ratio_dialog">竞选节点自定义设置对投票用户的奖励比例</string>
     <string name="confirm_vote">确认投票</string>
     <string name="node_confirm_detail">投票给\"%1$s\"%2$s票"</string>
+    <string name="node_confirm_detail_en">Vote for\"%1$s\"%2$s"</string>
     <string name="node_state_error">当前节点处于%1$s&quot;状态，暂不支持投票操作</string>
     <string name="error_identity_bind">当前身份地址已被绑定</string>
     <string name="error_we_chat_bind">当前微信已被绑定，请更换</string>

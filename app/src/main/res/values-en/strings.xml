@@ -532,6 +532,7 @@
     <string name="build_cooperate_bond">The initiator of the node co-funding project transfers the margin of co-funding to an account as the amount to be locked in node co-funding</string>
 
     <string name="revoke_vote_tx_details_txt">Cancel votes to\"%1$s\"</string>
+    <string name="revoke_vote_tx_details_txt_en">Cancel votes to\"%1$s\"</string>
 
 
     <string name="tx_from">From</string>
@@ -868,6 +869,7 @@
     <string name="node_ratio_dialog">Campaign node customizes proportion of rewards to voters</string>
     <string name="confirm_vote">Confirm</string>
     <string name="node_confirm_detail">Vote for\"%1$s\"%2$s"</string>
+    <string name="node_confirm_detail_en">Vote for\"%1$s\"%2$s"</string>
     <string name="node_state_error">The current node in %1$s status, and is not accessible for vote operation</string>
     <string name="error_identity_bind">The current identity address has been bound</string>
     <string name="error_we_chat_bind">The current WeChat has been bound; please change another one</string>

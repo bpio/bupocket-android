@@ -147,7 +147,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
 
         String destAddress = Constants.CONTRACT_ADDRESS;
         String transactionDetail = String.format(getString(R.string.revoke_vote_tx_details_txt), itemInfo.getNodeName());
-        metaData = String.format(getString(R.string.revoke_vote_tx_details_txt), itemInfo.getNodeName());
+        metaData = String.format(getString(R.string.revoke_vote_tx_details_txt_en), itemInfo.getNodeName());
         String transactionAmount = "0";
 
         final JSONObject input = new JSONObject();
@@ -194,7 +194,8 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
                     @Override
                     public void run() {
                         try {
-                            final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input.toJSONString(), WalletCurrentUtils.getWalletAddress(spHelper), String.valueOf(Constants.NODE_COMMON_FEE), Constants.CONTRACT_ADDRESS, metaData);
+                            final TransactionBuildBlobResponse buildBlobResponse = Wallet.getInstance().buildBlob(amount, input.toJSONString(), WalletCurrentUtils.getWalletAddress(spHelper),
+                                    String.valueOf(Constants.NODE_COMMON_FEE), Constants.CONTRACT_ADDRESS, metaData);
                             String txHash = buildBlobResponse.getResult().getHash();
                             NodePlanService nodePlanService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanService.class);
                             Call<ApiResult> call;
@@ -421,7 +422,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         supportDialog.show();
     }
 
-    private void showConfirmSupport(String amount, QMUIBottomSheet supportDialog) {
+    private void showConfirmSupport(final String amount, QMUIBottomSheet supportDialog) {
 
         if (Double.parseDouble(tokenBalance) < Double.parseDouble(amount)) {
             ToastUtil.showToast(getActivity(), getResources().getString(R.string.balance_not_enough), Toast.LENGTH_SHORT);
@@ -434,7 +435,7 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
         String destAddress = Constants.CONTRACT_ADDRESS;
         String transactionAmount = amount;
         double scanTxFee = Constants.NODE_COMMON_FEE;
-        String transactionDetail = String.format(getString(R.string.node_confirm_detail), itemData.getNodeName(), amount);
+        final String transactionDetail = String.format(getString(R.string.node_confirm_detail), itemData.getNodeName(), amount);
         String nodeType = "validator";
         String accountTag = this.accountTag;
         if (SuperNodeTypeEnum.ECOLOGICAL.getCode().equals(itemData.getIdentityType())) {
@@ -455,7 +456,9 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
                 transactionDetail, transactionParams, new TransferUtils.TransferListener() {
                     @Override
                     public void confirm() {
+                        String detail=String.format(getString(R.string.node_confirm_detail_en), itemData.getNodeName(), amount);
 
+                        getQRContentDto.setQrRemark(detail);
                         confirmTransaction(getQRContentDto);
                     }
                 });
