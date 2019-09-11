@@ -150,8 +150,8 @@ public class BPApplication extends Application {
         Constants.PUSH_MESSAGE_SOCKET_URL = Constants.WEB_SERVER_DOMAIN;
 
 
-        //debug
-        LogUtils.mDebuggable = LogUtils.LEVEL_ERROR;
+//        //debug
+//        LogUtils.mDebuggable = LogUtils.LEVEL_ERROR;
     }
 
     private void initCrash() {
