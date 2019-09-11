@@ -489,7 +489,9 @@
     <string name="transaction_success_hint">Tips: \n after transactions such as voting to a node or withdrawing votes from a node are successful on the chain, the statistics of related data are delayed, and it is expected to be completed within 30 seconds.</string>
 
     <string name="build_exit_confirm_title">Withdraw sponsor \"%1$s\" project</string>
+    <string name="build_exit_confirm_title_en">Withdraw sponsor \"%1$s\" project</string>
     <string name="build_support_confirm_title">Sponsor \"%1$s\" project</string>
+    <string name="build_support_confirm_title_en">Sponsor \"%1$s\" project</string>
 
     <string name="error_1003">The physical address to be bound is already occupied. Please apply after replacing it</string>
     <string name="error_1009">The wallet account has been applied for, please apply after replacing it.</string>

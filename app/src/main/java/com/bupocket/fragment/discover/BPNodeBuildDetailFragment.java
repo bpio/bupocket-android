@@ -427,7 +427,7 @@ public class BPNodeBuildDetailFragment extends BaseTransferFragment {
     }
 
     private void confirmExit() {
-
+        final String transMetaData = String.format(getString(R.string.build_exit_confirm_title_en), detailModel.getTitle());
         Runnable confirmExitRunnable = new Runnable() {
             @Override
             public void run() {
@@ -622,7 +622,7 @@ public class BPNodeBuildDetailFragment extends BaseTransferFragment {
         final String amount = tvDialogTotalAmount.getText().toString().replace(",", "");
         final String num = numSupport.getText().toString();
         final String contractAddress = detailModel.getContractAddress();
-
+        final String supportTransMetaData = String.format(getString(R.string.build_support_confirm_title_en), detailModel.getTitle());
         Runnable confirmSupportRunnable = new Runnable() {
             @Override
             public void run() {
