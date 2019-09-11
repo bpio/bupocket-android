@@ -349,6 +349,13 @@ public class BPNodeDetailFragment extends BaseTransferFragment {
     }
 
     private void dialogVoteNode() {
+
+
+        if (TextUtils.isEmpty(tokenBalance)) {
+            ToastUtil.showToast(getActivity(),R.string.address_not_exist,Toast.LENGTH_LONG);
+            return;
+        }
+
         final QMUIBottomSheet supportDialog = new QMUIBottomSheet(getContext());
         supportDialog.setContentView(supportDialog.getLayoutInflater().inflate(R.layout.view_node_detail_vote, null));
         TextView voteNumTv = (TextView) supportDialog.findViewById(R.id.voteNumTv);
