@@ -4,36 +4,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/app_bg_color_gray"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/common_padding_border"
-        android:layout_marginRight="@dimen/common_padding_border"
-        android:layout_marginBottom="10dp"
-        android:orientation="vertical"
-        android:background="@drawable/shape_corner"
-        >
+        android:layout_marginLeft="@dimen/common_left_right_padding"
+        android:layout_marginRight="@dimen/common_left_right_padding"
+        android:layout_marginBottom="@dimen/common_top_bottom_padding"
+        android:background="@drawable/shape_corner_white"
+        android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
-            >
+            android:paddingBottom="15dp">
+
+
+            <TextView
+                android:visibility="gone"
+                android:id="@+id/nodeStateTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:background="@mipmap/ic_launcher" />
 
             <include
                 android:id="@+id/nodeIconRl"
+                layout="@layout/view_circle_head_layout"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="10dp"
-                layout="@layout/view_circle_head_layout"/>
+                android:layout_marginTop="15dp" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginRight="15dp"
                 android:layout_toRightOf="@+id/nodeIconRl">
 
                 <TextView
@@ -45,9 +55,11 @@
                     android:layout_alignParentLeft="true"
                     android:layout_marginStart="0dp"
                     android:layout_marginLeft="0dp"
+                    android:maxWidth="140dp"
                     android:textSize="15sp"
                     android:textStyle="bold"
-                    tools:text="node name" />
+                    tools:text="node namenode namenode namenode namenode namenode name" />
+
 
                 <TextView
                     android:id="@+id/nodeTypeTv"
@@ -55,178 +67,113 @@
                     android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="12dp"
+                    android:layout_marginRight="10dp"
                     android:layout_toRightOf="@+id/nodeNameTv"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp"
-                    android:paddingTop="2dp"
-                    android:paddingBottom="2dp"
-                    android:background="@drawable/shape_corner_bg_gray"
+                    android:background="@drawable/shape_corner_gray_no_stroke"
                     android:gravity="center"
-                    android:textColor="@color/multiline_edit_hint_color"
+                    android:lines="1"
+                    android:paddingLeft="5dp"
+                    android:paddingTop="3dp"
+                    android:paddingRight="5dp"
+                    android:paddingBottom="3dp"
+                    android:textColor="@color/app_txt_color_gray_8"
                     android:textSize="11sp"
                     tools:text="@string/common_node" />
 
-            </RelativeLayout>
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1" />
+
+                <TextView
+                    android:visibility="gone"
+                    android:id="@+id/nodeRankTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="NO.4"
+                    android:textColor="@color/app_txt_color_red_7"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="15dp"
                 android:layout_toRightOf="@+id/nodeIconRl"
                 android:orientation="horizontal">
 
 
                 <TextView
-                    android:id="@+id/haveVotesNumTvHint"
+                    android:id="@+id/nodeIntroduceTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/number_have_votes"
-                    android:textColor="@color/multiline_edit_hint_color"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/haveVotesNumTv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="6dp"
-                    android:layout_weight="3"
-                    android:textColor="@color/app_txt_color_gray_2"
-                    android:textSize="14sp"
-                    tools:text="" />
+                    android:textColor="@color/app_txt_color_gray"
+                    android:textSize="13sp"
+                    android:lines="1"
+                    android:ellipsize="end"
+                    tools:text="@string/number_have_votes" />
 
 
-                <TextView
-                    android:id="@+id/myVotesNumTvHint"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/my_votes_number"
-                    android:textColor="@color/multiline_edit_hint_color"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/myVotesNumTv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:layout_weight="2"
-                    android:textColor="@color/app_txt_color_gray_2"
-                    android:textSize="14sp"
-                    tools:text="" />
             </LinearLayout>
         </RelativeLayout>
 
         <View style="@style/BPDivideLine" />
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp"
+            android:layout_marginLeft="13dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="13dp"
+            android:layout_marginBottom="15dp"
             android:orientation="horizontal">
 
-            <LinearLayout
+
+            <TextView
+                android:id="@+id/haveVotesNumTvHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/number_have_votes"
+                android:textColor="@color/app_txt_color_gray_8"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/haveVotesNumTv"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center">
+                android:layout_marginLeft="6dp"
+                android:layout_weight="3"
+                android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="14sp"
+                tools:text="" />
 
-                <LinearLayout
-                    android:id="@+id/shareBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="16dp"
-                        android:src="@mipmap/icon_share_green" />
+            <TextView
+                android:id="@+id/myVotesNumTvHint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_votes_number"
+                android:textColor="@color/app_txt_color_gray_8"
+                android:textSize="12sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="@string/invite_vote_txt"
-                        android:textColor="@color/app_txt_color_gray"
-                        android:textSize="13sp" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="26dp"
-                android:background="@color/app_txt_color_gray_3" />
-
-            <LinearLayout
+            <TextView
+                android:id="@+id/myVotesNumTv"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <LinearLayout
-                    android:id="@+id/voteRecordBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="16dp"
-                        android:src="@mipmap/icon_vote_record" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="@string/vote_record_txt"
-                        android:textColor="@color/app_txt_color_gray"
-                        android:textSize="13sp" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <View
-                android:layout_width="0.5dp"
-                android:layout_height="26dp"
-                android:background="@color/app_txt_color_gray_3" />
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center">
-
-                <LinearLayout
-                    android:id="@+id/revokeVoteBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="16dp"
-                        android:src="@mipmap/icon_revoke_vote" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"
-                        android:text="@string/cancel_vote"
-                        android:textColor="@color/app_txt_color_gray"
-                        android:textSize="13sp" />
-                </LinearLayout>
-            </LinearLayout>
-
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_weight="2"
+                android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="14sp"
+                tools:text="" />
         </LinearLayout>
 
-
     </LinearLayout>
-
-
 
 
 </LinearLayout>

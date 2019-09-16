@@ -1,15 +1,25 @@
 package com.bupocket.activity;
 
+import android.net.http.SslError;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+
 import com.bupocket.R;
+import com.bupocket.utils.LogUtils;
+import com.bupocket.utils.NetworkUtils;
 import com.qmuiteam.qmui.widget.QMUITopBar;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -23,11 +33,15 @@ public class BPWebActivity extends AppCompatActivity {
     WebView wvBanner;
     @BindView(R.id.pbWeb)
     ProgressBar progressBar;
-
+    @BindView(R.id.loadFailedLL)
+    LinearLayout loadFailedLL;
 
     private Unbinder bind;
     private String url;
+    private static boolean isNetError = false;
 
+    private boolean isSuccess = false;
+    private boolean isError = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,16 +60,14 @@ public class BPWebActivity extends AppCompatActivity {
 
     private void initData() {
         url = getIntent().getExtras().getString("url");
+//        url="http://mp.weixin.qq.com/s/qSnnJyd7gwDAw0suUMA9qg?";
     }
 
     private void initView() {
         WebSettings webSettings = wvBanner.getSettings();
-        //设置WebView属性，能够执行Javascript脚本
         webSettings.setJavaScriptEnabled(true);
         webSettings.setPluginState(WebSettings.PluginState.ON);
-        //设置可以访问文件
         webSettings.setAllowFileAccess(true);
-        //设置支持缩放
         webSettings.setBuiltInZoomControls(true);
         webSettings.setAppCacheEnabled(true);
         webSettings.setDomStorageEnabled(true);
@@ -69,11 +81,16 @@ public class BPWebActivity extends AppCompatActivity {
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
         webSettings.setLoadsImagesAutomatically(true);
 
-        //去掉缩放按钮
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.HONEYCOMB) {
             webSettings.setDisplayZoomControls(false);
         }
 
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_COMPATIBILITY_MODE);
+            webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+        }
+        webSettings.setBlockNetworkImage(false);
 
         wvBanner.setWebChromeClient(new WebChromeClient() {
 
@@ -90,8 +107,63 @@ public class BPWebActivity extends AppCompatActivity {
             }
         });
 
-        wvBanner.setWebViewClient(new WebViewClient());
+//        wvBanner.setWebViewClient(new WebViewClient() {
+//
+//            @Override
+//            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+//                super.onReceivedError(view, request, error);
+//                isError = true;
+//                isSuccess = false;
+//                if (wvBanner.getVisibility() == View.GONE) {
+//                    loadFailedLL.setVisibility(View.VISIBLE);
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
+//                handler.proceed();
+//            }
+//
+//            @Override
+//            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+//                super.onReceivedError(view, errorCode, description, failingUrl);
+//                isError = true;
+//                isSuccess = false;
+//                if (wvBanner.getVisibility() == View.GONE) {
+//                    loadFailedLL.setVisibility(View.VISIBLE);
+//                }
+//            }
+//
+//            @Override
+//            public void onPageFinished(WebView view, String url) {
+//                super.onPageFinished(view, url);
+//                if (!isError) {
+//                    isSuccess = true;
+//                    loadFailedLL.setVisibility(View.GONE);
+//                    wvBanner.setVisibility(View.VISIBLE);
+//
+//                }
+//            }
+//
+//
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                view.loadUrl(url);
+//                return true;
+//            }
+//        });
+
+        if (NetworkUtils.isNetWorkAvailable(this)) {
+            loadFailedLL.setVisibility(View.GONE);
+            wvBanner.setVisibility(View.VISIBLE);
+        }else{
+            loadFailedLL.setVisibility(View.VISIBLE);
+        }
+
+        wvBanner.setVisibility(View.VISIBLE);
         wvBanner.loadUrl(url);
+
     }
 
 

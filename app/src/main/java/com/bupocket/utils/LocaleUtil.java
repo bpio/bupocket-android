@@ -12,13 +12,12 @@ import android.widget.Toast;
 
 import com.bupocket.BPMainActivity;
 import com.bupocket.R;
+import com.bupocket.common.ConstantsType;
 
 import java.util.Locale;
 
 public class LocaleUtil {
     /**
-     * 获取用户设置的Locale
-     *
      * @return Locale
      */
     public static Locale getUserLocale() {
@@ -39,7 +38,7 @@ public class LocaleUtil {
     }
 
     /**
-     * 设置语言：如果之前有设置就遵循设置如果没设置过就跟随系统语言
+     *
      */
     public static void changeAppLanguage(Context context) {
         Resources resources = context.getResources();
@@ -81,10 +80,25 @@ public class LocaleUtil {
         return 0;
     }
 
+    /**
+     *
+     * @return
+     */
+    public static boolean isChinese() {
+        int currentLanguage = (int) SharedPreferencesHelper.getInstance().getInt("currentLanguage", 0);
+
+        switch (currentLanguage) {
+            case 0:// Locale.SIMPLIFIED_CHINESE;
+                return true;
+            case 1://Locale.ENGLISH;
+                return false;
+        }
+
+        return false;
+    }
+
 
     /**
-     * 保存设置的语言
-     *
      * @param currentLanguage index
      */
     public static void changeAppLanguage(Context context, int currentLanguage) {
@@ -106,26 +120,22 @@ public class LocaleUtil {
             LocaleUtil.updateLocale(appContext, myLocale);
         }
 
-        Toast.makeText(appContext, appContext.getString(R.string.set_success), Toast.LENGTH_SHORT).show();
         restartApp(appContext);
     }
 
     /**
-     * 重启app生效
-     *
      * @param context
      */
     public static void restartApp(Context context) {
         Intent intent = new Intent(context, BPMainActivity.class);
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.putExtra(ConstantsType.CHANGE_LANGUAGE, ConstantsType.STATUS_YES);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
     /**
-     * 获取当前的Locale
-     *
      * @param context Context
      * @return Locale
      */
@@ -140,8 +150,6 @@ public class LocaleUtil {
     }
 
     /**
-     * 更新Locale
-     *
      * @param context Context
      * @param locale  New User Locale
      */
@@ -159,8 +167,6 @@ public class LocaleUtil {
     }
 
     /**
-     * 判断需不需要更新
-     *
      * @param context Context
      * @param locale  New User Locale
      * @return true / false
@@ -170,8 +176,6 @@ public class LocaleUtil {
     }
 
     /**
-     * 当系统语言发生改变的时候还是继续遵循用户设置的语言
-     *
      * @param context
      * @param newConfig
      */

@@ -1,67 +1,97 @@
 package com.bupocket.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
-import android.view.Gravity;
+import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bupocket.BPApplication;
+import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.BumoNodeEnum;
-import com.bupocket.enums.HiddenFunctionStatusEnum;
-import com.bupocket.fragment.home.HomeFragment;
+import com.bupocket.enums.CustomNodeTypeEnum;
+import com.bupocket.enums.ExceptionEnum;
+import com.bupocket.enums.LanguageEnum;
+import com.bupocket.enums.WXBindEnum;
+import com.bupocket.http.api.RetrofitFactory;
+import com.bupocket.http.api.WeChatService;
+import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.model.UserInfoModel;
+import com.bupocket.model.WeChatInfoModel;
+import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUtils;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
-import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialogAction;
+import com.bupocket.utils.WalletCurrentUtils;
+import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
-import butterknife.BindString;
+import java.util.HashMap;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
-public class BPProfileHomeFragment extends BaseFragment{
+public class BPProfileHomeFragment extends BaseFragment {
+    @BindView(R.id.topbar)
+    QMUITopBarLayout topbar;
+    @BindView(R.id.profileAddressTv)
+    TextView profileAddressTv;
+    @BindView(R.id.llProfileIdentity)
+    LinearLayout llProfileIdentity;
+    @BindView(R.id.ivProfileAddressManage)
+    RelativeLayout ivProfileAddressManage;
+    @BindView(R.id.ivProfileWalletManage)
+    RelativeLayout ivProfileWalletManage;
+    @BindView(R.id.settingIcon)
+    ImageView settingIcon;
+    @BindView(R.id.addressBookIcon)
+    ImageView addressBookIcon;
+    @BindView(R.id.manageWalletIcon)
+    ImageView manageWalletIcon;
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String currentAccNick;
 
-    @BindString(R.string.qr_copy_success_message)
-    String copySuccessMessage;
     @BindView(R.id.userNick)
     TextView userNickTx;
-    @BindView(R.id.changePwdRL)
-    RelativeLayout mChangePwdRL;
+
     @BindView(R.id.helpFeedbackRL)
     RelativeLayout mHelpRL;
     @BindView(R.id.settingRL)
-    RelativeLayout mSettingRL;
+    LinearLayout mSettingRL;
     @BindView(R.id.versionNameTv)
     TextView mVersionNameTv;
-    @BindView(R.id.profileAvatarIv)
-    ImageView mProfileAvatarIv;
-    @BindView(R.id.currentTestNetTipsTv)
-    TextView mCurrentTestNetTipsTv;
-    @BindView(R.id.meLinearLayout)
-    LinearLayout mMeLinearLayout;
+    @BindView(R.id.identityHeadRiv)
+    ImageView identityHeadRiv;
     @BindView(R.id.versionRL)
     RelativeLayout mVersionRl;
-    @BindView(R.id.avatarNickLl)
-    LinearLayout mAvatarNickLl;
-    @BindView(R.id.manageWalletRl)
-    RelativeLayout mManageWalletRl;
-    @BindView(R.id.addressBookRL)
-    RelativeLayout mAddressBookRl;
+    @BindView(R.id.nodeSettingRl)
+    RelativeLayout nodeSettingRl;
+    @BindView(R.id.languageLL)
+    LinearLayout languageLL;
+    @BindView(R.id.llProfileProtocol)
+    LinearLayout llProfileProtocol;
+    @BindView(R.id.tvProfileCurrency)
+    TextView tvProfileCurrency;
+    @BindView(R.id.newVersionCodeTV)
+    TextView tvProfileLanguage;
+    @BindView(R.id.wxBindTV)
+    TextView wxBindTv;
 
-    private final static int CLICKCOUNTS = 5;
-    private final static long DURATION = 2 * 1000;
+    private String identityId;
+    private String identityAddress;
 
     @Override
     protected View onCreateView() {
@@ -76,9 +106,60 @@ public class BPProfileHomeFragment extends BaseFragment{
         return false;
     }
 
+
     private void init() {
+        initView();
+        initTopBar();
         initData();
         setListener();
+    }
+
+
+    private void initTopBar() {
+        topbar.setBackgroundDividerEnabled(false);
+        topbar.setTitle(R.string.tabbar_profile_txt);
+        Button button = topbar.addLeftTextButton("", R.id.topbar_left_arrow);
+        button.setTextColor(getResources().getColor(R.color.app_color_green));
+
+        int isStart = (int) spHelper.getSharedPreference(ConstantsType.IS_START_CUSTOM_SERVICE, 0);
+        if (isStart == CustomNodeTypeEnum.START.getServiceType()) {
+            button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+            button.setText(getString(R.string.custom_environment));
+        } else if (SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()) {
+            button.setTextSize(TypedValue.COMPLEX_UNIT_SP, 12);
+            button.setText(getString(R.string.current_test_message_txt));
+        }
+    }
+
+    private void initView() {
+
+        String currencyType = spHelper.getSharedPreference("currencyType", "CNY").toString();
+        tvProfileCurrency.setText(currencyType);
+
+        int language = SharedPreferencesHelper.getInstance().getInt("currentLanguage", LanguageEnum.UNDEFINED.getId());
+        if (LanguageEnum.UNDEFINED.getId() == language) {
+            String myLocaleStr = getContext().getResources().getConfiguration().locale.getLanguage();
+            switch (myLocaleStr) {
+                case "zh": {
+                    language = LanguageEnum.CHINESE.getId();
+                    break;
+                }
+                case "en": {
+                    language = LanguageEnum.ENGLISH.getId();
+                    break;
+                }
+                default: {
+                    language = LanguageEnum.ENGLISH.getId();
+                }
+            }
+        }
+        if (LanguageEnum.CHINESE.getId() == language) {
+
+            tvProfileLanguage.setText(getString(R.string.language_cn));
+        } else {
+            tvProfileLanguage.setText(getString(R.string.language_en));
+        }
+
     }
 
     @Override
@@ -87,26 +168,20 @@ public class BPProfileHomeFragment extends BaseFragment{
         initUI();
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        isWeChatBind();
+    }
+
     private void initUI() {
-        if(SharedPreferencesHelper.getInstance().getInt("bumoNode",Constants.DEFAULT_BUMO_NODE)== BumoNodeEnum.TEST.getCode()){
-            mCurrentTestNetTipsTv.setText(getString(R.string.current_test_message_txt));
-            mMeLinearLayout.setBackgroundResource(R.mipmap.ic_me_header_bg_test_net);
-        }
-        userNickTx.setText(currentAccNick);
         mVersionNameTv.setText(CommonUtil.packageName(getContext()));
-        if(userNickTx.getWidth() > 260){
-            userNickTx.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT,Gravity.LEFT));
-        }
+
     }
 
     private void setListener() {
-        mChangePwdRL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                gotoChangePwdFragment();
-            }
-        });
-        mManageWalletRl.setOnClickListener(new View.OnClickListener() {
+        nodeSettingRl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 gotoManageWalletFragment();
@@ -124,88 +199,200 @@ public class BPProfileHomeFragment extends BaseFragment{
                 gotoSettingFragment();
             }
         });
-        mAddressBookRl.setOnClickListener(new View.OnClickListener() {
+        languageLL.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                gotoAddressBookFragment();
+                goLanguageFragment();
             }
         });
-        mProfileAvatarIv.setOnClickListener(new View.OnClickListener() {
+
+
+//        }
+        mVersionRl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new BPAboutUsFragment());
+            }
+        });
+
+        llProfileIdentity.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle argz = new Bundle();
-                argz.putString("accName",currentAccNick);
+                argz.putString("accName", currentAccNick);
                 BPUserInfoFragment bpUserInfoFragment = new BPUserInfoFragment();
                 bpUserInfoFragment.setArguments(argz);
                 startFragment(bpUserInfoFragment);
             }
         });
+        ivProfileAddressManage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new BPAddressBookFragment());
+            }
+        });
 
-        int hiddenFunctionStatus = sharedPreferencesHelper.getInt("hiddenFunctionStatus",HiddenFunctionStatusEnum.DISABLE.getCode());
-        if(HiddenFunctionStatusEnum.DISABLE.getCode() == hiddenFunctionStatus){
-            mVersionRl.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    straightClick();
-                }
-            });
-        }
+        ivProfileWalletManage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new BPWalletsHomeFragment());
+            }
+        });
 
+        llProfileProtocol.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startFragment(new BPUserTermsFragment());
+            }
+        });
+
+        wxBindTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                bindWeChat();
+            }
+        });
     }
 
-    long[] mHits = new long[CLICKCOUNTS];
-    public void straightClick(){
-        // Listening to the straight click 5 times
-        System.arraycopy(mHits, 1, mHits, 0, mHits.length - 1);
-        mHits[mHits.length - 1] = SystemClock.uptimeMillis();
-        if(mHits[0] > SystemClock.uptimeMillis() - DURATION){
 
-            new QMUIDialog.MessageDialogBuilder(getActivity())
-                    .setMessage(getString(R.string.switch_test_net_message_txt))
-                    .addAction(getString(R.string.no_txt), new QMUIDialogAction.ActionListener() {
-                        @Override
-                        public void onClick(QMUIDialog dialog, int index) {
-                            dialog.dismiss();
-                        }
-                    })
-                    .addAction(getString(R.string.yes_txt), new QMUIDialogAction.ActionListener() {
-                        @Override
-                        public void onClick(QMUIDialog dialog, int index) {
-                            SharedPreferencesHelper.getInstance().save("hiddenFunctionStatus",HiddenFunctionStatusEnum.ENABLE.getCode());
-                            SharedPreferencesHelper.getInstance().save("bumoNode", BumoNodeEnum.TEST.getCode());
-                            BPApplication.switchNetConfig(BumoNodeEnum.TEST.getName());
-                            dialog.dismiss();
-                            startFragment(new BPSettingFragment());
-                        }
-                    })
-                    .setCanceledOnTouchOutside(false)
-                    .create().show();
-        }
-    }
-
-    private void initData(){
+    private void initData() {
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
         currentAccNick = sharedPreferencesHelper.getSharedPreference("currentAccNick", "").toString();
+        userNickTx.setText(currentAccNick);
+        identityId = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
+        identityAddress = spHelper.getSharedPreference("currentAccAddr", "").toString();
+        profileAddressTv.setText(AddressUtil.anonymous(identityId));
+
+
+        int isStart = (int) spHelper.getSharedPreference(ConstantsType.IS_START_CUSTOM_SERVICE, 0);
+        if (isStart == CustomNodeTypeEnum.STOP.getServiceType()) {
+            nodeSettingRl.setVisibility(View.VISIBLE);
+        } else if (isStart == CustomNodeTypeEnum.START.getServiceType()) {
+            nodeSettingRl.setVisibility(View.GONE);
+        }
+        queryBindState();
+        CommonUtil.setHeadIvRes(identityAddress, identityHeadRiv, spHelper);
     }
 
 
-    private void gotoChangePwdFragment(){
+    private void isWeChatBind() {
+
+        String bindState = (String) spHelper.getSharedPreference(ConstantsType.BIND_WECHAT_STATE, "");
+        LogUtils.e("bindWechat resume");
+        if (bindState.equals(WXBindEnum.BIND_WECHAT.getCode())) {//bind
+            setWechatInfo();
+        }
+
+    }
+
+    private void setWechatInfo() {
+
+
+        String wxHeadImgUrl = (String) spHelper.getSharedPreference(ConstantsType.WX_HEAD_IMG_URL, "");
+        if (!wxHeadImgUrl.isEmpty()) {
+            Glide.with(mContext)
+                    .load(wxHeadImgUrl)
+                    .into(identityHeadRiv);
+
+            wxBindTv.setText(R.string.wx_is_binding);
+            wxBindTv.setTextColor(getResources().getColor(R.color.app_txt_color_gray));
+            wxBindTv.setClickable(false);
+        }
+    }
+
+    private void queryBindState() {
+        WeChatService weChatService = RetrofitFactory.getInstance().getRetrofit().create(WeChatService.class);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put(ConstantsType.IDENTITY_ADDRESS, WalletCurrentUtils.getIdentityAddress(spHelper));
+        weChatService.getWalletIdentityInfo(map).enqueue(new Callback<ApiResult<UserInfoModel>>() {
+            @Override
+            public void onResponse(Call<ApiResult<UserInfoModel>> call, Response<ApiResult<UserInfoModel>> response) {
+                ApiResult<UserInfoModel> body = response.body();
+                if (body == null) {
+                    return;
+                }
+
+                if (ExceptionEnum.SUCCESS.getCode().equals(body.getErrCode())) {
+                    UserInfoModel data = body.getData();
+                    String isBindWx = data.getIsBindWx();
+                    if (WXBindEnum.BIND_WECHAT.getCode().equals(isBindWx)) {
+
+                        String wxHeadImgUrl = data.getWxInfo().getHeadImgUrl();
+                        if (!TextUtils.isEmpty(wxHeadImgUrl)) {
+                            spHelper.put(ConstantsType.WX_HEAD_IMG_URL, wxHeadImgUrl);
+                        }
+                        spHelper.put(ConstantsType.BIND_WECHAT_STATE, isBindWx);
+                        setWechatInfo();
+
+                    } else if (WXBindEnum.UNBIND_WECHAT.getCode().equals(isBindWx)) {
+                        spHelper.put(ConstantsType.BIND_WECHAT_STATE, isBindWx);
+                    }
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ApiResult<UserInfoModel>> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    private void bindWeChat() {
+
+        SendAuth.Req req = new SendAuth.Req();
+        req.scope = ConstantsType.WX_SCOPE;
+        req.state = ConstantsType.WX_STATE;
+        boolean isWechat = mApplication.getWxApi().sendReq(req);
+
+
+
+        if (!isWechat) {
+            DialogUtils.showMessageNoTitleDialog(mContext, R.string.wechat_down_load_info);
+        }
+
+//        DialogUtils.showConfirmNoTitleDialog(mContext,
+//                getString(R.string.dialog_bind_wx_info),
+//                getString(R.string.wachat_bind),
+//                new DialogUtils.KnowListener() {
+//                    @Override
+//                    public void Know() {
+//
+//                    }
+//                });
+
+
+    }
+
+    private void gotoChangePwdFragment() {
         startFragment(new BPChangePwdFragment());
     }
 
-    private void gotoHelpFeedbackFragment(){
+    private void gotoHelpFeedbackFragment() {
         startFragment(new BPHelpFeedbackFragment());
     }
 
-    private void gotoSettingFragment(){
-        startFragment(new BPSettingFragment());
+    private void gotoSettingFragment() {
+        startFragment(new BPCurrencyFragment2());
     }
 
     private void gotoManageWalletFragment() {
-        startFragment(new BPWalletsHomeFragment());
+        startFragment(new BPNodeSettingFragment());
     }
 
-    private void gotoAddressBookFragment() {
-        startFragment(new BPAddressBookFragment());
+    private void goLanguageFragment() {
+        startFragment(new BPLanguageFragment());
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        LogUtils.e("bpProfileHomeFragment");
+
     }
 }

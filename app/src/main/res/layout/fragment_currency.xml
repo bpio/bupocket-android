@@ -11,16 +11,12 @@
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/monetary_title_txt"
-            android:theme="@style/BPViewTitle" />
 
         <com.qmuiteam.qmui.widget.grouplist.QMUIGroupListView
             android:id="@+id/monetaryLv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            />
 
     </LinearLayout>
 

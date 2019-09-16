@@ -1,38 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
+    android:background="@drawable/shape_corner"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/common_left_right_padding"
     android:paddingTop="20dp"
-    android:paddingBottom="20dp"
-    android:background="@drawable/shape_corner">
+    android:paddingRight="@dimen/common_left_right_padding">
+
     <TextView
         android:id="@+id/addressNameTv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
         android:textColor="@color/app_color_black"
-        tools:text="火币充值地址"/>
+        android:textStyle="bold"
+        android:textSize="15sp"
+        tools:text="火币充值地址" />
 
     <TextView
         android:id="@+id/addressTv"
-        android:layout_marginTop="12dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:textColor="@color/app_txt_color_gray"
-        tools:text="buQhSMWw···4Bo73c8C"/>
+        android:layout_marginTop="10dp"
+        android:textColor="@color/app_txt_color_gray_2"
+        android:textSize="14sp"
+        tools:text="buQhSMWw···4Bo73c8C" />
 
     <TextView
         android:id="@+id/addressDescribeTv"
-        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="15sp"
-        android:textColor="@color/app_txt_color_gray"
-        tools:text="gatez交易所充值账户地址"/>
+        android:layout_marginTop="5dp"
+        android:textColor="@color/app_txt_color_gray_8"
+        android:textSize="13sp"
+        tools:text="gatez交易所充值账户地址" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="20dp"
+        android:background="@color/gray_line" />
 
 </LinearLayout>

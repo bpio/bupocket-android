@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import com.bupocket.BPMainActivity;
 import com.bupocket.R;
+import com.bupocket.utils.ThreadManager;
 
 public class LauncherActivity extends Activity {
     private static final int GOTO_MAIN_ACTIVITY = 0;
@@ -18,7 +19,7 @@ public class LauncherActivity extends Activity {
         }
         setContentView(R.layout.launcher_activity);
 
-        new Thread(new Runnable() {
+        Runnable launcherRunnable = new Runnable() {
             @Override
             public void run() {
                 try {
@@ -31,10 +32,8 @@ public class LauncherActivity extends Activity {
                     e.printStackTrace();
                 }
             }
-        }).start();
-
-
-
+        };
+        ThreadManager.getInstance().execute(launcherRunnable);
 
     }
 }

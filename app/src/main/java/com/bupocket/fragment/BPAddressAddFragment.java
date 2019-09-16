@@ -1,6 +1,7 @@
 package com.bupocket.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.Constants;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.AddressBookService;
 import com.bupocket.http.api.RetrofitFactory;
@@ -22,8 +24,10 @@ import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -118,9 +122,21 @@ public class BPAddressAddFragment extends BaseFragment {
         }else if(!addressFlag()){
             return;
         }
+        if (!addressRepeat()){
+            return;
+        }
+        
+        
         final String addressName = mAddressNameEt.getText().toString().trim();
         final String describe = mAddressDescribeEt.getText().toString().trim();
         final String linkmanAddress = mNewAddressEt.getText().toString().trim();
+
+
+        final QMUITipDialog txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                .setTipWord(getResources().getString(R.string.user_info_backup_loading))
+                .create();
+        txSendingTipDialog.show();
 
         AddressBookService addressBookService = RetrofitFactory.getInstance().getRetrofit().create(AddressBookService.class);
         Call<ApiResult> call;
@@ -134,6 +150,7 @@ public class BPAddressAddFragment extends BaseFragment {
             @Override
             public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
                 ApiResult respDto = response.body();
+                txSendingTipDialog.dismiss();
                 if(null != respDto){
                     if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                         Toast.makeText(getContext(),getString(R.string.save_address_success_message_txt),Toast.LENGTH_SHORT).show();
@@ -151,9 +168,26 @@ public class BPAddressAddFragment extends BaseFragment {
 
             @Override
             public void onFailure(Call<ApiResult> call, Throwable t) {
+                txSendingTipDialog.dismiss();
                 Toast.makeText(getContext(),getString(R.string.save_address_failure_message_txt),Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private boolean addressRepeat() {
+
+        Bundle arguments = getArguments();
+        if (arguments!=null) {
+            ArrayList<String> bookData = arguments.getStringArrayList("bookData");
+            for (int i = 0; i < bookData.size(); i++) {
+                String book = bookData.get(i);
+                if (mAddressNameEt.getText().toString().trim().equals(book)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 
     private boolean addressNameFlag() {
@@ -204,12 +238,26 @@ public class BPAddressAddFragment extends BaseFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (null != data) {
+            if (Constants.REQUEST_IMAGE == resultCode) {
+                if (null != data) {
+                    String destAddress = data.getStringExtra("resultFromBitmap");
+                    destAddress = destAddress.replace(Constants.VOUCHER_QRCODE, "");
+                    mNewAddressEt.setText(destAddress);
+                    return;
+                }
+            }
+        }
+
+
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (result.getContents() == null) {
                 Toast.makeText(getActivity(), R.string.wallet_scan_cancel, Toast.LENGTH_LONG).show();
             } else {
                 String destAddress = result.getContents();
+                destAddress=destAddress.replace(Constants.VOUCHER_QRCODE,"");
                 mNewAddressEt.setText(destAddress);
             }
         } else {

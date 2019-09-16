@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao' // apply plugin
 def cmd = 'git rev-list HEAD --count'
 def gitVersion = 100 //cmd.execute().text.trim().toInteger()
 
@@ -54,6 +55,13 @@ android {
     }
 }
 
+greendao {
+    schemaVersion 14
+    daoPackage 'com.bupocket.database.greendao'
+    targetGenDir 'src/main/java'
+    generateTests false
+    targetGenDirTests 'src/main/java'
+}
 
 
 dependencies {
@@ -102,13 +110,13 @@ dependencies {
     implementation 'com.orhanobut:logger:1.15'
     implementation 'org.greenrobot:eventbus:3.1.1'
     implementation 'com.github.ksoichiro:android-observablescrollview:1.6.0'
-
     implementation 'com.nineoldandroids:library:2.4.0'
     implementation 'com.melnykov:floatingactionbutton:1.0.7'
-
-
     implementation 'com.umeng.sdk:common:1.5.0'
     implementation 'com.umeng.sdk:analytics:7.5.0'
-
     implementation 'com.makeramen:roundedimageview:2.3.0'
+
+    implementation 'org.greenrobot:greendao:3.2.2'
+
+//    implementation 'me.jessyan:arms:2.5.2'
 }

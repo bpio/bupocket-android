@@ -50,19 +50,13 @@ public class CaptureActivity extends BaseFragmentActivity {
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleUtil.attachBaseContext(base));
     }
-    /**
-     * 条形码扫描管理器
-     */
+
     private CaptureManager mCaptureManager;
 
-    /**
-     * 条形码扫描视图
-     */
+
     private DecoratedBarcodeView mBarcodeView;
 
-    /**
-     * 标题栏
-     */
+
     private QMUITopBar mTopbar;
 
     @Override
@@ -82,9 +76,6 @@ public class CaptureActivity extends BaseFragmentActivity {
         mCaptureManager.decode();
     }
 
-    /**
-     * 初始化窗口
-     */
     private void initWindow() {
         // API_19及其以上透明掉状态栏
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT){
@@ -93,9 +84,7 @@ public class CaptureActivity extends BaseFragmentActivity {
         }
     }
 
-    /**
-     * 初始化标题栏
-     */
+
     private void initToolbar() {
         mTopbar = findViewById(R.id.topbar);
         mTopbar.setBackgroundAlpha(0);
@@ -152,17 +141,14 @@ public class CaptureActivity extends BaseFragmentActivity {
         mCaptureManager.onSaveInstanceState(outState);
     }
 
-    /**
-     * 权限处理
-     */
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
         mCaptureManager.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-    /**
-     * 按键处理
-     */
+
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         return mBarcodeView.onKeyDown(keyCode, event) || super.onKeyDown(keyCode, event);

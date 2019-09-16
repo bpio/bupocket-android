@@ -1,5 +1,6 @@
 package com.bupocket.fragment;
 
+import android.annotation.SuppressLint;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -15,7 +16,11 @@ import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.activity.BPWebActivity;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.AdvertisingEnum;
+import com.bupocket.enums.BumoNodeEnum;
+import com.bupocket.enums.CustomNodeTypeEnum;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.fragment.discover.BPBannerFragment;
 import com.bupocket.http.api.AdvertisingService;
@@ -26,6 +31,7 @@ import com.bupocket.model.AdvertisingModel;
 import com.bupocket.utils.AddressUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.LogUtils;
+import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.widget.QMUITopBar;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
@@ -80,11 +86,6 @@ public class BPTransactionTimeoutFragment extends BaseFragment {
                     if (AdvertisingEnum.APP.getCode().equals(ad.getType())) {
                         CommonUtil.goWeChat(getContext(), WeChat_APPID, XB_YOUPING_USERNAME);
                     } else if (AdvertisingEnum.H5.getCode().equals(ad.getType())) {
-//                        BPBannerFragment fragment = new BPBannerFragment();
-//                        Bundle args = new Bundle();
-//                        args.putString("url",ad.getUrl());
-//                        fragment.setArguments(args);
-//                        startFragment(fragment);
 
                         Intent intent = new Intent();
                         intent.setClass(mContext, BPWebActivity.class);
@@ -101,13 +102,27 @@ public class BPTransactionTimeoutFragment extends BaseFragment {
         getAdInfo();
     }
 
+    @SuppressLint("StringFormatInvalid")
     private void init() {
 
         txHash = getArguments().getString("txHash", "");
         if (txHash != null) {
             tvTimeoutHash.setText(AddressUtil.anonymous(txHash, 8));
         }
-        tvTransactionInfo.setText(Html.fromHtml(getString(R.string.transaction_timeout_info)));
+
+
+
+
+        int isStart = (int) spHelper.getSharedPreference(ConstantsType.IS_START_CUSTOM_SERVICE, 0);
+
+        if (isStart == CustomNodeTypeEnum.START.getServiceType()||
+                SharedPreferencesHelper.getInstance().getInt("bumoNode", Constants.DEFAULT_BUMO_NODE) == BumoNodeEnum.TEST.getCode()) {
+            tvTransactionInfo.setText(Html.fromHtml(String.format(getString(R.string.transaction_timeout_info),Constants.BUMO_TIMEOUT_TEST_URL)));
+        }else{
+            tvTransactionInfo.setText(Html.fromHtml(String.format(getString(R.string.transaction_timeout_info),Constants.BUMO_TIMEOUT_MAIN_URL)));
+        }
+
+
         initTopBar();
     }
 

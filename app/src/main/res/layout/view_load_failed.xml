@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/llLoadFailed"
+    android:id="@+id/loadFailedLL"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
@@ -23,9 +23,10 @@
         android:textSize="15sp" />
 
     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-        android:id="@+id/copyCommandBtn"
+        android:id="@+id/reloadBtn"
+        style="@style/BPComGreenBorderWhiteBgGreenTextBtn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginLeft="100dp"
         android:layout_marginTop="40dp"
         android:layout_marginRight="100dp"
@@ -34,10 +35,9 @@
         android:gravity="center"
         android:padding="10dp"
         android:text="@string/reload_txt"
-        android:textColor="@color/qmui_config_color_white"
-        app:qmui_backgroundColor="@color/app_color_main"
+        android:textSize="16sp"
         app:qmui_borderColor="@color/app_color_main"
-        app:qmui_radius="4dp" />
+        app:qmui_radius="4dp"/>
 
 
 </LinearLayout>

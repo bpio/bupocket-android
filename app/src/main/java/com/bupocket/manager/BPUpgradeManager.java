@@ -1,12 +1,15 @@
 package com.bupocket.manager;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentActivity;
+
 import com.alibaba.fastjson.JSON;
 import com.bupocket.R;
 import com.bupocket.common.Constants;
 import com.bupocket.enums.LanguageEnum;
 import com.bupocket.http.api.dto.resp.GetCurrentVersionRespDto;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.UpdateAppHttpUtil;
 import com.vector.update_app.UpdateAppBean;
@@ -28,6 +31,7 @@ public class BPUpgradeManager {
         if(bpUpgradeManager == null){
             bpUpgradeManager = new BPUpgradeManager(mActivity);
         }
+        bpUpgradeManager.mActivity=mActivity;
         return bpUpgradeManager;
     }
 
@@ -43,6 +47,7 @@ public class BPUpgradeManager {
                 .checkNewApp(new UpdateCallback(){
                     @Override
                     protected UpdateAppBean parseJson(String json) {
+                        LogUtils.e("downData"+json);
                         int language = SharedPreferencesHelper.getInstance().getInt("currentLanguage", LanguageEnum.UNDEFINED.getId());
                         if(language == LanguageEnum.UNDEFINED.getId()){
                             String myLocaleStr = Locale.getDefault().getLanguage();
@@ -81,7 +86,9 @@ public class BPUpgradeManager {
                         } else {
 
                         }
+
                         updateAppManager.showDialogFragment();
+
                     }
                     /**
                      * 网络请求之前

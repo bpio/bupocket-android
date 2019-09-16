@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/collectionLL"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/collection_background"
+    android:backgroundTintMode="src_over"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fitsSystemWindows="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp">
+
+        <ImageView
+            android:id="@+id/backIv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:paddingLeft="13dp"
+            android:paddingRight="20dp"
+            android:src="@mipmap/ic_left_back_white"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/currentWalletNameTv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:lines="1"
+            android:text="@string/receive_qr_txt"
+            android:textColor="@color/app_color_white"
+            android:textSize="20sp" />
+
+        <ImageView
+            android:id="@+id/shareQrCodeIv"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:paddingRight="10dp"
+            android:src="@mipmap/collection_share" />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="27dp"
+            android:layout_marginTop="35dp"
+            android:layout_marginRight="27dp"
+            android:background="@drawable/shape_corner_white"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/walletNameTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:textColor="@color/app_color_black"
+                android:textSize="16sp"
+                tools:text="walletName" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/walletAddressTv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textColor="@color/app_txt_color_gray_2"
+                    tools:text="1111111111111"
+                    android:textSize="12sp" />
+
+                <ImageView
+                    android:id="@+id/copyWalletAddressIv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="2dp"
+                    android:background="@mipmap/ic_copy_gray" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_dash_line" />
+
+
+            <ImageView
+                android:id="@+id/addressQrCodeIv"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/collection_address"
+                android:textColor="#B2B2B2"
+                android:textSize="15sp" />
+
+
+        </LinearLayout>
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/walletIconRIV"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_centerHorizontal="true"
+            android:background="@mipmap/identity_head_normal"
+            app:riv_oval="true" />
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="60dp"
+        android:background="@mipmap/collection_logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="35dp"
+        android:text="@string/splash_txt0"
+        android:textColor="#6A71F0"
+        android:textSize="12sp" />
+
+
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

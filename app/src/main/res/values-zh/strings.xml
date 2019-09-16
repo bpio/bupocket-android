@@ -14,16 +14,14 @@
     <string name="wallet_create_create_btn_txt">立即创建</string>
     <string name="wallet_create_recover_btn_txt">恢复身份</string>
     <string name="hint_wallet_create_form_input_identity_name">请创建身份名</string>
-    <string name="hint_wallet_create_form_input_password">请设置密码</string>
-    <string name="hint_wallet_create_form_input_rePassword">请再次确认密码</string>
+
 
     <string name="wallet_create_form_input_identity_name_empty">请输入身份名</string>
     <string name="wallet_create_form_input_password_empty">请输入密码</string>
     <string name="wallet_create_form_input_rePassword_empty">请再次确认密码</string>
-    <string name="wallet_create_form_error1">密码与确认密码不一致</string>
-    <string name="wallet_create_form_error2">6~30个字符，建议混合大小写字母加数字</string>
-    <string name="wallet_create_form_error4">身份名只允许输入字母、汉字、数字、下划线，并且长度不能超过20个字符</string>
-
+    <string name="wallet_create_form_error1">两次密码输入不一致</string>
+    <string name="wallet_create_form_error4">身份名只允许输入字母/汉字/数字/下划线，并且长度不能超过20个字符</string>
+    <string name="wallet_create_form_error5">钱包名称只允许输入字母/汉字/数字/下划线，并且长度不能超过20个字符</string>
     <string name="wallet_create_creating_txt">创建中</string>
     <string name="wallet_create_created_txt">创建成功</string>
     <string name="wallet_create_ok_btn">确认</string>
@@ -33,13 +31,11 @@
     <string name="otc_top_bar_sell_txt">出售</string>
     <string name="view_title_backup_wallet">备份钱包</string>
     <string name="view_title_create_wallet_identity">创建身份</string>
-    <string name="create_wallet_prompt_dialog_title">温馨提示</string>
-    <string name="create_wallet_prompt_txt1">密码用于加密保护私钥，以及转账、调用合约等，所以强度非常重要。
-        小布口袋不存储密码，也无法帮您找回，请务必牢记。</string>
-    <string name="create_wallet_prompt_txt2">6~30个字符，建议混合大小写字母加数字</string>
-    <string name="backup_wallet_txt1">没有妥善备份就无法保障资产安全，删除程序或钱包后，你需要备份文件来恢复钱包</string>
+
+
     <string name="backup_wallet_txt2">请确保在四周无人，没有摄像头的安全环境下备份</string>
     <string name="backup_wallet_btn_txt">备份助记词</string>
+
     <string name="view_title_backup_mneonic_code">备份助记词</string>
     <string name="skip_backup_mneonic_btn_code">跳过</string>
     <string name="no_backup_mneonic_btn_code">暂不备份</string>
@@ -67,7 +63,6 @@
     <string name="tx_status_runing">处理中</string>
 
 
-    <string name="tx_status_success_txt1">转账成功</string>
     <string name="tx_status_fail_txt1">转账失败</string>
 
 
@@ -75,26 +70,15 @@
     <string name="tx_timeout_txt1">请求超时</string>
 
     <string name="password_comfirm_dialog_title">密码确认</string>
-    <string name="password_comfirm_dialog_sub_txt">请填写钱包密码以确认转出</string>
-    <string name="password_comfirm_dialog_to_backup">请填写身份密码以确认备份</string>
-    <!-- 恢复身份 -->
-    <string name="recover_wallet_title">恢复身份</string>
-    <string name="recover_edit_mneonic_code_hint">输入助记词，用空格分割</string>
-    <string name="recover_mneonic_input_error">助记词输入有误，请重新输入</string>
-    <string name="recover_edit_new_wallet_name_hint">请输入新身份名</string>
-    <string name="recover_input_wallet_name_error">只允许输入字母、汉字、数字、下划线。长度为20个字符</string>
-    <string name="recover_set_pwd_hint">请设置密码</string>
-    <string name="recover_set_pwd_error">6~30个字符，建议混合大小写字母加数字</string>
-    <string name="recover_confirm_pwd_hint">请确认密码</string>
-    <string name="recover_confirm_pwd_error">密码与确认密码不一致</string>
-    <string name="recover_wallet_next_btn">恢复</string>
-    <string name="recover_wallet_reloading">恢复中</string>
-    <string name="recover_wallet_error_tip">助记词输入有误，请重新输入</string>
+    <string name="password_comfirm_dialog_sub_txt">请填写安全密码以确认交易</string>
+    <string name="password_comfirm_dialog_send_txt">请填写安全密码以确认转出</string>
+
 
     <string name="view_title_wallet_sendBU">转账</string>
 
     <string name="send_note_title">备注</string>
     <string name="send_fee_title">最多支付交易费用(BU)</string>
+    <string name="send_fee_title_no_bu">最多支付交易费用</string>
     <string name="send_input_receiver_address_hint">请输入接收方地址</string>
     <string name="no_backup_tips_btn">请备份</string>
 
@@ -108,7 +92,6 @@
     <string name="send_tx_handleing_txt">处理中</string>
     <string name="send_tx_sign_txt">签名中</string>
     <string name="send_tx_verify">校验中</string>
-
 
 
     <string name="send_tx_bu_not_enough">BU余额不足</string>
@@ -125,7 +108,7 @@
     <string name="tx_to">接收账户</string>
     <string name="tx_fee">交易费</string>
     <string name="tx_memo">备注</string>
-    <string name="tx_hash">交易Hash</string>
+    <string name="tx_hash">交易哈希</string>
     <string name="tx_time">交易时间</string>
     <string name="tx_value">数量</string>
     <string name="tx_value_bu">数量(BU)</string>
@@ -142,7 +125,7 @@
 
     <!-- 异常 -->
     <string name="create_wallet_fail">创建失败</string>
-    <string name="checking_password_error">密码错误</string>
+    <string name="checking_password_error">安全密码输入有误</string>
     <string name="geting_account_bu_balance">获取中</string>
     <string name="check_mneonic_code_err1">助记词顺序有误，请您核对后更正</string>
     <string name="next_key_down_err">再按一次退出程序</string>
@@ -153,7 +136,7 @@
     <string name="qr_pic_name_text">钱包地址二维码</string>
     <string name="qr_copy_success_message">已复制到剪切板</string>
     <!-- 我的 -->
-    <string name="change_the_password_txt">修改身份密码</string>
+
     <string name="help_txt">帮助与反馈</string>
     <string name="version_txt">版本号</string>
     <string name="language_txt">多语言</string>
@@ -219,9 +202,10 @@
     <string name="user_info_wallet_id">身份 ID</string>
     <string name="user_info_backup_current_wallet">备份身份</string>
     <string name="user_info_logout">退出当前身份</string>
+    <string name="user_info_logout_title">退出当前身份</string>
     <string name="user_info_logout_loading">退出中</string>
     <string name="user_info_backup_loading">加载中</string>
-    <string name="user_info_logout_notice">即将移除身份，请确保身份已备份</string>
+    <string name="user_info_logout_notice">即将退出当前身份，请确保身份已备份</string>
     <string name="user_info_logout_warning">警告：若未妥善备份，退出后将无法找回身份，请慎重处理该操作</string>
 
     <string name="common_dialog_cancel">取消</string>
@@ -240,7 +224,7 @@
     <string name="set_success">设置成功</string>
     <string name="handling">处理中...</string>
     <string name="i_knew_btn_txt">我知道了</string>
-    <string name="network_error_msg">您的网络好像不太给力，请稍后再试</string>
+    <string name="network_error_msg"> 网络不太给力，请检查您的网络</string>
     <string name="capture_activity_label">自定义扫描界面</string>
     <string name="capture_activity_title">扫一扫</string>
     <string name="capture_activity_cancel">关闭</string>
@@ -276,7 +260,7 @@
     <string name="srl_header_secondary">释放进入二楼</string>
     <string name="srl_header_update">上次更新 M-d HH:mm</string>
 
-    <string name="total_assets_title_txt">总资产估值</string>
+    <string name="total_assets_title_txt">资产估值</string>
     <string name="assets_add_txt">添加资产</string>
     <string name="my_assets_title_txt">我的资产</string>
     <string name="add_token_search_hint">请输入完整的资产代码</string>s
@@ -337,7 +321,7 @@
     <string name="currency_usd_txt">USD</string>
     <string name="currency_jpy_txt">JPY</string>
     <string name="currency_krw_txt">KRW</string>
-    <string name="switch_test_net_message_txt">是否切换为测试网</string>
+    <string name="switch_test_net_message_txt">确认切换为测试网吗？</string>
     <string name="switch_main_net_message_txt">您已关闭测试网</string>
     <string name="yes_txt">是</string>
     <string name="no_txt">否</string>
@@ -346,22 +330,21 @@
 
     <string name="receive_qr_txt">收款码</string>
     <string name="safety_tips_title">安全提示</string>
-    <string name="safety_tips_content_txt">您的钱包助记词尚未备份，为防止忘记密码、删除App或丢失手机等情况导致资产损失，请务必备份助记词</string>
+    <string name="safety_tips_content_txt">您当前身份下的钱包助记词尚未备份，为防止忘记密码、删除/卸载APP或丢失手机等情况导致资产损失，请务必妥善备份助记词。</string>
     <string name="backup_immediately_txt">立即备份</string>
     <string name="search_result_not_found">未找到搜索结果</string>
     <string name="switch_to_test_net_message_txt">您已开启测试网</string>
     <string name="issue_token_password_confirm_txt">请填写钱包密码以确认发行</string>
     <string name="recover_identity_confirm_message_txt">是否确认更新密码及导入身份</string>
 
-    <string name="wallet_management_txt">钱包管理</string>
+
     <string name="current_identity_wallet_title_txt">当前身份下的钱包</string>
-    <string name="imported_wallet_title_txt">导入的钱包</string>
     <string name="manage_txt">管理</string>
     <string name="export_keystore_txt">导出Keystore</string>
     <string name="export_private_txt">导出私钥</string>
     <string name="delete_wallet_txt">删除钱包</string>
     <string name="change_wallet_name_title">更改钱包名称</string>
-    <string name="export_keystore_tips_txt">请复制keystone文件到安全的地方保存</string>
+    <string name="export_keystore_tips_txt">请复制keystore文件到安全的地方保存</string>
     <string name="copy_keystore_txt">复制Keystore</string>
     <string name="copy_private_txt">复制私钥</string>
     <string name="export_private_tips_txt">为了保证您的账户资产安全，请注意周围是否有他人在浏览您的隐私信息！</string>
@@ -385,12 +368,11 @@
     <string name="start_import_wallet">开始导入</string>
     <string name="understand_mnemonic_txt">了解助记词</string>
     <string name="wallet_import_keystore_tips_txt">复制粘贴BUMO官方钱包Keystore文件内容至输入框</string>
-    <string name="wallet_import_keystore_et_hint_txt">Keystore文件内容</string>
-    <string name="password_for_keystore_txt">Keystore密码</string>
-    <string name="password_for_keystore_et_hint_txt">请输入原Keystore文件内容的密码</string>
+
+
     <string name="understand_keystore_txt">了解Keystore</string>
     <string name="wallet_import_private_tips_txt">粘贴私钥（Private Key）至输入框内</string>
-    <string name="wallet_import_private_et_hint_txt">私钥（Private Key）</string>
+
     <string name="understand_private_txt">了解私钥</string>
     <string name="import_success_message_txt">钱包导入成功</string>
     <string name="error_already_import_meaaage_txt">该钱包已导入，无需重复导入</string>
@@ -446,14 +428,14 @@
     <string name="my_votes_number_s">我的投票数</string>
     <string name="confirm_transfer_title_txt">确认交易</string>
 
-    <string name="vote_record_txt">投票记录</string>
+
     <string name="vote_txt">投</string>
     <string name="withdraw_vote_txt">撤</string>
     <string name="status_txt">状态</string>
     <string name="time_txt">时间</string>
     <string name="revoke_no_vote_error_message_txt">暂无可撤销的票数</string>
     <string name="revoke_vote_tx_details_txt">撤销对\"%1$s\"的投票</string>
-
+    <string name="revoke_vote_tx_details_txt_en">Cancel votes to\"%1$s\"</string>
 
 
     <string name="details_txt">详情>></string>
@@ -470,8 +452,6 @@
     <string name="scan_qr_login_management_system_note_txt">即将登录%1$s，请确认是本人操作。</string>
     <string name="address_be_made_public_note_txt">您的账户地址将被公开</string>
     <string name="confirm_login_txt">确认登录</string>
-
-
 
 
     <string name="weixin_txt">微信</string>
@@ -493,7 +473,6 @@
     <string name="ecological_node">生态节点</string>
 
     <string name="cancel_vote">撤销投票</string>
-    <string name="vote_record">投票记录</string>
 
     <string name="invite_vote_txt">邀请投票</string>
 
@@ -526,14 +505,13 @@
 
 
     <string name="transaction_timeout">请求已超时，请重新操作。</string>
-    <string name="reload_txt">重新加载</string>
+    <string name="reload_txt">刷新试试</string>
 
 
     <string name="transaction_success_title">交易成功</string>
     <string name="transaction_success_title_info">链上交易已成功</string>
     <string name="transaction_process_title">业务数据处理中</string>
-    <string name="transaction_process_title_info">业务数据根据链上交易元数据进行分析处理，预计
-20秒内处理完成</string>
+    <string name="transaction_process_title_info">业务数据根据链上交易元数据进行分析处理，预计20秒内处理完成</string>
     <string name="transaction_refresh_title">数据已刷新</string>
     <string name="transaction_success_hint">温馨提示：\n节点的投票、撤票等操作链上交易成功后，相关数据的统计有延迟，预计30秒内完成，此为正常现象。</string>
 
@@ -548,9 +526,7 @@
     <string name="error_100055">the contact is already existed</string>
 
 
-
     <string name="error_build_1024">没有权限，请使用委员会钱包进行扫码</string>
-    <string name="error_build_1028">copies is not available</string>
     <string name="error_1031">当前项目已获得目标共建总金额，  您可选择其他项目进行支持</string>
     <string name="error_1032">剩余份数不足，建议您调整支持份数</string>
     <string name="error_1033">您还未支持过此项目，暂不能撤回</string>
@@ -560,17 +536,18 @@
     <string name="error_1038">您已成功撤回，不能重复操作</string>
 
 
-
     <string name="share_close">投票通道还未开启，请在开启后进行分享</string>
 
     <string name="transaction_timeout_title">交易状态</string>
     <string name="transaction_timeout_hint">交易广播成功</string>
-    <string name="transaction_timeout_info">交易广播成功，交易最终状态请复制交易摘要到&lt;font color=\'#02CA71\'>https://explorer.bumo.io&lt;/font>查询</string>
+    <string name="transaction_timeout_info">交易广播成功，交易最终状态请复制交易摘要到&lt;font color=\'#02CA71\'>%1$s&lt;/font>查询</string>
     <string name="transaction_info">交易摘要</string>
 
 
     <string name="build_exit_confirm_title">撤回支持\"%1$s&quot;\"项目</string>
+    <string name="build_exit_confirm_title_en">Withdraw sponsor \"%1$s\" project</string>
     <string name="build_support_confirm_title">支持\"&quot;%1$s&quot;\"项目</string>
+    <string name="build_support_confirm_title_en">Sponsor \"%1$s\" project</string>
     <string name="build_type_support">支持</string>
     <string name="build_type_exit">撤回</string>
     <string name="build_left_copies">剩余&lt;font color=\'#151515\'> %1$s &lt;/font>份</string>
@@ -635,5 +612,268 @@
     <string name="open_youpin_title">免责声明</string>
 
 
+    <!--setting user info-->
+    <string name="setting_user_head_hint">更改钱包头像</string>
+    <string name="settting_user_title">钱包详情</string>
+
+
+    <!--profile -->
+    <string name="profile_currency">计价货币</string>
+    <string name="profile_language">显示语言</string>
+    <string name="profile_node_setting">节点设置</string>
+    <string name="profile_user_protocol">用户协议</string>
+    <string name="profile_user_help">意见反馈</string>
+    <string name="profile_about_us">关于我们</string>
+
+    <string name="user_agreement">小布口袋用户服务协议</string>
+
+
+    <!--collection-->
+    <string name="collection_address">收款地址</string>
+
+
+    <!--createIdentity wallet-->
+    <string name="view_title_create_wallet">创建钱包</string>
+    <string name="start_create_wallet">开始创建</string>
+    <string name="create_wallet_prompt_dialog_title">温馨提示</string>
+    <string name="create_wallet_prompt_txt1">1.安全密码用于加密保护私钥、确认交易转账和调用合约等，强度非常重要，请您务必牢记
+        \n\n2.小布口袋不会存储您的密码
+        \n\n3.安全密码只能修改，无法找回或重置，请务必牢记</string>
+    <string name="create_wallet_prompt_txt3">• 安全密码用于加密保护私钥、确认交易转账和调用合约等，强度非常重要，请您务必牢记</string>
+    <string name="create_wallet_prompt_text1">• 安全密码用于加密保护私钥、确认交易转账和调用合约等，强度非常重要，请您务必牢记</string>
+    <string name="create_wallet_prompt_text2">• 小布口袋不会存储您的密码</string>
+    <string name="create_wallet_prompt_text3">• 安全密码只能修改，无法找回或重置，请务必牢记</string>
+    <string name="create_wallet_prompt_txt2">6~30个字符，建议混合大小写字母加数字</string>
+    <string name="create_wallet_name_err_hint">允许输入字母/汉字/数字/下划线，且不能超过20个字符</string>
+    <string name="create_wallet_pw_err_hint">6-30个字符，大小写字母和数字任意两种组合</string>
+    <string name="view_change_wallet_pw">修改钱包密码</string>
+
+    <string name="wallet_mneonic_error">助记词输入有误</string>
+    <string name="wallet_keystore_error">Keystore无效或安全密码有误</string>
+    <string name="wallet_create_form_error2">密码必须是6-30个字符，大小写字母和数字任意两种的组合</string>
+    <string name="change_the_password_txt">修改安全密码</string>
+    <string name="import_mnemonic_wallet_name">请设置钱包名称</string>
+    <string name="hint_wallet_create_form_input_password">请设置安全密码</string>
+    <string name="imported_wallet_title_txt">创建/导入钱包</string>
+    <string name="imported_wallet_home_title_txt">创建/导入的钱包</string>
+    <!-- recover identity -->
+    <string name="recover_edit_mneonic_code">请填写您的助记词</string>
+    <string name="recover_edit_mneonic_code_hint">12个英文单词，请按空格分隔单词</string>
+    <string name="recover_wallet_title">恢复身份</string>
+    <string name="recover_mneonic_input_error">助记词输入有误</string>
+    <string name="recover_input_wallet_name_error">只允许输入字母、汉字、数字、下划线。长度为20个字符</string>
+    <string name="recover_set_pwd_hint">请设置密码</string>
+    <string name="recover_set_pwd_error">6~30个字符，建议混合大小写字母加数字</string>
+    <string name="recover_confirm_pwd_hint">请确认密码</string>
+    <string name="recover_confirm_pwd_error">两次密码输入不一致</string>
+    <string name="recover_wallet_next_btn">恢复</string>
+    <string name="recover_wallet_reloading">恢复中</string>
+    <string name="recover_wallet_error_tip">助记词输入有误，请重新输入</string>
+    <string name="error_hint">错误提示</string>
+
+
+    <!--backup-->
+    <string name="tv_backup_hint">拥有助记词等于拥有钱包资产的所有权</string>
+    <string name="backup_wallet_care_three">注意事项</string>
+    <string name="backup_wallet_care_three_info">
+        • 禁止截屏，请确保在四周无人、无摄像头的安全环境下进行备份
+        \n\n• 请用纸和笔正确抄写助记词，并妥善保管至隔离网络的安全地方
+        \n\n• 禁止以任何形式或方法将助记词透露或公开，比如邮件、相册等
+        \n\n• 没有妥善备份就无法保障资产安全，删除钱包或卸载程序后，您可以通过助记词来恢复身份/钱包</string>
+    <string name="backup_title">备份助记词</string>
+
+
+    <!--recover wallet-->
+    <string name="wallet_manage">钱包管理</string>
+
+
+    <!--change pwd-->
+    <string name="wallet_info">钱包信息</string>
+    <string name="change_old_pwd">请输入原安全密码</string>
+    <string name="change_old_pwd_hint">请输入当前钱包的安全密码</string>
+    <string name="change_new_pwd">请设置新安全密码</string>
+    <string name="change_new_pwd_confirm">再次确认新安全密码</string>
+    <string name="change_confirm_change">确认修改</string>
+
+
+    <!--setting user info-->
+    <string name="change_wallet_head_title">选择头像</string>
+
+
+    <!--node setting -->
+    <string name="add_node">添加自定义节点</string>
+    <string name="node_setting_title">节点设置</string>
+    <string name="add_node_address_title">请输入有效的节点地址</string>
+    <string name="edit_node_info">编辑</string>
+    <string name="edit_node_address_title">编辑节点地址</string>
+    <string name="confirm_delete_node">确定删除该节点吗？</string>
+    <string name="invalid_node_address">无效的节点地址</string>
+    <string name="node_address_repeat">节点重复，请重新设置</string>
+
+    <!--about us-->
+    <string name="about_us_version_code">当前版本:</string>
+    <string name="version_info">版本日志</string>
+    <string name="version_refresh">版本更新</string>
+    <string name="custom_environment">自定义环境</string>
+
+
+    <!--update app-->
+    <string name="update_app_min_title">新版本内容更新</string>
+    <string name="not_update_app">稍后更新</string>
+    <string name="new_update_app">立即更新</string>
+
+
+    <!--import wallet-->
+    <string name="keystore_hint_title">请填写Keystore文件内容</string>
+    <string name="wallet_import_keystore_et_hint_txt">请填写由BUMO官方钱包生成的Keystore文件</string>
+    <string name="password_for_keystore_et_hint_txt">请输入导出Keystore时使用的安全密码</string>
+    <string name="password_for_keystore_txt">请输入安全密码</string>
+    <string name="wallet_import_private_et_hint_txt">请填写您的私钥</string>
+    <string name="change_wallet_name_hint">用于区分其他钱包，不能超过20个字符</string>
+    <!--createIdentity wallet-->
+    <string name="create_wallet_name_title">请设置钱包名称</string>
+    <string name="recover_wallet_name_title">请设置新的身份名</string>
+
+
+    <!--custom net-->
+    <string name="wallet_service_title">钱包服务</string>
+    <string name="wallet_service_hint">请输入钱包服务地址</string>
+    <string name="node_service_title">节点服务</string>
+    <string name="node_service_hint">请输入节点服务地址</string>
+    <string name="start_custom_service">启用</string>
+    <string name="stop_custom_service">禁用</string>
+    <string name="start_custom_service_hint">此处启用为最高等级，启用后将适用于小布口袋APP全部应用操作，请确认后再启用，且启用后不可编辑。</string>
+    <string name="stop_custom_service_hint">禁用后，小布口袋APP恢复启用前状态，请确认后再操作。</string>
+    <string name="note">注意：</string>
+
+
+    <string name="wallet_create_error">钱包创建失败</string>
+    <string name="delete_node_info">当前删除节点为选中状态，删除后将选中系统默认设置节点。</string>
+    <string name="not_use_wallet_service">无效的钱包服务地址</string>
+    <string name="change_pwd_success_hint">&#8195;的安全密码已修改成功！</string>
+
+    <!--create wallet -->
+    <string name="old_pwd_error">原安全密码输入不正确</string>
+    <string name="pwd_repeat">密码重复，请重新设置</string>
+    <string name="new_safe_pwd_error">新安全密码两次输入不一致</string>
+    <string name="hint_wallet_create_form_input_rePassword">请再次确认安全密码</string>
+    <string name="wallet_create__input_rePassword">请再次输入安全密码</string>
+
+
+    <!--voucher package-->
+    <string name="tabbar_toucher_txt">券包</string>
+    <string name="voucher_empty">这里一张券都没有</string>
+    <string name="voucher_empty_btn">分享收款码转入券</string>
+    <string name="goods_price">面值：</string>
+    <string name="goods_validity_date">%1$s 至 %2$s</string>
+    <string name="number_voucher_package_title">加密数字券</string>
+    <string name="number_voucher_package_info">加密数字券是BUMO区块链上的数字权益凭证，它是真实权益在数字世界的映射，可在BUMO区块链网络上自由流通。\n\n小布口袋的券包支持加密数字券的管理、一键转赠、轻松承兑等功能，随时随地转赠给家人朋友，可轻松承兑进行使用。\n（承兑功能正在开发，敬请期待...）\n\n真实权益的未来：\n数字化、去中心化与自由流通</string>
+
+
+    <!--voucher detail-->
+    <string name="provide_acceptance">提供承兑</string>
+    <string name="validity_date">有效期</string>
+    <string name="voucher_code">券编码</string>
+    <string name="voucher_size">规格</string>
+    <string name="voucher_hold_num">持有数量</string>
+    <string name="d_party">承兑方</string>
+    <string name="asset_issuer">资产发行方</string>
+    <string name="transfer_voucher">转赠</string>
+    <string name="voucher_detail_title">券详情</string>
+
+
+    <!--d party-->
+    <string name="d_party_introduce">承兑方介绍</string>
+    <string name="delivery_instructions">提货说明</string>
+
+
+    <string name="asset_issuer_introduce">资产发行方介绍</string>
+    <string name="data_public">数据公示</string>
+
+    <string name="delete_time">销毁时间：</string>
+    <string name="delete_num">销毁数量：</string>
+    <string name="issue_time">发行时间：</string>
+    <string name="issue_num">发行数量：</string>
+
+
+    <string name="delete_current_wallet_title">确认删除该钱包吗？</string>
+    <string name="delete_current_wallet_info">当前删除钱包为当前使用钱包，删除后将默认设置当前身份下的钱包为当前使用钱包。</string>
+
+
+    <string name="send_voucher_title">转赠券</string>
+    <string name="send_voucher_title1">转券</string>
+    <string name="send_voucher_title2">选择要转赠的券</string>
+    <string name="send_voucher_num">转赠数量</string>
+    <string name="send_voucher_num_hint">请输入转赠数量</string>
+    <string name="send_voucher_info_hint">不能超过20个字符</string>
+    <string name="send_name_hint">&lt;font color=\'#00D175\'> %1$s &lt;/font>下可使用的券</string>
+    <string name="voucher_avail_balance">可转数量</string>
+
+    <string name="voucher_send_confirm_title">确认转赠</string>
+    <string name="send_voucher">转赠加密数字券</string>
+    <string name="send_token_transfer">转账交易</string>
+    <string name="voucher_pwd_confirm_hint">请填写安全密码以确认转赠</string>
+    <string name="tx_voucher_status_success_txt">转赠成功</string>
+    <string name="send_voucher_failure">转赠失败</string>
+    <string name="send_voucher_timeout">转赠超时</string>
+
+    <string name="send_address">请输入接收账户地址</string>
+
+    <string name="send_voucher_num_limit">可用券数量不足</string>
+
+    <string name="not_my_self_send_voucher">不能给自己转赠券</string>
+    <string name="select_voucher">选择券</string>
+    <string name="long_date">长期</string>
+    <string name="no_description">暂无</string>
+    <string name="password_backup_hint">请填写安全密码以确认备份</string>
+    <string name="empty_introduce">暂无介绍</string>
+    <string name="short_name_hint">简称：</string>
+    <string name="error_node">当前添加节点的区块落后于其它节点 {区块数偏移量>10} 个区块，您的资产数量可能会不准确，请以区块链浏览器（https://explorer.bumo.io）上的资产数量为准。</string>
+    <string name="no_valid_send_voucher">无效的转赠数量</string>
+
+    <string name="upgrade">更新版本</string>
+    <string name="whether_upgrade_versions">是否更新到版本 %s?</string>
+    <string name="new_version_size">新版本大小： </string>
+
+    <!--red packet-->
+    <string name="send_token_error">可用资产数量不足</string>
+    <string name="save_and_share">保存图片并分享</string>
+    <string name="red_success_title">领取成功</string>
+    <string name="save_wallet">已存入钱包，稍后到账</string>
+    <string name="save_wallet_1">已存入钱包</string>
+
+
+    <!--wechaet bind -->
+    <string name="profile_wx_bind">绑定微信</string>
+    <string name="wachat_bind">立即绑定</string>
+    <string name="wx_is_binding">已绑定</string>
+    <string name="dialog_bind_wx_info">需绑定微信后，方可使用此功能。</string>
+
+
+
+    <!--node detail-->
+    <string name="node_detail">节点详情</string>
+    <string name="node_detail_data">节点数据</string>
+    <string name="node_detail_state_refresh">状态更新</string>
+    <string name="my_node_vote">我要投票</string>
+    <string name="vote_record_txt">操作记录</string>
+    <string name="node_deposit">竞选保证金(BU)</string>
+    <string name="node_equity_value">节点权益值</string>
+    <string name="node_total_reward_amount">累计获得奖励(BU)</string>
+    <string name="node_ratio">对投票用户奖励分享比例</string>
+    <string name="node_vote_title">节点投票</string>
+    <string name="node_vote_support_min_amount">&lt;font color=\'#333333\'>投票数量&lt;/font>（请确认投票数是10的倍数）</string>
+    <string name="node_vote_input_hint">1 BU = 1 票</string>
+    <string name="node_ratio_dialog">竞选节点自定义设置对投票用户的奖励比例</string>
+    <string name="confirm_vote">确认投票</string>
+    <string name="node_confirm_detail">投票给\"%1$s\"%2$s票"</string>
+    <string name="node_confirm_detail_en">Vote for\"%1$s\"%2$s"</string>
+    <string name="node_state_error">当前节点处于%1$s&quot;状态，暂不支持投票操作</string>
+    <string name="error_identity_bind">当前身份地址已被绑定</string>
+    <string name="error_we_chat_bind">当前微信已被绑定，请更换</string>
+    <string name="wechat_bind_success">微信绑定成功</string>
+    
+    <string name="balance">可用余额</string>
+    <string name="current_wallet">当前钱包</string>
 
 </resources>

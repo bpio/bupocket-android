@@ -21,6 +21,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.adaptor.NodeBuildDetailAdapter;
 import com.bupocket.base.AbsBaseFragment;
+import com.bupocket.base.BaseTransferFragment;
 import com.bupocket.common.Constants;
 import com.bupocket.interfaces.SignatureListener;
 import com.bupocket.enums.CoBuildDetailStatusEnum;
@@ -33,7 +34,9 @@ import com.bupocket.model.NodeBuildDetailModel;
 import com.bupocket.model.NodeBuildSupportModel;
 import com.bupocket.model.TransConfirmModel;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.LogUtils;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.utils.TransferUtils;
 import com.bupocket.wallet.Wallet;
@@ -64,11 +67,11 @@ import retrofit2.Response;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
-public class BPNodeBuildDetailFragment extends AbsBaseFragment {
+public class BPNodeBuildDetailFragment extends BaseTransferFragment {
 
     @BindView(R.id.topbar)
     QMUITopBar mTopBar;
-    @BindView(R.id.lvRefresh)
+    @BindView(R.id.refreshComLv)
     ListView lvBuildDetail;
     @BindView(R.id.btnBuildExit)
     Button btnBuildExit;
@@ -78,11 +81,11 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
     LinearLayout llBtnBuild;
     @BindView(R.id.refreshLayout)
     SmartRefreshLayout refreshLayout;
-    @BindView(R.id.llLoadFailed)
+    @BindView(R.id.loadFailedLL)
     LinearLayout llLoadFailed;
-    @BindView(R.id.addressRecordEmptyLL)
+    @BindView(R.id.recordEmptyLL)
     LinearLayout addressRecordEmptyLL;
-    @BindView(R.id.copyCommandBtn)
+    @BindView(R.id.reloadBtn)
     QMUIRoundButton copyCommandBtn;
     @BindView(R.id.qmuiEmptyView)
     QMUIEmptyView qmuiEmptyView;
@@ -186,7 +189,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
         tvTotalAmount = ((TextView) headerView.findViewById(R.id.tvDetailTotalAmount));
         tvTotalAmount = ((TextView) headerView.findViewById(R.id.tvDetailTotalAmount));
         ivSheetHint = headerView.findViewById(R.id.ivSheetHint);
-        emptyLayout = headerView.findViewById(R.id.addressRecordEmptyLL);
+        emptyLayout = headerView.findViewById(R.id.recordEmptyLL);
         ivSheetHint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -357,7 +360,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
 
 
     private void initTopBar() {
-        mTopBar.setBackgroundDividerEnabled(false);
+        mTopBar.setBackgroundDividerEnabled(true);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -424,8 +427,8 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
     }
 
     private void confirmExit() {
-
-        new Thread(new Runnable() {
+        final String transMetaData = String.format(getString(R.string.build_exit_confirm_title_en), detailModel.getTitle());
+        Runnable confirmExitRunnable = new Runnable() {
             @Override
             public void run() {
                 try {
@@ -443,7 +446,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
                             @Override
                             public void run() {
 
-                                CommonUtil.showMessageDialog(mContext, transBlob.getErrorDesc());
+                                DialogUtils.showMessageNoTitleDialog(mContext, transBlob.getErrorDesc());
                             }
                         });
                         return;
@@ -479,7 +482,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
                                             CommonUtil.setExpiryTime(expiryTime, mContext);
 
                                         } else {
-                                            CommonUtil.showMessageDialog(mContext, body.getMsg(), body.getErrCode());
+                                            DialogUtils.showMessageNoTitleDialog(mContext, body.getMsg(), body.getErrCode());
                                         }
 
                                     }
@@ -503,8 +506,8 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
                     e.printStackTrace();
                 }
             }
-        }).start();
-
+        };
+        ThreadManager.getInstance().execute(confirmExitRunnable);
     }
 
     private void ShowSupport() {
@@ -619,8 +622,8 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
         final String amount = tvDialogTotalAmount.getText().toString().replace(",", "");
         final String num = numSupport.getText().toString();
         final String contractAddress = detailModel.getContractAddress();
-
-        new Thread(new Runnable() {
+        final String supportTransMetaData = String.format(getString(R.string.build_support_confirm_title_en), detailModel.getTitle());
+        Runnable confirmSupportRunnable = new Runnable() {
             @Override
             public void run() {
                 try {
@@ -632,7 +635,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                CommonUtil.showMessageDialog(mContext, transBlob.getErrorDesc());
+                                DialogUtils.showMessageNoTitleDialog(mContext, transBlob.getErrorDesc());
                             }
                         });
                         return;
@@ -672,7 +675,7 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
                                             CommonUtil.setExpiryTime(expiryTime, mContext);
 
                                         } else {
-                                            CommonUtil.showMessageDialog(mContext, body.getMsg(), body.getErrCode());
+                                            DialogUtils.showMessageNoTitleDialog(mContext, body.getMsg(), body.getErrCode());
                                         }
                                     }
                                 }
@@ -698,8 +701,9 @@ public class BPNodeBuildDetailFragment extends AbsBaseFragment {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        };
 
+        ThreadManager.getInstance().execute(confirmSupportRunnable);
 
     }
 

@@ -10,66 +10,48 @@
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:layout_marginBottom="80dp"
-        android:scrollbars="none"
-        >
+        android:scrollbars="none">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
+            android:layout_marginLeft="@dimen/common_left_right_padding"
+            android:layout_marginRight="@dimen/common_left_right_padding"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/help_txt"
-                android:theme="@style/BPViewTitle" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12.5dp"
-                android:layout_marginTop="35dp"
-                android:text="@string/help_title_txt"
-                android:textSize="16sp" />
+                style="@style/BPTextViewCreateWallet"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="15dp"
+                android:text="@string/help_title_txt" />
 
             <EditText
                 android:id="@+id/feedbackContentET"
-                android:layout_width="match_parent"
-                android:layout_height="125.5dp"
-                android:layout_marginHorizontal="12.5dp"
-                android:layout_marginTop="15dp"
-                android:background="@color/help_feedback_et_background_color"
-                android:gravity="left|top"
+                style="@style/BPEditTextMultiInput"
                 android:hint="@string/help_hint"
                 android:inputType=""
-                android:padding="10dp"
-                android:textSize="15sp" />
+                android:minLines="6" />
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="12.5dp"
+                style="@style/BPTextViewCreateWallet"
+                android:layout_marginLeft="0dp"
                 android:layout_marginTop="30dp"
-                android:text="@string/contact_title_txt"
-                android:textSize="16sp" />
+                android:text="@string/contact_title_txt" />
 
             <EditText
                 android:id="@+id/contactET"
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:layout_marginHorizontal="12.5dp"
-                android:layout_marginTop="15dp"
-                android:background="@color/help_feedback_et_background_color"
+                android:layout_height="wrap_content"
                 android:hint="@string/contact_hint"
-                android:inputType=""
-                android:paddingHorizontal="10dp"
-                android:textSize="15sp" />
+                android:inputType="phone"
+                android:theme="@style/BPEditText" />
 
         </LinearLayout>
 
 
     </ScrollView>
-
 
 
     <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
@@ -78,17 +60,17 @@
         android:layout_height="@dimen/bp_btn_hight"
         android:layout_centerInParent="true"
         android:layout_gravity="bottom"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="@dimen/common_left_right_padding"
+        android:layout_marginRight="@dimen/common_left_right_padding"
+        android:layout_marginBottom="30dp"
         android:enabled="false"
         android:gravity="center"
         android:text="@string/submit_feedback_btn_txt"
         android:textColor="@color/app_color_font"
         android:textSize="@dimen/bp_btn_text_size"
-        app:qmui_backgroundColor="@color/disabled_btn_color"
-        app:qmui_borderColor="@color/disabled_btn_color"
-        app:qmui_radius="5dp" />
+        app:qmui_backgroundColor="@color/app_color_green_disabled"
+        app:qmui_borderColor="@color/app_color_green_disabled"
+        app:qmui_radius="4dp" />
 
     <com.qmuiteam.qmui.widget.QMUITopBarLayout
         android:id="@+id/topbar"

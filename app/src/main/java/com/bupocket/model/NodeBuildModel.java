@@ -1,12 +1,23 @@
 package com.bupocket.model;
 
+import android.os.Looper;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
 
+import java.io.Serializable;
+import org.greenrobot.greendao.annotation.Generated;
+
+
+@Entity
 public class NodeBuildModel implements Serializable {
 
+
+    private static final long serialVersionUID = -4621715087305128172L;
+
+    @Id
     private String nodeId;
     private String title;
     private String perAmount;
@@ -16,6 +27,25 @@ public class NodeBuildModel implements Serializable {
     private String rewardRate;
     private String totalAmount;
     private int cobuildCopies;
+
+    @Generated(hash = 778070315)
+    public NodeBuildModel(String nodeId, String title, String perAmount,
+            String deposit, int totalCopies, int leftCopies, String rewardRate,
+            String totalAmount, int cobuildCopies) {
+        this.nodeId = nodeId;
+        this.title = title;
+        this.perAmount = perAmount;
+        this.deposit = deposit;
+        this.totalCopies = totalCopies;
+        this.leftCopies = leftCopies;
+        this.rewardRate = rewardRate;
+        this.totalAmount = totalAmount;
+        this.cobuildCopies = cobuildCopies;
+    }
+
+    @Generated(hash = 518472824)
+    public NodeBuildModel() {
+    }
 
     public int getCobuildCopies() {
         return cobuildCopies;

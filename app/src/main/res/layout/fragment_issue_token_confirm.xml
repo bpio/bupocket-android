@@ -212,7 +212,7 @@
                 android:textSize="@dimen/bp_btn_text_size"
                 app:qmui_backgroundColor="@color/app_color_main"
                 app:qmui_borderColor="@color/app_color_main"
-                app:qmui_radius="5dp" />
+                app:qmui_radius="4dp" />
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                 android:layout_marginTop="20dp"
@@ -227,7 +227,7 @@
                 android:textSize="@dimen/bp_btn_text_size"
                 app:qmui_backgroundColor="@color/app_color_white"
                 app:qmui_borderColor="@color/app_color_main"
-                app:qmui_radius="5dp" />
+                app:qmui_radius="4dp" />
         </LinearLayout>
     </LinearLayout>
     <com.qmuiteam.qmui.widget.QMUITopBarLayout

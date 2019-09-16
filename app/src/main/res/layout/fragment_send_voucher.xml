@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/qmui_config_color_white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        android:background="@color/app_color_white_background"
+        android:layout_marginBottom="@dimen/bp_create_wallet_layout_bottom"
+        android:fitsSystemWindows="true"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/app_color_white_background"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/common_left_right_padding"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="horizontal">
+
+
+                <TextView
+                    style="@style/BPTextViewCommonSize15Color66"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/send_voucher_title" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*"
+                    android:textColor="@color/app_txt_color_red_2" />
+            </LinearLayout>
+
+
+            <FrameLayout
+                android:id="@+id/firstAddVoucherFl"
+                android:layout_width="match_parent"
+                android:layout_height="85dp"
+                android:layout_marginLeft="18dp"
+                android:layout_marginRight="18dp"
+                android:background="@drawable/bg_voucher_dash_line"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginRight="18dp"
+                    android:drawableLeft="@mipmap/ic_select_voucher_add"
+                    android:drawablePadding="5dp"
+                    android:gravity="center"
+                    android:text="@string/select_voucher"
+                    android:textColor="@color/app_txt_color_gray"
+                    android:textSize="13sp" />
+            </FrameLayout>
+
+
+            <include
+                layout="@layout/view_voucher_package_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/common_left_right_padding"
+                android:paddingRight="@dimen/common_left_right_padding">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/app_color_white"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/bp_text_top"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            style="@style/BPSendTokenTextView"
+                            android:layout_height="match_parent"
+                            android:text="@string/tx_to" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="*"
+                            android:textColor="@color/app_txt_color_red_2" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:gravity="right">
+
+                            <ImageView
+                                android:id="@+id/sendFormScanIv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
+                                android:paddingRight="10dp"
+                                android:src="@mipmap/icon_scan_green_little" />
+
+                            <ImageView
+                                android:id="@+id/openAddressBookBtn"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:paddingLeft="10dp"
+                                android:src="@mipmap/icon_address_book" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                    <EditText
+                        android:id="@+id/destAccountAddressEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/send_address"
+                        android:inputType=""
+                        android:theme="@style/BPEditText" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/app_color_white"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/bp_text_top2"
+                        android:orientation="horizontal">
+
+
+                        <TextView
+                            android:id="@+id/sendTokenAmountLabel"
+                            style="@style/BPSendTokenTextView"
+                            android:text="@string/send_voucher_num" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="*"
+                            android:textColor="@color/app_txt_color_red_2" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="right"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/voucher_avail_balance"
+                                android:textColor="@color/app_txt_color_gray_2"
+                                android:textSize="@dimen/common_text_size_12" />
+
+                            <TextView
+                                android:id="@+id/tokenCodeTv"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="0"
+                                android:textColor="@color/app_color_green" />
+
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/sendAmountEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/send_voucher_num_hint"
+                        android:inputType="numberDecimal"
+                        android:theme="@style/BPEditText" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/app_color_white"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        style="@style/BPSendTokenTextView"
+                        android:layout_marginTop="@dimen/bp_text_top2"
+                        android:text="@string/send_note_title" />
+
+
+                    <EditText
+                        android:id="@+id/sendFormNoteEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/send_voucher_info_hint"
+                        android:inputType=""
+                        android:theme="@style/BPEditText" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/app_color_white"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/bp_text_top2"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/BPSendTokenTextView"
+                            android:text="@string/send_fee_title" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="*"
+                            android:textColor="@color/app_txt_color_red_2" />
+                    </LinearLayout>
+
+
+                    <EditText
+                        android:id="@+id/sendFormTxFeeEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/send_hint_txt3"
+                        android:inputType=""
+                        android:text="0.01"
+                        android:theme="@style/BPEditText" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:padding="10dp">
+
+
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true" />
+
+
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        android:id="@+id/completeMnemonicCodeBtn"
+        style="@style/BPCreateWalletGreenBtn"
+        android:text="@string/send_form_next_btn_txt"
+        app:qmui_backgroundColor="@color/app_color_green_disabled"
+        app:qmui_borderColor="@color/app_color_green_disabled"
+        app:qmui_radius="4dp" />
+
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

@@ -1,8 +1,11 @@
 package com.bupocket.fragment;
 
+import android.graphics.drawable.Drawable;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
@@ -49,8 +52,16 @@ public class BPCurrencyFragment extends BaseFragment {
     }
 
     private void initGroupListView() {
+//        mMonetaryLv.setDividerPadding(10);
+//        mMonetaryLv.setShowDividers(LinearLayout.SHOW_DIVIDER_END);
+//        mMonetaryLv.setDividerDrawable(getResources().getDrawable(R.drawable.shape_corner_green));
+        mMonetaryLv.setDividerDrawable(getResources().getDrawable(R.drawable.bg_gray_line));
         final QMUICommonListItemView CNYItem = mMonetaryLv.createItemView(getString(R.string.currency_cny_txt));
         CNYItem.getTextView().setTextColor(getResources().getColor(R.color.app_txt_color_gray_2));
+//        View lineView=LayoutInflater.from(mContext).inflate(R.layout.view_gray_line,null);
+//        CNYItem.setAccessoryType(QMUICommonListItemView.VERTICAL);
+//        CNYItem.addAccessoryCustomView(lineView);
+
 
         final QMUICommonListItemView USDItem = mMonetaryLv.createItemView(getString(R.string.currency_usd_txt));
         USDItem.getTextView().setTextColor(getResources().getColor(R.color.app_txt_color_gray_2));
@@ -119,7 +130,7 @@ public class BPCurrencyFragment extends BaseFragment {
     }
 
     private void initTopBar() {
-        mTopBar.setBackgroundDividerEnabled(false);
+        mTopBar.setTitle(R.string.monetary_title_txt);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

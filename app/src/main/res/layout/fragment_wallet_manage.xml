@@ -1,181 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_bg_color_gray">
 
+
     <LinearLayout
-        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/qmui_topbar_height"
         android:background="@color/app_bg_color_gray"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <LinearLayout
             android:id="@+id/walletInfoLl"
             android:layout_width="match_parent"
-            android:layout_height="85dp"
-            android:layout_marginLeft="12.5dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginRight="12.5dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:background="@drawable/shape_corner"
-            android:orientation="vertical"
-            android:gravity="center">
+            android:orientation="horizontal">
 
-            <RelativeLayout
-                android:id="@+id/walletNameRl"
-                android:layout_width="match_parent"
+            <include
+                layout="@layout/view_wallet_info"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingLeft="15sp">
+                android:layout_weight="1" />
 
-                <TextView
-                    android:id="@+id/walletNameTv"
-                    android:layout_width="280dp"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/app_color_black"
-                    android:textSize="16sp"
-                    tools:text="Wallet-1" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_right_arrow"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:paddingRight="15dp"
-                    android:paddingLeft="15dp"/>
-            </RelativeLayout>
-
-            <TextView
-                android:paddingLeft="15sp"
-                android:id="@+id/walletAddressTv"
-                android:layout_width="match_parent"
+            <ImageView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="15sp"
-                tools:text="buQhSMWw···4Bo73c8C" />
+                android:layout_marginTop="34dp"
+                android:paddingRight="@dimen/common_left_right_padding"
+                android:src="@mipmap/icon_right_arrow" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="12.5dp"
             android:layout_marginTop="12dp"
-            android:layout_marginRight="12.5dp"
             android:background="@drawable/shape_corner"
-            android:orientation="vertical"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="vertical">
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/exportKeystoreRl"
-                android:layout_width="match_parent"
-                android:layout_height="58.5dp"
-                android:gravity="center">
+                style="@style/BPLLDiscover">
 
                 <ImageView
                     android:id="@+id/exportKeystoreIconIv"
-                    android:layout_marginLeft="15dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="15dp"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_export_keystore"/>
+                    android:src="@mipmap/icon_export_keystore" />
 
                 <TextView
-                    android:layout_toRightOf="@+id/exportKeystoreIconIv"
+                    style="@style/BPTextViewDiscover"
                     android:layout_marginLeft="12dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/export_keystore_txt"/>
+                    android:text="@string/export_keystore_txt" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_right_arrow"
                     android:layout_alignParentRight="true"
-                    android:paddingRight="15dp"/>
-            </RelativeLayout>
+                    android:src="@mipmap/icon_right_arrow" />
+            </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/exportPrivateRl"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="58.5dp"
-                android:gravity="center_vertical">
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="44dp"
+                android:background="@color/gray_line" />
+
+            <LinearLayout
+                android:id="@+id/exportPrivateRl"
+                style="@style/BPLLDiscover">
 
                 <ImageView
                     android:id="@+id/exportPrivateIconIv"
-                    android:layout_marginLeft="15dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="15dp"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_export_private"/>
+
+                    android:src="@mipmap/icon_export_private" />
 
                 <TextView
-                    android:layout_toRightOf="@+id/exportPrivateIconIv"
+                    style="@style/BPTextViewDiscover"
                     android:layout_marginLeft="12dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/export_private_txt"/>
+                    android:layout_toRightOf="@+id/exportPrivateIconIv"
+                    android:layout_weight="1"
+                    android:text="@string/export_private_txt" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_right_arrow"
                     android:layout_alignParentRight="true"
-                    android:paddingRight="15dp"/>
-            </RelativeLayout>
+                    android:src="@mipmap/icon_right_arrow" />
+            </LinearLayout>
 
-            <RelativeLayout
-                android:id="@+id/backupMnemonicRl"
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="58.5dp"
-                android:gravity="center_vertical"
-                android:visibility="gone">
+                android:layout_height="0.5dp"
+                android:layout_marginLeft="44dp"
+                android:background="@color/gray_line" />
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/backupMnemonicRl"
+                style="@style/BPLLDiscover">
 
                 <ImageView
                     android:id="@+id/backupMnemonicIconIv"
-                    android:layout_marginLeft="15dp"
-                    android:layout_width="wrap_content"
+                    android:layout_width="15dp"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_backup_mnemonic"/>
+
+                    android:src="@mipmap/icon_backup_mnemonic" />
 
                 <TextView
-                    android:layout_toRightOf="@+id/backupMnemonicIconIv"
+                    style="@style/BPTextViewDiscover"
                     android:layout_marginLeft="12dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/view_title_backup_mneonic_code"/>
+                    android:layout_toRightOf="@+id/backupMnemonicIconIv"
+                    android:layout_weight="1"
+                    android:text="@string/view_title_backup_mneonic_code" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_right_arrow"
                     android:layout_alignParentRight="true"
-                    android:paddingRight="15dp"/>
-            </RelativeLayout>
+                    android:src="@mipmap/icon_right_arrow" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center">
+            android:id="@+id/changePwRl"
+            style="@style/BPLLDiscover"
+            android:layout_marginTop="@dimen/common_top_bottom_padding"
+            android:gravity="center_vertical">
 
-            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                android:id="@+id/deleteWalletBtn"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/bp_btn_hight"
-                android:gravity="center"
-                android:layout_marginLeft="12.5dp"
-                android:layout_marginRight="12.5dp"
-                android:text="@string/delete_wallet_txt"
-                android:textColor="@color/app_txt_color_red_3"
-                app:qmui_backgroundColor="@color/app_color_white"
-                app:qmui_borderWidth="0dp"
-                app:qmui_radius="5dp" />
+            <ImageView
+                android:id="@+id/changePwIconIv"
+                android:layout_width="15dp"
+                android:layout_height="wrap_content"
+
+                android:src="@mipmap/icon_profile_item_pwd" />
+
+            <TextView
+                style="@style/BPTextViewDiscover"
+                android:layout_marginLeft="12dp"
+                android:layout_weight="1"
+                android:text="@string/change_the_password_txt" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@mipmap/icon_right_arrow" />
         </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/deleteWalletBtn"
+            style="@style/BPComWhiteBgRegTextBtn"
+            android:layout_marginBottom="30dp"
+            android:text="@string/delete_wallet_txt" />
+
     </LinearLayout>
+
 
     <com.qmuiteam.qmui.widget.QMUITopBar
         android:id="@+id/topbar"

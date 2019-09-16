@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/shape_corner_gray_stroke"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingTop="17dp"
+    android:paddingRight="10dp"
+    android:paddingBottom="17dp">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lineSpacingMultiplier="@dimen/bp_line_spacing_multiplier"
+        android:text="@string/create_wallet_prompt_text1"
+        android:textColor="@color/app_txt_color_red"
+        android:textSize="13sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:lineSpacingMultiplier="@dimen/bp_line_spacing_multiplier"
+        android:text="@string/create_wallet_prompt_text2"
+        android:textColor="@color/app_txt_color_red"
+        android:textSize="13sp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:lineSpacingMultiplier="@dimen/bp_line_spacing_multiplier"
+        android:text="@string/create_wallet_prompt_text3"
+        android:textColor="@color/app_txt_color_red"
+        android:textSize="13sp" />
+
+
+
+</LinearLayout>

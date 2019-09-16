@@ -10,8 +10,6 @@ import android.support.annotation.Nullable;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,10 +26,13 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetTokenDetailRespDto;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.model.IssueTokenInfo;
+import com.bupocket.model.TxDetailRespBoBean;
 import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.SocketUtil;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
@@ -97,7 +98,7 @@ public class BPIssueTokenFragment extends BaseFragment {
     private String buBalance;
     private QMUITipDialog txSendingTipDialog;
     private String hash;
-    private TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean;
+    private TxDetailRespBoBean txDetailRespBoBean;
 
     @Override
     protected View onCreateView() {
@@ -114,11 +115,11 @@ public class BPIssueTokenFragment extends BaseFragment {
         mIssueConfirmBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Double.valueOf(buBalance) < Double.valueOf(Constants.ISSUE_TOKEN_FEE)){
+                if (Double.valueOf(buBalance) < Double.valueOf(Constants.ISSUE_TOKEN_FEE)) {
                     Toast.makeText(getActivity(), R.string.error_issue_balance_insufficient_message_txt, Toast.LENGTH_SHORT).show();
-                }else if(!CommonUtil.isNull(errorMsg)){
+                } else if (!CommonUtil.isNull(errorMsg)) {
                     Toast.makeText(getActivity(), errorMsg, Toast.LENGTH_SHORT).show();
-                }else{
+                } else {
                     showPasswordConfirmDialog();
                 }
             }
@@ -126,7 +127,7 @@ public class BPIssueTokenFragment extends BaseFragment {
         mIssueCancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mSocket.emit("token.issue.cancel","");
+                mSocket.emit("token.issue.cancel", "");
                 mSocket.disconnect();
                 startFragment(new HomeFragment());
             }
@@ -134,89 +135,72 @@ public class BPIssueTokenFragment extends BaseFragment {
     }
 
     private void showPasswordConfirmDialog() {
-        final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
-        qmuiDialog.setCanceledOnTouchOutside(false);
-        qmuiDialog.setContentView(R.layout.view_password_comfirm);
-        qmuiDialog.show();
-        QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
-        ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
-        TextView mPasswordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
-        TextView mPasswordConfirmTitle = qmuiDialog.findViewById(R.id.passwordConfirmTitle);
 
-        mPasswordConfirmNotice.setText(getString(R.string.issue_token_password_confirm_txt));
-        mPasswordConfirmTitle.setText(getString(R.string.password_comfirm_dialog_title));
 
-        mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
-                final String password = mPasswordConfirmEt.getText().toString().trim();
-                txSendingTipDialog = new QMUITipDialog.Builder(getContext())
-                        .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
-                        .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
-                        .create();
-                txSendingTipDialog.show();
-                txSendingTipDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+        DialogUtils.showPassWordInputDialog(getActivity(),
+                getString(R.string.password_comfirm_dialog_title),
+                getString(R.string.issue_token_password_confirm_txt), "", new DialogUtils.ConfirmListener() {
                     @Override
-                    public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                    public void confirm(final String password) {
 
-                        if(event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
-                            return true;
-                        }
-                        return false;
+                        txSendingTipDialog = new QMUITipDialog.Builder(getContext())
+                                .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
+                                .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
+                                .create();
+                        txSendingTipDialog.show();
+                        txSendingTipDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+                            @Override
+                            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+
+                                if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+                                    return true;
+                                }
+                                return false;
+                            }
+                        });
+
+                        Runnable confirmRunnable = new Runnable() {
+                            @Override
+                            public void run() {
+                                String accountBPData = getAccountBPData();
+                                try {
+                                    hash = Wallet.getInstance().issueAtp10Token(password, accountBPData, issueAddress, assetCode, tokenDecimals, issueAmount, Constants.ISSUE_TOKEN_FEE);
+                                } catch (WalletException e) {
+                                    e.printStackTrace();
+                                    Looper.prepare();
+                                    if (ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
+                                        ToastUtil.showToast(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT);
+                                    } else if (ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
+                                        ToastUtil.showToast(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT);
+                                    } else {
+                                        ToastUtil.showToast(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT);
+                                    }
+                                    txSendingTipDialog.dismiss();
+                                    Looper.loop();
+                                } catch (NumberFormatException e) {
+                                    e.printStackTrace();
+                                    Looper.prepare();
+                                    Toast.makeText(getActivity(), R.string.error_issue_amount_message_txt, Toast.LENGTH_SHORT).show();
+                                    txSendingTipDialog.dismiss();
+                                    Looper.loop();
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    Looper.prepare();
+                                    Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
+                                    txSendingTipDialog.dismiss();
+                                    Looper.loop();
+                                } finally {
+                                    mSocket.emit("token.issue.processing", "");
+                                    timer.schedule(timerTask,
+                                            1 * 1000,//延迟1秒执行
+                                            1000);
+                                }
+                            }
+                        };
+                        ThreadManager.getInstance().execute(confirmRunnable);
                     }
                 });
 
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String accountBPData = getAccountBPData();
-                        try {
-                            hash = Wallet.getInstance().issueAtp10Token(password,accountBPData,issueAddress,assetCode,tokenDecimals,issueAmount,Constants.ISSUE_TOKEN_FEE);
-                        } catch (WalletException e){
-                            e.printStackTrace();
-                            Looper.prepare();
-                            if(ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())){
-                               ToastUtil.showToast(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT);
-                            }else if(ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())){
-                                ToastUtil.showToast(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT);
-                            }else {
-                                ToastUtil.showToast(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT);
-                            }
-                            txSendingTipDialog.dismiss();
-                            Looper.loop();
-                        } catch (NumberFormatException e){
-                            e.printStackTrace();
-                            Looper.prepare();
-                            Toast.makeText(getActivity(), R.string.error_issue_amount_message_txt, Toast.LENGTH_SHORT).show();
-                            txSendingTipDialog.dismiss();
-                            Looper.loop();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            Looper.prepare();
-                            Toast.makeText(getActivity(), R.string.checking_password_error, Toast.LENGTH_SHORT).show();
-                            txSendingTipDialog.dismiss();
-                            Looper.loop();
-                        } finally {
-                            mSocket.emit("token.issue.processing","");
-                            timer.schedule(timerTask,
-                                    1 * 1000,//延迟1秒执行
-                                    1000);
-                        }
-                    }
-                }).start();
-
-                qmuiDialog.dismiss();
-            }
-        });
-
-        mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiDialog.dismiss();
-            }
-        });
     }
 
     @Override
@@ -229,21 +213,22 @@ public class BPIssueTokenFragment extends BaseFragment {
 
             @Override
             public void call(Object... args) {
-                mSocket.emit("token.issue.join",uuID);
+                mSocket.emit("token.issue.join", uuID);
             }
 
         }).on(Socket.EVENT_DISCONNECT, new Emitter.Listener() {
 
             @Override
-            public void call(Object... args) {}
+            public void call(Object... args) {
+            }
 
         }).on(Socket.EVENT_RECONNECT, new Emitter.Listener() {
             @Override
             public void call(Object... args) {
-                mSocket.emit("token.issue.join",uuID);
+                mSocket.emit("token.issue.join", uuID);
             }
         });
-        mSocket.emit("token.issue.scanSuccess","");
+        mSocket.emit("token.issue.scanSuccess", "");
         mSocket.connect();
     }
 
@@ -260,13 +245,13 @@ public class BPIssueTokenFragment extends BaseFragment {
         IssueTokenInfo issueTokenInfo = IssueTokenInfo.objectFromData(tokenData);
         assetCode = issueTokenInfo.getCode();
         issueAmount = issueTokenInfo.getAmount();
-        issueAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
-        if(CommonUtil.isNull(issueAddress) || sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString().equals(issueAddress)){
-            issueAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
+        issueAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress", "").toString();
+        if (CommonUtil.isNull(issueAddress) || sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString().equals(issueAddress)) {
+            issueAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
             whetherIdentityWallet = true;
         }
         buBalance = bundle.getString("buBalance");
-        if(null == buBalance){
+        if (null == buBalance) {
             buBalance = "0";
         }
         getTokenDetail();
@@ -275,16 +260,16 @@ public class BPIssueTokenFragment extends BaseFragment {
     private void getTokenDetail() {
         TokenService tokenService = RetrofitFactory.getInstance().getRetrofit().create(TokenService.class);
         Map<String, Object> parmasMap = new HashMap<>();
-        parmasMap.put("assetCode",assetCode);
-        parmasMap.put("issueAddress",issueAddress);
+        parmasMap.put("assetCode", assetCode);
+        parmasMap.put("issueAddress", issueAddress);
         Call<ApiResult<GetTokenDetailRespDto>> call = tokenService.getTokenDetail(parmasMap);
         call.enqueue(new Callback<ApiResult<GetTokenDetailRespDto>>() {
             @Override
             public void onResponse(Call<ApiResult<GetTokenDetailRespDto>> call, Response<ApiResult<GetTokenDetailRespDto>> response) {
                 ApiResult<GetTokenDetailRespDto> respDto = response.body();
                 String errorCode = respDto.getErrCode();
-                if(errorCode.equals("500004")){
-                    @SuppressLint("StringFormatMatches") String msg = String.format(getString(R.string.error_issue_unregistered_message_txt,assetCode));
+                if (errorCode.equals("500004")) {
+                    @SuppressLint("StringFormatMatches") String msg = String.format(getString(R.string.error_issue_unregistered_message_txt, assetCode));
                     new QMUIDialog.MessageDialogBuilder(getActivity())
                             .setMessage(msg)
                             .addAction(getString(R.string.i_knew_btn_txt), new QMUIDialogAction.ActionListener() {
@@ -303,9 +288,9 @@ public class BPIssueTokenFragment extends BaseFragment {
                     mAccumulativeIssueAmountTv.setText(inexistenceStr);
                     mIssueFeeTv.setText(inexistenceStr);
                     errorMsg = msg;
-                }else if(!errorCode.equals("0")){
+                } else if (!errorCode.equals("0")) {
                     Toast.makeText(getActivity(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
-                } else{
+                } else {
                     GetTokenDetailRespDto tokenDetail = respDto.getData();
 
                     actualSupply = tokenDetail.getActualSupply();
@@ -318,18 +303,18 @@ public class BPIssueTokenFragment extends BaseFragment {
                     mTokenNameTv.setText(assetName);
                     mTokenCodeTv.setText(assetCode);
                     mThisTimeIssueAmountTv.setText(CommonUtil.thousandSeparator(issueAmount));
-                    mIssueFeeTv.setText(CommonUtil.addSuffix(Constants.ISSUE_TOKEN_FEE,"BU"));
+                    mIssueFeeTv.setText(CommonUtil.addSuffix(Constants.ISSUE_TOKEN_FEE, "BU"));
 
-                    if(totalSupply.equals("0")){
+                    if (totalSupply.equals("0")) {
                         mAccumulativeIssueAmountTv.setText(CommonUtil.thousandSeparator(actualSupply));
                         mIssueTokenInfoLl.removeView(mIssueTokenInfoLl.findViewById(R.id.totalIssueAmountRl));
-                        if(!CommonUtil.checkAmount(AmountUtil.amountAddition(actualSupply,issueAmount),tokenDecimals)){
+                        if (!CommonUtil.checkAmount(AmountUtil.amountAddition(actualSupply, issueAmount), tokenDecimals)) {
                             errorMsg = getString(R.string.error_issue_overflow_message_txt);
                         }
-                    }else {
+                    } else {
                         mTotalIssueAmountTv.setText(CommonUtil.thousandSeparator(totalSupply));
                         mAccumulativeIssueAmountTv.setText(CommonUtil.thousandSeparator(actualSupply));
-                        if(new BigDecimal(AmountUtil.amountAddition(actualSupply,issueAmount)).compareTo(new BigDecimal(totalSupply))==1){
+                        if (new BigDecimal(AmountUtil.amountAddition(actualSupply, issueAmount)).compareTo(new BigDecimal(totalSupply)) == 1) {
                             errorMsg = getString(R.string.error_issue_issue_amount_overflow_message_txt);
                         }
                     }
@@ -343,12 +328,12 @@ public class BPIssueTokenFragment extends BaseFragment {
         });
     }
 
-    private String getAccountBPData(){
+    private String getAccountBPData() {
         String accountBPData = null;
-        if(whetherIdentityWallet) {
+        if (whetherIdentityWallet) {
             accountBPData = sharedPreferencesHelper.getSharedPreference("BPData", "").toString();
-        }else {
-            accountBPData = sharedPreferencesHelper.getSharedPreference(issueAddress+ "-BPdata", "").toString();
+        } else {
+            accountBPData = sharedPreferencesHelper.getSharedPreference(issueAddress + "-BPdata", "").toString();
         }
         return accountBPData;
     }
@@ -361,18 +346,18 @@ public class BPIssueTokenFragment extends BaseFragment {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case 1:
-                    if(timerTimes > Constants.TX_REQUEST_TIMEOUT_TIMES){
+                    if (timerTimes > Constants.TX_REQUEST_TIMEOUT_TIMES) {
                         timerTask.cancel();
                         txSendingTipDialog.dismiss();
                         Bundle argz = new Bundle();
-                        argz.putString("txStatus","timeout");
-                        argz.putString("assetName",assetName);
-                        argz.putString("assetCode",assetCode);
-                        argz.putString("issueAmount",issueAmount);
-                        argz.putString("totalSupply",totalSupply);
-                        argz.putString("tokenDecimals",tokenDecimals);
-                        argz.putString("tokenDescription",tokenDescription);
-                        argz.putString("issueAddress",issueAddress);
+                        argz.putString("txStatus", "timeout");
+                        argz.putString("assetName", assetName);
+                        argz.putString("assetCode", assetCode);
+                        argz.putString("issueAmount", issueAmount);
+                        argz.putString("totalSupply", totalSupply);
+                        argz.putString("tokenDecimals", tokenDecimals);
+                        argz.putString("tokenDescription", tokenDescription);
+                        argz.putString("issueAddress", issueAddress);
                         BPIssueTokenStatusFragment bpIssueTokenStatusFragment = new BPIssueTokenStatusFragment();
                         bpIssueTokenStatusFragment.setArguments(argz);
                         startFragmentAndDestroyCurrent(bpIssueTokenStatusFragment);
@@ -382,32 +367,32 @@ public class BPIssueTokenFragment extends BaseFragment {
                     System.out.println("timerTimes:" + timerTimes);
                     TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
                     Map<String, Object> parmasMap = new HashMap<>();
-                    parmasMap.put("hash",hash);
+                    parmasMap.put("hash", hash);
                     Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetailByHash(parmasMap);
-                    call.enqueue(new retrofit2.Callback<ApiResult<TxDetailRespDto>>(){
+                    call.enqueue(new retrofit2.Callback<ApiResult<TxDetailRespDto>>() {
 
                         @Override
                         public void onResponse(Call<ApiResult<TxDetailRespDto>> call, Response<ApiResult<TxDetailRespDto>> response) {
                             ApiResult<TxDetailRespDto> resp = response.body();
-                            if(!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())){
+                            if (!TxStatusEnum.SUCCESS.getCode().toString().equals(resp.getErrCode())) {
                                 return;
-                            }else{
+                            } else {
                                 txDetailRespBoBean = resp.getData().getTxDeatilRespBo();
                                 timerTask.cancel();
                                 txSendingTipDialog.dismiss();
                                 Bundle argz = new Bundle();
-                                argz.putString("assetName",assetName);
-                                argz.putString("assetCode",assetCode);
-                                argz.putString("issueAmount",issueAmount);
-                                argz.putString("totalSupply",totalSupply);
-                                argz.putString("tokenDecimals",tokenDecimals);
-                                argz.putString("tokenDescription",tokenDescription);
-                                argz.putString("txStatus",txDetailRespBoBean.getStatus().toString());
-                                argz.putString("issueAddress",issueAddress);
-                                argz.putString("txHash",hash);
-                                argz.putString("txFee",txDetailRespBoBean.getFee());
-                                argz.putString("errorMsg",txDetailRespBoBean.getErrorMsg());
-                                argz.putString("actualSupply",actualSupply);
+                                argz.putString("assetName", assetName);
+                                argz.putString("assetCode", assetCode);
+                                argz.putString("issueAmount", issueAmount);
+                                argz.putString("totalSupply", totalSupply);
+                                argz.putString("tokenDecimals", tokenDecimals);
+                                argz.putString("tokenDescription", tokenDescription);
+                                argz.putString("txStatus", txDetailRespBoBean.getStatus().toString());
+                                argz.putString("issueAddress", issueAddress);
+                                argz.putString("txHash", hash);
+                                argz.putString("txFee", txDetailRespBoBean.getFee());
+                                argz.putString("errorMsg", txDetailRespBoBean.getErrorMsg());
+                                argz.putString("actualSupply", actualSupply);
                                 BPIssueTokenStatusFragment bpIssueTokenStatusFragment = new BPIssueTokenStatusFragment();
                                 bpIssueTokenStatusFragment.setArguments(argz);
                                 startFragmentAndDestroyCurrent(bpIssueTokenStatusFragment);
@@ -432,7 +417,7 @@ public class BPIssueTokenFragment extends BaseFragment {
     private TimerTask timerTask = new TimerTask() {
         @Override
         public void run() {
-            if(hash != null && !hash.equals("")){
+            if (hash != null && !hash.equals("")) {
                 mHanlder.sendEmptyMessage(1);
             }
         }
@@ -442,7 +427,6 @@ public class BPIssueTokenFragment extends BaseFragment {
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
                 popBackStack();
             }
         });

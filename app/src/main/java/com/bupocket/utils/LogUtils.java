@@ -11,44 +11,36 @@ import org.json.JSONObject;
 
 
 /***
- * 描述: log 工具类
+ * log utils class
  *
- * @author zhangg
- * @下午10:17:04
  */
 public class LogUtils {
     /**
-     * 日志输出级别NONE
+     * log level none
      */
     public static final int LEVEL_NONE = 0;//上线级别
 
     /**
-     * 日志输出级别V
      */
     private static final int LEVEL_VERBOSE = 1;
 
     /**
-     * 日志输出级别D
      */
     private static final int LEVEL_DEBUG = 2;
 
     /**
-     * 日志输出级别I
      */
     private static final int LEVEL_INFO = 3;
 
     /**
-     * 日志输出级别W
      */
     private static final int LEVEL_WARN = 4;
 
     /**
-     * 日志输出级别E
      */
     public static final int LEVEL_ERROR = 5;
 
     /**
-     * 日志输出时的TAG
      */
     private static final String mTag = "mmmmbumo";
 
@@ -56,12 +48,10 @@ public class LogUtils {
     public static int mDebuggable = LEVEL_NONE;
 
     /**
-     * 用于记时的变量
      */
     private static long mTimestamp = 0;
 
     /**
-     * 以级别为 d 的形式输出LOG
      */
     public static void v(Object msg) {
         if (mDebuggable >= LEVEL_VERBOSE) {
@@ -71,7 +61,6 @@ public class LogUtils {
     }
 
     /**
-     * 以级别为 d 的形式输出LOG
      */
     public static void d(Object msg) { //(可以list,map等数据类型)
         if (mDebuggable >= LEVEL_DEBUG) {
@@ -82,7 +71,6 @@ public class LogUtils {
     }
 
     /**
-     * 以级别为 i 的形式输出LOG
      */
     public static void i(Object msg) {
         if (mDebuggable >= LEVEL_INFO) {
@@ -92,7 +80,6 @@ public class LogUtils {
     }
 
     /**
-     * 以级别为 w 的形式输出LOG
      */
     public static void w(Object msg) {
         if (mDebuggable >= LEVEL_WARN) {
@@ -102,7 +89,6 @@ public class LogUtils {
     }
 
     /**
-     * 以级别为 w 的形式输出Throwable
      */
     public static void w(Throwable tr) {
         if (mDebuggable >= LEVEL_WARN) {
@@ -111,7 +97,6 @@ public class LogUtils {
     }
 
     /**
-     * 以级别为 w 的形式输出LOG信息和Throwable
      */
     public static void w(@Nullable String msg, Throwable tr) {
         if (mDebuggable >= LEVEL_WARN && null != msg) {
@@ -121,7 +106,6 @@ public class LogUtils {
     }
 
     /**
-     * 以级别为 e 的形式输出LOG
      */
     public static void e(Object msg) {
         if (mDebuggable >= LEVEL_ERROR) {
@@ -138,7 +122,6 @@ public class LogUtils {
     }
 
     /**
-     * 格式化
      *
      * @param jsonObject
      */
@@ -148,7 +131,6 @@ public class LogUtils {
 
 
     /**
-     * 格式化
      *
      * @param xmlObject
      */
@@ -171,7 +153,6 @@ public class LogUtils {
     }
 
     /**
-     * 格式化
      *
      * @param exception
      * @param msg
@@ -182,7 +163,6 @@ public class LogUtils {
     }
 
     /**
-     * 格式化
      *
      * @param msg
      */
@@ -192,7 +172,6 @@ public class LogUtils {
     }
 
     /**
-     * 格式化
      *
      * @param msg
      */
@@ -201,7 +180,7 @@ public class LogUtils {
     }
 
     /**
-     * 以级别为 e 的形式输出Throwable
+     *
      */
     public static void e(@NonNull Throwable tr) {
         if (mDebuggable >= LEVEL_ERROR) {
@@ -211,7 +190,6 @@ public class LogUtils {
     }
 
     /**
-     * 以级别为 e 的形式输出LOG信息和Throwable
      */
     public static void e(@Nullable String msg, Throwable tr) {
         if (mDebuggable >= LEVEL_ERROR && null != msg) {
@@ -221,7 +199,6 @@ public class LogUtils {
     }
 
     /**
-     * 以级别为 e 的形式输出msg信息,附带时间戳，用于输出一个时间段结束点* @param msg 需要输出的msg
      */
     public static void elapsed(String msg) {
         long currentTime = System.currentTimeMillis();

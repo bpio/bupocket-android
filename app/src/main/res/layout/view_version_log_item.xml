@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/versionNumTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="17sp"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/app_color_black"
+        android:textSize="17sp"
+        tools:text="V1.6.1(1990.01.01)" />
+
+    <TextView
+        android:id="@+id/versionInfoTV"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginTop="20dp"
+        android:lineSpacingMultiplier="1.5"
+        android:textColor="@color/app_txt_color_gray_2"
+        android:textSize="14sp"
+        tools:text="优化了用户体验\n优化了用户体验" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginLeft="13dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="25dp"
+        android:background="@color/gray_line" />
+
+
+</LinearLayout>

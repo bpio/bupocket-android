@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_gravity="center"
+    android:orientation="vertical">
+
+
+
+
+    <TextView
+        android:id="@+id/tvComMassage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        tools:text="@string/revoke_no_vote_error_message_txt"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="35dp"
+        android:textColor="@color/app_color_black"
+        />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray_line"
+        />
+
+    <TextView
+        android:id="@+id/tvComKnow"
+        style="@style/BPTextViewIKnow"
+        android:text="@string/i_knew_btn_txt"
+
+
+        />
+
+</LinearLayout>

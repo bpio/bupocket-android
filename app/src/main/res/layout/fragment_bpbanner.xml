@@ -27,10 +27,15 @@
         android:progressDrawable="@drawable/progress_horizontal_green" />
 
 
+    <include
+        android:visibility="gone"
+        layout="@layout/view_load_failed"/>
+
     <WebView
         android:id="@+id/wvBanner"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:scrollbars="none"></WebView>
 
 

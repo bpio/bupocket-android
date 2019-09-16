@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.bupocket"
     android:debuggable="false"
-    android:versionCode="162"
-    android:versionName="V1.6.2"
+    android:versionCode="183"
+    android:versionName="V1.8.3"
     tools:ignore="HardcodedDebugMode">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -54,6 +54,11 @@
             android:launchMode="singleInstance" />
 
         <activity
+            android:name=".activity.RedPacketActivity"
+            android:launchMode="singleInstance"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <activity
             android:name=".activity.LauncherActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
@@ -72,6 +77,15 @@
             android:name="com.bupocket.activity.CaptureActivity"
             android:label="@string/capture_activity_label"
             android:screenOrientation="portrait" />
+
+
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:label="wechat_bind"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar.Transparent"
+            android:exported="true" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

@@ -2,30 +2,28 @@
 <com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
         android:background="@drawable/shape_corner"
         android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="22.5dp"
-            android:layout_marginLeft="22.5dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="45dp"
                 android:layout_gravity="center"
                 android:contentDescription="TODO"
                 android:src="@mipmap/icon_prompt" />
@@ -34,45 +32,34 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="12dp"
                 android:text="@string/create_wallet_prompt_dialog_title"
-                android:textColor="@color/send_confirm_title_color"
-                android:textSize="27sp" />
+                android:textColor="@color/app_color_black"
+                android:textSize="15sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="left"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/create_wallet_prompt_txt1"
-                android:textColor="@color/app_txt_color_red"
-                android:textSize="14sp" />
+                android:textColor="@color/app_txt_color_gray_2"
+                android:lineSpacingMultiplier="@dimen/bp_line_spacing_multiplier"
+                android:textSize="13sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:layout_marginTop="12dp"
-                android:text="@string/create_wallet_prompt_txt2"
-                android:textColor="@color/app_txt_color_black"
-                android:textSize="14sp" />
-
-
-            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                android:id="@+id/createWalletPromptConfirmBtn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="26dp"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="@string/wallet_create_ok_btn"
-                android:textColor="@color/qmui_config_color_white"
-                app:qmui_backgroundColor="@color/app_color_main"
-                app:qmui_borderColor="@color/app_color_main"
-                app:qmui_radius="4dp" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/gray_line" />
+        <TextView
+            android:id="@+id/createWalletPromptConfirmBtn"
+            style="@style/BPTextViewIKnow"
+            android:text="@string/i_knew_btn_txt"
+            android:textColor="@color/app_color_green"
+            />
     </LinearLayout>
 
 </com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

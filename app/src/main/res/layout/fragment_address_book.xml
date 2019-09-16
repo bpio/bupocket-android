@@ -11,15 +11,9 @@
         android:background="@color/app_bg_color_gray"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/address_book_txt"
-            android:theme="@style/BPViewTitle" />
 
         <com.qmuiteam.qmui.widget.QMUIEmptyView
             android:id="@+id/addressEv"
-            android:layout_marginTop="15dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible">
@@ -28,38 +22,43 @@
                 android:id="@+id/refreshLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:srlEnableScrollContentWhenLoaded="true"
-                app:srlEnableFooterFollowWhenLoadFinished="true">
+                app:srlEnableFooterFollowWhenLoadFinished="true"
+                app:srlEnableScrollContentWhenLoaded="true">
 
                 <com.scwang.smartrefresh.layout.header.ClassicsHeader
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
+
                     <ListView
                         android:id="@+id/addressBookLv"
-                        android:paddingLeft="12.5dp"
-                        android:paddingRight="12.5dp"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:divider="@color/tx_list_view_background_col"
-                        android:dividerHeight="10dp"
-                        android:scrollbars="none"
-                        android:fadeScrollbars="false"/>
+                        android:fadeScrollbars="false"
+                        android:scrollbars="none" />
 
 
                     <include
-                        android:id="@+id/addressRecordEmptyLL"
-                        layout="@layout/view_empty_record"/>
+                        android:visibility="gone"
+                        android:id="@+id/recordEmptyLL"
+                        layout="@layout/view_empty_record" />
+
+
+                    <include
+                        android:visibility="gone"
+                        layout="@layout/view_load_failed"/>
+
                 </LinearLayout>
 
                 <com.scwang.smartrefresh.layout.footer.ClassicsFooter
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srlClassicsSpinnerStyle="Translate"/>
+                    app:srlClassicsSpinnerStyle="Translate" />
 
             </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 

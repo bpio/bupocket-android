@@ -14,14 +14,13 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="?attr/qmui_topbar_height"
             android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="?attr/qmui_topbar_height"
-                android:orientation="vertical"
-                android:paddingBottom="20dp">
+                android:orientation="vertical">
 
 
                 <LinearLayout
@@ -30,8 +29,7 @@
                     android:layout_height="wrap_content"
                     android:background="@color/app_bg_color_gray_2"
                     android:gravity="center"
-                    android:orientation="vertical"
-                    android:visibility="invisible">
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -83,7 +81,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
-                            android:text="@string/send_status_success_txt"
+                            android:text="@string/tx_status_success_txt"
                             android:textAlignment="center"
                             android:textColor="@color/app_txt_color_gray"
                             android:textSize="16sp" />
@@ -93,37 +91,40 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="@dimen/view_padding">
+                        android:layout_marginBottom="@dimen/common_top_bottom_padding"
+                        android:orientation="vertical">
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:background="@drawable/shape_corner"
                             android:orientation="vertical"
-                            android:padding="10dp">
+                            android:paddingLeft="@dimen/common_left_right_padding"
+                            android:paddingRight="@dimen/common_left_right_padding">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="23dp"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:paddingTop="23dp">
 
                                 <TextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="6"
+
                                     android:text="@string/tx_from"
                                     android:textColor="@color/app_txt_color_gray_5" />
 
                                 <TextView
                                     android:id="@+id/txFromAccAddrTv"
-                                    android:textIsSelectable="true"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="4"
                                     android:gravity="end"
-                                    android:text="" />
+                                    android:text=""
+                                    android:textIsSelectable="true" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -145,8 +146,8 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="4"
                                     android:gravity="end"
-                                    android:textIsSelectable="true"
-                                    android:text="buQs9npaCq9mNFZG18qu88ZcmXYqd6bqpTU3" />
+                                    android:text="buQs9npaCq9mNFZG18qu88ZcmXYqd6bqpTU3"
+                                    android:textIsSelectable="true" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -216,29 +217,33 @@
                             </LinearLayout>
                         </LinearLayout>
 
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/shape_corner"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/common_left_right_padding"
+                            android:paddingRight="@dimen/common_left_right_padding">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:paddingStart="5dp"
-
-                                android:paddingLeft="5dp"
+                                android:layout_marginTop="23dp"
+                                android:layout_marginBottom="23dp"
                                 android:text="TX Info"
                                 android:textStyle="bold" />
+
+
+                            <View
+                                style="@style/BPDashBgLine"
+                                android:layout_marginBottom="23dp" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="@dimen/view_padding">
+                                android:orientation="vertical">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -255,11 +260,11 @@
 
                                     <TextView
                                         android:id="@+id/txDetailTXHashTv"
-                                        android:textIsSelectable="true"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="4"
-                                        android:gravity="end" />
+                                        android:gravity="end"
+                                        android:textIsSelectable="true" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -281,8 +286,8 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="4"
                                         android:gravity="end"
-                                        android:textIsSelectable="true"
-                                        android:text="buQs9npaCq9mNFZG18qu88ZcmXYqd6bqpTU3" />
+                                        android:text="buQs9npaCq9mNFZG18qu88ZcmXYqd6bqpTU3"
+                                        android:textIsSelectable="true" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -304,8 +309,8 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="4"
                                         android:gravity="end"
-                                        android:textIsSelectable="true"
-                                        android:text="buQs9npaCq9mNFZG18qu88ZcmXYqd6bqpTU3" />
+                                        android:text="buQs9npaCq9mNFZG18qu88ZcmXYqd6bqpTU3"
+                                        android:textIsSelectable="true" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -405,28 +410,34 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
                             android:background="@drawable/shape_corner"
-                            android:orientation="vertical">
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/common_left_right_padding"
+                            android:paddingRight="@dimen/common_left_right_padding">
 
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:paddingStart="5dp"
-
-                                android:paddingLeft="5dp"
+                                android:layout_marginTop="23dp"
+                                android:layout_marginBottom="23dp"
                                 android:text="Block Info"
                                 android:textStyle="bold" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="2dp"
+                                android:layout_marginBottom="23dp"
+                                android:background="@drawable/bg_dash_line" />
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="vertical"
-                                android:padding="@dimen/view_padding">
+                                android:layout_marginBottom="@dimen/common_top_bottom_padding"
+                                android:orientation="vertical">
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginTop="@dimen/common_top_bottom_padding"
                                     android:layout_marginBottom="23dp"
                                     android:orientation="horizontal">
 
@@ -461,12 +472,12 @@
 
                                     <TextView
                                         android:id="@+id/txDetailBlockInfoBlockHashTv"
-                                        android:textIsSelectable="true"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="4"
                                         android:gravity="end"
-                                        android:text="" />
+                                        android:text=""
+                                        android:textIsSelectable="true" />
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -484,12 +495,12 @@
 
                                     <TextView
                                         android:id="@+id/txDetailBlockInfoPrevBlockHashTv"
-                                        android:textIsSelectable="true"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="4"
                                         android:gravity="end"
-                                        android:text="83a5afe9b4d17bd29dca1beff1e182269f65162a32ce6d9924e7a4695b2d4317" />
+                                        android:text="83a5afe9b4d17bd29dca1beff1e182269f65162a32ce6d9924e7a4695b2d4317"
+                                        android:textIsSelectable="true" />
                                 </LinearLayout>
 
                                 <LinearLayout

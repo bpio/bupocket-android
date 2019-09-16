@@ -3,11 +3,13 @@
     <!--common -->
     <color name="app_color_main">#02CA71</color>
     <color name="app_color_blue">#5745C3</color>
+    <color name="app_color_blue1">#3C3B6D</color>
     <color name="app_btn_color_blue">#36B3FF</color>
     <color name="app_btn_color_white">#FFFFFF</color>
     <color name="app_btn_color_purple">#A4A8CE</color>
     <color name="app_color_white">#FFFFFF</color>
     <color name="app_color_black">#333333</color>
+    <color name="app_color_black_1">#151515</color>
     <color name="app_color_gray">#efefef</color>
     <color name="app_bg_color_gray">#F5F5F5</color>
     <color name="app_bg_color_gray_2">#f4f4f4</color>
@@ -15,6 +17,7 @@
     <color name="app_bg_color_gray_4">#f4f3f4</color>
     <color name="app_bg_color_gray_5">#C2C2C2</color>
     <color name="app_bg_color_gray_6">#EDEDED</color>
+    <color name="app_bg_color_gray_7">#C8C8C8 </color>
     <color name="app_bg_color_purple">#DADDF3</color>
     <color name="app_txt_color_purple">#9298BD</color>
     <color name="app_color_blue_disabled">#8000A8E1</color>
@@ -26,19 +29,23 @@
     <color name="app_txt_color_gray_5">#888888</color>
     <color name="app_txt_color_gray_6">#BBBBBB</color>
     <color name="app_txt_color_gray_7">#737791</color>
-    <color name="app_txt_color_red">#FF7272</color>
+    <color name="app_txt_color_gray_8">#b2b2b2</color>
+    <color name="app_txt_color_red">#FF6464</color>
     <color name="app_txt_color_red_2">#ff0000</color>
     <color name="app_txt_color_red_3">#e23b1b</color>
     <color name="app_txt_color_red_4">#FF2424</color>
     <color name="app_txt_color_red_5">#FF5824</color>
     <color name="app_txt_color_red_6">#FF7C14</color>
+    <color name="app_txt_color_red_7">#FF6600</color>
+    <color name="app_txt_color_red_packet">#FF7884 </color>
     <color name="app_txt_color_black">#2A2A2A</color>
     <color name="app_txt_color_black_2">#151515</color>
     <color name="app_txt_color_blue">#0598e2</color>
     <color name="app_txt_color_white">#BABCC9</color>
     <color name="app_color_green">#02CA71</color>
+    <color name="app_color_green_mnemonic">#3FD592</color>
     <color name="app_color_green_normal">#25C57E</color>
-
+    <color name="app_color_green_disabled">#8CD7B5</color>
     <color name="app_color_blue_2">#31BDF3</color>
     <color name="app_color_blue_2_disabled">#7F31BDF3</color>
     <color name="app_color_blue_2_pressed">#7F31BDF3</color>
@@ -68,10 +75,10 @@
     <color name="send_confirm_title_color">#333333</color>
     <color name="send_confirm_info_color">#666666</color>
     <color name="send_confirm_gray_color">#999999</color>
-    <color name="multiline_edit_hint_color">#b2b2b2</color>
+
     <color name="terms_unagree_btn_grey">#c9c9c9</color>
     <color name="help_feedback_et_background_color">#F5F5F5</color>
-    <color name="disabled_btn_color">#8CD7B5</color>
+
     <color name="language_background_color">#F5F5F5</color>
     <color name="app_color_white_background">#FFFFFF</color>
     <color name="tx_status_success_txt_color">#999999</color>
@@ -90,7 +97,7 @@
 
     <color name="gray_bg_color">#CCCCCC</color>
     <color name="gray_bg_color_2">#E7E8EC</color>
-    <color name="gray_line">#F2F2F2</color>
+    <color name="gray_line">#E3E3E3</color>
     <color name="tv_black">#FF101010</color>
 
     <color name="tv_node">#FF0BB9A9</color>

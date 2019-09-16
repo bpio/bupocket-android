@@ -15,8 +15,8 @@
             android:id="@+id/confirmLl"
             android:layout_width="match_parent"
             android:layout_height="460dp"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp"
+            android:layout_marginLeft="@dimen/common_left_right_padding"
+            android:layout_marginRight="@dimen/common_left_right_padding"
             android:orientation="vertical"
             android:visibility="visible">
 
@@ -26,6 +26,7 @@
                 android:gravity="center_vertical">
 
                 <TextView
+                    android:id="@+id/confirmTitleTv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingTop="15dp"
@@ -48,67 +49,110 @@
                 style="@style/BPDivideLine1"
                 android:layout_alignTop="@+id/sendConfirmBtnRl" />
 
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/fragment_title_tx_detail_txt"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/transactionDetailTv"
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/app_txt_color_gray_2"
-                android:textSize="14sp"
-                tools:text="向谷神668(buQk4h9Ygc5QSyDWCxgps6ZH)投票(buQk4h9Ygc5QSyDWCxgps6ZH)投票6894票" />
+                android:scrollbars="none">
 
-            <TextView
-                android:id="@+id/destAddressTvHint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14.5dp"
-                android:text="@string/tx_to"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="13sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/destAddressTv"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/fragment_title_tx_detail_txt"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/transactionDetailTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/app_txt_color_gray_2"
+                        android:textSize="14sp"
+                        tools:text="向谷神668(buQk4h9Ygc5QSyDWCxgps6ZH)投票(buQk4h9Ygc5QSyDWCxgps6ZH)投票6894票" />
+
+                    <TextView
+                        android:id="@+id/destAddressTvHint"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14.5dp"
+                        android:text="@string/tx_to"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/destAddressTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/app_txt_color_gray_2"
+                        android:textSize="14sp"
+                        tools:text="bujslk3i3kkdkladkl8dfkdfk3kl3kl3ldsjf" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14.5dp"
+                        android:text="@string/tx_value_bu"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/detailsAmountTv1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:textColor="@color/app_txt_color_gray_2"
+                        android:textSize="14sp"
+                        tools:text="0 BU" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="14.5dp"
+                        android:text="@string/send_fee_title"
+                        android:textColor="@color/app_txt_color_gray"
+                        android:textSize="13sp" />
+
+                    <TextView
+                        android:id="@+id/txFeeTv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="10dp"
+                        android:textColor="@color/app_txt_color_gray_2"
+                        android:textSize="14sp"
+                        tools:text="0.001675" />
+
+
+                </LinearLayout>
+
+
+            </ScrollView>
+
+
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/app_txt_color_gray_2"
-                android:textSize="14sp"
-                tools:text="bujslk3i3kkdkladkl8dfkdfk3kl3kl3ldsjf" />
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14.5dp"
-                android:text="@string/send_fee_title"
-                android:textColor="@color/app_txt_color_gray"
-                android:textSize="13sp" />
-
-            <TextView
-                android:id="@+id/txFeeTv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="@color/app_txt_color_gray_2"
-                android:textSize="14sp"
-                tools:text="0.001675" />
 
             <TextView
                 android:id="@+id/detailBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
+                android:layout_gravity="right"
+                android:paddingLeft="50dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginRight="5dp"
-                android:padding="3dp"
+                android:layout_marginBottom="90dp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
                 android:text="@string/details_txt"
                 android:textColor="@color/app_color_main"
                 android:textSize="14sp" />
@@ -120,8 +164,8 @@
             android:layout_width="match_parent"
             android:layout_height="460dp"
             android:layout_above="@+id/v_gray_line"
-            android:layout_marginLeft="18dp"
-            android:layout_marginRight="18dp"
+            android:layout_marginLeft="@dimen/common_left_right_padding"
+            android:layout_marginRight="@dimen/common_left_right_padding"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -163,13 +207,13 @@
             </RelativeLayout>
 
 
-            <View
-               style="@style/BPDivideLine1"/>
+            <View style="@style/BPDivideLine1" />
 
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -232,7 +276,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="14.5dp"
-                        android:text="@string/tx_fee_bu"
+                        android:text="@string/send_fee_title"
                         android:textColor="@color/app_txt_color_gray"
                         android:textSize="13sp" />
 
@@ -275,25 +319,25 @@
         <View
             android:id="@+id/v_gray_line"
             style="@style/BPDivideLine1"
+            android:layout_alignTop="@+id/sendConfirmBtnRl"
             android:layout_marginLeft="18dp"
             android:layout_marginRight="18dp"
-            android:layout_marginBottom="15dp"
-            android:layout_alignTop="@+id/sendConfirmBtnRl" />
+            android:layout_marginBottom="15dp" />
 
         <RelativeLayout
             android:id="@+id/sendConfirmBtnRl"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:paddingLeft="18dp"
-            android:paddingRight="18dp"
+            android:paddingLeft="@dimen/common_left_right_padding"
+            android:paddingRight="@dimen/common_left_right_padding"
             android:paddingBottom="25dp">
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
                 android:id="@+id/sendConfirmBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="19.5dp"
+                android:layout_marginTop="20dp"
                 android:clickable="true"
                 android:focusable="true"
                 android:padding="10dp"

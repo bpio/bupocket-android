@@ -48,7 +48,7 @@ public class TokensAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.view_my_token_item, null);
             holder.assetCodeTv = convertView.findViewById(R.id.assetCodeTv);
             holder.amountTv = convertView.findViewById(R.id.amountTv);
-            holder.assetIconIv = convertView.findViewById(R.id.assetIconIv);
+            holder.assetIconIv = convertView.findViewById(R.id.headIconIv);
             holder.assetAmount = convertView.findViewById(R.id.assetAmountTv);
             convertView.setTag(holder);
         } else {

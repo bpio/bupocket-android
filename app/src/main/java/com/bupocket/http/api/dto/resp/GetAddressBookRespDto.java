@@ -1,6 +1,10 @@
 package com.bupocket.http.api.dto.resp;
 
+import com.bupocket.http.api.AddressBookListBean;
 import com.google.gson.Gson;
+
+import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Id;
 
 import java.util.List;
 
@@ -146,44 +150,6 @@ public class GetAddressBookRespDto {
         }
     }
 
-    public static class AddressBookListBean {
-        /**
-         * nickName : 张三
-         * linkmanAddress : buQtL9dwfFj4BWGRsMri7GX9nGv4GdjpvAeN
-         * remark : 备注
-         */
 
-        private String nickName;
-        private String linkmanAddress;
-        private String remark;
 
-        public static AddressBookListBean objectFromData(String str) {
-
-            return new Gson().fromJson(str, AddressBookListBean.class);
-        }
-
-        public String getNickName() {
-            return nickName;
-        }
-
-        public void setNickName(String nickName) {
-            this.nickName = nickName;
-        }
-
-        public String getLinkmanAddress() {
-            return linkmanAddress;
-        }
-
-        public void setLinkmanAddress(String linkmanAddress) {
-            this.linkmanAddress = linkmanAddress;
-        }
-
-        public String getRemark() {
-            return remark;
-        }
-
-        public void setRemark(String remark) {
-            this.remark = remark;
-        }
-    }
 }

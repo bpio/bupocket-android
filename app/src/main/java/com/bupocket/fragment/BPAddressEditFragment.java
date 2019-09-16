@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.bupocket.R;
 import com.bupocket.activity.CaptureActivity;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.Constants;
 import com.bupocket.http.api.AddressBookService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
@@ -244,6 +245,19 @@ public class BPAddressEditFragment extends BaseFragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (null != data) {
+            if (Constants.REQUEST_IMAGE == resultCode) {
+                if (null != data) {
+                    String destAddress = data.getStringExtra("resultFromBitmap");
+                    destAddress = destAddress.replace(Constants.VOUCHER_QRCODE, "");
+                    mNewAddressEt.setText(destAddress);
+                    return;
+                }
+            }
+        }
+
+
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null) {
             if (result.getContents() == null) {
@@ -272,6 +286,7 @@ public class BPAddressEditFragment extends BaseFragment {
                 if(null != respDto){
                     if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
                         Toast.makeText(getContext(),getString(R.string.delete_address_success_message_txt),Toast.LENGTH_SHORT).show();
+                        mApplication.getDaoSession().getAddressBookListBeanDao().deleteByKey(oldLinkmanAddress);
                         popBackStack();
                     }else {
                         Toast.makeText(getContext(),getString(R.string.delete_address_failure_message_txt),Toast.LENGTH_SHORT).show();

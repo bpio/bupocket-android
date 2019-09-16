@@ -8,14 +8,20 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.fragment.BPAssetsHomeFragment;
 import com.bupocket.fragment.BPProfileHomeFragment;
 import com.bupocket.fragment.discover.BPDiscoverHomeFragment;
+import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUtils;
+import com.bupocket.utils.LogUtils;
+import com.bupocket.voucher.BPVoucherHomeFragment;
 import com.qmuiteam.qmui.widget.QMUIPagerAdapter;
 import com.qmuiteam.qmui.widget.QMUITabSegment;
 
@@ -25,39 +31,74 @@ import butterknife.ButterKnife;
 
 public class HomeFragment extends BaseFragment {
 
-
-    public static boolean isDisFragment;
-
     @BindView(R.id.pager)
     ViewPager mViewPager;
     @BindView(R.id.tabs)
-    QMUITabSegment mTabSegment;
+    public QMUITabSegment mTabSegment;
+
     @Override
     protected View onCreateView() {
-        FrameLayout layout = (FrameLayout) LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null);
+        View layout =  LayoutInflater.from(getActivity()).inflate(R.layout.fragment_home, null);
         ButterKnife.bind(this, layout);
         initTabs();
         initPagers();
         return layout;
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        if (getArguments()!=null) {
+            if (BPVoucherHomeFragment.class.getSimpleName().equals(getArguments().getString(ConstantsType.FRAGMENT_TAG))) {
+                mTabSegment.selectTab(1);
+                getArguments().clear();
+            }
+        }
+
+    }
+
     private void initTabs() {
+
+
         QMUITabSegment.Tab assets = new QMUITabSegment.Tab(
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_asset),
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_asset_selected),
                 getResources().getString(R.string.tabbar_assets_txt), false
+        );
+
+//        int voucher_normal = R.mipmap.icon_tabbar_voucher;
+//        int voucher_selected = R.mipmap.icon_tabbar_voucher_selected;
+//
+//        if (spHelper.getSharedPreference(ConstantsType.FIRST_OPEN_VOUCHER, "yes").equals("yes")) {
+//
+//            if (CommonUtil.isEnglishLangage()) {
+//                voucher_normal = R.mipmap.icon_tabbar_voucher_new_en;
+//            } else {
+//                voucher_normal = R.mipmap.icon_tabbar_voucher_new_cn;
+//            }
+//        }
+
+
+//        QMUITabSegment.Tab voucher = new QMUITabSegment.Tab(
+//                ContextCompat.getDrawable(getContext(), voucher_normal),
+//                ContextCompat.getDrawable(getContext(), voucher_selected),
+//                getResources().getString(R.string.tabbar_toucher_txt), false
+//        );
+        QMUITabSegment.Tab discover = new QMUITabSegment.Tab(
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_discover),
+                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_discover_selected),
+                getResources().getString(R.string.tabbar_discover_txt), false
         );
         QMUITabSegment.Tab profile = new QMUITabSegment.Tab(
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_profile),
                 ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_profile_selected),
                 getResources().getString(R.string.tabbar_profile_txt), false
         );
-        QMUITabSegment.Tab discover = new QMUITabSegment.Tab(
-                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_discover),
-                ContextCompat.getDrawable(getContext(), R.mipmap.icon_tabbar_discover_selected),
-                getResources().getString(R.string.tabbar_discover_txt), false
-        );
+
         mTabSegment.addTab(assets);
+//        mTabSegment.addTab(voucher);
         mTabSegment.addTab(discover);
         mTabSegment.addTab(profile);
         mTabSegment.setDefaultSelectedColor(getContext().getResources().getColor(R.color.app_color_green));
@@ -65,11 +106,30 @@ public class HomeFragment extends BaseFragment {
         mTabSegment.addOnTabSelectedListener(new QMUITabSegment.OnTabSelectedListener() {
             @Override
             public void onTabSelected(int index) {
-                if (index==1){
-                    isDisFragment=true;
-                }else{
-                    isDisFragment=false;
-                }
+
+//                if (index == 1) {
+//                    if (spHelper.getSharedPreference(ConstantsType.FIRST_OPEN_VOUCHER, "yes").equals("yes")) {
+//                        spHelper.put(ConstantsType.FIRST_OPEN_VOUCHER, "no");
+//                        int voucher_normal = R.mipmap.icon_tabbar_voucher;
+//                        int voucher_selected = R.mipmap.icon_tabbar_voucher_selected;
+//                        QMUITabSegment.Tab voucher = new QMUITabSegment.Tab(
+//                                ContextCompat.getDrawable(getContext(), voucher_normal),
+//                                ContextCompat.getDrawable(getContext(), voucher_selected),
+//                                getResources().getString(R.string.tabbar_toucher_txt), false
+//                        );
+//                        mTabSegment.replaceTab(1,voucher);
+//
+//                        DialogUtils.showMessageScrollDialog(mContext,
+//                                getString(R.string.number_voucher_package_info),
+//                                getString(R.string.number_voucher_package_title), new DialogUtils.KnowListener() {
+//                                    @Override
+//                                    public void Know() {
+//
+//                                    }
+//                                });
+//                    }
+//
+//                }
             }
 
             @Override
@@ -88,6 +148,7 @@ public class HomeFragment extends BaseFragment {
             }
         });
     }
+
 
     private void initPagers() {
         QMUIPagerAdapter pagerAdapter = new QMUIPagerAdapter() {
@@ -109,9 +170,11 @@ public class HomeFragment extends BaseFragment {
                 switch (position) {
                     case 0:
                         return getResources().getString(R.string.tabbar_assets_txt);
+//                    case 1:
+//                        return getResources().getString(R.string.tabbar_toucher_txt);
                     case 1:
                         return getResources().getString(R.string.tabbar_discover_txt);
-                    case 3:
+                    case 2:
                     default:
                         return getResources().getString(R.string.tabbar_profile_txt);
                 }
@@ -126,12 +189,14 @@ public class HomeFragment extends BaseFragment {
                             .beginTransaction();
                 }
                 Fragment fragment = getChildFragmentManager().findFragmentByTag(name);
-                if(fragment != null){
+                if (fragment != null) {
                     return fragment;
                 }
                 switch (position) {
                     case 0:
                         return new BPAssetsHomeFragment();
+//                    case 1:
+//                        return new BPVoucherHomeFragment();
                     case 1:
                         return new BPDiscoverHomeFragment();
                     case 2:
@@ -151,7 +216,7 @@ public class HomeFragment extends BaseFragment {
                 Fragment fragment = getChildFragmentManager().findFragmentByTag(name);
                 if (fragment != null) {
                     mCurrentTransaction.attach(fragment);
-                    if(fragment.getView() != null && fragment.getView().getWidth() == 0){
+                    if (fragment.getView() != null && fragment.getView().getWidth() == 0) {
                         fragment.getView().requestLayout();
                     }
                 } else {
@@ -162,6 +227,8 @@ public class HomeFragment extends BaseFragment {
                     fragment.setMenuVisibility(false);
                     fragment.setUserVisibleHint(false);
                 }
+
+
             }
 
             @SuppressLint("CommitTransaction")
@@ -207,12 +274,11 @@ public class HomeFragment extends BaseFragment {
             }
 
             private String makeFragmentName(int viewId, long id) {
-
                 return "HomeFragment:" + viewId + ":" + id;
             }
         };
         mViewPager.setAdapter(pagerAdapter);
-        mTabSegment.setupWithViewPager(mViewPager,false, true);
+        mTabSegment.setupWithViewPager(mViewPager, false, true);
     }
 
     @Override
@@ -221,6 +287,7 @@ public class HomeFragment extends BaseFragment {
     }
 
     private long exitTime = 0;
+
     public void onBackPressed() {
         if ((System.currentTimeMillis() - exitTime) > 2000) {
             Toast.makeText(getContext(), getResources().getText(R.string.next_key_down_err), Toast.LENGTH_SHORT).show();

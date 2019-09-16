@@ -4,11 +4,7 @@ import com.google.gson.Gson;
 
 public class IssueStatusInfo {
 
-    /**
-     * errorCode : 0
-     * errorMsg :
-     * data : {"name":"资产名称","code":"资产代码","type":"登记方式","total":"登记资产总量","decimals":"资产精度","version":"ATP版本","desc":"资产描述","fee":"实际交易费用","hash":"哈希","address":"发行方地址","issueTotal":"资产发行量"}
-     */
+
 
     private int errorCode;
     private String errorMsg;
@@ -44,19 +40,6 @@ public class IssueStatusInfo {
     }
 
     public static class DataBean {
-        /**
-         * name : 资产名称
-         * code : 资产代码
-         * type : 登记方式
-         * total : 登记资产总量
-         * decimals : 资产精度
-         * version : ATP版本
-         * desc : 资产描述
-         * fee : 实际交易费用
-         * hash : 哈希
-         * address : 发行方地址
-         * issueTotal : 资产发行量
-         */
 
         private String name;
         private String code;

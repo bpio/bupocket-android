@@ -1,99 +1,115 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_color_white"
     android:orientation="vertical">
 
-    <com.qmuiteam.qmui.widget.QMUITopBar
-        android:id="@+id/topbar"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:background="@color/app_btn_color_white"
-        android:fitsSystemWindows="true"
-        android:gravity="center"
-        android:text="@string/tabbar_discover_txt"
-        android:textColor="@color/send_confirm_title_color"
-        />
-
-
     <LinearLayout
-        android:background="@color/app_bg_color_gray_4"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:background="@color/app_color_white"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
 
-        <android.support.v4.view.ViewPager
-            android:id="@+id/vpDisBanner"
-            android:layout_width="match_parent"
-            android:layout_height="190dp"
-            android:layout_marginLeft="@dimen/common_padding_border"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="@dimen/common_padding_border"
-            android:background="@mipmap/ic_banner_empty" />
-
-        <ScrollView
+        <com.qmuiteam.qmui.widget.QMUITopBarLayout
+            android:id="@+id/topbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:scrollbars="none"
-            >
+            android:layout_gravity="center"
+            android:background="@color/app_btn_color_white"
+            android:fitsSystemWindows="true"
+            android:gravity="center"
+            android:text="@string/tabbar_discover_txt"
+            android:textColor="@color/send_confirm_title_color" />
 
-            <LinearLayout
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/app_bg_color_gray_4"
+            android:orientation="vertical">
+
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vpDisBanner"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@mipmap/ic_banner_empty" />
+
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-
-                >
-
-
-                <RelativeLayout
-                    android:id="@+id/cardPackageRl"
-                    style="@style/BPLayoutDiscover"
-                    android:visibility="gone">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginLeft="15dp"
-                        android:background="@mipmap/icon_discover_cards" />
-
-                    <TextView
-                        style="@style/BPTextDis"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="47dp"
-                        android:layout_marginLeft="47dp"
-                        android:text="@string/card_package_txt" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="13.25dp"
-                        android:layout_marginRight="13.25dp"
-                        android:background="@mipmap/icon_right_arrow" />
-                </RelativeLayout>
+                android:layout_marginBottom="20dp"
+                android:scrollbars="none">
 
                 <LinearLayout
-                    style="@style/BPLayoutDiscover"
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:layout_marginLeft="@dimen/common_padding_border"
-                    android:layout_marginRight="@dimen/common_padding_border"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <RelativeLayout
-                        android:id="@+id/nodePlanRl"
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="50dp">
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/common_top_bottom_padding"
+                        android:background="@color/app_color_white"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:id="@+id/nodePlanLl"
+                            style="@style/BPLayoutDiscover">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@mipmap/icon_discover_node_plan" />
+
+                            <TextView
+                                style="@style/BPTextViewDiscover"
+                                android:layout_marginLeft="11dp"
+                                android:text="@string/run_for_node_txt" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@mipmap/icon_right_arrow" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginLeft="45dp"
+                            android:background="@color/gray_line" />
+
+
+                        <LinearLayout
+                            android:id="@+id/nodeBuildLl"
+                            style="@style/BPLayoutDiscover"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp">
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@mipmap/icon_discover_node_build" />
+
+                            <TextView
+                                style="@style/BPTextViewDiscover"
+                                android:text="@string/build_node_txt" />
+
+                            <ImageView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@mipmap/icon_right_arrow" />
+                        </LinearLayout>
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/informationLl"
+                        style="@style/BPLayoutDiscover"
+                        android:layout_marginTop="@dimen/common_top_bottom_padding">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -101,151 +117,49 @@
                             android:layout_alignParentStart="true"
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
-                            android:layout_marginStart="15dp"
-                            android:layout_marginLeft="15dp"
-                            android:background="@mipmap/icon_discover_node_plan" />
+                            android:background="@mipmap/icon_discover_information" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="47dp"
-                            android:layout_marginLeft="47dp"
-                            android:text="@string/run_for_node_txt"
-                            android:textSize="15sp" />
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="13.25dp"
-                            android:layout_marginRight="13.25dp"
-                            android:background="@mipmap/icon_right_arrow" />
-                    </RelativeLayout>
-
-                    <View style="@style/BPDivideLine" />
-
-
-                    <RelativeLayout
-                        android:id="@+id/nodeBuildRl"
-                        android:layout_width="match_parent"
-                        android:layout_height="50dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentStart="true"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="15dp"
+                            style="@style/BPTextViewDiscover"
                             android:layout_marginLeft="15dp"
-                            android:background="@mipmap/icon_discover_node_build" />
+                            android:text="@string/information_txt" />
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/icon_right_arrow" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/xiaobuYoupinLl"
+                        style="@style/BPLayoutDiscover"
+                        android:layout_marginTop="@dimen/common_top_bottom_padding"
+                        android:layout_marginBottom="10dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@mipmap/icon_discover_youpin" />
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="47dp"
-                            android:layout_marginLeft="47dp"
-                            android:text="@string/build_node_txt"
-                            android:textSize="15sp" />
+                            style="@style/BPTextViewDiscover"
+                            android:text="@string/xiaobu_youpin_txt" />
 
                         <ImageView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_alignParentRight="true"
-                            android:layout_centerVertical="true"
-                            android:layout_marginEnd="13.25dp"
-                            android:layout_marginRight="13.25dp"
                             android:background="@mipmap/icon_right_arrow" />
-                    </RelativeLayout>
+                    </LinearLayout>
 
 
                 </LinearLayout>
 
-                <RelativeLayout
-                    android:id="@+id/informationRl"
-                    style="@style/BPLayoutDiscover"
-                    android:layout_marginLeft="@dimen/common_padding_border"
-                    android:layout_marginRight="@dimen/common_padding_border">
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginLeft="15dp"
-                        android:background="@mipmap/icon_discover_information" />
+            </ScrollView>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="47dp"
-                        android:layout_marginLeft="47dp"
-                        android:text="@string/information_txt"
-                        android:textSize="15sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="13.25dp"
-                        android:layout_marginRight="13.25dp"
-                        android:background="@mipmap/icon_right_arrow" />
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:id="@+id/xiaobuYoupinRl"
-                    style="@style/BPLayoutDiscover"
-                    android:layout_marginLeft="@dimen/common_padding_border"
-                    android:layout_marginRight="@dimen/common_padding_border">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginLeft="15dp"
-                        android:background="@mipmap/icon_discover_youpin" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="47dp"
-                        android:layout_marginLeft="47dp"
-                        android:text="@string/xiaobu_youpin_txt"
-                        android:textSize="15sp" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="13.25dp"
-                        android:layout_marginRight="13.25dp"
-                        android:background="@mipmap/icon_right_arrow" />
-                </RelativeLayout>
-
-
-            </LinearLayout>
-
-
-
-
-        </ScrollView>
+        </LinearLayout>
 
     </LinearLayout>
 
-</LinearLayout>
+
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

@@ -2,134 +2,114 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/qmui_config_color_white">
 
     <ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        android:layout_marginBottom="@dimen/bp_create_wallet_layout_bottom"
+        android:background="@color/app_color_white_background"
         android:orientation="vertical"
-        android:scrollbars="none"
-        android:background="@color/app_color_white_background">
+        android:scrollbars="none">
 
         <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="?attr/qmui_topbar_height"
-            android:background="@color/qmui_config_color_white"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/common_left_right_padding"
 
-            <TextView
+            android:paddingRight="@dimen/common_left_right_padding">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:layout_marginBottom="15dp"
+                android:background="@color/gray_line" />
+
+            <include
+                layout="@layout/view_mnemonic_hint"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:padding="10dp"
-                android:text="@string/recover_wallet_title"
-                android:theme="@style/BPViewTitle" />
+
+                android:layout_marginBottom="5dp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="@dimen/view_padding">
+                android:orientation="vertical">
 
-                <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="30dp"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="20dp"
                     android:orientation="vertical">
 
                     <EditText
                         android:id="@+id/recoverMneonicCodeEt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:background="#F5F5F5"
-                        android:gravity="start|top"
+                        style="@style/BPEditTextMultiInput"
                         android:hint="@string/recover_edit_mneonic_code_hint"
-                        android:inputType="textMultiLine"
-                        android:minLines="6"
-                        android:padding="10dp"
-                        android:textColorHint="@color/multiline_edit_hint_color"
-                        android:textSize="14sp" />
+                        android:inputType="textMultiLine" />
                 </LinearLayout>
+
+                <TextView
+                    style="@style/BPTextViewCreateWallet"
+                    android:text="@string/recover_wallet_name_title" />
 
                 <EditText
                     android:id="@+id/recoverWalletNameEt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/recover_edit_new_wallet_name_hint"
+                    android:hint="@string/create_wallet_name_err_hint"
                     android:inputType=""
                     android:theme="@style/BPEditText" />
+
+                <TextView
+                    style="@style/BPTextViewCreateWallet"
+                    android:text="@string/hint_wallet_create_form_input_password" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <EditText
+                        android:id="@+id/recoverPwdEt"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/create_wallet_pw_err_hint"
+                        android:inputType="textPassword|textMultiLine"
+                        android:theme="@style/BPEditText" />
+
+                    <ImageView
+                        android:id="@+id/recoverShowPwdIv"
+                        style="@style/BPCreateWalletEye" />
+                </RelativeLayout>
+
+
+                <TextView
+                    style="@style/BPTextViewCreateWallet"
+                    android:text="@string/hint_wallet_create_form_input_rePassword" />
 
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/recoverPwdEt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:gravity="start"
-                        android:hint="@string/recover_set_pwd_hint"
-                        android:inputType="textPassword"
-                        android:paddingEnd="20dp"
-                        android:paddingRight="20dp"
-                        android:theme="@style/BPEditText" />
-
-                    <ImageView
-                        android:id="@+id/recoverShowPwdIv"
-                        android:layout_width="20dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:paddingTop="20dp"
-                        android:paddingBottom="10dp"
-                        android:src="@mipmap/icon_close_eye" />
-                </RelativeLayout>
-
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <EditText
                         android:id="@+id/recoverConfirmPwdEt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:gravity="start"
-                        android:hint="@string/recover_confirm_pwd_hint"
+                        android:hint="@string/wallet_create__input_rePassword"
                         android:inputType="textPassword"
-                        android:paddingEnd="20dp"
-                        android:paddingRight="20dp"
                         android:theme="@style/BPEditText" />
 
                     <ImageView
                         android:id="@+id/recoverShowConfirmPwdIv"
-                        android:layout_width="20dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentBottom="true"
-                        android:paddingTop="20dp"
-                        android:paddingBottom="10dp"
-                        android:src="@mipmap/icon_close_eye" />
+                        style="@style/BPCreateWalletEye" />
                 </RelativeLayout>
 
-                <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                    android:id="@+id/recoverWalletSubmitBtn"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/bp_btn_hight"
-                    android:layout_gravity="bottom"
-                    android:layout_marginTop="55dp"
-                    android:layout_marginBottom="120dp"
-                    android:gravity="center"
-                    android:text="@string/recover_wallet_next_btn"
-                    android:textColor="@color/app_btn_color_white"
-                    android:textSize="18sp"
-                    app:qmui_backgroundColor="@color/disabled_btn_color"
-                    app:qmui_borderColor="@color/disabled_btn_color"
-                    app:qmui_radius="5dp" />
+
             </LinearLayout>
 
 
@@ -142,5 +122,14 @@
         android:layout_height="wrap_content"
         android:background="@color/app_color_white"
         android:fitsSystemWindows="true" />
+
+
+    <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
+        android:id="@+id/recoverWalletSubmitBtn"
+        style="@style/BPCreateWalletGreenBtn"
+        android:text="@string/recover_wallet_title"
+        app:qmui_backgroundColor="@color/app_color_green_disabled"
+        app:qmui_borderColor="@color/app_color_green_disabled"
+        app:qmui_radius="5dp" />
 
 </android.support.design.widget.CoordinatorLayout>
