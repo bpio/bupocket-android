@@ -10,11 +10,6 @@
         android:layout_marginTop="?attr/qmui_topbar_height"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/use_terms_title"
-            android:theme="@style/BPViewTitle" />
 
         <ScrollView
             android:layout_width="match_parent"
@@ -25,6 +20,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:orientation="vertical">
 
                 <WebView
@@ -38,19 +35,21 @@
         </ScrollView>
 
         <LinearLayout
+            android:id="@+id/llAgreeProtocol"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
             android:gravity="bottom"
             android:orientation="horizontal">
 
             <CheckBox
                 android:id="@+id/agreeUserTermsCheckbox"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="match_parent"
                 android:background="@color/app_bg_color_gray"
                 android:checked="false"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
+                android:textSize="14sp"
                 android:text="@string/use_terms_checkbox_agree"
                 android:textColor="@color/app_txt_color_gray_2"
                 android:theme="@style/BPCheckboxTheme" />
@@ -62,6 +61,7 @@
                 android:background="@color/terms_unagree_btn_grey"
                 android:enabled="false"
                 android:gravity="center"
+                android:textSize="18sp"
                 android:text="@string/use_terms_next_btn"
                 android:textColor="@color/app_btn_color_white">
 

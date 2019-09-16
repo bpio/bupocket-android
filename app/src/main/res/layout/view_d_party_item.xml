@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="78dp"
+    android:background="@color/app_color_white">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/dPartyIconRiv"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/common_left_right_padding"
+        android:scaleType="fitXY"
+        android:src="@mipmap/icon_goods_empty"
+        app:riv_oval="true" />
+
+    <TextView
+        android:id="@+id/dPartyNameRiv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/dPartyIconRiv"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@id/dPartyIconRiv"
+        android:textColor="@color/app_color_black"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/dPartyNickRiv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dPartyNameRiv"
+        android:layout_alignLeft="@+id/dPartyNameRiv"
+        android:layout_marginTop="5dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/app_txt_color_gray"
+        android:textSize="12sp" />
+
+</RelativeLayout>

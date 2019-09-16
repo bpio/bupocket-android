@@ -6,6 +6,7 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -13,15 +14,22 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.DialogUtils;
+import com.bupocket.utils.LogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.utils.ToastUtil;
+import com.bupocket.utils.WalletCurrentUtils;
+import com.bupocket.utils.WalletUtils;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.CreateWalletStepEnum;
 import com.bupocket.wallet.exception.WalletException;
@@ -33,8 +41,14 @@ import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-public class BPCreateWalletFormFragment extends BaseFragment {
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+public class BPCreateWalletFormFragment extends BaseFragment implements View.OnFocusChangeListener {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
 
@@ -53,9 +67,16 @@ public class BPCreateWalletFormFragment extends BaseFragment {
 
     @BindView(R.id.createWalletSubmitBtn)
     QMUIRoundButton mCreateWalletSubmitBtn;
-    private boolean isPwdHideFirst = false;
+    @BindView(R.id.create_wallet_name_title)
+    TextView createWalletNameTitle;
+
+
+    public boolean isPwdHideFirst = false;
     private boolean isConfirmPwdHideFirst = false;
     private SharedPreferencesHelper sharedPreferencesHelper;
+    public static boolean isCreateWallet;
+
+
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
     @Override
     protected View onCreateView() {
@@ -73,81 +94,71 @@ public class BPCreateWalletFormFragment extends BaseFragment {
         mPwdShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isPwdHideFirst) {
-                    mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_open_eye));
-                    mSetPwdEt.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mSetPwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance ());
-                    mSetPwdEt.setSelection(mSetPwdEt.getText().length());
-                    isPwdHideFirst = true;
-                } else {
-                    mPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_close_eye));
-                    mSetPwdEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    mSetPwdEt.setTransformationMethod(PasswordTransformationMethod.getInstance ());
-                    mSetPwdEt.setSelection(mSetPwdEt.getText().length());
-                    isPwdHideFirst = false;
-                }
+                WalletUtils.setEditTextEyeHide(mPwdShow, mSetPwdEt, isPwdHideFirst);
+                isPwdHideFirst = !isPwdHideFirst;
             }
         });
         mConfirmPwdShow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!isConfirmPwdHideFirst) {
-                    mConfirmPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_open_eye));
-                    mRepeatPwdEt.setInputType(InputType.TYPE_CLASS_TEXT);
-                    mRepeatPwdEt.setTransformationMethod(HideReturnsTransformationMethod.getInstance ());
-                    mRepeatPwdEt.setSelection(mRepeatPwdEt.getText().length());
-                    isConfirmPwdHideFirst = true;
-                } else {
-                    mConfirmPwdShow.setImageDrawable(ContextCompat.getDrawable(getContext(),R.mipmap.icon_close_eye));
-                    mRepeatPwdEt.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
-                    mRepeatPwdEt.setTransformationMethod(PasswordTransformationMethod.getInstance ());
-                    mRepeatPwdEt.setSelection(mRepeatPwdEt.getText().length());
-                    isConfirmPwdHideFirst = false;
-                }
+                WalletUtils.setEditTextEyeHide(mConfirmPwdShow, mRepeatPwdEt, isConfirmPwdHideFirst);
+                isConfirmPwdHideFirst = !isConfirmPwdHideFirst;
+
             }
         });
+
+        mSetIdentityNameEt.setOnFocusChangeListener(this);
+        mSetPwdEt.setOnFocusChangeListener(this);
+        mRepeatPwdEt.setOnFocusChangeListener(this);
+
     }
 
-    private void initData(){
+    private void initData() {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-
         initCreateWalletPromptView();
         initTopBar();
+        isCreateWallet = false;
+        Bundle arguments = getArguments();
+        if (arguments != null) {
+            String jumpPage = arguments.getString("jumpPage");
+            isCreateWallet = !TextUtils.isEmpty(jumpPage) && jumpPage.equals(BPWalletsHomeFragment.class.getSimpleName());
+            if (isCreateWallet) {
+                createWalletNameTitle.setText(R.string.create_wallet_name_title);
+                mSetIdentityNameEt.setHint(R.string.change_wallet_name_hint);
+                mTopBar.setTitle(R.string.view_title_create_wallet);
+            }
+        }
+
     }
 
 
-    private boolean validateData(){
+    private boolean validateData() {
         String indntityName = mSetIdentityNameEt.getText().toString().trim();
-        if("".equals(indntityName)){
-            Toast.makeText(getActivity(), R.string.wallet_create_form_input_identity_name_empty,Toast.LENGTH_SHORT).show();
-            return false;
-        }
 
-        if(!CommonUtil.validateNickname(indntityName)){
-            Toast.makeText(getActivity(), R.string.wallet_create_form_error4,Toast.LENGTH_SHORT).show();
+        if (!CommonUtil.validateNickname(indntityName)) {
+
+            if (isCreateWallet) {
+                DialogUtils.showTitleDialog(mContext, getString(R.string.wallet_create_form_error5), getString(R.string.error_hint));
+            } else {
+                DialogUtils.showTitleDialog(mContext, getString(R.string.wallet_create_form_error4), getString(R.string.error_hint));
+            }
+
+
             return false;
         }
 
         String password = mSetPwdEt.getText().toString().trim();
 
-        if("".equals(password)){
-            Toast.makeText(getActivity(), R.string.wallet_create_form_input_password_empty,Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(!CommonUtil.validatePassword(password)){
-            Toast.makeText(getActivity(), R.string.wallet_create_form_error2,Toast.LENGTH_SHORT).show();
+        if (!CommonUtil.validatePassword(password)) {
+            DialogUtils.showTitleDialog(mContext, R.string.wallet_create_form_error2, R.string.error_hint);
             return false;
         }
 
         String repeatPassword = mRepeatPwdEt.getText().toString().trim();
 
-        if("".equals(repeatPassword)){
-            Toast.makeText(getActivity(), R.string.wallet_create_form_input_rePassword_empty,Toast.LENGTH_SHORT).show();
-            return false;
-        }
-        if(!repeatPassword.equals(password)){
-            Toast.makeText(getActivity(), R.string.wallet_create_form_error1,Toast.LENGTH_SHORT).show();
+        if (!repeatPassword.equals(password)) {
+            DialogUtils.showTitleDialog(mContext, R.string.wallet_create_form_error1, R.string.error_hint);
             return false;
         }
 
@@ -155,14 +166,14 @@ public class BPCreateWalletFormFragment extends BaseFragment {
     }
 
 
-    private void onSubmitBtnListener(){
+    private void onSubmitBtnListener() {
         mCreateWalletSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Boolean flag = validateData();
-               if(!flag){
-                   return;
-               }
+                Boolean flag = validateData();
+                if (!flag) {
+                    return;
+                }
 
 
                 final QMUITipDialog tipDialog = new QMUITipDialog.Builder(getContext())
@@ -170,48 +181,99 @@ public class BPCreateWalletFormFragment extends BaseFragment {
                         .setTipWord(getResources().getString(R.string.wallet_create_creating_txt))
                         .create();
                 tipDialog.show();
-                new Thread(new Runnable() {
+                Runnable createWalletRunnable = new Runnable() {
                     @Override
                     public void run() {
                         String accountPwd = mSetPwdEt.getText().toString().trim();
 
                         WalletBPData walletBPData = null;
                         try {
-                            walletBPData = Wallet.getInstance().create(accountPwd,getContext());
-                            sharedPreferencesHelper.put("skey", walletBPData.getSkey());
-                            sharedPreferencesHelper.put("currentAccNick", mSetIdentityNameEt.getText().toString());
-                            sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
-                            sharedPreferencesHelper.put("identityId", walletBPData.getAccounts().get(0).getAddress());
-                            sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
-                            sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.CREATE_MNEONIC_CODE.getCode());
 
-                            sharedPreferencesHelper.put("currentWalletAddress",walletBPData.getAccounts().get(1).getAddress());
 
-                            final WalletBPData finalWalletBPData = walletBPData;
-                            getActivity().runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-
-                                    BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();
-                                    Bundle argz = new Bundle();
-                                    argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) finalWalletBPData.getMnemonicCodes());
-                                    backupWalletFragment.setArguments(argz);
-                                    startFragment(backupWalletFragment);
-                                }
-                            });
+                            if (isCreateWallet) {
+                                walletBPData = Wallet.getInstance().createWallet(accountPwd, getContext());
+                                createWallet(walletBPData);
+                            } else {
+                                walletBPData = Wallet.getInstance().createIdentity(accountPwd, getContext());
+                                createIdentityWallet(walletBPData);
+                            }
 
                             tipDialog.dismiss();
                         } catch (WalletException e) {
                             e.printStackTrace();
-                            ToastUtil.showToast(getActivity(), R.string.create_wallet_fail,Toast.LENGTH_SHORT);
+                            ToastUtil.showToast(getActivity(), R.string.create_wallet_fail, Toast.LENGTH_SHORT);
+                            tipDialog.dismiss();
                             return;
                         }
                     }
-                }).start();
-
+                };
+                ThreadManager.getInstance().execute(createWalletRunnable);
 
             }
         });
+    }
+
+    private void createWallet(WalletBPData walletBPData) {
+        String walletName = mSetIdentityNameEt.getText().toString().trim();
+        final String address = walletBPData.getAccounts().get(0).getAddress();
+        String bpData = JSON.toJSONString(walletBPData.getAccounts());
+        List<String> importedWallets = JSONObject.parseArray(spHelper.getSharedPreference("importedWallets", "[]").toString(), String.class);
+        if (address.equals(spHelper.getSharedPreference("currentAccAddr", "")) || importedWallets.contains(address)) {
+            ToastUtil.showToast(getActivity(), R.string.error_already_import_meaaage_txt, Toast.LENGTH_SHORT);
+        } else {
+            spHelper.put(address + "-walletName", walletName);
+            spHelper.put(address + "-BPdata", bpData);
+            importedWallets.add(address);
+            spHelper.put(address + "-mnemonicCodes", "yes");
+            spHelper.put("importedWallets", JSONObject.toJSONString(importedWallets));
+            sharedPreferencesHelper.put(address + ConstantsType.WALLET_SKEY, walletBPData.getSkey());
+            WalletCurrentUtils.saveInitHeadIcon(spHelper, address);
+            final WalletBPData finalWalletBPData = walletBPData;
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+
+                    getFragmentManager().findFragmentByTag(BPCreateWalletFormFragment.class.getSimpleName());
+
+                    BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();
+                    Bundle argz = new Bundle();
+                    argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) finalWalletBPData.getMnemonicCodes());
+                    argz.putString(ConstantsType.WALLET_ADDRESS, address);
+                    backupWalletFragment.setArguments(argz);
+                    startFragmentAndDestroyCurrent(backupWalletFragment);
+                }
+            });
+
+        }
+
+    }
+
+    private void createIdentityWallet(WalletBPData walletBPData) {
+        final String address = walletBPData.getAccounts().get(1).getAddress();
+        sharedPreferencesHelper.put("skey", walletBPData.getSkey());
+        String identityName = mSetIdentityNameEt.getText().toString().trim();
+        sharedPreferencesHelper.put("currentAccNick", identityName);
+        sharedPreferencesHelper.put("BPData", JSON.toJSONString(walletBPData.getAccounts()));
+        sharedPreferencesHelper.put("identityId", walletBPData.getAccounts().get(0).getAddress());
+        sharedPreferencesHelper.put("currentAccAddr", walletBPData.getAccounts().get(1).getAddress());
+        sharedPreferencesHelper.put("createWalletStep", CreateWalletStepEnum.CREATE_MNEONIC_CODE.getCode());
+        sharedPreferencesHelper.put("currentWalletAddress", address);
+        sharedPreferencesHelper.put(address + ConstantsType.WALLET_SKEY, walletBPData.getSkey());
+        WalletCurrentUtils.saveInitHeadIcon(spHelper, address);
+        final WalletBPData finalWalletBPData = walletBPData;
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+
+                BPBackupWalletFragment backupWalletFragment = new BPBackupWalletFragment();
+                Bundle argz = new Bundle();
+                argz.putStringArrayList("mneonicCodeList", (ArrayList<String>) finalWalletBPData.getMnemonicCodes());
+                argz.putString(ConstantsType.WALLET_ADDRESS, address);
+                backupWalletFragment.setArguments(argz);
+                startFragment(backupWalletFragment);
+            }
+        });
+
     }
 
 
@@ -223,50 +285,50 @@ public class BPCreateWalletFormFragment extends BaseFragment {
                 popBackStack();
             }
         });
+        mTopBar.setTitle(R.string.view_title_create_wallet_identity);
     }
 
-    private void initCreateWalletPromptView(){
+    private void initCreateWalletPromptView() {
         final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
         qmuiDialog.setCanceledOnTouchOutside(false);
         qmuiDialog.setContentView(R.layout.view_create_wallet_prompt);
         qmuiDialog.show();
-        QMUIRoundButton mreateWalletPromptConfirmBtn = qmuiDialog.findViewById(R.id.createWalletPromptConfirmBtn);
-
-        mreateWalletPromptConfirmBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiDialog.dismiss();
-            }
-        });
+        qmuiDialog.findViewById(R.id.createWalletPromptConfirmBtn)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        qmuiDialog.dismiss();
+                    }
+                });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
-    private void buildWatcher(){
+    private void buildWatcher() {
         TextWatcher watcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                mCreateWalletSubmitBtn.setEnabled(false);
-                mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mCreateWalletSubmitBtn.setEnabled(false);
-                mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                boolean signIdentityName = mSetIdentityNameEt.getText().toString().trim().length() > 0;
-                boolean signSetPwd = mSetPwdEt.getText().toString().trim().length() > 0;
-                boolean signRepeatPwd = mRepeatPwdEt.getText().toString().trim().length() >0;
-                if(signIdentityName && signSetPwd && signRepeatPwd){
+
+                String name = mSetIdentityNameEt.getText().toString().trim();
+                String password = mSetPwdEt.getText().toString().trim();
+                String passwordConfirm = mRepeatPwdEt.getText().toString().trim();
+
+                if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(password) && !TextUtils.isEmpty(passwordConfirm)) {
                     mCreateWalletSubmitBtn.setEnabled(true);
                     mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_able_bg));
-                }else {
+                } else {
                     mCreateWalletSubmitBtn.setEnabled(false);
                     mCreateWalletSubmitBtn.setBackground(getResources().getDrawable(R.drawable.radius_button_disable_bg));
                 }
+
+
             }
         };
         mSetIdentityNameEt.addTextChangedListener(watcher);
@@ -274,5 +336,10 @@ public class BPCreateWalletFormFragment extends BaseFragment {
         mRepeatPwdEt.addTextChangedListener(watcher);
     }
 
+
+    @Override
+    public void onFocusChange(View v, boolean hasFocus) {
+
+    }
 
 }

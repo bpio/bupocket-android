@@ -2,7 +2,6 @@ package com.bupocket.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,14 +11,17 @@ import android.widget.ListView;
 import com.bupocket.R;
 import com.bupocket.adaptor.AddressAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.database.greendao.AddressBookListBeanDao;
 import com.bupocket.enums.AddressClickEventEnum;
+import com.bupocket.http.api.AddressBookListBean;
 import com.bupocket.http.api.AddressBookService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.GetAddressBookRespDto;
 import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.LogUtils;
+import com.bupocket.utils.NetworkUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
-import com.bupocket.wallet.Wallet;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -38,8 +40,6 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.google.zxing.integration.android.IntentIntegrator.REQUEST_CODE;
-
 public class BPAddressBookFragment extends BaseFragment {
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
@@ -49,23 +49,26 @@ public class BPAddressBookFragment extends BaseFragment {
     RefreshLayout refreshLayout;
     @BindView(R.id.addressBookLv)
     ListView mAddressBookLv;
-    @BindView(R.id.addressRecordEmptyLL)
+    @BindView(R.id.recordEmptyLL)
     LinearLayout mAddressRecordEmptyLL;
+    @BindView(R.id.loadFailedLL)
+    LinearLayout faildLayout;
+
 
     private String flag;
     private SharedPreferencesHelper sharedPreferencesHelper;
     private String identityAddress;
-    private String pageSize = "10";
-    private Integer pageStart = 1;
     private AddressAdapter addressAdapter;
+
+
     private GetAddressBookRespDto.PageBean page;
-    private String tokenCode;
-    private String tokenDecimals;
-    private String tokenIssuer;
-    private String tokenType;
     private String currentWalletAddress;
-    private List<GetAddressBookRespDto.AddressBookListBean> addressList = new ArrayList<>();
-    private View faildLayout;
+    private List<AddressBookListBean> addressList = new ArrayList<>();
+    private AddressBookListBeanDao addressBookListBeanDao;
+
+
+    private static final int pageSize = 10;
+    private int pageStart = 1;
 
     @Override
     protected View onCreateView() {
@@ -79,8 +82,9 @@ public class BPAddressBookFragment extends BaseFragment {
     public void onStart() {
         super.onStart();
         initData();
-        refreshData();
         initListView();
+        refreshData();
+
     }
 
     private void init() {
@@ -88,19 +92,17 @@ public class BPAddressBookFragment extends BaseFragment {
     }
 
     private void initData() {
+
+        addressBookListBeanDao = mApplication.getDaoSession().getAddressBookListBeanDao();
+
         sharedPreferencesHelper = new SharedPreferencesHelper(getContext(), "buPocket");
-        identityAddress = sharedPreferencesHelper.getSharedPreference("identityId","").toString();
+        identityAddress = sharedPreferencesHelper.getSharedPreference("identityId", "").toString();
         Bundle bundle = getArguments();
         flag = bundle != null ? bundle.getString("flag") : AddressClickEventEnum.EDIT.getCode();
-        if(AddressClickEventEnum.CHOOSE.getCode().equals(flag)){
-            tokenCode = bundle.getString("tokenCode");
-            tokenDecimals = bundle.getString("tokenDecimals");
-            tokenIssuer = bundle.getString("tokenIssuer");
-            tokenType = bundle.getString("tokenType");
-        }
-        currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress","").toString();
-        if(CommonUtil.isNull(currentWalletAddress) || currentWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString())){
-            currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr","").toString();
+
+        currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentWalletAddress", "").toString();
+        if (CommonUtil.isNull(currentWalletAddress) || currentWalletAddress.equals(sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString())) {
+            currentWalletAddress = sharedPreferencesHelper.getSharedPreference("currentAccAddr", "").toString();
         }
     }
 
@@ -108,27 +110,17 @@ public class BPAddressBookFragment extends BaseFragment {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         initTopBar();
 
-        faildLayout = LayoutInflater.from(mContext).inflate(R.layout.view_load_failed, null);
-        faildLayout.findViewById(R.id.copyCommandBtn).setOnClickListener(new View.OnClickListener() {
+        faildLayout.findViewById(R.id.reloadBtn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                refreshLayout.autoRefreshAnimationOnly();
-                refreshLayout.getLayout().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        refreshData();
-                        refreshLayout.finishRefresh();
-                        refreshLayout.setNoMoreData(false);
-                        initData();
-                    }
-                }, 500);
+                refreshLayout.autoRefresh(100, 100, 1, false);
             }
         });
     }
 
     private void initListView() {
         refreshLayout.setNoMoreData(false);
-        mAddressEv.show(true);
+
         refreshLayout.setEnableLoadMore(false);
         refreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
@@ -148,24 +140,94 @@ public class BPAddressBookFragment extends BaseFragment {
         refreshLayout.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore(final RefreshLayout refreshlayout) {
+
                 refreshlayout.getLayout().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if(addressAdapter == null){
+                        if (addressAdapter == null) {
                             refreshlayout.finishRefresh();
                             return;
                         }
 
                         loadMoreData();
+
                         refreshlayout.finishLoadMore(500);
 
-                        if(!page.isNextFlag()){
+                        if (!page.isNextFlag()) {
                             refreshLayout.finishLoadMoreWithNoMoreData();
                         }
                     }
                 }, 500);
             }
         });
+
+
+        getDataDaoRefresh(pageStart);
+
+        mAddressBookLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                if (AddressClickEventEnum.CHOOSE.getCode().equals(flag)) {
+
+                    AddressBookListBean currentItem = (AddressBookListBean) addressAdapter.getItem(position);
+                    Intent intent = new Intent();
+                    intent.putExtra("destAddress", currentItem.getLinkmanAddress());
+                    setFragmentResult(RESULT_OK, intent);
+                    popBackStack();
+                } else if (AddressClickEventEnum.EDIT.getCode().equals(flag)) {
+                    AddressBookListBean currentItem = (AddressBookListBean) addressAdapter.getItem(position);
+                    Bundle argz = new Bundle();
+                    argz.putString("oldAddressName", currentItem.getNickName());
+                    argz.putString("oldLinkmanAddress", currentItem.getLinkmanAddress());
+                    argz.putString("oldAddressDescribe", currentItem.getRemark());
+                    argz.putString("flag", flag);
+                    BPAddressEditFragment bpAddressEditFragment = new BPAddressEditFragment();
+                    bpAddressEditFragment.setArguments(argz);
+                    startFragment(bpAddressEditFragment);
+
+                } else if (AddressClickEventEnum.VOUCHER.getCode().equals(flag)) {
+
+                    AddressBookListBean currentItem = (AddressBookListBean) addressAdapter.getItem(position);
+                    Intent intent = new Intent();
+                    intent.putExtra("destAddress", currentItem.getLinkmanAddress());
+                    setFragmentResult(RESULT_OK, intent);
+                    popBackStack();
+
+                }
+            }
+        });
+
+
+    }
+
+    private void getDataDaoRefresh(int pageStart) {
+        List<AddressBookListBean> addressBookListBeans = addressBookListBeanDao.queryBuilder().offset((pageStart - 1) * pageSize).limit(pageSize).list();
+
+        if (addressBookListBeans != null) {
+            if (pageStart == 1) {
+                addressAdapter = new AddressAdapter(addressBookListBeans, getContext());
+                if (addressBookListBeans.size() == 0) {
+                    mAddressEv.show(true);
+                }
+
+            } else {
+
+                if (addressBookListBeans.size() == 0) {
+                    refreshLayout.finishLoadMoreWithNoMoreData();
+                    return;
+                }
+                addressAdapter.loadMore(addressBookListBeans);
+                refreshLayout.finishLoadMore();
+
+
+            }
+            mAddressBookLv.setAdapter(addressAdapter);
+            addressAdapter.notifyDataSetChanged();
+            refreshLayout.setEnableLoadMore(true);
+        }
+
+
     }
 
     private void refreshData() {
@@ -175,9 +237,15 @@ public class BPAddressBookFragment extends BaseFragment {
     }
 
     private void loadMoreData() {
-        if(page.isNextFlag()){
-            pageStart ++;
-            loadAddressList();
+
+
+        if (NetworkUtils.isNetWorkAvailable(mContext)) {
+            if (page.isNextFlag()) {
+                pageStart++;
+                loadAddressList();
+            }
+        } else {
+            getDataDaoRefresh(pageStart + 1);
         }
     }
 
@@ -185,38 +253,37 @@ public class BPAddressBookFragment extends BaseFragment {
         final AddressBookService addressBookService = RetrofitFactory.getInstance().getRetrofit().create(AddressBookService.class);
         Call<ApiResult<GetAddressBookRespDto>> call;
         Map<String, Object> paramsMap = new HashMap<>();
-        paramsMap.put("identityAddress",identityAddress);
-        paramsMap.put("startPage",pageStart);
-        paramsMap.put("pageSize",pageSize);
+        paramsMap.put("identityAddress", identityAddress);
+        paramsMap.put("startPage", pageStart);
+        paramsMap.put("pageSize", pageSize);
         call = addressBookService.getMyAddressBook(paramsMap);
         call.enqueue(new Callback<ApiResult<GetAddressBookRespDto>>() {
             @Override
             public void onResponse(Call<ApiResult<GetAddressBookRespDto>> call, Response<ApiResult<GetAddressBookRespDto>> response) {
                 ApiResult<GetAddressBookRespDto> respDto = response.body();
-                if(null != respDto && null != respDto.getData()){
-                    mAddressEv.show(null,null);
-                    if(isAdded() && null != respDto.getData().getAddressBookList()){
+                if (null != respDto && null != respDto.getData()) {
+                    mAddressEv.show(null, null);
+                    if (isAdded() && null != respDto.getData().getAddressBookList()) {
                         mAddressBookLv.setVisibility(View.VISIBLE);
                         mAddressRecordEmptyLL.setVisibility(View.GONE);
                         handleAddressList(respDto.getData());
-                    }else{
+                    } else {
                         mAddressBookLv.setVisibility(View.GONE);
                         mAddressRecordEmptyLL.setVisibility(View.VISIBLE);
                     }
-                }else{
-//                    mAddressEv.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
-                    mAddressEv.removeAllViews();
-                    mAddressEv.addView(faildLayout);
                 }
+                faildLayout.setVisibility(View.GONE);
             }
 
             @Override
             public void onFailure(Call<ApiResult<GetAddressBookRespDto>> call, Throwable t) {
                 t.printStackTrace();
-                if(isAdded()){
-                    mAddressEv.removeAllViews();
-                    mAddressEv.addView(faildLayout);
+                mAddressEv.show(null, null);
+                if (addressAdapter != null && addressAdapter.getCount() > 0) {
+                    return;
                 }
+                faildLayout.setVisibility(View.VISIBLE);
+
             }
         });
     }
@@ -224,60 +291,49 @@ public class BPAddressBookFragment extends BaseFragment {
     private void handleAddressList(GetAddressBookRespDto getAddressBookRespDto) {
         refreshLayout.setEnableLoadMore(true);
         page = getAddressBookRespDto.getPage();
-        addressList.addAll(getAddressBookRespDto.getAddressBookList());
-        if(addressAdapter == null || pageStart == 1){
-            addressAdapter = new AddressAdapter(addressList,getContext());
+        List<AddressBookListBean> addressBookList = getAddressBookRespDto.getAddressBookList();
+        addressList.addAll(addressBookList);
+        if (addressBookList.size() > 0) {
+            addressBookListBeanDao.insertOrReplaceInTx(addressBookList);
+        }
+        if (addressAdapter == null || pageStart == 1) {
+            addressAdapter = new AddressAdapter(addressList, getContext());
             addressAdapter.setPage(page);
             mAddressBookLv.setAdapter(addressAdapter);
-        }else {
+        } else {
             addressAdapter.loadMore(getAddressBookRespDto.getAddressBookList());
         }
-        if(AddressClickEventEnum.CHOOSE.getCode().equals(flag)){
-            mAddressBookLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    GetAddressBookRespDto.AddressBookListBean currentItem = (GetAddressBookRespDto.AddressBookListBean)addressAdapter.getItem(position);
-                    Intent intent = new Intent();
-                    intent.putExtra("destAddress",currentItem.getLinkmanAddress());
-                    setFragmentResult(RESULT_OK, intent);
-                    popBackStack();
-                }
-            });
-        }else if(AddressClickEventEnum.EDIT.getCode().equals(flag)){
-            mAddressBookLv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    GetAddressBookRespDto.AddressBookListBean currentItem = (GetAddressBookRespDto.AddressBookListBean)addressAdapter.getItem(position);
-                    Bundle argz = new Bundle();
-                    argz.putString("oldAddressName",currentItem.getNickName());
-                    argz.putString("oldLinkmanAddress",currentItem.getLinkmanAddress());
-                    argz.putString("oldAddressDescribe",currentItem.getRemark());
-                    argz.putString("flag",flag);
-                    BPAddressEditFragment bpAddressEditFragment = new BPAddressEditFragment();
-                    bpAddressEditFragment.setArguments(argz);
-                    startFragment(bpAddressEditFragment);
-                }
-            });
-        }
+
+
     }
 
     private void initTopBar() {
         mTopBar.setBackgroundDividerEnabled(false);
+        mTopBar.setTitle(R.string.address_book_txt);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 popBackStack();
             }
         });
-        mTopBar.addRightImageButton(R.mipmap.icon_import_wallet,R.id.topbar_right_button).setOnClickListener(new View.OnClickListener() {
+        mTopBar.addRightImageButton(R.mipmap.icon_import_wallet, R.id.topbar_right_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Bundle argz = new Bundle();
-                argz.putString("flag",flag);
+                argz.putString("flag", flag);
+                argz.putStringArrayList("bookData", getBookData());
                 BPAddressAddFragment bpAddressAddFragment = new BPAddressAddFragment();
                 bpAddressAddFragment.setArguments(argz);
                 startFragment(bpAddressAddFragment);
             }
         });
+    }
+
+    private ArrayList<String> getBookData() {
+        ArrayList<String> bookData = new ArrayList<>();
+        for (int i = 0; i < addressList.size(); i++) {
+            bookData.add(addressList.get(i).getLinkmanAddress());
+        }
+        return bookData;
     }
 }

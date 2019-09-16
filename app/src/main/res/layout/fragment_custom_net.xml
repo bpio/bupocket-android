@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/app_color_gray"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/qmui_topbar_height"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app_color_white"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/common_left_right_padding"
+            android:paddingRight="@dimen/common_left_right_padding">
+
+            <TextView
+                style="@style/BPTextViewCreateWallet"
+                android:layout_marginTop="15dp"
+                android:text="@string/wallet_service_title" />
+
+
+            <EditText
+                android:id="@+id/wallet_service_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/wallet_service_hint"
+                android:inputType=""
+                android:theme="@style/BPEditText" />
+
+            <TextView
+                style="@style/BPTextViewCreateWallet"
+                android:layout_marginTop="15dp"
+                android:text="@string/node_service_title" />
+
+
+            <EditText
+                android:id="@+id/node_service_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/node_service_hint"
+                android:inputType=""
+                android:theme="@style/BPEditText" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/app_color_white">
+
+            <LinearLayout
+                android:id="@+id/visibleStartBtnLL"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/app_bg_color_gray"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/setNodeBtn"
+                    style="@style/BPComGreenBgWhiteTextBtn"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/start_custom_service" />
+
+                <TextView
+                    style="@style/BPTextViewCreateWallet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_left_right_padding"
+                    android:layout_marginTop="14dp"
+                    android:layout_marginRight="@dimen/common_left_right_padding"
+                    android:text="@string/note" />
+
+                <TextView
+                    android:id="@+id/nodeHintTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/common_left_right_padding"
+                    android:layout_marginTop="4dp"
+                    android:layout_marginRight="@dimen/common_left_right_padding"
+                    android:text="@string/start_custom_service_hint"
+                    android:textColor="@color/app_txt_color_gray"
+                    android:textSize="14sp" />
+
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true" />
+
+
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

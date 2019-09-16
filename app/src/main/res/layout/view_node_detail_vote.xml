@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_color_white"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/app_color_white"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/common_text_size_15"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/node_vote_title"
+                android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/ivDialogCancle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:background="@mipmap/icon_cancel"
+                android:padding="5dp" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginRight="20dp"
+            android:background="@color/app_txt_color_gray_3" />
+
+
+        <TextView
+            android:id="@+id/voteNumTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/common_text_size_15"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="@dimen/common_text_size_15"
+            android:layout_marginBottom="15dp"
+            android:textColor="@color/app_txt_color_gray"
+            android:textSize="13sp" />
+
+
+        <EditText
+            android:id="@+id/nodeVoteEt"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginLeft="@dimen/common_text_size_15"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/shape_corner_gray_stroke"
+            android:hint="@string/node_vote_input_hint"
+            android:inputType="number"
+            android:paddingLeft="12dp"
+            android:textSize="13sp" />
+
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/current_wallet"
+                android:textColor="@color/app_color_black"
+                android:textSize="@dimen/common_text_size_13" />
+
+            <TextView
+                android:id="@+id/currentName"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="50dp"
+                android:ellipsize="middle"
+                android:layout_height="match_parent"
+                tools:text="currentWallet"
+                android:gravity="right"
+                android:textColor="@color/app_color_black"
+                android:textSize="@dimen/common_text_size_13"
+                android:singleLine="true" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center_vertical|right"
+                android:text="@string/balance"
+                android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tvDialogTotalAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:gravity="center_vertical"
+                android:text="0 BU"
+                android:textColor="@color/app_color_green"
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_line" />
+
+        <TextView
+            android:id="@+id/tvDialogSupport"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/bp_btn_hight"
+            android:layout_marginLeft="@dimen/common_text_size_15"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/button_bg_green_selector"
+            android:enabled="false"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="@string/confirm_vote"
+            android:textColor="@color/app_color_white"
+            android:textSize="@dimen/common_btn_size" />
+
+    </LinearLayout>
+
+</ScrollView>
+

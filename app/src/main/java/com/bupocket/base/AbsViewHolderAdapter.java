@@ -6,12 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * edited by yanyi on 16/1/14.
+ *base  AbsViewHolderAdapter
  */
 public abstract class AbsViewHolderAdapter<ItemDataType> extends AbsBaseAdapter<ItemDataType> {
     protected abstract int getLayoutId();
 
-    protected AbsViewHolderAdapter(@NonNull Context context) {
+    public AbsViewHolderAdapter(@NonNull Context context) {
         super(context);
     }
 

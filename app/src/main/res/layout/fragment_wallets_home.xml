@@ -12,144 +12,49 @@
         android:background="@color/qmui_config_color_white"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/wallet_management_txt"
-            android:theme="@style/BPViewTitle" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/app_bg_color_gray"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/common_left_right_padding"
+            android:paddingRight="@dimen/common_left_right_padding">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="14.5dp"
-                android:layout_marginTop="15.5dp"
+                android:paddingTop="@dimen/common_top_bottom_padding"
+                android:paddingBottom="@dimen/common_top_bottom_padding"
                 android:text="@string/current_identity_wallet_title_txt"
-                android:textColor="@color/app_txt_color_gray_2"
-                android:textSize="15sp" />
+                android:textColor="@color/app_txt_color_gray"
+                android:textSize="14sp" />
 
-            <RelativeLayout
-                android:id="@+id/identityWalletInfoRl"
+            <include
+                android:id="@+id/identityWalletInfoLl"
+                layout="@layout/view_wallet_list_item"
                 android:layout_width="match_parent"
-                android:layout_height="85dp"
-                android:layout_marginLeft="12.5dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginRight="12.5dp"
-                android:background="@drawable/shape_corner">
+                android:layout_height="wrap_content" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:orientation="vertical"
-                    android:paddingLeft="15sp">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical">
-                        <TextView
-                            android:id="@+id/currentIdentityWalletNameTv"
-                            android:layout_width="wrap_content"
-                            android:maxWidth="120dp"
-                            android:singleLine="true"
-                            android:ellipsize="end"
-                            android:layout_height="wrap_content"
-                            android:textColor="@color/app_color_black"
-                            android:textSize="16sp"
-                            tools:text="Wallet-1" />
-
-                        <TextView
-                            android:id="@+id/currentIdentityWalletSignTv"
-                            android:layout_marginLeft="10.5dp"
-                            android:paddingLeft="5dp"
-                            android:paddingRight="5dp"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/current_wallet_sign_txt"
-                            android:background="@drawable/shape_corner_green"
-                            android:textColor="@color/app_color_white"
-                            android:textSize="13sp"
-                            android:visibility="gone"/>
-                    </LinearLayout>
-
-
-                    <TextView
-                        android:id="@+id/currentIdentityWalletAddressTv"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="12dp"
-                        android:textColor="@color/app_txt_color_gray"
-                        android:textSize="15sp"
-                        tools:text="buQhSMWw···4Bo73c8C" />
-                </LinearLayout>
-
-                <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                    android:id="@+id/manageIdentityWalletBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="15dp"
-                    android:gravity="center"
-                    android:text="@string/manage_txt"
-                    android:textColor="@color/app_color_main"
-                    android:textSize="15sp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    app:qmui_backgroundColor="@color/app_color_white"
-                    app:qmui_borderColor="@color/app_color_main"
-                    app:qmui_radius="5dp" />
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12.5dp"
-                android:layout_marginTop="25.5dp"
-                android:layout_marginRight="12.5dp">
+                android:layout_marginBottom="@dimen/common_top_bottom_padding"
+                android:layout_marginTop="@dimen/common_top_bottom_padding"
+                android:text="@string/imported_wallet_home_title_txt"
+                android:textColor="@color/app_txt_color_gray"
+                android:textSize="14sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/imported_wallet_title_txt"
-                    android:textColor="@color/app_txt_color_gray_2"
-                    android:textSize="15sp" />
 
-                <ImageView
-                    android:id="@+id/importSmallWalletBtnIv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:src="@mipmap/icon_import_wallet" />
-
-            </RelativeLayout>
-
-            <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                android:layout_marginTop="37dp"
+            <Button
                 android:id="@+id/importBigWalletBtn"
-                android:layout_width="238dp"
-                android:layout_height="43.5dp"
-                android:gravity="center"
-                android:layout_gravity="center_horizontal"
-                android:text="@string/import_wallet_btn_txt"
-                android:textSize="18sp"
-                android:textColor="@color/app_color_white"
-                app:qmui_backgroundColor="@color/app_color_main"
-                app:qmui_borderWidth="0dp"
-                app:qmui_radius="5dp"
-                android:drawableLeft="@mipmap/icon_import_wallet_white"
+                style="@style/BPComGreenBgWhiteTextBtn"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="40dp"
                 android:paddingLeft="50dp"
                 android:paddingRight="50dp"
-                android:visibility="visible"/>
+                android:text="@string/imported_wallet_title_txt" />
 
             <com.qmuiteam.qmui.widget.QMUIEmptyView
                 android:id="@+id/emptyView"
@@ -157,14 +62,13 @@
                 android:layout_height="match_parent">
 
                 <ListView
-                    android:padding="12.5dp"
                     android:id="@+id/importWalletsLv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:divider="@color/tx_list_view_background_col"
                     android:dividerHeight="10dp"
-                    android:scrollbars="none"
-                    android:fadeScrollbars="false">
+                    android:fadeScrollbars="false"
+                    android:scrollbars="none">
 
                 </ListView>
             </com.qmuiteam.qmui.widget.QMUIEmptyView>

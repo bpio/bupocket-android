@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="home_tab_height">49dp</dimen>
+    <dimen name="home_tab_height">55dp</dimen>
     <dimen name="qmui_topbar_height">30dp</dimen>
     <dimen name="common_content_spacing">@dimen/qmui_content_spacing_horizontal</dimen>
 
@@ -27,8 +27,8 @@
     <dimen name="spanUtils_column_marginBottom">35dp</dimen>
     <dimen name="spanUtils_common_textSize">16sp</dimen>
 
-    <dimen name="bp_btn_hight">45dp</dimen>
-    <dimen name="bp_btn_text_size">16sp</dimen>
+
+
     <dimen name="view_padding">10dp</dimen>
     <dimen name="mnemonic_word_view_padding">15dp</dimen>
     <dimen name="transaction_status_width">100dp</dimen>
@@ -37,5 +37,36 @@
     <dimen name="common_padding_border">10dp</dimen>
     <dimen name="common_btn_size">18sp</dimen>
 
+
+    <dimen name="common_left_padding">10dp</dimen>
+
+
+    <dimen name="common_left_right_padding">15dp</dimen>
+    <dimen name="common_top_bottom_padding">10dp</dimen>
+
+
+    <dimen name="common_text_size_36">36sp</dimen>
+    <dimen name="common_text_size_18">18sp</dimen>
+    <dimen name="common_text_size_16">16sp</dimen>
+    <dimen name="common_text_size_15">15sp</dimen>
+    <dimen name="common_text_size_14">14sp</dimen>
+    <dimen name="common_text_size_13">13sp</dimen>
+    <dimen name="common_text_size_12">12sp</dimen>
+    <dimen name="common_text_size_11">11sp</dimen>
+
+
+    <dimen name="common_border_4">4</dimen>
+    <dimen name="common_border_5">5</dimen>
+
+    <dimen name="bp_btn_hight">45dp</dimen>
+    <dimen name="bp_btn_text_size">18sp</dimen>
+
+    <dimen name="bp_btn_bottom_margin">30dp</dimen>
+
+    <dimen name="bp_text_top">30dp</dimen>
+    <dimen name="bp_text_top2">25dp</dimen>
+
+    <dimen name="bp_line_spacing_multiplier">1.2</dimen>
+    <dimen name="bp_create_wallet_layout_bottom">85dp</dimen>
 
 </resources>

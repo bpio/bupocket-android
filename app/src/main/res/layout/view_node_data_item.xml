@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/nodeDataLL"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="15dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/nodeDataItemTitleTv"
+        style="@style/BPTextBuildHeadGray"
+        android:layout_below="@+id/tvSupportAmountHint"
+        tools:text="@string/build_origin_purchase_amount" />
+
+
+    <ImageView
+        android:id="@+id/nodeDataItemIv"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_alignTop="@id/tvOriginPurchaseAmountHint"
+        android:layout_marginTop="0.5dp"
+        android:layout_toRightOf="@+id/tvOriginPurchaseAmountHint"
+        android:padding="3dp"
+        android:src="@mipmap/ic_sheet_hint" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_weight="1" />
+
+
+    <TextView
+        android:id="@+id/nodeDataItemAmountTv"
+        style="@style/BPTextBuildBlack"
+        android:layout_below="@+id/tvBuildDetailSupportAmount"
+        android:layout_alignParentRight="true"
+        tools:text="2000" />
+</LinearLayout>

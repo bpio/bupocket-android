@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.bumptech.glide.util.ExceptionCatchingInputStream;
 import com.bupocket.common.Constants;
 import com.bupocket.http.api.AccountService;
 import com.bupocket.http.api.RetrofitFactory;
@@ -12,6 +11,7 @@ import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DecimalCalculate;
 import com.bupocket.utils.LogUtils;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.wallet.enums.BUChainExceptionEnum;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
@@ -28,6 +28,7 @@ import io.bumo.encryption.utils.hex.HexFormat;
 import io.bumo.model.request.*;
 import io.bumo.model.request.operation.*;
 import io.bumo.model.response.*;
+import io.bumo.model.response.result.ContractCallResult;
 import io.bumo.model.response.result.TransactionBuildBlobResult;
 
 import org.bitcoinj.crypto.MnemonicCode;
@@ -47,13 +48,14 @@ import java.util.Map;
 public class Wallet {
     private static SDK sdk = null;
     private static Wallet wallet;
+    private static Long GAS_PRICE = 1003L;
 
     private Wallet() {
         init();
     }
 
     private void init() {
-        sdk = SDK.getInstance(Constants.BUMO_NODE_URL);
+        sdk = SDK.getInstance(Constants.BUMO_NODE_URL_BASE);
     }
 
     public synchronized static Wallet getInstance() {
@@ -67,7 +69,7 @@ public class Wallet {
         wallet = null;
     }
 
-    private WalletBPData create(String password, String sKey, Context context) throws WalletException {
+    private WalletBPData createIdentity(String password, String sKey, Context context) throws WalletException {
         try {
             WalletBPData walletBPData;
             List<String> mnemonicCodes;
@@ -100,6 +102,48 @@ public class Wallet {
             String walletAccountPk = getPk(privateKeys.get(1));
 
             String walletAccountSignData = signData(privateKeys.get(1), walletAccountBean.getAddress());
+            deviceBind(walletAccountBean.getAddress(), identityAccountBean.getAddress(), walletAccountPk, walletAccountSignData, context);
+
+            return walletBPData;
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new WalletException(ExceptionEnum.SYS_ERR.getCode(), ExceptionEnum.SYS_ERR.getMessage());
+        }
+    }
+
+    private WalletBPData createWallet(String password, String sKey, Context context) throws WalletException {
+        try {
+            WalletBPData walletBPData;
+            List<String> mnemonicCodes;
+            BaseKeyStoreEntity baseKeyStoreEntity = KeyStore.encryptMsg(password, sKey, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 1);
+            List<String> hdPaths = new ArrayList<>();
+            hdPaths.add("M/44H/526H/1H/0/0");
+            mnemonicCodes = new MnemonicCode().toMnemonic(HexFormat.hexStringToBytes(sKey));
+            List<String> privateKeys = Mnemonic.generatePrivateKeys(mnemonicCodes, hdPaths);
+
+
+            walletBPData = new WalletBPData();
+            walletBPData.setSkey(JSON.toJSONString(baseKeyStoreEntity));
+            List<WalletBPData.AccountsBean> accountsBeans = new ArrayList<>();
+
+            KeyStoreEntity keyStoreEntity = null;
+            WalletBPData.AccountsBean accountsBean;
+            for (String pk : privateKeys) {
+                keyStoreEntity = KeyStore.generateKeyStore(password, pk, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 1);
+                accountsBean = new WalletBPData.AccountsBean();
+                accountsBean.setAddress(new PrivateKey(pk).getEncAddress());
+                accountsBean.setSecret(JSON.toJSONString(keyStoreEntity));
+                accountsBeans.add(accountsBean);
+            }
+            walletBPData.setAccounts(accountsBeans);
+            walletBPData.setMnemonicCodes(mnemonicCodes);
+            WalletBPData.AccountsBean identityAccountBean = accountsBeans.get(0);
+            WalletBPData.AccountsBean walletAccountBean = accountsBeans.get(0);
+
+            String walletAccountPk = getPk(privateKeys.get(0));
+
+            String walletAccountSignData = signData(privateKeys.get(0), walletAccountBean.getAddress());
 
             deviceBind(walletAccountBean.getAddress(), identityAccountBean.getAddress(), walletAccountPk, walletAccountSignData, context);
 
@@ -111,19 +155,41 @@ public class Wallet {
         }
     }
 
-    public WalletBPData create(String password, Context context) throws WalletException {
+    public WalletBPData createIdentity(String password, Context context) throws WalletException {
         byte[] aesIv = new byte[16];
         SecureRandom randomIv = new SecureRandom();
         randomIv.nextBytes(aesIv);
         String skey = HexFormat.byteToHex(aesIv);
-        return create(password, skey, context);
+        return createIdentity(password, skey, context);
     }
+
+    public WalletBPData createWallet(String password, Context context) throws WalletException {
+        byte[] aesIv = new byte[16];
+        SecureRandom randomIv = new SecureRandom();
+        randomIv.nextBytes(aesIv);
+        String skey = HexFormat.byteToHex(aesIv);
+        return createWallet(password, skey, context);
+    }
+
 
     public WalletBPData updateAccountPassword(String oblPwd, String newPwd, String ciphertextSkeyData, Context context) throws WalletException {
         try {
             // 校验密码是否匹配
             String sKey = HexFormat.byteToHex(getSkey(oblPwd, ciphertextSkeyData));
-            return create(newPwd, sKey, context);
+            return createIdentity(newPwd, sKey, context);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new WalletException(ExceptionEnum.SYS_ERR.getCode(), ExceptionEnum.SYS_ERR.getMessage());
+        }
+    }
+
+
+    public WalletBPData updateAccountWalletPassword(String oblPwd, String newPwd, String privData, String identityAddress, Context context) throws WalletException {
+        try {
+
+            BaseKeyStoreEntity baseKeyStoreEntity = JSON.parseObject(privData, BaseKeyStoreEntity.class);
+            String decodePrivData = KeyStore.decodeMsg(oblPwd, baseKeyStoreEntity);
+            return importPrivateKey(newPwd, decodePrivData, identityAddress, context);
         } catch (Exception e) {
             e.printStackTrace();
             throw new WalletException(ExceptionEnum.SYS_ERR.getCode(), ExceptionEnum.SYS_ERR.getMessage());
@@ -134,18 +200,19 @@ public class Wallet {
     public WalletBPData importMnemonicCode(List<String> mnemonicCodes, String password, Context context) throws Exception {
         byte[] sKeyByte = new MnemonicCode().toEntropy(mnemonicCodes);
         String sKey = HexFormat.byteToHex(sKeyByte);
-        return create(password, sKey, context);
+        return createIdentity(password, sKey, context);
     }
 
     public void checkPwd(String password, String ciphertextSkeyData) throws Exception {
         getSkey(password, ciphertextSkeyData);
     }
 
-    public byte[] getSkey(String password, String ciphertextSkeyData) throws Exception {
+    public static byte[] getSkey(String password, String ciphertextSkeyData) throws Exception {
         BaseKeyStoreEntity baseKeyStoreEntity = JSON.parseObject(ciphertextSkeyData, BaseKeyStoreEntity.class);
         String skeyHex = KeyStore.decodeMsg(password, baseKeyStoreEntity);
         return HexFormat.hexToByte(skeyHex);
     }
+
 
     public String getAccountBUBalance(String accountAddress) {
         System.out.print(Constants.BUMO_NODE_URL);
@@ -154,7 +221,7 @@ public class Wallet {
         AccountGetBalanceResponse response = sdk.getAccountService().getBalance(request);
 
         System.out.println(JSON.toJSONString(response, true));
-        LogUtils.e("getAccountBUBalance:" + response.getErrorCode()+"\t"+response.getErrorDesc());
+        LogUtils.e("getAccountBUBalance:" + response.getErrorCode() + "\t" + response.getErrorDesc());
         if (0 == response.getErrorCode()) {
             return ToBaseUnit.MO2BU(response.getResult().getBalance().toString());
         }
@@ -175,6 +242,46 @@ public class Wallet {
     }
 
 
+    public AccountGetInfoResponse GetInfo(String address) throws WalletException {
+        Boolean flag = false;
+
+        AccountGetInfoRequest accountGetInfoRequest = new AccountGetInfoRequest();
+        accountGetInfoRequest.setAddress(address);
+        AccountGetInfoResponse info = sdk.getAccountService().getInfo(accountGetInfoRequest);
+        if (0 == info.getErrorCode()) {
+
+        } else {
+            throw new WalletException(ExceptionEnum.ADDRESS_NOT_EXIST.getCode(), ExceptionEnum.ADDRESS_NOT_EXIST.getMessage());
+        }
+//        } else if (ExceptionEnum.ADDRESS_NOT_EXIST.getCode().equals(info.getErrorCode() + "")) {
+//            throw new WalletException(ExceptionEnum.ADDRESS_NOT_EXIST.getCode(), ExceptionEnum.ADDRESS_NOT_EXIST.getMessage());
+//        } else {
+//            System.out.println(JSON.toJSONString(accountGetInfoRequest, true));
+//        }
+        return info;
+    }
+
+
+    public long checkToAddressValidateAndOpenAccount(String password, String bPData, String fromAddr, String toAddr, String amount, String fee) {
+        long nonce = 0;
+        try {
+            AccountGetInfoResponse accountGetInfoResponse = Wallet.getInstance().GetInfo(toAddr);
+        } catch (WalletException e) {
+            e.printStackTrace();
+            //address not exist
+            try {
+                nonce = Wallet.getInstance().getAccountNonce(fromAddr) + 1;
+                String hash = Wallet.getInstance().sendBuNoNonceVoucher(password, bPData, fromAddr, toAddr, amount, "", fee, nonce);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+        }
+
+        return nonce;
+    }
+
+
     public String sendBuNoNonce(String password, String bPData, String fromAccAddr, String toAccAddr, String amount, String note, String fee, long nonce) throws Exception {
         String hash = null;
         try {
@@ -185,7 +292,7 @@ public class Wallet {
             // The amount to be sent
             Long sendAmount = ToBaseUnit.BU2MO(amount);
             // The fixed write 1000L, the unit is MO
-            Long gasPrice = 1000L;
+            Long gasPrice = GAS_PRICE;
             // Set up the maximum cost 0.01BU
             Long feeLimit = ToBaseUnit.BU2MO(fee);
             // Transaction initiation account's nonce + 1
@@ -201,6 +308,32 @@ public class Wallet {
         return hash;
     }
 
+    public String sendBuNoNonceVoucher(String senderPrivateKey, String bPData, String fromAccAddr, String toAccAddr, String amount, String note, String fee, long nonce) throws Exception {
+        String hash = null;
+        try {
+            // Init variable
+            // The account address to receive bu
+            String destAddress = toAccAddr;
+            // The amount to be sent
+            Long sendAmount = ToBaseUnit.BU2MO(amount);
+            // The fixed write 1000L, the unit is MO
+            Long gasPrice = GAS_PRICE;
+            // Set up the maximum cost 0.01BU
+            Long feeLimit = ToBaseUnit.BU2MO(fee);
+            // Transaction initiation account's nonce + 1
+            String transMetadata = note;
+
+//            Long nonce = getAccountNonce(fromAccAddr) + 1;
+            hash = sendBu(senderPrivateKey, destAddress, sendAmount, nonce, gasPrice, feeLimit, transMetadata);
+        } catch (WalletException e) {
+            throw new WalletException(e.getErrCode(), e.getErrMsg());
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+        return hash;
+    }
+
+
     public String sendBu(String password, String bPData, String fromAccAddr, String toAccAddr, String amount, String note, String fee) throws Exception {
         String hash = null;
         try {
@@ -211,7 +344,7 @@ public class Wallet {
             // The amount to be sent
             Long sendAmount = ToBaseUnit.BU2MO(amount);
             // The fixed write 1000L, the unit is MO
-            Long gasPrice = 1000L;
+            Long gasPrice = GAS_PRICE;
             // Set up the maximum cost 0.01BU
             Long feeLimit = ToBaseUnit.BU2MO(fee);
             // Transaction initiation account's nonce + 1
@@ -284,7 +417,7 @@ public class Wallet {
             String senderPrivateKey = getPKBYAccountPassword(password, bPData, fromAccAddr);
             String metadata = note;
             // The fixed write 1000L, the unit is MO
-            Long gasPrice = 1000L;
+            Long gasPrice = GAS_PRICE;
 
 
             // handle send token amount
@@ -380,7 +513,7 @@ public class Wallet {
         // The operation notes
         String metadata = note;
         // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
+        Long gasPrice = GAS_PRICE;
 
 
         // handle send token amount
@@ -521,19 +654,20 @@ public class Wallet {
 
         AccountGetNonceResponse response = sdk.getAccountService().getNonce(request);
         if (0 == response.getErrorCode()) {
+            LogUtils.e("nonce" + response.getResult().getNonce());
             return response.getResult().getNonce();
         } else if (11007 == response.getErrorCode()) {
             throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
         } else if (20000 == response.getErrorCode()) {
             throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
-        }else if (4==response.getErrorCode()){
+        } else if (4 == response.getErrorCode()) {
             throw new WalletException(response.getErrorCode().toString(), response.getErrorDesc());
         }
         return null;
     }
 
     private void deviceBind(final String walletAddress, final String identityAddress, final String publicKey, final String signData, final Context context) {
-        new Thread(new Runnable() {
+        Runnable deviceBindRunnable = new Runnable() {
             @Override
             public void run() {
 
@@ -558,7 +692,8 @@ public class Wallet {
                     }
                 });
             }
-        }).start();
+        };
+        ThreadManager.getInstance().execute(deviceBindRunnable);
     }
 
 
@@ -567,7 +702,7 @@ public class Wallet {
     }
 
 
-    private String signData(String sk, String message) {
+    public String signData(String sk, String message) {
         return HexFormat.byteToHex(PrivateKey.sign(message.getBytes(), sk));
     }
 
@@ -591,7 +726,7 @@ public class Wallet {
         // Transaction initiation account's Nonce + 1
         Long nonce = getAccountNonce(fromAccAddr) + 1;
         // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
+        Long gasPrice = GAS_PRICE;
         // Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO(fee);
 
@@ -634,7 +769,7 @@ public class Wallet {
         // Transaction initiation account's Nonce + 1
         Long nonce = getAccountNonce(fromAccAddr) + 1;
         // The fixed write 1000L, the unit is MO
-        Long gasPrice = 1000L;
+        Long gasPrice = GAS_PRICE;
         // Set up the maximum cost 0.01BU
         Long feeLimit = ToBaseUnit.BU2MO(fee);
 
@@ -701,7 +836,7 @@ public class Wallet {
         return senderPrivateKey;
     }
 
-    public WalletBPData importKeystore(String password, String keystore) throws Exception {
+    public WalletBPData importKeystore(String password, String keystore, String identityAddress, Context context) throws Exception {
         String privateKey = KeyStore.decipherKeyStore(password, JSON.parseObject(keystore, KeyStoreEntity.class));
         if (!privateKey.startsWith("priv")) {
             throw new Exception();
@@ -715,10 +850,17 @@ public class Wallet {
         accountsBean.setSecret(JSON.toJSONString(keyStoreEntity));
         accountsBeans.add(accountsBean);
         walletBPData.setAccounts(accountsBeans);
+        walletBPData.setSkey(JSON.toJSONString(keyStoreEntity));
+
+
+        String walletAccountPk = getPk(privateKey);
+        String walletAccountSignData = signData(privateKey, address);
+        deviceBind(address, identityAddress, walletAccountPk, walletAccountSignData, context);
+
         return walletBPData;
     }
 
-    public WalletBPData importPrivateKey(String password, String privateKey) throws Exception {
+    public WalletBPData importPrivateKey(String password, String privateKey, String identityAddress, Context context) throws Exception {
         String address = new PrivateKey(privateKey).getEncAddress();
         KeyStoreEntity keyStoreEntity = KeyStore.generateKeyStore(password, privateKey, com.bupocket.wallet.Constants.WALLET_STORE_N, com.bupocket.wallet.Constants.WALLET_STORE_R, com.bupocket.wallet.Constants.WALLET_STORE_P, 2);
         WalletBPData walletBPData = new WalletBPData();
@@ -728,66 +870,57 @@ public class Wallet {
         accountsBean.setSecret(JSON.toJSONString(keyStoreEntity));
         accountsBeans.add(accountsBean);
         walletBPData.setAccounts(accountsBeans);
+        walletBPData.setSkey(JSON.toJSONString(keyStoreEntity));
+
+
+        String walletAccountPk = getPk(privateKey);
+        String walletAccountSignData = signData(privateKey, address);
+        deviceBind(address, identityAddress, walletAccountPk, walletAccountSignData, context);
         return walletBPData;
     }
 
-//    /**
-//     * withdraw the vote
-//     */
-//    public TransactionBuildBlobResponse unVoteBuildBlob(String fromAccAddr, String role, String address, String fee, String contractAddress) throws Exception {
-//        Long nonce = getAccountNonce(fromAccAddr) + 1;
-//        Long gasPrice = 1000L;
-//        Long feeLimit = ToBaseUnit.BU2MO(fee);
-//        Long buAmount = 0L;
-//
-//        // init input
-//        JSONObject input = new JSONObject();
-//        input.put("method", "unVote");
-//        JSONObject params = new JSONObject();
-//        params.put("role", role);
-//        params.put("address", address);
-//        input.put("params", params);
-//
-//        return buildBlob(buAmount, input, fromAccAddr, nonce, feeLimit, gasPrice, contractAddress);
-//    }
+    public TransactionBuildBlobResponse buildBlob(String amount, String input, String sourceAddress, String fee, String contractAddress, String transMetadata, long nonce) throws Exception {
 
-    /**
-     * build blob
-     *
-     * @param buAmount
-     * @param input
-     * @param fromAccAddr
-     * @param nonce
-     * @param feeLimit
-     * @param gasPrice
-     * @return
-     */
+        TransactionBuildBlobResponse transactionBuildBlobResponse = null;
+        Long gasPrice = GAS_PRICE;
+        Long feeLimit = ToBaseUnit.BU2MO(fee);
+        Long buAmount = ToBaseUnit.BU2MO(amount);
 
-    private TransactionBuildBlobResponse buildBlob(Long buAmount, JSONObject input, String fromAccAddr, Long nonce, Long feeLimit, Long gasPrice, String contractAddress) {
-        // build contractInvokeByBUOperation
         ContractInvokeByBUOperation contractInvokeByBUOperation = new ContractInvokeByBUOperation();
         contractInvokeByBUOperation.setContractAddress(contractAddress);
         contractInvokeByBUOperation.setBuAmount(buAmount);
-        contractInvokeByBUOperation.setInput(input.toJSONString());
+        contractInvokeByBUOperation.setInput(input);
+
+        if (!transMetadata.isEmpty()) {
+            contractInvokeByBUOperation.setMetadata(transMetadata);
+        }
+
 
         TransactionBuildBlobRequest transactionBuildBlobRequest = new TransactionBuildBlobRequest();
-        transactionBuildBlobRequest.setSourceAddress(fromAccAddr);
+        transactionBuildBlobRequest.setSourceAddress(sourceAddress);
         transactionBuildBlobRequest.setNonce(nonce);
         transactionBuildBlobRequest.setFeeLimit(feeLimit);
         transactionBuildBlobRequest.setGasPrice(gasPrice);
         transactionBuildBlobRequest.addOperation(contractInvokeByBUOperation);
+        if (!transMetadata.isEmpty()) {
+            transactionBuildBlobRequest.setMetadata(transMetadata);
+        }
 
-        String transactionBlob = null;
-        TransactionBuildBlobResponse transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
+        transactionBuildBlobResponse = sdk.getTransactionService().buildBlob(transactionBuildBlobRequest);
+        LogUtils.e("transactionBuildBlobResponse:" + transactionBuildBlobResponse.getErrorCode() + "" +
+                "t" + transactionBuildBlobResponse.getErrorDesc());
+
         return transactionBuildBlobResponse;
     }
+
 
     public TransactionBuildBlobResponse buildBlob(String amount, String input, String sourceAddress, String fee, String contractAddress, String transMetadata) throws Exception {
 
         TransactionBuildBlobResponse transactionBuildBlobResponse = null;
         try {
             Long nonce = getAccountNonce(sourceAddress) + 1;
-            Long gasPrice = 1000L;
+
+            Long gasPrice = GAS_PRICE;
             Long feeLimit = ToBaseUnit.BU2MO(fee);
             Long buAmount = ToBaseUnit.BU2MO(amount);
 
@@ -823,7 +956,7 @@ public class Wallet {
     public TransactionBuildBlobResponse applyCoBuildBlob(String sourceAddress, String amount, String initInput, String payload, double fee, String transMetaData) throws Exception {
         Long initBalance = ToBaseUnit.BU2MO(amount);
         // The fixed write 1000L ，the unit is MO
-        Long gasPrice = 1000L;
+        Long gasPrice = GAS_PRICE;
         // Set up the maximum cost 10.01BU
         Long feeLimit = ToBaseUnit.BU2MO(fee + "");//ToBaseUnit.BU2MO("10.01");
         // Transaction initiation account's Nonce + 1
@@ -935,4 +1068,33 @@ public class Wallet {
         }
         return txHash;
     }
+
+
+    public ContractCallResult callContract(String contractAddress, String input, double fee) {
+
+        // Amount
+        Long feeLimit = ToBaseUnit.BU2MO(fee + "");
+
+
+        // Init request
+        ContractCallRequest request = new ContractCallRequest();
+        request.setContractAddress(contractAddress);
+        request.setFeeLimit(feeLimit);
+        request.setOptType(2);
+        request.setInput(input);
+
+        // Call call
+        ContractCallResponse response = sdk.getContractService().call(request);
+        if (response.getErrorCode() == 0) {
+            ContractCallResult result = response.getResult();
+            return result;
+        } else {
+            System.out.println("error: " + response.getErrorDesc());
+        }
+
+        return null;
+    }
 }
+
+
+

@@ -27,8 +27,8 @@
             android:orientation="vertical">
 
 
-            <com.github.ksoichiro.android.observablescrollview.ObservableListView
-                android:id="@+id/lvRefresh"
+            <ListView
+                android:id="@+id/refreshComLv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@null"

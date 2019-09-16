@@ -6,11 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bupocket.R;
+import com.bupocket.base.BaseFragment;
 import com.bupocket.model.WalletInfo;
 import com.bupocket.utils.AddressUtil;
+import com.bupocket.utils.CommonUtil;
+import com.bupocket.utils.SharedPreferencesHelper;
+import com.bupocket.utils.TO;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
 import java.util.List;
@@ -51,6 +56,7 @@ public class ImportedWalletAdapter extends BaseAdapter {
             holder.walletAddressTv = convertView.findViewById(R.id.walletAddressTv);
             holder.walletSignTv = convertView.findViewById(R.id.walletSignTv);
             holder.manageWalletBtn = convertView.findViewById(R.id.manageWalletBtn);
+            holder.walletHeadRiv=convertView.findViewById(R.id.walletHeadRiv);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -62,8 +68,10 @@ public class ImportedWalletAdapter extends BaseAdapter {
             holder.walletAddressTv.setText(AddressUtil.anonymous(address));
             if(mCurrentWalletAddress.equals(address)){
                 holder.walletSignTv.setVisibility(View.VISIBLE);
+                holder.walletNameTv.setMaxWidth(TO.dip2px(mContext,100));
             }else {
                 holder.walletSignTv.setVisibility(View.GONE);
+                holder.walletNameTv.setMaxWidth(TO.dip2px(mContext,300));
             }
             holder.manageWalletBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -71,6 +79,10 @@ public class ImportedWalletAdapter extends BaseAdapter {
                     onManageWalletBtnListener.onClick(position);
                 }
             });
+           SharedPreferencesHelper  spHelper = new SharedPreferencesHelper(mContext, "buPocket");
+           CommonUtil.setHeadIvRes(address,holder.walletHeadRiv, spHelper);
+
+
         }
         return convertView;
 
@@ -90,5 +102,6 @@ public class ImportedWalletAdapter extends BaseAdapter {
         private TextView walletAddressTv;
         private TextView walletSignTv;
         private QMUIRoundButton manageWalletBtn;
+        private ImageView walletHeadRiv;
     }
 }

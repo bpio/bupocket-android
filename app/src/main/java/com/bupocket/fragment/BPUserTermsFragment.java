@@ -1,28 +1,21 @@
 package com.bupocket.fragment;
 
-import android.content.res.Resources;
-import android.graphics.Bitmap;
+
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.ProgressBar;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Scanner;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -30,9 +23,6 @@ public class BPUserTermsFragment extends BaseFragment {
 
     @BindView(R.id.topbar)
     QMUITopBarLayout mTopBar;
-
-//    @BindView(R.id.userTermsContentTv)
-//    TextView mUserTermsContentTv;
 
     @BindView(R.id.agreeUserTermsCheckbox)
     CheckBox mAgreeUserTerms;
@@ -42,6 +32,9 @@ public class BPUserTermsFragment extends BaseFragment {
 
     @BindView(R.id.useTermsContentWv)
     WebView mUseTermsContentWv;
+
+    @BindView(R.id.llAgreeProtocol)
+    LinearLayout llAgreeProtocol;
 
     private Boolean isAgreeTerms = false;
     private int currentLanguage = -1;
@@ -54,9 +47,9 @@ public class BPUserTermsFragment extends BaseFragment {
         initTopBar();
         eventListeners();
         int language = SharedPreferencesHelper.getInstance().getInt("currentLanguage", currentLanguage);
-        if(language == -1){
+        if (language == -1) {
             myLocaleStr = getContext().getResources().getConfiguration().locale.getLanguage();
-            switch (myLocaleStr){
+            switch (myLocaleStr) {
                 case "zh": {
                     language = 0;
                     break;
@@ -65,7 +58,7 @@ public class BPUserTermsFragment extends BaseFragment {
                     language = 1;
                     break;
                 }
-                default : {
+                default: {
                     language = 1;
                 }
             }
@@ -73,10 +66,17 @@ public class BPUserTermsFragment extends BaseFragment {
         changeLang(language);
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
 
-        WebSettings webSettings=mUseTermsContentWv.getSettings();
+        WebSettings webSettings = mUseTermsContentWv.getSettings();
         webSettings.setDefaultTextEncodingName("UTF-8");
+
+        Bundle arguments = getArguments();
+        if (arguments==null) {
+            llAgreeProtocol.setVisibility(View.GONE);
+        }
+
         return root;
     }
+
     private String getRawFileFromResource(int resourceId) {
         StringBuilder sb = new StringBuilder();
         Scanner s = new Scanner(getResources().openRawResource(resourceId));
@@ -120,7 +120,16 @@ public class BPUserTermsFragment extends BaseFragment {
         mUserTermsNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startFragment(new BPCreateWalletFormFragment());
+
+                Bundle arguments = getArguments();
+                if (arguments==null) {
+                    return;
+                }
+                if (arguments.getString("tag").equals(BPRecoverWalletFormFragment.class.getSimpleName())) {
+                    startFragment(new BPRecoverWalletFormFragment());
+                } else {
+                    startFragment(new BPCreateWalletFormFragment());
+                }
             }
         });
 
@@ -128,11 +137,10 @@ public class BPUserTermsFragment extends BaseFragment {
 
     private void initTopBar() {
         mTopBar.setBackgroundDividerEnabled(false);
+        mTopBar.setTitle(R.string.user_agreement);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
-//                startFragmentAndDestroyCurrent(new HomeFragment());
                 popBackStack();
             }
         });

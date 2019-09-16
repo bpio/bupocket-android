@@ -9,27 +9,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.bupocket.R;
 import com.bupocket.adaptor.TxDetailSignatureAdapter;
 import com.bupocket.base.BaseFragment;
+import com.bupocket.database.greendao.BlockInfoRespBoBeanDao;
+import com.bupocket.database.greendao.TxDetailRespBoBeanDao;
+import com.bupocket.database.greendao.TxInfoRespBoBeanDao;
 import com.bupocket.enums.OutinTypeEnum;
 import com.bupocket.enums.TxStatusEnum;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.TxService;
 import com.bupocket.http.api.dto.resp.ApiResult;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
+import com.bupocket.model.BlockInfoRespBoBean;
+import com.bupocket.model.TxDetailRespBoBean;
+import com.bupocket.model.TxInfoRespBoBean;
 import com.bupocket.utils.CommonUtil;
-import com.bupocket.utils.TO;
 import com.bupocket.utils.TimeUtil;
+import com.bupocket.utils.ToastUtil;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUIEmptyView;
 import com.qmuiteam.qmui.widget.QMUIRadiusImageView;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -102,6 +112,9 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
     private String assetCode;
     private String currentWalletAddress;
     private String optNo;
+    private TxDetailRespBoBeanDao txDetailRespBoBeanDao;
+    private TxInfoRespBoBeanDao txInfoRespBoBeanDao;
+    private BlockInfoRespBoBeanDao blockInfoRespBoBeanDao;
 
     @Override
     protected View onCreateView() {
@@ -109,17 +122,10 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
         ButterKnife.bind(this, root);
         initTopBar();
         initData();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                initTxDetailView();
-            }
-        },10);
-
         return root;
     }
 
-    private void initData(){
+    private void initData() {
         QMUIStatusBarHelper.setStatusBarLightMode(getBaseFragmentActivity());
         mEmptyView.show(true);
         txHash = getTxHash();
@@ -128,18 +134,53 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
         currentWalletAddress = getArguments().getString("currentAccAddress");
         optNo = getArguments().getString("optNo");
         mAssetCodeTv.setText(assetCode);
+
+
+        queryDataBase();
+        initTxDetailView();
+    }
+
+    private void queryDataBase() {
+
+        txDetailRespBoBeanDao = mApplication.getDaoSession().getTxDetailRespBoBeanDao();
+        txInfoRespBoBeanDao = mApplication.getDaoSession().getTxInfoRespBoBeanDao();
+        blockInfoRespBoBeanDao = mApplication.getDaoSession().getBlockInfoRespBoBeanDao();
+
+        TxDetailRespBoBean txDetailRespBoBean = txDetailRespBoBeanDao.queryBuilder().where(
+                TxDetailRespBoBeanDao.Properties.Address.eq(currentWalletAddress)
+                , TxDetailRespBoBeanDao.Properties.OptNo.eq(optNo)).unique();
+
+        if (txDetailRespBoBean == null || txDetailRespBoBean.getAddress().isEmpty()) {
+            return;
+        }
+
+        BlockInfoRespBoBean blockInfoRespBoBean = blockInfoRespBoBeanDao.queryBuilder().where(
+                BlockInfoRespBoBeanDao.Properties.Address.eq(currentWalletAddress)
+                , BlockInfoRespBoBeanDao.Properties.OptNo.eq(optNo)).unique();
+
+        TxInfoRespBoBean txInfoRespBoBean = txInfoRespBoBeanDao.queryBuilder().where(
+                TxInfoRespBoBeanDao.Properties.Address.eq(currentWalletAddress)
+                , TxInfoRespBoBeanDao.Properties.OptNo.eq(optNo)).unique();
+
+        TxDetailRespDto txDetailRespDto = new TxDetailRespDto();
+        txDetailRespDto.setBlockInfoRespBo(blockInfoRespBoBean);
+        txDetailRespDto.setTxDeatilRespBo(txDetailRespBoBean);
+        txDetailRespDto.setTxInfoRespBo(txInfoRespBoBean);
+
+        refreshView(txDetailRespDto);
+
     }
 
 
-    private String getTxHash(){
+    private String getTxHash() {
         return getArguments().getString("txHash");
     }
 
     private void initTxDetailView() {
         TxService txService = RetrofitFactory.getInstance().getRetrofit().create(TxService.class);
         Map<String, Object> paramsMap = new HashMap<>();
-        paramsMap.put("address",currentWalletAddress);
-        paramsMap.put("optNo",optNo);
+        paramsMap.put("address", currentWalletAddress);
+        paramsMap.put("optNo", optNo);
         Call<ApiResult<TxDetailRespDto>> call = txService.getTxDetailByOptNo(paramsMap);
         call.enqueue(new Callback<ApiResult<TxDetailRespDto>>() {
             @RequiresApi(api = Build.VERSION_CODES.KITKAT)
@@ -149,86 +190,18 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
 
                 ApiResult<TxDetailRespDto> respDto = response.body();
 
-                if(null != respDto.getData()){
+                if (null != respDto.getData()) {
 
                     mTxDetailLl.setVisibility(View.VISIBLE);
-                    TxDetailRespDto.TxInfoRespBoBean txInfoRespBoBean = respDto.getData().getTxInfoRespBo();
-                    TxDetailRespDto.TxDeatilRespBoBean txDeatilRespBoBean = respDto.getData().getTxDeatilRespBo();
-                    TxDetailRespDto.BlockInfoRespBoBean blockInfoRespBoBean = respDto.getData().getBlockInfoRespBo();
+                    TxDetailRespDto data = respDto.getData();
+                    insertDataBase(data);
+                    refreshView(data);
+                } else {
 
-                    Drawable txStatusIconDrawable = null;
-                    String txStatusStr = null;
-                    if(txDeatilRespBoBean.getStatus().equals(TxStatusEnum.SUCCESS.getCode())){
-                        if(isAdded()){
-                            txStatusIconDrawable = ContextCompat.getDrawable(Objects.requireNonNull(getContext()),R.mipmap.icon_send_success);
-                            txStatusStr = getResources().getString(R.string.tx_status_success_txt);
-                        }
-                    }else{
-                        if(isAdded()){
-                            txStatusIconDrawable = ContextCompat.getDrawable(Objects.requireNonNull(getContext()),R.mipmap.icon_send_fail);
-                            txStatusStr = getResources().getString(R.string.tx_status_fail_txt);
-                        }
-                    }
-                    mTxStatusIcon.setImageDrawable(txStatusIconDrawable);
-                    mTxStatusTv.setText(txStatusStr);
-
-                    if (txInfoRespBoBean.getAmount().equals("0")) {
-                        mSendAmountTv.setText(txInfoRespBoBean.getAmount());
-                    }else{
-                        mSendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(outinType) ? mContext.getString(R.string.comm_in) :mContext.getString(R.string.comm_out)) + txInfoRespBoBean.getAmount());
+                    if (getActivity() != null) {
+                        ToastUtil.showToast(getActivity(), R.string.emptyView_mode_desc_fail_title, Toast.LENGTH_LONG);
                     }
 
-                    mTxFromAccAddrTv.setText(txDeatilRespBoBean.getSourceAddress());
-                    mTxToAccAddrTv.setText(txDeatilRespBoBean.getDestAddress());
-                    mTxDetailFeeTv.setText(txDeatilRespBoBean.getFee() + " BU");
-                    mTxDetailSendDateTv.setText(TimeUtil.timeStamp2Date(txDeatilRespBoBean.getApplyTimeDate()));
-                    mTxDetailTXHashTv.setText(txInfoRespBoBean.getHash());
-                    mTxDetailNoteTv.setText(txDeatilRespBoBean.getTxMetadata());
-
-                    mTxDetailTxInfoSourceAddressTv.setText(txInfoRespBoBean.getSourceAddress());
-                    mTxDetailTxInfoDestAddressTv.setText(txInfoRespBoBean.getDestAddress());
-                    mTxDetailTxInfoAmountTv.setText(CommonUtil.addSuffix(txInfoRespBoBean.getAmount(),assetCode));
-                    mTxDetailTxInfoTXFeeTv.setText(txInfoRespBoBean.getFee() + " BU");
-                    mTxDetailTxInfoNonceTv.setText(txInfoRespBoBean.getNonce() + "");
-
-                    String signatureStr = txInfoRespBoBean.getSignatureStr();
-                    if(signatureStr != null){
-                        JSONArray signatureArr = JSON.parseArray(signatureStr);
-                        JSONObject signatureObj = null;
-                        List<TxDetailSignatureAdapter.Signature> signatures = new ArrayList<>();
-                        TxDetailSignatureAdapter.Signature signature = null;
-                        for (int i = 0; i < signatureArr.size(); i++) {
-                            signatureObj = JSON.parseObject(signatureArr.getString(i));
-                            signature = new TxDetailSignatureAdapter.Signature();
-                            signature.setPublicKey(signatureObj.getString("publicKey"));
-                            signature.setSignData(signatureObj.getString("signData"));
-                            signatures.add(signature);
-                        }
-
-                        if(isAdded()){
-                            loads(signatures);
-                        }
-                    }else {
-                        mTxSignatureTitleTv.setVisibility(View.GONE);
-                        txDetailSignatureListLl.setVisibility(View.GONE);
-                    }
-
-//                    txDetailSignatureAdapter = new TxDetailSignatureAdapter(signatures, getContext());
-//                    mTxDetailSignatureItemLv.setAdapter(txDetailSignatureAdapter);
-//                    setListViewHeightBasedOnChildren(mTxDetailSignatureItemLv);
-
-//                    mTxDetailTxInfoTxSignaturePkTv.setText(signatureObj.getString("publicKey"));
-//                    mTxDetailTxInfoTxSignatureSdTv.setText(signatureObj.getString("signData"));
-
-                    mTxDetailBlockInfoBlockHeightTv.setText(blockInfoRespBoBean.getSeq() + "");
-                    mTxDetailBlockInfoBlockHashTv.setText(blockInfoRespBoBean.getHash());
-                    mTxDetailBlockInfoPrevBlockHashTv.setText(blockInfoRespBoBean.getPreviousHash());
-                    mTxDetailBlockInfoTXCountTv.setText(blockInfoRespBoBean.getTxCount() + "");
-                    mTxDetailBlockInfoConsensusTimeTv.setText(TimeUtil.timeStamp2Date(blockInfoRespBoBean.getCloseTimeDate()));
-
-
-                }else{
-                    mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
                 }
             }
 
@@ -236,14 +209,106 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
             public void onFailure(Call<ApiResult<TxDetailRespDto>> call, Throwable t) {
                 t.printStackTrace();
                 mEmptyView.show(getResources().getString(R.string.emptyView_mode_desc_fail_title), null);
+                ToastUtil.showToast(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT);
             }
         });
     }
 
-    private void loads(List<TxDetailSignatureAdapter.Signature> signatures){
+    private void insertDataBase(TxDetailRespDto data) {
+        TxInfoRespBoBean txInfoRespBoBean = data.getTxInfoRespBo();
+        TxDetailRespBoBean txDetailRespBoBean = data.getTxDeatilRespBo();
+        BlockInfoRespBoBean blockInfoRespBoBean = data.getBlockInfoRespBo();
+        txInfoRespBoBean.setAddress(currentWalletAddress);
+        txInfoRespBoBean.setOptNo(optNo);
+        txDetailRespBoBean.setAddress(currentWalletAddress);
+        txDetailRespBoBean.setOptNo(optNo);
+        blockInfoRespBoBean.setAddress(currentWalletAddress);
+        blockInfoRespBoBean.setOptNo(optNo);
 
-        for (TxDetailSignatureAdapter.Signature signature: signatures
-             ) {
+        txInfoRespBoBeanDao.insertOrReplace(txInfoRespBoBean);
+        txDetailRespBoBeanDao.insertOrReplace(txDetailRespBoBean);
+        blockInfoRespBoBeanDao.insertOrReplace(blockInfoRespBoBean);
+
+//        if (txInfoRespBoBeanDao.queryBuilder().list().size()>=50){
+//
+//
+//        }
+    }
+
+    private void refreshView(TxDetailRespDto data) {
+        TxInfoRespBoBean txInfoRespBoBean = data.getTxInfoRespBo();
+        TxDetailRespBoBean txDetailRespBoBean = data.getTxDeatilRespBo();
+        BlockInfoRespBoBean blockInfoRespBoBean = data.getBlockInfoRespBo();
+
+        Drawable txStatusIconDrawable = null;
+        String txStatusStr = null;
+        if (txDetailRespBoBean.getStatus().equals(TxStatusEnum.SUCCESS.getCode())) {
+            if (isAdded()) {
+                txStatusIconDrawable = ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.mipmap.icon_send_success);
+                txStatusStr = getResources().getString(R.string.tx_status_success_txt);
+            }
+        } else {
+            if (isAdded()) {
+                txStatusIconDrawable = ContextCompat.getDrawable(Objects.requireNonNull(getContext()), R.mipmap.icon_send_fail);
+                txStatusStr = getResources().getString(R.string.tx_status_fail_txt);
+            }
+        }
+        mTxStatusIcon.setImageDrawable(txStatusIconDrawable);
+        mTxStatusTv.setText(txStatusStr);
+
+        if (txInfoRespBoBean.getAmount().equals("0")) {
+            mSendAmountTv.setText(txInfoRespBoBean.getAmount());
+        } else {
+            mSendAmountTv.setText((OutinTypeEnum.IN.getCode().equals(outinType) ? mContext.getString(R.string.comm_in) : mContext.getString(R.string.comm_out)) + txInfoRespBoBean.getAmount());
+        }
+
+        mTxFromAccAddrTv.setText(txDetailRespBoBean.getSourceAddress());
+        mTxToAccAddrTv.setText(txDetailRespBoBean.getDestAddress());
+        mTxDetailFeeTv.setText(txDetailRespBoBean.getFee() + " BU");
+        mTxDetailSendDateTv.setText(TimeUtil.timeStamp2Date(txDetailRespBoBean.getApplyTimeDate()));
+        mTxDetailTXHashTv.setText(txInfoRespBoBean.getHash());
+        mTxDetailNoteTv.setText(txDetailRespBoBean.getTxMetadata());
+
+        mTxDetailTxInfoSourceAddressTv.setText(txInfoRespBoBean.getSourceAddress());
+        mTxDetailTxInfoDestAddressTv.setText(txInfoRespBoBean.getDestAddress());
+        mTxDetailTxInfoAmountTv.setText(CommonUtil.addSuffix(txInfoRespBoBean.getAmount(), assetCode));
+        mTxDetailTxInfoTXFeeTv.setText(txInfoRespBoBean.getFee() + " BU");
+        mTxDetailTxInfoNonceTv.setText(txInfoRespBoBean.getNonce() + "");
+
+        String signatureStr = txInfoRespBoBean.getSignatureStr();
+        if (signatureStr != null) {
+            JSONArray signatureArr = JSON.parseArray(signatureStr);
+            JSONObject signatureObj = null;
+            List<TxDetailSignatureAdapter.Signature> signatures = new ArrayList<>();
+            TxDetailSignatureAdapter.Signature signature = null;
+            for (int i = 0; i < signatureArr.size(); i++) {
+                signatureObj = JSON.parseObject(signatureArr.getString(i));
+                signature = new TxDetailSignatureAdapter.Signature();
+                signature.setPublicKey(signatureObj.getString("publicKey"));
+                signature.setSignData(signatureObj.getString("signData"));
+                signatures.add(signature);
+            }
+
+            if (isAdded()) {
+                loads(signatures);
+            }
+        } else {
+            mTxSignatureTitleTv.setVisibility(View.GONE);
+            txDetailSignatureListLl.setVisibility(View.GONE);
+        }
+
+        mTxDetailBlockInfoBlockHeightTv.setText(blockInfoRespBoBean.getSeq() + "");
+        mTxDetailBlockInfoBlockHashTv.setText(blockInfoRespBoBean.getHash());
+        mTxDetailBlockInfoPrevBlockHashTv.setText(blockInfoRespBoBean.getPreviousHash());
+        mTxDetailBlockInfoTXCountTv.setText(blockInfoRespBoBean.getTxCount() + "");
+        mTxDetailBlockInfoConsensusTimeTv.setText(TimeUtil.timeStamp2Date(blockInfoRespBoBean.getCloseTimeDate()));
+
+    }
+
+    private void loads(List<TxDetailSignatureAdapter.Signature> signatures) {
+
+        for (TxDetailSignatureAdapter.Signature signature : signatures
+        ) {
             LinearLayout layout = new LinearLayout(getContext());
             layout.setOrientation(LinearLayout.VERTICAL);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
@@ -263,16 +328,15 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
             TextView pkLabelTv = new TextView(getContext());
             pkLabelTv.setText("Public Key");
             pkLabelTv.setTextColor(0xFF888888);
-            pkLabelTv.setPadding(20,10,10,20);
+            pkLabelTv.setPadding(20, 10, 10, 20);
 
             pkLayout.addView(pkLabelTv);
 
             TextView pkVTv = new TextView(getContext());
             pkVTv.setTextIsSelectable(true);
             pkVTv.setText(signature.getPublicKey());
-            pkVTv.setPadding(20,10,20,20);
+            pkVTv.setPadding(20, 10, 20, 20);
             pkLayout.addView(pkVTv);
-
 
 
             LinearLayout skLayout = new LinearLayout(getContext());
@@ -283,7 +347,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
 
             TextView sdLabelTv = new TextView(getContext());
             sdLabelTv.setText("Signed Data");
-            sdLabelTv.setPadding(20,10,10,20);
+            sdLabelTv.setPadding(20, 10, 10, 20);
             sdLabelTv.setTextColor(0xFF888888);
 
             skLayout.addView(sdLabelTv);
@@ -291,7 +355,7 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
             TextView sdVTv = new TextView(getContext());
             sdVTv.setTextIsSelectable(true);
             sdVTv.setText(signature.getSignData());
-            sdVTv.setPadding(20,10,20,20);
+            sdVTv.setPadding(20, 10, 20, 20);
             skLayout.addView(sdVTv);
 
 
@@ -300,8 +364,6 @@ public class BPAssetsTxDetailFragment extends BaseFragment {
 
             txDetailSignatureListLl.addView(layout);
         }
-
-
 
 
     }

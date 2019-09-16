@@ -17,17 +17,17 @@ import java.util.Hashtable;
 
 /**
  * @ClassName: QRCodeUtil
- * @Description: 二维码工具类
+ * @Description:
  */
 
 public class QRCodeUtil {
 
     /**
-     * 创建二维码位图
+     * createIdentity QRCode Util
      *
-     * @param content 字符串内容(支持中文)
-     * @param width 位图宽度(单位:px)
-     * @param height 位图高度(单位:px)
+     * @param content
+     * @param width
+     * @param height
      * @return
      */
     @Nullable
@@ -36,16 +36,15 @@ public class QRCodeUtil {
     }
 
     /**
-     * 创建二维码位图 (支持自定义配置和自定义样式)
      *
-     * @param content 字符串内容
-     * @param width 位图宽度,要求>=0(单位:px)
-     * @param height 位图高度,要求>=0(单位:px)
-     * @param character_set 字符集/字符转码格式 (支持格式:{@link CharacterSetECI })。传null时,zxing源码默认使用 "ISO-8859-1"
-     * @param error_correction 容错级别 (支持级别:{@link ErrorCorrectionLevel })。传null时,zxing源码默认使用 "L"
-     * @param margin 空白边距 (可修改,要求:整型且>=0), 传null时,zxing源码默认使用"4"。
-     * @param color_black 黑色色块的自定义颜色值
-     * @param color_white 白色色块的自定义颜色值
+     * @param content
+     * @param width
+     * @param height
+     * @param character_set
+     * @param error_correction
+     * @param margin
+     * @param color_black
+     * @param color_white
      * @return
      */
     @Nullable
@@ -53,7 +52,6 @@ public class QRCodeUtil {
                                             @Nullable String character_set, @Nullable String error_correction, @Nullable String margin,
                                             @ColorInt int color_black, @ColorInt int color_white){
 
-        /** 1.参数合法性判断 */
         if(TextUtils.isEmpty(content)){ // 字符串内容判空
             return null;
         }
@@ -63,7 +61,6 @@ public class QRCodeUtil {
         }
 
         try {
-            /** 2.设置二维码相关配置,生成BitMatrix(位矩阵)对象 */
             Hashtable<EncodeHintType, Object> hints = new Hashtable<>();
 
             if(!TextUtils.isEmpty(character_set)) {
@@ -79,7 +76,6 @@ public class QRCodeUtil {
             }
             BitMatrix bitMatrix = new QRCodeWriter().encode(content, BarcodeFormat.QR_CODE, width, height, hints);
 
-            /** 3.创建像素数组,并根据BitMatrix(位矩阵)对象为数组元素赋颜色值 */
             int[] pixels = new int[width * height];
             for(int y = 0; y < height; y++){
                 for(int x = 0; x < width; x++){
@@ -91,7 +87,6 @@ public class QRCodeUtil {
                 }
             }
 
-            /** 4.创建Bitmap对象,根据像素数组设置Bitmap每个像素点的颜色值,之后返回Bitmap对象 */
             Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
             bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
             return bitmap;

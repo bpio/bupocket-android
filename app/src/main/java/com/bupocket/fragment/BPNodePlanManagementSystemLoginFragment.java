@@ -4,16 +4,19 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
 import com.bupocket.enums.ExceptionEnum;
 import com.bupocket.http.api.NodePlanManagementSystemService;
 import com.bupocket.http.api.RetrofitFactory;
 import com.bupocket.http.api.dto.resp.ApiResult;
+import com.bupocket.utils.LogUtils;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 import com.squareup.picasso.Picasso;
 
@@ -30,9 +33,9 @@ public class BPNodePlanManagementSystemLoginFragment extends BaseFragment {
     @BindView(R.id.closeIv)
     ImageView mCloseIv;
     @BindView(R.id.loginCancelBtn)
-    QMUIRoundButton mLoginCancelBtn;
+    Button mLoginCancelBtn;
     @BindView(R.id.loginConfirmBtn)
-    QMUIRoundButton mLoginConfirmBtn;
+    Button mLoginConfirmBtn;
     @BindView(R.id.appNameTv)
     TextView mAppNameTv;
     @BindView(R.id.appPicIv)
@@ -63,7 +66,7 @@ public class BPNodePlanManagementSystemLoginFragment extends BaseFragment {
 
     private void initData() {
         Bundle bundle = getArguments();
-        if(null != bundle){
+        if (null != bundle) {
             appId = bundle.getString("appId");
             uuid = bundle.getString("uuid");
             address = bundle.getString("address");
@@ -74,7 +77,11 @@ public class BPNodePlanManagementSystemLoginFragment extends BaseFragment {
 
     private void initUI() {
 
-        Picasso.get().load(appPic).into(mAppPicIv);
+        Glide.with(getContext())
+                .load(appPic)
+                .error(R.mipmap.icon_token_default_icon)
+                .into(mAppPicIv);
+
 
         if (!TextUtils.isEmpty(appName)) {
             mAppNameTv.setText(appName);
@@ -105,37 +112,35 @@ public class BPNodePlanManagementSystemLoginFragment extends BaseFragment {
                 NodePlanManagementSystemService nodePlanManagementSystemService = RetrofitFactory.getInstance().getRetrofit().create(NodePlanManagementSystemService.class);
                 Call<ApiResult> call;
                 Map<String, Object> paramsMap = new HashMap<>();
-                paramsMap.put("uuid",uuid);
-                paramsMap.put("appId",appId);
-                paramsMap.put("address",address);
+                paramsMap.put("uuid", uuid);
+                paramsMap.put("appId", appId);
+                paramsMap.put("address", address);
                 call = nodePlanManagementSystemService.userScanQrConfirmLogin(paramsMap);
                 call.enqueue(new Callback<ApiResult>() {
                     @Override
                     public void onResponse(Call<ApiResult> call, Response<ApiResult> response) {
                         ApiResult respDto = response.body();
-                        if(null != respDto){
-                            if(ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())){
+                        if (null != respDto) {
+                            if (ExceptionEnum.SUCCESS.getCode().equals(respDto.getErrCode())) {
                                 popBackStack();
-                            }else{
-
-
+                            } else {
 
 
                                 Bundle argz = new Bundle();
-                                argz.putString("errorCode",respDto.getErrCode());
+                                argz.putString("errorCode", respDto.getErrCode());
                                 BPScanErrorFragment bpNodePlanManagementSystemLoginErrorFragment = new BPScanErrorFragment();
                                 bpNodePlanManagementSystemLoginErrorFragment.setArguments(argz);
                                 startFragmentAndDestroyCurrent(bpNodePlanManagementSystemLoginErrorFragment);
                             }
-                        }else {
-                            Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ApiResult> call, Throwable t) {
                         popBackStack();
-                        Toast.makeText(getContext(),getString(R.string.network_error_msg),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), getString(R.string.network_error_msg), Toast.LENGTH_SHORT).show();
                     }
                 });
             }

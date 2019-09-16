@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_color_white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvCreateWallet"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="@string/create_wallet_txt"
+        android:textColor="@color/app_color_black"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/gray_line" />
+
+    <TextView
+        android:id="@+id/tvRecoverWallet"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="@string/import_wallet_title_txt"
+        android:textColor="@color/app_color_black"
+        android:textSize="15sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#F1F1F1" />
+
+    <TextView
+        android:id="@+id/tvDeleteWallet"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="@string/common_dialog_cancel"
+        android:textColor="@color/app_txt_color_gray"
+        android:textSize="15sp" />
+
+</LinearLayout>

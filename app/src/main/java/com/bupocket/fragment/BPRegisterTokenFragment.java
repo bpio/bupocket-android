@@ -12,8 +12,6 @@ import android.support.annotation.RequiresApi;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,17 +29,19 @@ import com.bupocket.http.api.dto.resp.GetTokenDetailRespDto;
 import com.bupocket.http.api.dto.resp.TxDetailRespDto;
 import com.bupocket.model.RegisterStatusInfo;
 import com.bupocket.model.RegisterTokenInfo;
+import com.bupocket.model.TxDetailRespBoBean;
 import com.bupocket.utils.AmountUtil;
 import com.bupocket.utils.CommonUtil;
 import com.bupocket.utils.DecimalCalculate;
+import com.bupocket.utils.DialogUtils;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.SocketUtil;
+import com.bupocket.utils.ThreadManager;
 import com.bupocket.wallet.Wallet;
 import com.bupocket.wallet.enums.ExceptionEnum;
 import com.bupocket.wallet.exception.WalletException;
 import com.qmuiteam.qmui.util.QMUIStatusBarHelper;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
 import com.qmuiteam.qmui.widget.dialog.QMUITipDialog;
 import com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton;
 
@@ -89,7 +89,7 @@ public class BPRegisterTokenFragment extends BaseFragment {
     protected SharedPreferencesHelper sharedPreferencesHelper;
     QMUITipDialog txSendingTipDialog;
     private String hash;
-    private TxDetailRespDto.TxDeatilRespBoBean txDetailRespBoBean;
+    private TxDetailRespBoBean txDetailRespBoBean;
 
     public BPRegisterTokenFragment(){
         super();
@@ -231,24 +231,11 @@ public class BPRegisterTokenFragment extends BaseFragment {
     }
 
     private void showPasswordConfirmDialog() {
-        final QMUIDialog qmuiDialog = new QMUIDialog(getContext());
-        qmuiDialog.setCanceledOnTouchOutside(false);
-        qmuiDialog.setContentView(R.layout.view_password_comfirm);
-        qmuiDialog.show();
-        QMUIRoundButton mPasswordConfirmBtn = qmuiDialog.findViewById(R.id.passwordConfirmBtn);
-        ImageView mPasswordConfirmCloseBtn = qmuiDialog.findViewById(R.id.passwordConfirmCloseBtn);
-        TextView mPasswordConfirmNotice = qmuiDialog.findViewById(R.id.passwordConfirmNotice);
-        TextView mPpasswordConfirmTitle = qmuiDialog.findViewById(R.id.passwordConfirmTitle);
 
-        mPasswordConfirmNotice.setText(getString(R.string.register_token_password_confirm_txt));
-        mPpasswordConfirmTitle.setText(getString(R.string.password_comfirm_dialog_title));
-
-        mPasswordConfirmBtn.setOnClickListener(new View.OnClickListener() {
+        DialogUtils.showPassWordInputDialog(getActivity(), getString(R.string.register_token_password_confirm_txt), new DialogUtils.ConfirmListener() {
             @Override
-            public void onClick(View v) {
+            public void confirm(final String password) {
 
-                EditText mPasswordConfirmEt = qmuiDialog.findViewById(R.id.passwordConfirmEt);
-                final String password = mPasswordConfirmEt.getText().toString().trim();
                 txSendingTipDialog = new QMUITipDialog.Builder(getContext())
                         .setIconType(QMUITipDialog.Builder.ICON_TYPE_LOADING)
                         .setTipWord(getResources().getString(R.string.send_tx_handleing_txt))
@@ -265,25 +252,25 @@ public class BPRegisterTokenFragment extends BaseFragment {
                     }
                 });
 
-                new Thread(new Runnable() {
+                Runnable getAccountRunnable = new Runnable() {
                     @Override
                     public void run() {
                         String accountBPData = getAccountBPData();
                         try {
-                            hash = Wallet.getInstance().registerATP10Token(password,accountBPData,issueAddress,tokenName,tokenCode,tokenDecimals,tokenDesc,Constants.REGISTER_TOKEN_FEE,issueAmount);
-                        } catch (WalletException e){
+                            hash = Wallet.getInstance().registerATP10Token(password, accountBPData, issueAddress, tokenName, tokenCode, tokenDecimals, tokenDesc, Constants.REGISTER_TOKEN_FEE, issueAmount);
+                        } catch (WalletException e) {
                             e.printStackTrace();
                             Looper.prepare();
-                            if(ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())){
+                            if (ExceptionEnum.FEE_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
                                 Toast.makeText(getActivity(), R.string.send_tx_fee_not_enough, Toast.LENGTH_SHORT).show();
-                            }else if(ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())){
+                            } else if (ExceptionEnum.BU_NOT_ENOUGH.getCode().equals(e.getErrCode())) {
                                 Toast.makeText(getActivity(), R.string.send_tx_bu_not_enough, Toast.LENGTH_SHORT).show();
-                            }else {
+                            } else {
                                 Toast.makeText(getActivity(), R.string.network_error_msg, Toast.LENGTH_SHORT).show();
                             }
                             txSendingTipDialog.dismiss();
                             Looper.loop();
-                        } catch (NumberFormatException e){
+                        } catch (NumberFormatException e) {
                             e.printStackTrace();
                             Looper.prepare();
                             Toast.makeText(getActivity(), R.string.error_issue_amount_message_txt, Toast.LENGTH_SHORT).show();
@@ -296,24 +283,18 @@ public class BPRegisterTokenFragment extends BaseFragment {
                             txSendingTipDialog.dismiss();
                             Looper.loop();
                         } finally {
-                            mSocket.emit("token.register.processing","");
+                            mSocket.emit("token.register.processing", "");
                             timer.schedule(timerTask,
                                     1 * 1000,//延迟1秒执行
                                     1000);
                         }
                     }
-                }).start();
-
-                qmuiDialog.dismiss();
+                };
+                ThreadManager.getInstance().execute(getAccountRunnable);
             }
         });
 
-        mPasswordConfirmCloseBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiDialog.dismiss();
-            }
-        });
+
     }
 
     private String getAccountBPData(){
@@ -413,7 +394,6 @@ public class BPRegisterTokenFragment extends BaseFragment {
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                QMUIStatusBarHelper.setStatusBarDarkMode(getBaseFragmentActivity());
                 popBackStack();
             }
         });

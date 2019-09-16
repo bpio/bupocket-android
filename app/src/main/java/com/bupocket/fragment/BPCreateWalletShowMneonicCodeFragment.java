@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.bupocket.R;
 import com.bupocket.base.BaseFragment;
-import com.bupocket.fragment.home.HomeFragment;
 import com.bupocket.utils.SharedPreferencesHelper;
 import com.bupocket.utils.TO;
 import com.qmuiteam.qmui.widget.QMUITopBarLayout;
@@ -56,7 +55,7 @@ public class BPCreateWalletShowMneonicCodeFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
 
-                BPCreateWalletConfirmMneonicCodeFragment createWalletConfirmMneonicCodeFragment = new BPCreateWalletConfirmMneonicCodeFragment();
+                BPCreateWalletConfirmMnemonicCodeFragment createWalletConfirmMneonicCodeFragment = new BPCreateWalletConfirmMnemonicCodeFragment();
                 Bundle argz = new Bundle();
                 getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_SECURE);
                 List<String> mneonicCodeList = getArguments().getStringArrayList("mneonicCodeList");
@@ -82,7 +81,7 @@ public class BPCreateWalletShowMneonicCodeFragment extends BaseFragment {
             textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
             textView.setText(getMneonicCode().get(i));
             textView.setTextColor(getResources().getColor(R.color.app_txt_color_gray));
-            textView.setBackgroundColor(getResources().getColor(R.color.app_bg_color_gray));
+            textView.setBackground(getResources().getDrawable(R.drawable.shape_corner_gray_tv2));
             GridLayout.Spec rowSpec = GridLayout.spec(i / 4, 1.0f);
             GridLayout.Spec columnSpec = GridLayout.spec(i % 4, 1.0f);
             GridLayout.LayoutParams params = new GridLayout.LayoutParams(rowSpec, columnSpec);
@@ -98,6 +97,7 @@ public class BPCreateWalletShowMneonicCodeFragment extends BaseFragment {
 
     }
     private void initTopBar() {
+        mTopBar.setTitle(R.string.view_title_backup_mneonic_code);
         mTopBar.setBackgroundDividerEnabled(false);
         mTopBar.addLeftImageButton(R.mipmap.icon_tobar_left_arrow, R.id.topbar_left_arrow).setOnClickListener(new View.OnClickListener() {
             @Override

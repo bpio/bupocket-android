@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_color_white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+
+    <com.qmuiteam.qmui.widget.QMUITopBarLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app_color_white"
+            android:orientation="vertical">
+
+            <include
+                layout="@layout/view_red_packet_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/app_bg_color_gray" />
+
+            <TextView
+                android:id="@+id/luckTitleTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:textColor="@color/app_txt_color_red_packet"
+                android:textSize="18sp"
+                tools:text="七夕幸运儿" />
+
+            <ListView
+                android:id="@+id/redPacketLv"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@null"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:scrollbars="none"></ListView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/app_bg_color_gray" />
+
+            <TextView
+                android:id="@+id/redPacketDetailTitleTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:textColor="@color/app_txt_color_red_packet"
+                android:textSize="18sp"
+                tools:text="活动细则" />
+
+            <TextView
+                android:id="@+id/redPacketDetailTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="@dimen/common_left_right_padding"
+                android:paddingRight="@dimen/common_left_right_padding"
+                android:paddingBottom="20dp"
+                android:lineSpacingMultiplier="1.1"
+                android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="14sp"
+                tools:text="活动细则" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="@color/app_bg_color_gray" />
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>

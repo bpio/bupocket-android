@@ -23,6 +23,15 @@ public class GetQRContentDto {
     private String nodeId;
     private String accountTagEn;
     private String qrRemarkEn;
+    private double fee;
+
+    public double getFee() {
+        return fee;
+    }
+
+    public void setFee(double fee) {
+        this.fee = fee;
+    }
 
     public String getAccountTagEn() {
         return accountTagEn;

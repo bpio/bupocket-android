@@ -42,7 +42,7 @@
                 android:padding="6dp" />
 
             <com.qmuiteam.qmui.widget.roundwidget.QMUIRoundButton
-                android:id="@+id/copyCommandBtn"
+                android:id="@+id/reloadBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="28dp"

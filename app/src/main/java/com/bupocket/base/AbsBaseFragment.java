@@ -6,6 +6,10 @@ import android.view.View;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
+
+/**
+ * abs base fragment
+ */
 public abstract class AbsBaseFragment extends BaseFragment {
 
 
@@ -33,6 +37,6 @@ public abstract class AbsBaseFragment extends BaseFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        bind.unbind();
+//        bind.unbind();
     }
 }

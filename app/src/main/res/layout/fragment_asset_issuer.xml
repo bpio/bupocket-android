@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_bg_color_gray"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.qmuiteam.qmui.widget.QMUITopBarLayout
+            android:id="@+id/topbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true" />
+
+        <include layout="@layout/view_d_party_item" />
+
+
+        <LinearLayout
+            android:id="@+id/issuerInfoLL"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/app_color_white"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="@dimen/common_left_right_padding"
+            android:paddingRight="@dimen/common_left_right_padding"
+            android:orientation="vertical">
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_left_right_padding"
+                android:layout_marginBottom="@dimen/common_left_right_padding"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="2dp"
+                    android:layout_height="14dp"
+                    android:background="@color/app_color_green" />
+
+                <TextView
+                    style="@style/BPTextViewCommon13"
+                    android:text="@string/asset_issuer_introduce"
+                    android:textColor="@color/app_color_black"
+                    android:layout_marginLeft="8dp"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+
+
+            <TextView
+                android:id="@+id/dPartyIntroduceTv"
+                style="@style/BPTextViewCommon13"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/shape_corner_white"
+                android:minLines="5"
+                android:lineSpacingMultiplier="@dimen/bp_line_spacing_multiplier"
+                android:paddingBottom="15dp"
+                android:textColor="@color/app_txt_color_gray_2"
+                android:textSize="13dp"
+                tools:text="@string/start_custom_service_hint" />
+
+
+
+
+            <TextView
+                style="@style/BPTextViewCommon13"
+                android:layout_marginLeft="13dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="12dp"
+                android:text="@string/data_public"
+                android:visibility="gone" />
+
+
+            <ListView
+                android:id="@+id/assetIssuerLv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginBottom="15dp"
+                android:scrollbars="none"
+                android:visibility="gone" />
+
+
+        </LinearLayout>
+
+        <include
+            android:visibility="gone"
+            layout="@layout/view_empty_record"/>
+
+
+    </LinearLayout>
+
+
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

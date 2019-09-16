@@ -22,6 +22,12 @@
         <item name="app_primary_color">?attr/qmui_config_color_blue</item>
         <item name="app_content_bg_color">@color/qmui_config_color_white</item>
 
+
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/app_color_main</item>
+        <item name="colorPrimaryDark">@color/app_color_main</item>
+        <item name="colorAccent">@color/app_color_main</item>
+
     </style>
 
     <style name="QDtextAppearanceListItem">
@@ -66,7 +72,6 @@
     </style>
 
 
-
     <style name="button_wrapper_style">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -78,7 +83,8 @@
     <style name="DialogTheme2" parent="QMUI.Dialog">
         <item name="qmui_dialog_wrapper_style">@style/dialog_wrapper_style_63</item>
         <item name="qmui_dialog_title_style">@style/DialogTheme2TitleStyle</item>
-        <item name="qmui_dialog_action_container_style">@style/DialogTheme2ActionContainerStyle</item>
+        <item name="qmui_dialog_action_container_style">@style/DialogTheme2ActionContainerStyle
+        </item>
         <item name="qmui_dialog_action_style">@style/DialogTheme2ActionStyle</item>
         <item name="qmui_dialog_message_content_style">@style/DialogTheme2MessageContentStyle</item>
         <item name="qmui_dialog_menu_container_style">@style/DialogTheme2MenuContainerStyle</item>
@@ -158,12 +164,18 @@
     </style>
 
     <style name="BPEditText">
-        <item name="colorControlNormal">@color/edit_text_color_control_normal</item>
+        <item name="colorControlNormal">@color/app_txt_color_gray_3</item>
         <item name="colorControlActivated">@color/edit_text_color_control_activated</item>
-        <item name="android:layout_height">50dp</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:paddingBottom">15dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:inputType">textMultiLine</item>
     </style>
+
 
     <style name="BPEditTextBorder">
         <item name="colorControlNormal">@color/edit_text_color_control_normal</item>
@@ -196,9 +208,6 @@
     </style>
 
     <style name="BPCheckboxTheme">
-        <!--波纹的颜色-->
-        <!--<item name="android:colorControlHighlight">@color/colorPrimary</item>-->
-        <!--选中的颜色-->
         <item name="colorAccent">@color/app_color_main</item>
     </style>
 
@@ -215,16 +224,26 @@
     <style name="BPLayoutDiscover">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">50dp</item>
-        <item name="android:background">@drawable/shape_corner</item>
-        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:background">@color/app_color_white</item>
+        <item name="android:paddingLeft">@dimen/common_left_right_padding</item>
+        <item name="android:paddingRight">@dimen/common_left_right_padding</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
 
+    <style name="BPLayoutWhite55">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">55dp</item>
+        <item name="android:background">@color/app_color_white</item>
+        <item name="android:paddingLeft">@dimen/common_left_right_padding</item>
+        <item name="android:paddingRight">@dimen/common_left_right_padding</item>
+        <item name="android:gravity">center_vertical</item>
     </style>
 
     <style name="BPTextBuildHeaderHint">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/multiline_edit_hint_color</item>
+        <item name="android:textColor">@color/app_txt_color_gray_8</item>
     </style>
 
     <style name="BPTextBuildHeadGray">
@@ -258,9 +277,6 @@
     </style>
 
 
-
-
-
     <style name="BPDivideLine">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">0.5dp</item>
@@ -277,18 +293,246 @@
     </style>
 
     <style name="BPTextNodePlan">
-        <item name="android:maxEms">8</item>
         <item name="android:ellipsize">end</item>
         <item name="android:singleLine">true</item>
     </style>
 
 
-    <style name="QMUICustomDialog"   parent="QMUI.Dialog">
+    <style name="QMUICustomDialog" parent="QMUI.Dialog">
         <item name="android:textColor">@color/app_color_green</item>
         <item name="android:textSize">14sp</item>
         <item name="android:gravity">center_horizontal</item>
         <item name="qmui_dialog_positive_action_text_color">@color/app_color_green</item>
         <item name="qmui_dialog_negative_action_text_color">@color/app_color_green</item>
 
+    </style>
+
+    <style name="BPETCreateWalletError">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:visibility">invisible</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/app_txt_color_red_4</item>
+    </style>
+
+    <style name="BPTextViewCreateWallet">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/app_txt_color_gray_2</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">3dp</item>
+        <item name="android:layout_marginTop">25dp</item>
+    </style>
+
+
+    <style name="BPLLDiscover">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:paddingLeft">@dimen/common_left_right_padding</item>
+        <item name="android:paddingRight">@dimen/common_left_right_padding</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:background">@color/app_color_white</item>
+    </style>
+
+    <style name="BPTextViewDiscover">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/common_text_size_15</item>
+        <item name="android:textColor">@color/app_txt_color_gray_2</item>
+        <item name="android:layout_marginLeft">13dp</item>
+    </style>
+
+    <style name="BPTextViewAbout">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">@dimen/common_text_size_15</item>
+        <item name="android:textColor">@color/app_txt_color_gray_2</item>
+    </style>
+
+
+    <style name="BPTextViewCommonSize15Color99">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/app_txt_color_gray</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="BPTextViewCommonSize15Color66">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/app_txt_color_gray_2</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="BPSendTokenTextView" parent="BPTextViewCommonSize15Color66">
+        <item name="android:layout_marginLeft">3dp</item>
+    </style>
+
+    <style name="BPTextViewCommonSize14Color66">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/app_txt_color_gray_2</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="BPTextViewCommonSize14Color99">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/app_txt_color_gray</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="BPTextViewCommon13">
+        <item name="android:textSize">13sp</item>
+        <item name="android:textColor">@color/app_txt_color_gray</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="BPTextViewCommonGreen16">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/app_color_green</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="BPTextViewVoucherHint14">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/app_txt_color_gray</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingRight">20dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
+    <style name="BPTextViewVoucher14">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/app_txt_color_gray_2</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:gravity">right</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+
+    <style name="BPGreenBgWhiteText">
+
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/shape_corner_green</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/app_color_white</item>
+
+    </style>
+
+
+    <style name="BPCreateWalletGreenBtn" parent="BPComGreenBgWhiteTextBtn">
+        <item name="android:layout_marginBottom">@dimen/bp_btn_bottom_margin</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_gravity">bottom</item>
+        <item name="android:enabled">false</item>
+        <item name="android:focusable">true</item>
+    </style>
+
+
+    <style name="BPComGreenBgWhiteTextBtn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/common_text_size_18</item>
+        <item name="android:textColor">@color/app_color_white</item>
+        <item name="android:background">@drawable/shape_corner_green</item>
+        <item name="android:layout_marginLeft">@dimen/common_left_right_padding</item>
+        <item name="android:layout_marginRight">@dimen/common_left_right_padding</item>
+    </style>
+
+    <style name="BPComGreenBorderWhiteBgGreenTextBtn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/common_text_size_18</item>
+        <item name="android:textColor">@color/app_color_green</item>
+        <item name="android:background">@drawable/shape_stroke_green</item>
+        <item name="android:layout_marginLeft">@dimen/common_left_right_padding</item>
+        <item name="android:layout_marginRight">@dimen/common_left_right_padding</item>
+    </style>
+
+
+    <style name="BPComWhiteBgRegTextBtn">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">45dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">@dimen/common_text_size_18</item>
+        <item name="android:textColor">@color/app_txt_color_red</item>
+        <item name="android:background">@drawable/shape_corner_white_btn</item>
+        <item name="android:layout_marginLeft">@dimen/common_left_right_padding</item>
+        <item name="android:layout_marginRight">@dimen/common_left_right_padding</item>
+    </style>
+
+    <style name="BPTextViewGrayBg">
+        <item name="android:background">@drawable/shape_corner_gray_stroke</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/app_txt_color_gray_2</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:lineSpacingMultiplier">1.3</item>
+    </style>
+
+    <style name="BPCreateWalletEye">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:src">@mipmap/icon_close_eye</item>
+    </style>
+
+
+    <style name="BPTextViewIKnow">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/app_color_green</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+    </style>
+
+
+    <style name="BPDashBgLine">
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/bg_dash_line</item>
+        <item name="android:layerType">software</item>
+    </style>
+
+
+    <style name="BPEditTextMultiInput">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/shape_corner_gray1</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:gravity">left|top</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:minLines">6</item>
+        <item name="android:maxLines">8</item>
+    </style>
+
+
+    <style name="Theme.AppCompat.NoActionBar.Transparent" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
     </style>
 </resources>

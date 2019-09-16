@@ -3,6 +3,7 @@ package com.bupocket.enums;
 public enum AddressClickEventEnum {
     CHOOSE("0","CHOOSE"),
     EDIT("1","EDIT"),
+    VOUCHER("2","VOUCHER"),
     ;
 
     private String code;

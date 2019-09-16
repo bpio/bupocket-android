@@ -1,6 +1,7 @@
 package com.bupocket.utils;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -12,16 +13,21 @@ import android.text.TextUtils;
 import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.TextView;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.bupocket.R;
+import com.bupocket.adaptor.NodeSettingAdapter;
+import com.bupocket.common.Constants;
+import com.bupocket.common.ConstantsType;
 import com.bupocket.enums.CurrencyTypeEnum;
-import com.bupocket.enums.ExceptionEnum;
-import com.qmuiteam.qmui.widget.dialog.QMUIDialog;
+import com.bupocket.model.NodeAddressModel;
+import com.google.gson.Gson;
 import com.tencent.mm.opensdk.modelbiz.WXLaunchMiniProgram;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.net.MalformedURLException;
@@ -40,11 +46,16 @@ import java.util.concurrent.locks.ReentrantLock;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import okhttp3.Call;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 import static com.bupocket.common.Constants.WeChat_APPID;
 import static com.bupocket.common.Constants.XB_YOUPING_USERNAME;
 
 /**
- * 通用工具类.
+ * common util class
  */
 public class CommonUtil {
     private static SecureRandom random = new SecureRandom();
@@ -55,12 +66,14 @@ public class CommonUtil {
 
     public static final Pattern NAME_PATTERN = Pattern.compile("^[\\u4E00-\\u9FBF][\\u4E00-\\u9FBF(.|·)]{0,13}[\\u4E00-\\u9FBF]$");
 
-    public static final Pattern NICKNAME_PATTERN = Pattern.compile("^((?!\\d{21})[\\u4E00-\\u9FBF(.|·)|0-9A-Za-z_]){1,20}$");
-//    public static final Pattern PASSWORD_PATTERN = Pattern.compile("[^ \\f\\n\\r\\t\\v]{6,30}$");
+    public static final Pattern NICKNAME_PATTERN = Pattern.compile("[a-zA-Z0-9_\\u4e00-\\u9fa5]{1,20}$");
+
 
     public static final Pattern ADDRESS_DESCRIBE_PATTERN = Pattern.compile(".{0,30}$");
 
-    public static final Pattern PASSWORD_PATTERN = Pattern.compile(".{6,30}$");
+    public static final Pattern PASSWORD_PATTERN = Pattern.compile("(?=.*[0-9])(?=.*[a-zA-Z])[0-9a-zA-Z_]{6,30}");
+    public static final Pattern OLD_PASSWORD_PATTERN = Pattern.compile(".{6,30}$");
+
 
     public static final Pattern CODE_PATTERN = Pattern.compile("^0\\d{2,4}$");
 
@@ -70,11 +83,12 @@ public class CommonUtil {
 
     public static final Pattern BANK_CARD_PATTERN = Pattern.compile("^\\d{16,30}$");
 
-    /**
-     * 生成6位随机数字, 用于手机短信验证码.
-     *
-     * @return 6位随机数字
-     */
+
+    public static final Pattern IS_PURE_DIGITAL = Pattern.compile("^[1-9]\\d*$");
+
+
+
+
     public static int random() {
         int x = Math.abs(random.nextInt(899999));
 
@@ -92,12 +106,11 @@ public class CommonUtil {
     }
 
 
-    /**
-     * 对url字符串进行编码.
-     *
-     * @param url 要编码的url字符串
-     * @return 编码后的字符串
-     */
+    public static boolean isToken(String tokenCode) {
+        return !tokenCode.equals("BU");
+    }
+
+
     public static String urlEncoder(String url) {
         if (isEmpty(url)) {
             return null;
@@ -110,12 +123,7 @@ public class CommonUtil {
         return null;
     }
 
-    /**
-     * 对url字符串进行解码.
-     *
-     * @param url 要解码的url字符串
-     * @return 解码后的字符串
-     */
+
     public static String urlDecoder(String url) {
         if (isEmpty(url)) {
             return null;
@@ -128,12 +136,7 @@ public class CommonUtil {
         return null;
     }
 
-    /**
-     * 验证字符串是不是邮箱.
-     *
-     * @param email 要验证的邮箱
-     * @return 是否正确邮箱
-     */
+
     public static boolean validateEmail(String email) {
         if (isEmpty(email)) {
             return false;
@@ -142,12 +145,7 @@ public class CommonUtil {
         return m.matches();
     }
 
-    /**
-     * 验证字符串是不是手机号.
-     *
-     * @param mobile 要验证的手机号
-     * @return 是否正确手机号
-     */
+
     public static boolean validateMobile(String mobile) {
         if (isEmpty(mobile)) {
             return false;
@@ -157,12 +155,6 @@ public class CommonUtil {
     }
 
 
-    /**
-     * 验证姓名是否有效.
-     *
-     * @param name 要验证的姓名
-     * @return 是否正确姓名
-     */
     public static boolean validateName(String name) {
         if (isEmpty(name) || name.replaceAll("[^.·]", "").length() > 1) {
             return false;
@@ -171,12 +163,7 @@ public class CommonUtil {
         return m.matches();
     }
 
-    /**
-     * 验证昵称是否有效.
-     *
-     * @param nickname 要验证的昵称
-     * @return 是否正确昵称
-     */
+
     public static boolean validateNickname(String nickname) {
 
         //规则
@@ -184,7 +171,6 @@ public class CommonUtil {
             return false;
         }
         Matcher m = NICKNAME_PATTERN.matcher(nickname);
-        boolean flag = m.matches();
         return m.matches();
     }
 
@@ -195,12 +181,7 @@ public class CommonUtil {
         return m.matches();
     }
 
-    /**
-     * 验证密码格式是否有效.
-     *
-     * @param password 要验证的密码
-     * @return 是否正确密码格式
-     */
+
     public static boolean validatePassword(String password) {
         if (isEmpty(password)) {
             return false;
@@ -209,12 +190,15 @@ public class CommonUtil {
         return m.matches();
     }
 
-    /**
-     * 验证区号是否有效.
-     *
-     * @param code 要验证的区号
-     * @return 是否正确身份证
-     */
+    public static boolean validateOldPassword(String password) {
+        if (isEmpty(password)) {
+            return false;
+        }
+        Matcher m = OLD_PASSWORD_PATTERN.matcher(password);
+        return m.matches();
+    }
+
+
     public static boolean validateCode(String code) {
         if (isEmpty(code)) {
             return false;
@@ -223,12 +207,7 @@ public class CommonUtil {
         return m.matches();
     }
 
-    /**
-     * 验证邮政编码是否有效.
-     *
-     * @param postcode 要验证的邮政编码
-     * @return 是否正确邮政编码
-     */
+
     public static boolean validatePostcode(String postcode) {
         if (isEmpty(postcode)) {
             return false;
@@ -237,12 +216,7 @@ public class CommonUtil {
         return m.matches();
     }
 
-    /**
-     * 验证银行卡是否有效.
-     *
-     * @param bankCardNumber 要验证的银行卡号
-     * @return 是否正确银行卡号
-     */
+
     public static boolean validateBankCardNumber(String bankCardNumber) {
         if (isEmpty(bankCardNumber)) {
             return false;
@@ -252,33 +226,68 @@ public class CommonUtil {
     }
 
 
-    /**
-     * 获取当前系统时间,以java.sql.Timestamp类型返回.
-     *
-     * @return 当前时间
-     */
+    public static void invalidService(final String url, final Activity mActivity, final NodeSettingAdapter.NodeAddressListener nodeListener) {
+        if (TextUtils.isEmpty(url)) {
+            ToastUtil.showToast(mActivity, R.string.add_node_address_title, Toast.LENGTH_SHORT);
+            return;
+        }
+
+
+        try {
+            //check url
+            OkHttpClient okHttpClient = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url + Constants.BUMO_NODE_URL_PATH)
+                    .build();
+            okHttpClient.newCall(request).enqueue(new okhttp3.Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+
+                    try {
+                        String json = response.body().string();
+                        NodeAddressModel nodeAddressModel = new Gson().fromJson(json, NodeAddressModel.class);
+                        if (nodeAddressModel.getError_code() == 0) {
+                            mActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    nodeListener.success(url);
+                                }
+                            });
+                        } else {
+                            ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+                        }
+                    } catch (Exception e) {
+                        ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+                    }
+
+
+                }
+            });
+
+        } catch (Exception e) {
+            ToastUtil.showToast(mActivity, R.string.invalid_node_address, Toast.LENGTH_SHORT);
+        }
+
+    }
+
+
     public static Timestamp getTimestamp() {
         Timestamp d = new Timestamp(System.currentTimeMillis());
         return d;
     }
 
-    /**
-     * 生成32位编码,不含横线
-     *
-     * @return uuid串
-     */
+
     public static String getUUID() {
         String uuid = UUID.randomUUID().toString().trim().replaceAll("-", "");
         return uuid.toUpperCase();
     }
 
 
-    /**
-     * 通过身份证获取性别
-     *
-     * @param idNumber 身份证号
-     * @return 返回性别, 0 保密 , 1 男 2 女
-     */
     public static Integer getGenderByIdNumber(String idNumber) {
 
         int gender = 0;
@@ -293,12 +302,7 @@ public class CommonUtil {
 
     }
 
-    /**
-     * 通过身份证获取生日
-     *
-     * @param idNumber 身份证号
-     * @return 返回生日, 格式为 yyyy-MM-dd 的字符串
-     */
+
     public static String getBirthdayByIdNumber(String idNumber) {
 
         String birthday = "";
@@ -314,12 +318,6 @@ public class CommonUtil {
     }
 
 
-    /**
-     * 通过身份证获取年龄
-     *
-     * @param idNumber 身份证号
-     * @return 返回年龄
-     */
     public static Integer getAgeByIdNumber(String idNumber) {
 
         String birthString = getBirthdayByIdNumber(idNumber);
@@ -331,13 +329,7 @@ public class CommonUtil {
 
     }
 
-    /**
-     * 通过身份证获取年龄
-     *
-     * @param idNumber     身份证号
-     * @param isNominalAge 是否按元旦算年龄，过了1月1日加一岁 true : 是 false : 否
-     * @return 返回年龄
-     */
+
     public static Integer getAgeByIdNumber(String idNumber, boolean isNominalAge) {
 
         String birthString = getBirthdayByIdNumber(idNumber);
@@ -349,12 +341,7 @@ public class CommonUtil {
 
     }
 
-    /**
-     * 通过生日日期获取年龄
-     *
-     * @param birthDate 生日日期
-     * @return 返回年龄
-     */
+
     public static Integer getAgeByBirthDate(Date birthDate) {
 
         return getAgeByBirthString(new SimpleDateFormat("yyyy-MM-dd").format(birthDate));
@@ -362,51 +349,25 @@ public class CommonUtil {
     }
 
 
-    /**
-     * 通过生日字符串获取年龄
-     *
-     * @param birthString 生日字符串
-     * @return 返回年龄
-     */
     public static Integer getAgeByBirthString(String birthString) {
 
         return getAgeByBirthString(birthString, "yyyy-MM-dd");
 
     }
 
-    /**
-     * 通过生日字符串获取年龄
-     *
-     * @param birthString  生日字符串
-     * @param isNominalAge 是否按元旦算年龄，过了1月1日加一岁 true : 是 false : 否
-     * @return 返回年龄
-     */
+
     public static Integer getAgeByBirthString(String birthString, boolean isNominalAge) {
 
         return getAgeByBirthString(birthString, "yyyy-MM-dd", isNominalAge);
 
     }
 
-    /**
-     * 通过生日字符串获取年龄
-     *
-     * @param birthString 生日字符串
-     * @param format      日期字符串格式,为空则默认"yyyy-MM-dd"
-     * @return 返回年龄
-     */
+
     public static Integer getAgeByBirthString(String birthString, String format) {
         return getAgeByBirthString(birthString, "yyyy-MM-dd", false);
     }
 
 
-    /**
-     * 通过生日字符串获取年龄
-     *
-     * @param birthString  生日字符串
-     * @param format       日期字符串格式,为空则默认"yyyy-MM-dd"
-     * @param isNominalAge 是否按元旦算年龄，过了1月1日加一岁 true : 是 false : 否
-     * @return 返回年龄
-     */
     public static Integer getAgeByBirthString(String birthString, String format, boolean isNominalAge) {
 
         int age = 0;
@@ -441,12 +402,7 @@ public class CommonUtil {
 
     }
 
-    /**
-     * 手机号中间四位替换成星号
-     *
-     * @param mobile
-     * @return
-     */
+
     public static String maskMobile(String mobile) {
         if (validateMobile(mobile)) {
             return mobile.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
@@ -454,13 +410,7 @@ public class CommonUtil {
         return mobile;
     }
 
-    /**
-     * 手机号中间四位自定义替换
-     *
-     * @param mobile
-     * @param transCode 中间四位目标值 如GXJF 将136GXJF1111
-     * @return
-     */
+
     public static String maskMobile(String mobile, String transCode) {
         if (validateMobile(mobile)) {
             transCode = isEmpty(transCode) ? "****" : transCode;
@@ -469,12 +419,7 @@ public class CommonUtil {
         return mobile;
     }
 
-    /**
-     * 邮箱地址加星号
-     *
-     * @param email
-     * @return
-     */
+
     public static String maskEmail(String email) {
         if (validateEmail(email)) {
             String userName = email.substring(0, email.indexOf("@"));
@@ -497,23 +442,12 @@ public class CommonUtil {
         return email;
     }
 
-    /**
-     * 账号中间四位自定义替换
-     *
-     * @param account
-     * @return
-     */
+
     public static String maskTradeAccount(String account) {
         return account.replaceAll("(\\d{7})\\d*(\\d{4})", "$1****$2");
     }
 
 
-    /**
-     * 验证是否为日期
-     *
-     * @param date
-     * @return
-     */
     public static boolean validateDate(String date) {
         boolean convertSuccess = true;
         SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
@@ -526,9 +460,7 @@ public class CommonUtil {
         return convertSuccess;
     }
 
-    /**
-     * 获取时间戳,作为递增的ID
-     */
+
     private static final Lock lock = new ReentrantLock();   //锁对象
 
     public static long getUniqueLong() {
@@ -542,13 +474,7 @@ public class CommonUtil {
         return l;
     }
 
-    /**
-     * 解析出url参数中的键值对
-     * 如 "index.jsp?Action=del&id=123"，解析出Action:del,id:123存入map中
-     *
-     * @param URL url地址
-     * @return url请求参数部分
-     */
+
     public static String getUrlParams(String URL, String key) {
         Map<String, String> mapRequest = new HashMap<String, String>();
         String[] arrSplit = null;
@@ -588,12 +514,6 @@ public class CommonUtil {
     }
 
 
-    /**
-     * 生成随机密码
-     *
-     * @param pwd_len 生成的密码的总长度
-     * @return 密码的字符串
-     */
     public static String genRandomNum(int pwd_len) {
         // 35是因为数组是从0开始的，26个字母+10个数字
         final int maxNum = 36;
@@ -629,7 +549,7 @@ public class CommonUtil {
 
     public static String packageName(Context context) {
         PackageManager manager = context.getPackageManager();
-        String name = null;
+        String name = "";
         try {
             PackageInfo info = manager.getPackageInfo(context.getPackageName(), 0);
             name = info.versionName;
@@ -734,12 +654,7 @@ public class CommonUtil {
         return Pattern.matches(base64Pattern, str);
     }
 
-    /**
-     * 数字添加千分符
-     *
-     * @param str
-     * @return
-     */
+
     public static String thousandSeparator(String str) {
         DecimalFormat df = new DecimalFormat("###,###.########");
         return df.format(new BigDecimal(str));
@@ -764,7 +679,10 @@ public class CommonUtil {
     }
 
     /**
-     * 显示软键盘
+     * show input
+     *
+     * @param context
+     * @param view
      */
     public static void showInputMethod(Context context, View view) {
         if (context == null || view == null) {
@@ -777,9 +695,7 @@ public class CommonUtil {
         }
     }
 
-    /**
-     * 关闭软键盘
-     */
+
     public static boolean hideInputMethod(Context context, View view) {
         if (context == null || view == null) {
             return false;
@@ -803,74 +719,6 @@ public class CommonUtil {
             accountBPData = sharedPreferencesHelper.getSharedPreference(currentWalletAddress + "-BPdata", "").toString();
         }
         return accountBPData;
-    }
-
-    public static void showMessageDialog(Context mContext, String msg) {
-        final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
-                setLayout(R.layout.qmui_com_dialog_green).create();
-        qmuiDialog.findViewById(R.id.tvComKnow).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiDialog.dismiss();
-            }
-        });
-        ((TextView) qmuiDialog.findViewById(R.id.tvComMassage)).setText(msg);
-        qmuiDialog.show();
-
-    }
-
-
-    public static void showMessageDialog(Context mContext, String msg, String title, final KnowListener knowListener) {
-        final QMUIDialog qmuiDialog = new QMUIDialog.CustomDialogBuilder(mContext).
-                setLayout(R.layout.qmui_com_dialog_green).create();
-        qmuiDialog.findViewById(R.id.tvComKnow).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                qmuiDialog.dismiss();
-                knowListener.Know();
-            }
-        });
-        TextView tvTitle = qmuiDialog.findViewById(R.id.tvComTitle);
-        tvTitle.setVisibility(View.VISIBLE);
-        tvTitle.setText(title);
-        ((TextView) qmuiDialog.findViewById(R.id.tvComMassage)).setText(msg);
-        qmuiDialog.show();
-
-    }
-
-    /**
-     * @param mContext
-     * @param notice   error massage
-     * @param code     error code
-     */
-    public static void showMessageDialog(Context mContext, String notice, String code) {
-        String errMsg = byCodeToMsg(mContext, code);
-        if (!errMsg.isEmpty()) {
-            notice = errMsg;
-        }
-
-        showMessageDialog(mContext, notice);
-
-    }
-
-
-    public static void showMessageDialog(Context mContext, int notice) {
-        showMessageDialog(mContext, mContext.getResources().getString(notice));
-    }
-
-    /**
-     * get  error massage
-     *
-     * @param mContext
-     * @param code     error code
-     * @return error massage
-     */
-    public static String byCodeToMsg(Context mContext, String code) {
-        ExceptionEnum byValue = ExceptionEnum.getByValue(code);
-        if (byValue == null) {
-            return "";
-        }
-        return mContext.getResources().getString(byValue.getMsg());
     }
 
 
@@ -900,11 +748,23 @@ public class CommonUtil {
     public static String format(String num) {
         String format = "";
         try {
-            int num1 = Integer.parseInt(num);
+            Long num1 = Long.parseLong(num);
             format = DecimalFormat.getNumberInstance().format(num1);
             if (TextUtils.isEmpty(format)) {
                 return "0";
             }
+        } catch (Exception e) {
+            return "0";
+        }
+        return format;
+    }
+
+    public static String formatDecimalDouble(String num) {
+        String format = "";
+        try {
+            Double num1 = Double.parseDouble(num);
+            DecimalFormat decimalFormat = new DecimalFormat("#,###.000000");
+            format = decimalFormat.format(num1);
         } catch (Exception e) {
             return "0";
         }
@@ -919,7 +779,7 @@ public class CommonUtil {
         req.miniprogramType = WXLaunchMiniProgram.Req.MINIPTOGRAM_TYPE_RELEASE;
         boolean isSend = api.sendReq(req);
         if (!isSend) {
-            showMessageDialog(context, R.string.wechat_down_load_info);
+            DialogUtils.showMessageNoTitleDialog(context, R.string.wechat_down_load_info);
         }
         return isSend;
     }
@@ -951,111 +811,127 @@ public class CommonUtil {
     }
 
 
-    public static void TransactionConfirmSheet(Context context, String transactionDetail, String sourceAddress, String destAddress, String amount, String fee) {
-//        final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(context);
-//        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_transfer_confirm, null));
-//
-//        TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
-//        mTransactionDetailTv.setText(transactionDetail);
-//        TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
-//        TextView mDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.destAddressTvHint);
-//        if (TextUtils.isEmpty(destAddress)) {
-//            mDestAddressTv.setVisibility(View.GONE);
-//            mDestAddressTvHint.setVisibility(View.GONE);
-//        } else {
-//            mDestAddressTv.setVisibility(View.VISIBLE);
-//            mDestAddressTvHint.setVisibility(View.VISIBLE);
-//            if (TextUtils.isEmpty(accountTag)) {
-//                mDestAddressTv.setText(destAddress);
-//            } else {
-//                mDestAddressTv.setText(destAddress.concat(accountTag));
-//            }
-//
-//        }
-//
-//        TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
-//        mTxFeeTv.setText(String.valueOf(scanTxFee));
-//
-//
-//        qmuiBottomSheet.findViewById(R.id.detailBtn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.GONE);
-//                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.VISIBLE);
-//            }
-//        });
-//
-//
-//        TextView mSourceAddressTv = qmuiBottomSheet.findViewById(R.id.sourceAddressTv);
-//        mSourceAddressTv.setText(sourceAddress);
-//        TextView mDetailsDestAddressTv = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTv);
-//        TextView mDetailsDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTvHint);
-//        if (TextUtils.isEmpty(destAddress)) {
-//            mDetailsDestAddressTv.setVisibility(View.GONE);
-//            mDetailsDestAddressTvHint.setVisibility(View.GONE);
-//        } else {
-//            mDetailsDestAddressTv.setVisibility(View.VISIBLE);
-//            mDetailsDestAddressTvHint.setVisibility(View.VISIBLE);
-//            mDetailsDestAddressTv.setText(destAddress);
-//        }
-//
-//
-//        TextView mDetailsAmountTv = qmuiBottomSheet.findViewById(R.id.detailsAmountTv);
-//        mDetailsAmountTv.setText(CommonUtil.thousandSeparator(transactionAmount));
-//        TextView mDetailsTxFeeTv = qmuiBottomSheet.findViewById(R.id.detailsTxFeeTv);
-//        mDetailsTxFeeTv.setText(String.valueOf(scanTxFee));
-//        TextView mTransactionParamsTv = qmuiBottomSheet.findViewById(R.id.transactionParamsTv);
-//        mTransactionParamsTv.setText(transactionParams);
-//
-//        // title view listener
-//        qmuiBottomSheet.findViewById(R.id.goBackBtn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.VISIBLE);
-//                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.GONE);
-//            }
-//        });
-//        qmuiBottomSheet.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                qmuiBottomSheet.dismiss();
-//            }
-//        });
-//        qmuiBottomSheet.findViewById(R.id.detailsCancelBtn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                qmuiBottomSheet.dismiss();
-//            }
-//        });
-//        qmuiBottomSheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                qmuiBottomSheet.dismiss();
-//                confirmTransaction(contentDto);
-//            }
-//        });
-//        qmuiBottomSheet.show();
-    }
-
-
     public static void setExpiryTime(String expiryTime, Context context) {
         if (!TextUtils.isEmpty(expiryTime)) {
             String[] strings = TimeUtil.time_mmss(Long.parseLong(expiryTime) - System.currentTimeMillis());
             if (strings[0].isEmpty()) {
                 @SuppressLint("StringFormatMatches") String format = String.format(context.getString(R.string.error_1011_s, strings[1] + ""));
-                CommonUtil.showMessageDialog(context, format);
+                DialogUtils.showMessageNoTitleDialog(context, format);
             } else {
                 @SuppressLint("StringFormatMatches") String format = String.format(context.getString(R.string.error_1011_m, strings[0] + "", strings[1] + ""));
-                CommonUtil.showMessageDialog(context, format);
+                DialogUtils.showMessageNoTitleDialog(context, format);
             }
         }
     }
 
+    public static boolean validatePasswordEquals(String pw, String pwConfirm) {
+        if (pw.equals(pwConfirm)) {
+            return true;
+        }
 
-    public interface KnowListener {
-
-        void Know();
+        return false;
     }
 
+
+    public static int getWalletHeadRes(int position) {
+
+
+        int[] walletHeadResList = new int[]{
+                R.mipmap.ic_wallet_head_0,
+                R.mipmap.ic_wallet_head_1,
+                R.mipmap.ic_wallet_head_2,
+                R.mipmap.ic_wallet_head_3,
+                R.mipmap.ic_wallet_head_4,
+                R.mipmap.ic_wallet_head_5,
+                R.mipmap.ic_wallet_head_6,
+                R.mipmap.ic_wallet_head_7,
+                R.mipmap.ic_wallet_head_8,
+                R.mipmap.ic_wallet_head_9
+        };
+
+        return walletHeadResList[position];
+    }
+
+    ;
+
+
+    public static void setHeadIvRes(String walletAddress, ImageView walletHeadRiv, SharedPreferencesHelper spHelper) {
+        int imageRes = (int) spHelper.getSharedPreference(walletAddress + ConstantsType.WALLET_HEAD_ICON, -1);
+        if (imageRes != -1) {
+            walletHeadRiv.setImageResource(CommonUtil.getWalletHeadRes(imageRes));
+        }
+    }
+
+
+    public static String toJsonString(String theString) {
+        theString = theString.replace(">", "&gt;");
+        theString = theString.replace("<", "&lt;");
+        theString = theString.replace(" ", "&nbsp;");
+        theString = theString.replace("\"", "&quot;");
+        theString = theString.replace("\'", "&#39;");
+        theString = theString.replace("\\", "\\\\");//对斜线的转义
+        theString = theString.replace("\n", "\\n");
+        theString = theString.replace("\r", "\\r");
+
+        return theString;
+
+    }
+
+
+    public static String string2Json(String s) {
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            switch (c) {
+                case '\"':
+                    sb.append("");
+                    break;
+                case '\\':
+                    sb.append("");
+                    break;
+                case '/':
+                    sb.append("/");
+                    break;
+                case '\b':
+                    sb.append("");
+                    break;
+                case '\f':
+                    sb.append("");
+                    break;
+                case '\n':
+                    sb.append("");
+                    break;
+                case '\r':
+                    sb.append("");
+                    break;
+                case '\t':
+                    sb.append("");
+                    break;
+                default:
+                    sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+
+
+    public static boolean isEnglishLangage() {
+        switch (LocaleUtil.getLanguageStatus()) {
+            case 1:
+                return true;
+
+        }
+        return false;
+    }
+
+
+    public static boolean isPureDigital(String str) {
+        Matcher match = IS_PURE_DIGITAL.matcher(str);
+        if (match.matches() == false) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 
 }

@@ -1,38 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.qmuiteam.qmui.widget.QMUIWindowInsetLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/app_bg_color_gray"
-    android:orientation="vertical">
-
-    <com.qmuiteam.qmui.widget.QMUITopBar
-        android:id="@+id/topbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/qmui_topbar_height" />
+    android:fitsSystemWindows="true">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="15dp"
         android:background="@color/app_bg_color_gray"
+        android:fitsSystemWindows="true"
         android:orientation="vertical">
 
-        <TextView
+        <com.qmuiteam.qmui.widget.QMUITopBar
+            android:id="@+id/topbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="13dp"
-            android:layout_marginBottom="12dp"
-            android:text="@string/vote_record_txt"
-            android:textColor="@color/app_txt_color_gray"
-            android:textSize="13sp" />
+            android:fitsSystemWindows="true" />
 
-        <include
-            layout="@layout/view_common_lv_layout"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"/>
+
+
+        <include layout="@layout/view_common_lv_layout" />
 
     </LinearLayout>
 
 
-</LinearLayout>
+</com.qmuiteam.qmui.widget.QMUIWindowInsetLayout>

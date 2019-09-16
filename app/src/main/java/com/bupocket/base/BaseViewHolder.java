@@ -12,9 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 
-
 /**
- * edited by yanyi on 16/1/14.
+ * base viewholder
+ * use listview
  */
 public class BaseViewHolder {
     private SparseArray<View> viewMap;

@@ -15,9 +15,7 @@ import kotlin.collections.AbstractMutableMap;
 public class TransferUtils {
 
 
-
-
-    public static void confirmTxSheet(Context context, String fromAddress, String destAddress, String amount, Double fee, String metaData,String input, final TransferListener transferListener) {
+    public static void confirmTxSheet(Context context, String fromAddress, String destAddress, String amount, Double fee, String metaData, String input, final TransferListener transferListener) {
         confirmTxSheet(context, fromAddress, destAddress, "", amount, fee, metaData, input, transferListener);
     }
 
@@ -43,8 +41,110 @@ public class TransferUtils {
         TextView mTransactionParamsTv = qmuiBottomSheet.findViewById(R.id.transactionParamsTv);
         TextView mDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.destAddressTvHint);
         TextView mDetailsDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTvHint);
+        TextView mDetailsAmountTv1 = qmuiBottomSheet.findViewById(R.id.detailsAmountTv1);
 
 
+
+        mTransactionDetailTv.setText(metaData);
+        mDestAddressTv.setText(destAddressTag);
+        mSourceAddressTv.setText(fromAddress);
+        mDetailsDestAddressTv.setText(destAddressTag);
+        mTransactionParamsTv.setText(input);
+        mDetailsAmountTv.setText(amount);
+        mDetailsAmountTv1.setText(amount);
+        mDetailsTxFeeTv.setText(tx_fee);
+        mTxFeeTv.setText(tx_fee);
+
+
+        if (TextUtils.isEmpty(destAddress)) {
+            mDestAddressTv.setVisibility(View.GONE);
+            mDestAddressTvHint.setVisibility(View.GONE);
+            mDetailsDestAddressTv.setVisibility(View.GONE);
+            mDetailsDestAddressTvHint.setVisibility(View.GONE);
+        } else {
+            mDestAddressTv.setVisibility(View.VISIBLE);
+            mDestAddressTvHint.setVisibility(View.VISIBLE);
+            mDetailsDestAddressTv.setVisibility(View.VISIBLE);
+            mDetailsDestAddressTvHint.setVisibility(View.VISIBLE);
+        }
+
+
+        qmuiBottomSheet.findViewById(R.id.detailBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.GONE);
+                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.VISIBLE);
+            }
+        });
+
+        qmuiBottomSheet.findViewById(R.id.goBackBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.VISIBLE);
+                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.GONE);
+            }
+        });
+
+
+        qmuiBottomSheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiBottomSheet.dismiss();
+                transferListener.confirm();
+            }
+        });
+        qmuiBottomSheet.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiBottomSheet.dismiss();
+            }
+        });
+        qmuiBottomSheet.findViewById(R.id.tvConfirmCancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiBottomSheet.dismiss();
+            }
+        });
+        qmuiBottomSheet.show();
+
+    }
+
+    public static void confirmSendVoucherDialog(Context context,
+                                                String fromAddress,
+                                                String destAddress,
+                                                String destTag,
+                                                String amount,
+                                                String fee,
+                                                String metaData,
+                                                String input, String remark,
+                                                final TransferListener transferListener) {
+
+        String tx_fee = fee;
+        String destAddressTag = destAddress;
+        if (!TextUtils.isEmpty(destTag)) {
+            destAddressTag = destAddress.concat(destTag);
+        }
+
+        amount = CommonUtil.thousandSeparator(amount);
+
+        final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(context);
+        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_voucher_transfer_confirm, null));
+        TextView mTransactionDetailTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
+        TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
+        TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
+        TextView mSourceAddressTv = qmuiBottomSheet.findViewById(R.id.sourceAddressTv);
+        TextView mDetailsDestAddressTv = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTv);
+        TextView mDetailsAmountTv = qmuiBottomSheet.findViewById(R.id.detailsAmountTv);
+        TextView mDetailsTxFeeTv = qmuiBottomSheet.findViewById(R.id.detailsTxFeeTv);
+        TextView mTransactionParamsTv = qmuiBottomSheet.findViewById(R.id.transactionParamsTv);
+        TextView mDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.destAddressTvHint);
+        TextView mDetailsDestAddressTvHint = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTvHint);
+        TextView sendNumTv = qmuiBottomSheet.findViewById(R.id.sendNumTv);
+        TextView remarkTv = qmuiBottomSheet.findViewById(R.id.remarkTv);
+
+        remarkTv.setText(remark);
+
+        sendNumTv.setText(amount);
         mTransactionDetailTv.setText(metaData);
         mDestAddressTv.setText(destAddressTag);
         mSourceAddressTv.setText(fromAddress);
@@ -75,6 +175,82 @@ public class TransferUtils {
                 qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.VISIBLE);
             }
         });
+
+        qmuiBottomSheet.findViewById(R.id.goBackBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiBottomSheet.findViewById(R.id.confirmLl).setVisibility(View.VISIBLE);
+                qmuiBottomSheet.findViewById(R.id.confirmDetailsLl).setVisibility(View.GONE);
+            }
+        });
+
+
+        qmuiBottomSheet.findViewById(R.id.sendConfirmBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiBottomSheet.dismiss();
+                transferListener.confirm();
+            }
+        });
+        qmuiBottomSheet.findViewById(R.id.cancelBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiBottomSheet.dismiss();
+            }
+        });
+        qmuiBottomSheet.findViewById(R.id.tvConfirmCancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                qmuiBottomSheet.dismiss();
+            }
+        });
+        qmuiBottomSheet.show();
+
+    }
+
+
+    public static void confirmSendTokenDialog(Context context,
+                                              String fromAddress,
+                                              String destAddress,
+                                              String amount,
+                                              String fee, String remark,String tokenType,
+                                              final TransferListener transferListener) {
+
+        tokenType="(" + tokenType + ")";
+        String tx_fee = fee;
+        String destAddressTag = destAddress;
+        amount = CommonUtil.thousandSeparator(amount);
+
+        final QMUIBottomSheet qmuiBottomSheet = new QMUIBottomSheet(context);
+        qmuiBottomSheet.setContentView(qmuiBottomSheet.getLayoutInflater().inflate(R.layout.view_voucher_transfer_confirm, null));
+        ((TextView) qmuiBottomSheet.findViewById(R.id.confirmTitleTv)).setText(R.string.send_confirm_title);
+        ((TextView) qmuiBottomSheet.findViewById(R.id.transactionDetailHintTv)).setText(R.string.tx_from);
+
+        ((TextView) qmuiBottomSheet.findViewById(R.id.sendNumTvHint)).setText(context.getString(R.string.tx_value) + tokenType);
+        ((TextView) qmuiBottomSheet.findViewById(R.id.txFeeHintTv)).setText(context.getString(R.string.send_fee_title));
+
+
+
+        TextView mDestAddressTv = qmuiBottomSheet.findViewById(R.id.destAddressTv);
+        TextView mTxFeeTv = qmuiBottomSheet.findViewById(R.id.txFeeTv);
+        TextView mSourceAddressTv = qmuiBottomSheet.findViewById(R.id.transactionDetailTv);
+        TextView mDetailsDestAddressTv = qmuiBottomSheet.findViewById(R.id.detailsDestAddressTv);
+        TextView mDetailsAmountTv = qmuiBottomSheet.findViewById(R.id.detailsAmountTv);
+        TextView mDetailsTxFeeTv = qmuiBottomSheet.findViewById(R.id.detailsTxFeeTv);
+        TextView sendNumTv = qmuiBottomSheet.findViewById(R.id.sendNumTv);
+        TextView remarkTv = qmuiBottomSheet.findViewById(R.id.remarkTv);
+
+        remarkTv.setText(remark);
+
+        sendNumTv.setText(amount);
+        mDestAddressTv.setText(destAddressTag);
+        mDetailsDestAddressTv.setText(destAddress);
+        mDetailsAmountTv.setText(amount);
+        mDetailsTxFeeTv.setText(tx_fee);
+        mTxFeeTv.setText(tx_fee);
+        mSourceAddressTv.setText(fromAddress);
+
+        qmuiBottomSheet.findViewById(R.id.detailBtn).setVisibility(View.GONE);
 
         qmuiBottomSheet.findViewById(R.id.goBackBtn).setOnClickListener(new View.OnClickListener() {
             @Override

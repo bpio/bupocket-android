@@ -33,6 +33,16 @@ public class MyTokenTxAdapter extends BaseAdapter {
         this.mContext = mContext;
     }
 
+    public void setNewData(List<TokenTxInfo> datas) {
+        this.datas = datas;
+        notifyDataSetChanged();
+    }
+
+    public void addData(List<TokenTxInfo> datas) {
+        this.datas.addAll(datas);
+        notifyDataSetChanged();
+    }
+
 
     @Override
     public int getCount() {
@@ -53,7 +63,7 @@ public class MyTokenTxAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View convertView, ViewGroup viewGroup) {
         ViewHolder holder;
-        if(convertView == null){
+        if (convertView == null) {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(mContext).inflate(R.layout.view_my_token_tx_item, null);
             holder.userAccAddrTV = convertView.findViewById(R.id.tx_account_address);
@@ -66,50 +76,50 @@ public class MyTokenTxAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        if(datas.size() != 0){
+        if (datas.size() != 0) {
             holder.userAccAddrTV.setText(datas.get(i).getTxAccountAddress());
             holder.txAmountTV.setText(datas.get(i).getTxAmount());
             holder.txDateTV.setText(datas.get(i).getTxDate());
             String status = datas.get(i).getTxStatus();
-            if(TxStatusEnum.SUCCESS.getName().equals(status)){
+            if (TxStatusEnum.SUCCESS.getName().equals(status)) {
                 holder.txStatusTV.setText(R.string.tx_status_success_txt);
                 holder.txStatusTV.setTextColor(convertView.getResources().getColor(R.color.tx_status_success_txt_color));
-            }else {
+            } else {
                 holder.txStatusTV.setText(R.string.tx_status_fail_txt);
                 holder.txStatusTV.setTextColor(convertView.getResources().getColor(R.color.tx_status_failed_txt_color));
             }
             String outInType = datas.get(i).getOutinType();
-            if(OutinTypeEnum.IN.getCode().equals(outInType)){
+            if (OutinTypeEnum.IN.getCode().equals(outInType)) {
                 holder.outInTypeIconIv.setImageDrawable(convertView.getResources().getDrawable(R.mipmap.icon_collection));
-            }else{
+            } else {
                 holder.outInTypeIconIv.setImageDrawable(convertView.getResources().getDrawable(R.mipmap.icon_payment));
             }
         }
         return convertView;
     }
 
-    public void loadMore(List<GetMyTxsRespDto.TxRecordBean> txRecord,Map<String, TokenTxInfo> tokenTxInfoMap) {
+    public void loadMore(List<GetMyTxsRespDto.TxRecordBean> txRecord, Map<String, TokenTxInfo> tokenTxInfoMap) {
         this.tokenTxInfoMap = tokenTxInfoMap;
         for (GetMyTxsRespDto.TxRecordBean obj : txRecord) {
 
-            String txAccountAddress = AddressUtil.anonymous((obj.getOutinType().equals(OutinTypeEnum.OUT.getCode())) ? obj.getToAddress() : obj.getFromAddress());
+            String txAccountAddress = AddressUtil.anonymous((OutinTypeEnum.OUT.getCode().equals(obj.getOutinType())) ? obj.getToAddress() : obj.getFromAddress());
             String amountStr = null;
             String txStartStr = null;
-            if(obj.getOutinType().equals(OutinTypeEnum.OUT.getCode())){
-                amountStr = mContext.getString(R.string.comm_out)  + obj.getAmount();
-            }else {
-                amountStr =  mContext.getString(R.string.comm_in) + obj.getAmount();
+            if (OutinTypeEnum.OUT.getCode().equals(obj.getOutinType())) {
+                amountStr = mContext.getString(R.string.comm_out) + obj.getAmount();
+            } else {
+                amountStr = mContext.getString(R.string.comm_in) + obj.getAmount();
             }
 
-            if(TxStatusEnum.SUCCESS.getCode().equals(obj.getTxStatus())){
+            if (TxStatusEnum.SUCCESS.getCode().equals(obj.getTxStatus())) {
                 txStartStr = TxStatusEnum.SUCCESS.getName();
-            }else{
+            } else {
                 txStartStr = TxStatusEnum.FAIL.getName();
             }
             long optNo = obj.getOptNo();
 
-            if(!tokenTxInfoMap.containsKey(String.valueOf(obj.getOptNo()))){
-                TokenTxInfo tokenTxInfo = new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime(),mContext), amountStr, txStartStr, String.valueOf(optNo));
+            if (!tokenTxInfoMap.containsKey(String.valueOf(obj.getOptNo()))) {
+                TokenTxInfo tokenTxInfo = new TokenTxInfo(txAccountAddress, TimeUtil.getDateDiff(obj.getTxTime(), mContext),obj.getTxTime(), amountStr, txStartStr, String.valueOf(optNo));
                 tokenTxInfo.setTxHash(obj.getTxHash());
                 tokenTxInfo.setOutinType(obj.getOutinType());
                 tokenTxInfoMap.put(String.valueOf(obj.getOptNo()), tokenTxInfo);

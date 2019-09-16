@@ -6,10 +6,10 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/common_padding_border"
-        android:layout_marginRight="@dimen/common_padding_border"
+        android:layout_marginLeft="@dimen/common_left_right_padding"
+        android:layout_marginRight="@dimen/common_left_right_padding"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/shape_corner"
+        android:background="@drawable/shape_corner_white"
         android:paddingLeft="13sp"
         android:paddingBottom="10dp">
 
@@ -81,12 +81,12 @@
 
             <TextView
                 android:id="@+id/tvProgress"
-                android:layout_width="60dp"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:layout_marginRight="5dp"
                 android:gravity="center"
-                android:text="166.66%" />
+                android:text="166.661%" />
 
 
         </LinearLayout>
