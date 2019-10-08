@@ -22,31 +22,31 @@ public class DaoMaster extends AbstractDaoMaster {
     /** Creates underlying database table using DAOs. */
     public static void createAllTables(Database db, boolean ifNotExists) {
         AddressBookListBeanDao.createTable(db, ifNotExists);
-        BlockInfoRespBoBeanDao.createTable(db, ifNotExists);
-        ImageInfoDao.createTable(db, ifNotExists);
-        LogListModelDao.createTable(db, ifNotExists);
-        NodeBuildModelDao.createTable(db, ifNotExists);
-        SuperNodeModelDao.createTable(db, ifNotExists);
-        TokenTxInfoDao.createTable(db, ifNotExists);
-        TxDetailRespBoBeanDao.createTable(db, ifNotExists);
-        TxInfoRespBoBeanDao.createTable(db, ifNotExists);
-        VoucherDetailModelDao.createTable(db, ifNotExists);
         VoucherPackageDetailModelDao.createTable(db, ifNotExists);
+        VoucherDetailModelDao.createTable(db, ifNotExists);
+        TxDetailRespBoBeanDao.createTable(db, ifNotExists);
+        SuperNodeModelDao.createTable(db, ifNotExists);
+        LogListModelDao.createTable(db, ifNotExists);
+        TokenTxInfoDao.createTable(db, ifNotExists);
+        ImageInfoDao.createTable(db, ifNotExists);
+        BlockInfoRespBoBeanDao.createTable(db, ifNotExists);
+        NodeBuildModelDao.createTable(db, ifNotExists);
+        TxInfoRespBoBeanDao.createTable(db, ifNotExists);
     }
 
     /** Drops underlying database table using DAOs. */
     public static void dropAllTables(Database db, boolean ifExists) {
         AddressBookListBeanDao.dropTable(db, ifExists);
-        BlockInfoRespBoBeanDao.dropTable(db, ifExists);
-        ImageInfoDao.dropTable(db, ifExists);
-        LogListModelDao.dropTable(db, ifExists);
-        NodeBuildModelDao.dropTable(db, ifExists);
-        SuperNodeModelDao.dropTable(db, ifExists);
-        TokenTxInfoDao.dropTable(db, ifExists);
-        TxDetailRespBoBeanDao.dropTable(db, ifExists);
-        TxInfoRespBoBeanDao.dropTable(db, ifExists);
-        VoucherDetailModelDao.dropTable(db, ifExists);
         VoucherPackageDetailModelDao.dropTable(db, ifExists);
+        VoucherDetailModelDao.dropTable(db, ifExists);
+        TxDetailRespBoBeanDao.dropTable(db, ifExists);
+        SuperNodeModelDao.dropTable(db, ifExists);
+        LogListModelDao.dropTable(db, ifExists);
+        TokenTxInfoDao.dropTable(db, ifExists);
+        ImageInfoDao.dropTable(db, ifExists);
+        BlockInfoRespBoBeanDao.dropTable(db, ifExists);
+        NodeBuildModelDao.dropTable(db, ifExists);
+        TxInfoRespBoBeanDao.dropTable(db, ifExists);
     }
 
     /**
@@ -66,16 +66,16 @@ public class DaoMaster extends AbstractDaoMaster {
     public DaoMaster(Database db) {
         super(db, SCHEMA_VERSION);
         registerDaoClass(AddressBookListBeanDao.class);
-        registerDaoClass(BlockInfoRespBoBeanDao.class);
-        registerDaoClass(ImageInfoDao.class);
-        registerDaoClass(LogListModelDao.class);
-        registerDaoClass(NodeBuildModelDao.class);
-        registerDaoClass(SuperNodeModelDao.class);
-        registerDaoClass(TokenTxInfoDao.class);
-        registerDaoClass(TxDetailRespBoBeanDao.class);
-        registerDaoClass(TxInfoRespBoBeanDao.class);
-        registerDaoClass(VoucherDetailModelDao.class);
         registerDaoClass(VoucherPackageDetailModelDao.class);
+        registerDaoClass(VoucherDetailModelDao.class);
+        registerDaoClass(TxDetailRespBoBeanDao.class);
+        registerDaoClass(SuperNodeModelDao.class);
+        registerDaoClass(LogListModelDao.class);
+        registerDaoClass(TokenTxInfoDao.class);
+        registerDaoClass(ImageInfoDao.class);
+        registerDaoClass(BlockInfoRespBoBeanDao.class);
+        registerDaoClass(NodeBuildModelDao.class);
+        registerDaoClass(TxInfoRespBoBeanDao.class);
     }
 
     public DaoSession newSession() {

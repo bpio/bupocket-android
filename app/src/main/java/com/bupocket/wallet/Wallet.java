@@ -48,7 +48,7 @@ import java.util.Map;
 public class Wallet {
     private static SDK sdk = null;
     private static Wallet wallet;
-    private static Long GAS_PRICE = 1003L;
+    private static Long GAS_PRICE = Constants.GAS_PRICE;
 
     private Wallet() {
         init();

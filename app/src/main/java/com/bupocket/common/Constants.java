@@ -24,10 +24,11 @@ public class Constants {
     public static final Double NODE_CO_BUILD_PURCHASE_FEE = 10.30;
     public static final Double NODE_CO_BUILD_AMOUNT_FEE = 0.01;
 
+    public static final Long GAS_PRICE = 1003L;
     public static final double MIN_SEND_AMOUNT = 0.00000001;
     public static final double MAX_SEND_AMOUNT = 100000000;
     public static final String REGISTER_TOKEN_FEE = "0.02";
-    public static final String ISSUE_TOKEN_FEE = "50.01";
+    public static final String ISSUE_TOKEN_FEE = "50.2";
     public static final String ACCOUNT_NOT_ACTIVATED_SEND_FEE = "0.03";
     public static final String ACCOUNT_ACTIVATED_SEND_FEE = "0.01";
     public static final Integer DEFAULT_BUMO_NODE = 1;
